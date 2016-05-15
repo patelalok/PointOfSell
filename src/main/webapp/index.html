@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="sampleApp">
+<head>
+<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+        <title>My Sample App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1 , user-scalable=no">
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+       <link href="assets/css/custom.css" rel="stylesheet">
+       <script type="text/javascript" src="libs/jquery.js"></script>
+       <script type="text/javascript" src="libs/bootstrap.js"></script>
+       <script type="text/javascript" src="libs/angular.js"></script>
+       <script type="text/javascript" src="libs/angular-route.js"></script>
+       <script type="text/javascript" src="libs/angular-sanitize.js"></script>
+       <script type="text/javascript" src="libs/angular-loader.js"></script>
+       <script type="text/javascript" src="libs/angular-resource.js"></script>
+       <script type="text/javascript" src="libs/angular-cookies.js"></script>
+       <script type="text/javascript" src="libs/angular-aria.js"></script>
+       <script type="text/javascript" src="libs/angular-animate.js"></script>
+       <script type="text/javascript" src="libs/angular-ui-router.js"></script>
+       <script type="text/javascript" src="libs/ui-bootstrap-tpls-0.12.0.js"></script>
+       <script type="text/javascript" src="libs/ui-utils.js"></script>
+       <script type="text/javascript" src="libs/angular-match-media.js"></script>
+       <script type="text/javascript" src="libs/angular-messages.js"></script>
+       <script type="text/javascript" src="libs/d3.js"></script>
+       
+       
+       <script type="text/javascript" src="app/app.js"></script>
+       <script type="text/javascript" src="app/common/device.utility.js"></script>
+       <script type="text/javascript" src="app/common/startFrom.filter.js"></script>
+       <script type="text/javascript" src="app/common/GlobalVariable.js"></script>
+       <script type="text/javascript" src="app/common/responsiveTable.directive.js"></script>
+       <script type="text/javascript" src="app/mainPage/body.controller.js"></script>
+       <script type="text/javascript" src="app/dummy/dummyController.js"></script>
+       <script type="text/javascript" src="app/product/productController.js"></script>
+       <script type="text/javascript" src="app/sell/sellController.js"></script>
+       
+       
+</head>
+<body ng-controller="BodyController as bodyCtrl">
+
+	<section class="fixed-header-wrap">
+		<header class="mainHeader" ng-show="!GlobalVariable.isLoginPage">
+			<div class="leftItems">
+			<a class="toggle-nav" data-ng-click="openNav()" ng-show="!device.isTC70 && (device.isMobile || device.isTablet)"> <i class="fa fa-bars"></i> </a>
+				<img class="nickImage" src="./assets/images/leftImage.JPG"/>
+				<span class="nickText">Nicks</span>
+			
+			</div>
+			<div class="headerRightItems">
+			
+				<div class="help inline-vertical padding-right-30">
+					<span> Help </span>
+				</div>
+				<div class="headerImage inline-vertical padding-right-30">
+					<img src="./assets/images/bell.JPG"/>
+				</div>
+				<div class="headerName inline-vertical">
+				
+					<span>Alok Patel</span>
+				</div>
+			</div>
+		</header>
+	</section>
+		
+<div class="wrapper clearfix" id="wrapper">
+            <div id="inner" class="inner clearfix">
+            	<div class="sidebar"  ng-show="!GlobalVariable.isLoginPage">
+            		<aside id="admin-sidebar" class="admin-sidebar" ng-show="((device.isDesktop && !device.isTablet) || displaySideBar) && !hideSideBar">
+						<nav class="list-group nav-primary" id="sideBar_menu">
+							<div class="sideBarIcons">
+								<div class="homeImage list-group-item">
+									<img alt="" src="assets/images/home.JPG" />
+								</div>
+								<div class="sellImage list-group-item" ng-click="navigate()">
+									<img alt="" src="assets/images/sell.JPG" />
+								</div>
+								<div class="salesledgerImage list-group-item">
+									<img alt="" src="assets/images/salesledger.JPG" />
+								</div>
+								<div class="salesledgerImage list-group-item">
+									<img alt="" src="assets/images/product.JPG" />
+								</div>
+							</div>
+						</nav>
+					</aside>
+            	</div>
+                <div class="inner-views" ng-class="{'desktop-view':device.isDesktop,'tablet-view':device.isTablet}">
+                    <div class="admin-content">
+                        <ui-view class="container-fluid" style="overflow:hidden;"></ui-view>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<footer>
+
+</footer>
+
+</body>
+</html>

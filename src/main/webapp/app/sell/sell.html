@@ -1,0 +1,20 @@
+<div class="container">
+	<div class="row">
+	<button ng-click="addRow()">Add Row</button>
+		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
+				data-page-size="pageSize" class="full-width">
+				<columns>
+					<column name="Item No" key="intemNo" datatype="string"></column>
+					<column name="Item" key="item" datatype="string"></column>
+					<column name="Quantity" key=quantity datatype="string"></column>
+					<column name="Retail" key=retail datatype="string"></column>
+					<column name="Discount" key=discount datatype="string"></column>
+					<column name="Tax" key=tax datatype="string"></column>
+					<column name="Total" key=total datatype="string"></column>
+				</columns>		
+			</div>
+	
+	</div>
+	
+
+</div>
