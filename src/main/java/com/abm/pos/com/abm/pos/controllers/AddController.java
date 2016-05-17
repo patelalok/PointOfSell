@@ -1,8 +1,10 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.AddManager;
+import com.abm.pos.com.abm.pos.dto.AddCategoryDto;
 import com.abm.pos.com.abm.pos.dto.AddCustomerDto;
 import com.abm.pos.com.abm.pos.dto.AddProductDto;
+import com.abm.pos.com.abm.pos.dto.AddVendorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +44,36 @@ public class AddController {
             System.out.println(e);
         }
     }
+
+    @RequestMapping(value = "/addVendor",method = RequestMethod.POST, consumes = "application/json")
+    public void addCustomer(@RequestBody AddVendorDto vendorDto)
+    {
+        try
+        {
+            addManager.addVendorToDB(vendorDto);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+
+    @RequestMapping(value = "/addCategory",method = RequestMethod.POST, consumes = "application/json")
+    public void addCustomer(@RequestBody AddCategoryDto categoryDto)
+    {
+        try
+        {
+            addManager.addCategoryToDB(categoryDto);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+
+
 
 
 }

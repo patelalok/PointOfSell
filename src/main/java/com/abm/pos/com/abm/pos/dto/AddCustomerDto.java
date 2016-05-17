@@ -4,8 +4,6 @@ package com.abm.pos.com.abm.pos.dto;
  * Created by asp5045 on 5/9/16.
  */
 public class AddCustomerDto {
-
-    String customerId;
     String firstName;
     String lastName;
     String phoneNo;
@@ -19,7 +17,8 @@ public class AddCustomerDto {
     String country;
     String zipcode;
     String fax;
-    String image;
+    String customerCreatedDate;
+
 
     public String getZipcode() {
         return zipcode;
@@ -27,14 +26,6 @@ public class AddCustomerDto {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -133,13 +124,14 @@ public class AddCustomerDto {
         this.fax = fax;
     }
 
-    public String getImage() {
-        return image;
+    public String getCustomerCreatedDate() {
+        return customerCreatedDate;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCustomerCreatedDate(String customerCreatedDate) {
+        this.customerCreatedDate = customerCreatedDate;
     }
+
 
 
 

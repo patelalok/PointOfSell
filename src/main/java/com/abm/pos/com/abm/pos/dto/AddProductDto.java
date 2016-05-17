@@ -5,53 +5,25 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddProductDto {
 
-    private String productId;
-
-
-
-    private String vendorId;
-    private String description;
+    private String productNo;
     private String categoryId;
-    private String upcCode;
+    private String vendorId;
     private String altNo;
+    private String description;
     private String costPrice;
     private String retailPrice;
     private String quantity;
     private String minProductQuantity;
     private String returnRule;
     private String image;
+    private String createdDate;
 
-    public String getRetailPrice() {
-        return retailPrice;
+    public String getProductNo() {
+        return productNo;
     }
 
-    public void setRetailPrice(String retailPrice) {
-        this.retailPrice = retailPrice;
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(String vendorId) {
-        this.vendorId = vendorId;
+    public void setProductNo(String productNo) {
+        this.productNo = productNo;
     }
 
     public String getCategoryId() {
@@ -62,12 +34,12 @@ public class AddProductDto {
         this.categoryId = categoryId;
     }
 
-    public String getUpcCode() {
-        return upcCode;
+    public String getVendorId() {
+        return vendorId;
     }
 
-    public void setUpcCode(String upcCode) {
-        this.upcCode = upcCode;
+    public void setVendorId(String vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getAltNo() {
@@ -78,12 +50,28 @@ public class AddProductDto {
         this.altNo = altNo;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getCostPrice() {
         return costPrice;
     }
 
     public void setCostPrice(String costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public String getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(String retailPrice) {
+        this.retailPrice = retailPrice;
     }
 
     public String getQuantity() {
@@ -117,6 +105,15 @@ public class AddProductDto {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
 
 
 
