@@ -7,10 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by asp5045 on 5/9/16.
+ * Created by asp5045 on 5/17/16.
  */
 @Component
-public class AddManager {
+public class EditManager {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -18,14 +18,14 @@ public class AddManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public  void addProductToDB(AddProductDto productDto) {
+    public  void editProductToDB(AddProductDto productDto) {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addProductQuery,productDto.getProductNo(),productDto.getCategoryId(),productDto.getVendorId(),productDto.getBrandId(),productDto.getAltNo(),productDto.getDescription()
+            jdbcTemplate.update(sqlQuery.editProductQuery,productDto.getProductNo(),productDto.getCategoryId(),productDto.getVendorId(),productDto.getBrandId(),productDto.getAltNo(),productDto.getDescription()
                     ,productDto.getCostPrice(),productDto.getRetailPrice(),productDto.getQuantity(),productDto.getMinProductQuantity()
                     ,productDto.getReturnRule(),productDto.getImage(),productDto.getCreatedDate());
-            System.out.println("Product Added Successfully");
+            System.out.println("Product Edited Successfully");
         }
         catch (Exception e)
         {
@@ -34,14 +34,14 @@ public class AddManager {
 
     }
 
-    public  void addCustomerToDB(AddCustomerDto customerDto) {
+    public  void editCustomerToDB(AddCustomerDto customerDto) {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addCustomerQuery,customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhoneNo(),customerDto.getEmail(),
+            jdbcTemplate.update(sqlQuery.editCustomerQuery,customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhoneNo(),customerDto.getEmail(),
                     customerDto.getDateOfBirth(),customerDto.getGender(),customerDto.getAptNo(),customerDto.getStreet(),customerDto.getCity(),customerDto.getState(),
                     customerDto.getCountry(),customerDto.getZipcode(),customerDto.getFax(),customerDto.getCustomerCreatedDate());
-            System.out.println("Customer Added Successfully");
+            System.out.println("Customer Edited Successfully");
         }
         catch (Exception e)
         {
@@ -49,12 +49,12 @@ public class AddManager {
         }
 
     }
-    public void addVendorToDB(AddVendorDto vendorDto) {
+    public void editVendorToDB(AddVendorDto vendorDto) {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addVendorQuery,vendorDto.getVendorName(),vendorDto.getDescription());
-            System.out.println("Vendor Added Successfully");
+            jdbcTemplate.update(sqlQuery.editVendorQuery,vendorDto.getVendorName(),vendorDto.getDescription());
+            System.out.println("Vendor Edited Successfully");
 
         }
         catch (Exception e)
@@ -64,11 +64,11 @@ public class AddManager {
     }
 
 
-    public void addCategoryToDB(AddCategoryDto categoryDto) {
+    public void editCategoryToDB(AddCategoryDto categoryDto) {
         try
         {
-            jdbcTemplate.update(sqlQuery.addCategoryQuery,categoryDto.getCategoryName(),categoryDto.getDescription());
-            System.out.println("Category Added Successfully");
+            jdbcTemplate.update(sqlQuery.editCategoryQueryy,categoryDto.getCategoryName(),categoryDto.getDescription());
+            System.out.println("Category Edited Successfully");
         }
         catch (Exception e)
         {
@@ -76,11 +76,12 @@ public class AddManager {
         }
     }
 
-    public void addBrandToDB(AddBrandDto addBrandDto) {
+    public void editBrandToDB(AddBrandDto addBrandDto) {
+
         try
         {
-            jdbcTemplate.update(sqlQuery.addBrandQuery,addBrandDto.getBrandName(),addBrandDto.getBrandDescription());
-            System.out.println("Brand Added Successfully");
+            jdbcTemplate.update(sqlQuery.editBrandQuery,addBrandDto.getBrandName(),addBrandDto.getBrandDescription());
+            System.out.println("Brand Edited Successfully");
         }
         catch (Exception e)
         {

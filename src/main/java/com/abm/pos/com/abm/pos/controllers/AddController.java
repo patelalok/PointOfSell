@@ -1,10 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.AddManager;
-import com.abm.pos.com.abm.pos.dto.AddCategoryDto;
-import com.abm.pos.com.abm.pos.dto.AddCustomerDto;
-import com.abm.pos.com.abm.pos.dto.AddProductDto;
-import com.abm.pos.com.abm.pos.dto.AddVendorDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,7 +43,7 @@ public class AddController {
     }
 
     @RequestMapping(value = "/addVendor",method = RequestMethod.POST, consumes = "application/json")
-    public void addCustomer(@RequestBody AddVendorDto vendorDto)
+    public void addVendor(@RequestBody AddVendorDto vendorDto)
     {
         try
         {
@@ -60,11 +57,24 @@ public class AddController {
 
 
     @RequestMapping(value = "/addCategory",method = RequestMethod.POST, consumes = "application/json")
-    public void addCustomer(@RequestBody AddCategoryDto categoryDto)
+    public void addCategory(@RequestBody AddCategoryDto categoryDto)
     {
         try
         {
             addManager.addCategoryToDB(categoryDto);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    @RequestMapping(value = "/addBrand",method = RequestMethod.POST, consumes = "application/json")
+    public void addBrand(@RequestBody AddBrandDto addBrandDto)
+    {
+        try
+        {
+            addManager.addBrandToDB(addBrandDto);
         }
         catch (Exception e)
         {

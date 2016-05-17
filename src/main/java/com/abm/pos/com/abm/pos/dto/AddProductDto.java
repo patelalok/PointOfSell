@@ -8,6 +8,7 @@ public class AddProductDto {
     private String productNo;
     private String categoryId;
     private String vendorId;
+    private String brandId;
     private String altNo;
     private String description;
     private String costPrice;
@@ -44,6 +45,14 @@ public class AddProductDto {
 
     public String getAltNo() {
         return altNo;
+    }
+
+    public String getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
     }
 
     public void setAltNo(String altNo) {
