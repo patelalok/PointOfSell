@@ -1,10 +1,19 @@
-<div class="container">
+<div class="container" style="padding-top:59px;">
 	<div class="row">
-	<button ng-click="addRow()">Add Row</button>
+	<div class="searchItems col-md-6">
+		<div class="searchBox">
+			<input type="text" class="form-control" placeholder="Start typing or scanning" ng-model="searchValue" style="width:100%;height:52px;">
+		</div>
+		<div class="buttons" style="text-align:right;padding-top:10px;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Create Customer</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add Item</button>
+		</div>
+	</div>
+	<div class="col-md-6" style="background:#FFFFFF;padding:10px;">
 		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
-				data-page-size="pageSize" class="full-width">
+				 class="full-width" style="height:300px;overflow:auto;">
 				<columns>
-					<column name="Item No" key="intemNo" datatype="string"></column>
+					<column name="ItemNo" key="itemNo" datatype="string"></column>
 					<column name="Item" key="item" datatype="string"></column>
 					<column name="Quantity" key=quantity datatype="string"></column>
 					<column name="Retail" key=retail datatype="string"></column>
@@ -13,7 +22,28 @@
 					<column name="Total" key=total datatype="string"></column>
 				</columns>		
 			</div>
-	
+			
+			<div class="row totalColumn">
+				<div class="col-md-6">
+					<div >Quantity</div>
+					<div class="padding-top-10">Subtotal</div>
+					<div class="padding-top-10"><button class="btn btn-primary margin-top-1 wrap-text">Discount</button></div>
+					<div class="padding-top-10"><button class="btn btn-primary margin-top-1 wrap-text">Tax</button></div>
+					<div class="padding-top-10">Total</div>
+				</div>
+				<div class="col-md-6">
+					<div>6</div>
+					<div class="padding-top-10">20.89</div>
+					<div class="padding-top-10">1%</div>
+					<div class="padding-top-10">3.89</div>
+					<div class="padding-top-10">21.89</div>
+				</div>
+			</div>
+			<div class="row paymentBtns padding-top-10" style="text-align:center;">
+				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="openCashPopup()">Payment</button>
+				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Void Transaction</button>
+			</div>
+		</div>	
 	</div>
 	
 

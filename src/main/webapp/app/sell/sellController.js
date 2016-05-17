@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 
-	angular.module('sampleApp').controller('sellController', Body);
+	angular.module('sampleApp').controller('sellController', sellController);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable'];
+	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable) {
+	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -45,6 +45,16 @@
 				"tax":10.98,
 				"total":20.00});
 		};
+		$scope.openCashPopup = function()
+		{
+			var _tmPath = 'app/sell/paymentPopup.html';
+			var _ctrlPath = 'paymentPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, callbackPayment);
+		};
+		function callbackPayment()
+		{
+			
+		}
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;

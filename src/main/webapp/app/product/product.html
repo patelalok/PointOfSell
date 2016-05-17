@@ -1,6 +1,6 @@
 <div>
 	<div class="row">
-		<section class="panel col-md-4 col-xs-6 leftProductInfo">
+		<section class="col-md-6 col-xs-6 leftProductInfo">
 			<div class="panel-body inline-vertical">
 				<div>
 					<h2 class="page-header" style="font-size:16px;">Product Information</h2>
@@ -19,22 +19,22 @@
 						<label for="description" class="display-cell">Desc:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="description" id="description"/>
 					</div>
-					<div class="form-group display-row">
+					<!-- <div class="form-group display-row">
 						<label for="detDescription" class="display-cell">Detailed Description:</label>
 						<textarea  class="form-control display-cell" data-ng-model="detDescription" id="detDescription"></textarea>
-					</div>
-					<div class="form-group display-row">
+					</div> -->
+					<!-- <div class="form-group display-row">
 						<label for="code" class="display-cell">Code:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="code" id="code"/>
-					</div>
+					</div> -->
 					<div class="form-group display-row">
 						<label for="depart" class="display-cell">Depart:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="depart" id="depart"/>
 					</div>
-					<div class="form-group display-row">
+					<!-- <div class="form-group display-row">
 						<label for="upc" class="display-cell">UPC:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="upc" id="upc"/>
-					</div>
+					</div> -->
 					<div class="form-group display-row">
 						<label for="altNo" class="display-cell">Alt No:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo"/>
@@ -50,11 +50,18 @@
 						<label for="vendorNo" class="inline-vertical">This is a non-inventory item</label>
 						</div>
 					</div>
-					
+					<div class="form-group display-row">
+							<label for="cost" class="display-cell">Cost:</label>
+							<input  type="text" class="form-control display-cell" data-ng-model="cost" id="cost"/>
+						</div>
+						<div class="form-group display-row">
+							<label for="Retail" class="display-cell">Retail:</label>
+							<input  type="text" class="form-control display-cell" data-ng-model="Retail" id="Retail"/>
+						</div>
 				</div>
 			</div>
 		</section>
-		<section class="panel col-md-4 col-xs-6 rightProductInfo">
+<!-- 		<section class="panel col-md-4 col-xs-6 rightProductInfo">
 			<div class="panel-body">
 				<div class="content display-table">
 					<div class="form-group display-row">
@@ -67,8 +74,8 @@
 						</div>
 				</div>
 		</div>
-		</section>
-		<section class="panel col-md-4 col-xs-6 rightProductInfo">
+		</section> -->
+		<section class="col-md-6 col-xs-6 rightProductInfo">
 			<div class="panel-body">
 				<div class="headerPage">
 					<h2 class="page-header" style="font-size:16px;">Stock in the Store</h2>
@@ -101,7 +108,7 @@
 						</div>
 				</div>
 			</div>
-			<div class="panel-body">
+			<!-- <div class="panel-body">
 				<div class="headerPage">
 					<h2 class="page-header" style="font-size:16px;">On Order</h2>
 			
@@ -116,7 +123,7 @@
 							<input  type="text" class="form-control display-cell" data-ng-model="special" id="special"/>
 						</div>
 				</div>
-			</div>
+			</div> -->
 			
 		</section>
 	</div>

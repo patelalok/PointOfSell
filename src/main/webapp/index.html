@@ -27,18 +27,22 @@
        
        
        <script type="text/javascript" src="app/app.js"></script>
+       <script type="text/javascript" src="app/common/utils.js"></script>
        <script type="text/javascript" src="app/common/device.utility.js"></script>
+       <script type="text/javascript" src="app/common/DialogFactory.js"></script>
        <script type="text/javascript" src="app/common/startFrom.filter.js"></script>
        <script type="text/javascript" src="app/common/GlobalVariable.js"></script>
        <script type="text/javascript" src="app/common/responsiveTable.directive.js"></script>
+       <script type="text/javascript" src="app/common/dataService.js"></script>
        <script type="text/javascript" src="app/mainPage/body.controller.js"></script>
        <script type="text/javascript" src="app/dummy/dummyController.js"></script>
        <script type="text/javascript" src="app/product/productController.js"></script>
+       <script type="text/javascript" src="app/sell/paymentController.js"></script>
        <script type="text/javascript" src="app/sell/sellController.js"></script>
        
        
 </head>
-<body ng-controller="BodyController as bodyCtrl">
+<body ng-controller="BodyController as bodyCtrl" style="background-color:#fafafa;" class="bodyClass">
 
 	<section class="fixed-header-wrap">
 		<header class="mainHeader" ng-show="!GlobalVariable.isLoginPage">
@@ -73,13 +77,13 @@
 								<div class="homeImage list-group-item">
 									<img alt="" src="assets/images/home.JPG" />
 								</div>
-								<div class="sellImage list-group-item" ng-click="navigate()">
+								<div class="sellImage list-group-item" ng-click="navigate('sell')">
 									<img alt="" src="assets/images/sell.JPG" />
 								</div>
 								<div class="salesledgerImage list-group-item">
 									<img alt="" src="assets/images/salesledger.JPG" />
 								</div>
-								<div class="salesledgerImage list-group-item">
+								<div class="salesledgerImage list-group-item" ng-click="navigate('product')">
 									<img alt="" src="assets/images/product.JPG" />
 								</div>
 							</div>

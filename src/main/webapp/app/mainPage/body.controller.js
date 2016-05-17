@@ -17,9 +17,9 @@
 			$rootScope.displaySideBar = !$rootScope.displaySideBar;
 		};
 		
-		$scope.navigate = function()
+		$scope.navigate = function(page)
 		{
-			$state.go('sell');
+			$state.go(page);
 		};
 	}
 })();
