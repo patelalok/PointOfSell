@@ -5,6 +5,8 @@ import com.abm.pos.com.abm.pos.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
+
 /**
  * Created by asp5045 on 5/9/16.
  */
@@ -22,6 +24,7 @@ public class AddController {
         try
         {
             addManager.addProductToDB(productDto);
+
         }
         catch (Exception e)
         {

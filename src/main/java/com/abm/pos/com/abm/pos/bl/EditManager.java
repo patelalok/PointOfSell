@@ -22,9 +22,20 @@ public class EditManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.editProductQuery,productDto.getProductNo(),productDto.getCategoryId(),productDto.getVendorId(),productDto.getBrandId(),productDto.getAltNo(),productDto.getDescription()
-                    ,productDto.getCostPrice(),productDto.getRetailPrice(),productDto.getQuantity(),productDto.getMinProductQuantity()
-                    ,productDto.getReturnRule(),productDto.getImage(),productDto.getCreatedDate());
+            jdbcTemplate.update(sqlQuery.editProductQuery,
+                    productDto.getProductNo(),
+                    productDto.getCategoryId(),
+                    productDto.getVendorId(),
+                    productDto.getBrandId(),
+                    productDto.getAltNo(),
+                    productDto.getDescription(),
+                    productDto.getCostPrice(),
+                    productDto.getRetailPrice(),
+                    productDto.getQuantity(),
+                    productDto.getMinProductQuantity(),
+                    productDto.getReturnRule(),
+                    productDto.getImage(),
+                    productDto.getCreatedDate());
             System.out.println("Product Edited Successfully");
         }
         catch (Exception e)
@@ -38,9 +49,21 @@ public class EditManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.editCustomerQuery,customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhoneNo(),customerDto.getEmail(),
-                    customerDto.getDateOfBirth(),customerDto.getGender(),customerDto.getAptNo(),customerDto.getStreet(),customerDto.getCity(),customerDto.getState(),
-                    customerDto.getCountry(),customerDto.getZipcode(),customerDto.getFax(),customerDto.getCustomerCreatedDate());
+            jdbcTemplate.update(sqlQuery.editCustomerQuery,
+                    customerDto.getFirstName(),
+                    customerDto.getLastName(),
+                    customerDto.getPhoneNo(),
+                    customerDto.getEmail(),
+                    customerDto.getDateOfBirth(),
+                    customerDto.getGender(),
+                    customerDto.getAptNo(),
+                    customerDto.getStreet(),
+                    customerDto.getCity(),
+                    customerDto.getState(),
+                    customerDto.getCountry(),
+                    customerDto.getZipcode(),
+                    customerDto.getFax(),
+                    customerDto.getCustomerCreatedDate());
             System.out.println("Customer Edited Successfully");
         }
         catch (Exception e)
@@ -53,7 +76,9 @@ public class EditManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.editVendorQuery,vendorDto.getVendorName(),vendorDto.getDescription());
+            jdbcTemplate.update(sqlQuery.editVendorQuery,
+                    vendorDto.getVendorName(),
+                    vendorDto.getDescription());
             System.out.println("Vendor Edited Successfully");
 
         }
@@ -67,7 +92,9 @@ public class EditManager {
     public void editCategoryToDB(AddCategoryDto categoryDto) {
         try
         {
-            jdbcTemplate.update(sqlQuery.editCategoryQueryy,categoryDto.getCategoryName(),categoryDto.getDescription());
+            jdbcTemplate.update(sqlQuery.editCategoryQueryy,
+                    categoryDto.getCategoryName(),
+                    categoryDto.getDescription());
             System.out.println("Category Edited Successfully");
         }
         catch (Exception e)
@@ -80,7 +107,9 @@ public class EditManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.editBrandQuery,addBrandDto.getBrandName(),addBrandDto.getBrandDescription());
+            jdbcTemplate.update(sqlQuery.editBrandQuery,
+                    addBrandDto.getBrandName(),
+                    addBrandDto.getBrandDescription());
             System.out.println("Brand Edited Successfully");
         }
         catch (Exception e)

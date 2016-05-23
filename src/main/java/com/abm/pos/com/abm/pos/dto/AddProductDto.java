@@ -6,9 +6,9 @@ package com.abm.pos.com.abm.pos.dto;
 public class AddProductDto {
 
     private String productNo;
-    private String categoryId;
-    private String vendorId;
-    private String brandId;
+    private int categoryId;
+    private int vendorId;
+    private int brandId;
     private String altNo;
     private String description;
     private String costPrice;
@@ -19,6 +19,14 @@ public class AddProductDto {
     private String image;
     private String createdDate;
 
+    public String getReturnRule() {
+        return returnRule;
+    }
+
+    public void setReturnRule(String returnRule) {
+        this.returnRule = returnRule;
+    }
+
     public String getProductNo() {
         return productNo;
     }
@@ -27,32 +35,32 @@ public class AddProductDto {
         this.productNo = productNo;
     }
 
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
-    public String getVendorId() {
+    public int getVendorId() {
         return vendorId;
     }
 
-    public void setVendorId(String vendorId) {
+    public void setVendorId(int vendorId) {
         this.vendorId = vendorId;
+    }
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
     }
 
     public String getAltNo() {
         return altNo;
-    }
-
-    public String getBrandId() {
-        return brandId;
-    }
-
-    public void setBrandId(String brandId) {
-        this.brandId = brandId;
     }
 
     public void setAltNo(String altNo) {
@@ -99,14 +107,6 @@ public class AddProductDto {
         this.minProductQuantity = minProductQuantity;
     }
 
-    public String getReturnRule() {
-        return returnRule;
-    }
-
-    public void setReturnRule(String returnRule) {
-        this.returnRule = returnRule;
-    }
-
     public String getImage() {
         return image;
     }
@@ -122,6 +122,7 @@ public class AddProductDto {
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
+
 
 
 

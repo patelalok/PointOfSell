@@ -12,6 +12,7 @@ public class DeleteManager {
     }
 
     public void deleteCustomerToDB(AddCustomerDto customerDto) {
+
     }
 
     public void deleteVendorToDB(AddVendorDto vendorDto) {

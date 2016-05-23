@@ -22,9 +22,20 @@ public class AddManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addProductQuery,productDto.getProductNo(),productDto.getCategoryId(),productDto.getVendorId(),productDto.getBrandId(),productDto.getAltNo(),productDto.getDescription()
-                    ,productDto.getCostPrice(),productDto.getRetailPrice(),productDto.getQuantity(),productDto.getMinProductQuantity()
-                    ,productDto.getReturnRule(),productDto.getImage(),productDto.getCreatedDate());
+            jdbcTemplate.update(sqlQuery.addProductQuery,
+                    productDto.getProductNo(),
+                    productDto.getCategoryId(),
+                    productDto.getVendorId(),
+                    productDto.getBrandId(),
+                    productDto.getAltNo(),
+                    productDto.getDescription(),
+                    productDto.getCostPrice(),
+                    productDto.getRetailPrice(),
+                    productDto.getQuantity(),
+                    productDto.getMinProductQuantity(),
+                    productDto.getReturnRule(),
+                    productDto.getImage(),
+                    productDto.getCreatedDate());
             System.out.println("Product Added Successfully");
         }
         catch (Exception e)
@@ -38,9 +49,21 @@ public class AddManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addCustomerQuery,customerDto.getFirstName(),customerDto.getLastName(),customerDto.getPhoneNo(),customerDto.getEmail(),
-                    customerDto.getDateOfBirth(),customerDto.getGender(),customerDto.getAptNo(),customerDto.getStreet(),customerDto.getCity(),customerDto.getState(),
-                    customerDto.getCountry(),customerDto.getZipcode(),customerDto.getFax(),customerDto.getCustomerCreatedDate());
+            jdbcTemplate.update(sqlQuery.addCustomerQuery,
+                    customerDto.getFirstName(),
+                    customerDto.getLastName(),
+                    customerDto.getPhoneNo(),
+                    customerDto.getEmail(),
+                    customerDto.getDateOfBirth(),
+                    customerDto.getGender(),
+                    customerDto.getAptNo(),
+                    customerDto.getStreet(),
+                    customerDto.getCity(),
+                    customerDto.getState(),
+                    customerDto.getCountry(),
+                    customerDto.getZipcode(),
+                    customerDto.getFax(),
+                    customerDto.getCustomerCreatedDate());
             System.out.println("Customer Added Successfully");
         }
         catch (Exception e)
@@ -53,7 +76,9 @@ public class AddManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addVendorQuery,vendorDto.getVendorName(),vendorDto.getDescription());
+            jdbcTemplate.update(sqlQuery.addVendorQuery,
+                    vendorDto.getVendorName(),
+                    vendorDto.getDescription());
             System.out.println("Vendor Added Successfully");
 
         }
@@ -67,7 +92,9 @@ public class AddManager {
     public void addCategoryToDB(AddCategoryDto categoryDto) {
         try
         {
-            jdbcTemplate.update(sqlQuery.addCategoryQuery,categoryDto.getCategoryName(),categoryDto.getDescription());
+            jdbcTemplate.update(sqlQuery.addCategoryQuery,
+                    categoryDto.getCategoryName(),
+                    categoryDto.getDescription());
             System.out.println("Category Added Successfully");
         }
         catch (Exception e)
@@ -79,7 +106,9 @@ public class AddManager {
     public void addBrandToDB(AddBrandDto addBrandDto) {
         try
         {
-            jdbcTemplate.update(sqlQuery.addBrandQuery,addBrandDto.getBrandName(),addBrandDto.getBrandDescription());
+            jdbcTemplate.update(sqlQuery.addBrandQuery,
+                    addBrandDto.getBrandName(),
+                    addBrandDto.getBrandDescription());
             System.out.println("Brand Added Successfully");
         }
         catch (Exception e)
