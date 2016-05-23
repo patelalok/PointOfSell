@@ -576,7 +576,7 @@ body.modal-open {
 
 .bodyClass .modal-dialog
 {
-	    width: 431px;
+	    /* width: 431px; */
     margin: 9% auto;
 }
 .alignCenter
@@ -586,4 +586,97 @@ body.modal-open {
 .displayBlock
 {
 	display:block;
+}
+
+.tableMainProp
+{
+	border-spacing: 10px;
+    border-collapse: separate;
+    margin-left:auto;
+    margin-right:auto;
+}
+.align-left
+{
+	text-align:left;
+}
+.padding-left-40
+{
+	padding-left:40%;
+}
+.login-background {
+	background-image: url("../images/loginbackground.jpg");
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+.main-background
+{
+	background-color:#fafafa;
+}
+
+/*****login******/
+
+.login-content
+{
+	position: relative;
+    padding: 25px 0 100px;
+}
+.container
+{
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;	
+}
+.inner-container
+{
+	max-width: 600px;
+    position: relative;
+    text-align: left;
+    background-color: white;
+    margin: 0 auto;
+    padding: 30px;
+    top: 50px;
+}
+@media (min-width: 1200px)
+{
+	.logged-out_container {
+	    margin: 20px auto 0;
+	}
+}
+
+.signIn-btn
+{
+	width: 100%;
+    font-size: 23px;
+    padding-right: 50px;
+    padding-left: 50px;
+}	
+.padding-bottom-5
+{
+	padding-bottom:5px;
+}
+
+.wrap-text {
+	white-space: normal !important;
+}
+.padding-top-15
+{
+	padding-top:15px;
+}
+.font-weight-label
+{
+	font-weight:bold;
+}
+hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+  border-style: solid none;
+  border-width: 1px 0;
+  margin: 18px 0;
 }

@@ -1,0 +1,136 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-ng-click="closePopup()">&times;</button>
+		<h4 class="modal-title" style="font-size:24px;">Create new customer</h4>
+	</div>
+	<div class="modal-body" style="height:340px;overflow-y:scroll;">
+			<div class="row">
+				<div class="col-md-6">
+                        <label for="firstName" class="padding-bottom-5 font-weight-label">First Name</label>
+                        <input type="text" class="form-control" name="firstName" id="firstName" data-ng-model="firstName"
+                        autocomplete="off" autofocus placeholder = "Enter postcode" style="width:100%;height:50px;"/>
+				</div>
+				<div class="col-md-6">
+                        <label for="lastName" class="padding-bottom-5 font-weight-label">Last Name</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName" data-ng-model="lastName"
+                        autocomplete="off"  placeholder = "Enter state" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="customerCode" class="padding-bottom-5 font-weight-label">Customer Code</label>
+                        <input type="text" class="form-control" name="customerCode" id="customerCode" data-ng-model="customerCode"
+                        autocomplete="off" autofocus placeholder = "Enter customer code" style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="dob" class="padding-bottom-5 font-weight-label">Date of birth</label>
+                        <input type="text" class="form-control" name="dob" id="dob" data-ng-model="dob"
+                        autocomplete="off"  placeholder = "YYYY-MM-DD" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="postCode" class="padding-bottom-5 font-weight-label">Postcode</label>
+                        <input type="text" class="form-control" name="postCode" id="postCode" data-ng-model="postCode"
+                        autocomplete="off" autofocus placeholder = "Enter postcode" style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="state" class="padding-bottom-5 font-weight-label">State</label>
+                        <input type="text" class="form-control" name="state" id="state" data-ng-model="state"
+                        autocomplete="off" autofocus placeholder = "Enter state" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="gender" class="padding-bottom-5 font-weight-label">Gender</label>
+                        <div class="genderRadio padding-top-10">
+						      <label class="radio-inline">
+						      <input type="radio" name="optradio">Male
+						    </label>
+						    <label class="radio-inline">
+						      <input type="radio" name="optradio">Female
+						    </label>
+						  </div>  
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-12">
+                        <label for="postCode" class="padding-bottom-5 font-weight-label">Contact Information</label>
+                        <hr />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="phoneNumber" class="padding-bottom-5 font-weight-label">Phone Number</label>
+                        <input type="tel" class="form-control" name="phoneNumber" id="phoneNumber" data-ng-model="phoneNumber"
+                        autocomplete="off" autofocus placeholder = "Enter phoneNumber" style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="email" class="padding-bottom-5 font-weight-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" data-ng-model="email"
+                        autocomplete="off" autofocus placeholder = "Enter email" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-12">
+                        <label for="Website" class="padding-bottom-5 font-weight-label">Website</label>
+                        <input type="tel" class="form-control" name="Website" id="Website" data-ng-model="Website"
+                        autocomplete="off" autofocus placeholder = "Enter Website" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-12">
+                        <label for="postCode" class="padding-bottom-5 font-weight-label">Postal Address</label>
+                        <hr />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="Street" class="padding-bottom-5 font-weight-label">Street</label>
+                        <input type="text" class="form-control" name="Street" id="Street" data-ng-model="Street"
+                        autocomplete="off" autofocus placeholder = "Enter Street" style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="Street" class="padding-bottom-5 font-weight-label">Street</label>
+                        <input type="text" class="form-control" name="Street" id="Street" data-ng-model="email"
+                        autocomplete="off" autofocus placeholder = "Enter Street" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="Suburb" class="padding-bottom-5 font-weight-label">Suburb</label>
+                        <input type="text" class="form-control" name="Suburb" id="Suburb" data-ng-model="Suburb"
+                        autocomplete="off" autofocus placeholder = "Enter Suburb" style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="City" class="padding-bottom-5 font-weight-label">City</label>
+                        <input type="text" class="form-control" name="City" id="City" data-ng-model="City"
+                        autocomplete="off" autofocus placeholder = "Enter City" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="postalCode" class="padding-bottom-5 font-weight-label">Postal Code</label>
+                        <input type="text" class="form-control" name="postalCode" id="postalCode" data-ng-model="postalCode"
+                        autocomplete="off" autofocus placeholder = "Enter postalCode" style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="State" class="padding-bottom-5 font-weight-label">State</label>
+                        <input type="text" class="form-control" name="State" id="State" data-ng-model="State"
+                        autocomplete="off" autofocus placeholder = "Enter State" style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-12">
+                        <label for="Country" class="padding-bottom-5 font-weight-label">Country</label>
+                        <input type="text" class="form-control" name="Country" id="Country" data-ng-model="Country"
+                        autocomplete="off" autofocus placeholder = "Enter Country" style="width:100%;height:50px;" />
+				</div>
+			</div>
+	</div>
+	<div class="modal-footer">
+	 <div class="bottomButtons" style="text-align:right;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Create new customer</button>
+		</div>	
+	</div>
+</div>
