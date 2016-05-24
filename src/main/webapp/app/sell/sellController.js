@@ -43,12 +43,19 @@
 				"retail":"test",
 				"discount":20,
 				"tax":10.98,
-				"total":20.00});
+				"total":20.00,
+				"image":"test"});
 		};
 		$scope.openCashPopup = function()
 		{
 			var _tmPath = 'app/sell/paymentPopup.html';
 			var _ctrlPath = 'paymentPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, callbackPayment);
+		};
+		$scope.createCustomer = function()
+		{
+			var _tmPath = 'app/AddCustomer/addcustomer.html';
+			var _ctrlPath = 'addCustomerController';
 			DialogFactory.show(_tmPath, _ctrlPath, callbackPayment);
 		};
 		function callbackPayment()

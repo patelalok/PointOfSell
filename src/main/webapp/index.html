@@ -35,14 +35,15 @@
        <script type="text/javascript" src="app/common/responsiveTable.directive.js"></script>
        <script type="text/javascript" src="app/common/dataService.js"></script>
        <script type="text/javascript" src="app/mainPage/body.controller.js"></script>
-       <script type="text/javascript" src="app/dummy/dummyController.js"></script>
+       <script type="text/javascript" src="app/login/loginController.js"></script>
        <script type="text/javascript" src="app/product/productController.js"></script>
        <script type="text/javascript" src="app/sell/paymentController.js"></script>
+       <script type="text/javascript" src="app/AddCustomer/addcustomer.controller.js"></script>
        <script type="text/javascript" src="app/sell/sellController.js"></script>
        
        
 </head>
-<body ng-controller="BodyController as bodyCtrl" style="background-color:#fafafa;" class="bodyClass">
+<body ng-controller="BodyController as bodyCtrl" class="bodyClass" ng-class="{'login-background':GlobalVariable.isLoginPage,'main-background':!GlobalVariable.isLoginPage}">
 
 	<section class="fixed-header-wrap">
 		<header class="mainHeader" ng-show="!GlobalVariable.isLoginPage">

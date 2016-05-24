@@ -24,5 +24,12 @@ public class LineItemHandlerController {
 
     }
 
+    @RequestMapping(value = "/getProductDetails",method = RequestMethod.GET, produces = "application/json")
+    public void getCustomerDetails(String phoneNo)
+    {
+        //lineItemHandlerManager.getCustomerDetails(phoneNo);
+    }
+
+
 }
 

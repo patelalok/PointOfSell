@@ -14,7 +14,7 @@ public class SQLQueries {
 
            "INSERT INTO PRODUCT" +
            " (PRODUCT_NO,CATEGORY_ID,VENDOR_ID,BRAND_ID,ATL_NO,DESCRIPTION,COST_PRICE,RETAIL_PRICE,QUANTITY,MIN_PRODUCT,RETURN_RULE,IMAGE,CREATED_DATE)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
@@ -61,36 +61,36 @@ public class SQLQueries {
     public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, PHONE_NO = ?, EMAIL = ?, DATEOFBIRTH = ?, GENDER = ?, APT_NO = ?," +
             " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ?, CUSTOMER_CREATE_DATE = ? WHERE ";
 
-    public String editVendorQuery = "";
+    public String editVendorQuery = "UPDATE VENDOR SET VENDOR_NAME = ?, DESCRIPTION = ? WHERE VENDOR_ID = ?";
 
-    public String editCategoryQueryy = "";
+    public String editCategoryQuery = "UPDATE CATEGORY SET CATEGORY_NAME = ?, DESCRIPTION = ? WHERE CATEGORY_ID = ?";
 
-    public String editBrandQuery = "";
+    public String editBrandQuery = "UPDATE BRAND SET BRAND_NAME = ?, DESCRIPTION = ? WHERE BRAND_ID = ?";
 
 
     //SQL QUERY TO GET  DETAILS FROM DATABASE
 
-    public String getProductDetails = "SELECT * FROM PRODUCT WHERE ";
+    public String getProductDetails = "SELECT * FROM PRODUCT WHERE  ";
 
-    public String getCustomerDetails = "SELECT * FROM CUSTOMER WHERE ";
+    public String getCustomerDetails = "SELECT * FROM CUSTOMER WHERE PHONE_NO = ?";
 
-    public String getVendorDetails = "SELECT * FROM VENDOR WHERE ";
+    public String getVendorDetails = "SELECT * FROM VENDOR WHERE VENDOR_ID = ?";
 
-    public String getCategoryDetails = "SELECT * FROM CATEGORY WHERE";
+    public String getCategoryDetails = "SELECT * FROM CATEGORY WHERE CATEGORY_ID = ?";
 
-    public String getBrandDetails = "SELECT * FROM CATEGORY WHERE";
+    public String getBrandDetails = "SELECT * FROM BRAND WHERE BRAND_ID = ?";
 
     //SQL QUERY TO DELETE FROM DATABASE
 
     public String deleteProduct = "DELETE FROM PRODUCT WHERE ";
 
-    public String deleteCustomer = "DELETE FROM PRODUCT WHERE ";
+    public String deleteCustomer = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
 
-    public String deleteVendor = "DELETE FROM PRODUCT WHERE ";
+    public String deleteVendor = "DELETE FROM VENDOR WHERE VENDOR_ID = ?";
 
-    public String deleteCategory = "DELETE FROM PRODUCT WHERE ";
+    public String deleteCategory = "DELETE FROM CATEGORY WHERE CATEGORY_ID = ?";
 
-    public String deleteBrand = "DELETE FROM PRODUCT WHERE ";
+    public String deleteBrand = "DELETE FROM BRAND WHERE BRAND_ID = ?";
 
 
 }

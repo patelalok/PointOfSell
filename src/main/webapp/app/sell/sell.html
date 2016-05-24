@@ -1,46 +1,69 @@
 <div class="container" style="padding-top:59px;">
 	<div class="row">
-	<div class="searchItems col-md-6">
+	<div class="searchItems col-md-12" style="margin-bottom:10px;">
+	 	<div class="searchProducts col-md-6">	
 		<div class="searchBox">
 			<input type="text" class="form-control" placeholder="Start typing or scanning" ng-model="searchValue" style="width:100%;height:52px;">
 		</div>
 		<div class="buttons" style="text-align:right;padding-top:10px;">
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Create Customer</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Search Item</button>
 			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add Item</button>
 		</div>
+		</div>
+		<div class="searchCustomers col-md-6">	
+		<div class="searchBox">
+			<input type="text" class="form-control" placeholder="Start typing or scanning" ng-model="searchValue" style="width:100%;height:52px;">
+		</div>
+		<div class="buttons" style="text-align:right;padding-top:10px;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Search Customer</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createCustomer()">Create Customer</button>
+		</div>
+		</div>
 	</div>
-	<div class="col-md-6" style="background:#FFFFFF;padding:10px;">
+	<div class="col-md-12" style="background:#FFFFFF;padding:10px;padding-top:20px;">
 		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
 				 class="full-width" style="height:300px;overflow:auto;">
 				<columns>
 					<column name="ItemNo" key="itemNo" datatype="string"></column>
 					<column name="Item" key="item" datatype="string"></column>
-					<column name="Quantity" key=quantity datatype="string"></column>
-					<column name="Retail" key=retail datatype="string"></column>
-					<column name="Discount" key=discount datatype="string"></column>
-					<column name="Tax" key=tax datatype="string"></column>
-					<column name="Total" key=total datatype="string"></column>
+					<column name="Quantity" key="quantity" datatype="string"></column>
+					<column name="Retail" key="retail" datatype="string"></column>
+					<column name="Discount" key="discount" datatype="string"></column>
+					<column name="Tax" key="tax" datatype="string"></column>
+					<column name="Total" key="total" datatype="string"></column>
+					<column name="Actions" key="image" sortable="false" word-wrap="false">
+					<cell>
+					<span>{{row.total}}
+						<img src="./assets/images/bell.JPG" alt="test" />
+					</span>
+					</cell>
+					</column>
 				</columns>		
 			</div>
-			
-			<div class="row totalColumn">
-				<div class="col-md-6">
-					<div >Quantity</div>
-					<div class="padding-top-10">Subtotal</div>
-					<div class="padding-top-10"><button class="btn btn-primary margin-top-1 wrap-text">Discount</button></div>
-					<div class="padding-top-10"><button class="btn btn-primary margin-top-1 wrap-text">Tax</button></div>
-					<div class="padding-top-10">Total</div>
+			<div class="row totalColumn display-table tableMainProp" align="center">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left">Quantity</div>
+					<div class=" inline-vertical display-cell align-left padding-left-40">6</div>
 				</div>
-				<div class="col-md-6">
-					<div>6</div>
-					<div class="padding-top-10">20.89</div>
-					<div class="padding-top-10">1%</div>
-					<div class="padding-top-10">3.89</div>
-					<div class="padding-top-10">21.89</div>
+				<div class="display-row">	
+					<div class="padding-top-10 inline-vertical display-cell align-left">Subtotal</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">20.89</div>
+				</div>
+				<div class="display-row">		
+					<div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" class="form-control" placeholder="1%" /></div>
+				</div>	
+				<div class="display-row">	
+					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" class="form-control" placeholder="3.89" /></div>
+				</div>	
+				<div class="display-row">	
+					<div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">21.89</div>
 				</div>
 			</div>
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
-				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="openCashPopup()">Payment</button>
+				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:18px;" ng-click="openCashPopup()">Payment</button>
 				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Void Transaction</button>
 			</div>
 		</div>	

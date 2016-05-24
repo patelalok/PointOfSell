@@ -12,12 +12,23 @@ public class AddProductDto {
     private String altNo;
     private String description;
     private String costPrice;
+    private String markup;
     private String retailPrice;
     private String quantity;
     private String minProductQuantity;
     private String returnRule;
     private String image;
     private String createdDate;
+
+    public String getMarkup() {
+        return markup;
+    }
+
+    public void setMarkup(String markup) {
+        this.markup = markup;
+    }
+
+
 
     public String getReturnRule() {
         return returnRule;

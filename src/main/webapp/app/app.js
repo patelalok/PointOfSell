@@ -2,13 +2,13 @@
   
 app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
 
-	$urlRouterProvider.otherwise('/dummy');
+	$urlRouterProvider.otherwise('/login');
 	
 	$stateProvider
-	  .state('dummy', {
-	    url: '/dummy',
-	    templateUrl: 'app/dummy/dummy.html',
-	    controller: 'dummyController'
+	  .state('login', {
+	    url: '/login',
+	    templateUrl: 'app/login/login.html',
+	    controller: 'loginController'
 	  })
 	  .state('product', {
 	    url: '/product',

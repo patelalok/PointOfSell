@@ -21,14 +21,41 @@ public class CustomerHandlerManager {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    SQLQueries sqlQueries;
+    SQLQueries sqlQuery;
 
+    public  void addCustomerToDB(AddCustomerDto customerDto) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.addCustomerQuery,
+                    customerDto.getFirstName(),
+                    customerDto.getLastName(),
+                    customerDto.getPhoneNo(),
+                    customerDto.getEmail(),
+                    customerDto.getDateOfBirth(),
+                    customerDto.getGender(),
+                    customerDto.getAptNo(),
+                    customerDto.getStreet(),
+                    customerDto.getCity(),
+                    customerDto.getState(),
+                    customerDto.getCountry(),
+                    customerDto.getZipcode(),
+                    customerDto.getFax(),
+                    customerDto.getCustomerCreatedDate());
+            System.out.println("Customer Added Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+    }
 
     public void getCustomerDetailsFromDB(String phoneNo) {
 
         try
         {
-            jdbcTemplate.query(sqlQueries.getCustomerDetails,new CustomerMapper());
+            jdbcTemplate.query(sqlQuery.getCustomerDetails,new CustomerMapper());
         }
         catch (Exception e)
         {
@@ -62,5 +89,37 @@ public class CustomerHandlerManager {
 
             return customer;
         }
+    }
+
+    public  void editCustomerToDB(AddCustomerDto customerDto) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.editCustomerQuery,
+                    customerDto.getFirstName(),
+                    customerDto.getLastName(),
+                    customerDto.getPhoneNo(),
+                    customerDto.getEmail(),
+                    customerDto.getDateOfBirth(),
+                    customerDto.getGender(),
+                    customerDto.getAptNo(),
+                    customerDto.getStreet(),
+                    customerDto.getCity(),
+                    customerDto.getState(),
+                    customerDto.getCountry(),
+                    customerDto.getZipcode(),
+                    customerDto.getFax(),
+                    customerDto.getCustomerCreatedDate());
+            System.out.println("Customer Edited Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+    }
+
+    public void deleteCustomerToDB(AddCustomerDto customerDto) {
+
     }
 }

@@ -4,10 +4,12 @@ import com.abm.pos.com.abm.pos.dto.AddClosingDetailsDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by asp5045 on 5/20/16.
  */
+@Component
 public class AddClosingDetailsManager {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
+import com.abm.pos.com.abm.pos.dto.AddCustomerDto;
 import com.abm.pos.com.abm.pos.dto.AddProductDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,6 @@ public class LineItemHandlerManager {
             System.out.println(e);
         }
     }
-
-
     private static final class AddProductMapper implements RowMapper<AddProductDto>
     {
 
@@ -50,6 +49,7 @@ public class LineItemHandlerManager {
             product.setAltNo(rs.getString("ATL_NO"));
             product.setDescription(rs.getString("DESCRIPTION"));
             product.setCostPrice(rs.getString("COST_PRICE"));
+            product.setMarkup(rs.getString("MARKUP"));
             product.setRetailPrice(rs.getString("RETAIL_PRICE"));
             product.setQuantity(rs.getString("QUANTITY"));
             product.setMinProductQuantity(rs.getString("MIN_PRODUCT"));
@@ -62,4 +62,6 @@ public class LineItemHandlerManager {
         }
     }
 
-}
+
+
+    }
