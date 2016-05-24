@@ -203,6 +203,7 @@
 											column.serverSort = getBooleanAttributeValue(columnElement, 'server-sort', false,
 													false);
 											column.wordWrap = getBooleanAttributeValue(columnElement, 'word-wrap', false, true);
+											column.width = getAttributeValue(columnElement, 'width' , true);
 											watchHidden(scope, column, columnElement);
 
 											column.cell = null;
