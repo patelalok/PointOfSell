@@ -25,7 +25,7 @@
 		},
 		{
 			"itemNo":1,
-			"item":"paint",
+			"item":"brush",
 			"quantity":1,
 			"retail":"test",
 			"discount":20,
@@ -38,7 +38,7 @@
 		$scope.addRow = function()
 		{
 			$scope.testData.push({"itemNo":1,
-				"item":"paint",
+				"item":"check",
 				"quantity":1,
 				"retail":"test",
 				"discount":20,
