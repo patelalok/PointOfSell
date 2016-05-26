@@ -1,0 +1,80 @@
+<div>
+<div class="row pageHeader" style="padding:30px;">
+	<div class="col-md-6 pageHeader">
+		<span style="font-weight:bold;font-size:30px">Products</span>
+	</div>
+	<div class="cold-md-6 productBtn">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="navigateToAddProduct()">ADD PRODUCT</button>
+	</div>
+
+</div>
+<div class="row padding-top-20" style="padding:30px;">
+	<div class="col-md-1" style="width:20%;">
+		<div class="padding-bottom-5"><label>Name/SKU/Handle</label></div>
+		<div>
+			<input  type="text" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;"/>
+		</div>
+	</div>
+	<div class="col-md-1" style="width:20%;">
+		<div class="padding-bottom-5"><label>Product Type</label></div>
+		<div>
+			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
+							<option value="">Select All</option>
+						</select>
+		</div>
+	</div>
+	<div class="col-md-1" style="width:20%;">
+		<div class="padding-bottom-5"><label>Brand</label></div>
+		<div>
+			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
+							<option value="">Select All</option>
+						</select>
+		</div>
+	</div>
+	<div class="col-md-1" style="width:20%;">
+		<div class="padding-bottom-5"><label>Supplier</label></div>
+		<div>
+			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
+							<option value="">Select All</option>
+						</select>
+		</div>
+	</div>
+	<div class="col-md-1" style="width:20%;">
+		<div class="padding-bottom-5"><label>Tags</label></div>
+		<div>
+			<input  type="text" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;"/>
+		</div>
+	</div>
+
+</div>
+<div class="row" style="padding:30px;">
+	<div class="filterBtn" style="float:right;padding-right:15px;">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Apply Filter</button>
+	</div>
+</div>
+<div class="row" style="padding:30px;">
+	<div class="col-md-12">
+		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Product" key="product" datatype="string" width="10%" sortable="true"></column>
+					<column name="Created" key="created" datatype="string" width="10%"></column>
+					<column name="Tags" key="tags" datatype="string" width="10%"></column>
+					<column name="Brand" key="brand" datatype="string" width="10%"></column>
+					<column name="Supplier" key="supplier" datatype="string" width="10%"></column>
+					<column name="Variants" key="variants" datatype="string" width="10%"></column>
+					<column name="Price" key="price" datatype="string" width="10%"></column>
+					<column name="Count" key="count" datatype="string" width="10%"></column>
+					<column name="" key="" datatype="" width="10%">
+						<cell ng-non-bindable>
+							<span>
+								<img src="./assets/images/delete.png" alt="delete" height="20" />
+							</span>
+						</cell>
+					</column>
+				</columns>		
+			</div>
+	</div>
+</div>
+</div>
