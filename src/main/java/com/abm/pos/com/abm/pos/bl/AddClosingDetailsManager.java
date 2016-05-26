@@ -26,16 +26,20 @@ public class AddClosingDetailsManager {
             jdbcTemplate.update(sqlQueries.addClosingDetails,
                     addClosingDetailsDto.getUserId(),
                     addClosingDetailsDto.getOpenDate(),
-                    addClosingDetailsDto.getIntialAmount(),
+                    addClosingDetailsDto.getOpenAmount(),
                     addClosingDetailsDto.getReportCash(),
                     addClosingDetailsDto.getReportCredit(),
+                    addClosingDetailsDto.getReportTotalAmount(),
                     addClosingDetailsDto.getCloseCash(),
                     addClosingDetailsDto.getCloseCredit(),
                     addClosingDetailsDto.getCloseDate(),
+                    addClosingDetailsDto.getCloseTotalAmount(),
                     addClosingDetailsDto.getDifferenceCash(),
                     addClosingDetailsDto.getDifferenceCredit(),
                     addClosingDetailsDto.getTotalDifference(),
-                    addClosingDetailsDto.getTotalAmount());
+                    addClosingDetailsDto.getTotalBusinessAmount());
+
+            System.out.println("Closing Details Added Successfully");
         }
         catch (Exception e)
         {

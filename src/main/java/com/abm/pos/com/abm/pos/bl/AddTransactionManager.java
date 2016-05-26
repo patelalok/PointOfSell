@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.AddTransactionDto;
 import com.abm.pos.com.abm.pos.dto.AddTransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.AddTransactionPaymentDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,6 +32,7 @@ public class AddTransactionManager {
                     addTransactionDto.getCustomerId(),
                     addTransactionDto.getUserId(),
                     addTransactionDto.getPaymentId());
+            System.out.println("Transaction Added Successfully");
 
         }
         catch (Exception e)
@@ -50,6 +52,25 @@ public class AddTransactionManager {
                     addTransactionLineItemDto.getCost(),
                     addTransactionLineItemDto.getTax(),
                     addTransactionLineItemDto.getDiscount());
+            System.out.println("Transaction Line Item Added Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void addTransactionPaymentToDB(AddTransactionPaymentDto transactionPaymentDto) {
+        try
+        {
+            jdbcTemplate.update(sqlQueries.addTransactionPaymentDetail,
+
+                    transactionPaymentDto.getTransactionId(),
+                    transactionPaymentDto.getTransactionDate(),
+                    transactionPaymentDto.getPaymentId(),
+                    transactionPaymentDto.getPaymentAmount());
+            System.out.println("Transaction Payment Details Added Successfully");
+
         }
         catch (Exception e)
         {

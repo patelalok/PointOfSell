@@ -1,6 +1,6 @@
 <div>
-	<div class="row">
-		<section class="col-md-4 col-xs-12 leftProductInfo">
+	<div class="row" style="padding-top:20px;">
+		<section class="col-md-6 col-xs-12" ng-class="{'leftProductInfo':!device.isMobile}">
 			<div class="panel-body inline-vertical">
 				<div>
 					<h2 class="page-header" style="font-size:16px;">Product Information</h2>
@@ -13,64 +13,65 @@
 					</div>
 					<div class="form-group display-row">
 						<label for="vendorId" class="display-cell">Vendor:</label>
-						<select   class="form-control display-cell" data-ng-model="vendorId" id="vendorId">
-							<option>Select Vendor</option>
-						</select>
+						<div class="btn-group pull-left" dropdown is-open="status.isopen" ng-class="{'full-width': device.isMobile}">
+				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}">
+				                    <span ng-hide="selectedSearchType">Select Vendor</span>
+				                    <span class="caret margin-left-caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li>
+				                        <a ng-click="setSearchType()">Search By</a>
+				                    </li>
+				                </ul>
+				            </div>
 					</div>
 					<div class="form-group display-row">
 						<label for="description" class="display-cell">Desc:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="description" id="description"/>
 					</div>
-					<!-- <div class="form-group display-row">
-						<label for="detDescription" class="display-cell">Detailed Description:</label>
-						<textarea  class="form-control display-cell" data-ng-model="detDescription" id="detDescription"></textarea>
-					</div> -->
-					<!-- <div class="form-group display-row">
-						<label for="code" class="display-cell">Code:</label>
-						<input  type="text" class="form-control display-cell" data-ng-model="code" id="code"/>
-					</div> -->
 					<div class="form-group display-row">
 						<label for="depart" class="display-cell">Category:</label>
-						<select class="form-control display-cell" data-ng-model="depart" id="depart">
-						<option>Select Category</option>
-						</select>
+						<div class="btn-group pull-left" dropdown is-open="cat.isopen" ng-class="{'full-width': device.isMobile}">
+				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}">
+				                    <span ng-hide="selectedSearchType">Select Category</span>
+				                    <span class="caret margin-left-caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li>
+				                        <a ng-click="setSearchType()">Search By</a>
+				                    </li>
+				                </ul>
+				            </div>
 					</div>
 					<div class="form-group display-row">
 						<label for="upc" class="display-cell">Brand:</label>
-						<select class="form-control display-cell" data-ng-model="depart" id="depart">
-						<option>Select Brand</option>
-						</select>
+						<div class="btn-group pull-left" dropdown is-open="brand.isopen" ng-class="{'full-width': device.isMobile}">
+				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+				                ng-class="{'full-width left-align': device.isMobile}">
+				                    <span ng-hide="selectedSearchType">Select Vendor</span>
+				                    <span class="caret margin-left-caret"></span>
+				                </button>
+				                <ul class="dropdown-menu drp-min-width" role="menu">
+				                    <li>
+				                        <a ng-click="setSearchType()">Search Brand</a>
+				                    </li>
+				                    
+				                </ul>
+				            </div>
 					</div>
 					<div class="form-group display-row">
 						<label for="altNo" class="display-cell">Alt No:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo"/>
 					</div>
-					<!-- <div class="form-group display-row">
-						<label for="vendorNo" class="display-cell">Vendor No:</label>
-						<input  type="text" class="form-control display-cell" data-ng-model="vendorNo" id="vendorNo"/>
-					</div> -->
-					<div class="form-group display-row">
-						<label for="vendorNo" class="display-cell"></label>
-						<div class=" display-cell">
-						<input  type="checkbox" class="inline-vertical" data-ng-model="vendorNo" id="vendorNo"/>
-						<label for="vendorNo" class="inline-vertical">This is a non-inventory item</label>
-						</div>
-					</div>
-					<div class="form-group display-row">
-							<label for="cost" class="display-cell">Cost:</label>
-							<input  type="text" class="form-control display-cell" data-ng-model="cost" id="cost"/>
-						</div>
-						<div class="form-group display-row">
-							<label for="Retail" class="display-cell">Retail:</label>
-							<input  type="text" class="form-control display-cell" data-ng-model="Retail" id="Retail"/>
-						</div>
 				</div>
 			</div>
 		</section>
-		<section class="col-md-4 col-xs-12 rightProductInfo">
+		<section class="col-md-6 col-xs-12 rightProductInfo">
 			<div class="panel-body">
 				<div class="headerPage">
-					<h2 class="page-header" style="font-size:16px;">Header</h2>
+					<h2 class="page-header" style="font-size:16px;">Retail</h2>
 			
 				</div>
 				<div class="middlecontent display-table">
@@ -96,9 +97,7 @@
 					</div>	
 				</div>
 		</div>
-		</section>
-		<section class="col-md-4 col-xs-12 rightProductInfo">
-			<div class="panel-body">
+		<div class="panel-body">
 				<div class="headerPage">
 					<h2 class="page-header" style="font-size:16px;">Stock in the Store</h2>
 			
@@ -114,6 +113,24 @@
 						</div>
 				</div>
 			</div>
+		</section>
+<!-- 		<section class="col-md-4 col-xs-12 rightProductInfo">
+			<div class="panel-body">
+				<div class="headerPage">
+					<h2 class="page-header" style="font-size:16px;">Stock in the Store</h2>
+			
+				</div>
+				<div class="content display-table">
+					<div class="form-group display-row">
+							<label for="Stock" class="display-cell">Quantity:</label>
+							<input  type="text" class="form-control display-cell" data-ng-model="Stock" id="Stock"/>
+						</div>
+						<div class="form-group display-row">
+							<label for="Stock" class="display-cell">MinQuantity:</label>
+							<input  type="text" class="form-control display-cell" data-ng-model="Stock" id="Stock"/>
+						</div>
+				</div>
+			</div> -->
 	<!-- 		<div class="panel-body">
 				<div class="headerPage">
 					<h2 class="page-header" style="font-size:16px;">Desired Stock Levels</h2>
@@ -147,7 +164,7 @@
 				</div>
 			</div> -->
 			
-		</section>
+		<!-- </section> -->
 	</div>
 	<div class="row">
 		<div class="bottomButtons" style="text-align:center;">

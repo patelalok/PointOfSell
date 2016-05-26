@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * Created by asp5045 on 5/18/16.
  */
 @Component
-public class CustomerHandlerManager {
+public class CustomerManager {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -43,6 +43,34 @@ public class CustomerHandlerManager {
                     customerDto.getFax(),
                     customerDto.getCustomerCreatedDate());
             System.out.println("Customer Added Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+    }
+
+    public  void editCustomerToDB(AddCustomerDto customerDto) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.editCustomerQuery,
+                    customerDto.getFirstName(),
+                    customerDto.getLastName(),
+                    customerDto.getPhoneNo(),
+                    customerDto.getEmail(),
+                    customerDto.getDateOfBirth(),
+                    customerDto.getGender(),
+                    customerDto.getAptNo(),
+                    customerDto.getStreet(),
+                    customerDto.getCity(),
+                    customerDto.getState(),
+                    customerDto.getCountry(),
+                    customerDto.getZipcode(),
+                    customerDto.getFax(),
+                    customerDto.getCustomerCreatedDate());
+            System.out.println("Customer Edited Successfully");
         }
         catch (Exception e)
         {
@@ -91,35 +119,10 @@ public class CustomerHandlerManager {
         }
     }
 
-    public  void editCustomerToDB(AddCustomerDto customerDto) {
 
-        try
-        {
-            jdbcTemplate.update(sqlQuery.editCustomerQuery,
-                    customerDto.getFirstName(),
-                    customerDto.getLastName(),
-                    customerDto.getPhoneNo(),
-                    customerDto.getEmail(),
-                    customerDto.getDateOfBirth(),
-                    customerDto.getGender(),
-                    customerDto.getAptNo(),
-                    customerDto.getStreet(),
-                    customerDto.getCity(),
-                    customerDto.getState(),
-                    customerDto.getCountry(),
-                    customerDto.getZipcode(),
-                    customerDto.getFax(),
-                    customerDto.getCustomerCreatedDate());
-            System.out.println("Customer Edited Successfully");
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
 
-    }
 
-    public void deleteCustomerToDB(AddCustomerDto customerDto) {
+    public void deleteCustomerToDB(String phoneNo) {
 
     }
 }

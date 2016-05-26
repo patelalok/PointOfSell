@@ -680,3 +680,29 @@ hr {
   border-width: 1px 0;
   margin: 18px 0;
 }
+.leftProductInfo
+{
+	padding-left:20%;
+}
+.dropdown-menu{
+	z-index: 998;
+}
+.dropdown-menu > li > a {
+white-space: normal;
+word-wrap: break-word;
+word-break: break-word;
+padding: 3px 10px;
+}
+.drop-width
+{
+	width:194px;
+}
+.margin-left-caret
+{
+	
+	margin-left:70px !important;
+}
+.drp-min-width
+{
+	min-width:192px;
+}

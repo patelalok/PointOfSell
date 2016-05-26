@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("")
-public class AddClosingDetailsController {
+public class ClosingDetailsController {
     @Autowired
     AddClosingDetailsManager addClosingDetailsManager;
 

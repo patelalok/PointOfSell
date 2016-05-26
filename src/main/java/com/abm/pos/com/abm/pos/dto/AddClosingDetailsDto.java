@@ -8,23 +8,26 @@ public class AddClosingDetailsDto {
 
     int userId;
     String openDate;
-    double intialAmount;
+    double openAmount;
     double reportCash;
     double reportCredit;
+    double reportTotalAmount;
     double closeCash;
     double closeCredit;
     String closeDate;
+    double closeTotalAmount;
     double differenceCash;
     double differenceCredit;
     double totalDifference;
-    double totalAmount;
+    double totalBusinessAmount;
 
-    public double getIntialAmount() {
-        return intialAmount;
+
+    public double getDifferenceCredit() {
+        return differenceCredit;
     }
 
-    public void setIntialAmount(double intialAmount) {
-        this.intialAmount = intialAmount;
+    public void setDifferenceCredit(double differenceCredit) {
+        this.differenceCredit = differenceCredit;
     }
 
     public int getUserId() {
@@ -43,6 +46,14 @@ public class AddClosingDetailsDto {
         this.openDate = openDate;
     }
 
+    public double getOpenAmount() {
+        return openAmount;
+    }
+
+    public void setOpenAmount(double openAmount) {
+        this.openAmount = openAmount;
+    }
+
     public double getReportCash() {
         return reportCash;
     }
@@ -57,6 +68,14 @@ public class AddClosingDetailsDto {
 
     public void setReportCredit(double reportCredit) {
         this.reportCredit = reportCredit;
+    }
+
+    public double getReportTotalAmount() {
+        return reportTotalAmount;
+    }
+
+    public void setReportTotalAmount(double reportTotalAmount) {
+        this.reportTotalAmount = reportTotalAmount;
     }
 
     public double getCloseCash() {
@@ -83,20 +102,20 @@ public class AddClosingDetailsDto {
         this.closeDate = closeDate;
     }
 
+    public double getCloseTotalAmount() {
+        return closeTotalAmount;
+    }
+
+    public void setCloseTotalAmount(double closeTotalAmount) {
+        this.closeTotalAmount = closeTotalAmount;
+    }
+
     public double getDifferenceCash() {
         return differenceCash;
     }
 
     public void setDifferenceCash(double differenceCash) {
         this.differenceCash = differenceCash;
-    }
-
-    public double getDifferenceCredit() {
-        return differenceCredit;
-    }
-
-    public void setDifferenceCredit(double differenceCredit) {
-        this.differenceCredit = differenceCredit;
     }
 
     public double getTotalDifference() {
@@ -107,13 +126,14 @@ public class AddClosingDetailsDto {
         this.totalDifference = totalDifference;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public double getTotalBusinessAmount() {
+        return totalBusinessAmount;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setTotalBusinessAmount(double totalBusinessAmount) {
+        this.totalBusinessAmount = totalBusinessAmount;
     }
+
 
 
 

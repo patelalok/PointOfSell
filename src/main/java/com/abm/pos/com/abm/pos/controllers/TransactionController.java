@@ -3,6 +3,7 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.AddTransactionManager;
 import com.abm.pos.com.abm.pos.dto.AddTransactionDto;
 import com.abm.pos.com.abm.pos.dto.AddTransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.AddTransactionPaymentDto;
 import com.abm.pos.com.abm.pos.dto.AddVendorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("")
-public class AddTransactionController {
+public class TransactionController {
 
     @Autowired
     AddTransactionManager addTransactionManager;
@@ -27,10 +28,17 @@ public class AddTransactionController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", produces = "application/json")
-    public void AddTransactionLineItem(AddTransactionLineItemDto addTransactionLineItemDto)
+    public void addTransactionLineItem(AddTransactionLineItemDto addTransactionLineItemDto)
     {
         addTransactionManager.addTransactionLineItemToDB(addTransactionLineItemDto);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
+    public void addTransactionPayment(AddTransactionPaymentDto transactionPaymentDto)
+    {
+        addTransactionManager.addTransactionPaymentToDB(transactionPaymentDto);
+    }
+
 
 
 }

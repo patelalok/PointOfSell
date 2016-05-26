@@ -13,7 +13,7 @@ public class SQLQueries {
    public String addProductQuery =
 
            "INSERT INTO PRODUCT" +
-           " (PRODUCT_NO,CATEGORY_ID,VENDOR_ID,BRAND_ID,ATL_NO,DESCRIPTION,COST_PRICE,RETAIL_PRICE,QUANTITY,MIN_PRODUCT,RETURN_RULE,IMAGE,CREATED_DATE)" +
+           " (PRODUCT_NO,CATEGORY_ID,VENDOR_ID,BRAND_ID,ATL_NO,DESCRIPTION,COST_PRICE,MARKUP,RETAIL_PRICE,QUANTITY,MIN_PRODUCT,RETURN_RULE,IMAGE,CREATED_DATE)" +
            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addCustomerQuery =
@@ -30,8 +30,8 @@ public class SQLQueries {
                     "(CATEGORY_NAME,DESCRIPTION) " +
                     "VALUES(?,?)";
     public String addBrandQuery =
-            "INSERT INTO CATEGORY " +
-            "(BRAND_NAME,BRAND_DESCRIPTION)" +
+            "INSERT INTO BRAND " +
+            "(BRAND_NAME,DESCRIPTION)" +
             "VALUES(?,?)";
 
     //ADD TRANSACTION INTO DATABASE
@@ -41,22 +41,34 @@ public class SQLQueries {
                     "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_ID,USER_ID,PAYMENT_ID) " +
                      "VALUES (?,?,?,?,?,?,?)";
 
-    public String addTransactionLineItem = "INSERT INTO TRANSACTION_LINE_ITEM " +
+    public String addTransactionLineItem =
+            "INSERT INTO TRANSACTION_LINE_ITEM " +
             "(TRANSACTION_ID,PRODUCT_ID,QUANTITY,RETAIL,COST,DISCOUNT,TAX,)" +
             " VALUES (?,?,?,?,?,?,?)";
 
+ public String addUserQuery
+         = "INSERT INTO USER" +
+         " (USERNAME,PASSWORD,USER_ROLE,USER_CREATED_DATE) " +
+         "VALUES (?,?,?,?)";
+
     //ADD CLOSING DETAILS INTO DATABASE
 
-    public String addClosingDetails = "INSERT INTO CLOSING_DETAILS (USER_ID,OPEN_DATE,INITIAL_AMOUNT,REPORT_CASH,REPORT_CREDIT,CLOSE_CASH," +
-            "CLOSE_CREDIT," + "CLOSE_DATE,DIFFERENCE_CASH,DIFFERENCE_CREDIT,TOTAL_DIFFERENCE,TOTAL_AMOUNT) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+    public String addClosingDetails = "INSERT INTO CLOSING_DETAILS " +
+            "(USER_ID,OPEN_DATE,OPEN_AMOUNT,REPORT_CASH,REPORT_CREDIT,REPORT_TOTAL_AMOUNT,CLOSE_CASH," +
+            "CLOSE_CREDIT," + "CLOSE_DATE,CLOSE_TOTAL_AMOUNT,CASH_DIFFERENCE,CREDIT_DIFFERENCE,TOTAL_DIFFERENCE,TOTAL_BUSINESS_AMOUNT) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+
+ public String addTransactionPaymentDetail = "INSERT INTO TRANSACTION_PAYMENT " +
+         "(TRANSACTION_ID,TRANSACTION_DATE,PAYMENT_ID,PAYMENT_AMOUNT)" +
+         "VALUES (?,?,?,?)";
 
 
     //SQL QUERY FOR EDIT  INTO DATABASE
 
-    public String editProductQuery = "UPDATE PRODUCT SET PRODUCT_NO = ?, CATEGORY_ID = ?, VENDOR_ID = ?, BRAND_ID = ?, ATL_NO = ?, DESCRIPTION = ?, " +
-            "COST_PRICE = ?, RETAIL_PRICE = ?, QUANTITY = ?, MIN_PRODUCT = ?, RETURN_RULE = ?, IMAGE = ?, CREATED_DATE = ?";
+    public String editProductQuery = "UPDATE PRODUCT SET PRODUCT_NO = ?, CATEGORY_ID = ?, VENDOR_ID = ?, BRAND_ID = ?, " +
+            "ATL_NO = ?, DESCRIPTION = ?, COST_PRICE = ?, RETAIL_PRICE = ?, QUANTITY = ?, MIN_PRODUCT = ?, RETURN_RULE = ?, " +
+            "IMAGE = ?, CREATED_DATE = ?";
 
     public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, PHONE_NO = ?, EMAIL = ?, DATEOFBIRTH = ?, GENDER = ?, APT_NO = ?," +
             " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ?, CUSTOMER_CREATE_DATE = ? WHERE ";
@@ -66,6 +78,8 @@ public class SQLQueries {
     public String editCategoryQuery = "UPDATE CATEGORY SET CATEGORY_NAME = ?, DESCRIPTION = ? WHERE CATEGORY_ID = ?";
 
     public String editBrandQuery = "UPDATE BRAND SET BRAND_NAME = ?, DESCRIPTION = ? WHERE BRAND_ID = ?";
+
+    public String editUserQuery = "UPDATE USER SET PASSWORD = ?, USER_ROLE = ? WHERE USER_ID = ?";
 
 
     //SQL QUERY TO GET  DETAILS FROM DATABASE
@@ -79,6 +93,8 @@ public class SQLQueries {
     public String getCategoryDetails = "SELECT * FROM CATEGORY WHERE CATEGORY_ID = ?";
 
     public String getBrandDetails = "SELECT * FROM BRAND WHERE BRAND_ID = ?";
+
+    public String getUserDetails = "SELECT * FROM USER";
 
     //SQL QUERY TO DELETE FROM DATABASE
 

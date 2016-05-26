@@ -1,6 +1,6 @@
 package com.abm.pos.com.abm.pos.controllers;
 
-import com.abm.pos.com.abm.pos.bl.BrandHandlerManager;
+import com.abm.pos.com.abm.pos.bl.BrandManager;
 import com.abm.pos.com.abm.pos.dto.AddBrandDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,54 +13,32 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("")
-public class BrandHandlerController {
+public class BrandController {
 
     @Autowired
-    BrandHandlerManager brandHandlerManager;
+    BrandManager brandManager;
 
     @RequestMapping(value = "/addBrand",method = RequestMethod.POST, consumes = "application/json")
     public void addBrand(@RequestBody AddBrandDto addBrandDto)
     {
-        try
-        {
-            brandHandlerManager.addBrandToDB(addBrandDto);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+        brandManager.addBrandToDB(addBrandDto);
     }
-
 
     @RequestMapping(value = "/editBrand",method = RequestMethod.POST, consumes = "application/json")
     public void editBrand(@RequestBody AddBrandDto addBrandDto)
     {
-        try
-        {
-            brandHandlerManager.editBrandToDB(addBrandDto);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+        brandManager.editBrandToDB(addBrandDto);
     }
 
+    @RequestMapping(value = "/getBrand",method = RequestMethod.POST, consumes = "application/json")
+    public void getBrand(@RequestBody AddBrandDto addBrandDto)
+    {
+        brandManager.getBrandDetails(addBrandDto);
+    }
 
     @RequestMapping(value = "/deleteBrand",method = RequestMethod.POST, consumes = "application/json")
     public void deleteBrand(@RequestBody AddBrandDto addBrandDto)
     {
-        try
-        {
-            brandHandlerManager.deleteBrandToDB(addBrandDto);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+        brandManager.deleteBrandToDB(addBrandDto);
     }
-
-
-
-
-
 }

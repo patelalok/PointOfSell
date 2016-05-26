@@ -1,8 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
-import com.abm.pos.com.abm.pos.bl.LineItemHandlerManager;
+import com.abm.pos.com.abm.pos.bl.LineItemManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,22 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("")
-public class LineItemHandlerController {
+public class LineItemController {
 
     @Autowired
-    LineItemHandlerManager lineItemHandlerManager;
+    LineItemManager lineItemManager;
 
     @RequestMapping(value = "/getProductDetails",method = RequestMethod.GET, produces = "application/json")
     public void getProductForLineItem(String productId)
     {
-        lineItemHandlerManager.getProductDetails(productId);
+        //lineItemHandlerManager.getProductDetails(productId);
 
-    }
-
-    @RequestMapping(value = "/getProductDetails",method = RequestMethod.GET, produces = "application/json")
-    public void getCustomerDetails(String phoneNo)
-    {
-        //lineItemHandlerManager.getCustomerDetails(phoneNo);
     }
 
 
