@@ -96,6 +96,7 @@ public class ProductManager
 
                 AddProductDto product = new AddProductDto();
 
+                product.setProductId(rs.getInt("PRODUCT_ID"));
                 product.setProductNo(rs.getString("PRODUCT_NO"));
                 product.setCategoryId(rs.getInt("CATEGORY_ID"));
                 product.setVendorId(rs.getInt("VENDOR_ID"));

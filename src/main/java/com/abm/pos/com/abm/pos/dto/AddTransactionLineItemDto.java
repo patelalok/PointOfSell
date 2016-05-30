@@ -5,30 +5,15 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddTransactionLineItemDto {
 
-    int transactionId;
-    int productId;
-    int quantity;
-    double retail;
-    double cost;
-    double tax;
-    double discount;
+    private int transactionLineItemId;
+    private int transactionId;
+    private int productId;
+    private int quantity;
+    private double retail;
+    private double cost;
+    private double tax;
+    private double discount;
 
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
-    }
 
     public int getProductId() {
         return productId;
@@ -36,14 +21,6 @@ public class AddTransactionLineItemDto {
 
     public void setProductId(int productId) {
         this.productId = productId;
-    }
-
-    public double getRetail() {
-        return retail;
-    }
-
-    public void setRetail(double retail) {
-        this.retail = retail;
     }
 
     public double getCost() {
@@ -54,6 +31,30 @@ public class AddTransactionLineItemDto {
         this.cost = cost;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getRetail() {
+        return retail;
+    }
+
+    public void setRetail(double retail) {
+        this.retail = retail;
+    }
+
     public double getTax() {
         return tax;
     }
@@ -62,12 +63,23 @@ public class AddTransactionLineItemDto {
         this.tax = tax;
     }
 
-    public double getDiscount() {
-        return discount;
+    public int getTransactionId() {
+        return transactionId;
     }
 
-    public void setDiscount(double discount) {
-        this.discount = discount;
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
+
+    public int getTransactionLineItemId() {
+        return transactionLineItemId;
+    }
+
+    public void setTransactionLineItemId(int transactionLineItemId) {
+        this.transactionLineItemId = transactionLineItemId;
+    }
+
+
+
 
 }

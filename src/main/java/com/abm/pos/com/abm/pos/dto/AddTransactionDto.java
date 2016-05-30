@@ -5,13 +5,23 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddTransactionDto {
 
-    String transactionDate;
-    String totalAmount;
-    String tax;
-    String discount;
-    int customerId;
-    int userId;
-    int paymentId;
+    private int transactionId;
+    private String transactionDate;
+    private String totalAmount;
+    private  String tax;
+    private String discount;
+    private int customerId;
+    private  int userId;
+    private int paymentId;
+    private String status;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
 
     public String getDiscount() {
         return discount;
@@ -19,6 +29,14 @@ public class AddTransactionDto {
 
     public void setDiscount(String discount) {
         this.discount = discount;
+    }
+
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(int paymentId) {
+        this.paymentId = paymentId;
     }
 
     public String getTax() {
@@ -29,7 +47,13 @@ public class AddTransactionDto {
         this.tax = tax;
     }
 
+    public String getTotalAmount() {
+        return totalAmount;
+    }
 
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
     public String getTransactionDate() {
         return transactionDate;
@@ -39,22 +63,12 @@ public class AddTransactionDto {
         this.transactionDate = transactionDate;
     }
 
-    public String getTotalAmount() {
-        return totalAmount;
+    public int getTransactionId() {
+        return transactionId;
     }
 
-    public void setTotalAmount(String totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
 
     public int getUserId() {
@@ -65,13 +79,17 @@ public class AddTransactionDto {
         this.userId = userId;
     }
 
-    public int getPaymentId() {
-        return paymentId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPaymentId(int paymentId) {
-        this.paymentId = paymentId;
+    public void setStatus(String status) {
+        this.status = status;
     }
+
+
+
+
 
 
 }

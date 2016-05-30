@@ -4,8 +4,18 @@ package com.abm.pos.com.abm.pos.dto;
  * Created by asp5045 on 5/17/16.
  */
 public class AddCategoryDto {
-    String categoryName;
-    String description;
+
+    private int categoryId;
+    private String categoryName;
+    private String description;
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public String getCategoryName() {
         return categoryName;
@@ -22,6 +32,10 @@ public class AddCategoryDto {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+
+
 
 
 }

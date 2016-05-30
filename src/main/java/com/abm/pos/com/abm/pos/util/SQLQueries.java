@@ -20,6 +20,7 @@ public class SQLQueries {
             "INSERT INTO CUSTOMER " +
             "(FIRST_NAME,LAST_NAME,PHONE_NO,EMAIL,DATEOFBIRTH,GENDER,APT_NO,STREET,CITY,STATE,COUNTRY,ZIPCODE,FAX,CUSTOMER_CREATE_DATE)" +
             " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
     public String addVendorQuery =
             "INSERT INTO VENDOR " +
             "(VENDOR_NAME,DESCRIPTION) " +
@@ -38,8 +39,8 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_ID,USER_ID,PAYMENT_ID) " +
-                     "VALUES (?,?,?,?,?,?,?)";
+                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_ID,USER_ID,PAYMENT_ID,STATUS) " +
+                     "VALUES (?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -95,6 +96,12 @@ public class SQLQueries {
     public String getBrandDetails = "SELECT * FROM BRAND WHERE BRAND_ID = ?";
 
     public String getUserDetails = "SELECT * FROM USER";
+
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION";
+
+    public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM";
+
+    public String getTransactionPaymentDetails = "SELECT * FROM TRANSACTION_PAYMENT";
 
     //SQL QUERY TO DELETE FROM DATABASE
 

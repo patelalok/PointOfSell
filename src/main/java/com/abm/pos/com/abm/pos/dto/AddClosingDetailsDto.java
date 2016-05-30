@@ -6,29 +6,21 @@ package com.abm.pos.com.abm.pos.dto;
 
 public class AddClosingDetailsDto {
 
-    int userId;
-    String openDate;
-    double openAmount;
-    double reportCash;
-    double reportCredit;
-    double reportTotalAmount;
-    double closeCash;
-    double closeCredit;
-    String closeDate;
-    double closeTotalAmount;
-    double differenceCash;
-    double differenceCredit;
-    double totalDifference;
-    double totalBusinessAmount;
-
-
-    public double getDifferenceCredit() {
-        return differenceCredit;
-    }
-
-    public void setDifferenceCredit(double differenceCredit) {
-        this.differenceCredit = differenceCredit;
-    }
+    private int registerId;
+    private int userId;
+    private String openDate;
+    private double openAmount;
+    private double reportCash;
+    private double reportCredit;
+    private double reportTotalAmount;
+    private double closeCash;
+    private double closeCredit;
+    private String closeDate;
+    private double closeTotalAmount;
+    private double differenceCash;
+    private double differenceCredit;
+    private double totalDifference;
+    private double totalBusinessAmount;
 
     public int getUserId() {
         return userId;
@@ -36,46 +28,6 @@ public class AddClosingDetailsDto {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getOpenDate() {
-        return openDate;
-    }
-
-    public void setOpenDate(String openDate) {
-        this.openDate = openDate;
-    }
-
-    public double getOpenAmount() {
-        return openAmount;
-    }
-
-    public void setOpenAmount(double openAmount) {
-        this.openAmount = openAmount;
-    }
-
-    public double getReportCash() {
-        return reportCash;
-    }
-
-    public void setReportCash(double reportCash) {
-        this.reportCash = reportCash;
-    }
-
-    public double getReportCredit() {
-        return reportCredit;
-    }
-
-    public void setReportCredit(double reportCredit) {
-        this.reportCredit = reportCredit;
-    }
-
-    public double getReportTotalAmount() {
-        return reportTotalAmount;
-    }
-
-    public void setReportTotalAmount(double reportTotalAmount) {
-        this.reportTotalAmount = reportTotalAmount;
     }
 
     public double getCloseCash() {
@@ -118,12 +70,60 @@ public class AddClosingDetailsDto {
         this.differenceCash = differenceCash;
     }
 
-    public double getTotalDifference() {
-        return totalDifference;
+    public double getDifferenceCredit() {
+        return differenceCredit;
     }
 
-    public void setTotalDifference(double totalDifference) {
-        this.totalDifference = totalDifference;
+    public void setDifferenceCredit(double differenceCredit) {
+        this.differenceCredit = differenceCredit;
+    }
+
+    public double getOpenAmount() {
+        return openAmount;
+    }
+
+    public void setOpenAmount(double openAmount) {
+        this.openAmount = openAmount;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public int getRegisterId() {
+        return registerId;
+    }
+
+    public void setRegisterId(int registerId) {
+        this.registerId = registerId;
+    }
+
+    public double getReportCash() {
+        return reportCash;
+    }
+
+    public void setReportCash(double reportCash) {
+        this.reportCash = reportCash;
+    }
+
+    public double getReportCredit() {
+        return reportCredit;
+    }
+
+    public void setReportCredit(double reportCredit) {
+        this.reportCredit = reportCredit;
+    }
+
+    public double getReportTotalAmount() {
+        return reportTotalAmount;
+    }
+
+    public void setReportTotalAmount(double reportTotalAmount) {
+        this.reportTotalAmount = reportTotalAmount;
     }
 
     public double getTotalBusinessAmount() {
@@ -133,6 +133,17 @@ public class AddClosingDetailsDto {
     public void setTotalBusinessAmount(double totalBusinessAmount) {
         this.totalBusinessAmount = totalBusinessAmount;
     }
+
+    public double getTotalDifference() {
+        return totalDifference;
+    }
+
+    public void setTotalDifference(double totalDifference) {
+        this.totalDifference = totalDifference;
+    }
+
+
+
 
 
 

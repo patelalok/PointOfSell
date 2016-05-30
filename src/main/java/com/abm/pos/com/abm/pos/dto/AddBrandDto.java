@@ -5,6 +5,7 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddBrandDto {
 
+    private int brandId;
     private String brandName;
     private String brandDescription;
 
@@ -17,6 +18,14 @@ public class AddBrandDto {
         this.brandDescription = brandDescription;
     }
 
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
+    }
+
     public String getBrandName() {
         return brandName;
     }
@@ -24,6 +33,9 @@ public class AddBrandDto {
     public void setBrandName(String brandName) {
         this.brandName = brandName;
     }
+
+
+
 
 
 }

@@ -20,6 +20,7 @@ import java.io.OutputStream;
 @RequestMapping("")
 public class BarcodeGenerator {
 
+
     public void getBarcode() throws IOException {
 
 

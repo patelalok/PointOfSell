@@ -49,7 +49,7 @@ public class CategoryManager {
 
         try
         {
-            jdbcTemplate.query(sqlQuery.getVendorDetails, new CategoryManager.AddCategoryMapper());
+            jdbcTemplate.query(sqlQuery.getCategoryDetails, new CategoryManager.AddCategoryMapper());
         }
 
         catch (Exception e) {

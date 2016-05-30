@@ -59,6 +59,7 @@ public class TransactionManager {
 
 
 
+
     private static final class TransactionMapper implements RowMapper<AddTransactionDto>
     {
 
@@ -153,5 +154,36 @@ public class TransactionManager {
         }
     }
 
+    public void getTransactionPaymentDetails(AddTransactionPaymentDto transactionPaymentDto) {
 
-}
+        try
+        {
+            jdbcTemplate.query(sqlQuery.getTransactionPaymentDetails,new TransactionManager.TransactionPaymentMapper());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    private static final class TransactionPaymentMapper implements RowMapper<AddTransactionPaymentDto>
+    {
+
+        @Override
+        public AddTransactionPaymentDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            AddTransactionPaymentDto transPayment = new AddTransactionPaymentDto();
+
+            transPayment.setTransactionPaymentId(rs.getInt("TRANSACTION_PAYMENT_ID"));
+            transPayment.setTransactionId(rs.getInt("TRANSACTION_ID"));
+            transPayment.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+            transPayment.setPaymentId(rs.getInt("PAYMENT_ID"));
+            transPayment.setPaymentAmount(rs.getString("PAYMENT_AMOUNT"));
+
+            return transPayment;
+        }
+    }
+    }
+
+
+

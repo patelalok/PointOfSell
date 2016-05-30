@@ -5,6 +5,7 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddProductDto {
 
+    private int productId;
     private String productNo;
     private int categoryId;
     private int vendorId;
@@ -19,6 +20,15 @@ public class AddProductDto {
     private String returnRule;
     private String image;
     private String createdDate;
+
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     public String getMarkup() {
         return markup;

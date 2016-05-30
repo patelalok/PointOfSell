@@ -5,17 +5,26 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddTransactionPaymentDto {
 
+    private int transactionPaymentId;
     private int transactionId;
     private String transactionDate;
     private int paymentId;
     private String paymentAmount;
 
-    public String getPaymentAmount() {
-        return paymentAmount;
+    public String getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setPaymentAmount(String paymentAmount) {
-        this.paymentAmount = paymentAmount;
+    public void setTransactionDate(String transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
+    public int getTransactionPaymentId() {
+        return transactionPaymentId;
+    }
+
+    public void setTransactionPaymentId(int transactionPaymentId) {
+        this.transactionPaymentId = transactionPaymentId;
     }
 
     public int getTransactionId() {
@@ -26,14 +35,6 @@ public class AddTransactionPaymentDto {
         this.transactionId = transactionId;
     }
 
-    public String getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(String transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
     public int getPaymentId() {
         return paymentId;
     }
@@ -41,6 +42,17 @@ public class AddTransactionPaymentDto {
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }
+
+    public String getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(String paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+
+
 
 
 

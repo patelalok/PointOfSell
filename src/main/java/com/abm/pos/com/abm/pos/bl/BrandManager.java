@@ -56,7 +56,7 @@ public class BrandManager {
 
         try
         {
-            jdbcTemplate.query(sqlQuery.getVendorDetails, new BrandManager.AddBrandMapper());
+            jdbcTemplate.query(sqlQuery.getBrandDetails, new BrandManager.AddBrandMapper());
         }
 
         catch (Exception e) {

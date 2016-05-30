@@ -5,17 +5,25 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class AddUserDto {
 
+    private int userId;
     private String username;
     private String password;
     private String userRole;
-    private String createdDate;
 
-    public String getUserRole() {
-        return userRole;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -34,14 +42,15 @@ public class AddUserDto {
         this.password = password;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public String getUserRole() {
+        return userRole;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
+    private String createdDate;
 
 
 }
