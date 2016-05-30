@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th data-ng-repeat="column in columns" data-ng-click="sortByColumn($index, column)" data-ng-if="!column.toggle"
-					colspan={{column.colSpan}} data-ng-hide="column.hidden"
+					colspan={{column.colSpan}} data-ng-hide="column.hidden" style="font-weight:bold;"
 					data-ng-class="{'active-sort': $index === sortColumn && column.sortable, 'wrapword': column.wordWrap, 'sortable': column.sortable}">
 					<span data-ng-if="column.header" data-compile-html="column.header" class=""> </span>
 					<span data-ng-if="!column.header" class=""> {{::column.name}} </span>

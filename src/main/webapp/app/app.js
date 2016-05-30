@@ -1,4 +1,4 @@
-﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router']);
+﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch']);
   
 app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
 
@@ -24,6 +24,16 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    url: '/sell',
 		    templateUrl: 'app/sell/sell.html',
 		    controller: 'sellController'
+		  })
+		   .state('brand', {
+		    url: '/brand',
+		    templateUrl: 'app/product/brand.html',
+		    controller: 'BrandController'
+		  })
+		  .state('supplier', {
+		    url: '/supplier',
+		    templateUrl: 'app/product/supplier.html',
+		    controller: 'SupplierController'
 		  });
   
 }]);
