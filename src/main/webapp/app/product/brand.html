@@ -1,0 +1,41 @@
+<div>
+<div class="row pageHeader" style="padding:30px;">
+	<div class="col-md-12 pageHeader">
+		<span style="font-weight:bold;font-size:30px">Brands</span>
+	</div>
+</div>
+<div class="row productBtns" style="padding:30px;">	
+	<div class="productBtn" style="float:right;padding-right:15px;">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('product')">
+		<i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span>Add Brand</span>
+		</button>
+	</div>
+</div>
+<div class="row" style="padding:30px;">
+	<div class="col-md-12">
+		<div data-responsive-table data-ng-model="brandData"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Name" key="name" datatype="string" width="20%" sortable="true"></column>
+					<column name="Descritpion" key="desc" datatype="string" width="40%"></column>
+					<column name="Number of products" key="noofprod" datatype="string" width="25%"></column>
+					<column name="" key="" datatype="" width="15%">
+						<cell ng-non-bindable>
+							<span class="inline-vertical">
+								<a ng-click="navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
+							</span>
+							<span class="inline-vertical">
+								<a  style="cursor:pointer;"><img src="./assets/images/edit.png" alt="edit" height="20" /></a>
+							</span>
+							<span class="inline-vertical">
+								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="20" /></a>
+							</span>
+						</cell>
+					</column>
+				</columns>		
+			</div>
+	</div>
+</div>
+</div>

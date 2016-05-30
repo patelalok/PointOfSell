@@ -21,7 +21,8 @@
 			"retail":"test",
 			"discount":20,
 			"tax":10.98,
-			"total":20.00
+			"total":20.00,
+			"stock":5
 		},
 		{
 			"itemNo":1,
@@ -30,7 +31,19 @@
 			"retail":"test",
 			"discount":20,
 			"tax":10.98,
-			"total":20.00
+			"total":20.00,
+			"stock":5
+		},
+		{
+			"product":"Sunglasses",
+			"created":"25 June 2016",
+			"tags":"RetroSquare",
+			"brand":"Nomad",
+			"supplier":"Summerly",
+			"variants":"7",
+			"price":100.00,
+			"count":16,
+			"stock":5
 		}
 			
 		];
@@ -44,7 +57,8 @@
 				"discount":20,
 				"tax":10.98,
 				"total":20.00,
-				"image":"test"});
+				"image":"test",
+				"stock":5});
 		};
 		$scope.openCashPopup = function()
 		{

@@ -1,11 +1,34 @@
 <div>
 <div class="row pageHeader" style="padding:30px;">
-	<div class="col-md-6 pageHeader">
+	<div class="col-md-12 pageHeader">
 		<span style="font-weight:bold;font-size:30px">Products</span>
 	</div>
-	<div class="cold-md-6 productBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="navigateToAddProduct()">ADD PRODUCT</button>
+</div>
+<div class="row productBtns" style="padding:30px;">	
+	<div class="col-md-4 productBtn">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('product')">
+		<i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span>Add Product</span>
+		</button>
 	</div>
+	<div class="col-md-4 productBtn">
+		<button type="button" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('brand')">
+	          <i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span>Brands</span>
+	        </button>
+	 </div> 
+	 <div class="col-md-4 productBtn">
+		<button type="button" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('vendor')">
+				<i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span >Vendors</span> 
+	        </button>
+	 </div>    
+	 <div class="col-md-4 productBtn">
+		<button type="button" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('supplier')">
+				<i class="fa fa-plus registration-btn-image-small"></i><br/>
+	          <span>Suppliers</span>
+	        </button>
+	 </div>  
 
 </div>
 <div class="row padding-top-20" style="padding:30px;">
@@ -54,7 +77,7 @@
 </div>
 <div class="row" style="padding:30px;">
 	<div class="col-md-12">
-		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="productData"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
@@ -69,7 +92,10 @@
 					<column name="" key="" datatype="" width="10%">
 						<cell ng-non-bindable>
 							<span>
-								<img src="./assets/images/delete.png" alt="delete" height="20" />
+								<img src="./assets/images/edit.png" alt="edit" height="20" />
+							</span>
+							<span>
+								<switch name="enabled" ng-model="enabled" enabled="enabled"></switch>
 							</span>
 						</cell>
 					</column>

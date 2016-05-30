@@ -12,10 +12,35 @@
 		GlobalVariable.isLoginPage = false;
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
+		$scope.enabled = true;
 		
-		$scope.navigateToAddProduct = function()
+$scope.productData = [{
+			
+			"product":"DressShirt",
+			"created":"25 April 2016",
+			"tags":"Mens winter",
+			"brand":"Summerly",
+			"supplier":"FD Ltd",
+			"variants":"6",
+			"price":90.00,
+			"count":46
+		},
 		{
-			$state.go('product');
+			"product":"mircrophone",
+			"created":"25 May 2016",
+			"tags":"Necklacer",
+			"brand":"In shade",
+			"supplier":"Ramons",
+			"variants":"4",
+			"price":190.00,
+			"count":26
+		}
+			
+		];
+		
+		$scope.navigateToAddProduct = function(page)
+		{
+			$state.go(page);
 		};
 		
 		$scope.sortColumnData = function(index) {
