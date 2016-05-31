@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 
-	angular.module('sampleApp').controller('SupplierController', SupplierController);
+	angular.module('sampleApp').controller('VendorController', VendorController);
 
-	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory'];
+	VendorController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory'];
 
-	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory) {
+	function VendorController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -13,38 +13,33 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		
-$scope.supplierData = [{
+$scope.brandData = [{
 			
 			"name":"DressShirt",
 			"desc":"25 April 2016",
-			"defaultmarkup":"5%",
 			"noofprod":5
 		},
 		{
 			"name":"DressShirt",
 			"desc":"25 April 2016",
-			"defaultmarkup":"15%",
 			"noofprod":5.00,
 			"count":26
 		},
 		{
 			"name":"DressShirt",
 			"desc":"25 April 2016",
-			"defaultmarkup":"50%",
 			"noofprod":5.00,
 			"count":26
 		},
 		{
 			"name":"DressShirt",
 			"desc":"25 April 2016",
-			"defaultmarkup":"25%",
 			"noofprod":5.00,
 			"count":26
 		},
 		{
 			"name":"DressShirt",
 			"desc":"25 April 2016",
-			"defaultmarkup":"35%",
 			"noofprod":5.00,
 			"count":26
 		}
@@ -71,9 +66,9 @@ $scope.supplierData = [{
 		};
 		$scope.openAddPopup = function()
 		{
-			GlobalVariable.addHeaderName = "Add Supplier";
-			GlobalVariable.textName = "Supplier";
-			GlobalVariable.addButtonName = "Add Supplier";
+			GlobalVariable.addHeaderName = "Add Vendor";
+			GlobalVariable.textName = "Vendor";
+			GlobalVariable.addButtonName = "Add Vendor";
 			var _tmPath = 'app/product/AddPopup.html';
 			var _ctrlPath = 'addPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);

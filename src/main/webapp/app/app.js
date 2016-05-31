@@ -34,6 +34,11 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    url: '/supplier',
 		    templateUrl: 'app/product/supplier.html',
 		    controller: 'SupplierController'
+		  })
+		   .state('vendor', {
+		    url: '/vendor',
+		    templateUrl: 'app/product/vendor.html',
+		    controller: 'VendorController'
 		  });
   
 }]);
