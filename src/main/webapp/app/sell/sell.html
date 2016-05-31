@@ -26,14 +26,14 @@
 				 class="full-width" style="height:300px;overflow:auto;">
 				<columns>
 					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true"></column>
-					<column name="Item" key="item" datatype="string" width="52%">
+					<column name="Item" key="item" datatype="string" width="58%">
 					<cell ng-non-bindable>
 						{{::row.item}}
 					</cell>
 					</column>
-					<column name="Quantity" key="quantity" datatype="string" width="5%"></column>
+					<column name="Quantity" key="quantity" datatype="string" width="2%"></column>
 					<column name="Retail" key="retail" datatype="string" width="10%"></column>
-					<column name="Discount" key="discount" datatype="string" width="5%"></column>
+					<column name="Discount" key="discount" datatype="string" width="2%"></column>
 					<column name="Tax" key="tax" datatype="string" width="5%"></column>
 					<column name="Total" key="total" datatype="string" width="10%"></column>
 					<column name="Stock" key="stock" datatype="string" width="5%"></column>
@@ -72,11 +72,10 @@
 				</div>
 			</div>
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
-				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:18px;" ng-click="openCashPopup()">
-				<span class="inline-vertical">Payment</span>
-				<span class="inline-vertical" style="padding-left:10px;"> $125.00</span>
+				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:30px;width:33%;background-color:#44b772;" ng-click="openCashPopup()">
+				<span style="float:left;">Payment</span>
+				<span style="float:right;"> $125.00</span>
 				</button>
-				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Void</button>
 			</div>
 		</div>	
 	</div>

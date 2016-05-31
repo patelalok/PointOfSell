@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BrandController', BrandController);
 
-	BrandController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state'];
+	BrandController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory'];
 
-	function BrandController($scope, $rootScope, device ,GlobalVariable,$state) {
+	function BrandController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -64,6 +64,21 @@ $scope.brandData = [{
 		{
 			$state.go('product');
 		};
+		$scope.openAddPopup = function()
+		{
+			GlobalVariable.addHeaderName = "Add Brand";
+			GlobalVariable.textName = "Brand";
+			GlobalVariable.addButtonName = "Add Brand";
+			var _tmPath = 'app/product/AddPopup.html';
+			var _ctrlPath = 'addPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
+		};
+		function addPopupControllerCallBack()
+		{
+			GlobalVariable.addHeaderName = "";
+			GlobalVariable.textName = "";
+			GlobalVariable.addButtonName = "";
+		}
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;
