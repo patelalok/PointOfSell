@@ -1,8 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ProductManager;
-import com.abm.pos.com.abm.pos.dto.AddProductDto;
-import com.abm.pos.com.abm.pos.dto.AddVendorDto;
+import com.abm.pos.com.abm.pos.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +19,13 @@ public class ProductController {
     ProductManager productManager;
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST, consumes = "application/json")
-    public void addProduct(@RequestBody AddProductDto productDto) {
+    public void addProduct(@RequestBody ProductDto productDto) {
 
         productManager.addProductToDB(productDto);
     }
 
     @RequestMapping(value = "/editProduct", method = RequestMethod.POST, consumes = "application/json")
-    public void editProduct(@RequestBody AddProductDto productDto) {
+    public void editProduct(@RequestBody ProductDto productDto) {
 
         productManager.editProductToDB(productDto);
     }

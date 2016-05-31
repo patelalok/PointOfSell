@@ -1,10 +1,9 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.TransactionManager;
-import com.abm.pos.com.abm.pos.dto.AddTransactionDto;
-import com.abm.pos.com.abm.pos.dto.AddTransactionLineItemDto;
-import com.abm.pos.com.abm.pos.dto.AddTransactionPaymentDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.abm.pos.com.abm.pos.dto.TransactionDto;
+import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +20,9 @@ public class TransactionController {
     TransactionManager  transactionManager = new TransactionManager();
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransaction", produces = "application/json")
-    public void addTransactionDetails(@RequestBody AddTransactionDto addTransactionDto)
+    public void addTransactionDetails(@RequestBody TransactionDto transactionDto)
     {
-        transactionManager.addTransactionToDB(addTransactionDto);
+        transactionManager.addTransactionToDB(transactionDto);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/getTransaction", produces = "application/json")
@@ -33,25 +32,25 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", produces = "application/json")
-    public void addTransactionLineItem(AddTransactionLineItemDto addTransactionLineItemDto)
+    public void addTransactionLineItem(TransactionLineItemDto transactionLineItemDto)
     {
-        transactionManager.addTransactionLineItemToDB(addTransactionLineItemDto);
+        transactionManager.addTransactionLineItemToDB(transactionLineItemDto);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/getTransactionLineItem", produces = "application/json")
-    public void getTransactionLineItem(AddTransactionLineItemDto addTransactionLineItemDto)
+    public void getTransactionLineItem(TransactionLineItemDto transactionLineItemDto)
     {
-        transactionManager.getTransactionLineItemDetails(addTransactionLineItemDto);
+        transactionManager.getTransactionLineItemDetails(transactionLineItemDto);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
-    public void addTransactionPayment(AddTransactionPaymentDto transactionPaymentDto)
+    public void addTransactionPayment(TransactionPaymentDto transactionPaymentDto)
     {
         transactionManager.addTransactionPaymentToDB(transactionPaymentDto);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/getTransactionPaymentDetails", produces = "application/json")
-    public void getTransactionPayment(AddTransactionPaymentDto transactionPaymentDto)
+    public void getTransactionPayment(TransactionPaymentDto transactionPaymentDto)
     {
         transactionManager.getTransactionPaymentDetails(transactionPaymentDto);
     }

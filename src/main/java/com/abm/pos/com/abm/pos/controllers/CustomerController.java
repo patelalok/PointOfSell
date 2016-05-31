@@ -1,7 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.CustomerManager;
-import com.abm.pos.com.abm.pos.dto.AddCustomerDto;
+import com.abm.pos.com.abm.pos.dto.CustomerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,13 @@ public class CustomerController {
     CustomerManager customerManager;
 
     @RequestMapping(value = "/addCustomer",method = RequestMethod.POST, consumes = "application/json")
-    public void addCustomer(@RequestBody AddCustomerDto customerDto)
+    public void addCustomer(@RequestBody CustomerDto customerDto)
     {
         customerManager.addCustomerToDB(customerDto);
     }
 
     @RequestMapping(value = "/editCustomer",method = RequestMethod.POST, consumes = "application/json")
-    public void editCustomer(@RequestBody AddCustomerDto customerDto)
+    public void editCustomer(@RequestBody CustomerDto customerDto)
     {
         customerManager.editCustomerToDB(customerDto);
     }

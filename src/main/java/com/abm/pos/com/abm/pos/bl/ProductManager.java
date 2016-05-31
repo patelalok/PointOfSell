@@ -1,6 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddProductDto;
+import com.abm.pos.com.abm.pos.dto.ProductDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +22,7 @@ public class ProductManager
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addProductToDB(AddProductDto productDto) {
+    public void addProductToDB(ProductDto productDto) {
         try
         {
             jdbcTemplate.update(sqlQuery.addProductQuery,
@@ -48,7 +48,7 @@ public class ProductManager
         }
     }
 
-    public void editProductToDB(AddProductDto productDto) {
+    public void editProductToDB(ProductDto productDto) {
 
         try
         {
@@ -88,13 +88,13 @@ public class ProductManager
 
 
 
-    private static final class AddProductMapper implements RowMapper<AddProductDto>
+    private static final class AddProductMapper implements RowMapper<ProductDto>
         {
 
             @Override
-            public AddProductDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public ProductDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-                AddProductDto product = new AddProductDto();
+                ProductDto product = new ProductDto();
 
                 product.setProductId(rs.getInt("PRODUCT_ID"));
                 product.setProductNo(rs.getString("PRODUCT_NO"));

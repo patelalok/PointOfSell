@@ -1,8 +1,8 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddTransactionDto;
-import com.abm.pos.com.abm.pos.dto.AddTransactionLineItemDto;
-import com.abm.pos.com.abm.pos.dto.AddTransactionPaymentDto;
+import com.abm.pos.com.abm.pos.dto.TransactionDto;
+import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,19 +24,19 @@ public class TransactionManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addTransactionToDB(AddTransactionDto addTransactionDto) {
+    public void addTransactionToDB(TransactionDto transactionDto) {
 
         try
         {
             jdbcTemplate.update(sqlQuery.addTransaction,
-                    addTransactionDto.getTransactionDate(),
-                    addTransactionDto.getTotalAmount(),
-                    addTransactionDto.getTax(),
-                    addTransactionDto.getDiscount(),
-                    addTransactionDto.getCustomerId(),
-                    addTransactionDto.getUserId(),
-                    addTransactionDto.getPaymentId(),
-                    addTransactionDto.getStatus());
+                    transactionDto.getTransactionDate(),
+                    transactionDto.getTotalAmount(),
+                    transactionDto.getTax(),
+                    transactionDto.getDiscount(),
+                    transactionDto.getCustomerId(),
+                    transactionDto.getUserId(),
+                    transactionDto.getPaymentId(),
+                    transactionDto.getStatus());
             System.out.println("Transaction Added Successfully");
 
         }
@@ -60,13 +60,13 @@ public class TransactionManager {
 
 
 
-    private static final class TransactionMapper implements RowMapper<AddTransactionDto>
+    private static final class TransactionMapper implements RowMapper<TransactionDto>
     {
 
         @Override
-        public AddTransactionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public TransactionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddTransactionDto transaction = new AddTransactionDto();
+            TransactionDto transaction = new TransactionDto();
 
             transaction.setTransactionId(rs.getInt("TRANSACTION_ID"));
             transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
@@ -82,18 +82,18 @@ public class TransactionManager {
         }
     }
 
-    public void addTransactionLineItemToDB(AddTransactionLineItemDto addTransactionLineItemDto) {
+    public void addTransactionLineItemToDB(TransactionLineItemDto transactionLineItemDto) {
         try
         {
 
             jdbcTemplate.update(sqlQuery.addTransactionLineItem,
-                    addTransactionLineItemDto.getTransactionId(),
-                    addTransactionLineItemDto.getProductId(),
-                    addTransactionLineItemDto.getQuantity(),
-                    addTransactionLineItemDto.getRetail(),
-                    addTransactionLineItemDto.getCost(),
-                    addTransactionLineItemDto.getTax(),
-                    addTransactionLineItemDto.getDiscount());
+                    transactionLineItemDto.getTransactionId(),
+                    transactionLineItemDto.getProductId(),
+                    transactionLineItemDto.getQuantity(),
+                    transactionLineItemDto.getRetail(),
+                    transactionLineItemDto.getCost(),
+                    transactionLineItemDto.getTax(),
+                    transactionLineItemDto.getDiscount());
             System.out.println("Transaction Line Item Added Successfully");
         }
         catch (Exception e)
@@ -101,7 +101,7 @@ public class TransactionManager {
             System.out.println(e);
         }
     }
-    public void getTransactionLineItemDetails(AddTransactionLineItemDto addTransactionLineItemDto) {
+    public void getTransactionLineItemDetails(TransactionLineItemDto transactionLineItemDto) {
         try
         {
             jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionManager.TransactionLineItemMapper());
@@ -114,13 +114,13 @@ public class TransactionManager {
 
 
 
-    private static final class TransactionLineItemMapper implements RowMapper<AddTransactionLineItemDto>
+    private static final class TransactionLineItemMapper implements RowMapper<TransactionLineItemDto>
     {
 
         @Override
-        public AddTransactionLineItemDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public TransactionLineItemDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddTransactionLineItemDto lineItem = new AddTransactionLineItemDto();
+            TransactionLineItemDto lineItem = new TransactionLineItemDto();
 
             lineItem.setTransactionLineItemId(rs.getInt("TRANSACTION_LINE_ITEM_ID"));
             lineItem.setTransactionId(rs.getInt("TRANSACTION_ID"));
@@ -136,7 +136,7 @@ public class TransactionManager {
     }
 
 
-    public void addTransactionPaymentToDB(AddTransactionPaymentDto transactionPaymentDto) {
+    public void addTransactionPaymentToDB(TransactionPaymentDto transactionPaymentDto) {
         try
         {
             jdbcTemplate.update(sqlQuery.addTransactionPaymentDetail,
@@ -154,7 +154,7 @@ public class TransactionManager {
         }
     }
 
-    public void getTransactionPaymentDetails(AddTransactionPaymentDto transactionPaymentDto) {
+    public void getTransactionPaymentDetails(TransactionPaymentDto transactionPaymentDto) {
 
         try
         {
@@ -166,13 +166,13 @@ public class TransactionManager {
         }
     }
 
-    private static final class TransactionPaymentMapper implements RowMapper<AddTransactionPaymentDto>
+    private static final class TransactionPaymentMapper implements RowMapper<TransactionPaymentDto>
     {
 
         @Override
-        public AddTransactionPaymentDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public TransactionPaymentDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddTransactionPaymentDto transPayment = new AddTransactionPaymentDto();
+            TransactionPaymentDto transPayment = new TransactionPaymentDto();
 
             transPayment.setTransactionPaymentId(rs.getInt("TRANSACTION_PAYMENT_ID"));
             transPayment.setTransactionId(rs.getInt("TRANSACTION_ID"));

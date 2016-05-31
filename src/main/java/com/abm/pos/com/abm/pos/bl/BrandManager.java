@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddBrandDto;
-import com.abm.pos.com.abm.pos.dto.AddCategoryDto;
+import com.abm.pos.com.abm.pos.dto.BrandDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,12 +22,12 @@ public class BrandManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addBrandToDB(AddBrandDto addBrandDto) {
+    public void addBrandToDB(BrandDto brandDto) {
         try
         {
             jdbcTemplate.update(sqlQuery.addBrandQuery,
-                    addBrandDto.getBrandName(),
-                    addBrandDto.getBrandDescription());
+                    brandDto.getBrandName(),
+                    brandDto.getBrandDescription());
             System.out.println("Brand Added Successfully");
         }
         catch (Exception e)
@@ -37,13 +36,13 @@ public class BrandManager {
         }
     }
 
-    public void editBrandToDB(AddBrandDto addBrandDto) {
+    public void editBrandToDB(BrandDto brandDto) {
 
         try
         {
             jdbcTemplate.update(sqlQuery.editBrandQuery,
-                    addBrandDto.getBrandName(),
-                    addBrandDto.getBrandDescription());
+                    brandDto.getBrandName(),
+                    brandDto.getBrandDescription());
             System.out.println("Brand Edited Successfully");
         }
         catch (Exception e)
@@ -52,7 +51,7 @@ public class BrandManager {
         }
     }
 
-    public void getBrandDetails(AddBrandDto addBrandDto) {
+    public void getBrandDetails(BrandDto brandDto) {
 
         try
         {
@@ -64,13 +63,13 @@ public class BrandManager {
         }
     }
 
-    private static final class AddBrandMapper implements RowMapper<AddBrandDto>
+    private static final class AddBrandMapper implements RowMapper<BrandDto>
     {
 
         @Override
-        public AddBrandDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public BrandDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddBrandDto brand = new AddBrandDto();
+            BrandDto brand = new BrandDto();
 
             brand.setBrandName(rs.getString("BRAND_ID"));
             brand.setBrandDescription(rs.getString("DESCRIPTION"));
@@ -80,7 +79,7 @@ public class BrandManager {
     }
 
 
-    public void deleteBrandToDB(AddBrandDto addBrandDto) {
+    public void deleteBrandToDB(BrandDto brandDto) {
     }
 
 

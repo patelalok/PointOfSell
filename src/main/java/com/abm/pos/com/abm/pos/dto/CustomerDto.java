@@ -3,7 +3,7 @@ package com.abm.pos.com.abm.pos.dto;
 /**
  * Created by asp5045 on 5/9/16.
  */
-public class AddCustomerDto {
+public class CustomerDto {
 
     private int customerId;
     private String firstName;

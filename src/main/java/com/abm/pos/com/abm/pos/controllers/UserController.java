@@ -1,8 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.UserManager;
-import com.abm.pos.com.abm.pos.dto.AddUserDto;
-import com.abm.pos.com.abm.pos.dto.AddVendorDto;
+import com.abm.pos.com.abm.pos.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,7 @@ public class UserController {
     UserManager userManager;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST, consumes = "application/json")
-    public void addVendor(@RequestBody AddUserDto userDto) {
+    public void addVendor(@RequestBody UserDto userDto) {
         userManager.addUserToDB(userDto);
 
     }

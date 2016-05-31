@@ -1,7 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.BrandManager;
-import com.abm.pos.com.abm.pos.dto.AddBrandDto;
+import com.abm.pos.com.abm.pos.dto.BrandDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,26 +19,26 @@ public class BrandController {
     BrandManager brandManager;
 
     @RequestMapping(value = "/addBrand",method = RequestMethod.POST, consumes = "application/json")
-    public void addBrand(@RequestBody AddBrandDto addBrandDto)
+    public void addBrand(@RequestBody BrandDto brandDto)
     {
-        brandManager.addBrandToDB(addBrandDto);
+        brandManager.addBrandToDB(brandDto);
     }
 
     @RequestMapping(value = "/editBrand",method = RequestMethod.POST, consumes = "application/json")
-    public void editBrand(@RequestBody AddBrandDto addBrandDto)
+    public void editBrand(@RequestBody BrandDto brandDto)
     {
-        brandManager.editBrandToDB(addBrandDto);
+        brandManager.editBrandToDB(brandDto);
     }
 
     @RequestMapping(value = "/getBrand",method = RequestMethod.POST, consumes = "application/json")
-    public void getBrand(@RequestBody AddBrandDto addBrandDto)
+    public void getBrand(@RequestBody BrandDto brandDto)
     {
-        brandManager.getBrandDetails(addBrandDto);
+        brandManager.getBrandDetails(brandDto);
     }
 
     @RequestMapping(value = "/deleteBrand",method = RequestMethod.POST, consumes = "application/json")
-    public void deleteBrand(@RequestBody AddBrandDto addBrandDto)
+    public void deleteBrand(@RequestBody BrandDto brandDto)
     {
-        brandManager.deleteBrandToDB(addBrandDto);
+        brandManager.deleteBrandToDB(brandDto);
     }
 }

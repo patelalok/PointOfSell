@@ -3,7 +3,7 @@ package com.abm.pos.com.abm.pos.dto;
 /**
  * Created by asp5045 on 5/9/16.
  */
-public class AddProductDto {
+public class ProductDto {
 
     private int productId;
     private String productNo;

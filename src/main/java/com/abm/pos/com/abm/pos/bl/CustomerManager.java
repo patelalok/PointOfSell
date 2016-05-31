@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddCustomerDto;
-import com.abm.pos.com.abm.pos.dto.AddProductDto;
+import com.abm.pos.com.abm.pos.dto.CustomerDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,7 @@ public class CustomerManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public  void addCustomerToDB(AddCustomerDto customerDto) {
+    public  void addCustomerToDB(CustomerDto customerDto) {
 
         try
         {
@@ -51,7 +50,7 @@ public class CustomerManager {
 
     }
 
-    public  void editCustomerToDB(AddCustomerDto customerDto) {
+    public  void editCustomerToDB(CustomerDto customerDto) {
 
         try
         {
@@ -92,13 +91,13 @@ public class CustomerManager {
 
     }
 
-    private static final class CustomerMapper implements RowMapper<AddCustomerDto>
+    private static final class CustomerMapper implements RowMapper<CustomerDto>
     {
 
         @Override
-        public AddCustomerDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public CustomerDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddCustomerDto customer = new AddCustomerDto();
+            CustomerDto customer = new CustomerDto();
 
             customer.setFirstName(rs.getString("FIRST_NAME"));
             customer.setLastName(rs.getString("LAST_NAME"));

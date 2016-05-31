@@ -20,13 +20,13 @@ public class VendorController {
     VendorManager vendorManager;
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.POST, consumes = "application/json")
-    public void addVendor(@RequestBody AddVendorDto vendorDto) {
+    public void addVendor(@RequestBody VendorDto vendorDto) {
         vendorManager.addVendorToDB(vendorDto);
 
     }
 
     @RequestMapping(value = "/editVendor", method = RequestMethod.POST, consumes = "application/json")
-    public void editVendor(@RequestBody AddVendorDto vendorDto) {
+    public void editVendor(@RequestBody VendorDto vendorDto) {
 
             vendorManager.editVendorToDB(vendorDto);
     }

@@ -3,7 +3,7 @@ package com.abm.pos.com.abm.pos.dto;
 /**
  * Created by asp5045 on 5/25/16.
  */
-public class AddTransactionPaymentDto {
+public class TransactionPaymentDto {
 
     private int transactionPaymentId;
     private int transactionId;

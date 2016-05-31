@@ -1,7 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
-import com.abm.pos.com.abm.pos.bl.AddClosingDetailsManager;
-import com.abm.pos.com.abm.pos.dto.AddClosingDetailsDto;
+import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
+import com.abm.pos.com.abm.pos.dto.ClosingDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("")
 public class ClosingDetailsController {
     @Autowired
-    AddClosingDetailsManager addClosingDetailsManager;
+    ClosingDetailsManager addClosingDetailsManager;
 
     @RequestMapping(value = "/addClosingDetails", method = RequestMethod.POST, produces = "application/json")
-    public void addClosingDetails(@RequestBody AddClosingDetailsDto addClosingDetailsDto)
+    public void addClosingDetails(@RequestBody ClosingDetailsDto closingDetailsDto)
     {
-        addClosingDetailsManager.addClosingDetailsToDB(addClosingDetailsDto);
+        addClosingDetailsManager.addClosingDetailsToDB(closingDetailsDto);
     }
 }

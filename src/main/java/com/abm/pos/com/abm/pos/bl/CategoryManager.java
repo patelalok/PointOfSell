@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddCategoryDto;
-import com.abm.pos.com.abm.pos.dto.AddVendorDto;
+import com.abm.pos.com.abm.pos.dto.CategoryDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,7 @@ public class CategoryManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addCategoryToDB(AddCategoryDto categoryDto) {
+    public void addCategoryToDB(CategoryDto categoryDto) {
         try {
             jdbcTemplate.update(sqlQuery.addCategoryQuery,
                     categoryDto.getCategoryName(),
@@ -34,7 +33,7 @@ public class CategoryManager {
         }
     }
 
-    public void editCategoryToDB(AddCategoryDto categoryDto) {
+    public void editCategoryToDB(CategoryDto categoryDto) {
         try {
             jdbcTemplate.update(sqlQuery.editCategoryQuery,
                     categoryDto.getCategoryName(),
@@ -45,7 +44,7 @@ public class CategoryManager {
         }
     }
 
-    public void getCategoryDetails(AddCategoryDto categoryDto) {
+    public void getCategoryDetails(CategoryDto categoryDto) {
 
         try
         {
@@ -57,13 +56,13 @@ public class CategoryManager {
         }
     }
 
-    private static final class AddCategoryMapper implements RowMapper<AddCategoryDto>
+    private static final class AddCategoryMapper implements RowMapper<CategoryDto>
     {
 
         @Override
-        public AddCategoryDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public CategoryDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddCategoryDto category = new AddCategoryDto();
+            CategoryDto category = new CategoryDto();
 
             category.setCategoryName(rs.getString("CATEGORY_NAME"));
             category.setDescription(rs.getString("DESCRIPTION"));

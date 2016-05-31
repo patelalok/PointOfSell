@@ -3,7 +3,7 @@ package com.abm.pos.com.abm.pos.dto;
 /**
  * Created by asp5045 on 5/17/16.
  */
-public class AddBrandDto {
+public class BrandDto {
 
     private int brandId;
     private String brandName;

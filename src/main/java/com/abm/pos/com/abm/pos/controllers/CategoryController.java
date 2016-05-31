@@ -19,19 +19,19 @@ public class CategoryController {
     CategoryManager categoryManager;
 
     @RequestMapping(value = "/addCategory",method = RequestMethod.POST, consumes = "application/json")
-    public void addCategory(@RequestBody AddCategoryDto categoryDto)
+    public void addCategory(@RequestBody CategoryDto categoryDto)
     {
             categoryManager.addCategoryToDB(categoryDto);
     }
 
     @RequestMapping(value = "/editCategory",method = RequestMethod.POST, consumes = "application/json")
-    public void editCategory(@RequestBody AddCategoryDto categoryDto)
+    public void editCategory(@RequestBody CategoryDto categoryDto)
     {
         categoryManager.editCategoryToDB(categoryDto);
     }
 
     @RequestMapping(value = "/getCategory",method = RequestMethod.POST, consumes = "application/json")
-    public void getCategoryDetails(@RequestBody AddCategoryDto categoryDto)
+    public void getCategoryDetails(@RequestBody CategoryDto categoryDto)
     {
         categoryManager.getCategoryDetails(categoryDto);
     }

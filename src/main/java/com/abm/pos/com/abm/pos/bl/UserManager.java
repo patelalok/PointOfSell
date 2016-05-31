@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddUserDto;
-import com.abm.pos.com.abm.pos.dto.AddVendorDto;
+import com.abm.pos.com.abm.pos.dto.UserDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,7 @@ public class UserManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addUserToDB(AddUserDto userDto) {
+    public void addUserToDB(UserDto userDto) {
 
         try
         {
@@ -41,7 +40,7 @@ public class UserManager {
         }
     }
 
-    public void editUserToDB(AddUserDto userDto) {
+    public void editUserToDB(UserDto userDto) {
 
         try
         {
@@ -67,13 +66,13 @@ public class UserManager {
             System.out.println(e);
         }
     }
-    private static final class AddUserMapper implements RowMapper<AddUserDto>
+    private static final class AddUserMapper implements RowMapper<UserDto>
     {
 
         @Override
-        public AddUserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public UserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            AddUserDto user = new AddUserDto();
+            UserDto user = new UserDto();
 
             user.setUsername(rs.getString("USERNAME"));
             user.setPassword(rs.getString("PASSWORD"));

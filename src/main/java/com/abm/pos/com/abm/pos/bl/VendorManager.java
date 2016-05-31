@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.AddProductDto;
-import com.abm.pos.com.abm.pos.dto.AddVendorDto;
+import com.abm.pos.com.abm.pos.dto.VendorDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,7 @@ public class VendorManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addVendorToDB(AddVendorDto vendorDto) {
+    public void addVendorToDB(VendorDto vendorDto) {
 
         try
         {
@@ -39,7 +38,7 @@ public class VendorManager {
         }
     }
 
-    public void editVendorToDB(AddVendorDto vendorDto) {
+    public void editVendorToDB(VendorDto vendorDto) {
 
         try
         {
@@ -63,13 +62,13 @@ public class VendorManager {
             System.out.println(e);
         }
     }
-        private static final class AddVenderMapper implements RowMapper<AddVendorDto>
+        private static final class AddVenderMapper implements RowMapper<VendorDto>
         {
 
             @Override
-            public AddVendorDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public VendorDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-                AddVendorDto vendor = new AddVendorDto();
+                VendorDto vendor = new VendorDto();
 
                 vendor.setVendorName(rs.getString("VENDOR_NAME"));
                 vendor.setDescription(rs.getString("DESCRIPTION"));
