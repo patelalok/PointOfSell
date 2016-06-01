@@ -28,7 +28,7 @@
 		},
 		{
 			menuCode:3,
-			menuName:"Sales Ledger",
+			menuName:"Sales History",
 			imgPath:"assets/images/ledger.png",
 			path:"ledger"
 		},
@@ -42,7 +42,7 @@
 			menuCode:5,
 			menuName:"Product",
 			imgPath:"assets/images/final-logo.png",
-			path:"product"
+			path:"productmain"
 		},
 		{
 			menuCode:6,

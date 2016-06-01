@@ -1,4 +1,4 @@
-﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch']);
+﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask']);
   
 app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
 
@@ -39,6 +39,11 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    url: '/vendor',
 		    templateUrl: 'app/product/vendor.html',
 		    controller: 'VendorController'
+		  })
+		    .state('ledger', {
+		    url: '/ledger',
+		    templateUrl: 'app/Ledger/ledger.html',
+		    controller: 'LedgerController'
 		  });
   
 }]);
