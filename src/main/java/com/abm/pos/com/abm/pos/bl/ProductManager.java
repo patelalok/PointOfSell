@@ -78,7 +78,7 @@ public class ProductManager
 
             try
             {
-                jdbcTemplate.query(sqlQuery.getProductDetails,new AddProductMapper());
+                jdbcTemplate.query(sqlQuery.getProductDetails,new ProductMapper());
             }
             catch (Exception e)
             {
@@ -88,7 +88,7 @@ public class ProductManager
 
 
 
-    private static final class AddProductMapper implements RowMapper<ProductDto>
+    private static final class ProductMapper implements RowMapper<ProductDto>
         {
 
             @Override

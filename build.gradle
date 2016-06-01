@@ -35,6 +35,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 // http://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j
 	compile group: 'net.sf.barcode4j', name: 'barcode4j', version: '2.1'
+	//http://mvnrepository.com/artifact/com.itextpdf/itextpdf
+	compile group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
+
 	runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test') 

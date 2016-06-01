@@ -27,6 +27,8 @@ public class BarcodeGenerator {
         Code39Bean bean = new Code39Bean();
 
         final int dpi = 150;
+        String name = "Running shoes";
+        String price = "$12.99";
 
         //Configure the barcode generator
         bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi)); //makes the narrow bar, width exactly one pixel
@@ -34,7 +36,7 @@ public class BarcodeGenerator {
         bean.doQuietZone(false);
 
         //Open output file
-        File outputFile = new File("resources"+"/"+"images"+"/"+"out.png");
+        File outputFile = new File("out1.png");
         OutputStream out = new FileOutputStream(outputFile);
 
         try {
@@ -43,8 +45,10 @@ public class BarcodeGenerator {
             BitmapCanvasProvider canvas = new BitmapCanvasProvider(
                     out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
+
             //Generate the barcode
-            bean.generateBarcode(canvas, "Hello World");
+            bean.generateBarcode(canvas,name + price);
+
 
             //Signal end of generation
             canvas.finish();
@@ -53,5 +57,6 @@ public class BarcodeGenerator {
         } finally {
             out.close();
         }
-    }
+
+}
 }
