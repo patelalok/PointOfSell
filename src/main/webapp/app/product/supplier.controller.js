@@ -71,9 +71,9 @@ $scope.supplierData = [{
 		};
 		$scope.openAddPopup = function()
 		{
-			GlobalVariable.addHeaderName = "Add Supplier";
-			GlobalVariable.textName = "Supplier";
-			GlobalVariable.addButtonName = "Add Supplier";
+			GlobalVariable.addHeaderName = "Add Category";
+			GlobalVariable.textName = "Category";
+			GlobalVariable.addButtonName = "Add Category";
 			var _tmPath = 'app/product/AddPopup.html';
 			var _ctrlPath = 'addPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);

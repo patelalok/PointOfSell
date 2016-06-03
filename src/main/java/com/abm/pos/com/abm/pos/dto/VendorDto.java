@@ -8,6 +8,17 @@ public class VendorDto {
     private int vendorId;
     private String vendorName;
     private String description;
+    private String commision;
+
+    public String getCommision() {
+        return commision;
+    }
+
+    public void setCommision(String commision) {
+        this.commision = commision;
+    }
+
+
 
     public String getVendorName() {
         return vendorName;

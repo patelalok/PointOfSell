@@ -30,8 +30,8 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    templateUrl: 'app/product/brand.html',
 		    controller: 'BrandController'
 		  })
-		  .state('supplier', {
-		    url: '/supplier',
+		  .state('category', {
+		    url: '/category',
 		    templateUrl: 'app/product/supplier.html',
 		    controller: 'SupplierController'
 		  })

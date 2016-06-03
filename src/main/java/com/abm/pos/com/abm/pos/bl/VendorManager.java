@@ -28,7 +28,8 @@ public class VendorManager {
         {
             jdbcTemplate.update(sqlQuery.addVendorQuery,
                     vendorDto.getVendorName(),
-                    vendorDto.getDescription());
+                    vendorDto.getDescription(),
+                    vendorDto.getCommision());
             System.out.println("Vendor Added Successfully");
 
         }

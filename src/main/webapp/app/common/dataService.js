@@ -3,10 +3,10 @@
 
 	angular.module('sampleApp').factory('dataService', DataService);
 
-	DataService.$inject = [ '$http', '$state', 'GlobalConstants', 'GlobalVariable', '$rootScope',
+	DataService.$inject = [ '$http', '$state', 'GlobalVariable', '$rootScope',
 			'DialogFactory', 'util'];
 
-	function DataService($http,$state, GlobalConstants, GlobalVariable, $rootScope, DialogFactory, util) {
+	function DataService($http,$state,  GlobalVariable, $rootScope, DialogFactory, util) {
 		return {
 			Get : function(_url, success, error) {
 				$http({
@@ -23,7 +23,7 @@
 					error(data);
 				});
 			},
-			Post : function(_url, _reqData, success, error, contentType, accept, isNonFormParamFlow) {
+			Post : function(_url, _reqData, success, error, contentType, accept) {
 				var thisObj = this;
 				contentType = (contentType) ? contentType : 'application/x-www-form-urlencoded';
 				accept = (accept) ? accept : 'application/json';
@@ -32,11 +32,11 @@
 				};
 				_reqData = _reqData ? (_reqData) : {};
 
-				var reqData = isNonFormParamFlow ? JSON.stringify(_reqData) : $.param(_reqData);
+
 				$http({
 					method : 'POST',
 					url : _url,
-					data : reqData,
+					data : _reqData,
 					headers : headerObj
 				})
 						.success(
