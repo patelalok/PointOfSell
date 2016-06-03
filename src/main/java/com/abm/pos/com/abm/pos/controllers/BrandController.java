@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by asp5045 on 5/24/16.
  */
@@ -30,10 +32,11 @@ public class BrandController {
         brandManager.editBrandToDB(brandDto);
     }
 
-    @RequestMapping(value = "/getBrand",method = RequestMethod.POST, consumes = "application/json")
-    public void getBrand(@RequestBody BrandDto brandDto)
+    @RequestMapping(value = "/getBrand",method = RequestMethod.GET)
+    public List<BrandDto> getBrand()
     {
-        brandManager.getBrandDetails(brandDto);
+
+       return brandManager.getBrandDetails();
     }
 
     @RequestMapping(value = "/deleteBrand",method = RequestMethod.POST, consumes = "application/json")

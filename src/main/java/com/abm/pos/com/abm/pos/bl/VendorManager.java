@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by asp5045 on 5/24/16.
@@ -55,15 +57,24 @@ public class VendorManager {
         }
     }
 
-    public void getVendorDetails(String vendorId) {
+    public List<VendorDto> getVendorDetails() {
 
-        try {
-            jdbcTemplate.query(sqlQuery.getVendorDetails, new VendorManager.AddVenderMapper());
-        } catch (Exception e) {
+        List<VendorDto> vendorList = new ArrayList<>();
+
+        try
+        {
+            vendorList = jdbcTemplate.query(sqlQuery.getVendorDetails, new VendorMapper());
+            System.out.println("Send All Vendor Details Successfully.");
+        }
+        catch (Exception e)
+        {
             System.out.println(e);
         }
+
+        return vendorList;
+
     }
-        private static final class AddVenderMapper implements RowMapper<VendorDto>
+        private static final class VendorMapper implements RowMapper<VendorDto>
         {
 
             @Override
@@ -71,8 +82,10 @@ public class VendorManager {
 
                 VendorDto vendor = new VendorDto();
 
+                vendor.setVendorId(rs.getInt("VENDOR_ID"));
                 vendor.setVendorName(rs.getString("VENDOR_NAME"));
                 vendor.setDescription(rs.getString("DESCRIPTION"));
+                vendor.setCommision(rs.getString("COMMISION"));
 
                 return vendor;
             }

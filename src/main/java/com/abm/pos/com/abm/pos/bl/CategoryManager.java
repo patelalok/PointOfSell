@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by asp5045 on 5/24/16.
@@ -44,19 +46,23 @@ public class CategoryManager {
         }
     }
 
-    public void getCategoryDetails(CategoryDto categoryDto) {
+    public List<CategoryDto> getCategoryDetails() {
 
+        List<CategoryDto> categoryList = new ArrayList<>();
         try
         {
-            jdbcTemplate.query(sqlQuery.getCategoryDetails, new CategoryManager.AddCategoryMapper());
+            categoryList =  jdbcTemplate.query(sqlQuery.getCategoryDetails, new CategoryMapper());
+            System.out.println("Send All Category Details Successfully");
         }
 
         catch (Exception e) {
             System.out.println(e);
         }
+
+        return categoryList;
     }
 
-    private static final class AddCategoryMapper implements RowMapper<CategoryDto>
+    private static final class CategoryMapper implements RowMapper<CategoryDto>
     {
 
         @Override
@@ -64,6 +70,7 @@ public class CategoryManager {
 
             CategoryDto category = new CategoryDto();
 
+            category.setCategoryId(rs.getInt("CATEGORY_ID"));
             category.setCategoryName(rs.getString("CATEGORY_NAME"));
             category.setDescription(rs.getString("DESCRIPTION"));
 

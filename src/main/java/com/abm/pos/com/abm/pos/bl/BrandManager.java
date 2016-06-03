@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by asp5045 on 5/24/16.
@@ -51,19 +53,23 @@ public class BrandManager {
         }
     }
 
-    public void getBrandDetails(BrandDto brandDto) {
+    public List<BrandDto> getBrandDetails() {
+
+        List<BrandDto> brandList = new ArrayList<>();
 
         try
         {
-            jdbcTemplate.query(sqlQuery.getBrandDetails, new BrandManager.AddBrandMapper());
+            brandList = jdbcTemplate.query(sqlQuery.getBrandDetails, new BrandMapper());
+            System.out.println("Send All Brand Details Successfully");
         }
 
         catch (Exception e) {
             System.out.println(e);
         }
+        return brandList;
     }
 
-    private static final class AddBrandMapper implements RowMapper<BrandDto>
+    private static final class BrandMapper implements RowMapper<BrandDto>
     {
 
         @Override
@@ -71,7 +77,8 @@ public class BrandManager {
 
             BrandDto brand = new BrandDto();
 
-            brand.setBrandName(rs.getString("BRAND_ID"));
+            brand.setBrandId(rs.getInt("BRAND_ID"));
+            brand.setBrandName(rs.getString("BRAND_NAME"));
             brand.setBrandDescription(rs.getString("DESCRIPTION"));
 
             return brand;

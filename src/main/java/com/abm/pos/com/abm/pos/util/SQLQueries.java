@@ -85,15 +85,15 @@ public class SQLQueries {
 
     //SQL QUERY TO GET  DETAILS FROM DATABASE
 
-    public String getProductDetails = "SELECT * FROM PRODUCT WHERE  ";
+    public String getProductDetails = "SELECT * FROM PRODUCT";
 
-    public String getCustomerDetails = "SELECT * FROM CUSTOMER WHERE PHONE_NO = ?";
+    public String getCustomerDetails = "SELECT * FROM CUSTOMER";
 
-    public String getVendorDetails = "SELECT * FROM VENDOR WHERE VENDOR_ID = ?";
+    public String getVendorDetails = "SELECT * FROM VENDOR";
 
-    public String getCategoryDetails = "SELECT * FROM CATEGORY WHERE CATEGORY_ID = ?";
+    public String getCategoryDetails = "SELECT * FROM CATEGORY";
 
-    public String getBrandDetails = "SELECT * FROM BRAND WHERE BRAND_ID = ?";
+    public String getBrandDetails = "SELECT * FROM BRAND";
 
     public String getUserDetails = "SELECT * FROM USER";
 

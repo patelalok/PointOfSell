@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by asp5045 on 5/17/16.
  */
@@ -30,10 +32,10 @@ public class CategoryController {
         categoryManager.editCategoryToDB(categoryDto);
     }
 
-    @RequestMapping(value = "/getCategory",method = RequestMethod.POST, consumes = "application/json")
-    public void getCategoryDetails(@RequestBody CategoryDto categoryDto)
+    @RequestMapping(value = "/getCategory",method = RequestMethod.GET)
+    public List<CategoryDto> getCategoryDetails()
     {
-        categoryManager.getCategoryDetails(categoryDto);
+        return categoryManager.getCategoryDetails();
     }
 
     @RequestMapping(value = "/deleteCategory",method = RequestMethod.POST, consumes = "application/json")

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by asp5045 on 5/24/16.
@@ -74,16 +76,19 @@ public class ProductManager
             System.out.println(e);
         }
     }
-        public void getProductDetails(String productId) {
+        public List<ProductDto> getProductDetails() {
+
+            List<ProductDto> productList = new ArrayList<>();
 
             try
             {
-                jdbcTemplate.query(sqlQuery.getProductDetails,new ProductMapper());
+                productList = jdbcTemplate.query(sqlQuery.getProductDetails,new ProductMapper());
             }
             catch (Exception e)
             {
                 System.out.println(e);
             }
+            return productList;
         }
 
 

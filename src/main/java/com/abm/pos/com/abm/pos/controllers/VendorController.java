@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by asp5045 on 5/17/16.
  */
@@ -31,10 +34,10 @@ public class VendorController {
             vendorManager.editVendorToDB(vendorDto);
     }
 
-    @RequestMapping(value = "/getVendor", method = RequestMethod.POST, consumes = "application/json")
-    public void getVendor(@RequestBody String  vendorId) {
+    @RequestMapping(value = "/getVendor", method = RequestMethod.GET)
+    public List<VendorDto> getVendor() {
 
-        vendorManager.getVendorDetails(vendorId);
+        return  vendorManager.getVendorDetails();
     }
 
     @RequestMapping(value = "/deleteVendor", method = RequestMethod.POST, consumes = "application/json")
