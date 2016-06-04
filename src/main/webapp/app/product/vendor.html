@@ -1,10 +1,8 @@
 <div>
 <div class="row pageHeader" style="padding:30px;">
-	<div class="col-md-12 pageHeader">
+	<div class="col-md-4 pageHeader">
 		<span style="font-weight:bold;font-size:30px">Vendors</span>
 	</div>
-</div>
-<div class="row productBtns" style="padding:30px;">	
 	<div class="productBtn" style="float:right;padding-right:15px;">
 		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="openAddPopup()">
 		<i class="fa fa-plus registration-btn-image-small"></i><br/>
@@ -24,14 +22,10 @@
 					<column name="" key="" datatype="" width="15%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
-								<a ng-click="navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
+								<a ng-click="scope.navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
 							</span>
-							<span class="inline-vertical">
-								<a  style="cursor:pointer;"><img src="./assets/images/edit.png" alt="edit" height="20" /></a>
-							</span>
-							<span class="inline-vertical">
-								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="20" /></a>
-							</span>
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:#478FCA;"></span>
+							<span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span>
 						</cell>
 					</column>
 				</columns>		

@@ -13,7 +13,10 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 	  .state('product', {
 	    url: '/product',
 	    templateUrl: 'app/product/product.html',
-	    controller: 'productController'
+	    controller: 'productController',
+	    params:{
+	    	obj:null
+	    }
 	  })
 	   .state('productmain', {
 	    url: '/productmain',
@@ -30,8 +33,8 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    templateUrl: 'app/product/brand.html',
 		    controller: 'BrandController'
 		  })
-		  .state('category', {
-		    url: '/category',
+		  .state('supplier', {
+		    url: '/supplier',
 		    templateUrl: 'app/product/supplier.html',
 		    controller: 'SupplierController'
 		  })

@@ -38,6 +38,9 @@
        <script type="text/javascript" src="app/common/GlobalVariable.js"></script>
        <script type="text/javascript" src="app/common/responsiveTable.directive.js"></script>
        <script type="text/javascript" src="app/common/dataService.js"></script>
+       
+       <script type="text/javascript" src="app/mainPage/SideBar.controller.js"></script>
+       <script type="text/javascript" src="app/mainPage/sidebar.directive.js"></script>
        <script type="text/javascript" src="app/mainPage/body.controller.js"></script>
        <script type="text/javascript" src="app/login/loginController.js"></script>
        <script type="text/javascript" src="app/product/mainProduct.controller.js"></script>
@@ -80,41 +83,7 @@
 <div class="wrapper clearfix" id="wrapper">
             <div id="inner" class="inner clearfix">
             	<div class="sidebar"  ng-show="!GlobalVariable.isLoginPage">
-            		<aside id="admin-sidebar" class="admin-sidebar" ng-show="((device.isDesktop && !device.isTablet) || displaySideBar) && !hideSideBar">
-						<nav class="list-group nav-primary" id="sideBar_menu">
-							<div class="sideBarIcons">
-								<div class="homeImage list-group-item alignCenter menuItemsText" ng-repeat="option in menuOptions track by $index"
-									ng-click="navigate(option.menuCode,option.path)" ng-class="{'menuActive':option.menuCode == selectedMenuCd}"}>
-									<img alt="" src="{{option.imgPath}}" height="25" />
-									<div class="alignCenter"><span style="color:#000000;">{{option.menuName}}</span></div>
-								</div>
-								<!-- <div class="sellImage list-group-item alignCenter menuItemsText" ng-click="navigate('sell')">
-									<img alt="" src="assets/images/sell.png" height="35" />
-									<div class="alignCenter"><span style="color:#000000;" >Sell</span></div>
-								</div>
-								<div class="sellImage list-group-item alignCenter menuItemsText" ng-click="navigate('ledger')">
-									<img alt="" src="assets/images/ledger.png" height="25" />
-									<div class="alignCenter"><span style="color:#000000;" >Sales Ledger</span></div>
-								</div>
-								<div class="salesledgerImage list-group-item alignCenter menuItemsText">
-									<img alt="" src="assets/images/report.png" height="25" />
-									<div class="alignCenter"><span style="color:#000000;">Report</span></div>
-								</div>
-								<div class="salesledgerImage list-group-item alignCenter menuItemsText" ng-click="navigate('productmain')">
-									<img alt="" src="assets/images/final-logo.png" height="25" />
-									<div class="alignCenter"><span style="color:#000000;">Product</span></div>
-								</div>
-								<div class="salesledgerImage list-group-item alignCenter menuItemsText" ng-click="navigate('customer')">
-									<img alt="" src="assets/images/addCustomer.png" height="25" />
-									<div class="alignCenter"><span style="color:#000000;">Customer</span></div>
-								</div>
-								<div class="salesledgerImage list-group-item alignCenter menuItemsText" ng-click="navigate('setup')">
-									<img alt="" src="assets/images/setup.png" height="25" />
-									<div class="alignCenter"><span style="color:#000000;">Setup</span></div>
-								</div> -->
-							</div>
-						</nav>
-					</aside>
+            		<side-nav></side-nav>
             	</div>
                 <div class="inner-views" ng-class="{'desktop-view':device.isDesktop,'tablet-view':device.isTablet}">
                     <div class="admin-content">

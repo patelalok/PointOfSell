@@ -27,7 +27,7 @@
 	<div class="row">
 	<div class="col-md-8" style="background-color:#FFFFFF;padding:10px;padding-top:53px;">
 		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
-				 class="full-width" style="height:300px;overflow:auto;">
+				 class="full-width" style="height:500px;overflow:auto;">
 				<columns>
 					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true"></column>
 					<column name="Item" key="item" datatype="string" width="58%">
@@ -46,7 +46,7 @@
 							<!-- <span>
 								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
 							</span> -->
-							<span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span>
+							<a ng-click="scope.removeRow(row.itemNo)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span></a>
 						</cell>
 					</column>
 				</columns>		

@@ -10,7 +10,11 @@
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
-		
+		function render($stateParams)
+		{
+			console.log("params = "+$stateParams);
+		}
+		render();
 	}
 		
 })();

@@ -40,7 +40,17 @@ $scope.productData = [{
 		
 		$scope.navigateToAddProduct = function(page)
 		{
+			if(page == 'prodcut')
+			{
+				var test = new Object();
+				test.name = 'Prodcut';
+				test.last = 'No';
+				$state.go(page,{obj:test});
+			}
+			else
+			{	
 			$state.go(page);
+			}
 		};
 		
 		$scope.sortColumnData = function(index) {

@@ -10,55 +10,40 @@
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
-
+		var i=0;
 		$scope.pageSize = 10;
 		
-		$scope.testData = [{
-			
-			"itemNo":1,
-			"item":"paint",
-			"quantity":1,
-			"retail":"test",
-			"discount":20,
-			"tax":10.98,
-			"total":20.00,
-			"stock":5
-		},
-		{
-			"itemNo":1,
-			"item":"brush",
-			"quantity":1,
-			"retail":"test",
-			"discount":20,
-			"tax":10.98,
-			"total":20.00,
-			"stock":5
-		},
-		{
-			"itemNo":1,
-			"item":"brush",
-			"quantity":1,
-			"retail":"test",
-			"discount":20,
-			"tax":10.98,
-			"total":20.00,
-			"stock":5
-		}
-			
-		];
+		$scope.testData = [];
 		
 		$scope.addRow = function()
 		{
-			$scope.testData.push({"itemNo":1,
+			
+			$scope.testData.push({"itemNo":i,
 				"item":"check",
-				"quantity":1,
+				"quantity":89,
 				"retail":"test",
 				"discount":20,
 				"tax":10.98,
 				"total":20.00,
 				"image":"test",
 				"stock":5});
+			i++;
+			
 		};
+		$scope.removeRow = function(itemNo){				
+		var index = -1;		
+		var comArr = eval( $scope.testData );
+		for( var i = 0; i < comArr.length; i++ ) {
+			if( comArr[i].itemNo === itemNo ) {
+				index = i;
+				break;
+			}
+		}
+		if( index === -1 ) {
+			alert( "Something gone wrong" );
+		}
+		$scope.testData.splice( index, 1 );		
+	};
 		$scope.openCashPopup = function()
 		{
 			var _tmPath = 'app/sell/paymentPopup.html';

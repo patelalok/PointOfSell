@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 
-	angular.module('sampleApp').controller('BodyController', Body);
+	angular.module('sampleApp').controller('SidebarController', SidebarController);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state'];
+	SidebarController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state'];
 
-	function Body($scope, $rootScope, device,GlobalVariable,$state) {
+	function SidebarController($scope, $rootScope, device,GlobalVariable,$state) {
 		
 		var vm = this;
 		vm.device = device;
@@ -70,6 +70,10 @@
 		$scope.navigateToBrand = function()
 		{
 			$state.go('brand');
+		};
+		$scope.navigateToPage = function(page)
+		{
+			$state.go(page);
 		};
 	}
 })();

@@ -1,44 +1,12 @@
 <div>
-<!-- <div class="row pageHeader" style="padding:30px;">
-	<div class="col-md-12 pageHeader">
-		<span style="font-weight:bold;font-size:30px">Products</span>
-	</div>
-</div> -->
-<div class="row productBtns" style="padding:30px;">	
-	<div class="col-md-4 productBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('product')">
-		<i class="fa fa-plus registration-btn-image-small"></i><br/>
-	          <span>Add Product</span>
-		</button>
-	</div>
-	<div class="col-md-4 productBtn">
-		<button type="button" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('brand')">
-	          <i class="fa fa-plus registration-btn-image-small"></i><br/>
-	          <span>Brands</span>
-	        </button>
-	 </div> 
-	 <div class="col-md-4 productBtn">
-		<button type="button" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('vendor')">
-				<i class="fa fa-plus registration-btn-image-small"></i><br/>
-	          <span >Vendors</span> 
-	        </button>
-	 </div>    
-	 <div class="col-md-4 productBtn">
-		<button type="button" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="navigateToAddProduct('category')">
-				<i class="fa fa-plus registration-btn-image-small"></i><br/>
-	          <span>Suppliers</span>
-	        </button>
-	 </div>  
-
-</div>
 <div class="row padding-top-20" style="padding:30px;">
-	<div class="col-md-1" style="width:20%;">
+	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Name/SKU/Handle</label></div>
 		<div>
 			<input  type="text" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;"/>
 		</div>
 	</div>
-	<div class="col-md-1" style="width:20%;">
+	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Product Type</label></div>
 		<div>
 			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
@@ -46,7 +14,7 @@
 						</select>
 		</div>
 	</div>
-	<div class="col-md-1" style="width:20%;">
+	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Brand</label></div>
 		<div>
 			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
@@ -54,7 +22,7 @@
 						</select>
 		</div>
 	</div>
-	<div class="col-md-1" style="width:20%;">
+	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Supplier</label></div>
 		<div>
 			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
@@ -62,19 +30,20 @@
 						</select>
 		</div>
 	</div>
-	<div class="col-md-1" style="width:20%;">
+	<div class="col-md-1" style="width:16%;">
 	<div class="padding-bottom-5"><label></label></div>
 		<div class="filterBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Apply Filter</button>
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;">Apply Filter</button>
+	</div>
+	</div>
+	<div class="col-md-1" style="width:16%;">
+	<div class="padding-bottom-5"><label></label></div>
+		<div class="filterBtn">
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="navigateToAddProduct('product')">Add Product</button>
 	</div>
 	</div>
 
 </div>
-<!-- <div class="row" style="padding:30px;">
-	<div class="filterBtn" style="float:right;padding-right:15px;">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Apply Filter</button>
-	</div>
-</div> -->
 <div class="row" style="padding:30px;">
 	<div class="col-md-12">
 		<div data-responsive-table data-ng-model="productData"  data-current-page="currentPageIndexArr"

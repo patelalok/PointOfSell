@@ -11,11 +11,11 @@
 						<label for="productId" class="display-cell">Product ID:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="prdouctId" id="productId"/>
 						<div class="display-cell"><button class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;">Generate</button></div>
-						<div class="display-cell"><button class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;">Unique Img</button></div>
+						<div class="display-cell"><button class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;">Img</button></div>
 					</div>
 					<div class="form-group display-row">
 						<label for="vendorId" class="display-cell">Vendor:</label>
-						<div class="btn-group pull-left" dropdown is-open="status.isopen" ng-class="{'full-width': device.isMobile}">
+						<div class="btn-group pull-left prd-drop" dropdown is-open="status.isopen" ng-class="{'full-width': device.isMobile}">
 				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
 				                ng-class="{'full-width left-align': device.isMobile}">
 				                    <span ng-hide="selectedSearchType">Select Vendor</span>
@@ -34,7 +34,7 @@
 					</div>
 					<div class="form-group display-row">
 						<label for="depart" class="display-cell">Category:</label>
-						<div class="btn-group pull-left" dropdown is-open="cat.isopen" ng-class="{'full-width': device.isMobile}">
+						<div class="btn-group pull-left  prd-drop" dropdown is-open="cat.isopen" ng-class="{'full-width': device.isMobile}">
 				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
 				                ng-class="{'full-width left-align': device.isMobile}">
 				                    <span ng-hide="selectedSearchType">Select Category</span>
@@ -49,7 +49,7 @@
 					</div>
 					<div class="form-group display-row">
 						<label for="upc" class="display-cell">Brand:</label>
-						<div class="btn-group pull-left" dropdown is-open="brand.isopen" ng-class="{'full-width': device.isMobile}">
+						<div class="btn-group pull-left  prd-drop" dropdown is-open="brand.isopen" ng-class="{'full-width': device.isMobile}">
 				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
 				                ng-class="{'full-width left-align': device.isMobile}">
 				                    <span ng-hide="selectedSearchType">Select Vendor</span>
@@ -107,7 +107,7 @@
 				<div class="content display-table">
 					<div class="form-group display-row">
 							<label for="Stock" class="display-cell">Quantity:</label>
-							<div class="btn-group pull-left" dropdown is-open="return.isopen" ng-class="{'full-width': device.isMobile}">
+							<div class="btn-group pull-left  prd-drop" dropdown is-open="return.isopen" ng-class="{'full-width': device.isMobile}">
 				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
 				                ng-class="{'full-width left-align': device.isMobile}">
 				                    <span ng-hide="selectedSearchType">Select Vendor</span>
