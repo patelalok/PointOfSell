@@ -23,8 +23,8 @@ public class SQLQueries {
 
     public String addVendorQuery =
             "INSERT INTO VENDOR " +
-            "(VENDOR_NAME,DESCRIPTION,COMMISION) " +
-            "VALUES(?,?,?)";
+            "(VENDOR_NAME,COMMISION,PHONENO,COMPANY_NAME,ADDRESS) " +
+            "VALUES(?,?,?,?,?)";
 
     public String addCategoryQuery =
             "INSERT INTO CATEGORY " +

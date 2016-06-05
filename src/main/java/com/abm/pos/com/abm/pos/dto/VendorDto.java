@@ -7,8 +7,36 @@ public class VendorDto {
 
     private int vendorId;
     private String vendorName;
-    private String description;
     private String commision;
+    private int phoneNo;
+    private String companyName;
+    private String address;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(int phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+
 
     public String getCommision() {
         return commision;
@@ -36,13 +64,6 @@ public class VendorDto {
         this.vendorId = vendorId;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
 
 

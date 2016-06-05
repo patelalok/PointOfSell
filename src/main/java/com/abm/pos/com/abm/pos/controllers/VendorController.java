@@ -3,11 +3,14 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.VendorManager;
 import com.abm.pos.com.abm.pos.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +26,17 @@ public class VendorController {
     VendorManager vendorManager;
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.POST, consumes = "application/json")
-    public void addVendor(@RequestBody VendorDto vendorDto) {
-        vendorManager.addVendorToDB(vendorDto);
+    public ResponseEntity addVendor(@RequestBody VendorDto vendorDto) throws SQLException {
+        try
+        {
+            vendorManager.addVendorToDB(vendorDto);
+        }
+
+        catch (Exception e)
+            {
+                System.out.println(e);
+            }
+        return new ResponseEntity(HttpStatus.OK);
 
     }
 

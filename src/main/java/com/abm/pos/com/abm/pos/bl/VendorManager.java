@@ -24,21 +24,17 @@ public class VendorManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addVendorToDB(VendorDto vendorDto) {
+    public void addVendorToDB(VendorDto vendorDto) throws SQLException {
 
-        try
-        {
-            jdbcTemplate.update(sqlQuery.addVendorQuery,
+
+            int a = jdbcTemplate.update(sqlQuery.addVendorQuery,
                     vendorDto.getVendorName(),
-                    vendorDto.getDescription(),
-                    vendorDto.getCommision());
+                    vendorDto.getCommision(),
+                    vendorDto.getPhoneNo(),
+                    vendorDto.getCompanyName(),
+                    vendorDto.getAddress());
+            System.out.println(a);
             System.out.println("Vendor Added Successfully");
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
     }
 
     public void editVendorToDB(VendorDto vendorDto) {
@@ -46,8 +42,12 @@ public class VendorManager {
         try
         {
             jdbcTemplate.update(sqlQuery.editVendorQuery,
+                    vendorDto.getVendorId(),
                     vendorDto.getVendorName(),
-                    vendorDto.getDescription());
+                    vendorDto.getCommision(),
+                    vendorDto.getPhoneNo(),
+                    vendorDto.getCompanyName(),
+                    vendorDto.getAddress());
             System.out.println("Vendor Edited Successfully");
 
         }
@@ -84,8 +84,10 @@ public class VendorManager {
 
                 vendor.setVendorId(rs.getInt("VENDOR_ID"));
                 vendor.setVendorName(rs.getString("VENDOR_NAME"));
-                vendor.setDescription(rs.getString("DESCRIPTION"));
                 vendor.setCommision(rs.getString("COMMISION"));
+                vendor.setPhoneNo(rs.getInt("PHONENO"));
+                vendor.setCompanyName(rs.getString("COMPANY_NAME"));
+                vendor.setAddress(rs.getString("ADDRESS"));
 
                 return vendor;
             }
