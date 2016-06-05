@@ -18,6 +18,10 @@ jar {
 	baseName = 'PointOfSale'
 	version = '0.0.1-SNAPSHOT'
 }
+
+task stage {
+	dependsOn build
+}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
