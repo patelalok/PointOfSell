@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.VendorDto;
+import com.abm.pos.com.abm.pos.service.VendorService;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,8 +25,15 @@ public class VendorManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addVendorToDB(VendorDto vendorDto) throws SQLException {
+    public void addVendorToDB(VendorDto vendorDto) {
 
+       /* try {
+            vendorService.addVendorToDB(vendorDto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }*/
+        try {
 
             int a = jdbcTemplate.update(sqlQuery.addVendorQuery,
                     vendorDto.getVendorName(),
@@ -35,6 +43,9 @@ public class VendorManager {
                     vendorDto.getAddress());
             System.out.println(a);
             System.out.println("Vendor Added Successfully");
+        } catch (Exception e) {
+
+        }
     }
 
     public void editVendorToDB(VendorDto vendorDto) {

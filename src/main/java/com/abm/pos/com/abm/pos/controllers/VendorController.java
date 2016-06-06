@@ -26,16 +26,12 @@ public class VendorController {
     VendorManager vendorManager;
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity addVendor(@RequestBody VendorDto vendorDto) throws SQLException {
-        try
-        {
-            vendorManager.addVendorToDB(vendorDto);
-        }
+    public ResponseEntity addVendor(@RequestBody VendorDto vendorDto){
 
-        catch (Exception e)
-            {
-                System.out.println(e);
-            }
+
+            vendorManager.addVendorToDB(vendorDto);
+
+
         return new ResponseEntity(HttpStatus.OK);
 
     }
