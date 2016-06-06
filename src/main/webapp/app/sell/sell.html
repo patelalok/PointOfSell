@@ -4,7 +4,7 @@
 	 	<div class="searchProducts col-md-6">
 	 		<div class="row">	
 			<div class="col-md-8 searchBox">
-				<input type="text" class="form-control" placeholder="Start typing or scanning" ng-model="searchValue" style="width:100%;height:52px;">
+				<input type="text" class="form-control" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
 			</div>
 			<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
 				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add Item</button>
@@ -28,7 +28,7 @@
 	<div class="col-md-8" style="background-color:#FFFFFF;padding:10px;padding-top:53px;">
 		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
 				 class="full-width" style="height:500px;overflow:auto;">
-				<columns>
+				<columns style="bakcground:red;">
 					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true"></column>
 					<column name="Item" key="item" datatype="string" width="58%">
 					<cell ng-non-bindable>
@@ -39,7 +39,11 @@
 					<column name="Retail" key="retail" datatype="string" width="10%"></column>
 					<column name="Discount" key="discount" datatype="string" width="2%"></column>
 					<column name="Tax" key="tax" datatype="string" width="5%"></column>
-					<column name="Total" key="total" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%">
+					<cell ng-non-bindable>
+							{{::row.total}}
+						</cell>
+					</column>
 					<column name="Stock" key="stock" datatype="string" width="5%"></column>
 					<column name="" key="" datatype="" width="5%">
 						<cell ng-non-bindable>

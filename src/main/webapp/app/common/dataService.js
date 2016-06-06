@@ -8,10 +8,16 @@
 
 	function DataService($http,$state,  GlobalVariable, $rootScope, DialogFactory, util) {
 		return {
-			Get : function(_url, success, error) {
+			Get : function(_url, success, error,contentType, accept) {
+				contentType = (contentType) ? contentType : 'application/x-www-form-urlencoded';
+				accept = (accept) ? accept : 'application/json';
+				var headerObj = {
+						Accept : accept
+				};
 				$http({
 					method : 'GET',
 					url : _url+util.getRandomNumberForUrl(_url),
+					headers : headerObj,
 					cache : false
 				}).success(function(data, status, headers, config) {
 					if (status === 200) {

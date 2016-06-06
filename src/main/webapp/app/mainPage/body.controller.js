@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BodyController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails'];
 
-	function Body($scope, $rootScope, device,GlobalVariable,$state) {
+	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails) {
 		
 		var vm = this;
 		vm.device = device;
@@ -71,5 +71,10 @@
 		{
 			$state.go('brand');
 		};
+		function render()
+		{
+			getProductDetails.getProductValues();
+		}
+		render();
 	}
 })();
