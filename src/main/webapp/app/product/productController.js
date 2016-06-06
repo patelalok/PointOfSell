@@ -11,7 +11,7 @@
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
-		GlobalVariable.getVendors =  [
+		/*GlobalVariable.getVendors =  [
 		                                        {
 		                                            "vendorId": 11,
 		                                            "vendorName": "Tcl-delta",
@@ -49,7 +49,7 @@
 		    "categoryName": "Phone",
 		    "description": "This category is for phone"
 		  }
-		]
+		]*/
 		
 		$scope.populateRetailPrice = function()
 		{
