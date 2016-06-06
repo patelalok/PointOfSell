@@ -68,7 +68,8 @@ public class ProductManager
                     productDto.getMinProductQuantity(),
                     productDto.getReturnRule(),
                     productDto.getImage(),
-                    productDto.getCreatedDate());
+                    productDto.getProductId());
+
             System.out.println("Product Edited Successfully");
         }
         catch (Exception e)

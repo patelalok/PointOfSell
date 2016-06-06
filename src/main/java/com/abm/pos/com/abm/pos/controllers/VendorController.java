@@ -28,10 +28,7 @@ public class VendorController {
     @RequestMapping(value = "/addVendor", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity addVendor(@RequestBody VendorDto vendorDto){
 
-
-            vendorManager.addVendorToDB(vendorDto);
-
-
+        vendorManager.addVendorToDB(vendorDto);
         return new ResponseEntity(HttpStatus.OK);
 
     }

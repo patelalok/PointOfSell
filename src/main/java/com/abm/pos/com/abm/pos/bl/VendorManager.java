@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.VendorDto;
-import com.abm.pos.com.abm.pos.service.VendorService;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -53,12 +52,14 @@ public class VendorManager {
         try
         {
             jdbcTemplate.update(sqlQuery.editVendorQuery,
-                    vendorDto.getVendorId(),
+
                     vendorDto.getVendorName(),
                     vendorDto.getCommision(),
                     vendorDto.getPhoneNo(),
                     vendorDto.getCompanyName(),
-                    vendorDto.getAddress());
+                    vendorDto.getAddress(),
+                    vendorDto.getVendorId());
+
             System.out.println("Vendor Edited Successfully");
 
         }

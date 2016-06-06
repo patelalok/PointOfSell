@@ -19,8 +19,17 @@ public class UserController {
     UserManager userManager;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST, consumes = "application/json")
-    public void addVendor(@RequestBody UserDto userDto) {
+    public void addUser(@RequestBody UserDto userDto) {
+
         userManager.addUserToDB(userDto);
+    }
+
+    @RequestMapping(value = "/editUser", method = RequestMethod.POST, consumes = "application/json")
+    public void editUser(@RequestBody UserDto userDto) {
+
+        userManager.editUserToDB(userDto);
 
     }
+
+
 }

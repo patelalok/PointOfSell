@@ -44,7 +44,8 @@ public class BrandManager {
         {
             jdbcTemplate.update(sqlQuery.editBrandQuery,
                     brandDto.getBrandName(),
-                    brandDto.getBrandDescription());
+                    brandDto.getBrandDescription(),
+                    brandDto.getBrandId());
             System.out.println("Brand Edited Successfully");
         }
         catch (Exception e)

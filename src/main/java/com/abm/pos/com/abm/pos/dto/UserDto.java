@@ -9,6 +9,7 @@ public class UserDto {
     private String username;
     private String password;
     private String userRole;
+    private String createdDate;
 
     public String getCreatedDate() {
         return createdDate;
@@ -50,7 +51,7 @@ public class UserDto {
         this.userRole = userRole;
     }
 
-    private String createdDate;
+
 
 
 }

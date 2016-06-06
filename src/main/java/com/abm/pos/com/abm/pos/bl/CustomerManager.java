@@ -68,7 +68,8 @@ public class CustomerManager {
                     customerDto.getCountry(),
                     customerDto.getZipcode(),
                     customerDto.getFax(),
-                    customerDto.getCustomerCreatedDate());
+                    customerDto.getCustomerId());
+
             System.out.println("Customer Edited Successfully");
         }
         catch (Exception e)

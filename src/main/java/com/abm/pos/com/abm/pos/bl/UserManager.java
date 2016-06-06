@@ -45,11 +45,13 @@ public class UserManager {
         try
         {
             jdbcTemplate.update(sqlQuery.editUserQuery,
-                    userDto.getUsername(),
+
                     userDto.getPassword(),
                     userDto.getUserRole(),
-                    userDto.getCreatedDate());
-            System.out.println("USer Edited Successfully");
+                    userDto.getUserId(),
+                    userDto.getUsername());
+
+            System.out.println("User Edited Successfully");
 
         }
         catch (Exception e)

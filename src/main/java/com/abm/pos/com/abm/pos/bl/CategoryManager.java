@@ -39,7 +39,9 @@ public class CategoryManager {
         try {
             jdbcTemplate.update(sqlQuery.editCategoryQuery,
                     categoryDto.getCategoryName(),
-                    categoryDto.getDescription());
+                    categoryDto.getDescription(),
+                    categoryDto.getCategoryId());
+
             System.out.println("Category Edited Successfully");
         } catch (Exception e) {
             System.out.println(e);
