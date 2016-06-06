@@ -19,7 +19,7 @@
 			dataService.Get("http://localhost:8080/getCategory",getCategorySuccessHandler,getCategoryErrorHandler,"application/json","application/json");
 			dataService.Get("http://localhost:8080/getProduct",getProductSuccessHandler,getProductErrorHandler,"application/json","application/json");
 		}
-		function getVendorSuccessHandler(reponse)
+		function getVendorSuccessHandler(response)
 		{
 			GlobalVariable.getVendors = response;
 		}
@@ -27,7 +27,7 @@
 		{
 			
 		}
-		function getBrandSuccessHandler(reponse)
+		function getBrandSuccessHandler(response)
 		{
 			GlobalVariable.getBrands = response;
 		}
@@ -35,7 +35,7 @@
 		{
 			
 		}
-		function getCategorySuccessHandler(reponse)
+		function getCategorySuccessHandler(response)
 		{
 			GlobalVariable.getCategory = response;
 		}
@@ -43,7 +43,7 @@
 		{
 			
 		}
-		function getProductSuccessHandler(reponse)
+		function getProductSuccessHandler(response)
 		{
 			GlobalVariable.getProducts = response;
 		}
