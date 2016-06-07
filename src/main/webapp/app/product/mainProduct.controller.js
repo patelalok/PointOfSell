@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -37,10 +37,9 @@ $scope.productData = [{
 		}
 			
 		];
-		
 		$scope.navigateToAddProduct = function(page)
 		{
-			if(page == 'prodcut')
+			if(page == 'product')
 			{
 				var test = new Object();
 				test.name = 'Prodcut';

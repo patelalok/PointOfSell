@@ -3,12 +3,13 @@
 
 	angular.module('sampleApp').controller('addPopupController', addPopupController);
 
-	addPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
+	addPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout'];
 
-	function addPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService) 
+	function addPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout) 
 	{
 		$scope.device= device;
 		$scope.GlobalVariable = GlobalVariable;
+		$scope.successAlert = false;
 		$scope.closePopup = function()
 		{
 			DialogFactory.close(true);
@@ -16,7 +17,7 @@
 		
 		$scope.addItems = function(name)
 		{
-
+			
 			var request = new Object();
 			if(name == 'Brand') {
 				var url = "http://localhost:8080/addBrand";
@@ -43,12 +44,21 @@
 		};
 		function addItemsSuccessHandler(response)
 		{
+			DialogFactory.close(true);
+			GlobalVariable.successAlert = true;
 			console.log(response);
+			$timeout(function() {
+				$rootScope.closeBootstrapAlert();
+			}, 9000);
 		}
 		function addItemsErrorHandler(response)
 		{
-			console.log(response);
+			DialogFactory.close(true);
+			$timeout(function() {
+				$rootScope.closeBootstrapAlert();
+			}, 9000);
 		}
+		
 		function render()
 		{
 			

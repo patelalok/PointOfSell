@@ -45,7 +45,10 @@ $scope.brandData = [{
 		}
 			
 		];
-		
+$rootScope.closeBootstrapAlert = function()
+{
+	GlobalVariable.successAlert = false;
+};
 		
 		$scope.sortColumnData = function(index) {
 			if ($scope.testGridData != null && $scope.testGridData.length > 0) {

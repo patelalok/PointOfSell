@@ -64,6 +64,11 @@ $scope.brandData = [{
 		{
 			$state.go('product');
 		};
+
+		$rootScope.closeBootstrapAlert = function()
+		{
+			GlobalVariable.successAlert = false;
+		};
 		$scope.openAddPopup = function()
 		{
 			GlobalVariable.addHeaderName = "Add Brand";

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('productController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService) {
+	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams) {
 		
 		$scope.device = device;
 		$scope.restrictCharacter=restrictCharacter;
@@ -114,9 +114,9 @@
 		{
 			
 		}
-		function render($stateParams)
+		function render()
 		{
-			console.log("params = "+$stateParams);
+			console.log("params = "+$state.params);
 		}
 		render();
 	}

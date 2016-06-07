@@ -71,7 +71,7 @@
 			//{
 			$scope.removeRowOnSearch($scope.testData[$scope.testData.length-2].itemNo);
 			//}
-		
+			$scope.searchValue = '';
 	};
 	$scope.removeRowOnSearch = function(itemNo){				
 		var index = -1;		
