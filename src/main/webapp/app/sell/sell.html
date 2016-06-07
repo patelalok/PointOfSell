@@ -4,8 +4,11 @@
 	 	<div class="searchProducts col-md-6">
 	 		<div class="row">	
 			<div class="col-md-8 searchBox">
-				<input type="text" class="form-control" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
-			</div>
+				<!-- <input type="text" class="form-control" auto-complete ui-items="productNames" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
+			 -->
+			 <input type="text" class="form-control" typeahead="productName for productName in productNames | filter:$viewValue" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
+			
+			 </div>
 			<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
 				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add Item</button>
 			</div>

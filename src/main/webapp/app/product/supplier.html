@@ -20,12 +20,12 @@
 </div>
 <div class="row" style="padding:30px;">
 	<div class="col-md-12">
-		<div data-responsive-table data-ng-model="supplierData"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="getCategory"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="Name" key="name" datatype="string" width="25%" sortable="true"></column>
-					<column name="Descritpion" key="desc" datatype="string" width="40%"></column>
+					<column name="Name" key="categoryName" datatype="string" width="25%" sortable="true"></column>
+					<column name="Descritpion" key="description" datatype="string" width="40%"></column>
 					<column name="Default Markup" key="defaultmarkup" datatype="string" width="5%"></column>
 					<column name="Number of products" key="noofprod" datatype="string" width="5%"></column>
 					<column name="" key="" datatype="" width="15%">

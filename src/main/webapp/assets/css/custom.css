@@ -879,3 +879,7 @@ font-weight: bold;
 .nav-list li.open>.submenu {
     display: block;
 }
+.searchBox .dropdown-menu
+{
+	background-color:white;
+}
