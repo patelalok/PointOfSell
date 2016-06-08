@@ -14,7 +14,7 @@
 		$scope.pageSize = 10;
 		
 		$scope.testData = [];
-		/*GlobalVariable.getProducts = [{
+		GlobalVariable.getProducts = [{
 			 "productId": 6,
 			    "productNo": "123456789012",
 			    "categoryId": 1,
@@ -32,7 +32,7 @@
 			    "createdDate": "1000-01-01 00:00:00"
 		},
 		{
-			 "productId": 6,
+			 "productId": 7,
 			    "productNo": "123456789012",
 			    "categoryId": 1,
 			    "vendorId": 11,
@@ -49,7 +49,7 @@
 			    "createdDate": "1000-01-01 00:00:00"
 		},
 		{
-			 "productId": 6,
+			 "productId": 8,
 			    "productNo": "123456789012",
 			    "categoryId": 1,
 			    "vendorId": 11,
@@ -66,7 +66,7 @@
 			    "createdDate": "1000-01-01 00:00:00"
 		},
 		{
-			 "productId": 6,
+			 "productId": 9,
 			    "productNo": "123456789012",
 			    "categoryId": 1,
 			    "vendorId": 11,
@@ -83,7 +83,7 @@
 			    "createdDate": "1000-01-01 00:00:00"
 		},
 		{
-			 "productId": 6,
+			 "productId": 10,
 			    "productNo": "123456789012",
 			    "categoryId": 1,
 			    "vendorId": 11,
@@ -100,7 +100,7 @@
 			    "createdDate": "1000-01-01 00:00:00"
 		},
 		{
-			 "productId": 6,
+			 "productId": 11,
 			    "productNo": "123456789012",
 			    "categoryId": 1,
 			    "vendorId": 11,
@@ -117,7 +117,7 @@
 			    "createdDate": "1000-01-01 00:00:00"
 		}
 			
-		];*/
+		];
 		$scope.productNames = [];
 		
 		$scope.addRow = function()
@@ -128,7 +128,6 @@
 				"quantity":89,
 				"retail":"test",
 				"discount":20,
-				"tax":10.98,
 				"total":20.00,
 				"stock":5});
 			
@@ -153,41 +152,77 @@
 		var searchTxt = $scope.searchValue.toString();
 		if (searchTxt.match(/[a-z]/i)) {
 		    console.log("contains only charcters");
+		    $scope.discount =0;
 		    for(var i=0;i<GlobalVariable.getProducts.length;i++)
 		    {
 		    	if(searchTxt === GlobalVariable.getProducts[i].description)
 		    	{
-		    		$scope.testData.push({"itemNo":Math.round((Math.random() * 10) * 10),
+		    		$scope.testData.push({"itemNo":GlobalVariable.getProducts[i].productId,
 						"item":GlobalVariable.getProducts[i].description,
-						"quantity":GlobalVariable.getProducts[i].quantity,
-						"retail":GlobalVariable.getProducts[i].costPrice,
-						"discount":GlobalVariable.getProducts[i].markup,
-						"tax":10.98,
-						"total":GlobalVariable.getProducts[i].retailPrice,
-						"stock":5});
+						"quantity":1,
+						"retail":GlobalVariable.getProducts[i].retailPrice,
+						"discount":parseFloat($scope.discount),
+						"total":(parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity),
+						"stock":GlobalVariable.getProducts[i].quantity});
 		    	}	
 		    }	
 		    
 		}
+		else if(searchTxt.length > 5)
+		{
+			console.log(""+$scope.searchValue);
+			$scope.discount =0;
+			 for(var i=0;i<GlobalVariable.getProducts.length;i++)
+			    {
+			    	if(searchTxt === GlobalVariable.getProducts[i].prodcutNo)
+			    	{
+			    		$scope.testData.push({"itemNo":GlobalVariable.getProducts[i].productId,
+							"item":GlobalVariable.getProducts[i].description,
+							"quantity":1,
+							"retail":GlobalVariable.getProducts[i].retailPrice,
+							"discount":parseFloat($scope.discount),
+							"total":(parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity),
+							"stock":GlobalVariable.getProducts[i].quantity});
+			    	}	
+			    }
+		}	
 		else
 		{
 			if(searchTxt.indexOf(".") >=0 )
 			{
 				$scope.quantity = $scope.testData[$scope.testData.length-1].quantity;
-				$scope.total = $scope.searchValue;
+				if(parseFloat($scope.searchValue) > parseFloat(parseFloat($scope.testData[$scope.testData.length-1].retail)))
+				{
+					$scope.discount =0;
+					$scope.testData[$scope.testData.length-1].retail = $scope.searchValue;
+					
+				}
+				else
+				{
+					$scope.discount = parseFloat($scope.testData[$scope.testData.length-1].retail)-parseFloat($scope.searchValue);
+				}	
+				
+				$scope.total = (parseFloat($scope.testData[$scope.testData.length-1].retail)-$scope.discount)*parseFloat($scope.quantity);
 			}
 			else
 			{
 				$scope.quantity = $scope.searchValue;
-				$scope.total = $scope.testData[$scope.testData.length-1].total;
+				if(parseFloat($scope.testData[$scope.testData.length-1].discount) == 'NaN')
+				{
+					$scope.discount=0
+				}	
+				else
+				{
+					$scope.discount = parseFloat($scope.testData[$scope.testData.length-1].discount);
+				}	
+				$scope.total = (parseFloat($scope.testData[$scope.testData.length-1].retail)-parseFloat($scope.discount))*parseFloat($scope.quantity);
 			}	
 			
 			$scope.testData.push({"itemNo":$scope.testData[$scope.testData.length-1].itemNo,
 				"item":$scope.testData[$scope.testData.length-1].item,
 				"quantity":$scope.quantity,
 				"retail":$scope.testData[$scope.testData.length-1].retail,
-				"discount":$scope.testData[$scope.testData.length-1].discount,
-				"tax":$scope.testData[$scope.testData.length-1].tax,
+				"discount":$scope.discount,
 				"total":$scope.total,
 				"stock":$scope.testData[$scope.testData.length-1].stock});
 			//for(var i=0;i<$scope.testData.length-1;i++)
@@ -239,6 +274,10 @@
 		{
 			
 		}
+		$scope.test = function()
+		{
+			console.log(""+$scope.searchValue);
+		};
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;
