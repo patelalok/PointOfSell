@@ -8,7 +8,7 @@ public class BrandDto {
     private int brandId;
     private String brandName;
     private String brandDescription;
-
+    private int noOfProducts;
 
     public String getBrandDescription() {
         return brandDescription;

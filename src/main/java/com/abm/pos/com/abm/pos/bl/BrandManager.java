@@ -5,12 +5,15 @@ import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.coyote.http11.Constants.a;
 
 /**
  * Created by asp5045 on 5/24/16.
@@ -70,7 +73,7 @@ public class BrandManager {
         return brandList;
     }
 
-    private static final class BrandMapper implements RowMapper<BrandDto>
+    private final class BrandMapper implements RowMapper<BrandDto>
     {
 
         @Override
@@ -78,11 +81,42 @@ public class BrandManager {
 
             BrandDto brand = new BrandDto();
 
-            brand.setBrandId(rs.getInt("BRAND_ID"));
-            brand.setBrandName(rs.getString("BRAND_NAME"));
-            brand.setBrandDescription(rs.getString("DESCRIPTION"));
+                /*List<Integer> brandId = new ArrayList<Integer>();
+                brandId.add(rs.getInt("BRAND_ID"));
+
+            for(int a : brandId)
+            {
+                System.out.println(a);
+                jdbcTemplate.query(sqlQuery.getNoOfProducts, new BrandMapper());*/
+
+                brand.setBrandId(rs.getInt("BRAND_ID"));
+            int ab = brand.getBrandId();
+             int noOfProduct;
+            Object[] parameters = new Object[] {new Integer(ab)};
+
+            List l = jdbcTemplate.queryForList("SELECT COUNT(*) from PRODUCT where BRAND_ID = ? ",
+                    parameters);
+            String alok = l.toString();
+
+                    System.out.println(alok);
+
+                brand.setBrandName(rs.getString("BRAND_NAME"));
+                brand.setBrandDescription(rs.getString("DESCRIPTION"));
+
+
+
+
+
+
+
+
 
             return brand;
+        }
+
+        private void getNoOfProduct(int a) {
+
+
         }
     }
 
