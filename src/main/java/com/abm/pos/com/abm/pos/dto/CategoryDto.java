@@ -8,7 +8,15 @@ public class CategoryDto {
     private int categoryId;
     private String categoryName;
     private String description;
+    private int noOfProducts;
 
+    public int getNoOfProducts() {
+        return noOfProducts;
+    }
+
+    public void setNoOfProducts(int noOfProducts) {
+        this.noOfProducts = noOfProducts;
+    }
     public int getCategoryId() {
         return categoryId;
     }

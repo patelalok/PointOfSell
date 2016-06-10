@@ -3,10 +3,7 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.ProductManager;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +33,12 @@ public class ProductController {
     public List<ProductDto> getProduct() {
 
         return productManager.getProductDetails();
+    }
+
+    @RequestMapping(value = "/getProductForProductPage", method = RequestMethod.GET)
+    public List<ProductDto> getProductForProductPage(@PathVariable int brandId) {
+
+        return null;// productManager.getProductDetailsForProductPage(brandId,categoryId,vendorId);
     }
 
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")

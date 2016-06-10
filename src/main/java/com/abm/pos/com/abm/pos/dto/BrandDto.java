@@ -10,6 +10,16 @@ public class BrandDto {
     private String brandDescription;
     private int noOfProducts;
 
+    public int getNoOfProducts() {
+        return noOfProducts;
+    }
+
+    public void setNoOfProducts(int noOfProducts) {
+        this.noOfProducts = noOfProducts;
+    }
+
+
+
     public String getBrandDescription() {
         return brandDescription;
     }

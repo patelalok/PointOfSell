@@ -11,7 +11,6 @@ public class TransactionLineItemDto {
     private int quantity;
     private double retail;
     private double cost;
-    private double tax;
     private double discount;
 
 
@@ -53,14 +52,6 @@ public class TransactionLineItemDto {
 
     public void setRetail(double retail) {
         this.retail = retail;
-    }
-
-    public double getTax() {
-        return tax;
-    }
-
-    public void setTax(double tax) {
-        this.tax = tax;
     }
 
     public int getTransactionId() {

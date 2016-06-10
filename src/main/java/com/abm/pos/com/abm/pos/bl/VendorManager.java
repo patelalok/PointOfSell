@@ -86,7 +86,7 @@ public class VendorManager {
         return vendorList;
 
     }
-        private static final class VendorMapper implements RowMapper<VendorDto>
+        private final class VendorMapper implements RowMapper<VendorDto>
         {
 
             @Override
@@ -95,11 +95,14 @@ public class VendorManager {
                 VendorDto vendor = new VendorDto();
 
                 vendor.setVendorId(rs.getInt("VENDOR_ID"));
+
+                int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForVendor, new Object[] {vendor.getVendorId()},Integer.class);
                 vendor.setVendorName(rs.getString("VENDOR_NAME"));
                 vendor.setCommision(rs.getString("COMMISION"));
                 vendor.setPhoneNo(rs.getInt("PHONENO"));
                 vendor.setCompanyName(rs.getString("COMPANY_NAME"));
                 vendor.setAddress(rs.getString("ADDRESS"));
+                vendor.setNoOfProducts(noOfProducts);
 
                 return vendor;
             }

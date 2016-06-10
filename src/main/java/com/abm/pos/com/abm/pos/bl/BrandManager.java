@@ -64,6 +64,7 @@ public class BrandManager {
         try
         {
             brandList = jdbcTemplate.query(sqlQuery.getBrandDetails, new BrandMapper());
+
             System.out.println("Send All Brand Details Successfully");
         }
 
@@ -81,35 +82,13 @@ public class BrandManager {
 
             BrandDto brand = new BrandDto();
 
-                /*List<Integer> brandId = new ArrayList<Integer>();
-                brandId.add(rs.getInt("BRAND_ID"));
+            brand.setBrandId(rs.getInt("BRAND_ID"));
 
-            for(int a : brandId)
-            {
-                System.out.println(a);
-                jdbcTemplate.query(sqlQuery.getNoOfProducts, new BrandMapper());*/
+            int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForBrand, new Object[] {brand.getBrandId()},Integer.class);
 
-                brand.setBrandId(rs.getInt("BRAND_ID"));
-            int ab = brand.getBrandId();
-             int noOfProduct;
-            Object[] parameters = new Object[] {new Integer(ab)};
-
-            List l = jdbcTemplate.queryForList("SELECT COUNT(*) from PRODUCT where BRAND_ID = ? ",
-                    parameters);
-            String alok = l.toString();
-
-                    System.out.println(alok);
-
-                brand.setBrandName(rs.getString("BRAND_NAME"));
-                brand.setBrandDescription(rs.getString("DESCRIPTION"));
-
-
-
-
-
-
-
-
+            brand.setBrandName(rs.getString("BRAND_NAME"));
+            brand.setBrandDescription(rs.getString("DESCRIPTION"));
+            brand.setNoOfProducts(noOfProducts);
 
             return brand;
         }

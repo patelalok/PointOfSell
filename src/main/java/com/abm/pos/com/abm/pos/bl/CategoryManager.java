@@ -64,7 +64,7 @@ public class CategoryManager {
         return categoryList;
     }
 
-    private static final class CategoryMapper implements RowMapper<CategoryDto>
+    private final class CategoryMapper implements RowMapper<CategoryDto>
     {
 
         @Override
@@ -73,8 +73,11 @@ public class CategoryManager {
             CategoryDto category = new CategoryDto();
 
             category.setCategoryId(rs.getInt("CATEGORY_ID"));
+
+            int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForCategory, new Object[] {category.getCategoryId()},Integer.class);
             category.setCategoryName(rs.getString("CATEGORY_NAME"));
             category.setDescription(rs.getString("DESCRIPTION"));
+            category.setNoOfProducts(noOfProducts);
 
             return category;
         }

@@ -116,5 +116,7 @@ public class SQLQueries {
     public String deleteBrand = "DELETE FROM BRAND WHERE BRAND_ID = ?";
 
 
-    public String getNoOfProducts = "SELECT COUNT(*) from PRODUCT where BRAND_ID = ?";
+    public String getNoOfProductsForBrand = "SELECT COUNT(*) from PRODUCT where BRAND_ID = ?";
+    public String getNoOfProductsForCategory = "SELECT COUNT(*) from PRODUCT where CATEGORY_ID = ?";
+    public String getNoOfProductsForVendor = "SELECT COUNT(*) from PRODUCT where VENDOR_ID = ?";
 }

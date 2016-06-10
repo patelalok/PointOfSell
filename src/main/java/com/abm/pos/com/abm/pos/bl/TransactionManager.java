@@ -92,7 +92,6 @@ public class TransactionManager {
                     transactionLineItemDto.getQuantity(),
                     transactionLineItemDto.getRetail(),
                     transactionLineItemDto.getCost(),
-                    transactionLineItemDto.getTax(),
                     transactionLineItemDto.getDiscount());
             System.out.println("Transaction Line Item Added Successfully");
         }
@@ -129,7 +128,6 @@ public class TransactionManager {
             lineItem.setRetail(rs.getDouble("RETAIL"));
             lineItem.setCost(rs.getDouble("COST"));
             lineItem.setDiscount(rs.getDouble("DISCOUNT"));
-            lineItem.setTax(rs.getDouble("TAX"));
 
             return lineItem;
         }

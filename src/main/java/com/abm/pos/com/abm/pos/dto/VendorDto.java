@@ -11,6 +11,15 @@ public class VendorDto {
     private int phoneNo;
     private String companyName;
     private String address;
+    private int noOfProducts;
+
+    public int getNoOfProducts() {
+        return noOfProducts;
+    }
+
+    public void setNoOfProducts(int noOfProducts) {
+        this.noOfProducts = noOfProducts;
+    }
 
     public String getCompanyName() {
         return companyName;
