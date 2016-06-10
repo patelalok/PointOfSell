@@ -883,3 +883,11 @@ font-weight: bold;
 {
 	background-color:white;
 }
+.color-green
+{
+	color:green !important;
+}
+.color-red
+{
+	color:red;
+}

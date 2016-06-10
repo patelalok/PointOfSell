@@ -23,6 +23,11 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 	    templateUrl: 'app/product/mainProduct.html',
 	    controller: 'mainProductController'
 	  })
+	  .state('customer', {
+	    url: '/customer',
+	    templateUrl: 'app/AddCustomer/mainCustomer.html',
+	    controller: 'mainCustomerController'
+	  })
 	  .state('sell', {
 		    url: '/sell',
 		    templateUrl: 'app/sell/sell.html',
@@ -42,6 +47,11 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    url: '/vendor',
 		    templateUrl: 'app/product/vendor.html',
 		    controller: 'VendorController'
+		  })
+		  .state('setup', {
+		    url: '/setup',
+		    templateUrl: 'app/Setup/setup.html',
+		    controller: 'SetupController'
 		  })
 		    .state('ledger', {
 		    url: '/ledger',
