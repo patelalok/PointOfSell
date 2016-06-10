@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').directive('responsiveTable', ResponsiveTableTwo);
 
-	ResponsiveTableTwo.$inject = [ '$timeout', '$compile', '$window', '$filter', 'screenSize' ];
+	ResponsiveTableTwo.$inject = [ '$rootScope','$timeout', '$compile', '$window', '$filter', 'screenSize' ];
 
-	function ResponsiveTableTwo($timeout, $compile, $window, $filter, screenSize) {
+	function ResponsiveTableTwo($rootScope,$timeout, $compile, $window, $filter, screenSize) {
 
 		return {
 			restrict : 'EA',
@@ -53,7 +53,7 @@
 				};
 
 				var maximumInteger = Math.pow(2, 53) - 1;
-
+				
 				/*
 				 * var sortExistingData = function(data, columns, sortColumn,
 				 * sortAscending) { var toSortBy = columns[sortColumn]; var
@@ -266,7 +266,10 @@
 								// column);
 							}
 						};
-
+						scope.Delete = function()
+						{
+						$rootScope.testData = [];	
+						};
 						scope.sortByColumn = function(columnIndex, column) {
 							if (scope.sortColumn === columnIndex) {
 								scope.sortAscending = !scope.sortAscending;

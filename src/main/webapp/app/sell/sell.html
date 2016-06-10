@@ -38,10 +38,8 @@
 						{{::row.item}}
 					</cell>
 					</column>
-					<column name="Quantity" key="" datatype="string" width="2%">
-					<cell ng-non-bindable>
-					<span>1</span>
-					</cell>
+					<column name="Quantity" key="quantity" datatype="string" width="2%">
+					
 					</column>
 					<column name="Retail" key="retail" datatype="string" width="10%"></column>
 					<column name="Discount" key="discount" datatype="string" width="2%"></column>
@@ -50,8 +48,8 @@
 							{{::row.total}}
 						</cell>
 					</column>
-					<column name="Stock" key="quantity" datatype="string" width="5%"></column>
-					<column name="" key="" datatype="" width="5%">
+					<column name="Stock" key="stock" datatype="string" width="5%"></column>
+					<column name="Delete" key="" datatype="string" width="5%">
 						<cell ng-non-bindable>
 							<!-- <span>
 								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
@@ -67,29 +65,29 @@
 			<div class="row totalColumn display-table tableMainProp" align="center">
 				<div class="display-row">
 					<div class=" inline-vertical display-cell align-left">Quantity</div>
-					<div class=" inline-vertical display-cell align-left padding-left-40">6</div>
+					<div class=" inline-vertical display-cell align-left padding-left-40" ng-model="totalQuantity">{{totalQuantity}}</div>
 				</div>
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Subtotal</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">20.89</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="subTotal">{{subTotal}}</div>
 				</div>
 				<div class="display-row">		
 					<div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="1%" /></div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()"/></div>
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="3.89" /></div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="3.89" ng-model="totalTax" ng-change="loadCheckOutData()" /></div>
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">21.89</div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{productTotal}}</div>
 				</div>
 			</div>
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
 				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:30px;width:33%;background-color:#44b772;" ng-click="openCashPopup()">
 				<span style="float:left;">Payment</span>
-				<span style="float:right;"> $125.00</span>
+				<span style="float:right;">{{totalPayment}}</span>
 				</button>
 			</div>
 		</div>	
