@@ -62,7 +62,7 @@ $scope.brandData = [{
 		
 		$scope.navigateToProduct = function()
 		{
-			$state.go('product');
+			$state.go('productmain');
 		};
 
 		$rootScope.closeBootstrapAlert = function()

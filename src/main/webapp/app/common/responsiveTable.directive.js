@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').directive('responsiveTable', ResponsiveTableTwo);
 
-	ResponsiveTableTwo.$inject = [ '$rootScope','$timeout', '$compile', '$window', '$filter', 'screenSize' ];
+	ResponsiveTableTwo.$inject = [ '$rootScope','$timeout', '$compile', '$window', '$filter', 'screenSize','modalService' ];
 
-	function ResponsiveTableTwo($rootScope,$timeout, $compile, $window, $filter, screenSize) {
+	function ResponsiveTableTwo($rootScope,$timeout, $compile, $window, $filter, screenSize,modalService) {
 
 		return {
 			restrict : 'EA',
@@ -268,8 +268,19 @@
 						};
 						scope.Delete = function()
 						{
-						$rootScope.testData = [];	
+							modalService.showModal('', {
+								isCancel : true
+							}, "Are you Sure Want to Delete ? ", callBackAction);
+							
 						};
+						function callBackAction(isOKClicked)
+						{
+							
+							if(isOKClicked)
+							{
+								$rootScope.testData = [];
+							}	
+						}
 						scope.sortByColumn = function(columnIndex, column) {
 							if (scope.sortColumn === columnIndex) {
 								scope.sortAscending = !scope.sortAscending;

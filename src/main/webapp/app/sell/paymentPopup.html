@@ -6,8 +6,8 @@
 	<div class="modal-body">
 		<div class="row cashbuttons alignCenter">
 			<div class="inline-vertical">CASH</div>
-			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" /></div>
-			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;">Max</button></div>
+			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" ng-model="cashPayout" ng-change="addAmount(this.value)"/></div>
+			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;" ng-click="payOutMax()">Max</button></div>
 		</div>
 		<div class="row priceBtns alignCenter padding-top-10">
 			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;" ng-click="addAmount(1)">$1</button></div>
@@ -22,30 +22,30 @@
 				<span class="displayBlock">CREDIT</span> 
 				<span>CARD</span>
 			</div>
-			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" /></div>
-			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;">Max</button></div>
+			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" ng-model="creditCardPayout" /></div>
+			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;" ng-click="payOutMax()">Max</button></div>
 		</div>
 		<div class="row alignCenter cashbuttons padding-top-10">
 			<div class="inline-vertical"><span class="displayBlock">DEBIT</span><span>CARD</span></div>
-			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" /></div>
-			<div class="inline-vertical"><button type="button" class="btn btn-primary"style="width:75px;font-size:28px;" >Max</button></div>
+			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" ng-model="debitCardPayout" /></div>
+			<div class="inline-vertical"><button type="button" class="btn btn-primary"style="width:75px;font-size:28px;" ng-click="payOutMax()" >Max</button></div>
 		</div>
 		<div class="row checkbuttons alignCenter padding-top-10">
 			<div class="inline-vertical">CHECK</div>
 			<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00" /></div>
-			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;">Max</button></div>
+			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;" ng-model="checkPayout" ng-click="payOutMax()">Max</button></div>
 		</div>
 				
 	</div>
 	<div class="modal-footer">
 	 <div class="row alignCenter">
 	 	<div class="col-md-6">
-		<div class="inline-vertical" style="font-size:20px;">Total</div>
-		<div class="inline-vertical"><input type="text" class="form-control" placeholder="$O.00"  ng-model="checkPayment" /></div>
+		<div class="inline-block" style="font-size:20px;">Total</div>
+		<div class="inline-block" style="padding-left:10px;"><span  ng-model="checkPayment" >{{checkPayment}}</span></div>
 		</div>
 		<div class="col-md-6">
-		<div class="inline-vertical" style="font-size:20px;">Balance</div>
-		<div class="inline-vertical"><input type="text" class="form-control color-red" placeholder="$O.00" ng-model="balanceAmount" ng-class="{'color-green':color}"/></div>
+		<div class="inline-block" style="font-size:20px;">Balance</div>
+		<div class="inline-block" style="padding-left:10px;"><span class="color-red" ng-model="balanceAmount" ng-class="{'color-green':color}" >{{balanceAmount}}</span></div>
 		</div>
  	</div>	
 	</div>

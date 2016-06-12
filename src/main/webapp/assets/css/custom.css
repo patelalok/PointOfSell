@@ -891,3 +891,19 @@ font-weight: bold;
 {
 	color:red;
 }
+.btn.btn-secondary {
+	border: 1px solid #F9750C;
+	color: #F9750C;
+	background-color: #fff;
+	margin-bottom: 0;
+}
+
+.btn.btn-secondary:hover {
+	border-color: #CC6633;
+	color: #CC6633;
+	background-color: #fff;
+}
+.inline-block
+{
+	display:inline-block;
+}

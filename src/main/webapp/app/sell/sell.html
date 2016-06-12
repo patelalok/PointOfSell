@@ -73,11 +73,11 @@
 				</div>
 				<div class="display-row">		
 					<div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()"/></div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/></div>
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="3.89" ng-model="totalTax" ng-change="loadCheckOutData()" /></div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="3.89" ng-model="totalTax" ng-change="loadCheckOutData()" disabled="disabled" /></div>
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
@@ -87,7 +87,7 @@
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
 				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:30px;width:33%;background-color:#44b772;" ng-click="openCashPopup()">
 				<span style="float:left;">Payment</span>
-				<span style="float:right;">{{totalPayment}}</span>
+				<span style="float:right;">${{totalPayment}}</span>
 				</button>
 			</div>
 		</div>	

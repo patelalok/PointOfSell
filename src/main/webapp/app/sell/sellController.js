@@ -3,12 +3,13 @@
 
 	angular.module('sampleApp').controller('sellController', sellController);
 
-	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory'];
+	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types'];
 
-	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory) {
+	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
+		$scope.restrictCharacter=restrictCharacter;
 		GlobalVariable.isLoginPage = false;
 		var i=0;
 		$scope.pageSize = 10;
@@ -139,8 +140,13 @@
 			
 			$scope.loadCheckOutData();
 		};
-		$scope.removeRow = function(itemNo){				
-		var index = -1;		
+		$scope.removeRow = function(itemNo){	
+			
+			GlobalVariable.itemNoToDelete = itemNo;
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Delete ? ", $scope.callBackAction);
+		/*var index = -1;		
 		var comArr = eval( $rootScope.testData );
 		for( var i = 0; i < comArr.length; i++ ) {
 			if( comArr[i].itemNo === itemNo ) {
@@ -151,8 +157,27 @@
 		if( index === -1 ) {
 			alert( "Something gone wrong" );
 		}
-		$rootScope.testData.splice( index, 1 );		
+		$rootScope.testData.splice( index, 1 );*/		
 	};
+	$scope.callBackAction = function(isOKClicked)
+	{
+		
+		if(isOKClicked)
+		{
+			var index = -1;		
+			var comArr = eval( $rootScope.testData );
+			for( var i = 0; i < comArr.length; i++ ) {
+				if( comArr[i].itemNo === GlobalVariable.itemNoToDelete ) {
+					index = i;
+					break;
+				}
+			}
+			if( index === -1 ) {
+				alert( "Something gone wrong" );
+			}
+			$rootScope.testData.splice( index, 1 );
+		}	
+	}
 	$scope.changeQuantity= function()
 	{
 		var searchTxt = $scope.searchValue.toString();
@@ -300,12 +325,12 @@
 			if($scope.totalDisc == undefined)
 				$scope.totalDisc = 0;
 			
-			$scope.productTotalWithoutTax = ($scope.totalQuantity * $scope.subTotal) - parseFloat($scope.totalDisc);
+			$scope.productTotalWithoutTax = ( $scope.subTotal) - parseFloat($scope.totalDisc);
 			
 			if($scope.totalTax == undefined)
 				$scope.totalTax = 0;
 			
-			$scope.productTotal = parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 );
+			$scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
 			 
 			$scope.totalPayment = $scope.productTotal;
 			GlobalVariable.checkOuttotal = $scope.totalPayment;

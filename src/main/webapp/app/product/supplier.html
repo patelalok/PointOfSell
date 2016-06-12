@@ -20,18 +20,17 @@
 </div>
 <div class="row" style="padding:30px;">
 	<div class="col-md-12">
-		<div data-responsive-table data-ng-model="getCategory"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="GlobalVariable.getCategory"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
 					<column name="Name" key="categoryName" datatype="string" width="25%" sortable="true"></column>
-					<column name="Descritpion" key="description" datatype="string" width="40%"></column>
-					<column name="Default Markup" key="defaultmarkup" datatype="string" width="5%"></column>
-					<column name="Number of products" key="noofprod" datatype="string" width="5%"></column>
-					<column name="" key="" datatype="" width="15%">
+					<column name="Descritpion" key="description" datatype="string" width="50%"></column>
+					<column name="Number of products" key="noofprod" datatype="string" width="15%"></column>
+					<column name="" key="" datatype="" width="20%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
-								<a ng-click="scope.navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
+								<a ng-click="navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
 							</span>
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:#478FCA;"></span>
 							<span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span>
