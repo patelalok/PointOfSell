@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by asp5045 on 6/12/16.
@@ -51,13 +52,13 @@ public class SalesManager {
 
 
 
-    public List<TransactionDto> getTransactionDetails(String date)
+    public List<TransactionDto> getTransactionDetails(String startDate, String endDate)
     {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
         try
         {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(), date);
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(), startDate,endDate);
         }
         catch (Exception e)
         {
@@ -77,6 +78,11 @@ public class SalesManager {
 
             transaction.setTransactionId(rs.getInt("TRANSACTION_ID"));
             transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+           StringTokenizer at = new StringTokenizer(transaction.getTransactionDate());
+            String date = at.nextToken();
+            String time = at.nextToken();
+            System.out.println(date);
+            System.out.println(time);
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setTax(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));

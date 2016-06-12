@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.imageio.plugins.jpeg.JPEG.vendor;
+
 /**
  * Created by asp5045 on 5/24/16.
  */
@@ -91,7 +93,7 @@ public class ProductManager
             }
             return productList;
         }
-    private static final class ProductMapper implements RowMapper<ProductDto>
+    private final class ProductMapper implements RowMapper<ProductDto>
         {
 
             @Override
@@ -102,7 +104,9 @@ public class ProductManager
                 product.setProductId(rs.getInt("PRODUCT_ID"));
                 product.setProductNo(rs.getString("PRODUCT_NO"));
                 product.setCategoryId(rs.getInt("CATEGORY_ID"));
+                product.setCategoryName(jdbcTemplate.queryForObject(sqlQuery.getCategoryName, new Object[] {product.getCategoryId()},String.class));
                 product.setVendorId(rs.getInt("VENDOR_ID"));
+                product.setVendorName(jdbcTemplate.queryForObject(sqlQuery.getVendorName, new Object[] {product.getVendorId()},String.class));
                 product.setAltNo(rs.getString("ATL_NO"));
                 product.setDescription(rs.getString("DESCRIPTION"));
                 product.setCostPrice(rs.getString("COST_PRICE"));
@@ -114,6 +118,7 @@ public class ProductManager
                 product.setImage(rs.getString("IMAGE"));
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
+                product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
 
                 return product;
             }

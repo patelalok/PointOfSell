@@ -97,7 +97,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE = ?";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ?";
 
     public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM";
 
@@ -119,4 +119,7 @@ public class SQLQueries {
     public String getNoOfProductsForBrand = "SELECT COUNT(*) from PRODUCT where BRAND_ID = ?";
     public String getNoOfProductsForCategory = "SELECT COUNT(*) from PRODUCT where CATEGORY_ID = ?";
     public String getNoOfProductsForVendor = "SELECT COUNT(*) from PRODUCT where VENDOR_ID = ?";
+    public String getCategoryName =  "SELECT CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_ID = ? ";
+    public String getVendorName = "SELECT VENDOR_NAME FROM VENDOR WHERE VENDOR_ID = ?";
+    public String getBrandName = "SELECT BRAND_NAME FROM BRAND WHERE BRAND_ID = ?";
 }
