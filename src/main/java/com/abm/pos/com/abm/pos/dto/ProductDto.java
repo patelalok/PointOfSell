@@ -20,6 +20,36 @@ public class ProductDto {
     private String returnRule;
     private String image;
     private String createdDate;
+    private String categoryName;
+    private String brandName;
+    private String vendorName;
+
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+
 
 
     public int getProductId() {

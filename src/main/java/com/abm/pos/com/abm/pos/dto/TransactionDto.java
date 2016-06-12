@@ -5,15 +5,26 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class TransactionDto {
 
+
     private int transactionId;
     private String transactionDate;
-    private String totalAmount;
-    private  String tax;
-    private String discount;
+    private double totalAmount;
+    private double tax;
+    private double discount;
     private int customerId;
-    private  int userId;
+    private int userId;
     private int paymentId;
     private String status;
+    private double  paidAmount;
+    private double changeAmount;
+
+    public double getChangeAmount() {
+        return changeAmount;
+    }
+
+    public void setChangeAmount(double changeAmount) {
+        this.changeAmount = changeAmount;
+    }
 
     public int getCustomerId() {
         return customerId;
@@ -23,12 +34,20 @@ public class TransactionDto {
         this.customerId = customerId;
     }
 
-    public String getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(double paidAmount) {
+        this.paidAmount = paidAmount;
     }
 
     public int getPaymentId() {
@@ -39,19 +58,27 @@ public class TransactionDto {
         this.paymentId = paymentId;
     }
 
-    public String getTax() {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 
-    public String getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(String totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -77,14 +104,6 @@ public class TransactionDto {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
 
