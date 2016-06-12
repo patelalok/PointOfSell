@@ -3,8 +3,8 @@
 	    <div>
 	    <button  type="button" class="close" ng-click="closeBootstrapAlert()">
 	        &times;
-	    </button>
-	    Vendor Added Successfully
+	    </button><span data-ng-show="GlobalVariable.addesSuccessfull == true">Vendor Added Successfully</span> 
+	   <span data-ng-show="GlobalVariable.enableEdit == true">Vendor Edited Successfully</span>
 		</div>
 		</div>
 <div class="row pageHeader" style="padding:30px;">
@@ -24,16 +24,19 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="Name" key="vendorName" datatype="string" width="20%" sortable="true"></column>
-					<column name="Descritpion" key="desc" datatype="string" width="40%"></column>
-					<column name="Number of products" key="noofprod" datatype="string" width="25%"></column>
+					<column name="Name" key="vendorName" datatype="string" width="22%" sortable="true"></column>
+					<column name="Phone Number" key="phoneNo" datatype="string" width="10%" sortable="true"></column>
+					<column name="Commision" key="commision" datatype="string" width="3%"></column>
+					<column name="Company Name" key="companyName" datatype="string" width="20%"></column>
+					<column name="Address" key="address" datatype="string" width="25%"></column>
+					<column name="Number Of Products" key="noOfProducts" datatype="string" width="5%"></column>
 					<column name="" key="" datatype="" width="15%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
 								<a ng-click="scope.navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
 							</span>
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:#478FCA;"></span>
-							<span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span>
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:#478FCA;" ng-click="scope.editVendor(row)"></span>
+							<span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;" ng-click="scope.deleteVendor(row.vendorId)"></span>
 						</cell>
 					</column>
 				</columns>		

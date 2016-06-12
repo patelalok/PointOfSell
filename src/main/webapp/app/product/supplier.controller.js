@@ -3,15 +3,16 @@
 
 	angular.module('sampleApp').controller('SupplierController', SupplierController);
 
-	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory'];
+	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService'];
 
-	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory) {
+	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
+		GlobalVariable.enableEdit = false;
 
 		
 $rootScope.closeBootstrapAlert = function()
@@ -37,6 +38,7 @@ $rootScope.closeBootstrapAlert = function()
 		};
 		$scope.openAddPopup = function()
 		{
+			GlobalVariable.enableEdit = false;
 			GlobalVariable.addHeaderName = "Add Category";
 			GlobalVariable.textName = "Category";
 			GlobalVariable.addButtonName = "Add Category";
@@ -44,11 +46,51 @@ $rootScope.closeBootstrapAlert = function()
 			var _ctrlPath = 'addPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
 		};
+		$scope.editCategory = function(categoryDetails)
+		{
+			GlobalVariable.enableEdit = true;
+			GlobalVariable.editBrandName = categoryDetails.categoryName;
+			GlobalVariable.editBrandDescription = categoryDetails.categoryDescription;
+			GlobalVariable.editBrandId = categoryDetails.categoryId;
+			GlobalVariable.addHeaderName = "Edit Category";
+			GlobalVariable.textName = "Category";
+			GlobalVariable.addButtonName = "Edit Category";
+			var _tmPath = 'app/product/AddPopup.html';
+			var _ctrlPath = 'addPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
+		};
 		function addPopupControllerCallBack()
 		{
+			GlobalVariable.addesSuccessfull = true;
 			GlobalVariable.addHeaderName = "";
 			GlobalVariable.textName = "";
 			GlobalVariable.addButtonName = "";
+		}
+		$scope.deleteCategory(categoryId)
+		{
+			$scope.deleteCategoryrId = categoryId;
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Delete ? ", $scope.callBackDeleteAction);
+		};
+		$scope.callBackDeleteAction = function(isOKClicked)
+		{
+			if(isOKClicked)
+			{
+				var request = new Object();
+				request.categoryId = $scope.deleteCategoryrId;
+				request = JSON.stringify(request);
+
+				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
+			}
+		};
+		function deleteSuccessHandler(response)
+		{
+			console.log(response);
+		}
+		function deleteErrorHandler(response)
+		{
+			console.log(response);
 		}
 		function render()
 		{

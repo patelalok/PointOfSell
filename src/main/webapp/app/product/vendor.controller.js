@@ -3,48 +3,17 @@
 
 	angular.module('sampleApp').controller('VendorController', VendorController);
 
-	VendorController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory'];
+	VendorController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService'];
 
-	function VendorController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory) {
+	function VendorController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
-		
-$scope.brandData = [{
-			
-			"name":"DressShirt",
-			"desc":"25 April 2016",
-			"noofprod":5
-		},
-		{
-			"name":"DressShirt",
-			"desc":"25 April 2016",
-			"noofprod":5.00,
-			"count":26
-		},
-		{
-			"name":"DressShirt",
-			"desc":"25 April 2016",
-			"noofprod":5.00,
-			"count":26
-		},
-		{
-			"name":"DressShirt",
-			"desc":"25 April 2016",
-			"noofprod":5.00,
-			"count":26
-		},
-		{
-			"name":"DressShirt",
-			"desc":"25 April 2016",
-			"noofprod":5.00,
-			"count":26
-		}
-			
-		];
+		GlobalVariable.enableEdit = false;
+
 $rootScope.closeBootstrapAlert = function()
 {
 	GlobalVariable.successAlert = false;
@@ -65,10 +34,11 @@ $rootScope.closeBootstrapAlert = function()
 		
 		$scope.navigateToProduct = function()
 		{
-			$state.go('product');
+			$state.go('productmain');
 		};
 		$scope.openAddPopup = function()
 		{
+			GlobalVariable.enableEdit = false;
 			GlobalVariable.addHeaderName = "Add Vendor";
 			GlobalVariable.textName = "Vendor";
 			GlobalVariable.addButtonName = "Add Vendor";
@@ -76,11 +46,52 @@ $rootScope.closeBootstrapAlert = function()
 			var _ctrlPath = 'addPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
 		};
+		$scope.editVendor = function(vendorDetails)
+		{
+			GlobalVariable.enableEdit = true;
+			GlobalVariable.editBrandName = vendorDetails.vendorName;
+			GlobalVariable.editBrandDescription = vendorDetails.vendorDescription;
+			GlobalVariable.editBrandId = vendorDetails.vendorId;
+			GlobalVariable.editCommision = vendorDetails.commision;
+			GlobalVariable.addHeaderName = "Edit Vendor";
+			GlobalVariable.textName = "Vendor";
+			GlobalVariable.addButtonName = "Edit Vendor";
+			var _tmPath = 'app/product/AddPopup.html';
+			var _ctrlPath = 'addPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
+		};
 		function addPopupControllerCallBack()
 		{
+			GlobalVariable.addesSuccessfull = true;
 			GlobalVariable.addHeaderName = "";
 			GlobalVariable.textName = "";
 			GlobalVariable.addButtonName = "";
+		}
+		$scope.deleteVendor =function(vendorId)
+		{
+			$scope.deleteVendorId = vendorId;
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Delete ? ", $scope.callBackDeleteAction);
+		};
+		$scope.callBackDeleteAction = function(isOKClicked)
+		{
+			if(isOKClicked)
+			{
+				var request = new Object();
+				request.brandId = $scope.deleteVendorId;
+				request = JSON.stringify(request);
+
+				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
+			}
+		};
+		function deleteSuccessHandler(response)
+		{
+			console.log(response);
+		}
+		function deleteErrorHandler(response)
+		{
+			console.log(response);
 		}
 		function render()
 		{

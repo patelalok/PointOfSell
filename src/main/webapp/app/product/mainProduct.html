@@ -3,7 +3,7 @@
 	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Name/SKU/Handle</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;"/>
+			<input  type="text" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
 		</div>
 	</div>
 	<div class="col-md-1" style="width:16%;">
@@ -17,15 +17,15 @@
 	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Brand</label></div>
 		<div>
-			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
+			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;" data-ng-options="brandOpt as brandOpt.brandName for brandOpt in brandOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
 	</div>
 	<div class="col-md-1" style="width:16%;">
-		<div class="padding-bottom-5"><label>Supplier</label></div>
+		<div class="padding-bottom-5"><label>Category</label></div>
 		<div>
-			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
+			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;" data-ng-options="categoryOpt as categoryOpt.categoryName for categoryOpt in categoryOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
@@ -50,14 +50,14 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="Product" key="product" datatype="string" width="10%" sortable="true"></column>
-					<column name="Created" key="created" datatype="string" width="10%"></column>
-					<column name="Tags" key="tags" datatype="string" width="10%"></column>
-					<column name="Brand" key="brand" datatype="string" width="10%"></column>
-					<column name="Supplier" key="supplier" datatype="string" width="10%"></column>
-					<column name="Variants" key="variants" datatype="string" width="10%"></column>
-					<column name="Price" key="price" datatype="string" width="10%"></column>
-					<column name="Count" key="count" datatype="string" width="10%"></column>
+					<column name="Product No" key="productNo" datatype="string" width="10%" sortable="true"></column>
+					<column name="Product Name" key="description" datatype="string" width="10%"></column>
+					<column name="Brand Name" key="brandName" datatype="string" width="10%"></column>
+					<column name="Category Name" key="categoryName" datatype="string" width="10%"></column>
+					<column name="Vendor Name" key="vendorName" datatype="string" width="10%"></column>
+					<column name="Quantity" key="quantity" datatype="string" width="10%"></column>
+					<column name="Retail Price" key="retailPrice" datatype="string" width="10%"></column>
+					<column name="Alt No" key="altNo" datatype="string" width="10%"></column>
 					<column name="" key="" datatype="" width="10%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">

@@ -18,15 +18,16 @@
 			dataService.Get("http://localhost:8080/getBrand",getBrandSuccessHandler,getBrandErrorHandler,"application/json","application/json");
 			dataService.Get("http://localhost:8080/getCategory",getCategorySuccessHandler,getCategoryErrorHandler,"application/json","application/json");
 			dataService.Get("http://localhost:8080/getProduct",getProductSuccessHandler,getProductErrorHandler,"application/json","application/json");
-			getVendorSuccessHandler('');
-			getBrandSuccessHandler('');
-			getCategorySuccessHandler('');
+			//getVendorSuccessHandler('');
+			//getBrandSuccessHandler('');
+			//getCategorySuccessHandler('');
 			
-			getProductSuccessHandler('');
+			//getProductSuccessHandler('');
 		}
 		function getVendorSuccessHandler(response)
 		{
-			GlobalVariable.getVendors =  [
+			GlobalVariable.getVendors = response;
+			/*[
 			                              {
 			                            	    "vendorId": 11,
 			                            	    "vendorName": "Tcl-delta",
@@ -36,7 +37,7 @@
 			                            	    "address": "This is from china",
 			                            	"noOfProducts":"10"
 			                            	  }
-			                            	];
+			                            	];*/
 				//response;
 		}
 		function getVendorErrorHandler(errorResponse)
@@ -45,7 +46,8 @@
 		}
 		function getBrandSuccessHandler(response)
 		{
-			GlobalVariable.getBrands =  [
+			GlobalVariable.getBrands =  response;
+				/*[
 			                             {
 			                            	    "brandId": 1,
 			                            	    "brandName": "test",
@@ -66,7 +68,7 @@
 			                            	"noOfProducts":"10"
 
 			                            	  }
-			                            	];
+			                            	];*/
 				//response;
 		}
 		function getBrandErrorHandler(errorResponse)
@@ -75,7 +77,8 @@
 		}
 		function getCategorySuccessHandler(response)
 		{
-			GlobalVariable.getCategory = [
+			GlobalVariable.getCategory = response;
+			/*	[
 			                              {
 			                            	    "categoryId": 1,
 			                            	    "categoryName": "dtgf",
@@ -91,14 +94,15 @@
 			                            	  }
 			                            	];
 				//response;
-		}
+*/		}
 		function getCategoryErrorHandler(errorResponse)
 		{
 			
 		}
 		function getProductSuccessHandler(response)
 		{
-			GlobalVariable.getProducts = [
+			GlobalVariable.getProducts =response;
+				/* [
 			                              {
 			                            	    "productId": 6,
 			                            	    "productNo": "123456789012",
@@ -118,7 +122,7 @@
 			                            	  }
 			                            	];
 				//response;
-		}
+*/		}
 		function getProductErrorHandler(errorResponse)
 		{
 			
