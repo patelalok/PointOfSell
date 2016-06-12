@@ -118,17 +118,6 @@ public class ProductManager
                 return product;
             }
         }
-
-    public List<ProductDto> getProductDetailsForProductPage(int brandId, int categoryId, int vendorId) {
-
-      //  if(brandId!=0, categoryId!= )
-
-
-        {
-            return null;
-        }
-    }
-
     public void deleteProductToDB(String productNo) {
 
     }

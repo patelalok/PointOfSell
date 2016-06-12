@@ -39,8 +39,8 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_ID,USER_ID,PAYMENT_ID,STATUS) " +
-                     "VALUES (?,?,?,?,?,?,?,?)";
+                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_ID,USER_ID,PAYMENT_ID,STATUS,PAID_AMOUNT,CHANGE_AMOUNT) " +
+                     "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -97,7 +97,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE = ?";
 
     public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM";
 

@@ -8,15 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by asp5045 on 5/20/16.
+ * Created by asp5045 on 6/12/16.
  */
+
 @Component
-public class TransactionManager {
+public class SalesManager {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -24,7 +26,7 @@ public class TransactionManager {
     @Autowired
     SQLQueries sqlQuery;
 
-    public void addTransactionToDB(TransactionDto transactionDto) {
+    public void addTransaction(TransactionDto transactionDto) {
 
         try
         {
@@ -36,29 +38,34 @@ public class TransactionManager {
                     transactionDto.getCustomerId(),
                     transactionDto.getUserId(),
                     transactionDto.getPaymentId(),
-                    transactionDto.getStatus());
-            System.out.println("Transaction Added Successfully");
-
+                    transactionDto.getStatus(),
+                    transactionDto.getPaidAmount(),
+                    transactionDto.getChangeAmount());
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
+
     }
 
-    public void getTransactionDetails(int transactionId) {
+
+
+    public List<TransactionDto> getTransactionDetails(String date)
+    {
+        List<TransactionDto> transactionDto = new ArrayList<>();
+
         try
         {
-            jdbcTemplate.query(sqlQuery.getTransactionDetails,new TransactionManager.TransactionMapper());
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(), date);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
+
+        return transactionDto;
     }
-
-
-
 
     private static final class TransactionMapper implements RowMapper<TransactionDto>
     {
@@ -70,13 +77,16 @@ public class TransactionManager {
 
             transaction.setTransactionId(rs.getInt("TRANSACTION_ID"));
             transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
-            transaction.setTotalAmount(rs.getString("TOTAL_AMOUNT"));
-            transaction.setTax(rs.getString("TAX_AMOUNT"));
-            transaction.setDiscount(rs.getString("DISCOUNT_AMOUNT"));
+            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setTax(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
             transaction.setCustomerId(rs.getInt("CUSTOMER_ID"));
             transaction.setUserId(rs.getInt("USER_ID"));
             transaction.setPaymentId(rs.getInt("PAYMENT_ID"));
             transaction.setStatus(rs.getString("STATUS"));
+            transaction.setTotalAmount(rs.getDouble("PAID_AMOUNT"));
+            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+
 
             return transaction;
         }
@@ -100,18 +110,18 @@ public class TransactionManager {
             System.out.println(e);
         }
     }
+
+
     public void getTransactionLineItemDetails(TransactionLineItemDto transactionLineItemDto) {
         try
         {
-            jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionManager.TransactionLineItemMapper());
+            jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper());
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
     }
-
-
 
     private static final class TransactionLineItemMapper implements RowMapper<TransactionLineItemDto>
     {
@@ -133,36 +143,35 @@ public class TransactionManager {
         }
     }
 
-
     public void addTransactionPaymentToDB(TransactionPaymentDto transactionPaymentDto) {
-        try
-        {
-            jdbcTemplate.update(sqlQuery.addTransactionPaymentDetail,
+            try
+            {
+                jdbcTemplate.update(sqlQuery.addTransactionPaymentDetail,
 
-                    transactionPaymentDto.getTransactionId(),
-                    transactionPaymentDto.getTransactionDate(),
-                    transactionPaymentDto.getPaymentId(),
-                    transactionPaymentDto.getPaymentAmount());
-            System.out.println("Transaction Payment Details Added Successfully");
+                        transactionPaymentDto.getTransactionId(),
+                        transactionPaymentDto.getTransactionDate(),
+                        transactionPaymentDto.getPaymentId(),
+                        transactionPaymentDto.getPaymentAmount());
+                System.out.println("Transaction Payment Details Added Successfully");
 
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+            }
         }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-    }
 
-    public void getTransactionPaymentDetails(TransactionPaymentDto transactionPaymentDto) {
 
-        try
-        {
-            jdbcTemplate.query(sqlQuery.getTransactionPaymentDetails,new TransactionManager.TransactionPaymentMapper());
+        public void getTransactionPaymentDetails(TransactionPaymentDto transactionPaymentDto) {
+            try
+            {
+                jdbcTemplate.query(sqlQuery.getTransactionPaymentDetails,new TransactionPaymentMapper());
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+            }
         }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-    }
 
     private static final class TransactionPaymentMapper implements RowMapper<TransactionPaymentDto>
     {
@@ -181,7 +190,12 @@ public class TransactionManager {
             return transPayment;
         }
     }
-    }
+
+
+
+}
+
+
 
 
 

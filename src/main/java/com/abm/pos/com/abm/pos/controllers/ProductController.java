@@ -34,13 +34,6 @@ public class ProductController {
 
         return productManager.getProductDetails();
     }
-
-    @RequestMapping(value = "/getProductForProductPage", method = RequestMethod.GET)
-    public List<ProductDto> getProductForProductPage(@PathVariable int brandId) {
-
-        return null;// productManager.getProductDetailsForProductPage(brandId,categoryId,vendorId);
-    }
-
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")
     public void deleteProduct(@RequestBody String productNo) {
 
