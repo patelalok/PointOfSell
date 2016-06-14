@@ -19,7 +19,8 @@
 				sortColumn : '=?',
 				sortAscending : '=?',
 				onSort : '&?',
-				emptyMessage : '=?'
+				emptyMessage : '=?',
+				filterValue : '='
 			},
 			compile : function(element, attrs, transclude) {
 				var throwException = function(message) {
@@ -312,6 +313,10 @@
 						scope.$watch('ngModel', function(newValue, oldValue) {
 							scope.sortedData = scope.ngModel;
 							scope.sortColumn = -1;
+						});
+						scope.$watch('filterValue', function(newValue, oldValue) {
+							scope.valueFilter = scope.filterValue;
+							
 						});
 					}
 				};

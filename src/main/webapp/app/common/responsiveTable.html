@@ -28,7 +28,7 @@
 		</tfoot>
 		<tbody ng-show="sortedData.length > 0">
 			<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
-			<tr data-ng-repeat="row in sortedData  | limitTo : pageSize">
+			<tr data-ng-repeat="row in sortedData  | limitTo : pageSize | filter : valueFilter">
 				<td data-ng-repeat="column in columns" data-ng-class="{'wrapword': column.wordWrap}" data-ng-if="!column.toggle"
 					data-ng-hide="column.hidden" data-ng-style="{'width': column.width}">
 					<span data-ng-if="!column.cell">

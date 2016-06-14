@@ -3,12 +3,13 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
+		$scope.getProductDtls = [];
 
 		$scope.restrictCharacter=restrictCharacter;
 		GlobalVariable.isLoginPage = false;
@@ -44,14 +45,29 @@
 				}$scope
 			}
 		};
+		
+		$scope.applyFilter = function()
+		{
+			$scope.getProductDtls = $filter('filter')($scope.getProductDtls,$scope.vType);
+		};
+		$scope.checkValue = function()
+		{
+			if($scope.cType == undefined && $scope.bType == undefined && $scope.vType == undefined)
+				{
+				$scope.getProductDtls = GlobalVariable.getProducts;
+				}
+		};
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;
 			$scope.curPageOnTotalLen = 0;
 			$scope.totalLength = 0;
+			$scope.productType = "select";
 			
 			$scope.brandOptions = GlobalVariable.getBrands;
 			$scope.categoryOptions = GlobalVariable.getCategory;
+			$scope.vendorOptions = GlobalVariable.getVendors;
+			$scope.getProductDtls = GlobalVariable.getProducts;
 			
 				
 		}

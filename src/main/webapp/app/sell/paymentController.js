@@ -27,6 +27,45 @@
 		{
 			//TODO 
 			//Database service call to complete transaction request.
+			if($scope.balanceAmount == 0)
+			{
+				$scope.amountPaid = parseFloat($scope.checkPayment);
+				$scope.changeAmount = 0;
+			}
+			else if($scope.balanceAmount < 0)
+			{
+				$scope.amountPaid = parseFloat($scope.checkPayment)-parseFloat($scope.balanceAmount);
+				$scope.changeAmount = -(parseFloat($scope.balanceAmount));
+			}
+			else if($scope.balanceAmount > 0)
+			{
+				$scope.amountPaid = parseFloat($scope.checkPayment)-parseFloat($scope.balanceAmount);
+				$scope.changeAmount = $scope.balanceAmount;
+			}	
+			var url ="http://localhost:8080/addTransaction";
+			var request = new Object();
+			request = {
+				"transactionDate":"1000-01-01 00:00:00",  
+				"totalAmount":GlobalVariable.checkOuttotal,
+				"tax":GlobalVariable.taxTotal,
+				"discount":GlobalVariable.discountTotal ,
+				"customerPhoneNo":"123456789012",
+				"userId":"1234", 
+				"paymentId":"1",
+				"status":"completed",
+			"paidAmount":$scope.amountPaid,
+			"changeAmount":$scope.changeAmount
+
+			};
+			dataService.Post(url,request,addTransactionSuccessHandler,addTransactionErrorHandler,"application/json","application/json");
+		};
+		function addTransactionSuccessHandler(response)
+		{
+			
+		};
+		function addTransactionErrorHandler(response)
+		{
+			
 		};
 		$scope.payOutMax = function()
 		{

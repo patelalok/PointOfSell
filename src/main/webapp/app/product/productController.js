@@ -11,45 +11,7 @@
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
-		/*GlobalVariable.getVendors =  [
-		                                        {
-		                                            "vendorId": 11,
-		                                            "vendorName": "Tcl-delta",
-		                                            "commision": "12",
-		                                            "phoneNo": 1234567890,
-		                                            "companyName": "TCS",
-		                                            "address": "This is from china"
-		                                          }
-		                                        ];
-		GlobalVariable.getBrands =[
-		                           {
-		                        	    "brandId": 1,
-		                        	    "brandName": "test",
-		                        	    "brandDescription": "test"
-		                        	  },
-		                        	  {
-		                        	    "brandId": 2,
-		                        	    "brandName": "test",
-		                        	    "brandDescription": "test"
-		                        	  },
-		                        	  {
-		                        	    "brandId": 3,
-		                        	    "brandName": "Iphone",
-		                        	    "brandDescription": "This is iphone brand"
-		                        	  }
-		                        	];
-		GlobalVariable.getCategory=[
-		  {
-		    "categoryId": 1,
-		    "categoryName": "dtgf",
-		    "description": "fdgdf"
-		  },
-		  {
-		    "categoryId": 2,
-		    "categoryName": "Phone",
-		    "description": "This category is for phone"
-		  }
-		]*/
+	
 		
 		$scope.populateRetailPrice = function()
 		{
@@ -83,7 +45,7 @@
 		};
 		$scope.generateRandomId = function()
 		{
-			$scope.productId = Math.round((Math.random() * 10) * 10);
+			$scope.productId = Math.round(((Math.random() * 10) * 10)+1000000000);
 		}
 		$scope.addProduct = function()
 		{
@@ -117,6 +79,10 @@
 		function render()
 		{
 			console.log("params = "+$state.params);
+			$scope.prodCP = 0;
+			$scope.prodMarkup = 0;
+			$scope.prodRetail = 0;
+			
 		}
 		render();
 	}

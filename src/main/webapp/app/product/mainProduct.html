@@ -9,23 +9,34 @@
 	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Product Type</label></div>
 		<div>
-			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
+			<select id="prType" data-ng-model="productType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;">
+							<option value="select">Select All</option>
+							<option value="Brand">Brand</option>
+							<option value="Vendor">Vendor</option>
+							<option value="Category">Category</option>
+						</select>
+		</div>
+	</div>
+	<div class="col-md-1" style="width:16%;" ng-show="productType == 'Vendor'">
+		<div class="padding-bottom-5"><label>Vendor</label></div>
+		<div>
+			<select id="prType" data-ng-model="bType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="vendorOpt as vendorOpt.vendorName for vendorOpt in vendorOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
 	</div>
-	<div class="col-md-1" style="width:16%;">
+	<div class="col-md-1" style="width:16%;" ng-show="productType == 'Brand'">
 		<div class="padding-bottom-5"><label>Brand</label></div>
 		<div>
-			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;" data-ng-options="brandOpt as brandOpt.brandName for brandOpt in brandOptions">
+			<select id="prType" data-ng-model="bType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="brandOpt as brandOpt.brandName for brandOpt in brandOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
 	</div>
-	<div class="col-md-1" style="width:16%;">
+	<div class="col-md-1" style="width:16%;" ng-show="productType == 'Category'">
 		<div class="padding-bottom-5"><label>Category</label></div>
 		<div>
-			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;" data-ng-options="categoryOpt as categoryOpt.categoryName for categoryOpt in categoryOptions">
+			<select id="prType" data-ng-model="bType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="categoryOpt as categoryOpt.categoryName for categoryOpt in categoryOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
@@ -33,7 +44,7 @@
 	<div class="col-md-1" style="width:16%;">
 	<div class="padding-bottom-5"><label></label></div>
 		<div class="filterBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;">Apply Filter</button>
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilter()">Apply Filter</button>
 	</div>
 	</div>
 	<div class="col-md-1" style="width:16%;">
@@ -46,25 +57,31 @@
 </div>
 <div class="row" style="padding:30px;">
 	<div class="col-md-12">
-		<div data-responsive-table data-ng-model="GlobalVariable.getProducts"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="getProductDtls"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
-				on-sort="sortColumnData(index)">
+				on-sort="sortColumnData(index)" data-filter-value="bType.filterValue">
 				<columns>
 					<column name="Product No" key="productNo" datatype="string" width="10%" sortable="true"></column>
 					<column name="Product Name" key="description" datatype="string" width="10%"></column>
 					<column name="Brand Name" key="brandName" datatype="string" width="10%"></column>
 					<column name="Category Name" key="categoryName" datatype="string" width="10%"></column>
 					<column name="Vendor Name" key="vendorName" datatype="string" width="10%"></column>
-					<column name="Quantity" key="quantity" datatype="string" width="10%"></column>
+					<column name="Quantity" key="quantity" datatype="string" width="5%"></column>
 					<column name="Retail Price" key="retailPrice" datatype="string" width="10%"></column>
-					<column name="Alt No" key="altNo" datatype="string" width="10%"></column>
-					<column name="" key="" datatype="" width="10%">
+					<column name="Alt No" key="altNo" datatype="string" width="5%"></column>
+					<column name="" key="" datatype="" width="20%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:#478FCA;"></span>
 							</span>
 							<span class="inline-vertical">
 								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span>
+							</span>
+							<span class="inline-vertical">
+								<span  aria-hidden="true" style="color:green;">Sales History</span>
+							</span>
+							<span class="inline-vertical">
+								<span  aria-hidden="true" style="color:orange;">Bar Code</span>
 							</span>
 						</cell>
 					</column>

@@ -325,11 +325,13 @@
 			if($scope.totalDisc == undefined)
 				$scope.totalDisc = 0;
 			
+			GlobalVariable.discountTotal = $scope.totalDisc ;
 			$scope.productTotalWithoutTax = ( $scope.subTotal) - parseFloat($scope.totalDisc);
 			
 			if($scope.totalTax == undefined)
 				$scope.totalTax = 0;
 			
+			GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax) * (parseFloat($scope.totalTax) / 100);
 			$scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
 			 
 			$scope.totalPayment = $scope.productTotal;
