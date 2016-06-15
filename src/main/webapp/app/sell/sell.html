@@ -42,7 +42,7 @@
 					
 					</column>
 					<column name="Retail" key="retail" datatype="string" width="10%"></column>
-					<column name="Discount" key="discount" datatype="string" width="2%"></column>
+					<column name="Retail After Discount" key="discount" datatype="string" width="2%"></column>
 					<column name="Total" key="total" datatype="string" width="10%">
 					<cell ng-non-bindable>
 							{{::row.total}}
@@ -85,7 +85,7 @@
 				</div>
 			</div>
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
-				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:30px;width:33%;background-color:#44b772;" ng-click="openCashPopup()">
+				<button class="btn btn-primary margin-top-1 wrap-text " style="font-size:30px;width:33%;background-color:#44b772;" ng-click="openCashPopup()" ng-disabled="!(testData.length > 0)">
 				<span style="float:left;">Payment</span>
 				<span style="float:right;">${{totalPayment}}</span>
 				</button>

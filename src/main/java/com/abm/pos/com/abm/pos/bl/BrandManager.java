@@ -89,6 +89,7 @@ public class BrandManager {
             brand.setBrandName(rs.getString("BRAND_NAME"));
             brand.setBrandDescription(rs.getString("DESCRIPTION"));
             brand.setNoOfProducts(noOfProducts);
+            brand.setFilterValue(rs.getString("BRAND_NAME"));
 
             return brand;
         }
@@ -100,7 +101,29 @@ public class BrandManager {
     }
 
 
-    public void deleteBrandToDB(BrandDto brandDto) {
+    public void deleteBrandFromDB(int  brandId) {
+
+        try {
+            int a =  jdbcTemplate.queryForObject(sqlQuery.getBrandFromProductTable, new Object[]{brandId}, Integer.class);
+            System.out.println(a);
+
+            if(a == 0)
+            {
+                jdbcTemplate.update(sqlQuery.deleteBrand, brandId);
+                System.out.println("Brand deleted successfully");
+
+            }
+            else
+            {
+                System.out.println("This Brand is associate with product so can not delete it.");
+
+            }
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
     }
 
 

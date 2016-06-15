@@ -112,13 +112,14 @@ public class ProductManager
                 product.setCostPrice(rs.getString("COST_PRICE"));
                 product.setMarkup(rs.getString("MARKUP"));
                 product.setRetailPrice(rs.getString("RETAIL_PRICE"));
-                product.setQuantity(rs.getString("QUANTITY"));
+                product.setStock(rs.getString("QUANTITY"));
                 product.setMinProductQuantity(rs.getString("MIN_PRODUCT"));
                 product.setReturnRule(rs.getString("RETURN_RULE"));
                 product.setImage(rs.getString("IMAGE"));
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
+                product.setQuantity("1");
 
                 return product;
             }

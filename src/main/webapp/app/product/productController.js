@@ -40,7 +40,7 @@
 		$scope.setCategoryType = function(category)
 		{
 			$scope.selectedCategoryType = category;
-			$scope.categoryrId = category.categoryId;
+			$scope.categoryId = category.categoryId;
 			$scope.categoryDescription = category.description;
 		};
 		$scope.generateRandomId = function()
@@ -55,7 +55,8 @@
 				"vendorId": $scope.vendorId,
 				"brandId": $scope.brandId,
 				"altNo": $scope.altNo,
-				"description":$scope.prodCP,
+				"description":$scope.description,
+				"costPrice":$scope.prodCP,
 				"markup": $scope.prodMarkup,
 				"retailPrice": $scope.prodRetail,
 				"quantity": $scope.prodQuantity,

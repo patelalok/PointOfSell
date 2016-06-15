@@ -28,10 +28,10 @@ public class SalesController {
         salesManager.addTransaction(transactionDto);
     }
 
-    @RequestMapping(value = "getSalesHistory", method = RequestMethod.GET, produces = "application/json")
-    public List<TransactionDto> getTransactionFromDB(@RequestParam String startDate, @RequestParam String endDate)
+    @RequestMapping(value = "/getSalesHistory", method = RequestMethod.GET, produces = "application/json")
+    public List<TransactionDto> getTransactionFromDB(@RequestParam String startDate)
     {
-        return salesManager.getTransactionDetails(startDate,endDate);
+        return salesManager.getTransactionDetails(startDate);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", produces = "application/json")

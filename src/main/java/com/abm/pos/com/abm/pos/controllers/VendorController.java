@@ -33,7 +33,7 @@ public class VendorController {
     @RequestMapping(value = "/editVendor", method = RequestMethod.POST, consumes = "application/json")
     public void editVendor(@RequestBody VendorDto vendorDto) {
 
-            vendorManager.editVendorToDB(vendorDto);
+        vendorManager.editVendorToDB(vendorDto);
     }
 
     @RequestMapping(value = "/getVendor", method = RequestMethod.GET)
@@ -42,12 +42,10 @@ public class VendorController {
         return  vendorManager.getVendorDetails();
     }
 
-    @RequestMapping(value = "/deleteVendor", method = RequestMethod.POST, consumes = "application/json")
+    /*@RequestMapping(value = "/deleteVendor", method = RequestMethod.POST, consumes = "application/json")
     public void deleteVendor(@RequestBody String  vendorId) {
 
-            vendorManager.deleteVendorToDB(vendorId);
-    }
+        vendorManager.deleteVendorToDB(vendorId);
+    }*/
 }
-
-
 

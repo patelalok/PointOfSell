@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService'];
+	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService'];
 
-	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService) 
+	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService)
 	{
 		$scope.color= false;
 		
@@ -27,6 +27,7 @@
 		{
 			//TODO 
 			//Database service call to complete transaction request.
+			DialogFactory.close(true);
 			if($scope.balanceAmount == 0)
 			{
 				$scope.amountPaid = parseFloat($scope.checkPayment);
@@ -61,7 +62,7 @@
 		};
 		function addTransactionSuccessHandler(response)
 		{
-			
+			$rootScope.testData = [];
 		};
 		function addTransactionErrorHandler(response)
 		{
@@ -74,6 +75,10 @@
 			$scope.creditcardPayout = GlobalVariable.checkOuttotal;
 			$scope.debitcardPayout = GlobalVariable.checkOuttotal;
 			$scope.cashPayout = GlobalVariable.checkOuttotal;
+			var msg= "Your total balance is "+$scope.balanceAmount;
+				modalService.showModal('', '', msg, $scope.callBackCheckout);
+				$scope.color = true;
+
 		};
 		function render()
 		{

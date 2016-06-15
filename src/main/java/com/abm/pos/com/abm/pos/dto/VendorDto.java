@@ -13,6 +13,16 @@ public class VendorDto {
     private String address;
     private int noOfProducts;
 
+    public String getFilterValue() {
+        return filterValue;
+    }
+
+    public void setFilterValue(String filterValue) {
+        this.filterValue = filterValue;
+    }
+
+    private String filterValue;
+
     public int getNoOfProducts() {
         return noOfProducts;
     }

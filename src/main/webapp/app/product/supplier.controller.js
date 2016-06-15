@@ -66,7 +66,7 @@ $rootScope.closeBootstrapAlert = function()
 			GlobalVariable.textName = "";
 			GlobalVariable.addButtonName = "";
 		}
-		$scope.deleteCategory(categoryId)
+		$scope.deleteCategory = function(categoryId)
 		{
 			$scope.deleteCategoryrId = categoryId;
 			modalService.showModal('', {

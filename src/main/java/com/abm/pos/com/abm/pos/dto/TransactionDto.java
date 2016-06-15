@@ -11,7 +11,16 @@ public class TransactionDto {
     private double totalAmount;
     private double tax;
     private double discount;
-    private int customerId;
+
+    public int getCustomerPhoneno() {
+        return customerPhoneno;
+    }
+
+    public void setCustomerPhoneno(int customerPhoneno) {
+        this.customerPhoneno = customerPhoneno;
+    }
+
+    private int customerPhoneno;
     private int userId;
     private int paymentId;
     private String status;
@@ -26,13 +35,7 @@ public class TransactionDto {
         this.changeAmount = changeAmount;
     }
 
-    public int getCustomerId() {
-        return customerId;
-    }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
 
     public double getDiscount() {
         return discount;

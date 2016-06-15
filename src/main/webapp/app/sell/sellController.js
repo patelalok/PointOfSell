@@ -15,116 +15,116 @@
 		$scope.pageSize = 10;
 		
 		$rootScope.testData = [];
-		GlobalVariable.getProducts = [{
-			 "productId": 6,
-			    "productNo": "123456789012",
-			    "categoryId": 1,
-			    "vendorId": 11,
-			    "brandId": 1,
-			    "altNo": "1234",
-			    "description": "iphone-6",
-			    "costPrice": "12.99",
-			    "markup": "25",
-			    "retailPrice": "15.00",
-			    "quantity": "10",
-			    "minProductQuantity": "5",
-			    "returnRule": "NextWeek",
-			    "image": "image",
-			    "createdDate": "1000-01-01 00:00:00",
-			    "stock":10
-		},
-		{
-			 "productId": 7,
-			    "productNo": "123456789012",
-			    "categoryId": 1,
-			    "vendorId": 11,
-			    "brandId": 1,
-			    "altNo": "1234",
-			    "description": "samsung",
-			    "costPrice": "12.99",
-			    "markup": "25",
-			    "retailPrice": "15.00",
-			    "quantity": "10",
-			    "minProductQuantity": "5",
-			    "returnRule": "NextWeek",
-			    "image": "image",
-			    "createdDate": "1000-01-01 00:00:00",
-			    "stock":10
-		},
-		{
-			 "productId": 8,
-			    "productNo": "123456789012",
-			    "categoryId": 1,
-			    "vendorId": 11,
-			    "brandId": 1,
-			    "altNo": "1234",
-			    "description": "htc",
-			    "costPrice": "12.99",
-			    "markup": "25",
-			    "retailPrice": "15.00",
-			    "quantity": "10",
-			    "minProductQuantity": "5",
-			    "returnRule": "NextWeek",
-			    "image": "image",
-			    "createdDate": "1000-01-01 00:00:00",
-			    "stock":10
-		},
-		{
-			 "productId": 9,
-			    "productNo": "123456789012",
-			    "categoryId": 1,
-			    "vendorId": 11,
-			    "brandId": 1,
-			    "altNo": "1234",
-			    "description": "google",
-			    "costPrice": "12.99",
-			    "markup": "25",
-			    "retailPrice": "15.00",
-			    "quantity": "10",
-			    "minProductQuantity": "5",
-			    "returnRule": "NextWeek",
-			    "image": "image",
-			    "createdDate": "1000-01-01 00:00:00",
-			    "stock":10
-		},
-		{
-			 "productId": 10,
-			    "productNo": "123456789012",
-			    "categoryId": 1,
-			    "vendorId": 11,
-			    "brandId": 1,
-			    "altNo": "1234",
-			    "description": "motorolla",
-			    "costPrice": "12.99",
-			    "markup": "25",
-			    "retailPrice": "15.00",
-			    "quantity": "10",
-			    "minProductQuantity": "5",
-			    "returnRule": "NextWeek",
-			    "image": "image",
-			    "createdDate": "1000-01-01 00:00:00",
-			    "stock":10
-		},
-		{
-			 "productId": 11,
-			    "productNo": "123456789012",
-			    "categoryId": 1,
-			    "vendorId": 11,
-			    "brandId": 1,
-			    "altNo": "1234",
-			    "description": "lg",
-			    "costPrice": "12.99",
-			    "markup": "25",
-			    "retailPrice": "15.00",
-			    "quantity": "10",
-			    "minProductQuantity": "5",
-			    "returnRule": "NextWeek",
-			    "image": "image",
-			    "createdDate": "1000-01-01 00:00:00",
-			    "stock":10
-		}
-			
-		];
+		// GlobalVariable.getProducts = [{
+		// 	 "productId": 6,
+		// 	    "productNo": "123456789012",
+		// 	    "categoryId": 1,
+		// 	    "vendorId": 11,
+		// 	    "brandId": 1,
+		// 	    "altNo": "1234",
+		// 	    "description": "iphone-6",
+		// 	    "costPrice": "12.99",
+		// 	    "markup": "25",
+		// 	    "retailPrice": "15.00",
+		// 	    "quantity": "10",
+		// 	    "minProductQuantity": "5",
+		// 	    "returnRule": "NextWeek",
+		// 	    "image": "image",
+		// 	    "createdDate": "1000-01-01 00:00:00",
+		// 	    "stock":10
+		// },
+		// {
+		// 	 "productId": 7,
+		// 	    "productNo": "123456789012",
+		// 	    "categoryId": 1,
+		// 	    "vendorId": 11,
+		// 	    "brandId": 1,
+		// 	    "altNo": "1234",
+		// 	    "description": "samsung",
+		// 	    "costPrice": "12.99",
+		// 	    "markup": "25",
+		// 	    "retailPrice": "15.00",
+		// 	    "quantity": "10",
+		// 	    "minProductQuantity": "5",
+		// 	    "returnRule": "NextWeek",
+		// 	    "image": "image",
+		// 	    "createdDate": "1000-01-01 00:00:00",
+		// 	    "stock":10
+		// },
+		// {
+		// 	 "productId": 8,
+		// 	    "productNo": "123456789012",
+		// 	    "categoryId": 1,
+		// 	    "vendorId": 11,
+		// 	    "brandId": 1,
+		// 	    "altNo": "1234",
+		// 	    "description": "htc",
+		// 	    "costPrice": "12.99",
+		// 	    "markup": "25",
+		// 	    "retailPrice": "15.00",
+		// 	    "quantity": "10",
+		// 	    "minProductQuantity": "5",
+		// 	    "returnRule": "NextWeek",
+		// 	    "image": "image",
+		// 	    "createdDate": "1000-01-01 00:00:00",
+		// 	    "stock":10
+		// },
+		// {
+		// 	 "productId": 9,
+		// 	    "productNo": "123456789012",
+		// 	    "categoryId": 1,
+		// 	    "vendorId": 11,
+		// 	    "brandId": 1,
+		// 	    "altNo": "1234",
+		// 	    "description": "google",
+		// 	    "costPrice": "12.99",
+		// 	    "markup": "25",
+		// 	    "retailPrice": "15.00",
+		// 	    "quantity": "10",
+		// 	    "minProductQuantity": "5",
+		// 	    "returnRule": "NextWeek",
+		// 	    "image": "image",
+		// 	    "createdDate": "1000-01-01 00:00:00",
+		// 	    "stock":10
+		// },
+		// {
+		// 	 "productId": 10,
+		// 	    "productNo": "123456789012",
+		// 	    "categoryId": 1,
+		// 	    "vendorId": 11,
+		// 	    "brandId": 1,
+		// 	    "altNo": "1234",
+		// 	    "description": "motorolla",
+		// 	    "costPrice": "12.99",
+		// 	    "markup": "25",
+		// 	    "retailPrice": "15.00",
+		// 	    "quantity": "10",
+		// 	    "minProductQuantity": "5",
+		// 	    "returnRule": "NextWeek",
+		// 	    "image": "image",
+		// 	    "createdDate": "1000-01-01 00:00:00",
+		// 	    "stock":10
+		// },
+		// {
+		// 	 "productId": 11,
+		// 	    "productNo": "123456789012",
+		// 	    "categoryId": 1,
+		// 	    "vendorId": 11,
+		// 	    "brandId": 1,
+		// 	    "altNo": "1234",
+		// 	    "description": "lg",
+		// 	    "costPrice": "12.99",
+		// 	    "markup": "25",
+		// 	    "retailPrice": "15.00",
+		// 	    "quantity": "10",
+		// 	    "minProductQuantity": "5",
+		// 	    "returnRule": "NextWeek",
+		// 	    "image": "image",
+		// 	    "createdDate": "1000-01-01 00:00:00",
+		// 	    "stock":10
+		// }
+        //
+		// ];
 		$scope.productNames = [];
 		
 		$scope.addRow = function()
@@ -234,8 +234,10 @@
 						{
 							$scope.discount = parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.searchValue);
 						}	
-						
-						$scope.total = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-$scope.discount)*parseFloat($scope.quantity);
+						if($scope.discount == 0)
+							$scope.total = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-$scope.discount)*parseFloat($scope.quantity);
+						else
+							$scope.total = ($scope.discount)*parseFloat($scope.quantity);
 					}
 					else
 					{
@@ -247,7 +249,7 @@
 						else
 						{
 							$scope.discount = parseFloat($rootScope.testData[$rootScope.testData.length-1].discount);
-						}	
+						}
 						$scope.total = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.discount))*parseFloat($scope.quantity);
 					}	
 					

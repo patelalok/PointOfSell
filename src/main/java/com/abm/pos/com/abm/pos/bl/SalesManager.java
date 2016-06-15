@@ -36,7 +36,7 @@ public class SalesManager {
                     transactionDto.getTotalAmount(),
                     transactionDto.getTax(),
                     transactionDto.getDiscount(),
-                    transactionDto.getCustomerId(),
+                    transactionDto.getCustomerPhoneno(),
                     transactionDto.getUserId(),
                     transactionDto.getPaymentId(),
                     transactionDto.getStatus(),
@@ -52,13 +52,14 @@ public class SalesManager {
 
 
 
-    public List<TransactionDto> getTransactionDetails(String startDate, String endDate)
+    public List<TransactionDto> getTransactionDetails(String startDate)
     {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
         try
         {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(), startDate,endDate);
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper());
+            System.out.println("Send Transaction Details Successfully");
         }
         catch (Exception e)
         {
@@ -86,7 +87,7 @@ public class SalesManager {
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setTax(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
-            transaction.setCustomerId(rs.getInt("CUSTOMER_ID"));
+            transaction.setCustomerPhoneno(rs.getInt("CUSTOMER_PHONENO"));
             transaction.setUserId(rs.getInt("USER_ID"));
             transaction.setPaymentId(rs.getInt("PAYMENT_ID"));
             transaction.setStatus(rs.getString("STATUS"));

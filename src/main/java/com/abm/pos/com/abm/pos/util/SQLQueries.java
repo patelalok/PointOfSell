@@ -39,7 +39,7 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_ID,USER_ID,PAYMENT_ID,STATUS,PAID_AMOUNT,CHANGE_AMOUNT) " +
+                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID,STATUS,PAID_AMOUNT,CHANGE_AMOUNT) " +
                      "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
@@ -97,7 +97,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ?";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION";
 
     public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM";
 
@@ -122,4 +122,7 @@ public class SQLQueries {
     public String getCategoryName =  "SELECT CATEGORY_NAME FROM CATEGORY WHERE CATEGORY_ID = ? ";
     public String getVendorName = "SELECT VENDOR_NAME FROM VENDOR WHERE VENDOR_ID = ?";
     public String getBrandName = "SELECT BRAND_NAME FROM BRAND WHERE BRAND_ID = ?";
+    public String getVendorFromProductTable = "SELECT COUNT(VENDOR_ID) FROM PRODUCT WHERE VENDOR_ID = ?";
+    public String getBrandFromProductTable = "SELECT COUNT(BRAND_ID) FROM PRODUCT WHERE BRAND_ID = ?";
+    public String getCategoryFromProductTable = "SELECT COUNT(CATEGORY_ID) FROM PRODUCT WHERE CATEGORY_ID = ?";
 }

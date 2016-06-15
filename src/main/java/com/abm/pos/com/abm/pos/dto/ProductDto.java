@@ -24,6 +24,16 @@ public class ProductDto {
     private String brandName;
     private String vendorName;
 
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    private String stock;
+
 
     public String getBrandName() {
         return brandName;
