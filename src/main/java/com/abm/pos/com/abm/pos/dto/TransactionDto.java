@@ -12,15 +12,15 @@ public class TransactionDto {
     private double tax;
     private double discount;
 
-    public int getCustomerPhoneno() {
-        return customerPhoneno;
+    public String getCustomerPhoneNo() {
+        return customerPhoneNo;
     }
 
-    public void setCustomerPhoneno(int customerPhoneno) {
-        this.customerPhoneno = customerPhoneno;
+    public void setCustomerPhoneNo(String customerPhoneNo) {
+        this.customerPhoneNo = customerPhoneNo;
     }
 
-    private int customerPhoneno;
+    private String customerPhoneNo;
     private int userId;
     private int paymentId;
     private String status;
