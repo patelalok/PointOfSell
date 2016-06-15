@@ -271,7 +271,7 @@
 						{
 							modalService.showModal('', {
 								isCancel : true
-							}, "Are you Sure Want to Delete ? ", callBackAction);
+							}, "Are you Sure Want to Delete ?.This will delete all rows.", callBackAction);
 							
 						};
 						function callBackAction(isOKClicked)

@@ -54,10 +54,37 @@ $scope.ledgerData = [{
 		{ 
 			DialogFactory.close(true);
 		};
-
-		function render()
+		function loadSalesHistoryData()
+		{
+			var url =' http://localhost:8080/getSalesHistory?startDate=1000-01-0100:00:00';
+			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
+			
+		}
+		function getSalesHistorySuccessHandler(response)
+		{
+			$scope.salesHistory = [
+			                       {
+			                    	    "transactionId": 13,
+			                    	    "transactionDate": "1000-01-01 00:00:00.0",
+			                    	    "totalAmount": 12,
+			                    	    "tax": 12.99,
+			                    	    "discount": 0,
+			                    	    "customerPhoneno": 1234,
+			                    	    "userId": 1,
+			                    	    "paymentId": 1,
+			                    	    "status": "completed",
+			                    	    "paidAmount": 0,
+			                    	    "changeAmount": 0
+			                    	  }
+			                    	];
+		}
+		function getSalesHistroyErrorHandler(response)
 		{
 			
+		}
+		function render()
+		{
+			loadSalesHistoryData();
 		}
 		render();
 	}

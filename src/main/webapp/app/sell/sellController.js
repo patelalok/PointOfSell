@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('sellController', sellController);
 
-	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types'];
+	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types','dataService'];
 
-	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter) {
+	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter,dataService) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -15,116 +15,6 @@
 		$scope.pageSize = 10;
 		
 		$rootScope.testData = [];
-		// GlobalVariable.getProducts = [{
-		// 	 "productId": 6,
-		// 	    "productNo": "123456789012",
-		// 	    "categoryId": 1,
-		// 	    "vendorId": 11,
-		// 	    "brandId": 1,
-		// 	    "altNo": "1234",
-		// 	    "description": "iphone-6",
-		// 	    "costPrice": "12.99",
-		// 	    "markup": "25",
-		// 	    "retailPrice": "15.00",
-		// 	    "quantity": "10",
-		// 	    "minProductQuantity": "5",
-		// 	    "returnRule": "NextWeek",
-		// 	    "image": "image",
-		// 	    "createdDate": "1000-01-01 00:00:00",
-		// 	    "stock":10
-		// },
-		// {
-		// 	 "productId": 7,
-		// 	    "productNo": "123456789012",
-		// 	    "categoryId": 1,
-		// 	    "vendorId": 11,
-		// 	    "brandId": 1,
-		// 	    "altNo": "1234",
-		// 	    "description": "samsung",
-		// 	    "costPrice": "12.99",
-		// 	    "markup": "25",
-		// 	    "retailPrice": "15.00",
-		// 	    "quantity": "10",
-		// 	    "minProductQuantity": "5",
-		// 	    "returnRule": "NextWeek",
-		// 	    "image": "image",
-		// 	    "createdDate": "1000-01-01 00:00:00",
-		// 	    "stock":10
-		// },
-		// {
-		// 	 "productId": 8,
-		// 	    "productNo": "123456789012",
-		// 	    "categoryId": 1,
-		// 	    "vendorId": 11,
-		// 	    "brandId": 1,
-		// 	    "altNo": "1234",
-		// 	    "description": "htc",
-		// 	    "costPrice": "12.99",
-		// 	    "markup": "25",
-		// 	    "retailPrice": "15.00",
-		// 	    "quantity": "10",
-		// 	    "minProductQuantity": "5",
-		// 	    "returnRule": "NextWeek",
-		// 	    "image": "image",
-		// 	    "createdDate": "1000-01-01 00:00:00",
-		// 	    "stock":10
-		// },
-		// {
-		// 	 "productId": 9,
-		// 	    "productNo": "123456789012",
-		// 	    "categoryId": 1,
-		// 	    "vendorId": 11,
-		// 	    "brandId": 1,
-		// 	    "altNo": "1234",
-		// 	    "description": "google",
-		// 	    "costPrice": "12.99",
-		// 	    "markup": "25",
-		// 	    "retailPrice": "15.00",
-		// 	    "quantity": "10",
-		// 	    "minProductQuantity": "5",
-		// 	    "returnRule": "NextWeek",
-		// 	    "image": "image",
-		// 	    "createdDate": "1000-01-01 00:00:00",
-		// 	    "stock":10
-		// },
-		// {
-		// 	 "productId": 10,
-		// 	    "productNo": "123456789012",
-		// 	    "categoryId": 1,
-		// 	    "vendorId": 11,
-		// 	    "brandId": 1,
-		// 	    "altNo": "1234",
-		// 	    "description": "motorolla",
-		// 	    "costPrice": "12.99",
-		// 	    "markup": "25",
-		// 	    "retailPrice": "15.00",
-		// 	    "quantity": "10",
-		// 	    "minProductQuantity": "5",
-		// 	    "returnRule": "NextWeek",
-		// 	    "image": "image",
-		// 	    "createdDate": "1000-01-01 00:00:00",
-		// 	    "stock":10
-		// },
-		// {
-		// 	 "productId": 11,
-		// 	    "productNo": "123456789012",
-		// 	    "categoryId": 1,
-		// 	    "vendorId": 11,
-		// 	    "brandId": 1,
-		// 	    "altNo": "1234",
-		// 	    "description": "lg",
-		// 	    "costPrice": "12.99",
-		// 	    "markup": "25",
-		// 	    "retailPrice": "15.00",
-		// 	    "quantity": "10",
-		// 	    "minProductQuantity": "5",
-		// 	    "returnRule": "NextWeek",
-		// 	    "image": "image",
-		// 	    "createdDate": "1000-01-01 00:00:00",
-		// 	    "stock":10
-		// }
-        //
-		// ];
 		$scope.productNames = [];
 		
 		$scope.addRow = function()
@@ -181,7 +71,7 @@
 	$scope.changeQuantity= function()
 	{
 		var searchTxt = $scope.searchValue.toString();
-		if(searchTxt !== '' && searchTxt !== undefined)
+		if(searchTxt !== '' && searchTxt !== undefined && searchTxt.indexOf(".") !== 0 )
 		{	
 		if (searchTxt.match(/[a-z]/i)) {
 				    console.log("contains only charcters");
@@ -221,7 +111,7 @@
 				}	
 				else
 				{
-					if(searchTxt.indexOf(".") >=0 )
+					if(searchTxt.indexOf(".") >0 )
 					{
 						$scope.quantity = $rootScope.testData[$rootScope.testData.length-1].quantity;
 						if(parseFloat($scope.searchValue) > parseFloat(parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)))
@@ -338,6 +228,22 @@
 			 
 			$scope.totalPayment = $scope.productTotal;
 			GlobalVariable.checkOuttotal = $scope.totalPayment;
+		}
+		$scope.searchCustomer = function()
+		{
+			var request = new Object();
+			request.phoneNumber = $scope.customerPhone;
+			request=JSON.stringify(request);
+			var url = '';
+			dataService.Post(url,request,successHandler,errorHandler,'application/json','application/json');
+		};
+		function successHandler(response)
+		{
+			
+		}
+		function errorHandler(response)
+		{
+			
 		}
 		function render()
 		{

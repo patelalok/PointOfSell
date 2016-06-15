@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService'];
+	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state'];
 
-	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService)
+	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state)
 	{
 		$scope.color= false;
 		
@@ -63,6 +63,9 @@
 		function addTransactionSuccessHandler(response)
 		{
 			$rootScope.testData = [];
+			//TODO
+			//popup to display whther to print receipt or not;
+			$state.go('ledger');
 		};
 		function addTransactionErrorHandler(response)
 		{

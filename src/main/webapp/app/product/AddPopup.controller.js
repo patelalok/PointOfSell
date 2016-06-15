@@ -95,7 +95,11 @@
 				$scope.brandName = GlobalVariable.editBrandName;
 				$scope.brandDescription = GlobalVariable.editBrandDescription;
 				if(GlobalVariable.textName == 'Vendor')
-				$scope.commision = GlobalVariable.editCommision;
+					{				$scope.commision = GlobalVariable.editCommision;
+				$scope.PhoneNumber=GlobalVariable.editPhoneNumber;
+				$scope.companyName=GlobalVariable.editCompanyName ;
+				$scope.address = GlobalVariable.editaddress ;
+					}
 			}	
 		}
 		render();

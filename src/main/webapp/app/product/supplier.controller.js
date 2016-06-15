@@ -50,7 +50,7 @@ $rootScope.closeBootstrapAlert = function()
 		{
 			GlobalVariable.enableEdit = true;
 			GlobalVariable.editBrandName = categoryDetails.categoryName;
-			GlobalVariable.editBrandDescription = categoryDetails.categoryDescription;
+			GlobalVariable.editBrandDescription = categoryDetails.description;
 			GlobalVariable.editBrandId = categoryDetails.categoryId;
 			GlobalVariable.addHeaderName = "Edit Category";
 			GlobalVariable.textName = "Category";

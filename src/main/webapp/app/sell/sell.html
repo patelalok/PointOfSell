@@ -6,7 +6,7 @@
 			<div class="col-md-8 searchBox">
 				<!-- <input type="text" class="form-control" auto-complete ui-items="productNames" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
 			 -->
-			 <input type="text" class="form-control" typeahead="productName for productName in productNames | filter:$viewValue" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;" >
+			 <input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" typeahead="productName for productName in productNames | filter:$viewValue" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;" >
 			
 			 </div>
 			<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
@@ -16,9 +16,12 @@
 		</div>
 		<div class="searchCustomers col-md-6">	
 		<div class="row">
-		<div class="searchBox col-md-8">
+		<div class="searchBox col-md-4">
 			<input type="tel" data-ng-model="regPhone" class="form-control" name="reg-phone" id="reg-phone" ui-mask="(999) 999-9999" 
-							placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"  />
+							placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"  ng-enter="searchCustomer" />
+		</div>
+		<div class="searchBox col-md-4">
+			<input type="tel" data-ng-model="customerPhone" class="form-control" disabled="true" style="width:100%;height:52px;"  />
 		</div>
 		<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
 			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createCustomer()">Create Customer</button>
@@ -73,7 +76,7 @@
 				</div>
 				<div class="display-row">		
 					<div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/></div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>

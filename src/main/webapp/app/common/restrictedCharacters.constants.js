@@ -42,6 +42,10 @@
 		AgreementCode :{
 			regExp:/[^a-zA-Z0-9-_]/g,
 			label:"Only _,- is allowed"
-		}
+		},
+		NumericPeriod : {
+			regExp : /[^a-zA-Z0-9.]/g,
+			label : "Non-alphabetic and non-numeric characters disallowed"
+		},
 	});
 })();
