@@ -50,7 +50,7 @@
 				"totalAmount":GlobalVariable.checkOuttotal,
 				"tax":GlobalVariable.taxTotal,
 				"discount":GlobalVariable.discountTotal ,
-				"customerPhoneNo":"123456789012",
+				"customerPhoneNo":"7707030801",
 				"userId":"1234", 
 				"paymentId":"1",
 				"status":"completed",
