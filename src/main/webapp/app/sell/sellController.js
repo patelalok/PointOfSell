@@ -26,7 +26,8 @@
 				"retail":"test",
 				"discount":20,
 				"total":20.00,
-				"stock":5});
+				"stock":5,
+				"costPrice":"12.90"});
 			
 			$scope.loadCheckOutData();
 		};
@@ -86,7 +87,8 @@
 								"retail":GlobalVariable.getProducts[i].retailPrice,
 								"discount":parseFloat($scope.discount),
 								"total":(parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity),
-								"stock":GlobalVariable.getProducts[i].stock});
+								"stock":GlobalVariable.getProducts[i].stock,
+								"costPrice":GlobalVariable.getProducts[i].costPrice});
 				    	}	
 				    }	
 				    
@@ -105,7 +107,8 @@
 									"retail":GlobalVariable.getProducts[i].retailPrice,
 									"discount":parseFloat($scope.discount),
 									"total":(parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity),
-									"stock":GlobalVariable.getProducts[i].stock});
+									"stock":GlobalVariable.getProducts[i].stock,
+									"costPrice":GlobalVariable.getProducts[i].costPrice});
 					    	}	
 					    }
 				}	
@@ -140,6 +143,11 @@
 						{
 							$scope.discount = parseFloat($rootScope.testData[$rootScope.testData.length-1].discount);
 						}
+						if($scope.discount !== 0)
+							{
+							  $scope.total = parseFloat($scope.quantity) * parseFloat($scope.discount);
+							}
+						else
 						$scope.total = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.discount))*parseFloat($scope.quantity);
 					}	
 					
@@ -149,7 +157,8 @@
 						"retail":$rootScope.testData[$rootScope.testData.length-1].retail,
 						"discount":$scope.discount,
 						"total":$scope.total,
-						"stock":$rootScope.testData[$rootScope.testData.length-1].stock});
+						"stock":$rootScope.testData[$rootScope.testData.length-1].stock,
+						"costPrice":$rootScope.testData[$rootScope.testData.length-1].costPrice});
 					//for(var i=0;i<$rootScope.testData.length-1;i++)
 						//{
 						$scope.removeRowOnSearch($rootScope.testData[$rootScope.testData.length-2].itemNo);
@@ -231,20 +240,23 @@
 		}
 		$scope.searchCustomer = function()
 		{
-			var request = new Object();
-			request.phoneNumber = $scope.customerPhone;
-			request=JSON.stringify(request);
-			var url = '';
-			dataService.Post(url,request,successHandler,errorHandler,'application/json','application/json');
+			// $scope.customerPhone;
+			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
+			{
+				if($scope.regPhone == GlobalVariable.getCustomerDtls[i].phoneNo)
+				{
+					$rootScope.customerName = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
+					$rootScope.customerPhone= $scope.regPhone;
+				}	
+				else
+				{
+					$rootScope.customerName = 'No customer found';
+					$rootScope.customerPhone = $scope.regPhone;
+				}	
+		
+			}	
+			
 		};
-		function successHandler(response)
-		{
-			
-		}
-		function errorHandler(response)
-		{
-			
-		}
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;
