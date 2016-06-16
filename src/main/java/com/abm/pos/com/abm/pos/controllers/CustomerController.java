@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * Created by asp5045 on 5/18/16.
  */
@@ -31,9 +33,9 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/getCustomerDetail", method = RequestMethod.GET, produces = "application/json")
-    public void getCustomerDetails(String phoneNo)
+    public List<CustomerDto> getCustomerDetails()
     {
-        customerManager.getCustomerDetailsFromDB(phoneNo);
+        return customerManager.getCustomerDetailsFromDB();
     }
 
     @RequestMapping(value = "/deleteCustomer",method = RequestMethod.POST, consumes = "application/json")

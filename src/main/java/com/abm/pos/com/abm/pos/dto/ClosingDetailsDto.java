@@ -21,6 +21,45 @@ public class ClosingDetailsDto {
     private double differenceCredit;
     private double totalDifference;
     private double totalBusinessAmount;
+    private double totalTax;
+    private double totalDiscount;
+    private double totalProfit;
+    private double totalMarkup;
+
+    public double getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(double totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public double getTotalMarkup() {
+        return totalMarkup;
+    }
+
+    public void setTotalMarkup(double totalMarkup) {
+        this.totalMarkup = totalMarkup;
+    }
+
+    public double getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(double totalProfit) {
+        this.totalProfit = totalProfit;
+    }
+
+    public double getTotalTax() {
+        return totalTax;
+    }
+
+    public void setTotalTax(double totalTax) {
+        this.totalTax = totalTax;
+    }
+
+
+
 
     public int getUserId() {
         return userId;

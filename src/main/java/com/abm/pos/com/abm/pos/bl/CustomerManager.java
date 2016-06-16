@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by asp5045 on 5/18/16.
@@ -79,17 +81,22 @@ public class CustomerManager {
 
     }
 
-    public void getCustomerDetailsFromDB(String phoneNo) {
+    public List<CustomerDto> getCustomerDetailsFromDB() {
+
+        List<CustomerDto> customerDto = new ArrayList<>();
 
         try
         {
-            jdbcTemplate.query(sqlQuery.getCustomerDetails,new CustomerMapper());
+            customerDto = jdbcTemplate.query(sqlQuery.getCustomerDetails,new CustomerMapper());
+            System.out.println("Send Customer Details Successfully");
         }
+
         catch (Exception e)
         {
             System.out.println(e);
         }
 
+        return customerDto;
     }
 
     private static final class CustomerMapper implements RowMapper<CustomerDto>
