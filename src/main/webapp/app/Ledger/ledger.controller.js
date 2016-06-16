@@ -3,11 +3,11 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory'];
+	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory) 
+	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService) 
 	{
-$scope.ledgerData = [{
+/*$scope.ledgerData = [{
 			
 			"date":"26 April 2016",
 			"user":"Bob",
@@ -49,7 +49,7 @@ $scope.ledgerData = [{
 			"saleTotal":78.90
 		}
 			
-		];
+		];*/
 		$scope.closePopup = function()
 		{ 
 			DialogFactory.close(true);
@@ -62,7 +62,7 @@ $scope.ledgerData = [{
 		}
 		function getSalesHistorySuccessHandler(response)
 		{
-			$scope.salesHistory = [
+			$scope.salesHistory = response/*[
 			                       {
 			                    	    "transactionId": 13,
 			                    	    "transactionDate": "1000-01-01 00:00:00.0",
@@ -76,7 +76,7 @@ $scope.ledgerData = [{
 			                    	    "paidAmount": 0,
 			                    	    "changeAmount": 0
 			                    	  }
-			                    	];
+			                    	];*/
 		}
 		function getSalesHistroyErrorHandler(response)
 		{
