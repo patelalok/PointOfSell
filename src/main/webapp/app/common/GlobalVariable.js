@@ -9,6 +9,7 @@
 		var GlobalVarObj = {
 		};
 		GlobalVarObj.isLoginPage = true;
+		GlobalVarObj.editProduct = false;
 		
 		return GlobalVarObj;
 	}

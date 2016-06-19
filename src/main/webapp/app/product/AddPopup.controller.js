@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('addPopupController', addPopupController);
 
-	addPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state'];
+	addPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails'];
 
-	function addPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state) 
+	function addPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails) 
 	{
 		$scope.device= device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -66,11 +66,20 @@
 			DialogFactory.close(true);
 			GlobalVariable.successAlert = true;
 			if(GlobalVariable.textName == 'Brand')
+			{
+				getProductDetails.getBrandDetails();
 				$state.go('brand');
+			}
 			else if(GlobalVariable.textName == 'Vendor')
+			{	
+				getProductDetails.getVendorDetails();
 				$state.go('vendor');
+			}
 			else
+			{
+				getProductDetails.getCategoryDetails();
 				$state.go('category');
+			}
 			console.log(response);
 			$timeout(function() {
 				$rootScope.closeBootstrapAlert();

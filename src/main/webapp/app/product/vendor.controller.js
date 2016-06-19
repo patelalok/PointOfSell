@@ -98,6 +98,7 @@ $rootScope.closeBootstrapAlert = function()
 		}
 		function render()
 		{
+			console.log("vendor render");
 			$scope.currentPageIndexArr = 0;
 			$scope.curPageOnTotalLen = 0;
 			$scope.totalLength = 0;

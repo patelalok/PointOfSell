@@ -31,6 +31,7 @@
 			{	
 			$state.go(page);
 			}
+			GlobalVariable.editProduct = false;
 		};
 		
 		$scope.sortColumnData = function(index) {
@@ -56,6 +57,19 @@
 				{
 				$scope.getProductDtls = GlobalVariable.getProducts;
 				}
+		};
+		$scope.navigateToSales = function()
+		{
+			$state.go('ledger');
+		};
+		$scope.editProduct = function(row)
+		{
+			
+			var request = new Object();
+			GlobalVariable.editProductDetails = row;
+			GlobalVariable.editProduct = true;
+			$state.go('product');
+			
 		};
 		function render()
 		{

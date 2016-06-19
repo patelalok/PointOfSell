@@ -1,4 +1,4 @@
-﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask']);
+﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint']);
   
 app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
 

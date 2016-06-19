@@ -1,4 +1,4 @@
-<div>
+<div print-remove>
 <div class="row pageHeader" style="padding:30px;">
 	<div class="col-md-12 pageHeader">
 		<span style="font-weight:bold;font-size:30px">Sales History</span>
@@ -35,6 +35,7 @@
 				on-sort="sortColumnData(index)">
 				<columns>
 					<column name="Date" key="transactionDate" datatype="string" width="10%" sortable="true"></column>
+<<<<<<< HEAD
 
 					<column name="CustomerPhone" key="customerPhoneno" datatype="string" width="10%"></column>
 					<column name="UserID" key="userId" datatype="string" width="10%"></column>
@@ -43,15 +44,36 @@
 					<column name="TotalAmount" key="totalAmount" datatype="string" width="10%"></column>
 
 
+=======
+					<column name="CustomerPhone" key="customerPhoneno" datatype="string" width="10%"></column>
+					<column name="UserID" key="userId" datatype="string" width="10%"></column>
+					
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="TotalAmount" key="totalAmount" datatype="string" width="10%"></column>
+					<column name="Receipt No" key="transactionCompId" datatype="string" width="10%"></column>
+					
+>>>>>>> 01b887496fa2972a3311f7647ef9c83bedeb5e64
 					<column name="" key="" datatype="" width="10%">
 						<cell ng-non-bindable>
-							<span class="inline-vertical">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="color:#478FCA;"></span>
+						<span class="inline-vertical">
+								
+								<span class="fa fa-share"  style="color:#478FCA;cursor:pointer;" ng-click="scope.navigateToReturnPage(row.transactionCompId)"></span>
+							</span>
+							<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;"   ng-click="scope.print()"></span>
 							</span>
 						</cell>
 					</column>
 				</columns>		
 			</div>
 	</div>
+</div>
+
+</div>
+<div print-section>
+<div print-only>
+I will print
+<p>{{testPrint}}</p>
 </div>
 </div>

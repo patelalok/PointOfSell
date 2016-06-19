@@ -76,7 +76,7 @@ public class SalesManager {
 
 
 
-        return
+        return null;
     }
 
     private final class TransactionMapper implements RowMapper<TransactionDto>
