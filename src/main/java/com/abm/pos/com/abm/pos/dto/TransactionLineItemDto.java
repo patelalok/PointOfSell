@@ -6,12 +6,22 @@ package com.abm.pos.com.abm.pos.dto;
 public class TransactionLineItemDto {
 
     private int transactionLineItemId;
-    private int transactionId;
+    private int transactionCompId;
     private int productId;
     private int quantity;
     private double retail;
     private double cost;
     private double discount;
+
+    public int getTransactionCompId() {
+        return transactionCompId;
+    }
+
+    public void setTransactionCompId(int transactionCompId) {
+        this.transactionCompId = transactionCompId;
+    }
+
+
 
 
     public int getProductId() {
@@ -54,13 +64,6 @@ public class TransactionLineItemDto {
         this.retail = retail;
     }
 
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
-    }
 
     public int getTransactionLineItemId() {
         return transactionLineItemId;

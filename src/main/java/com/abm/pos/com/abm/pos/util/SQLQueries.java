@@ -39,13 +39,13 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID,STATUS,PAID_AMOUNT,CHANGE_AMOUNT) " +
-                     "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                    "(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID,STATUS,PAID_AMOUNT,CHANGE_AMOUNT) " +
+                     "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
-            "(TRANSACTION_ID,PRODUCT_ID,QUANTITY,RETAIL,COST,DISCOUNT,TAX,)" +
-            " VALUES (?,?,?,?,?,?,?)";
+            "(TRANSACTION_COMP_ID,PRODUCT_ID,QUANTITY,RETAIL,COST,DISCOUNT)" +
+            " VALUES (?,?,?,?,?,?)";
 
  public String addUserQuery
          = "INSERT INTO USER" +

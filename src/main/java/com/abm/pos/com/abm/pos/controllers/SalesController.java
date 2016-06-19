@@ -34,8 +34,15 @@ public class SalesController {
         return salesManager.getTransactionDetails(startDate);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", produces = "application/json")
-    public void addTransactionLineItem(TransactionLineItemDto transactionLineItemDto)
+    @RequestMapping(value = "/getSalesHistory", method = RequestMethod.GET, produces = "application/json")
+    public List<TransactionDto> printReceipt(@RequestParam int receiptId)
+    {
+        return salesManager.getReceiptDetails(receiptId);
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", consumes = "application/json")
+    public void addTransactionLineItem(@RequestBody TransactionLineItemDto transactionLineItemDto)
     {
         salesManager.addTransactionLineItemToDB(transactionLineItemDto);
     }

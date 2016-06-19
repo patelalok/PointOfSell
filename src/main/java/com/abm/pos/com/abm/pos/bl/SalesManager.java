@@ -32,6 +32,7 @@ public class SalesManager {
         try
         {
             jdbcTemplate.update(sqlQuery.addTransaction,
+                    transactionDto.getTransactionCompId(),
                     transactionDto.getTransactionDate(),
                     transactionDto.getTotalAmount(),
                     transactionDto.getTax(),
@@ -71,6 +72,13 @@ public class SalesManager {
         return transactionDto;
     }
 
+    public List<TransactionDto> getReceiptDetails(int receiptId) {
+
+
+
+        return
+    }
+
     private final class TransactionMapper implements RowMapper<TransactionDto>
     {
 
@@ -79,7 +87,7 @@ public class SalesManager {
 
             TransactionDto transaction = new TransactionDto();
 
-            transaction.setTransactionId(rs.getInt("TRANSACTION_ID"));
+            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
             StringTokenizer at = new StringTokenizer(transaction.getTransactionDate());
             String date = at.nextToken();
@@ -87,7 +95,7 @@ public class SalesManager {
             System.out.println(date);
             System.out.println(time);
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-            transaction.setTax(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
             transaction.setUserId(rs.getInt("USER_ID"));
@@ -107,7 +115,7 @@ public class SalesManager {
         {
 
             jdbcTemplate.update(sqlQuery.addTransactionLineItem,
-                    transactionLineItemDto.getTransactionId(),
+                    transactionLineItemDto.getTransactionCompId(),
                     transactionLineItemDto.getProductId(),
                     transactionLineItemDto.getQuantity(),
                     transactionLineItemDto.getRetail(),
@@ -142,7 +150,7 @@ public class SalesManager {
             TransactionLineItemDto lineItem = new TransactionLineItemDto();
 
             lineItem.setTransactionLineItemId(rs.getInt("TRANSACTION_LINE_ITEM_ID"));
-            lineItem.setTransactionId(rs.getInt("TRANSACTION_ID"));
+            lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             lineItem.setProductId(rs.getInt("PRODUCT_ID"));
             lineItem.setQuantity(rs.getInt("QUANTITY"));
             lineItem.setRetail(rs.getDouble("RETAIL"));

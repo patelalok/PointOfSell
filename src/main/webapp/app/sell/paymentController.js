@@ -63,7 +63,7 @@
 				"tax":GlobalVariable.taxTotal,
 				"discount":GlobalVariable.discountTotal ,
 				"customerPhoneNo":$rootScope.customerPhone,
-				"userId":"1234", 
+				"userId":"2",
 				"paymentId":"1",
 				"status":"completed",
 			"paidAmount":$scope.amountPaid,

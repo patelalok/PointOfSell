@@ -6,7 +6,9 @@ package com.abm.pos.com.abm.pos.dto;
 public class TransactionDto {
 
 
-    private int transactionId;
+
+
+    private int transactionCompId;
     private String transactionDate;
     private double totalAmount;
     private double tax;
@@ -19,6 +21,13 @@ public class TransactionDto {
     private double changeAmount;
     private String username;
 
+    public int getTransactionCompId() {
+        return transactionCompId;
+    }
+
+    public void setTransactionCompId(int transactionCompId) {
+        this.transactionCompId = transactionCompId;
+    }
     public String getUsername() {
         return username;
     }
@@ -105,13 +114,6 @@ public class TransactionDto {
         this.transactionDate = transactionDate;
     }
 
-    public int getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
-    }
 
     public int getUserId() {
         return userId;
