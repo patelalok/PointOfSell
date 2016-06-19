@@ -27,21 +27,21 @@
 				$scope.prodRetail = 0;
 			}	
 		};
-		$scope.setVendorType = function(vendor)
+		$scope.setVendorType = function(vendorId,vendorName)
 		{
-			$scope.selectedVendorType = vendor;
-			$scope.vendorId = vendor.vendorId;
+			$scope.selectedVendorType = vendorName;
+			$scope.vendorId = vendorId;
 		};
-		$scope.setBrandType = function(brand)
+		$scope.setBrandType = function(brandId,brandName)
 		{
-			$scope.selectedBrandType = brand;
-			$scope.brandId = brand.brandId;
+			$scope.selectedBrandType = brandName;
+			$scope.brandId = brandId;
 		};
-		$scope.setCategoryType = function(category)
+		$scope.setCategoryType = function(categoryId,categoryName,categoryDescription)
 		{
-			$scope.selectedCategoryType = category;
-			$scope.categoryId = category.categoryId;
-			$scope.categoryDescription = category.description;
+			$scope.selectedCategoryType = categoryName;
+			$scope.categoryId = categoryId;
+			$scope.categoryDescription = categoryDescription;
 		};
 		$scope.generateRandomId = function()
 		{
@@ -49,24 +49,52 @@
 		}
 		$scope.addProduct = function()
 		{
-			var request={
-				"productNo":$scope.productId,
-				"categoryId": $scope.categoryId,
-				"vendorId": $scope.vendorId,
-				"brandId": $scope.brandId,
-				"altNo": $scope.altNo,
-				"description":$scope.description,
-				"costPrice":$scope.prodCP,
-				"markup": $scope.prodMarkup,
-				"retailPrice": $scope.prodRetail,
-				"quantity": $scope.prodQuantity,
-				"minProductQuantity": $scope.prodMinquantity,
-				"returnRule": "NextWeek",
-				"image": "image",
-				"createdDate": "1000-01-01 00:00:00"
-			};
+			if(GlobalVariable.editProduct == true)
+			{
+				var request={
+						"productId": GlobalVariable.editProductDetails.productId,
+						"productNo":GlobalVariable.editProductDetails.productNo,
+						"categoryId": $scope.categoryId,
+						"vendorId": $scope.vendorId,
+						"brandId": $scope.brandId,
+						"altNo": $scope.altNo,
+						"description":$scope.description,
+						"costPrice":$scope.prodCP,
+						"markup": $scope.prodMarkup,
+						"retailPrice": $scope.prodRetail,
+						"quantity": $scope.prodQuantity,
+						"minProductQuantity": $scope.prodMinquantity,
+						"returnRule": "NextWeek",
+						"image": "image",
+						"createdDate": "1000-01-01 00:00:00"
+					};
+				var url ="http://localhost:8080/editProduct";
+			}
+			else
+			{
+				var request = {
+		        	    
+		        	    "productNo":$scope.productId,
+						"categoryId": $scope.categoryId,
+						"vendorId": $scope.vendorId,
+						"brandId": $scope.brandId,
+						"altNo": $scope.altNo,
+						"description":$scope.description,
+						"costPrice":$scope.prodCP,
+						"markup": $scope.prodMarkup,
+						"retailPrice": $scope.prodRetail,
+						"quantity": $scope.prodQuantity,
+						"minProductQuantity": $scope.prodMinquantity,
+						"returnRule": "NextWeek",
+						"image": "image",
+						"createdDate": "1000-01-01 00:00:00"
+		        	  };
+				var url ="http://localhost:8080/addProduct";
+			}	
+			
+			 
 			request= JSON.stringify(request);
-			var url ="http://localhost:8080/addProduct";
+			
 			dataService.Post(url,request,addProductSuccessHandler,addProductErrorHandler,"application/json","application/json");
 		}
 		function addProductSuccessHandler(response)
@@ -83,7 +111,23 @@
 			$scope.prodCP = 0;
 			$scope.prodMarkup = 0;
 			$scope.prodRetail = 0;
-			
+			if(GlobalVariable.editProduct == true)
+			{
+				$scope.productId = GlobalVariable.editProductDetails.productId;
+				$scope.setVendorType(GlobalVariable.editProductDetails.vendorId,GlobalVariable.editProductDetails.vendorName);
+				$scope.setBrandType(GlobalVariable.editProductDetails.brandId,GlobalVariable.editProductDetails.brandName);
+				$scope.setCategoryType(GlobalVariable.editProductDetails.categoryId,GlobalVariable.editProductDetails.categoryName,'');
+				//$scope.selectedVendorType.vendorName = GlobalVariable.editProductDetails.vendorName;
+				//$scope.selectedBrandType.brandrName = GlobalVariable.editProductDetails.brandName;
+				//$scope.selectedCatgeoryType.categoryName = GlobalVariable.editProductDetails.categoryName;
+				$scope.description = GlobalVariable.editProductDetails.description;
+				$scope.altNo = GlobalVariable.editProductDetails.altNo;
+				$scope.prodCP = GlobalVariable.editProductDetails.costPrice;
+				$scope.prodMarkup = GlobalVariable.editProductDetails.markup;
+				$scope.prodRetail = GlobalVariable.editProductDetails.retailPrice;
+				$scope.prodQuantity = GlobalVariable.editProductDetails.quantity;
+				$scope.prodMinquantity = GlobalVariable.editProductDetails.minProductQuantity;
+			}	
 		}
 		render();
 	}

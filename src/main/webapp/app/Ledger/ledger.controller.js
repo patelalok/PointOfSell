@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
+	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService) 
+	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window) 
 	{
 /*$scope.ledgerData = [{
 			
@@ -58,30 +58,26 @@
 		{
 			var url =' http://localhost:8080/getSalesHistory?startDate=1000-01-0100:00:00';
 			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
+			//getSalesHistorySuccessHandler('');
 			
 		}
 		function getSalesHistorySuccessHandler(response)
 		{
-			$scope.salesHistory = response/*[
-			                       {
-			                    	    "transactionId": 13,
-			                    	    "transactionDate": "1000-01-01 00:00:00.0",
-			                    	    "totalAmount": 12,
-			                    	    "tax": 12.99,
-			                    	    "discount": 0,
-			                    	    "customerPhoneno": 1234,
-			                    	    "userId": 1,
-			                    	    "paymentId": 1,
-			                    	    "status": "completed",
-			                    	    "paidAmount": 0,
-			                    	    "changeAmount": 0
-			                    	  }
-			                    	];*/
+			$scope.salesHistory =response;
 		}
 		function getSalesHistroyErrorHandler(response)
 		{
 			
 		}
+		$scope.print = function()
+		{
+			$scope.testPrint = "hi";
+			$window.print();
+		};
+		$scope.navigateToReturnPage = function(id)
+		{
+			
+		};
 		function render()
 		{
 			loadSalesHistoryData();

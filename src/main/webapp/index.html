@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1 , user-scalable=no">
         <link href="assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/angularPrint.css" rel="stylesheet">
        <link href="assets/css/custom.css" rel="stylesheet">
        <script type="text/javascript" src="libs/jquery.js"></script>
        <script type="text/javascript" src="libs/jquery-ui.js"></script>
@@ -27,6 +28,7 @@
        <script type="text/javascript" src="libs/angular-messages.js"></script>
        <script type="text/javascript" src="libs/d3.js"></script>
        <script type="text/javascript" src="libs/uiswitch.js"></script>
+       <script type="text/javascript" src="libs/angularPrint.js"></script>
        
        
        <script type="text/javascript" src="app/app.js"></script>
@@ -67,7 +69,7 @@
 </head>
 <body ng-controller="BodyController as bodyCtrl" class="bodyClass" ng-class="{'login-background':GlobalVariable.isLoginPage,'main-background':!GlobalVariable.isLoginPage}">
 
-	<section class="fixed-header-wrap">
+	<section class="fixed-header-wrap" print-remove>
 		<header class="mainHeader" ng-show="!GlobalVariable.isLoginPage">
 			<div class="leftItems">
 			<a class="toggle-nav" data-ng-click="openNav()" ng-show="!device.isTC70 && (device.isMobile || device.isTablet)"> <i class="fa fa-bars"></i> </a>
@@ -93,7 +95,7 @@
 		
 <div class="wrapper clearfix" id="wrapper">
             <div id="inner" class="inner clearfix">
-            	<div class="sidebar"  ng-show="!GlobalVariable.isLoginPage">
+            	<div class="sidebar"  ng-show="!GlobalVariable.isLoginPage" print-remove>
             		<side-nav></side-nav>
             	</div>
                 <div class="inner-views" ng-class="{'desktop-view':device.isDesktop,'tablet-view':device.isTablet}">
