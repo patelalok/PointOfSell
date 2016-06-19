@@ -56,8 +56,8 @@ public class SQLQueries {
 
     public String addClosingDetails = "INSERT INTO CLOSING_DETAILS " +
             "(USER_ID,OPEN_DATE,OPEN_AMOUNT,REPORT_CASH,REPORT_CREDIT,REPORT_TOTAL_AMOUNT,CLOSE_CASH," +
-            "CLOSE_CREDIT," + "CLOSE_DATE,CLOSE_TOTAL_AMOUNT,CASH_DIFFERENCE,CREDIT_DIFFERENCE,TOTAL_DIFFERENCE,TOTAL_BUSINESS_AMOUNT) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "CLOSE_CREDIT," + "CLOSE_DATE,CLOSE_TOTAL_AMOUNT,CASH_DIFFERENCE,CREDIT_DIFFERENCE,TOTAL_DIFFERENCE,TOTAL_BUSINESS_AMOUNT,TOTAL_TAX,TOTAL_DISCOUNT,TOTAL_PROFIT,TOTAL_MARKUP) " +
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
  public String addTransactionPaymentDetail = "INSERT INTO TRANSACTION_PAYMENT " +
@@ -125,4 +125,6 @@ public class SQLQueries {
     public String getVendorFromProductTable = "SELECT COUNT(VENDOR_ID) FROM PRODUCT WHERE VENDOR_ID = ?";
     public String getBrandFromProductTable = "SELECT COUNT(BRAND_ID) FROM PRODUCT WHERE BRAND_ID = ?";
     public String getCategoryFromProductTable = "SELECT COUNT(CATEGORY_ID) FROM PRODUCT WHERE CATEGORY_ID = ?";
+    public String getUsernameFromUser = "SELECT USERNAME FROM USER WHERE USER_ID = ?";
+
 }

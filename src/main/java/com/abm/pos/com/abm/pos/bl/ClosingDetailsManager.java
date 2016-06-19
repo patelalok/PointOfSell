@@ -37,7 +37,11 @@ public class ClosingDetailsManager {
                     closingDetailsDto.getDifferenceCash(),
                     closingDetailsDto.getDifferenceCredit(),
                     closingDetailsDto.getTotalDifference(),
-                    closingDetailsDto.getTotalBusinessAmount());
+                    closingDetailsDto.getTotalBusinessAmount(),
+                    closingDetailsDto.getTotalTax(),
+                    closingDetailsDto.getTotalDiscount(),
+                    closingDetailsDto.getTotalProfit(),
+                    closingDetailsDto.getTotalMarkup());
 
             System.out.println("Closing Details Added Successfully");
         }

@@ -71,7 +71,7 @@ public class SalesManager {
         return transactionDto;
     }
 
-    private static final class TransactionMapper implements RowMapper<TransactionDto>
+    private final class TransactionMapper implements RowMapper<TransactionDto>
     {
 
         @Override
@@ -81,7 +81,7 @@ public class SalesManager {
 
             transaction.setTransactionId(rs.getInt("TRANSACTION_ID"));
             transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
-           StringTokenizer at = new StringTokenizer(transaction.getTransactionDate());
+            StringTokenizer at = new StringTokenizer(transaction.getTransactionDate());
             String date = at.nextToken();
             String time = at.nextToken();
             System.out.println(date);
@@ -91,11 +91,12 @@ public class SalesManager {
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
             transaction.setUserId(rs.getInt("USER_ID"));
+            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {transaction.getUserId()},String.class);
+            transaction.setUsername(username);
             transaction.setPaymentId(rs.getInt("PAYMENT_ID"));
             transaction.setStatus(rs.getString("STATUS"));
             transaction.setTotalAmount(rs.getDouble("PAID_AMOUNT"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
-
 
             return transaction;
         }
