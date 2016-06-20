@@ -65,6 +65,8 @@
 		$scope.navigate = function(code,page)
 		{
 			$scope.selectedMenuCd = code;
+			if(page == 'sell')
+			GlobalVariable.returnProduct = false;
 			$state.go(page);
 		};
 		$scope.navigateToBrand = function()

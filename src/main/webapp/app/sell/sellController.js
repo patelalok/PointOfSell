@@ -227,7 +227,13 @@
 				$scope.totalDisc = 0;
 			
 			GlobalVariable.discountTotal = $scope.totalDisc ;
-			$scope.productTotalWithoutTax = ( $scope.subTotal) - parseFloat($scope.totalDisc);
+			$scope.productTotalWithoutTax = Number(parseFloat( $scope.subTotal) - parseFloat($scope.totalDisc)).toFixed(2);
+			
+			
+			if($scope.productTotalWithoutTax == 'NaN')
+			{
+				$scope.productTotalWithoutTax =0;
+			}	
 			
 			if($scope.totalTax == undefined)
 				$scope.totalTax = 0;
@@ -265,6 +271,21 @@
 			{
 				$scope.productNames.push(GlobalVariable.getProducts[i].description);
 			}
+			//TODO
+			//uncomment below code when return end point is available
+			/*for(var i=0;i<GlobalVariable.getReturnDetails.length;i++)
+			{
+				$rootScope.testData.push({"itemNo":GlobalVariable.getReturnDetails[i].,
+					"item":GlobalVariable.getReturnDetails[i].,
+					"quantity":GlobalVariable.getReturnDetails[i].,
+					"retail":GlobalVariable.getReturnDetails[i].,
+					"discount":GlobalVariable.getReturnDetails[i].,
+					"total":GlobalVariable.getReturnDetails[i].,
+					"stock":GlobalVariable.getReturnDetails[i].,
+					"costPrice":GlobalVariable.getReturnDetails[i].
+					});
+			}	*/
+			
 			$scope.loadCheckOutData();
 		}
 		render();

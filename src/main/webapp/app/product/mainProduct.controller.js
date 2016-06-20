@@ -47,16 +47,19 @@
 			}
 		};
 		
-		$scope.applyFilter = function()
+		/*$scope.applyFilter = function()
 		{
 			$scope.getProductDtls = $filter('filter')($scope.getProductDtls,$scope.vType);
-		};
+		};*/
 		$scope.checkValue = function()
 		{
 			if($scope.cType == undefined && $scope.bType == undefined && $scope.vType == undefined)
 				{
-				$scope.getProductDtls = GlobalVariable.getProducts;
+				$scope.bType.filterValue = '';
 				}
+			if($scope.productType == "select")
+				$scope.bType.filterValue = '';
+				
 		};
 		$scope.navigateToSales = function()
 		{

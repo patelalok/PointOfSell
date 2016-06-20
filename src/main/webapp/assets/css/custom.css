@@ -911,3 +911,15 @@ font-weight: bold;
 {
 	padding-left:10px;
 }
+.payment-btn
+{
+	font-size:30px;width:33%
+}
+.payment-btn-color
+{
+	background-color:#44b772;
+}
+.return-btn-color
+{
+	background-color:red;
+}
