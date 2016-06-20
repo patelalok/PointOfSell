@@ -20,6 +20,26 @@ public class TransactionDto {
     private double  paidAmount;
     private double changeAmount;
     private String username;
+    private int paymentIdMulty;
+    private double paidAmountMulty;
+
+    public int getPaymentIdMulty() {
+        return paymentIdMulty;
+    }
+
+    public void setPaymentIdMulty(int paymentIdMulty) {
+        this.paymentIdMulty = paymentIdMulty;
+    }
+
+    public double getPaidAmountMulty() {
+        return paidAmountMulty;
+    }
+
+    public void setPaidAmountMulty(double paidAmountMulty) {
+        this.paidAmountMulty = paidAmountMulty;
+    }
+
+
 
     public int getTransactionCompId() {
         return transactionCompId;

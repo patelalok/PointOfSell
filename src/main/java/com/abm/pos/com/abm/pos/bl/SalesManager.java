@@ -1,5 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
+import com.abm.pos.com.abm.pos.dto.ReceiptDto;
 import com.abm.pos.com.abm.pos.dto.TransactionDto;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
@@ -29,22 +30,27 @@ public class SalesManager {
 
     public void addTransaction(TransactionDto transactionDto) {
 
-        try
-        {
-            jdbcTemplate.update(sqlQuery.addTransaction,
-                    transactionDto.getTransactionCompId(),
-                    transactionDto.getTransactionDate(),
-                    transactionDto.getTotalAmount(),
-                    transactionDto.getTax(),
-                    transactionDto.getDiscount(),
-                    transactionDto.getCustomerPhoneNo(),
-                    transactionDto.getUserId(),
-                    transactionDto.getPaymentId(),
-                    transactionDto.getStatus(),
-                    transactionDto.getPaidAmount(),
-                    transactionDto.getChangeAmount());
+        try {
+            if (transactionDto.getPaymentIdMulty() == 0 && transactionDto.getPaidAmountMulty() == 0) {
+                jdbcTemplate.update(sqlQuery.addTransaction,
+                        transactionDto.getTransactionCompId(),
+                        transactionDto.getTransactionDate(),
+                        transactionDto.getTotalAmount(),
+                        transactionDto.getTax(),
+                        transactionDto.getDiscount(),
+                        transactionDto.getCustomerPhoneNo(),
+                        transactionDto.getUserId(),
+                        transactionDto.getPaymentId(),
+                        transactionDto.getStatus(),
+                        transactionDto.getPaidAmount(),
+                        transactionDto.getChangeAmount());
 
-            System.out.println("Transaction Added Successfully");
+                System.out.println("Transaction Added Successfully");
+            }
+            else
+            {
+
+            }
         }
         catch (Exception e)
         {
@@ -55,7 +61,7 @@ public class SalesManager {
 
 
 
-    public List<TransactionDto> getTransactionDetails(String startDate)
+    public List<TransactionDto> getTransactionDetails(String startDate, String endDate)
     {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
@@ -70,13 +76,6 @@ public class SalesManager {
         }
 
         return transactionDto;
-    }
-
-    public List<TransactionDto> getReceiptDetails(int receiptId) {
-
-
-
-        return null;
     }
 
     private final class TransactionMapper implements RowMapper<TransactionDto>
@@ -103,12 +102,68 @@ public class SalesManager {
             transaction.setUsername(username);
             transaction.setPaymentId(rs.getInt("PAYMENT_ID"));
             transaction.setStatus(rs.getString("STATUS"));
-            transaction.setTotalAmount(rs.getDouble("PAID_AMOUNT"));
+            transaction.setPaidAmount(rs.getDouble("PAID_AMOUNT"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
 
             return transaction;
         }
     }
+
+    public List<ReceiptDto> getReceiptDetails(int receiptId)
+    {
+        List<ReceiptDto> receiptDto = new ArrayList<>();
+
+
+        try
+        {
+            receiptDto = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceipt,new TransactionReceiptMapper(),receiptId );
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return receiptDto;
+    }
+    private final class TransactionReceiptMapper implements RowMapper<ReceiptDto>
+    {
+
+        @Override
+        public ReceiptDto mapRow(ResultSet rs, int rowNum) throws SQLException
+        {
+
+            ReceiptDto receipt = new ReceiptDto();
+
+            receipt.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            receipt.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+            receipt.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            receipt.setTax(rs.getDouble("TAX_AMOUNT"));
+            receipt.setTransactionDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+            receipt.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+            receipt.setUserId(rs.getInt("USER_ID"));
+            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {receipt.getUserId()},String.class);
+            receipt.setUsername(username);
+            receipt.setPaymentId(rs.getInt("PAYMENT_ID"));
+            receipt.setStatus(rs.getString("STATUS"));
+            receipt.setPaidAmount(rs.getDouble("PAID_AMOUNT"));
+            receipt.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            receipt.setPaymentIdMulty(rs.getInt("PAYMENT__ID_MULTY"));
+            receipt.setPaidAmountMulty(rs.getDouble("TOTAL_AMOUNT_MULTY"));
+
+
+            receipt.setProductId(rs.getInt("PRODUCT_ID"));
+            receipt.setQuantity(rs.getInt("QUANTITY"));
+            receipt.setRetail(rs.getDouble("RETAIL"));
+            receipt.setCost(rs.getDouble("COST"));
+            receipt.setProductDiscount(rs.getDouble("DISCOUNT"));
+
+            return receipt;
+        }
+    }
+
+
+
+
 
     public void addTransactionLineItemToDB(TransactionLineItemDto transactionLineItemDto) {
         try
@@ -130,15 +185,18 @@ public class SalesManager {
     }
 
 
-    public void getTransactionLineItemDetails(TransactionLineItemDto transactionLineItemDto) {
+    public List<TransactionLineItemDto> getTransactionLineItemDetails(int  transactionCompId) {
+
+        List<TransactionLineItemDto> lineItemList = new ArrayList<>();
         try
         {
-            jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper());
+            lineItemList = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper(),transactionCompId);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
+        return lineItemList;
     }
 
     private static final class TransactionLineItemMapper implements RowMapper<TransactionLineItemDto>

@@ -1,10 +1,12 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.SalesManager;
+import com.abm.pos.com.abm.pos.dto.ReceiptDto;
 import com.abm.pos.com.abm.pos.dto.TransactionDto;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,6 @@ public class SalesController {
     SalesManager salesManager;
 
 
-
-
     @RequestMapping(value = "/addTransaction", method = RequestMethod.POST, consumes = "application/json")
     public void addTransactionToDB(@RequestBody TransactionDto transactionDto)
     {
@@ -29,16 +29,17 @@ public class SalesController {
     }
 
     @RequestMapping(value = "/getSalesHistory", method = RequestMethod.GET, produces = "application/json")
-    public List<TransactionDto> getTransactionFromDB(@RequestParam String startDate)
+    public List<TransactionDto> getTransactionFromDB(@RequestParam String startDate, @RequestParam String endDate)
     {
-        return salesManager.getTransactionDetails(startDate);
+        return salesManager.getTransactionDetails(startDate,endDate);
     }
 
-   /* @RequestMapping(value = "/printReceipt, method = RequestMethod.GET, produces = "application/json")
-    public List<TransactionDto> printReceipt(@RequestParam int receiptId)
+
+    @RequestMapping(value = "/getReceiptDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ReceiptDto> getReceiptDetails(@RequestParam int receiptId)
     {
-        return salesManager.getReceiptDetails(receiptId);
-    }*/
+       return salesManager.getReceiptDetails(receiptId);
+    }
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", consumes = "application/json")
@@ -48,9 +49,9 @@ public class SalesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/getTransactionLineItem", produces = "application/json")
-    public void getTransactionLineItem(TransactionLineItemDto transactionLineItemDto)
+    public void getTransactionLineItem(@RequestParam int  transactionCompId)
     {
-        salesManager.getTransactionLineItemDetails(transactionLineItemDto);
+        salesManager.getTransactionLineItemDetails(transactionCompId);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
