@@ -86,7 +86,6 @@
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
 					 "productId":$rootScope.testData[i].itemNo,
-					"description":$rootScope.testData[i].item,
 					"quantity":$rootScope.testData[i].quantity,
 					 "retail":$rootScope.testData[i].retail,
 					 "cost":$rootScope.testData[i].costPrice,

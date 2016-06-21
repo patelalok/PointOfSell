@@ -6,9 +6,12 @@ import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,9 +59,6 @@ public class SalesManager {
         }
 
     }
-
-
-
     public List<TransactionDto> getTransactionDetails(String startDate, String endDate) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
@@ -162,18 +162,31 @@ public class SalesManager {
     }
 
 
-    public void addTransactionLineItemToDB(TransactionLineItemDto transactionLineItemDto) {
-        try
-        {
+    public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto) {
 
-            jdbcTemplate.update(sqlQuery.addTransactionLineItem,
-                    transactionLineItemDto.getTransactionCompId(),
-                    transactionLineItemDto.getProductId(),
-                    transactionLineItemDto.getQuantity(),
-                    transactionLineItemDto.getRetail(),
-                    transactionLineItemDto.getCost(),
-                    transactionLineItemDto.getDiscount());
-            System.out.println("Transaction Line Item Added Successfully");
+        try {
+
+            jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
+
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
+                    ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
+                    ps.setInt(2, transactionLineItemDto1.getProductId());
+                    ps.setInt(3, transactionLineItemDto1.getQuantity());
+                    ps.setDouble(4, transactionLineItemDto1.getRetail());
+                    ps.setDouble(5, transactionLineItemDto1.getCost());
+                    ps.setDouble(6, transactionLineItemDto1.getDiscount());
+
+                    System.out.println("Transaction Line Item Added Successfully");
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return transactionLineItemDto.size();
+                }
+            });
         }
         catch (Exception e)
         {
