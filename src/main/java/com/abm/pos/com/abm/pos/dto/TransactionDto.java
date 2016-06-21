@@ -5,9 +5,6 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class TransactionDto {
 
-
-
-
     private int transactionCompId;
     private String transactionDate;
     private double totalAmount;
@@ -15,28 +12,46 @@ public class TransactionDto {
     private double discount;
     private String customerPhoneNo;
     private int userId;
-    private int paymentId;
+    private int cashId;
+    private int creditId;
     private String status;
-    private double  paidAmount;
+    private double  paidAmountCash;
     private double changeAmount;
+    private double paidAmountCredit;
     private String username;
-    private int paymentIdMulty;
-    private double paidAmountMulty;
 
-    public int getPaymentIdMulty() {
-        return paymentIdMulty;
+    public int getCreditId() {
+        return creditId;
     }
 
-    public void setPaymentIdMulty(int paymentIdMulty) {
-        this.paymentIdMulty = paymentIdMulty;
+    public void setCreditId(int creditId) {
+        this.creditId = creditId;
     }
 
-    public double getPaidAmountMulty() {
-        return paidAmountMulty;
+
+
+    public int getCashId() {
+        return cashId;
     }
 
-    public void setPaidAmountMulty(double paidAmountMulty) {
-        this.paidAmountMulty = paidAmountMulty;
+    public void setCashId(int cashId) {
+        this.cashId = cashId;
+    }
+
+    public double getPaidAmountCash() {
+        return paidAmountCash;
+    }
+
+    public void setPaidAmountCash(double paidAmountCash) {
+        this.paidAmountCash = paidAmountCash;
+    }
+
+    public double getPaidAmountCredit() {
+        return paidAmountCredit;
+    }
+
+    public void setPaidAmountCredit(double paidAmountCredit) {
+        this.paidAmountCredit = paidAmountCredit;
     }
 
 
@@ -86,21 +101,7 @@ public class TransactionDto {
         this.discount = discount;
     }
 
-    public double getPaidAmount() {
-        return paidAmount;
-    }
 
-    public void setPaidAmount(double paidAmount) {
-        this.paidAmount = paidAmount;
-    }
-
-    public int getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(int paymentId) {
-        this.paymentId = paymentId;
-    }
 
     public String getStatus() {
         return status;

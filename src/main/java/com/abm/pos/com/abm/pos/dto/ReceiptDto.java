@@ -22,6 +22,16 @@ public class ReceiptDto {
 
     private int transactionLineItemId;
     private int productId;
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    private String productDescription;
     private int quantity;
     private double retail;
     private double cost;

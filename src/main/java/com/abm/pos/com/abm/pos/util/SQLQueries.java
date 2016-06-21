@@ -39,8 +39,8 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID,STATUS,PAID_AMOUNT,CHANGE_AMOUNT) " +
-                     "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    "(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID_CASH,STATUS,PAID_AMOUNT_CASH,CHANGE_AMOUNT,PAYMENT_ID_CREDIT,TOTAL_AMOUNT_CREDIT) " +
+                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -128,4 +128,5 @@ public class SQLQueries {
     public String getUsernameFromUser = "SELECT USERNAME FROM USER WHERE USER_ID = ?";
 
     public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION INNER JOIN TRANSACTION_LINE_ITEM ON TRANSACTION.TRANSACTION_COMP_ID = ?";
+   public String productDescriptionFromProduct = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 }

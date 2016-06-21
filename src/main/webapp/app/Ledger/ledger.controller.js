@@ -14,9 +14,9 @@
 		};
 		function loadSalesHistoryData()
 		{
-			var url =' http://localhost:8080/getSalesHistory?startDate=1000-01-0100:00:00';
+			var url =' http://localhost:8080/getSalesHistory?startDate=2016-06-16 20:02:53&endDate=2016-06-19 13:15:06';
 			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
-			getSalesHistorySuccessHandler('');
+			//getSalesHistorySuccessHandler('');
 			
 		}
 		$scope.filterSalesHistory =  function(value)

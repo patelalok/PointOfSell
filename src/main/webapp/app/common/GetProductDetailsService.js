@@ -91,11 +91,11 @@
 		}
 		function getCustomerDetailSuccessHandler(response)
 		{
-			
+			GlobalVariable.getCustomerDtls =response;
 		}
 		function getCustomerDetailErrorHandler(response)
 		{
-			GlobalVariable.getCustomerDtls =response;
+			//GlobalVariable.getCustomerDtls =response;
 		}
 		return getProductDetails;
 	};

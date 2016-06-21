@@ -31,7 +31,7 @@ public class SalesManager {
     public void addTransaction(TransactionDto transactionDto) {
 
         try {
-            if (transactionDto.getPaymentIdMulty() == 0 && transactionDto.getPaidAmountMulty() == 0) {
+           // if (transactionDto.getPaymentIdMulty() == 0 && transactionDto.getPaidAmountMulty() == 0) {
                 jdbcTemplate.update(sqlQuery.addTransaction,
                         transactionDto.getTransactionCompId(),
                         transactionDto.getTransactionDate(),
@@ -40,18 +40,16 @@ public class SalesManager {
                         transactionDto.getDiscount(),
                         transactionDto.getCustomerPhoneNo(),
                         transactionDto.getUserId(),
-                        transactionDto.getPaymentId(),
+                        transactionDto.getCashId(),
                         transactionDto.getStatus(),
-                        transactionDto.getPaidAmount(),
-                        transactionDto.getChangeAmount());
+                        transactionDto.getPaidAmountCash(),
+                        transactionDto.getChangeAmount(),
+                        transactionDto.getCreditId(),
+                        transactionDto.getPaidAmountCredit());
 
                 System.out.println("Transaction Added Successfully");
             }
-            else
-            {
 
-            }
-        }
         catch (Exception e)
         {
             System.out.println(e);
@@ -61,22 +59,19 @@ public class SalesManager {
 
 
 
-    public List<TransactionDto> getTransactionDetails(String startDate, String endDate)
-    {
+    public List<TransactionDto> getTransactionDetails(String startDate, String endDate) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
-        try
-        {
+        try {
             transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper());
             System.out.println("Send Transaction Details Successfully");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
         return transactionDto;
     }
+
 
     private final class TransactionMapper implements RowMapper<TransactionDto>
     {
@@ -100,9 +95,11 @@ public class SalesManager {
             transaction.setUserId(rs.getInt("USER_ID"));
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {transaction.getUserId()},String.class);
             transaction.setUsername(username);
-            transaction.setPaymentId(rs.getInt("PAYMENT_ID"));
+            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
+            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
+            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
-            transaction.setPaidAmount(rs.getDouble("PAID_AMOUNT"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
 
             return transaction;
@@ -152,6 +149,9 @@ public class SalesManager {
 
 
             receipt.setProductId(rs.getInt("PRODUCT_ID"));
+            String productDescription = jdbcTemplate.queryForObject(sqlQuery.productDescriptionFromProduct, new Object[] {receipt.getUserId()},String.class);
+            receipt.setProductDescription(productDescription);
+            receipt.setUsername(username);
             receipt.setQuantity(rs.getInt("QUANTITY"));
             receipt.setRetail(rs.getDouble("RETAIL"));
             receipt.setCost(rs.getDouble("COST"));
@@ -160,9 +160,6 @@ public class SalesManager {
             return receipt;
         }
     }
-
-
-
 
 
     public void addTransactionLineItemToDB(TransactionLineItemDto transactionLineItemDto) {

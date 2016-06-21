@@ -64,10 +64,12 @@
 				"discount":GlobalVariable.discountTotal ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":"2",
-				"paymentId":"1",
+				"cashId":"1",
 				"status":"completed",
-			"paidAmount":$scope.amountPaid,
+			"paidAmountCash":$scope.amountPaid,
 			"changeAmount":$scope.changeAmount,
+				"creditIdMulty":'',
+				"paidAmountCredit":'',
 			"transactionCompId":GlobalVariable.transactionCompletedId
 
 			};
