@@ -12,6 +12,16 @@
 		{ 
 			DialogFactory.close(true);
 		};
+		$scope.openStartCalendar = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openStart = true;
+		};
+		$scope.openEndCalendar = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openEnd = true;
+		};
 		function loadSalesHistoryData()
 		{
 			var url =' http://localhost:8080/getSalesHistory?startDate=2016-06-16 20:02:53&endDate=2016-06-19 13:15:06';
@@ -19,6 +29,11 @@
 			//getSalesHistorySuccessHandler('');
 			
 		}
+		$scope.onDateSelected = function(startDate, endDate, label, element) {
+			var receiptIndex = element.attr('data-receipt-index');
+			element.find('span').eq(0).html(endDate.format('MM/DD/YYYY'));
+			$scope.salesDates[receiptIndex] = endDate.format('MM/DD/YYYY');
+		};
 		$scope.filterSalesHistory =  function(value)
 		{
 			console.log(value);
@@ -131,8 +146,17 @@
 		{
 			
 		}
-		function render()
+/*		salesDate : moment($scope.salesDates[receiptIndex]).format("MM/DD/YYYY")
+*/		function render()
 		{
+			$scope.startDate = moment();
+			/** Options for the date picker directive * */
+			$scope.dateRangeOptions = {
+				startDate : moment(),
+				showDropdowns : true,
+				format : 'MM/DD/YYYY',
+				singleDatePicker : true
+			};
 			loadSalesHistoryData();
 		}
 		render();

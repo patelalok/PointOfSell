@@ -8,6 +8,8 @@
 	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state)
 	{
 		$scope.color= false;
+		$scope.paidAmountCash =0;
+		$scope.paidAmountCredit =0;
 		
 		$scope.closePopup = function()
 		{
@@ -15,6 +17,8 @@
 		};
 		$scope.addAmount = function(amount)
 		{
+			$scope.paidAmountCash =parseFloat($scope.paidAmountCash)+parseFloat(amount);
+			$scope.cashId = 1;
 			$scope.balanceAmount =parseFloat($scope.balanceAmount)-amount;
 			if($scope.balanceAmount <= 0)
 			{
@@ -55,6 +59,16 @@
 				$scope.amountPaid = parseFloat($scope.checkPayment)-parseFloat($scope.balanceAmount);
 				$scope.changeAmount = $scope.balanceAmount;
 			}	
+			
+			if($scope.cashId == undefined)
+				$scope.cashId = '';
+			if($scope.paidAmountCash == undefined)
+				$scope.paidAmountCash = '';
+			if($scope.creditIdMulty == undefined)
+				$scope.creditIdMulty = '';
+			if($scope.paidAmountCredit == undefined)
+				$scope.paidAmountCredit = '';
+			
 			var url ="http://localhost:8080/addTransaction";
 			var request = new Object();
 			request = {
@@ -64,18 +78,18 @@
 				"discount":GlobalVariable.discountTotal ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":"2",
-				"cashId":"1",
+				"cashId":$scope.cashId,
 				"status":"completed",
-			"paidAmountCash":$scope.amountPaid,
+			"paidAmountCash":$scope.paidAmountCash,
 			"changeAmount":$scope.changeAmount,
-				"creditIdMulty":'',
-				"paidAmountCredit":'',
+				"creditIdMulty":$scope.creditIdMulty,
+				"paidAmountCredit":$scope.paidAmountCredit,
 			"transactionCompId":GlobalVariable.transactionCompletedId
 
 			};
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionSuccessHandler,addTransactionErrorHandler,"application/json","application/json");
-			//addTransactionSuccessHandler(response);
+			//addTransactionSuccessHandler('');
 		};
 		function addTransactionSuccessHandler(response)
 		{	
@@ -95,6 +109,7 @@
 			var url ="http://localhost:8080/addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
+			//addTransactionLineItemSuccessHandler('');
 			
 		};
 		function addTransactionErrorHandler(response)
@@ -112,17 +127,55 @@
 		{
 			
 		}
-		$scope.payOutMax = function()
+		$scope.payOutMax = function(value)
 		{
-			$scope.balanceAmount =0;
-			$scope.checkPayout = GlobalVariable.checkOuttotal;
-			$scope.creditcardPayout = GlobalVariable.checkOuttotal;
-			$scope.debitcardPayout = GlobalVariable.checkOuttotal;
-			$scope.cashPayout = GlobalVariable.checkOuttotal;
+			
+			if(value == 'cash')
+			{
+				$scope.cashId =1;
+				$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat($scope.balanceAmount);
+			}
+			else
+			{
+				$scope.creditIdMulty = 2;
+				$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat($scope.balanceAmount);
+			}
+			
+				$scope.balanceAmount =0;
+				
+				$scope.checkPayout = GlobalVariable.checkOuttotal;
+				$scope.creditcardPayout = GlobalVariable.checkOuttotal;
+				$scope.debitcardPayout = GlobalVariable.checkOuttotal;
+				$scope.cashPayout = GlobalVariable.checkOuttotal;
+			
+			
 			var msg= "Your total balance is "+$scope.balanceAmount;
 				modalService.showModal('', '', msg, $scope.callBackCheckout);
 				$scope.color = true;
 
+		};
+		$scope.calculateAmount = function(value,means)
+		{
+			
+			if(means == 'cash')
+			{
+				$scope.cashId =1;
+				$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
+			}
+			else
+			{
+				$scope.creditIdMulty = 2;
+				$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
+			}
+			
+			$scope.remainingBalance = parseFloat(GlobalVariable.checkOuttotal)-parseFloat(value);
+			$scope.balanceAmount =$scope.remainingBalance;
+			if($scope.balanceAmount <= 0)
+			{
+				var msg= "Your total balance is "+$scope.balanceAmount;
+				modalService.showModal('', '', msg, $scope.callBackCheckout);
+				$scope.color = true;
+			}
 		};
 		function render()
 		{
