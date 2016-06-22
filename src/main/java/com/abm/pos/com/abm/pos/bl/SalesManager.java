@@ -173,11 +173,12 @@ public class SalesManager {
 
                     TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
                     ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
-                    ps.setInt(2, transactionLineItemDto1.getProductId());
-                    ps.setInt(3, transactionLineItemDto1.getQuantity());
-                    ps.setDouble(4, transactionLineItemDto1.getRetail());
-                    ps.setDouble(5, transactionLineItemDto1.getCost());
-                    ps.setDouble(6, transactionLineItemDto1.getDiscount());
+                    ps.setString(2,transactionLineItemDto1.getDate());
+                    ps.setInt(3, transactionLineItemDto1.getProductId());
+                    ps.setInt(4, transactionLineItemDto1.getQuantity());
+                    ps.setDouble(5, transactionLineItemDto1.getRetail());
+                    ps.setDouble(6, transactionLineItemDto1.getCost());
+                    ps.setDouble(7, transactionLineItemDto1.getDiscount());
 
                     System.out.println("Transaction Line Item Added Successfully");
                 }
@@ -219,6 +220,7 @@ public class SalesManager {
 
             lineItem.setTransactionLineItemId(rs.getInt("TRANSACTION_LINE_ITEM_ID"));
             lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            lineItem.setDate(rs.getString("DATE"));
             lineItem.setProductId(rs.getInt("PRODUCT_ID"));
             lineItem.setQuantity(rs.getInt("QUANTITY"));
             lineItem.setRetail(rs.getDouble("RETAIL"));

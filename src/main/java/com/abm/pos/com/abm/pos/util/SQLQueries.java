@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SQLQueries {
 
+
+
     //SQL QUERY FOR ADD INTO DATABASE
 
    public String addProductQuery =
@@ -129,4 +131,9 @@ public class SQLQueries {
 
     public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION INNER JOIN TRANSACTION_LINE_ITEM ON TRANSACTION.TRANSACTION_COMP_ID = ?";
    public String productDescriptionFromProduct = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
+
+
+    public static String getProductHistory = "SELECT PRODUCT_ID,DATE,QUANTITY,RETAIL,COST FROM TRANSACTION_LINE_ITEM WHERE PRODUCT_ID=?";
+
+    public static String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
 }
