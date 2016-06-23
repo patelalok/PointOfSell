@@ -10,7 +10,7 @@
 			
 			 </div>
 			<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
-				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add Item</button>
+				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addRow()">Add  Product</button>
 			</div>
 			</div>
 		</div>
@@ -36,7 +36,7 @@
 				 class="full-width" style="height:500px;overflow:auto;">
 				<columns style="bakcground:red;">
 					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true"></column>
-					<column name="Item" key="item" datatype="string" width="63%">
+					<column name="Item Description" key="item" datatype="string" width="50%">
 					<cell ng-non-bindable>
 						{{::row.item}}
 					</cell>
@@ -44,9 +44,9 @@
 					<column name="Quantity" key="quantity" datatype="string" width="2%">
 					
 					</column>
-					<column name="Retail" key="retail" datatype="string" width="10%"></column>
-					<column name="Retail After Discount" key="discount" datatype="string" width="2%"></column>
-					<column name="Total" key="total" datatype="string" width="10%">
+					<column name="Retail" key="retail" datatype="string" width="7%"></column>
+					<column name="Ret W/Disc" key="discount" datatype="string" width="20%"></column>
+					<column name="Total" key="total" datatype="string" width="8%">
 					<cell ng-non-bindable>
 							{{::row.total}}
 						</cell>

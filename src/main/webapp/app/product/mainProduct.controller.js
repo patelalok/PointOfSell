@@ -61,10 +61,17 @@
 				$scope.bType.filterValue = '';
 				
 		};
-		$scope.navigateToSales = function()
+		$scope.navigateToSales = function(productId)
 		{
-			$state.go('ledger');
+			GlobalVariable.productIdHistory = productId;
+			var _tmPath = 'app/product/historyPopup.html';
+			var _ctrlPath = 'historyPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, callbackPaymentHistory);
 		};
+		function callbackPaymentHistory()
+		{
+			
+		}
 		$scope.editProduct = function(row)
 		{
 			

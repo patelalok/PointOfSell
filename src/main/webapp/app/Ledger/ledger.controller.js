@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter'];
+	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter) 
+	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout) 
 	{
 
 		$scope.closePopup = function()
@@ -37,20 +37,23 @@
 		$scope.filterSalesHistory =  function(value)
 		{
 			console.log(value);
-			$scope.filterVlaue = value;
+			$scope.filterHistory = value;
 		};
-		$scope.checkfilterValue = function()
+		$scope.checkfilterValue = function(value)
 		{
 			if(($scope.customerPhone == undefined && $scope.receiptNumber == undefined) || ($scope.customerPhone == "" && $scope.receiptNumber == "")
 					||($scope.customerPhone == undefined && $scope.receiptNumber == "")||($scope.customerPhone == "" && $scope.receiptNumber == undefined))
 			{
-				$scope.filterVlaue= '';
+				$scope.filterHistory= '';
 			}
+			else
+				$scope.filterHistory = value;
 		};
 		
 		function getSalesHistorySuccessHandler(response)
 		{
-			$scope.salesHistory =  response;/*[
+			$scope.salesHistory =  response;
+			/*[
 			                       {
 			                    	    "transactionId": 13,
 			                    	    "transactionDate": "1000-01-01 00:00:00.0",
@@ -89,12 +92,13 @@
 			$scope.testPrint = "hi";
 			var url="http://localhost:8080/getReceiptDetails?receiptId="+id;
 			dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
-			getPrintSuccessHandler('');
+			//getPrintSuccessHandler('');
 			
 		};
 		function getPrintSuccessHandler(response)
 		{
-			$scope.receiptData = response;/*[
+			GlobalVariable.receiptData = response;
+			/*[
 			                      {
 			                    	    "transactionCompId": 96,
 			                    	    "transactionDate": "2016-06-17 22:22:14.0",
@@ -120,7 +124,10 @@
 			                    	    "storeDetails": null
 			                    	  }
 			                    	];*/
-			$window.print();
+			$timeout(function() {
+				$window.print();
+			}, 2000);
+			
 		}
 		function getPrintErrorHandler(response)
 		{
@@ -157,8 +164,8 @@
 				format : 'MM/DD/YYYY',
 				singleDatePicker : true
 			};
-			//$scope.startDate = js_yyyy_mm_dd_hh_mm_ss();
-			//$scope.endDate = js_yyyy_mm_dd_hh_mm_ss();
+			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
+			$scope.endDate = $scope.startDate;
 			loadSalesHistoryData(js_yyyy_mm_dd_hh_mm_ss(),js_yyyy_mm_dd_hh_mm_ss());
 		}
 $scope.applyFilterHistory = function()

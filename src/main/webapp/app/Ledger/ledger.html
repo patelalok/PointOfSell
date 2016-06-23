@@ -1,10 +1,10 @@
-<div print-remove>
-<div class="row pageHeader" style="padding:30px;">
+<div >
+<div class="row pageHeader" style="padding:30px;" print-remove>
 	<div class="col-md-12 pageHeader">
 		<span style="font-weight:bold;font-size:30px">Sales History</span>
 	</div>
 </div>
-<div class="row productBtns" style="padding:30px;">	
+<div class="row productBtns" style="padding:30px;" print-remove>	
 
 	<div class="col-md-4 productBtn">
 		
@@ -43,13 +43,13 @@
 	 <div class="col-md-4 productBtn">
 		<div class="padding-bottom-5"><label>Search For Customers</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="customerPhone" id="customerPhone" style="height:52px;width:100%;" ng-change="checkfilterValue()" ng-enter="filterSalesHistory(customerPhone)" />
+			<input  type="text" class="form-control" data-ng-model="customerPhone" id="customerPhone" style="height:52px;width:100%;" ng-change="checkfilterValue(customerPhone)" ng-enter="filterSalesHistory(customerPhone)" />
 		</div>
 	 </div>    
 	 <div class="col-md-4 productBtn">
 		<div class="padding-bottom-5"><label>Search By Receipt Number</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="receiptNumber" id="receiptNumber" style="height:52px;width:100%;" ng-change="checkfilterValue()" ng-enter="filterSalesHistory(receiptNumber)"/>
+			<input  type="text" class="form-control" data-ng-model="receiptNumber" id="receiptNumber" style="height:52px;width:100%;" ng-change="checkfilterValue(receiptNumber)" ng-enter="filterSalesHistory(receiptNumber)"/>
 		</div>
 	 </div> 
 	 	<div class="col-md-1" style="width:16%;">
@@ -60,11 +60,15 @@
 	</div> 
 
 </div>
-<div class="row" style="padding:30px;">
+
+
+
+</div>
+<div class="row" style="padding:30px;" print-remove>
 	<div class="col-md-12">
 		<div data-responsive-table data-ng-model="salesHistory"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
-				on-sort="sortColumnData(index)" data-filter-value="filterVlaue">
+				on-sort="sortColumnData(index)" data-filter-value="filterHistory">
 				<columns>
 					<column name="Date" key="transactionDate" datatype="string" width="25%" sortable="true"></column>
 					<column name="CustomerPhone" key="customerPhoneno" datatype="string" width="15%"></column>
@@ -89,35 +93,4 @@
 				</columns>		
 			</div>
 	</div>
-</div>
-
-</div>
-<div print-section>
-<div print-only>
-<div class="row" style="padding:30px">
-	<div class="customerName">
-		<span>{{receiptData.username}}</span>
-	</div>
-</div>
-<div class="row" style="padding:30px;">
-<div class="col-md-12">
-		<div data-responsive-table data-ng-model="receiptData"  data-current-page="currentPageIndexArr"
-				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
-				on-sort="sortColumnData(index)">
-				<columns>
-					<column name="Date" key="transactionDate" datatype="string" width="25%" sortable="true"></column>
-					<column name="CustomerPhone" key="customerPhoneNo" datatype="string" width="15%"></column>
-					<column name="UserID" key="userId" datatype="string" width="10%"></column>
-					<column name="PaidAmount" key="paidAmount" datatype="string" width="10%"></column>
-					<column name="ChangeAmount" key="changeAmount" datatype="string" width="10%"></column>
-					<column name="Tax" key="tax" datatype="string" width="5%"></column>
-					<column name="Discount" key="transactionDiscount" datatype="string" width="5%"></column>
-					<column name="TotalAmount" key="totalAmount" datatype="string" width="10%"></column>
-					<column name="Receipt No" key="transactionCompId" datatype="string" width="15%"></column>
-
-				</columns>		
-			</div>
-	</div>
-</div>
-</div>
 </div>

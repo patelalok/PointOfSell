@@ -20,7 +20,7 @@
 		$scope.addRow = function()
 		{
 			
-			$rootScope.testData.push({"itemNo":Math.round((Math.random() * 10) * 10),
+			/*$rootScope.testData.push({"itemNo":Math.round((Math.random() * 10) * 10),
 				"item":"check",
 				"quantity":89,
 				"retail":"test",
@@ -29,7 +29,9 @@
 				"stock":5,
 				"costPrice":"12.90"});
 			
-			$scope.loadCheckOutData();
+			$scope.loadCheckOutData();*/
+			
+			$state.go('product');
 		};
 		$scope.removeRow = function(itemNo){	
 			
@@ -227,6 +229,9 @@
 				$scope.totalDisc = 0;
 			
 			GlobalVariable.discountTotal = $scope.totalDisc ;
+			if($scope.totalDisc == "")
+				$scope.productTotalWithoutTax = Number(parseFloat( $scope.subTotal)).toFixed(2);
+			else
 			$scope.productTotalWithoutTax = Number(parseFloat( $scope.subTotal) - parseFloat($scope.totalDisc)).toFixed(2);
 			
 			
