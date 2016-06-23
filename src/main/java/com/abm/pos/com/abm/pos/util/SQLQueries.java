@@ -99,7 +99,13 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ?";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION";
+            /*"" +
+            "" +
+            "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
+            "t.CUSTOMER_PHONENO,t.USER_ID, u.USERNAME,t.PAYMENT_ID_CASH,t.STATUS,t.PAID_AMOUNT_CASH,t.CHANGE_AMOUNT,t.PAYMENT_ID_CREDIT," +
+            "t.TOTAL_AMOUNT_CREDIT FROM TRANSACTION t, USER u WHERE t.USER_ID = u.USER_ID AND t.USER_ID = ? AND TRANSACTION_DATE BETWEEN " +
+            "? AND ?";*/
 
     public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
 
@@ -129,11 +135,13 @@ public class SQLQueries {
     public String getCategoryFromProductTable = "SELECT COUNT(CATEGORY_ID) FROM PRODUCT WHERE CATEGORY_ID = ?";
     public String getUsernameFromUser = "SELECT USERNAME FROM USER WHERE USER_ID = ?";
 
-    public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION INNER JOIN TRANSACTION_LINE_ITEM ON TRANSACTION.TRANSACTION_COMP_ID = ?";
+    public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION";
+            //"INNER JOIN TRANSACTION_LINE_ITEM ON TRANSACTION.TRANSACTION_COMP_ID = ?";
    public String productDescriptionFromProduct = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 
 
-    public static String getProductHistory = "SELECT PRODUCT_ID,DATE,QUANTITY,RETAIL,COST FROM TRANSACTION_LINE_ITEM WHERE PRODUCT_ID=?";
+    public static String getProductHistory = "SELECT t.DATE,p.PRODUCT_ID,p.PRODUCT_NO,p.DESCRIPTION,t.QUANTITY,t.RETAIL," +
+            "t.COST,t.DISCOUNT FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_ID=p.PRODUCT_ID AND t.PRODUCT_ID = ?";
 
-    public static String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
+    public static String getProductHistoryCount = "SELECT count(PRODUCT_ID) FROM TRANSACTION_LINE_ITEM where PRODUCT_ID = ?";
 }

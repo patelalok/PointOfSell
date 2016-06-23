@@ -59,7 +59,7 @@ public class SalesManager {
         }
 
     }
-    public List<TransactionDto> getTransactionDetails(String startDate, String endDate) {
+    public List<TransactionDto> getTransactionDetails(String startDate, String endDategit ) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
         try {
