@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.ProductDto;
+import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -93,6 +94,7 @@ public class ProductManager
             }
             return productList;
         }
+
     private final class ProductMapper implements RowMapper<ProductDto>
         {
 
@@ -124,6 +126,43 @@ public class ProductManager
                 return product;
             }
         }
+
+    public List<TransactionLineItemDto> getProductHistoryFromDB(int productId) {
+
+        List<TransactionLineItemDto> productHistory = new ArrayList<>();
+
+        try
+        {
+            productHistory = jdbcTemplate.query(SQLQueries.getProductHistory,new ProductHistoryMapper(), productId);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return productHistory;
+
+    }
+
+    private final class ProductHistoryMapper implements RowMapper<TransactionLineItemDto>
+    {
+
+        @Override
+        public TransactionLineItemDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            TransactionLineItemDto productHistory = new TransactionLineItemDto();
+
+            productHistory.setDate(rs.getString("DATE"));
+            productHistory.setProductId(rs.getInt("PRODUCT_ID"));
+            String description = jdbcTemplate.queryForObject(SQLQueries.getProductDescription,new Object[] {productHistory.getProductId()}, String.class);
+            productHistory.setProductDescription(description);
+            productHistory.setQuantity(rs.getInt("QUANTITY"));
+            productHistory.setRetail(rs.getDouble("RETAIL"));
+            productHistory.setCost(rs.getDouble("COST"));
+
+            return productHistory;
+        }
+    }
     public void deleteProductToDB(String productNo) {
 
     }

@@ -12,6 +12,24 @@ public class TransactionLineItemDto {
     private double retail;
     private double cost;
     private double discount;
+    private String date;
+    private String ProductDescription;
+
+    public String getProductDescription() {
+        return ProductDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        ProductDescription = productDescription;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public int getTransactionCompId() {
         return transactionCompId;

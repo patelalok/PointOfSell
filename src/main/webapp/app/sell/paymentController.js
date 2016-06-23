@@ -82,7 +82,7 @@
 				"status":"completed",
 			"paidAmountCash":$scope.paidAmountCash,
 			"changeAmount":$scope.changeAmount,
-				"creditIdMulty":$scope.creditIdMulty,
+				"creditId":$scope.creditIdMulty,
 				"paidAmountCredit":$scope.paidAmountCredit,
 			"transactionCompId":GlobalVariable.transactionCompletedId
 
