@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window'];
+	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window) 
+	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter) 
 	{
 
 		$scope.closePopup = function()
@@ -22,9 +22,9 @@
 			$event.stopPropagation();
 			$scope.openEnd = true;
 		};
-		function loadSalesHistoryData()
+		function loadSalesHistoryData(startDate,endDate)
 		{
-			var url =' http://localhost:8080/getSalesHistory?startDate=2016-06-16 20:02:53&endDate=2016-06-19 13:15:06';
+			var url ='http://localhost:8080/getSalesHistory?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
 			//getSalesHistorySuccessHandler('');
 			
@@ -149,16 +149,34 @@
 /*		salesDate : moment($scope.salesDates[receiptIndex]).format("MM/DD/YYYY")
 */		function render()
 		{
-			$scope.startDate = moment();
+			//$scope.startDate = moment();
 			/** Options for the date picker directive * */
 			$scope.dateRangeOptions = {
-				startDate : moment(),
+				//startDate : moment(),
 				showDropdowns : true,
 				format : 'MM/DD/YYYY',
 				singleDatePicker : true
 			};
-			loadSalesHistoryData();
+			//$scope.startDate = js_yyyy_mm_dd_hh_mm_ss();
+			//$scope.endDate = js_yyyy_mm_dd_hh_mm_ss();
+			loadSalesHistoryData(js_yyyy_mm_dd_hh_mm_ss(),js_yyyy_mm_dd_hh_mm_ss());
 		}
+$scope.applyFilterHistory = function()
+{
+	//$scope.startDate = $filter('date')($scope.startDate, "yyyy-MM-dd HH:mm:ss");
+	//$scope.endDate = $filter('date')($scope.endDate, "yyyy-MM-dd HH:mm:ss");
+	loadSalesHistoryData($filter('date')($scope.startDate, "yyyy-MM-dd HH:mm:ss"),$filter('date')($scope.endDate, "yyyy-MM-dd HH:mm:ss"));
+};
+function js_yyyy_mm_dd_hh_mm_ss () {
+	  var now = new Date();
+	  var year = "" + now.getFullYear();
+	  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+	  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+	 var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+	  var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+	  var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+	  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+	}
 		render();
 	}
 		
