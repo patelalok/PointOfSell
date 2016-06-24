@@ -43,6 +43,7 @@
 			//TODO 
 			//Database service call to complete transaction request.
 			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
+			GlobalVariable.transDate = trasnactionDate;
 			GlobalVariable.transactionCompletedId = Math.round(((Math.random() * 10) * 10));
 			DialogFactory.close(true);
 			if($scope.balanceAmount == 0)
@@ -85,7 +86,8 @@
 			"changeAmount":$scope.changeAmount,
 				"creditIdMulty":$scope.creditIdMulty,
 				"paidAmountCredit":$scope.paidAmountCredit,
-			"transactionCompId":GlobalVariable.transactionCompletedId
+			"transactionCompId":GlobalVariable.transactionCompletedId,
+			"subTotal":GlobalVariable.totalSub
 
 			};
 			request = JSON.stringify(request);
@@ -104,7 +106,11 @@
 					"quantity":$rootScope.testData[i].quantity,
 					 "retail":$rootScope.testData[i].retail,
 					 "cost":$rootScope.testData[i].costPrice,
-					 "discount":$rootScope.testData[i].discount
+					 "discount":$rootScope.testData[i].discount,
+					 "retailWithDis":$rootScope.testData[i].discount,
+					 "totalProductPrice":$rootScope.testData[i].total,
+					 "transactionDate":GlobalVariable.transDate
+					 
 			});
 			}	
 			var url ="http://localhost:8080/addTransactionLineItem";

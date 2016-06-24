@@ -17,7 +17,7 @@
 					<column name="Retail" key="retail" datatype="string" width="14%"></column>
 					<column name="Cost" key="cost" datatype="string" width="14%"></column>
 					<column name="Discount" key="discount" datatype="string" width="14%"></column>
-					
+					<column name="Product Count" key="discount" datatype="string" width="14%"></column>
 				</columns>		
 			</div>
 	</div>
@@ -25,7 +25,7 @@
 	</div>
 	<div class="modal-footer">
 	 <div class="row alignCenter">
-	 	<span>Total No Of Products Sold Till Date:</span><span>24</span>
+	 	<span>Total No Of Products Sold Till Date:</span><span>{{getProductHistory[0].productCount}}</span>
  	</div>	
 	</div>
 </div>
