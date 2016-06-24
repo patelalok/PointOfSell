@@ -198,6 +198,7 @@
 	};
 		$scope.openCashPopup = function()
 		{
+			
 			var _tmPath = 'app/sell/paymentPopup.html';
 			var _ctrlPath = 'paymentPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, callbackPayment);
@@ -224,7 +225,9 @@
 			{
 				$scope.totalQuantity = parseFloat( $scope.totalQuantity) + parseFloat($rootScope.testData[i].quantity);
 				$scope.subTotal = parseFloat($scope.subTotal) + parseFloat($rootScope.testData[i].total);
+				
 			}
+			GlobalVariable.totalSub = $socpe.subTotal;
 			if($scope.totalDisc == undefined)
 				$scope.totalDisc = 0;
 			
