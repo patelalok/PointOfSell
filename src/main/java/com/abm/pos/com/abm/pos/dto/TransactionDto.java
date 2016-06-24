@@ -10,6 +10,7 @@ public class TransactionDto {
     private double totalAmount;
     private double tax;
     private double discount;
+    private double subTotal;
     private String customerPhoneNo;
     private int userId;
     private int cashId;
@@ -28,7 +29,13 @@ public class TransactionDto {
         this.creditId = creditId;
     }
 
+    public double getSubTotal() {
+        return subTotal;
+    }
 
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
+    }
 
     public int getCashId() {
         return cashId;

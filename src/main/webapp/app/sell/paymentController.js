@@ -3,13 +3,14 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state'];
+	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
 
-	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state)
+	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
 	{
 		$scope.color= false;
 		$scope.paidAmountCash =0;
 		$scope.paidAmountCredit =0;
+		$scope.restrictCharacter=restrictCharacter;
 		
 		$scope.closePopup = function()
 		{
@@ -19,10 +20,10 @@
 		{
 			$scope.paidAmountCash =parseFloat($scope.paidAmountCash)+parseFloat(amount);
 			$scope.cashId = 1;
-			$scope.balanceAmount =parseFloat($scope.balanceAmount)-amount;
+			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
 			if($scope.balanceAmount <= 0)
 			{
-				var msg= "Your total balance is "+$scope.balanceAmount;
+				var msg= "Your total balance is "+Number(parseFloat($scope.balanceAmount)).toFixed(2);
 				modalService.showModal('', '', msg, $scope.callBackCheckout);
 				$scope.color = true;
 			}	
@@ -82,14 +83,14 @@
 				"status":"completed",
 			"paidAmountCash":$scope.paidAmountCash,
 			"changeAmount":$scope.changeAmount,
-				"creditId":$scope.creditIdMulty,
+				"creditIdMulty":$scope.creditIdMulty,
 				"paidAmountCredit":$scope.paidAmountCredit,
 			"transactionCompId":GlobalVariable.transactionCompletedId
 
 			};
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionSuccessHandler,addTransactionErrorHandler,"application/json","application/json");
-			//addTransactionSuccessHandler('');
+			addTransactionSuccessHandler('');
 		};
 		function addTransactionSuccessHandler(response)
 		{	
@@ -109,7 +110,7 @@
 			var url ="http://localhost:8080/addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
-			//addTransactionLineItemSuccessHandler('');
+			addTransactionLineItemSuccessHandler('');
 			
 		};
 		function addTransactionErrorHandler(response)
@@ -121,7 +122,7 @@
 			$rootScope.testData = [];
 			//TODO
 			//popup to display whther to print receipt or not;
-			$state.go('ledger');
+			/*$state.go('ledger');*/
 		};
 		function addTransactionLineItemErrorHandler(response)
 		{
@@ -149,14 +150,15 @@
 				$scope.cashPayout = GlobalVariable.checkOuttotal;
 			
 			
-			var msg= "Your total balance is "+$scope.balanceAmount;
+			var msg= "Your total balance is "+Number(parseFloat($scope.balanceAmount)).toFixed(2);
 				modalService.showModal('', '', msg, $scope.callBackCheckout);
 				$scope.color = true;
 
 		};
 		$scope.calculateAmount = function(value,means)
 		{
-			
+			if(value == "")
+				value= 0;
 			if(means == 'cash')
 			{
 				$scope.cashId =1;
@@ -172,7 +174,7 @@
 			$scope.balanceAmount =$scope.remainingBalance;
 			if($scope.balanceAmount <= 0)
 			{
-				var msg= "Your total balance is "+$scope.balanceAmount;
+				var msg= "Your total balance is "+Number(parseFloat($scope.balanceAmount)).toFixed(2);
 				modalService.showModal('', '', msg, $scope.callBackCheckout);
 				$scope.color = true;
 			}

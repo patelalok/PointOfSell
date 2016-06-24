@@ -41,6 +41,7 @@ public class SalesManager {
                         transactionDto.getTotalAmount(),
                         transactionDto.getTax(),
                         transactionDto.getDiscount(),
+                        transactionDto.getSubTotal(),
                         transactionDto.getCustomerPhoneNo(),
                         transactionDto.getUserId(),
                         transactionDto.getCashId(),
@@ -82,7 +83,7 @@ public class SalesManager {
             TransactionDto transaction = new TransactionDto();
 
             transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-            transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+           transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
             StringTokenizer at = new StringTokenizer(transaction.getTransactionDate());
             String date = at.nextToken();
             String time = at.nextToken();
@@ -91,6 +92,7 @@ public class SalesManager {
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setTax(rs.getDouble("TAX_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
             transaction.setUserId(rs.getInt("USER_ID"));
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {transaction.getUserId()},String.class);
@@ -111,9 +113,13 @@ public class SalesManager {
         List<ReceiptDto> receiptDto = new ArrayList<>();
 
 
+
         try
         {
-            receiptDto = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceipt,new TransactionReceiptMapper(),receiptId );
+            receiptDto = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceipt,new TransactionReceiptMapper());
+           // lineItemList = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper(),rs.getInt("TRANSACTION_COMP_ID"));
+
+
 
         }
         catch (Exception e)
@@ -129,35 +135,45 @@ public class SalesManager {
         public ReceiptDto mapRow(ResultSet rs, int rowNum) throws SQLException
         {
 
-            ReceiptDto receipt = new ReceiptDto();
-
-            receipt.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-            receipt.setTransactionDate(rs.getString("TRANSACTION_DATE"));
-            receipt.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-            receipt.setTax(rs.getDouble("TAX_AMOUNT"));
-            receipt.setTransactionDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
-            receipt.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
-            receipt.setUserId(rs.getInt("USER_ID"));
-            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {receipt.getUserId()},String.class);
-            receipt.setUsername(username);
-            receipt.setPaymentId(rs.getInt("PAYMENT_ID"));
-            receipt.setStatus(rs.getString("STATUS"));
-            receipt.setPaidAmount(rs.getDouble("PAID_AMOUNT"));
-            receipt.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
-            receipt.setPaymentIdMulty(rs.getInt("PAYMENT__ID_MULTY"));
-            receipt.setPaidAmountMulty(rs.getDouble("TOTAL_AMOUNT_MULTY"));
 
 
-            receipt.setProductId(rs.getInt("PRODUCT_ID"));
-            String productDescription = jdbcTemplate.queryForObject(sqlQuery.productDescriptionFromProduct, new Object[] {receipt.getUserId()},String.class);
-            receipt.setProductDescription(productDescription);
-            receipt.setUsername(username);
-            receipt.setQuantity(rs.getInt("QUANTITY"));
-            receipt.setRetail(rs.getDouble("RETAIL"));
-            receipt.setCost(rs.getDouble("COST"));
-            receipt.setProductDiscount(rs.getDouble("DISCOUNT"));
+            ReceiptDto r = new ReceiptDto();
 
-            return receipt;
+            TransactionDto t = new TransactionDto();
+
+
+
+
+            t.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            t.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+            t.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            t.setTax(rs.getDouble("TAX_AMOUNT"));
+            t.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+            t.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+            t.setUserId(rs.getInt("USER_ID"));
+            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {t.getUserId()},String.class);
+            t.setUsername(username);
+            t.setCashId(rs.getInt("PAYMENT_ID_CASH"));
+            t.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
+            t.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            t.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+            t.setStatus(rs.getString("STATUS"));
+            t.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+
+
+
+
+
+
+           /* tl.setProductId(rs.getInt("PRODUCT_ID"));
+            String productDescription = jdbcTemplate.queryForObject(sqlQuery.productDescriptionFromProduct, new Object[] {tl.getProductId()},String.class);
+            tl.setProductDescription(productDescription);
+            tl.setQuantity(rs.getInt("QUANTITY"));
+            tl.setRetail(rs.getDouble("RETAIL"));
+            tl.setCost(rs.getDouble("COST"));
+            tl.setDiscount(rs.getDouble("DISCOUNT"));*/
+
+            return r;
         }
     }
 
@@ -179,6 +195,8 @@ public class SalesManager {
                     ps.setDouble(5, transactionLineItemDto1.getRetail());
                     ps.setDouble(6, transactionLineItemDto1.getCost());
                     ps.setDouble(7, transactionLineItemDto1.getDiscount());
+                    ps.setDouble(8,transactionLineItemDto1.getRetailWithDis());
+                    ps.setDouble(9,transactionLineItemDto1.getTotalProductPrice());
 
                     System.out.println("Transaction Line Item Added Successfully");
                 }
@@ -226,6 +244,8 @@ public class SalesManager {
             lineItem.setRetail(rs.getDouble("RETAIL"));
             lineItem.setCost(rs.getDouble("COST"));
             lineItem.setDiscount(rs.getDouble("DISCOUNT"));
+            lineItem.setRetailWithDis(rs.getDouble("RETAILWITHDISCOUNT"));
+            lineItem.setTotalProductPrice(rs.getDouble("TOTALPRODUCTPRICE"));
 
             return lineItem;
         }

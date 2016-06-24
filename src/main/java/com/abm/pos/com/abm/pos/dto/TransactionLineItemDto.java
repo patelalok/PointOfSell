@@ -16,6 +16,26 @@ public class TransactionLineItemDto {
     private String date;
     private String ProductDescription;
     private String  productCount;
+    private double retailWithDis;
+    private double totalProductPrice;
+
+    public double getRetailWithDis() {
+        return retailWithDis;
+    }
+
+    public void setRetailWithDis(double retailWithDis) {
+        this.retailWithDis = retailWithDis;
+    }
+
+    public double getTotalProductPrice() {
+        return totalProductPrice;
+    }
+
+    public void setTotalProductPrice(double totalProductPrice) {
+        this.totalProductPrice = totalProductPrice;
+    }
+
+
 
     public String getProductCount() {
         return productCount;

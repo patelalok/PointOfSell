@@ -24,6 +24,17 @@ public class ProductDto {
     private String brandName;
     private String vendorName;
 
+    private int quantityForSell;
+
+    public int getQuantityForSell() {
+        return quantityForSell;
+    }
+
+    public void setQuantityForSell(int quantityForSell) {
+        this.quantityForSell = quantityForSell;
+    }
+
+
     public String getStock() {
         return stock;
     }

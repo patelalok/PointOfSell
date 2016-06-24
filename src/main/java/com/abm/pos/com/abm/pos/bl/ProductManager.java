@@ -121,7 +121,7 @@ public class ProductManager
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
-                product.setQuantity("1");
+                product.setQuantityForSell(1);
 
                 return product;
             }
