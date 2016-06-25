@@ -227,7 +227,7 @@
 				$scope.subTotal = parseFloat($scope.subTotal) + parseFloat($rootScope.testData[i].total);
 				
 			}
-			GlobalVariable.totalSub = $socpe.subTotal;
+			GlobalVariable.totalSub = $scope.subTotal;
 			if($scope.totalDisc == undefined)
 				$scope.totalDisc = 0;
 			
