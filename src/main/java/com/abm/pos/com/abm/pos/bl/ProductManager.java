@@ -121,7 +121,7 @@ public class ProductManager
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
-                product.setQuantity("1");
+                product.setQuantityForSell(1);
 
                 return product;
             }
@@ -154,11 +154,13 @@ public class ProductManager
 
             productHistory.setDate(rs.getString("DATE"));
             productHistory.setProductId(rs.getInt("PRODUCT_ID"));
-            String description = jdbcTemplate.queryForObject(SQLQueries.getProductDescription,new Object[] {productHistory.getProductId()}, String.class);
-            productHistory.setProductDescription(description);
+            productHistory.setProductNumber(rs.getString("PRODUCT_NO"));
+            productHistory.setProductDescription(rs.getString("DESCRIPTION"));
             productHistory.setQuantity(rs.getInt("QUANTITY"));
             productHistory.setRetail(rs.getDouble("RETAIL"));
             productHistory.setCost(rs.getDouble("COST"));
+            productHistory.setDiscount(rs.getDouble("DISCOUNT"));
+            productHistory.setProductCount(jdbcTemplate.queryForObject(SQLQueries.getProductHistoryCount,new Object[] {productHistory.getProductId()}, String.class));
 
             return productHistory;
         }

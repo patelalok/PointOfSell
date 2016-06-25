@@ -1,9 +1,14 @@
 package com.abm.pos.com.abm.pos.dto;
 
+import java.util.List;
+
 /**
  * Created by asp5045 on 6/19/16.
  */
 public class ReceiptDto {
+
+
+
 
     private int transactionCompId;
     private String transactionDate;
@@ -12,14 +17,46 @@ public class ReceiptDto {
     private double transactionDiscount;
     private String customerPhoneNo;
     private int userId;
-    private int paymentId;
+    private int cashId;
+    private int creditId;
     private String status;
-    private double  paidAmount;
+    private double  paidAmountCash;
+
+    public double getPaidAmountCredit() {
+        return paidAmountCredit;
+    }
+
+    public void setPaidAmountCredit(double paidAmountCredit) {
+        this.paidAmountCredit = paidAmountCredit;
+    }
+
+    public int getCashId() {
+        return cashId;
+    }
+
+    public void setCashId(int cashId) {
+        this.cashId = cashId;
+    }
+
+    public int getCreditId() {
+        return creditId;
+    }
+
+    public void setCreditId(int creditId) {
+        this.creditId = creditId;
+    }
+
+    public double getPaidAmountCash() {
+        return paidAmountCash;
+    }
+
+    public void setPaidAmountCash(double paidAmountCash) {
+        this.paidAmountCash = paidAmountCash;
+    }
+
+    private double paidAmountCredit;
     private double changeAmount;
     private String username;
-    private int paymentIdMulty;
-    private double paidAmountMulty;
-
     private int transactionLineItemId;
     private int productId;
 
@@ -72,38 +109,6 @@ public class ReceiptDto {
 
     public void setCustomerPhoneNo(String customerPhoneNo) {
         this.customerPhoneNo = customerPhoneNo;
-    }
-
-    public double getPaidAmount() {
-        return paidAmount;
-    }
-
-    public void setPaidAmount(double paidAmount) {
-        this.paidAmount = paidAmount;
-    }
-
-    public double getPaidAmountMulty() {
-        return paidAmountMulty;
-    }
-
-    public void setPaidAmountMulty(double paidAmountMulty) {
-        this.paidAmountMulty = paidAmountMulty;
-    }
-
-    public int getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(int paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public int getPaymentIdMulty() {
-        return paymentIdMulty;
-    }
-
-    public void setPaymentIdMulty(int paymentIdMulty) {
-        this.paymentIdMulty = paymentIdMulty;
     }
 
     public String getPaymentType() {
@@ -217,7 +222,6 @@ public class ReceiptDto {
     public void setUsername(String username) {
         this.username = username;
     }
-
 
 
 }
