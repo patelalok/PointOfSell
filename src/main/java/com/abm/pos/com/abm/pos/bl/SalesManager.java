@@ -14,9 +14,7 @@ import org.springframework.stereotype.Component;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by asp5045 on 6/12/16.
@@ -63,6 +61,7 @@ public class SalesManager {
     public List<TransactionDto> getTransactionDetails(String startDate, String endDategit ) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
+
         try {
             transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper());
             System.out.println("Send Transaction Details Successfully");
@@ -82,42 +81,49 @@ public class SalesManager {
 
             TransactionDto transaction = new TransactionDto();
 
-            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-           transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
-            StringTokenizer at = new StringTokenizer(transaction.getTransactionDate());
-            String date = at.nextToken();
-            String time = at.nextToken();
-            System.out.println(date);
-            System.out.println(time);
-            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
-            transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
-            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
-            transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
-            transaction.setUserId(rs.getInt("USER_ID"));
-            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {transaction.getUserId()},String.class);
-            transaction.setUsername(username);
-            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
-            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
-            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
-            transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
-            transaction.setStatus(rs.getString("STATUS"));
-            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
 
+                transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+                transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+                transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+                transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+                transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+                transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+                transaction.setUserId(rs.getInt("USER_ID"));
+                String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
+                transaction.setUsername(username);
+                transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
+                transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
+                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+                transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+                transaction.setStatus(rs.getString("STATUS"));
+                transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
             return transaction;
         }
     }
 
     public List<ReceiptDto> getReceiptDetails(int receiptId)
     {
-        List<ReceiptDto> receiptDto = new ArrayList<>();
+       List<ReceiptDto> receiptDtos = new ArrayList<>();
 
+        List<TransactionLineItemDto> transactionLineItemDtos = new ArrayList<>();
+        List<TransactionDto> transactionDtos = new ArrayList<>();
 
+        ReceiptDto receiptDto = new ReceiptDto();
 
         try
         {
-            receiptDto = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceipt,new TransactionReceiptMapper());
-           // lineItemList = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper(),rs.getInt("TRANSACTION_COMP_ID"));
+
+            transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceipt, new TransactionMapper(),receiptId);
+            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper(),receiptId);
+
+            receiptDto.setTransactionDtoList(transactionDtos);
+            receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
+
+            receiptDtos.add(receiptDto);
+
+
+
 
 
 
@@ -126,8 +132,10 @@ public class SalesManager {
         {
             System.out.println(e);
         }
-        return receiptDto;
+
+        return receiptDtos;
     }
+
     private final class TransactionReceiptMapper implements RowMapper<ReceiptDto>
     {
 
@@ -135,16 +143,12 @@ public class SalesManager {
         public ReceiptDto mapRow(ResultSet rs, int rowNum) throws SQLException
         {
 
-
-
             ReceiptDto r = new ReceiptDto();
 
             TransactionDto t = new TransactionDto();
 
 
-
-
-            t.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+           /* t.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             t.setTransactionDate(rs.getString("TRANSACTION_DATE"));
             t.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             t.setTax(rs.getDouble("TAX_AMOUNT"));
@@ -158,7 +162,7 @@ public class SalesManager {
             t.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
             t.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             t.setStatus(rs.getString("STATUS"));
-            t.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            t.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));*/
 
 
 

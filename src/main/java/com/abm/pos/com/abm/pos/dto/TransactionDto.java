@@ -1,5 +1,7 @@
 package com.abm.pos.com.abm.pos.dto;
 
+import java.util.List;
+
 /**
  * Created by asp5045 on 5/20/16.
  */
@@ -20,6 +22,16 @@ public class TransactionDto {
     private double changeAmount;
     private double paidAmountCredit;
     private String username;
+
+    public List<TransactionLineItemDto> getTransactionLineItemDtoList() {
+        return transactionLineItemDtoList;
+    }
+
+    public void setTransactionLineItemDtoList(List<TransactionLineItemDto> transactionLineItemDtoList) {
+        this.transactionLineItemDtoList = transactionLineItemDtoList;
+    }
+
+    private List<TransactionLineItemDto> transactionLineItemDtoList;
 
     public int getCreditId() {
         return creditId;
