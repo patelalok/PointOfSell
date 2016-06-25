@@ -1,8 +1,17 @@
-﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint']);
+﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint','chart.js']);
   
-app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider){
+app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($stateProvider, $urlRouterProvider,ChartJsProvider){
 
 	$urlRouterProvider.otherwise('/login');
+	//ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+	 ChartJsProvider.setOptions({
+	      colours: [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
+	      responsive: true
+	    });
+	    // Configure all line charts
+	  /*  ChartJsProvider.setOptions('Line', {
+	      datasetFill: false
+	    });*/
 	
 	$stateProvider
 	  .state('login', {
@@ -57,6 +66,11 @@ app.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlR
 		    url: '/ledger',
 		    templateUrl: 'app/Ledger/ledger.html',
 		    controller: 'LedgerController'
+		  })
+		  .state('report', {
+		    url: '/report',
+		    templateUrl: 'app/Report/report.html',
+		    controller: 'ReportController'
 		  });
   
 }]);
