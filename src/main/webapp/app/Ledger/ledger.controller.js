@@ -136,13 +136,12 @@
 		}
 		$scope.navigateToReturnPage = function(transactionDate,transactionCompId)
 		{
-			var request = new Object();
+			/*var request = new Object();
 			request.transactionDate = transactionDate;
 			request.transactionCompId = transactionCompId;
-			request = JSON.stringify(request);
+			request = JSON.stringify(request);*/
 			var url="http://localhost:8080/getReceiptDetails?receiptId="+transactionCompId;
-			
-			dataService.Post(url,request,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
+			dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
 
 		};
 		function getReturnsSuccessHandler(response)
