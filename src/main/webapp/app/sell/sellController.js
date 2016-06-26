@@ -11,6 +11,7 @@
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter=restrictCharacter;
 		GlobalVariable.isLoginPage = false;
+		GlobalVariable.returnProduct = false;
 		var i=0;
 		$scope.pageSize = 10;
 		
@@ -227,6 +228,7 @@
 				$scope.subTotal = parseFloat($scope.subTotal) + parseFloat($rootScope.testData[i].total);
 				
 			}
+			GlobalVariable.quantityTotal = $scope.totalQuantity;
 			GlobalVariable.totalSub = $scope.subTotal;
 			if($scope.totalDisc == undefined)
 				$scope.totalDisc = 0;
@@ -279,22 +281,78 @@
 			{
 				$scope.productNames.push(GlobalVariable.getProducts[i].description);
 			}
-			//TODO
-			//uncomment below code when return end point is available
-			/*for(var i=0;i<GlobalVariable.getReturnDetails.length;i++)
-			{
-				$rootScope.testData.push({"itemNo":GlobalVariable.getReturnDetails[i].,
-					"item":GlobalVariable.getReturnDetails[i].,
-					"quantity":GlobalVariable.getReturnDetails[i].,
-					"retail":GlobalVariable.getReturnDetails[i].,
-					"discount":GlobalVariable.getReturnDetails[i].,
-					"total":GlobalVariable.getReturnDetails[i].,
-					"stock":GlobalVariable.getReturnDetails[i].,
-					"costPrice":GlobalVariable.getReturnDetails[i].
-					});
-			}	*/
-			
 			$scope.loadCheckOutData();
+			if(GlobalVariable.returnProduct == true)
+			{	
+				for(var i=0;i<GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length;i++)
+				{
+					$rootScope.testData.push({"itemNo":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
+						"item":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
+						"quantity":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
+						"retail":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retail,
+						"discount":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
+						"total":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
+						"stock":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
+						"costPrice":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost
+						});
+				}	
+				$scope.totalQuantity =GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalQuantity;
+				$scope.subTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].subTotal;
+				$scope.totalDisc =GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
+				$scope.totalTax =GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
+				$scope.productTotal= GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
+				$scope.totalPayment =$scope.productTotal;
+				$scope.returnAmount = $scope.totalPayment
+				$scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
+				$scope.returnId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionCompId;
+				$scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
+				$scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
+				$scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
+				$scope.returncashId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].cashId;
+				$scope.paidAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
+				$scope.paidAmountCreditReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCredit;
+				$scope.changeAmountReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].changeAmount;
+				$scope.creditIdReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].creditId;
+			
+			}
+		}
+		$scope.returnProduct = function()
+		{
+			var msg= "Your total balance is "+-(Number(parseFloat($scope.productTotal)).toFixed(2));
+			modalService.showModal('', '', msg, $scope.callBackReturnCheckout);
+		};
+		$scope.callBackReturnCheckout = function()
+		{
+			var url ="http://localhost:8080/returnTransaction";
+			var request = new Object();
+			request = {
+				"transactionDate":$scope.returnDate,  
+				"totalAmount":$scope.returnAmount,
+				"tax":$scope.totalTax,
+				"discount":$scope.totalDisc ,
+				"customerPhoneNo":$scope.returnPhone,
+				"userId":$scope.userIdReturn,
+				"cashId":$scope.returncashId,
+				"status":"return",
+			"paidAmountCash":$scope.paidAmountReturn,
+			"changeAmount":$scope.changeAmountReturn,
+				"creditId":$scope.creditIdReturn,
+				"paidAmountCredit":$scope.paidAmountCreditReturn,
+			"transactionCompId":$scope.returnId,
+			"subTotal":$scope.subTotal,
+			"totalQuantity":$scope.totalQuantity
+
+			};
+			request = JSON.stringify(request);
+			dataService.Post(url,request,returnTransactionSuccessHandler,returnTransactionErrorHandler,"application/json","application/json");
+		};
+		function returnTransactionSuccessHandler(response)
+		{
+			$rootScope.testData = [];
+		}
+		function returnTransactionErrorHandler(response)
+		{
+			
 		}
 		render();
 	}

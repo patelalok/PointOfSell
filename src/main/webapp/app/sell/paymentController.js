@@ -84,10 +84,11 @@
 				"status":"completed",
 			"paidAmountCash":$scope.paidAmountCash,
 			"changeAmount":$scope.changeAmount,
-				"creditIdMulty":$scope.creditIdMulty,
-				"paidAmountCredit":$scope.paidAmountCredit,
-			"transactionCompId":GlobalVariable.transactionCompletedId,
-			"subTotal":GlobalVariable.totalSub
+			"creditId":$scope.creditIdMulty,
+			"paidAmountCredit":$scope.paidAmountCredit,
+		"transactionCompId":GlobalVariable.transactionCompletedId,
+		"subTotal":GlobalVariable.totalSub,
+		"totalQuantity":GlobalVariable.quantityTotal
 
 			};
 			request = JSON.stringify(request);

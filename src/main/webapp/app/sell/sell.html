@@ -88,8 +88,11 @@
 				</div>
 			</div>
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
-				<button class="btn btn-primary margin-top-1 wrap-text payment-btn" ng-class="{'payment-btn-color':GlobalVariable.returnProduct == false,'return-btn-color':GlobalVariable.returnProduct == true}" ng-click="openCashPopup()" ng-disabled="!(testData.length > 0)">
+				<button ng-if="GlobalVariable.returnProduct == false" class="btn btn-primary margin-top-1 wrap-text payment-btn payment-btn-color"  ng-click="openCashPopup()" ng-disabled="!(testData.length > 0)">
 				<span style="float:left;" ng-if="GlobalVariable.returnProduct == false">Payment</span>
+				<span style="float:right;">${{totalPayment}}</span>
+				</button>
+				<button ng-if="GlobalVariable.returnProduct == true" class="btn btn-primary margin-top-1 wrap-text payment-btn return-btn-color"  ng-click="returnProduct()" ng-disabled="!(testData.length > 0)">
 				<span style="float:left;" ng-if="GlobalVariable.returnProduct == true">Return</span>
 				<span style="float:right;">${{totalPayment}}</span>
 				</button>

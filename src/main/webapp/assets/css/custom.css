@@ -922,6 +922,7 @@ font-weight: bold;
 .return-btn-color
 {
 	background-color:red;
+	border-color:red;
 }
 .fromDate .dropdown-menu
 {

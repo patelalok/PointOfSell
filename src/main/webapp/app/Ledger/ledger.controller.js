@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types'];
+	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','$state'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter) 
+	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state) 
 	{
 
 		$scope.restrictCharacter=restrictCharacter;	
@@ -140,7 +140,8 @@
 			request.transactionDate = transactionDate;
 			request.transactionCompId = transactionCompId;
 			request = JSON.stringify(request);
-			var url="http://localhost:8080/";
+			var url="http://localhost:8080/getReceiptDetails?receiptId="+transactionCompId;
+			
 			dataService.Post(url,request,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
 
 		};
