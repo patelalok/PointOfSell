@@ -67,8 +67,8 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		    templateUrl: 'app/Ledger/ledger.html',
 		    controller: 'LedgerController'
 		  })
-		  .state('report', {
-		    url: '/report',
+		  .state('home', {
+		    url: '/home',
 		    templateUrl: 'app/Report/report.html',
 		    controller: 'ReportController'
 		  });
