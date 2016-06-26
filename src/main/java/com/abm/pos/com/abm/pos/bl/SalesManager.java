@@ -32,7 +32,6 @@ public class SalesManager {
     public void addTransaction(TransactionDto transactionDto) {
 
         try {
-           // if (transactionDto.getPaymentIdMulty() == 0 && transactionDto.getPaidAmountMulty() == 0) {
                 jdbcTemplate.update(sqlQuery.addTransaction,
                         transactionDto.getTransactionCompId(),
                         transactionDto.getTransactionDate(),
@@ -40,6 +39,7 @@ public class SalesManager {
                         transactionDto.getTax(),
                         transactionDto.getDiscount(),
                         transactionDto.getSubTotal(),
+                        transactionDto.getTotalQuantity(),
                         transactionDto.getCustomerPhoneNo(),
                         transactionDto.getUserId(),
                         transactionDto.getCashId(),
@@ -88,6 +88,7 @@ public class SalesManager {
                 transaction.setTax(rs.getDouble("TAX_AMOUNT"));
                 transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
                 transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+                transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
                 transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
                 transaction.setUserId(rs.getInt("USER_ID"));
                 String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
@@ -122,11 +123,6 @@ public class SalesManager {
 
             receiptDtos.add(receiptDto);
 
-
-
-
-
-
         }
         catch (Exception e)
         {
@@ -136,50 +132,6 @@ public class SalesManager {
         return receiptDtos;
     }
 
-    private final class TransactionReceiptMapper implements RowMapper<ReceiptDto>
-    {
-
-        @Override
-        public ReceiptDto mapRow(ResultSet rs, int rowNum) throws SQLException
-        {
-
-            ReceiptDto r = new ReceiptDto();
-
-            TransactionDto t = new TransactionDto();
-
-
-           /* t.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-            t.setTransactionDate(rs.getString("TRANSACTION_DATE"));
-            t.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-            t.setTax(rs.getDouble("TAX_AMOUNT"));
-            t.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
-            t.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
-            t.setUserId(rs.getInt("USER_ID"));
-            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[] {t.getUserId()},String.class);
-            t.setUsername(username);
-            t.setCashId(rs.getInt("PAYMENT_ID_CASH"));
-            t.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
-            t.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
-            t.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
-            t.setStatus(rs.getString("STATUS"));
-            t.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));*/
-
-
-
-
-
-
-           /* tl.setProductId(rs.getInt("PRODUCT_ID"));
-            String productDescription = jdbcTemplate.queryForObject(sqlQuery.productDescriptionFromProduct, new Object[] {tl.getProductId()},String.class);
-            tl.setProductDescription(productDescription);
-            tl.setQuantity(rs.getInt("QUANTITY"));
-            tl.setRetail(rs.getDouble("RETAIL"));
-            tl.setCost(rs.getDouble("COST"));
-            tl.setDiscount(rs.getDouble("DISCOUNT"));*/
-
-            return r;
-        }
-    }
 
 
     public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto) {
@@ -232,7 +184,7 @@ public class SalesManager {
         return lineItemList;
     }
 
-    private static final class TransactionLineItemMapper implements RowMapper<TransactionLineItemDto>
+    private  final class TransactionLineItemMapper implements RowMapper<TransactionLineItemDto>
     {
 
         @Override
@@ -244,6 +196,7 @@ public class SalesManager {
             lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             lineItem.setDate(rs.getString("DATE"));
             lineItem.setProductId(rs.getInt("PRODUCT_ID"));
+            lineItem.setProductDescription(jdbcTemplate.queryForObject(sqlQuery.getProductDescription, new Object[]{lineItem.getProductId()}, String.class));
             lineItem.setQuantity(rs.getInt("QUANTITY"));
             lineItem.setRetail(rs.getDouble("RETAIL"));
             lineItem.setCost(rs.getDouble("COST"));

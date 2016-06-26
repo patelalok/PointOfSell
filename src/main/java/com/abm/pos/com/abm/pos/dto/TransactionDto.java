@@ -22,6 +22,18 @@ public class TransactionDto {
     private double changeAmount;
     private double paidAmountCredit;
     private String username;
+    private List<TransactionLineItemDto> transactionLineItemDtoList;
+    private int totalQuantity;
+
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
+
+
 
     public List<TransactionLineItemDto> getTransactionLineItemDtoList() {
         return transactionLineItemDtoList;
@@ -31,7 +43,7 @@ public class TransactionDto {
         this.transactionLineItemDtoList = transactionLineItemDtoList;
     }
 
-    private List<TransactionLineItemDto> transactionLineItemDtoList;
+
 
     public int getCreditId() {
         return creditId;

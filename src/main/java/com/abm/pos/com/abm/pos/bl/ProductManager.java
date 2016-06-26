@@ -87,6 +87,8 @@ public class ProductManager
             try
             {
                 productList = jdbcTemplate.query(sqlQuery.getProductDetails,new ProductMapper());
+
+                System.out.println("Send Product Details Successfully");
             }
             catch (Exception e)
             {
@@ -115,13 +117,15 @@ public class ProductManager
                 product.setMarkup(rs.getString("MARKUP"));
                 product.setRetailPrice(rs.getString("RETAIL_PRICE"));
                 product.setStock(rs.getString("QUANTITY"));
+                product.setQuantity("1");
                 product.setMinProductQuantity(rs.getString("MIN_PRODUCT"));
                 product.setReturnRule(rs.getString("RETURN_RULE"));
                 product.setImage(rs.getString("IMAGE"));
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
-                product.setQuantityForSell(1);
+                //product.setQuantityForSell(1);
+
 
                 return product;
             }
