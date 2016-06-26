@@ -19,7 +19,7 @@
 		
 		$scope.onLoginClicked = function($event)
 		{
-			$state.go('productmain');
+			$state.go('home');
 		};
 	}
 })();
