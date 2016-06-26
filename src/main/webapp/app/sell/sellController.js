@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('sellController', sellController);
 
-	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types','dataService'];
+	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types','dataService','$state'];
 
-	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter,dataService) {
+	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter,dataService,$state) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
