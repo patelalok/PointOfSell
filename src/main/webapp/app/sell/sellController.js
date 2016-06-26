@@ -11,7 +11,7 @@
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter=restrictCharacter;
 		GlobalVariable.isLoginPage = false;
-		GlobalVariable.returnProduct = false;
+		
 		var i=0;
 		$scope.pageSize = 10;
 		

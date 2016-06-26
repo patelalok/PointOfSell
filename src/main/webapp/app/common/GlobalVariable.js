@@ -10,6 +10,7 @@
 		};
 		GlobalVarObj.isLoginPage = true;
 		GlobalVarObj.editProduct = false;
+		GlobalVarObj.returnProduct = false;
 		
 		return GlobalVarObj;
 	}
