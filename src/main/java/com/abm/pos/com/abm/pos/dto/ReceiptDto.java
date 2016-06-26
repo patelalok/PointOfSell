@@ -7,10 +7,30 @@ import java.util.List;
  */
 public class ReceiptDto {
 
+    List<TransactionDto> transactionDtoList;
+    List<TransactionLineItemDto> transactionLineItemDtoList;
+
+    public List<TransactionDto> getTransactionDtoList() {
+        return transactionDtoList;
+    }
+
+    public void setTransactionDtoList(List<TransactionDto> transactionDtoList) {
+        this.transactionDtoList = transactionDtoList;
+    }
+
+    public List<TransactionLineItemDto> getTransactionLineItemDtoList() {
+        return transactionLineItemDtoList;
+    }
+
+    public void setTransactionLineItemDtoList(List<TransactionLineItemDto> transactionLineItemDtoList) {
+        this.transactionLineItemDtoList = transactionLineItemDtoList;
+    }
+}
 
 
 
-    private int transactionCompId;
+
+   /* private int transactionCompId;
     private String transactionDate;
     private double totalAmount;
     private double tax;
@@ -223,6 +243,6 @@ public class ReceiptDto {
         this.username = username;
     }
 
+*/
 
-}
 
