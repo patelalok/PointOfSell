@@ -69,8 +69,23 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		  })
 		  .state('home', {
 		    url: '/home',
+		    templateUrl: 'app/Report/home.html',
+		    controller: 'HomeController'
+		  })
+		   .state('report', {
+		    url: '/report',
 		    templateUrl: 'app/Report/report.html',
 		    controller: 'ReportController'
+		  })
+		   .state('closeregister', {
+		    url: '/closeregister',
+		    templateUrl: 'app/Registers/CloseRegister.html',
+		    controller: 'CloseRegisterController'
+		  })
+		   .state('openregister', {
+		    url: '/openregister',
+		    templateUrl: 'app/Registers/OpenRegister.html',
+		    controller: 'OpenRegisterController'
 		  });
   
 }]);
