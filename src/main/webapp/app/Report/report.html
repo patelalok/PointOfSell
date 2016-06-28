@@ -65,10 +65,10 @@
 
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">REVENUE</span>
+			<span class="box-heading">TOTAL REVENUE</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">$250</span>
+			<span style="font-size:46px;">{{loadReports[0].total}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -88,10 +88,10 @@
 	</div>
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">SALE COUNT</span>
+			<span class="box-heading">CASH REVENUE</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">$250</span>
+			<span style="font-size:46px;">{{loadReports[0].cash}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -111,10 +111,10 @@
 	</div>
 <div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">CUSTOMER COUNT</span>
+			<span class="box-heading">CREDIT REVENUE</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">$250</span>
+			<span style="font-size:46px;">{{loadReports[0].credit}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -137,7 +137,7 @@
 			<span class="box-heading">PROFIT</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">$250</span>
+			<span style="font-size:46px;">{{loadReports[0].profitAmount}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -163,10 +163,10 @@
 
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">DISCOUNT</span>
+			<span class="box-heading">TAX</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">$25</span>
+			<span style="font-size:46px;">{{loadReports[0].tax}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -186,10 +186,10 @@
 	</div>
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">DISOCUNT %</span>
+			<span class="box-heading">DISOCUNT</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">0%</span>
+			<span style="font-size:46px;">{{loadReports[0].discount}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -209,10 +209,10 @@
 	</div>
 <div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">BASKET VALUE</span>
+			<span class="box-heading">NO OF TRANSACTIONS</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">$250</span>
+			<span style="font-size:46px;">{{loadReports[0].noOfTransactions}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
@@ -232,10 +232,10 @@
 	</div>
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">BASKET SIZE</span>
+			<span class="box-heading">AVG BASKET VALUE</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">2</span>
+			<span style="font-size:46px;">{{loadReports[0].avgTotal}}</span>
 			
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
