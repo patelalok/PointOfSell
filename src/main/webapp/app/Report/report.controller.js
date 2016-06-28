@@ -52,6 +52,36 @@
 			};
 			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
 			$scope.endDate = $scope.startDate;
+			
+			loadReports(js_yyyy_mm_dd_hh_mm_ss(),js_yyyy_mm_dd_hh_mm_ss());
+		}
+		function loadReports(start,end)
+		{
+			var url ="http://localhost:8080/getDailyTransactionDetails?startDate="+start+"&endDate="+end;
+			dataService.Get(url,getReportsSuccessHandler,getReportsErrorHandler,'application/json','application/json');
+			getReportsSuccessHandler('');
+		}
+		function getReportsSuccessHandler(response)
+		{
+			$scope.loadReports = response;
+			/*$scope.loadReports = [
+			                      {
+			                    	  "credit":120.89,
+			                    	  "tax":12,
+			                    	  "discount":10,
+			                    	  "total":218.90,
+			                    	  "grossSale":298.90,
+			                    	  "markup":0,
+			                    	  "noOfTransactions":11,
+			                    	  "avgTotal":19.08,
+			                    	  "profitAmount":23,
+			                    	  "cash":89
+			                      }
+			                      ];*/
+		}
+		function getReportsErrorHandler(response)
+		{
+			
 		}
 		function js_yyyy_mm_dd_hh_mm_ss () {
 			  var now = new Date();
