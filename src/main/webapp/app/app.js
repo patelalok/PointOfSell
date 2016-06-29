@@ -86,6 +86,11 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		    url: '/openregister',
 		    templateUrl: 'app/Registers/OpenRegister.html',
 		    controller: 'OpenRegisterController'
+		  })
+		  .state('monthly', {
+		    url: '/monthly',
+		    templateUrl: 'app/Registers/monthlyanalysis.html',
+		    controller: 'MonthlyAnalysisController'
 		  });
   
 }]);
