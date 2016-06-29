@@ -17,6 +17,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.util.Calendar;
 
 import static java.lang.System.out;
 
@@ -25,6 +26,13 @@ public class PointOfSaleApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(PointOfSaleApplication.class, args);
+
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, 2016);
+		cal.set(Calendar.MONTH, 6);
+		cal.set(Calendar.DAY_OF_MONTH, 28);
+		int start = cal.get(Calendar.WEEK_OF_MONTH);
+		System.out.println(start);
 
 		Document document = new Document();
 			try {

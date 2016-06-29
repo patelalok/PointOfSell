@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.ClosingDetailsDto;
 import com.abm.pos.com.abm.pos.dto.DailyTransactionDto;
+import com.abm.pos.com.abm.pos.dto.WeekDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -68,6 +69,24 @@ public class ClosingDetailsManager {
         }
 
         return closingDetails;
+    }
+
+    public List<WeekDto> getMontlyTransactionDetails(String startDate, String endDate, int month) {
+
+
+        List<WeekDto> week = new ArrayList<>();
+
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        return week;
+
     }
 
 // JUST MAPPER TO MAP RESPONSE FROM DB
