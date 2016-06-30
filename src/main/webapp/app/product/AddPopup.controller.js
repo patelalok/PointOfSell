@@ -42,6 +42,9 @@
 				request.vendorName = $scope.brandName;
 				request.description = $scope.brandDescription;
 				request.commision = $scope.commision;
+				request.phoneNumber = $scope.PhoneNumber;
+				request.companyName = $scope.companyName;
+				request.address = $scope.address;
 			}
 			else if(name == 'Category') {
 				if(GlobalVariable.enableEdit == true)
@@ -78,7 +81,7 @@
 			else
 			{
 				getProductDetails.getCategoryDetails();
-				$state.go('category');
+				$state.go('supplier');
 			}
 			console.log(response);
 			$timeout(function() {
