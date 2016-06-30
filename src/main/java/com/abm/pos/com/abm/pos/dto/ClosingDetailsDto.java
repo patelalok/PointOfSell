@@ -7,10 +7,7 @@ package com.abm.pos.com.abm.pos.dto;
 public class ClosingDetailsDto {
 
     private int registerId;
-    private int userIdOpen;
     private int userIdClose;
-    private String openDate;
-    private double openAmount;
     private double reportCash;
     private double reportCredit;
     private double reportTotalAmount;
@@ -28,6 +25,7 @@ public class ClosingDetailsDto {
     private double totalMarkup;
     private String registerStatus;
 
+
     public String getRegisterStatus() {
         return registerStatus;
     }
@@ -42,14 +40,6 @@ public class ClosingDetailsDto {
 
     public void setUserIdClose(int userIdClose) {
         this.userIdClose = userIdClose;
-    }
-
-    public int getUserIdOpen() {
-        return userIdOpen;
-    }
-
-    public void setUserIdOpen(int userIdOpen) {
-        this.userIdOpen = userIdOpen;
     }
 
     public double getTotalDiscount() {
@@ -130,22 +120,6 @@ public class ClosingDetailsDto {
 
     public void setDifferenceCredit(double differenceCredit) {
         this.differenceCredit = differenceCredit;
-    }
-
-    public double getOpenAmount() {
-        return openAmount;
-    }
-
-    public void setOpenAmount(double openAmount) {
-        this.openAmount = openAmount;
-    }
-
-    public String getOpenDate() {
-        return openDate;
-    }
-
-    public void setOpenDate(String openDate) {
-        this.openDate = openDate;
     }
 
     public int getRegisterId() {

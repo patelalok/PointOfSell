@@ -3,6 +3,7 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
 import com.abm.pos.com.abm.pos.dto.ClosingDetailsDto;
 import com.abm.pos.com.abm.pos.dto.DailyTransactionDto;
+import com.abm.pos.com.abm.pos.dto.PaidOutDto;
 import com.abm.pos.com.abm.pos.dto.WeekDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,8 +23,21 @@ public class ClosingDetailsController {
     @RequestMapping(value = "/addClosingDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addClosingDetails(@RequestBody ClosingDetailsDto closingDetailsDto)
     {
-        addClosingDetailsManager.editClosingDetailsToDB(closingDetailsDto);
+        addClosingDetailsManager.addClosingDetailsToDB(closingDetailsDto);
     }
+
+    @RequestMapping(value = "/addPaidOut", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addPaidOut(@RequestBody PaidOutDto paidOutDto)
+    {
+        addClosingDetailsManager.addPaidOut(paidOutDto);
+    }
+
+    @RequestMapping(value = "/getPaidOut", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<PaidOutDto> getPaidOut(@RequestParam String startDate, @RequestParam String endDate)
+    {
+        return addClosingDetailsManager.getPaidOutDetails(startDate,endDate);
+    }
+
 
     @RequestMapping(value = "/getClosingDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ClosingDetailsDto> getClosingDetails(@RequestParam String startDate, @RequestParam String endDate)
