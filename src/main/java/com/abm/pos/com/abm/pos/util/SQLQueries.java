@@ -159,4 +159,6 @@ public class SQLQueries {
     public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ?";
     public String addPaidOutDetails = "INSERT INTO PAIDOUT (PAIDOUT1,PAIDOUT2,PAIDOUT3,REASON1,REASON2,REASON3,DATE) VALUES (?,?,?,?,?,?,?)";
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
+    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, SUM(PAID_AMOUNT_CASH)as SUM_CASH,sum(TOTAL_AMOUNT_CREDIT) as SUM_CREDIT,sum(TOTAL_AMOUNT) as TOTAL,sum(TAX_AMOUNT) as SUM_TAX, sum(DISCOUNT_AMOUNT) as DISCOUNT from TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(TRANSACTION_DATE)";
+    public String getWeeklyTransDetails = "";
 }

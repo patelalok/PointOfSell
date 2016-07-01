@@ -1,9 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.ClosingDetailsDto;
-import com.abm.pos.com.abm.pos.dto.DailyTransactionDto;
-import com.abm.pos.com.abm.pos.dto.PaidOutDto;
-import com.abm.pos.com.abm.pos.dto.WeekDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -73,23 +70,105 @@ public class ClosingDetailsManager {
         return closingDetails;
     }
 
-    public List<WeekDto> getMontlyTransactionDetails(String startDate, String endDate, int month) {
+    public List<MonthDto> getMontlyTransactionDetails(String startDate, String endDate, int month) {
 
 
-        List<WeekDto> week = new ArrayList<>();
+        List<MonthDto> monthDtos = new ArrayList<>();
 
         try
         {
+            monthDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, new MonthlyDetailsMapper(), startDate,endDate);
 
         }
         catch (Exception e)
         {
-
+                System.out.println(e);
         }
 
-        return week;
+        return monthDtos;
 
     }
+
+    public List<WeekDto> getWeeklyTransactionDetails(String startDate, String endDate, int month) {
+
+
+        List<WeekDto> weeks = new ArrayList<>();
+
+
+            WeekDto weekDto = new WeekDto();
+
+            weekDto.setCash1(12.99);
+            weekDto.setCash2(12.99);
+            weekDto.setCash3(12.99);
+            weekDto.setCash4(12.99);
+            weekDto.setCash5(12.99);
+
+            weekDto.setCredit1(11.99);
+            weekDto.setCredit2(11.99);
+            weekDto.setCredit3(11.99);
+            weekDto.setCredit4(11.99);
+            weekDto.setCredit5(11.99);
+
+            weekDto.setTotal1(24.00);
+            weekDto.setTotal2(24.00);
+            weekDto.setTotal3(24.00);
+            weekDto.setTotal4(24.00);
+            weekDto.setTotal5(24.00);
+
+            weekDto.setWeekAvg(134.99);
+
+            weeks.add(0,weekDto);
+
+            //weeks = jdbcTemplate.query(sqlQueries.getWeeklyTransDetails, new WeeklyDetailsMapper(), startDate,endDate);
+
+        return weeks;
+    }
+
+    private final class WeeklyDetailsMapper implements RowMapper<WeekDto> {
+
+        @Override
+        public WeekDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            WeekDto weekDto = new WeekDto();
+
+           /* weekDto.setWeek1(12.99);
+            weekDto.setWeek2(13.99);
+            weekDto.setWeek3(14.99);
+            weekDto.setWeek4(15.99);
+            weekDto.setWeek5(16.99);
+            weekDto.setWeekAvg(134.99);*/
+
+
+
+
+            return weekDto;
+
+        }
+    }
+
+
+
+
+
+    private final class MonthlyDetailsMapper implements RowMapper<MonthDto> {
+
+        @Override
+        public MonthDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            MonthDto monthDto = new MonthDto();
+
+            monthDto.setDate(rs.getString("DATE"));
+            monthDto.setSumCash(rs.getDouble("SUM_CASH"));
+            monthDto.setSumCredit(rs.getDouble("SUM_CREDIT"));
+            monthDto.setTotal(rs.getDouble("TOTAL"));
+            monthDto.setSumTax(rs.getDouble("SUM_TAX"));
+            monthDto.setDiscount(rs.getDouble("DISCOUNT"));
+
+            return monthDto;
+
+        }
+    }
+
 
     public void addPaidOut(PaidOutDto paidOutDto) {
 
