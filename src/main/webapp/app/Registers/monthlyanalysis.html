@@ -53,26 +53,33 @@
 							
 		</div>
 	</div>
+	<div class="col-md-4">
+	<div style="visibility:hidden;"><label>Search For Customers</label></div>
+		<div style="font-size:25px;">
+			
+		 <span style="display:inline-block;">Daily Avg:</span><span style="padding-left:10px;display:inline-block;">$100</span>					
+		</div>
+	</div>
 
 </div>
 <div class="row" style="padding-left:30px;padding-top:10px;">
 	<div class="col-md-7">
-		<div data-responsive-table data-ng-model="monthlyAnalysis"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="monthlyDtls"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="Date" key="transactionDate" datatype="string" width="20%" sortable="true"></column>
-					<column name="CC Total" key="customerPhoneno" datatype="string" width="20%"></column>
+					<column name="Date" key="date" datatype="string" width="20%" sortable="true"></column>
+					<column name="CC Total" key="sumCredit" datatype="string" width="20%"></column>
 					<column name="Check" key="userId" datatype="string" width="20%"></column>
 					
-					<column name="Cash Total" key="tax" datatype="string" width="20%"></column>
-					<column name="Total" key="discount" datatype="string" width="20%"></column>
+					<column name="Cash Total" key="sumCash" datatype="string" width="20%"></column>
+					<column name="Total" key="total" datatype="string" width="20%"></column>
 					
 				</columns>		
 			</div>
 	</div>
 	<div class="col-md-4">
-		<div class="row totalColumn display-table tableMainProp" align="left" style="border:1px solid #ddd;">
+		<!-- <div class="row totalColumn display-table tableMainProp" align="left" style="border:1px solid #ddd;">
 					<div class="display-row">
 						<div class="padding-top-10 inline-vertical display-cell align-left">Daily Avg :</div>
 						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
@@ -93,7 +100,7 @@
 						<div class="padding-top-10 inline-vertical display-cell align-left">Est MTD Gross Left:</div>
 						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$800</label></div>
 					</div>
-		 </div>
+		 </div> -->
 		 <div class="row" style="border:1px solid #ddd;margin-top:10px;">
 		 	<div class="" style="padding:10px;border-bottom:2px solid #ddd;text-align:center">
 		 			<span>Weekly analysis</span>
@@ -107,34 +114,34 @@
 					</div>
 					<div class="display-row">
 						<div class="padding-top-10 inline-vertical display-cell align-left">Week1 :</div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].cash1}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].credit1}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].total1}}</label></div>
 					</div>
 					<div class="display-row">
 						<div class="padding-top-10 inline-vertical display-cell align-left">Week2 :</div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].cash2}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].credit2}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].total2}}</label></div>
 					</div>
 					<div class="display-row">
 						<div class="padding-top-10 inline-vertical display-cell align-left">Week3 :</div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].cash3}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].credit3}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].total3}}</label></div>
 					</div>
 					<div class="display-row" style="border-bottom:1px solid #ddd;">
 						<div class="padding-top-10 inline-vertical display-cell align-left">Week4 :</div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$100</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].cash4}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].credit4}}</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].total4}}</label></div>
 					</div>
 		 </div>
 		 <div style="padding:10px;border-top:2px solid #ddd;text-align:center">
 		 <div class="totalColumn display-table tableMainProp" >
 		 			<div class="display-row">
 						<div class="padding-top-10 inline-vertical display-cell align-left">Week Average:</div>
-						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>$800</label></div>
+						<div class="padding-top-10 inline-vertical display-cell align-left padding-left-70" ><label>{{weeklyDtls[0].weekAvg}}</label></div>
 					</div>
 		 	</div>
 		</div>
