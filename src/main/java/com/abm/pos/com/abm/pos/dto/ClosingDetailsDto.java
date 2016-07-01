@@ -7,9 +7,7 @@ package com.abm.pos.com.abm.pos.dto;
 public class ClosingDetailsDto {
 
     private int registerId;
-    private int userId;
-    private String openDate;
-    private double openAmount;
+    private int userIdClose;
     private double reportCash;
     private double reportCredit;
     private double reportTotalAmount;
@@ -25,6 +23,24 @@ public class ClosingDetailsDto {
     private double totalDiscount;
     private double totalProfit;
     private double totalMarkup;
+    private String registerStatus;
+
+
+    public String getRegisterStatus() {
+        return registerStatus;
+    }
+
+    public void setRegisterStatus(String registerStatus) {
+        this.registerStatus = registerStatus;
+    }
+
+    public int getUserIdClose() {
+        return userIdClose;
+    }
+
+    public void setUserIdClose(int userIdClose) {
+        this.userIdClose = userIdClose;
+    }
 
     public double getTotalDiscount() {
         return totalDiscount;
@@ -56,17 +72,6 @@ public class ClosingDetailsDto {
 
     public void setTotalTax(double totalTax) {
         this.totalTax = totalTax;
-    }
-
-
-
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public double getCloseCash() {
@@ -115,22 +120,6 @@ public class ClosingDetailsDto {
 
     public void setDifferenceCredit(double differenceCredit) {
         this.differenceCredit = differenceCredit;
-    }
-
-    public double getOpenAmount() {
-        return openAmount;
-    }
-
-    public void setOpenAmount(double openAmount) {
-        this.openAmount = openAmount;
-    }
-
-    public String getOpenDate() {
-        return openDate;
-    }
-
-    public void setOpenDate(String openDate) {
-        this.openDate = openDate;
     }
 
     public int getRegisterId() {
