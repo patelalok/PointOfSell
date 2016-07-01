@@ -1,10 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
-import com.abm.pos.com.abm.pos.dto.ClosingDetailsDto;
-import com.abm.pos.com.abm.pos.dto.DailyTransactionDto;
-import com.abm.pos.com.abm.pos.dto.PaidOutDto;
-import com.abm.pos.com.abm.pos.dto.WeekDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -51,10 +48,16 @@ public class ClosingDetailsController {
         return addClosingDetailsManager.getDailyTransactionDetails(startDate,endDate);
     }
     @RequestMapping(value = "/getMontlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<WeekDto> getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int month)
+    public List<MonthDto> getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int month)
     {
         return addClosingDetailsManager.getMontlyTransactionDetails(startDate,endDate,month);
     }
+    @RequestMapping(value = "/getWeeklyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<WeekDto> getWeeklyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int month)
+    {
+        return addClosingDetailsManager.getWeeklyTransactionDetails(startDate,endDate,month);
+    }
+
 
 
 
