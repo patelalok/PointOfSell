@@ -66,7 +66,7 @@
 		{
 			var url = "http://localhost:8080/getWeeklyTransactionDetails?startDate="+start+"&endDate="+end+"&month=2";
 			dataService.Get(url,getWeeklyDtlsSuccessHandler,getWeeklyDtlsErrorHandler,'application/json','application/json');
-			getWeeklyDtlsSuccessHandler('');
+			//getWeeklyDtlsSuccessHandler('');
 			
 		}
 		function getWeeklyDtlsSuccessHandler(response)
@@ -102,7 +102,7 @@
 		{
 			var url = "http://localhost:8080/getMonthlyTransactionDetails?startDate="+start+"&endDate="+end+"&month=2";
 			dataService.Get(url,getMonthlyDtlsSuccessHandler,getMonthlyDtlsErrorHandler,'application/json','application/json');
-			getMonthlyDtlsSuccessHandler('');
+			//getMonthlyDtlsSuccessHandler('');
 		}
 		function getMonthlyDtlsSuccessHandler(response)
 		{
