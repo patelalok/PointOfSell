@@ -137,18 +137,10 @@ public class ClosingDetailsManager {
             weekDto.setWeek4(15.99);
             weekDto.setWeek5(16.99);
             weekDto.setWeekAvg(134.99);*/
-
-
-
-
             return weekDto;
 
         }
     }
-
-
-
-
 
     private final class MonthlyDetailsMapper implements RowMapper<MonthDto> {
 
