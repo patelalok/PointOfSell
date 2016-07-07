@@ -47,7 +47,9 @@ public class SalesManager {
                         transactionDto.getPaidAmountCash(),
                         transactionDto.getChangeAmount(),
                         transactionDto.getCreditId(),
-                        transactionDto.getPaidAmountCredit());
+                        transactionDto.getPaidAmountCredit(),
+                        transactionDto.getTransCreditId(),
+                        transactionDto.getLast4Digits());
 
 
                 System.out.println("Transaction Added Successfully");

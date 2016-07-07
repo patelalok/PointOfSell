@@ -41,8 +41,22 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,SUBTOTAL,TOTALQUANTITY," +
-                    "CUSTOMER_PHONENO,USER_ID,PAYMENT_ID_CASH,STATUS,PAID_AMOUNT_CASH,CHANGE_AMOUNT,PAYMENT_ID_CREDIT,TOTAL_AMOUNT_CREDIT, TRANS_CREDIT_ID,LAST_4_DIGITS) " +
+                    "(" +
+                    "TRANSACTION_COMP_ID," +
+                    "TRANSACTION_DATE," +
+                    "TOTAL_AMOUNT," +
+                    "TAX_AMOUNT," +
+                    "DISCOUNT_AMOUNT," +
+                    "SUBTOTAL," +
+                    "TOTALQUANTITY" +
+                    "CUSTOMER_PHONENO," +
+                    "USER_ID," +
+                    "PAYMENT_ID_CASH," +
+                    "STATUS,PAID_AMOUNT_CASH," +
+                    "CHANGE_AMOUNT," +
+                    "PAYMENT_ID_CREDIT," +
+                    "TOTAL_AMOUNT_CREDIT, " +
+                    "TRANS_CREDIT_ID,LAST_4_DIGITS) " +
                      "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
