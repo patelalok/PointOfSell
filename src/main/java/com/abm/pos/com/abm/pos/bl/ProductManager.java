@@ -164,6 +164,8 @@ public class ProductManager
             productHistory.setRetail(rs.getDouble("RETAIL"));
             productHistory.setCost(rs.getDouble("COST"));
             productHistory.setDiscount(rs.getDouble("DISCOUNT"));
+
+            //TODO NEED TO FIND THE LOGIC TO TAKE THIS DB CALL OUT FROM SUM OF QUANTITY
             productHistory.setProductCount(jdbcTemplate.queryForObject(SQLQueries.getProductHistoryCount,new Object[] {productHistory.getProductId()}, String.class));
 
             return productHistory;

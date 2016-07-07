@@ -49,7 +49,10 @@ public class SalesManager {
                         transactionDto.getCreditId(),
                         transactionDto.getPaidAmountCredit());
 
+
                 System.out.println("Transaction Added Successfully");
+
+
             }
 
         catch (Exception e)
@@ -140,14 +143,36 @@ public class SalesManager {
 
             jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
 
+
+
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
 
                     TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
+
                     ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
                     ps.setString(2,transactionLineItemDto1.getDate());
                     ps.setInt(3, transactionLineItemDto1.getProductId());
+
+                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
+                            {transactionLineItemDto1.getProductId()}, Integer.class);
+
+                    //System.out.println("Quantity: "+productQuantity);
+
                     ps.setInt(4, transactionLineItemDto1.getQuantity());
+
+                    int transQuantity = transactionLineItemDto1.getQuantity();
+
+                    //System.out.println("transQuantity:"+transQuantity);
+
+                    productQuantity = productQuantity - transQuantity;
+
+
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity,transactionLineItemDto1.getProductId());
+
+
+                   // System.out.println("DONE:)");
+
                     ps.setDouble(5, transactionLineItemDto1.getRetail());
                     ps.setDouble(6, transactionLineItemDto1.getCost());
                     ps.setDouble(7, transactionLineItemDto1.getDiscount());
@@ -155,6 +180,8 @@ public class SalesManager {
                     ps.setDouble(9,transactionLineItemDto1.getTotalProductPrice());
 
                     System.out.println("Transaction Line Item Added Successfully");
+
+
                 }
 
                 @Override

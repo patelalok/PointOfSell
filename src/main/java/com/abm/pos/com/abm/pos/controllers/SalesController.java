@@ -48,7 +48,7 @@ public class SalesController {
         salesManager.addTransactionLineItemToDB(transactionLineItemDto);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/getTransactionLineItem", produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, value = "/getTransactionLineItem", produces = "application/json")
     public List<TransactionLineItemDto> getTransactionLineItem(@RequestParam int  transactionCompId)
     {
         return salesManager.getTransactionLineItemDetails(transactionCompId);

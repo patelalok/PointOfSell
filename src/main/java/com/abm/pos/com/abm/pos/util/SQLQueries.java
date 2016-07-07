@@ -41,7 +41,8 @@ public class SQLQueries {
 
     public String addTransaction =
             "INSERT INTO TRANSACTION " +
-                    "(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,SUBTOTAL,TOTALQUANTITY,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID_CASH,STATUS,PAID_AMOUNT_CASH,CHANGE_AMOUNT,PAYMENT_ID_CREDIT,TOTAL_AMOUNT_CREDIT) " +
+                    "(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,SUBTOTAL,TOTALQUANTITY," +
+                    "CUSTOMER_PHONENO,USER_ID,PAYMENT_ID_CASH,STATUS,PAID_AMOUNT_CASH,CHANGE_AMOUNT,PAYMENT_ID_CREDIT,TOTAL_AMOUNT_CREDIT, TRANS_CREDIT_ID,LAST_4_DIGITS) " +
                      "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
@@ -151,14 +152,40 @@ public class SQLQueries {
     public static String getProductHistory = "SELECT t.DATE,p.PRODUCT_ID,p.PRODUCT_NO,p.DESCRIPTION,t.QUANTITY,t.RETAIL," +
             "t.COST,t.DISCOUNT FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_ID=p.PRODUCT_ID AND t.PRODUCT_ID = ?";
 
-    public static String getProductHistoryCount = "SELECT count(PRODUCT_ID) FROM TRANSACTION_LINE_ITEM where PRODUCT_ID = ?";
+    public static String getProductHistoryCount = "SELECT SUM(QUANTITY) FROM TRANSACTION_LINE_ITEM where PRODUCT_ID = ?";
    public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
 
     public String getClosingDetails = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ?";
-    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID),AVG(TOTAL_AMOUNT),sum(PAID_AMOUNT_CASH),sum(TOTAL_AMOUNT_CREDIT), sum(TAX_AMOUNT), sum(DISCOUNT_AMOUNT) FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ?";
+
+
+    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL " +
+                                        ",sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, " +
+                                        "sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ?";
+
     public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ?";
+
+
     public String addPaidOutDetails = "INSERT INTO PAIDOUT (PAIDOUT1,PAIDOUT2,PAIDOUT3,REASON1,REASON2,REASON3,DATE) VALUES (?,?,?,?,?,?,?)";
+
+
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
-    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, SUM(PAID_AMOUNT_CASH)as SUM_CASH,sum(TOTAL_AMOUNT_CREDIT) as SUM_CREDIT,sum(TOTAL_AMOUNT) as TOTAL,sum(TAX_AMOUNT) as SUM_TAX, sum(DISCOUNT_AMOUNT) as DISCOUNT from TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(TRANSACTION_DATE)";
+
+
+    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, SUM(PAID_AMOUNT_CASH) SUM_CASH,sum(TOTAL_AMOUNT_CREDIT)" +
+                                            "SUM_CREDIT,sum(TOTAL_AMOUNT) TOTAL,sum(TAX_AMOUNT)  SUM_TAX, sum(DISCOUNT_AMOUNT) DISCOUNT from " +
+                                            "TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(TRANSACTION_DATE)";
+
     public String getWeeklyTransDetails = "";
+    public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_ID = ?";
+    public String updateProductQuantity = "UPDATE PRODUCT SET QUANTITY = ? WHERE PRODUCT_ID = ?";
+    public String getTop50Items = "SELECT PRODUCT.PRODUCT_NO,PRODUCT.DESCRIPTION,sum(TRANSACTION_LINE_ITEM.QUANTITY) QUANTITY," +
+                                  "sum(TRANSACTION_LINE_ITEM.RETAIL) RETAIL, sum(TRANSACTION_LINE_ITEM.COST) COST FROM PRODUCT JOIN " +
+                                  "TRANSACTION_LINE_ITEM on TRANSACTION_LINE_ITEM.PRODUCT_ID=PRODUCT.PRODUCT_ID WHERE DATE BETWEEN " +
+                                  "? AND ? GROUP BY PRODUCT.PRODUCT_NO";
+
+    public String getHourlyTransactions = " SELECT Hour(DATE) AS HOUR,sum(COST) COST,sum(RETAIL) RETAIL,AVG(RETAIL) AVG_RETAIL, " +
+                                            "COUNT(distinct TRANSACTION_COMP_ID) NOTRANS" +
+                                             "FROM TRANSACTION_LINE_ITEM" +
+                                             "WHERE DATE BETWEEN ? AND ?" +
+                                             "GROUP BY hour;";
 }

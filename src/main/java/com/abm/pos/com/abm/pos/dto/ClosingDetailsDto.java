@@ -24,7 +24,15 @@ public class ClosingDetailsDto {
     private double totalProfit;
     private double totalMarkup;
     private String registerStatus;
+    private double reportCheck;
 
+    public double getReportCheck() {
+        return reportCheck;
+    }
+
+    public void setReportCheck(double reportCheck) {
+        this.reportCheck = reportCheck;
+    }
 
     public String getRegisterStatus() {
         return registerStatus;

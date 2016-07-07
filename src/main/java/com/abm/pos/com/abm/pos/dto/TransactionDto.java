@@ -24,6 +24,26 @@ public class TransactionDto {
     private String username;
     private List<TransactionLineItemDto> transactionLineItemDtoList;
     private int totalQuantity;
+    private String transCreditId;
+    private int last4Digits;
+
+    public int getLast4Digits() {
+        return last4Digits;
+    }
+
+    public void setLast4Digits(int last4Digits) {
+        this.last4Digits = last4Digits;
+    }
+
+    public String getTransCreditId() {
+        return transCreditId;
+    }
+
+    public void setTransCreditId(String transCreditId) {
+        this.transCreditId = transCreditId;
+    }
+
+
 
     public int getTotalQuantity() {
         return totalQuantity;

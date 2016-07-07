@@ -16,6 +16,16 @@ public class DailyTransactionDto {
     private double avgTotal;
     private double profitAmount;
 
+    public double getCheck() {
+        return check;
+    }
+
+    public void setCheck(double check) {
+        this.check = check;
+    }
+
+    private double check;
+
     public double getProfitAmount() {
         return profitAmount;
     }
