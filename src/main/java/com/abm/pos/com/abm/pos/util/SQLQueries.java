@@ -197,9 +197,8 @@ public class SQLQueries {
                                   "TRANSACTION_LINE_ITEM on TRANSACTION_LINE_ITEM.PRODUCT_ID=PRODUCT.PRODUCT_ID WHERE DATE BETWEEN " +
                                   "? AND ? GROUP BY PRODUCT.PRODUCT_NO";
 
-    public String getHourlyTransactions = " SELECT Hour(DATE) AS HOUR,sum(COST) COST,sum(RETAIL) RETAIL,AVG(RETAIL) AVG_RETAIL, " +
-                                            "COUNT(distinct TRANSACTION_COMP_ID) NOTRANS" +
-                                             "FROM TRANSACTION_LINE_ITEM" +
-                                             "WHERE DATE BETWEEN ? AND ?" +
-                                             "GROUP BY hour;";
+    public String getHourlyTransactions = " SELECT Hour(DATE) AS HOUR,sum(COST) COST,sum(RETAIL) RETAIL,AVG(RETAIL) AVG_RETAIL, COUNT(distinct TRANSACTION_COMP_ID) NOTRANS " +
+            "FROM TRANSACTION_LINE_ITEM" +
+            " WHERE DATE BETWEEN ? AND ? " +
+            " GROUP BY hour";
 }
