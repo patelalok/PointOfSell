@@ -16,6 +16,9 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		$scope.enabled = true;
+		/*GlobalVariable.productSuccessAlert = false;
+		GlobalVariable.addedSucces= false;
+		GlobalVariable.editedSuccess= false;*/
 		
 		
 		$scope.navigateToAddProduct = function(page)
@@ -66,7 +69,7 @@
 			GlobalVariable.productIdHistory = productId;
 			var _tmPath = 'app/product/historyPopup.html';
 			var _ctrlPath = 'historyPopupController';
-			DialogFactory.show(_tmPath, _ctrlPath, callbackPaymentHistory);
+			DialogFactory.show(_tmPath, _ctrlPath, callbackPaymentHistory,undefined, undefined, 'lg');
 		};
 		function callbackPaymentHistory()
 		{
@@ -92,9 +95,18 @@
 			$scope.categoryOptions = GlobalVariable.getCategory;
 			$scope.vendorOptions = GlobalVariable.getVendors;
 			$scope.getProductDtls = GlobalVariable.getProducts;
+			$timeout(function() {
+				$scope.closeBootstrapAlert();
+			}, 9000);
 			
 				
 		}
+		$scope.closeBootstrapAlert = function()
+		{
+			GlobalVariable.productSuccessAlert = false;
+			GlobalVariable.addedSucces= false;
+			GlobalVariable.editedSuccess= false;
+		};
 		render();
 		
 	}

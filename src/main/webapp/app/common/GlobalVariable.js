@@ -11,6 +11,9 @@
 		GlobalVarObj.isLoginPage = true;
 		GlobalVarObj.editProduct = false;
 		GlobalVarObj.returnProduct = false;
+		GlobalVarObj.productSuccessAlert = false;
+		GlobalVarObj.addedSucces= false;
+		GlobalVarObj.editedSuccess= false;
 		
 		return GlobalVarObj;
 	}

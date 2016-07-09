@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('MonthlyAnalysisController', MonthlyAnalysisController);
 
-	MonthlyAnalysisController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','$filter','dataService'];
+	MonthlyAnalysisController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','$filter','dataService','$window'];
 
-	function MonthlyAnalysisController($scope, $rootScope, device,GlobalVariable,$state,$filter,dataService) {
+	function MonthlyAnalysisController($scope, $rootScope, device,GlobalVariable,$state,$filter,dataService,$window) {
 		
 		
 		$scope.openStartCalendar = function($event) {
@@ -155,6 +155,10 @@
 			                    	  }
 			                    	];*/
 		}
+		$scope.printMonthly = function()
+		{
+			$window.print();
+		};
 		function getMonthlyDtlsErrorHandler(response)
 		{
 			

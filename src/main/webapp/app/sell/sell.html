@@ -21,7 +21,7 @@
 							placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"  ng-enter="searchCustomer()" />
 		</div>
 		<div class="searchBox col-md-4">
-			<input type="text" data-ng-model="customerName" class="form-control" disabled="true" style="width:100%;height:52px;"  />
+			<input type="text" data-ng-model="customerName" class="form-control"  style="width:100%;height:52px;"  ng-enter="searchCustomerByFirst()"/>
 		</div>
 		<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
 			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createCustomer()">Create Customer</button>
@@ -57,7 +57,7 @@
 							<!-- <span>
 								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
 							</span> -->
-							<a ng-click="scope.removeRow(row.itemNo)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span></a>
+							<a ng-click="scope.removeRow(row.itemNo)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
 						</cell>
 					</column>
 				</columns>		
@@ -80,7 +80,15 @@
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="3.89" ng-model="totalTax" ng-change="loadCheckOutData()" disabled="disabled" /></div>
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
+					<select id="prType" data-ng-model="totalTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
+							<option value="select">Select Tax</option>
+							<option value="Brand">1</option>
+							<option value="Vendor">2</option>
+							<option value="Category">3</option>
+						</select>
+					
+					</div>
 				</div>	
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Total</div>

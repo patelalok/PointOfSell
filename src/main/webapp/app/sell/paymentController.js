@@ -129,7 +129,9 @@
 			$rootScope.testData = [];
 			//TODO
 			//popup to display whther to print receipt or not;
-			/*$state.go('ledger');*/
+			//$state.go('sell');
+			$rootScope.totalPayment = '0.00';
+			$rootScope.customerName = '';
 		};
 		function addTransactionLineItemErrorHandler(response)
 		{

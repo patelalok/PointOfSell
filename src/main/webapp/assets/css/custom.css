@@ -1008,7 +1008,27 @@ table th
 {
 	padding:10px;
 }
+.padding-1
+{
+	padding:1px;
+}
 .padding-left-70
 {
 	padding-left:70px;
+}
+.glyphicon-pencil:hover
+{
+	color:#478FCA;
+}
+.glyphicon-pencil
+{
+	color:#DDD;
+}
+.glyphicon-trash:hover
+{
+	color:#DD5A43;
+}
+.glyphicon-trash
+{
+	color:#DDD;
 }
