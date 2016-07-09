@@ -3,14 +3,17 @@
 
 	angular.module('sampleApp').controller('productController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams) {
+	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails) {
 		
 		$scope.device = device;
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
+		GlobalVariable.productSuccessAlert = false;
+		GlobalVariable.addedSucces= false;
+		GlobalVariable.editedSuccess= false;
 	
 		
 		$scope.populateRetailPrice = function()
@@ -19,7 +22,7 @@
 			{
 				if($scope.prodMarkup !== '' && $scope.prodMarkup !== undefined)
 				{
-					$scope.prodRetail = parseFloat($scope.prodCP) * parseFloat($scope.prodMarkup);
+					$scope.prodRetail = parseFloat($scope.prodCP) *( (parseFloat($scope.prodMarkup))/100);
 				}	
 			}
 			else
@@ -99,7 +102,17 @@
 		}
 		function addProductSuccessHandler(response)
 		{
-			
+			GlobalVariable.productSuccessAlert = true;
+			if(GlobalVariable.editProduct == true)
+			{
+				
+				
+				GlobalVariable.editedSuccess= true;
+			}
+			else
+				GlobalVariable.addedSucces= true;
+			getProductDetails.getProductDetail();
+			$state.go('productmain');
 		}
 		function addProductErrorHandler(response)
 		{

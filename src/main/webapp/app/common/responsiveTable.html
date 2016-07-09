@@ -7,7 +7,7 @@
 					data-ng-class="{'active-sort': $index === sortColumn && column.sortable, 'wrapword': column.wordWrap, 'sortable': column.sortable}">
 					<span data-ng-if="column.header" data-compile-html="column.header" class=""> </span>
 					<span data-ng-if="!column.header && column.name != 'Delete'" class=""> {{::column.name}} </span>
-					<span data-ng-if="!column.header && column.name == 'Delete'" class=""> <a  ng-click="Delete()" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="color:#DD5A43;"></span></a> </span>
+					<span data-ng-if="!column.header && column.name == 'Delete'" class=""> <a  ng-click="Delete()" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor:pointer"></span></a> </span>
 					<!-- 'ui-state-active': $index === sortColumn,  -->
 					<span data-ng-if="column.sortable" class="sort-icons" data-ng-class="{'ui-state-disabled': $index !== sortColumn}">
 						<span class="ui-grid-ico-sort ui-icon-asc ui-icon ui-icon-triangle-1-n"

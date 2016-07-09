@@ -251,8 +251,8 @@
 			GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax) * (parseFloat($scope.totalTax) / 100);
 			$scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
 			 
-			$scope.totalPayment = $scope.productTotal;
-			GlobalVariable.checkOuttotal = $scope.totalPayment;
+			$rootScope.totalPayment = $scope.productTotal;
+			GlobalVariable.checkOuttotal = $rootScope.totalPayment;
 		}
 		$scope.searchCustomer = function()
 		{
@@ -273,6 +273,23 @@
 			}	
 			
 		};
+		$scope.searchCustomerByFirst = function()
+		{
+			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
+			{
+				if($rootScope.customerName == GlobalVariable.getCustomerDtls[i].firstName)
+				{
+					$rootScope.customerName = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
+					$rootScope.customerPhone= $scope.regPhone;
+				}	
+				else
+				{
+					$rootScope.customerName = 'No customer found';
+					$rootScope.customerPhone = $scope.regPhone;
+				}	
+		
+			}
+		}
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;
@@ -301,8 +318,8 @@
 				$scope.totalDisc =GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
 				$scope.totalTax =GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
 				$scope.productTotal= GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
-				$scope.totalPayment =$scope.productTotal;
-				$scope.returnAmount = $scope.totalPayment
+				$rootScope.totalPayment =$scope.productTotal;
+				$scope.returnAmount = $rootScope.totalPayment
 				$scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
 				$scope.returnId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionCompId;
 				$scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
