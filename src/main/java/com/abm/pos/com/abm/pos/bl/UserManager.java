@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by asp5045 on 5/25/16.
@@ -60,13 +62,40 @@ public class UserManager {
         }
     }
 
-    public void getUserDetails(String userId) {
+    public boolean getUserDetails(String username, String password) {
 
-        try {
-            jdbcTemplate.query(sqlQuery.getUserDetails, new UserManager.AddUserMapper());
-        } catch (Exception e) {
+        List<UserDto> user = new ArrayList<>();
+        boolean response = false;
+        try
+        {
+            user = jdbcTemplate.query(sqlQuery.getUserDetails, new UserManager.AddUserMapper());
+
+            for(int i = 0; i<= user.size(); i++)
+            {
+                UserDto u = user.get(i);
+
+                if(u.getUsername().equals(username))
+                {
+                    response = true;
+                    System.out.println(u.getUsername());
+                    break;
+                }
+                else
+                {
+                    response = false;
+                }
+
+            }
+
+
+
+        }
+        catch (Exception e)
+        {
             System.out.println(e);
         }
+
+        return response;
     }
     private static final class AddUserMapper implements RowMapper<UserDto>
     {
