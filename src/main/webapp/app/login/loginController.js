@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('loginController',loginFunction);
 
-	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable'];
+	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService'];
 
-	function loginFunction($scope, $rootScope, device,$state,GlobalVariable) {
+	function loginFunction($scope, $rootScope, device,$state,GlobalVariable,dataService) {
 		
 		
 		$scope.device = device;
