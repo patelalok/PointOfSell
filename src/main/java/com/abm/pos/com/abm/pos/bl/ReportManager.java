@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.reports.CatogoryComparisonDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,14 +68,58 @@ public class ReportManager {
 
             int test =+ top50.getQuantity();
 
-           if( rs.isLast())
-           {
-              top50.setRetailPrice(test);
-              System.out.println(test);
-               System.out.println(top50.getRetailPrice());
-               System.out.println("test");
-           }
+            if( rs.isLast())
+            {
+                top50.setRetailPrice(test);
+                System.out.println(test);
+                System.out.println(top50.getRetailPrice());
+                System.out.println("test");
+            }
             return top50;
         }
     }
+
+    public List<CatogoryComparisonDto> getSalesByCategory(String startDate, String endDate) {
+
+        List<CatogoryComparisonDto> catogoryComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            CatogoryComparisonDto catogoryComparisonDto = new CatogoryComparisonDto();
+            catogoryComparisonDto.setCommanName("Phone");
+            catogoryComparisonDto.setQuantity(12);
+            catogoryComparisonDto.setCostPrice(12.88);
+            catogoryComparisonDto.setRetailPrice(32.54);
+            catogoryComparisonDto.setProfitAmount(2.0);
+
+            catogoryComparisonDtos.add(catogoryComparisonDto);
+                    //= jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, new SalesCategoryManager(), startDate, endDate)
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return catogoryComparisonDtos;
+
+    }
+
+
+    private final class SalesCategoryManager implements RowMapper<CatogoryComparisonDto>
+    {
+        @Override
+        public CatogoryComparisonDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            CatogoryComparisonDto catogoryComparisonDto = new CatogoryComparisonDto();
+
+            catogoryComparisonDto.setCommanName("Phone");
+            catogoryComparisonDto.setQuantity(12);
+            catogoryComparisonDto.setCostPrice(12.88);
+            catogoryComparisonDto.setRetailPrice(32.54);
+            catogoryComparisonDto.setProfitAmount(2.0);
+
+
+            return catogoryComparisonDto;
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.*;
+import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -106,6 +107,53 @@ public class ClosingDetailsManager {
 
 
 
+    public List<YearlyDto> getYearlyTransactionDetails(String startDate, String endDate) {
+
+        List<YearlyDto> yearOfMonth = new ArrayList<>();
+
+        try
+        {
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, new YearlyMapper(), startDate,endDate);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return yearOfMonth;
+    }
+
+    private final class YearlyMapper implements RowMapper<YearlyDto> {
+
+        @Override
+        public YearlyDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            YearlyDto yearlyDto = new YearlyDto();
+            yearlyDto.setMonthName(rs.getString("NameOfMonth"));
+            yearlyDto.setCredit(rs.getDouble("CREDIT"));
+            yearlyDto.setCash(rs.getDouble("CASH"));
+            yearlyDto.setCheck(rs.getDouble("CHEC"));
+            yearlyDto.setTax(rs.getDouble("TAX"));
+            yearlyDto.setDiscount(rs.getDouble("DISCOUNT"));
+            yearlyDto.setTotal(rs.getDouble("TOTAL"));
+            yearlyDto.setCost(rs.getDouble("COST"));
+            yearlyDto.setRetail(rs.getDouble("RETAIL"));
+
+            double a = yearlyDto.getRetail() - yearlyDto.getCost() - yearlyDto.getDiscount();
+            yearlyDto.setProfit(a);
+
+
+
+
+            return yearlyDto;
+        }
+    }
+
+
+
+
+
 
 
     private final class ClosingMapper implements RowMapper<ClosingDetailsDto> {
@@ -138,7 +186,7 @@ public class ClosingDetailsManager {
     }
 
 
-    public List<MonthDto> getMonthlyTransactionDetails(String startDate, String endDate, int month) {
+    public List<MonthDto> getMonthlyTransactionDetails(String startDate, String endDate) {
 
 
         List<MonthDto> monthDtos = new ArrayList<>();
@@ -164,11 +212,18 @@ public class ClosingDetailsManager {
             MonthDto monthDto = new MonthDto();
 
             monthDto.setDate(rs.getString("DATE"));
-            monthDto.setSumCash(rs.getDouble("SUM_CASH"));
-            monthDto.setSumCredit(rs.getDouble("SUM_CREDIT"));
+            monthDto.setCash(rs.getDouble("SUM_CASH"));
+            monthDto.setCredit(rs.getDouble("SUM_CREDIT"));
             monthDto.setTotal(rs.getDouble("TOTAL"));
-            monthDto.setSumTax(rs.getDouble("SUM_TAX"));
+            monthDto.setTax(rs.getDouble("SUM_TAX"));
             monthDto.setDiscount(rs.getDouble("DISCOUNT"));
+
+            monthDto.setCost(rs.getDouble("COST"));
+            monthDto.setRetail(rs.getDouble("RETAIL"));
+
+
+            double a = monthDto.getRetail() - monthDto.getCost() - monthDto.getDiscount();
+            monthDto.setProfit(a);
 
             return monthDto;
 
@@ -177,7 +232,7 @@ public class ClosingDetailsManager {
 
 
 
-    public List<WeekDto> getWeeklyTransactionDetails(String startDate, String endDate, int month) {
+    public List<WeekDto> getWeeklyTransactionDetails(String startDate, String endDate) {
 
 
         List<WeekDto> weeks = new ArrayList<>();

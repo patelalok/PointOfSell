@@ -185,9 +185,7 @@ public class SQLQueries {
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
 
 
-    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, SUM(PAID_AMOUNT_CASH) SUM_CASH,sum(TOTAL_AMOUNT_CREDIT)" +
-                                            "SUM_CREDIT,sum(TOTAL_AMOUNT) TOTAL,sum(TAX_AMOUNT)  SUM_TAX, sum(DISCOUNT_AMOUNT) DISCOUNT from " +
-                                            "TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(TRANSACTION_DATE)";
+    public String getMonthlyTransDetails = "SELECT date(t.TRANSACTION_DATE) as DATE, SUM(t.PAID_AMOUNT_CASH) SUM_CASH,sum(t.TOTAL_AMOUNT_CREDIT) SUM_CREDIT,sum(t.TOTAL_AMOUNT) TOTAL,sum(t.TAX_AMOUNT)  SUM_TAX, sum(t.DISCOUNT_AMOUNT) DISCOUNT, SUM(l.COST) COST, SUM(l.RETAIL) RETAIL from TRANSACTION t, TRANSACTION_LINE_ITEM l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND t.TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(t.TRANSACTION_DATE)";
 
     public String getWeeklyTransDetails = "";
     public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_ID = ?";
@@ -201,4 +199,5 @@ public class SQLQueries {
             "FROM TRANSACTION_LINE_ITEM" +
             " WHERE DATE BETWEEN ? AND ? " +
             " GROUP BY hour";
+    public String getYearlyTransaction = "SELECT monthname(t.TRANSACTION_DATE) AS NameOfMonth,sum(t.TOTAL_AMOUNT_CREDIT) CREDIT,sum(t.PAID_AMOUNT_CASH) CASH,SUM(t.TOTAL_AMOUNT_CHECK) CHEC,SUM(t.TAX_AMOUNT) TAX ,SUM(t.DISCOUNT_AMOUNT) DISCOUNT , SUM(t.TOTAL_AMOUNT) TOTAL, sum(l.COST) COST, sum(l.RETAIL) RETAIL FROM TRANSACTION t, TRANSACTION_LINE_ITEM l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY NameOfMonth ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')";
 }

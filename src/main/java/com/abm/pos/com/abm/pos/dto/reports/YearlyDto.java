@@ -1,13 +1,11 @@
-package com.abm.pos.com.abm.pos.dto;
-
-import java.util.List;
+package com.abm.pos.com.abm.pos.dto.reports;
 
 /**
- * Created by asp5045 on 6/30/16.
+ * Created by asp5045 on 7/10/16.
  */
-public class MonthDto {
+public class YearlyDto {
 
-    private String date;
+    private String monthName;
     private double credit;
     private double cash;
     private double check;
@@ -20,6 +18,25 @@ public class MonthDto {
     private double monthAvg;
     private double cost;
     private double retail;
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public double getRetail() {
+        return retail;
+    }
+
+    public void setRetail(double retail) {
+        this.retail = retail;
+    }
+
+
+
 
     public double getCash() {
         return cash;
@@ -37,28 +54,12 @@ public class MonthDto {
         this.check = check;
     }
 
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
     public double getCredit() {
         return credit;
     }
 
     public void setCredit(double credit) {
         this.credit = credit;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public double getDiscount() {
@@ -85,20 +86,20 @@ public class MonthDto {
         this.monthAvg = monthAvg;
     }
 
+    public String getMonthName() {
+        return monthName;
+    }
+
+    public void setMonthName(String monthName) {
+        this.monthName = monthName;
+    }
+
     public double getProfit() {
         return profit;
     }
 
     public void setProfit(double profit) {
         this.profit = profit;
-    }
-
-    public double getRetail() {
-        return retail;
-    }
-
-    public void setRetail(double retail) {
-        this.retail = retail;
     }
 
     public double getReturnAmount() {
@@ -124,4 +125,7 @@ public class MonthDto {
     public void setTotal(double total) {
         this.total = total;
     }
+
+
+
 }

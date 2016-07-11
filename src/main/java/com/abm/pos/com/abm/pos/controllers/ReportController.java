@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ReportManager;
+import com.abm.pos.com.abm.pos.dto.reports.CatogoryComparisonDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,18 +24,16 @@ public class ReportController {
     @Autowired
     ReportManager reportManager;
 
-    @RequestMapping(value = "/getDailyReports",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void getDailyReports()
-    {
-
-    }
-
     @RequestMapping(value = "/getTop50Items",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Top50ItemsDto> getTop50Items(@RequestParam String startDate, String endDate)
     {
-
         return reportManager.getTop50Items(startDate,endDate);
+    }
 
+    @RequestMapping(value = "/getSalesByCategory",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CatogoryComparisonDto> getSalesByCategory(@RequestParam String startDate, String endDate)
+    {
+        return reportManager.getSalesByCategory(startDate,endDate);
     }
 
 

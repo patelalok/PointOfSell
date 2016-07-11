@@ -11,5 +11,7 @@ public class BrandComparisionDto {
     private double costPrice;
     private double retailPrice;
     private double profitAmount;
+    private double markup;
+    private double perOfTotalProfit;
 
 }
