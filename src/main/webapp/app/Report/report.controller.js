@@ -9,22 +9,7 @@
 	{
 		GlobalVariable.isLoginPage = false;
 		$scope.restrictCharacter=restrictCharacter;	
-		$scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-	    $scope.series = ['Series A', 'Series B'];
-	    $scope.data = [
-	      [65, 59, 80, 81, 56, 55, 40],
-	      [28, 48, 40, 19, 86, 27, 90]
-	    ];
-	    $scope.onClick = function (points, evt) {
-	      console.log(points, evt);
-	    };
-	    $scope.onHover = function (points) {
-	      if (points.length > 0) {
-	        console.log('Point', points[0].value);
-	      } else {
-	        console.log('No point');
-	      }
-	    };
+		
 	    $scope.openStartCalendar = function($event) {
 			$event.preventDefault();
 			$event.stopPropagation();
@@ -42,6 +27,9 @@
 		};
 		function render()
 		{
+			$scope.reportType = 'salesSummary';
+			$scope.measureType = 'yearlySummary'
+			
 			//$scope.startDate = moment();
 			/** Options for the date picker directive * */
 			$scope.dateRangeOptions = {
@@ -52,34 +40,153 @@
 			};
 			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
 			$scope.endDate = $scope.startDate;
+			var start = js_yyyy_mm_dd('')+''+'00:00:00';
+			var endM = js_yyyy_mm_dd('M')+''+'23:59:59';
+			var endY = js_yyyy_mm_dd('Y')+''+'23:59:59';
+			var endH = js_yyyy_mm_dd('')+''+'23:59:59';
+			loadSalesMonthlyData(start,endM);
+			loadSalesHourlyData(start,endH);
+			loadSalesYearlyData(start,endY);
 			
-			loadReports(js_yyyy_mm_dd_hh_mm_ss(),js_yyyy_mm_dd_hh_mm_ss());
 		}
-		function loadReports(start,end)
+		function loadSalesYearlyData(start,end)
 		{
-			var url ="http://localhost:8080/getDailyTransactionDetails?startDate="+start+"&endDate="+end;
-			dataService.Get(url,getReportsSuccessHandler,getReportsErrorHandler,'application/json','application/json');
-			getReportsSuccessHandler('');
+			var url='http://localhost:8080/getYearlyTransactionDetails?startDate='+start+'&endDate='+end;
+			dataService.Get(url,onYearlySucces,onYearlyError,'application/json','application/json');
+			//onMonthlySucces('');
+			
 		}
-		function getReportsSuccessHandler(response)
+		function onYearlySucces(response)
 		{
-			$scope.loadReports = response;
-			/*$scope.loadReports = [
-			                      {
-			                    	  "credit":120.89,
-			                    	  "tax":12,
-			                    	  "discount":10,
-			                    	  "total":218.90,
-			                    	  "grossSale":298.90,
-			                    	  "markup":0,
-			                    	  "noOfTransactions":11,
-			                    	  "avgTotal":19.08,
-			                    	  "profitAmount":23,
-			                    	  "cash":89
-			                      }
-			                      ];*/
+			$scope.hourlySummary = response;
+			/*$scope.monthlySummary = [
+			                         {
+			                        	    "date": "2016-06-01",
+			                        	    "credit": 0,
+			                        	    "cash": 32,
+			                        	    "check": 0,
+			                        	    "tax": 32.99,
+			                        	    "discount": 0,
+			                        	    "returnAmount": 0,
+			                        	    "profit": 23,
+			                        	    "marginPercentage": 0,
+			                        	    "total": 0,
+			                        	    "monthAvg": 0,
+			                        	    "cost": 0,
+			                        	    "retail": 23
+			                        	  },
+			                        	  {
+			                        	    "date": "2016-06-22",
+			                        	    "credit": 56.89000000000001,
+			                        	    "cash": 101,
+			                        	    "check": 0,
+			                        	    "tax": 0,
+			                        	    "discount": 0,
+			                        	    "returnAmount": 0,
+			                        	    "profit": 939,
+			                        	    "marginPercentage": 0,
+			                        	    "total": 157.89000000000001,
+			                        	    "monthAvg": 0,
+			                        	    "cost": 948.99,
+			                        	    "retail": 1887.99
+			                        	  }
+			                        	];*/
 		}
-		function getReportsErrorHandler(response)
+		function onYearlyError(response)
+		{
+			
+		}
+		function loadSalesHourlyData(start,end)
+		{
+			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
+			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
+			//onMonthlySucces('');
+			
+		}
+		function onHourlySucces(response)
+		{
+			$scope.hourlySummary = response;
+			/*$scope.monthlySummary = [
+			                         {
+			                        	    "date": "2016-06-01",
+			                        	    "credit": 0,
+			                        	    "cash": 32,
+			                        	    "check": 0,
+			                        	    "tax": 32.99,
+			                        	    "discount": 0,
+			                        	    "returnAmount": 0,
+			                        	    "profit": 23,
+			                        	    "marginPercentage": 0,
+			                        	    "total": 0,
+			                        	    "monthAvg": 0,
+			                        	    "cost": 0,
+			                        	    "retail": 23
+			                        	  },
+			                        	  {
+			                        	    "date": "2016-06-22",
+			                        	    "credit": 56.89000000000001,
+			                        	    "cash": 101,
+			                        	    "check": 0,
+			                        	    "tax": 0,
+			                        	    "discount": 0,
+			                        	    "returnAmount": 0,
+			                        	    "profit": 939,
+			                        	    "marginPercentage": 0,
+			                        	    "total": 157.89000000000001,
+			                        	    "monthAvg": 0,
+			                        	    "cost": 948.99,
+			                        	    "retail": 1887.99
+			                        	  }
+			                        	];*/
+		}
+		function onHourlyError(response)
+		{
+			
+		}
+		function loadSalesMonthlyData(start,end)
+		{
+			var url='http://localhost:8080/getMonthlyTransactionDetails?startDate='+start+'&endDate='+end;
+			dataService.Get(url,onMonthlySucces,onMonthlyError,'application/json','application/json');
+			//onMonthlySucces('');
+			
+		}
+		function onMonthlySucces(response)
+		{
+			$scope.monthlySummary = response;
+			/*$scope.monthlySummary = [
+			                         {
+			                        	    "date": "2016-06-01",
+			                        	    "credit": 0,
+			                        	    "cash": 32,
+			                        	    "check": 0,
+			                        	    "tax": 32.99,
+			                        	    "discount": 0,
+			                        	    "returnAmount": 0,
+			                        	    "profit": 23,
+			                        	    "marginPercentage": 0,
+			                        	    "total": 0,
+			                        	    "monthAvg": 0,
+			                        	    "cost": 0,
+			                        	    "retail": 23
+			                        	  },
+			                        	  {
+			                        	    "date": "2016-06-22",
+			                        	    "credit": 56.89000000000001,
+			                        	    "cash": 101,
+			                        	    "check": 0,
+			                        	    "tax": 0,
+			                        	    "discount": 0,
+			                        	    "returnAmount": 0,
+			                        	    "profit": 939,
+			                        	    "marginPercentage": 0,
+			                        	    "total": 157.89000000000001,
+			                        	    "monthAvg": 0,
+			                        	    "cost": 948.99,
+			                        	    "retail": 1887.99
+			                        	  }
+			                        	];*/
+		}
+		function onMonthlyError(response)
 		{
 			
 		}
@@ -94,6 +201,44 @@
 			  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 			}
 		render();
+		function js_yyyy_mm_dd (value) {
+			  var now = new Date();
+			 
+			  var year = "" + now.getFullYear();
+			  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			  var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			  var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			  var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			  
+			  if(value == 'Y')
+			  {
+				  //var test = new Date(year,month,day);
+				  now.setMonth(now.getMonth()+12);
+				  now.setDate(now.getDate() +31);
+				  var year = "" + now.getFullYear();
+				  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+				  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+				  return year + "-" + month + "-" + day ;
+			  }
+			  else if(value == 'M' )
+			  {
+				  //var test = new Date(year,month,day);
+				  now.setDate(now.getDate() +31);
+				  var year = "" + now.getFullYear();
+				  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+				  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+				  return year + "-" + month + "-" + day ;
+			  }
+			  else
+			  {
+				  return year + "-" + month + "-" + day ;
+			  }	  
+			  
+			 
+			  
+			  
+			}
 	}
 		
 })();

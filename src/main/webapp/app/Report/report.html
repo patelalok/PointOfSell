@@ -1,18 +1,56 @@
-<div >
-<div class="row pageHeader" style="padding:30px;" print-remove>
-	<div class="col-md-12 pageHeader">
-		<span style="font-weight:bold;font-size:30px">Dashboard</span>
+<div>
+	<div class="row pageHeader" style="padding-left:30px;padding-top:10px;" print-remove>
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:30px">Sales Reports</span>
+		</div>
 	</div>
-</div>
-<div class="row productBtns" style="padding:30px;" print-remove>	
-
-	<div class="col-md-4 productBtn">
+	<div class="row productBtns" style="padding-left:30px;padding-top:10px;" print-remove>
+		<div class="col-md-1" style="width:16%;">
+			<div class="padding-bottom-5"><label>Report Type</label></div>
+			<div>
+				<select id="prType" data-ng-model="reportType" class="form-control" ng-change="checkType()" style="height:52px;width:100%;">
+								<option value="salesSummary">Sales Summary</option>
+								<option value="salesCategory">Sales By Category</option>
+								<option value="salesVendor">Sales By Vendor</option>
+								<option value="salesBrand">Sales By Brand</option>
+								<option value="salesProduct">Sales By Product</option>
+								<option value="salesCustomer">Sales By Customer</option>
+								<option value="salesUser">Sales By User</option>
+								<option value="inventorySummary">Inventory Summary</option>
+			  </select>
+			</div>
+		</div>
+		<div class="col-md-1" style="width:16%;" ng-show="reportType == 'salesSummary'">
+			<div class="padding-bottom-5"><label>Measure</label></div>
+			<div>
+				<select id="pType" data-ng-model="measureType" class="form-control" ng-change="checkMeasure()" style="height:52px;width:100%;">
+								<option value="hourlySummary">Hourly Summary</option>
+								<option value="dailySummary">Daily Summary</option>
+								<option value="weeklySummary">Weekly Summary</option>
+								<option value="monthlySummary">Monthly Summary</option>
+								<option value="yearlySummary">Yearly Summary</option>
+			  </select>
+			</div>
+		</div>
+		<div class="col-md-1" style="width:16%;" ng-show="reportType == 'inventorySummary'">
+			<div class="padding-bottom-5"><label>CategoryType</label></div>
+			<div>
+				<select id="pType" data-ng-model="cType" class="form-control" ng-change="checkwise()" style="height:52px;width:100%;">
+								<option value="cat">Category</option>
+								<option value="ven">Vendor</option>
+								<option value="bran">Brand</option>
+								<option value="prod">Product</option>
+								<option value="tin">Total Inventory</option>
+			  </select>
+			</div>
+		</div>
+		<div class="col-md-1 productBtn" style="width:16%;">
 		
 		<div class="form-group">
 						<label for="sales_Date" class="required">Start Date</label>
 						<div class="input-group calendar-group fromDate">
 							<input type="text" style="height:52px;width:100%;" ng-model="startDate" class="form-control fromDate" datepicker-popup="{{'MM/dd/yyyy'}}" required
-							ng-model-options="{allowInvalid: true}" name="startDate" 
+							ng-model-options="{allowInvalid: true}" name="startDate" data-restrict-characters="restrictCharacter.DateField.regExp"
 							is-open="openStart"  date-cleared="dateCleared"  date-length="10"
 							id="startDate" placeholder="mm/dd/yyyy">
 							<span class="input-group-btn">
@@ -23,13 +61,13 @@
 					
 					</div>
 	 </div> 
-	 <div class="col-md-4 productBtn">
+	 <div class="col-md-1 productBtn" style="width:16%;">
 		
 		<div class="form-group">
 						<label for="sales_Date" class="required">End Date</label>
 						<div class="input-group calendar-group fromDate">
 							<input type="text" style="height:52px;width:100%;" ng-model="endDate" class="form-control fromDate" datepicker-popup="{{'MM/dd/yyyy'}}" required
-							ng-model-options="{allowInvalid: true}" name="endDate"
+							ng-model-options="{allowInvalid: true}" name="endDate" data-restrict-characters="restrictCharacter.DateField.regExp"
 							is-open="openEnd"  date-cleared="dateCleared"  date-length="10"
 							id="endDate" placeholder="mm/dd/yyyy">
 							<span class="input-group-btn">
@@ -40,222 +78,315 @@
 					
 					</div>
 	 </div>
-	 <!-- <div class="col-md-4 productBtn">
-		<div class="padding-bottom-5"><label>Search For Customers</label></div>
+	 <div class="col-md-1 productBtn" style="width:16%;">
+		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="customerPhone" id="customerPhone" ui-mask="(999) 999-9999" name="customerPhone"
-							placeholder="(xxx) xxx-xxxx" style="height:52px;width:100%;" ng-change="checkfilterValue(customerPhone)" ng-enter="filterSalesHistory(customerPhone)" />
+			<input  type="text" class="form-control" data-ng-model="customerPhone" id="customerPhone"  name="customerPhone"
+							 style="height:52px;width:100%;"  />
 		</div>
-	 </div> -->    
-	 <div class="col-md-4 productBtn">
-		<div class="padding-bottom-5"><label></label></div>
-		<div>
-			<input  type="text" class="form-control" data-ng-model="receiptNumber" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" id="receiptNumber" style="height:52px;width:100%;" ng-change="checkfilterValue(receiptNumber)" ng-enter="filterSalesHistory(receiptNumber)"/>
-		</div>
-	 </div> 
-	 	<!-- <div class="col-md-1" style="width:16%;">
-	<div class="padding-bottom-5"><label></label></div>
-		<div class="filterBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterDashBoard()">Apply Filter</button>
-	</div>
-	</div> --> 
-
-</div>
-<div class="row" style="padding:30px;" print-remove>
-
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">TOTAL REVENUE</span>
-		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].total}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+	 </div>
 	
 	</div>
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">CASH REVENUE</span>
+	
+	<!-- Sales By category -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesCategory'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Category</span>
 		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].cash}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+		<div data-responsive-table data-ng-model="salesByCategory"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="CategoryName" key="categoryName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+
+				</columns>		
+			</div>
 	
 	</div>
-<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">CREDIT REVENUE</span>
+	<!-- End Sales By category -->
+	
+	<!-- Sales By Vendor -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesVendor'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Vendor</span>
 		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].credit}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+		<div data-responsive-table data-ng-model="salesByCategory"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="VendorName" key="vendorName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+
+				</columns>		
+			</div>
 	
 	</div>
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">PROFIT</span>
+	<!-- End Sales By vendor -->
+	
+	
+	<!-- Sales By Brand -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesBrand'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Brand</span>
 		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].profitAmount}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+		<div data-responsive-table data-ng-model="salesByBrand"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="BrandName" key="brandName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+
+				</columns>		
+			</div>
 	
 	</div>
+	<!-- End Sales By brand -->
+	
+	<!-- Sales By Product -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesProduct'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Product</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByProduct"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="ProductName" key="productName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
 
-
-</div>
-
-<div class="row" style="padding:30px;" print-remove>
-
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">TAX</span>
-		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].tax}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+				</columns>		
+			</div>
 	
 	</div>
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">DISOCUNT</span>
+	<!-- End Sales By Product -->
+	
+	<!-- Sales By Customer -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesCustomer'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By Customer</span>
 		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].discount}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+		<div data-responsive-table data-ng-model="salesByBrand"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="CustomerName" key="customerName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+
+				</columns>		
+			</div>
 	
 	</div>
-<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">NO OF TRANSACTIONS</span>
+	<!-- End Sales By Customer -->
+	
+	<!-- Sales By User -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesUser'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Sales By User</span>
 		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].noOfTransactions}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+		<div data-responsive-table data-ng-model="salesByUser"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="UserName" key="userrName" datatype="string" width="18%" sortable="true"></column>
+					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="12%"></column>
+					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+
+				</columns>		
+			</div>
 	
 	</div>
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">AVG BASKET VALUE</span>
+	<!-- End Sales By User -->
+	
+	
+	<!-- Inventory Summary -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'inventorySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Inventory Summary</span>
 		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{loadReports[0].avgTotal}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-			<span>$250</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
+		<div data-responsive-table data-ng-model="inventorySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="CategoryName" key="categoryName" datatype="string" width="20%" sortable="true"></column>
+					<column name="No Of Products" key="noOfProducts" datatype="string" width="20%"></column>
+					<column name="Cost" key="cost" datatype="string" width="20%"></column>
+					
+					<column name="Retail" key="retail" datatype="string" width="20%"></column>
+					<column name="Margin" key="margin" datatype="string" width="20%"></column>
+
+				</columns>		
+			</div>
 	
 	</div>
+	<!-- Inventory Summary -->
+	
+	
+	<!-- Yearly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'yearlySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Yearly Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="yearlySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Month" key="monthName" datatype="string" width="10%" sortable="true"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cahs" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="return" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Margin" key="margin" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
 
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Yearly Summary -->
+	
+	
+	<!-- Monthly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'monthlySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Monthly Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="monthlySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Date" key="date" datatype="string" width="10%" sortable="true"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cash" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Margin" key="marginPercentage" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
 
-</div>
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Monthly Summary -->
+	
+	
+	<!-- Weekly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'weeklySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Weekly Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="weeklySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Week" key="month" datatype="string" width="10%" sortable="true"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cahs" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="return" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Margin" key="margin" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
 
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- weekly Summary -->
+	
+	<!-- Daily Summary -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'dailySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Daily Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="dailySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Daily" key="month" datatype="string" width="10%" sortable="true"></column>
+					<column name="Credit" key="credit" datatype="string" width="10%"></column>
+					<column name="Cash" key="cahs" datatype="string" width="10%"></column>
+					
+					<column name="Check" key="check" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Discount" key="discount" datatype="string" width="10%"></column>
+					<column name="Return" key="return" datatype="string" width="10%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
+					<column name="Margin" key="margin" datatype="string" width="10%"></column>
+					<column name="Total" key="total" datatype="string" width="10%"></column>
 
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Daily Summary -->
+	
+	
+	<!-- Hourly Summary -->
+	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'hourlySummary'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Hourly Summary</span>
+		</div>
+		<div data-responsive-table data-ng-model="hourlySummary"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				on-sort="sortColumnData(index)">
+				<columns>
+					<column name="Hour" key="hour" datatype="string" width="20%" sortable="true"></column>
+					<column name="cost" key="cost" datatype="string" width="20%"></column>
+					<column name="Retail" key="retail" datatype="string" width="20%"></column>
+					<column name="Avg Retail" key="avgRetail" datatype="string" width="20%"></column>
+					<column name="NoOfTransactions" key="noOfTransactions" datatype="string" width="20%"></column>
+
+				</columns>		
+			</div>
+	
+	</div>
+	<!-- Hourly Summary -->
+	
 </div>

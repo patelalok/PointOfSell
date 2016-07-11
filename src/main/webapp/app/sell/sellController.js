@@ -280,13 +280,13 @@
 				if($rootScope.customerName == GlobalVariable.getCustomerDtls[i].firstName)
 				{
 					$rootScope.customerName = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
-					$rootScope.customerPhone= $scope.regPhone;
+					$rootScope.customerPhone= GlobalVariable.getCustomerDtls[i].phoneNo;
 				}	
-				else
+				/*else
 				{
 					$rootScope.customerName = 'No customer found';
 					$rootScope.customerPhone = $scope.regPhone;
-				}	
+				}*/	
 		
 			}
 		}
