@@ -67,11 +67,6 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		    templateUrl: 'app/Ledger/ledger.html',
 		    controller: 'LedgerController'
 		  })
-		  .state('home', {
-		    url: '/home',
-		    templateUrl: 'app/Report/home.html',
-		    controller: 'HomeController'
-		  })
 		   .state('report', {
 		    url: '/report',
 		    templateUrl: 'app/Report/report.html',
@@ -91,6 +86,11 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		    url: '/monthly',
 		    templateUrl: 'app/Registers/monthlyanalysis.html',
 		    controller: 'MonthlyAnalysisController'
+		  })
+		  .state('home', {
+		    url: '/home',
+		    templateUrl: 'app/home/home.html',
+		    controller: 'HomeController'
 		  });
   
 }]);

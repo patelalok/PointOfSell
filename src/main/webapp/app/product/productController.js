@@ -22,7 +22,7 @@
 			{
 				if($scope.prodMarkup !== '' && $scope.prodMarkup !== undefined)
 				{
-					$scope.prodRetail = parseFloat($scope.prodCP) *( (parseFloat($scope.prodMarkup))/100);
+					$scope.prodRetail =(parseFloat($scope.prodCP))+(parseFloat($scope.prodCP) *( (parseFloat($scope.prodMarkup))/100));
 				}	
 			}
 			else

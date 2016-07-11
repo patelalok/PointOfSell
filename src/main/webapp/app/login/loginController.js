@@ -19,16 +19,17 @@
 		
 		$scope.onLoginClicked = function($event)
 		{
-			var request = {};
+			/*var request = {};
 			request.email = $scope.loginemail;
-			request.password=$scope.loginpassword;
-			var url='';
-			dataService.Post(url,request,onLoginSuccess,onLoginError,'application/json','application/json');
-			$state.go('report');
+			request.password=$scope.loginpassword;*/
+			var url='http://localhost:8080/getUserDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
+			dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
+			//$state.go('report');
 		};
 		function onLoginSuccess(response)
 		{
-			
+			if(response == true)
+				$state.go('home');
 		}
 		function onLoginError(response)
 		{
