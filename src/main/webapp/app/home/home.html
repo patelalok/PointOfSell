@@ -48,13 +48,22 @@
 		</div>
 	 </div> -->    
 	 <div class="col-md-4 productBtn">
-		<div class="padding-bottom-5"><label></label></div>
+		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="receiptNumber" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" id="receiptNumber" style="height:52px;width:100%;" ng-change="checkfilterValue(receiptNumber)" ng-enter="filterSalesHistory(receiptNumber)"/>
+			<select id="salesToDay" data-ng-model="transType" class="form-control"  style="height:52px;width:100%;">
+								<option value="yest">Yesterday</option>
+								<option value="lastWeek">last week</option>
+								<option value="thisMonth">this month</option>
+								<option value="lastMonth">last month</option>
+								<option value="last3Months">last 3 months</option>
+								<option value="last6Months">last 6 months</option>
+								<option value="thisYear">this year</option>
+								<option value="lastYear">last year</option>
+			  </select>
 		</div>
 	 </div> 
 	 	<div class="col-md-1" style="width:16%;">
-	<div class="padding-bottom-5"><label></label></div>
+	<div ><label></label></div>
 		<div class="filterBtn">
 		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterDashBoard()">Apply Filter</button>
 	</div>

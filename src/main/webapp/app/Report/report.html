@@ -81,15 +81,23 @@
 	 <div class="col-md-1 productBtn" style="width:16%;">
 		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="customerPhone" id="customerPhone"  name="customerPhone"
-							 style="height:52px;width:100%;"  />
+			<select id="salesToDay" data-ng-model="transType" class="form-control"  style="height:52px;width:100%;">
+								<option value="yest">Yesterday</option>
+								<option value="lastWeek">last week</option>
+								<option value="thisMonth">this month</option>
+								<option value="lastMonth">last month</option>
+								<option value="last3Months">last 3 months</option>
+								<option value="last6Months">last 6 months</option>
+								<option value="thisYear">this year</option>
+								<option value="lastYear">last year</option>
+			  </select>
 		</div>
 	 </div>
 	
 	</div>
 	
 	<!-- Sales By category -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesCategory'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesCategory'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Category</span>
 		</div>
@@ -113,7 +121,7 @@
 	<!-- End Sales By category -->
 	
 	<!-- Sales By Vendor -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesVendor'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesVendor'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Vendor</span>
 		</div>
@@ -138,7 +146,7 @@
 	
 	
 	<!-- Sales By Brand -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesBrand'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesBrand'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Brand</span>
 		</div>
@@ -162,7 +170,7 @@
 	<!-- End Sales By brand -->
 	
 	<!-- Sales By Product -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesProduct'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesProduct'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Product</span>
 		</div>
@@ -186,7 +194,7 @@
 	<!-- End Sales By Product -->
 	
 	<!-- Sales By Customer -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesCustomer'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesCustomer'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Customer</span>
 		</div>
@@ -210,7 +218,7 @@
 	<!-- End Sales By Customer -->
 	
 	<!-- Sales By User -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesUser'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesUser'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By User</span>
 		</div>
@@ -235,7 +243,7 @@
 	
 	
 	<!-- Inventory Summary -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'inventorySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'inventorySummary'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Inventory Summary</span>
 		</div>
@@ -258,9 +266,23 @@
 	
 	
 	<!-- Yearly Summary -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'yearlySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'yearlySummary'">
 		<div class="col-md-12 pageHeader">
-			<span style="font-weight:bold;font-size:20px">Yearly Summary</span>
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Yearly Summary</span>
+			 </div>	
+			 <div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Yearly:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{yearlySummary.monthAvg}}</span>
+			 </div>
+			 <div class="col-md-4">
+			
+				<div>
+					
+				 <span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
+									
+				</div>
+			</div>
 		</div>
 		<div data-responsive-table data-ng-model="yearlySummary"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
@@ -286,9 +308,23 @@
 	
 	
 	<!-- Monthly Summary -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'monthlySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'monthlySummary'">
 		<div class="col-md-12 pageHeader">
-			<span style="font-weight:bold;font-size:20px">Monthly Summary</span>
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Monthly Summary</span>
+			 </div>	
+			 <div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Monthly:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{monthlySummary.monthAvg}}</span>
+			 </div>
+			 <div class="col-md-4">
+			
+				<div>
+					
+				 <span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
+									
+				</div>
+			</div>
 		</div>
 		<div data-responsive-table data-ng-model="monthlySummary"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
@@ -314,9 +350,23 @@
 	
 	
 	<!-- Weekly Summary -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'weeklySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'weeklySummary'">
 		<div class="col-md-12 pageHeader">
-			<span style="font-weight:bold;font-size:20px">Weekly Summary</span>
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Weekly Summary</span>
+			 </div>	
+			 <div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Weekly:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{weeklySummary.monthAvg}}</span>
+			 </div>
+			 <div class="col-md-4">
+			
+				<div>
+					
+				 <span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
+									
+				</div>
+			</div>
 		</div>
 		<div data-responsive-table data-ng-model="weeklySummary"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
@@ -341,9 +391,23 @@
 	<!-- weekly Summary -->
 	
 	<!-- Daily Summary -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'dailySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'dailySummary'">
 		<div class="col-md-12 pageHeader">
-			<span style="font-weight:bold;font-size:20px">Daily Summary</span>
+			<div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px">Daily Summary</span>
+			 </div>	
+			 <div class="col-md-4">
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Daily:</span>
+				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{dailySummary.monthAvg}}</span>
+			 </div>
+			 <div class="col-md-4">
+			
+				<div>
+					
+				 <span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
+									
+				</div>
+			</div>
 		</div>
 		<div data-responsive-table data-ng-model="dailySummary"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
@@ -369,7 +433,7 @@
 	
 	
 	<!-- Hourly Summary -->
-	<div class="row" style="padding-left:30px;padding-top:10px;" ng-if="reportType == 'salesSummary' && measureType == 'hourlySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'hourlySummary'">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Hourly Summary</span>
 		</div>

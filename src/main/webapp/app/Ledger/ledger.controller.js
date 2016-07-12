@@ -167,8 +167,8 @@
 			};
 			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
 			$scope.endDate = $scope.startDate;
-			var start = js_yyyy_mm_dd()+''+'00:00:00';
-			var end = js_yyyy_mm_dd()+''+'23:59:59';
+			var start = js_yyyy_mm_dd()+''+' 00:00:00';
+			var end = js_yyyy_mm_dd()+''+' 23:59:59';
 			loadSalesHistoryData(start,end);
 		}
 $scope.applyFilterHistory = function()

@@ -40,10 +40,10 @@
 			};
 			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
 			$scope.endDate = $scope.startDate;
-			var start = js_yyyy_mm_dd('')+''+'00:00:00';
-			var endM = js_yyyy_mm_dd('M')+''+'23:59:59';
-			var endY = js_yyyy_mm_dd('Y')+''+'23:59:59';
-			var endH = js_yyyy_mm_dd('')+''+'23:59:59';
+			var start = js_yyyy_mm_dd('')+''+' 00:00:00';
+			var endM = js_yyyy_mm_dd('M')+''+' 23:59:59';
+			var endY = js_yyyy_mm_dd('Y')+''+' 23:59:59';
+			var endH = js_yyyy_mm_dd('')+''+' 23:59:59';
 			loadSalesMonthlyData(start,endM);
 			loadSalesHourlyData(start,endH);
 			loadSalesYearlyData(start,endY);
@@ -58,7 +58,7 @@
 		}
 		function onYearlySucces(response)
 		{
-			$scope.hourlySummary = response;
+			$scope.yearlySummary = response;
 			/*$scope.monthlySummary = [
 			                         {
 			                        	    "date": "2016-06-01",

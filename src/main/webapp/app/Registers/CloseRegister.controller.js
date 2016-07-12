@@ -113,8 +113,8 @@
 		};
 		function render()
 		{
-			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+'00:00:00';
-			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+'23:59:59';
+			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
+			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
 			getClosingDetails(startDate,endDate);
 			getPaidOutDetails(startDate,endDate);
 		}
