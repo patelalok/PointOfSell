@@ -68,7 +68,7 @@ public class SalesManager {
 
 
         try {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper());
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(),startDate,endDategit);
             System.out.println("Send Transaction Details Successfully");
         } catch (Exception e) {
             System.out.println(e);

@@ -116,7 +116,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ? ";
             /*"" +
             "" +
             "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
@@ -200,4 +200,5 @@ public class SQLQueries {
             " WHERE DATE BETWEEN ? AND ? " +
             " GROUP BY hour";
     public String getYearlyTransaction = "SELECT monthname(t.TRANSACTION_DATE) AS NameOfMonth,sum(t.TOTAL_AMOUNT_CREDIT) CREDIT,sum(t.PAID_AMOUNT_CASH) CASH,SUM(t.TOTAL_AMOUNT_CHECK) CHEC,SUM(t.TAX_AMOUNT) TAX ,SUM(t.DISCOUNT_AMOUNT) DISCOUNT , SUM(t.TOTAL_AMOUNT) TOTAL, sum(l.COST) COST, sum(l.RETAIL) RETAIL FROM TRANSACTION t, TRANSACTION_LINE_ITEM l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY NameOfMonth ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')";
+    public String getDashboardDetailsForMonths = "SELECT monthname(t.TRANSACTION_DATE) AS NameOfMonth,sum(t.TOTAL_AMOUNT_CREDIT) CREDIT,sum(t.PAID_AMOUNT_CASH) CASH,SUM(t.TOTAL_AMOUNT_CHECK) CHEC,SUM(t.TAX_AMOUNT) TAX ,SUM(t.DISCOUNT_AMOUNT) DISCOUNT , SUM(t.TOTAL_AMOUNT) TOTAL, sum(l.RETAIL - l.COST) PROFIT,count(t.TRANSACTION_COMP_ID) NOOFTRANS FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY  NameOfMonth ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')";
 }
