@@ -17,6 +17,7 @@
 		
 		$rootScope.testData = [];
 		$scope.productNames = [];
+		$scope.firstNames = [];
 		
 		$scope.addRow = function()
 		{
@@ -212,6 +213,9 @@
 		};
 		function callbackPayment()
 		{
+			$scope.totalQuantity = 0;
+			$scope.subTotal = 0;
+			$scope.productTotal = 0;
 			
 		}
 		$scope.test = function()
@@ -261,12 +265,12 @@
 			{
 				if($scope.regPhone == GlobalVariable.getCustomerDtls[i].phoneNo)
 				{
-					$rootScope.customerName = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
+					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
 					$rootScope.customerPhone= $scope.regPhone;
 				}	
 				else
 				{
-					$rootScope.customerName = 'No customer found';
+					$rootScope.customerNameOnSearch = 'No customer found';
 					$rootScope.customerPhone = $scope.regPhone;
 				}	
 		
@@ -277,10 +281,11 @@
 		{
 			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
 			{
-				if($rootScope.customerName == GlobalVariable.getCustomerDtls[i].firstName)
+				if($scope.customerNameOnSearch == GlobalVariable.getCustomerDtls[i].firstName)
 				{
-					$rootScope.customerName = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
+					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
 					$rootScope.customerPhone= GlobalVariable.getCustomerDtls[i].phoneNo;
+					$scope.regPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
 				}	
 				/*else
 				{
@@ -297,6 +302,10 @@
 			for(var i=0;i<GlobalVariable.getProducts.length;i++)
 			{
 				$scope.productNames.push(GlobalVariable.getProducts[i].description);
+			}
+			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
+			{
+				$scope.firstNames.push(GlobalVariable.getCustomerDtls[i].firstName);
 			}
 			$scope.loadCheckOutData();
 			if(GlobalVariable.returnProduct == true)

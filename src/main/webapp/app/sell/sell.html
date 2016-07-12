@@ -21,7 +21,7 @@
 							placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"  ng-enter="searchCustomer()" />
 		</div>
 		<div class="searchBox col-md-4">
-			<input type="text" data-ng-model="customerName" class="form-control"  style="width:100%;height:52px;"  ng-enter="searchCustomerByFirst()"/>
+			<input type="text" data-ng-model="customerNameOnSearch" class="form-control"  style="width:100%;height:52px;" typeahead="firstName for firstName in firstNames | filter:$viewValue" ng-enter="searchCustomerByFirst()"/>
 		</div>
 		<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">
 			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createCustomer()">Create Customer</button>
