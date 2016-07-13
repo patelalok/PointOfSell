@@ -44,7 +44,7 @@
 			//Database service call to complete transaction request.
 			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
 			GlobalVariable.transDate = trasnactionDate;
-			GlobalVariable.transactionCompletedId = Math.round(((Math.random() * 10) * 10));
+			GlobalVariable.transactionCompletedId = Math.round(((Math.random() * 10) * 10))+Math.round(((Math.random() * 10) * 10));
 			DialogFactory.close(true);
 			if($scope.balanceAmount == 0)
 			{

@@ -10,7 +10,7 @@
 		$scope.totalInValue = 0;
 		function getClosingDetails(startDate,endDate)
 		{
-			var url=":http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate+"&month=2";
+			var url="http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate;
 			dataService.Get(url,getClosingDetailsSuccessHandler,getClosingDtlsErrorHandler,'application/json','applicaiton/json');
 			//getClosingDetailsSuccessHandler('');
 		}
