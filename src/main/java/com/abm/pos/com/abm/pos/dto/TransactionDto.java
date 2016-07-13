@@ -27,6 +27,16 @@ public class TransactionDto {
     private String transCreditId;
     private int last4Digits;
 
+    public double getPaidAmountCheck() {
+        return paidAmountCheck;
+    }
+
+    public void setPaidAmountCheck(double paidAmountCheck) {
+        this.paidAmountCheck = paidAmountCheck;
+    }
+
+    private double paidAmountCheck;
+
     public int getLast4Digits() {
         return last4Digits;
     }

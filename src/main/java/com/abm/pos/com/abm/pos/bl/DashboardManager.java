@@ -25,12 +25,12 @@ public class DashboardManager {
     SQLQueries sqlQueries;
 
 
-    public List<DashboardDto> getDashboardDetails(String startDate, String endDate) {
+    public List<DashboardDto> getDashboardDetails(String startDateCurrent, String endDateCurrent, String startDateLast, String endDateLast) {
 
         List<DashboardDto> dashboardDtos = new ArrayList<>();
         try
         {
-            dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDate,endDate);
+            dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDateCurrent,endDateCurrent);
 
         }
         catch (Exception e)

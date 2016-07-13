@@ -22,9 +22,9 @@ public class DashboardController
 
 
     @RequestMapping(value = "/getDashBoardDetailByMonth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<DashboardDto> getDashBoardDetailByMonth(@RequestParam String startDate, @RequestParam String endDate)
+    public List<DashboardDto> getDashBoardDetailByMonth(@RequestParam String startDateCurrent, @RequestParam String endDateCurrent , @RequestParam String startDateLast, @RequestParam String endDateLast)
     {
-        return dashboardManager.getDashboardDetails(startDate,endDate);
+        return dashboardManager.getDashboardDetails(startDateCurrent,endDateCurrent,startDateLast,endDateLast);
     }
 
 

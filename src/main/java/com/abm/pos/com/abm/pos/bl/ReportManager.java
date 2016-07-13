@@ -46,6 +46,9 @@ public class ReportManager {
 
     }
 
+
+
+
     private final class Top50Mapper implements RowMapper<Top50ItemsDto>
     {
         @Override
@@ -85,15 +88,7 @@ public class ReportManager {
 
         try
         {
-            CatogoryComparisonDto catogoryComparisonDto = new CatogoryComparisonDto();
-            catogoryComparisonDto.setCommanName("Phone");
-            catogoryComparisonDto.setQuantity(12);
-            catogoryComparisonDto.setCostPrice(12.88);
-            catogoryComparisonDto.setRetailPrice(32.54);
-            catogoryComparisonDto.setProfitAmount(2.0);
-
-            catogoryComparisonDtos.add(catogoryComparisonDto);
-                    //= jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, new SalesCategoryManager(), startDate, endDate)
+            catogoryComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, new SalesCategoryManager(), startDate, endDate);
         }
         catch (Exception e)
         {
@@ -101,6 +96,34 @@ public class ReportManager {
         }
         return catogoryComparisonDtos;
 
+    }
+
+    public List<CatogoryComparisonDto> getSalesByVendor(String startDate, String endDate) {
+        List<CatogoryComparisonDto> catogoryComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            catogoryComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesVendorDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return catogoryComparisonDtos;
+    }
+
+    public List<CatogoryComparisonDto> getSalesByBrand(String startDate, String endDate) {
+        List<CatogoryComparisonDto> catogoryComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            catogoryComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesBrandDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return catogoryComparisonDtos;
     }
 
 
@@ -111,12 +134,11 @@ public class ReportManager {
 
             CatogoryComparisonDto catogoryComparisonDto = new CatogoryComparisonDto();
 
-            catogoryComparisonDto.setCommanName("Phone");
-            catogoryComparisonDto.setQuantity(12);
-            catogoryComparisonDto.setCostPrice(12.88);
-            catogoryComparisonDto.setRetailPrice(32.54);
-            catogoryComparisonDto.setProfitAmount(2.0);
-
+            catogoryComparisonDto.setCommanName(rs.getString("COMMON_NAME"));
+            catogoryComparisonDto.setCostPrice(rs.getDouble("COST"));
+            catogoryComparisonDto.setRetailPrice(rs.getDouble("RETAIL"));
+            catogoryComparisonDto.setQuantity(rs.getInt("QUANTITY"));
+            catogoryComparisonDto.setProfitAmount(rs.getDouble("PROFIT"));
 
             return catogoryComparisonDto;
         }

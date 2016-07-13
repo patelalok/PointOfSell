@@ -5,6 +5,15 @@ package com.abm.pos.com.abm.pos.dto.reports;
  */
 public class CatogoryComparisonDto {
 
+    private String commanName;
+    private int quantity;
+    private double costPrice;
+    private double retailPrice;
+    private double profitAmount;
+    private double markup;
+    private double perOfTotalProfit;
+
+
     public String getCommanName() {
         return commanName;
     }
@@ -61,11 +70,5 @@ public class CatogoryComparisonDto {
         this.retailPrice = retailPrice;
     }
 
-    private String commanName;
-    private int quantity;
-    private double costPrice;
-    private double retailPrice;
-    private double profitAmount;
-    private double markup;
-    private double perOfTotalProfit;
+
 }

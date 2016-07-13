@@ -48,6 +48,7 @@ public class SalesManager {
                         transactionDto.getChangeAmount(),
                         transactionDto.getCreditId(),
                         transactionDto.getPaidAmountCredit(),
+                        transactionDto.getPaidAmountCheck(),
                         transactionDto.getTransCreditId(),
                         transactionDto.getLast4Digits());
 

@@ -36,6 +36,17 @@ public class ReportController {
         return reportManager.getSalesByCategory(startDate,endDate);
     }
 
+    @RequestMapping(value = "/getSalesByVendor",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CatogoryComparisonDto> getSalesByVendor(@RequestParam String startDate, String endDate)
+    {
+        return reportManager.getSalesByVendor(startDate,endDate);
+    }
+
+    @RequestMapping(value = "/getSalesByBrand",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CatogoryComparisonDto> getSalesByBrand(@RequestParam String startDate, String endDate)
+    {
+        return reportManager.getSalesByBrand(startDate,endDate);
+    }
 
 
 

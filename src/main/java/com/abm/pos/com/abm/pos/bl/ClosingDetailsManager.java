@@ -139,9 +139,7 @@ public class ClosingDetailsManager {
             yearlyDto.setTotal(rs.getDouble("TOTAL"));
             yearlyDto.setCost(rs.getDouble("COST"));
             yearlyDto.setRetail(rs.getDouble("RETAIL"));
-
-            double a = yearlyDto.getRetail() - yearlyDto.getCost() - yearlyDto.getDiscount();
-            yearlyDto.setProfit(a);
+            yearlyDto.setProfit(rs.getDouble("PROFIT"));
 
 
 
@@ -217,13 +215,9 @@ public class ClosingDetailsManager {
             monthDto.setTotal(rs.getDouble("TOTAL"));
             monthDto.setTax(rs.getDouble("SUM_TAX"));
             monthDto.setDiscount(rs.getDouble("DISCOUNT"));
-
             monthDto.setCost(rs.getDouble("COST"));
             monthDto.setRetail(rs.getDouble("RETAIL"));
-
-
-            double a = monthDto.getRetail() - monthDto.getCost() - monthDto.getDiscount();
-            monthDto.setProfit(a);
+            monthDto.setProfit(rs.getDouble("PROFIT"));
 
             return monthDto;
 
@@ -385,11 +379,8 @@ public class ClosingDetailsManager {
             trans.setCheck(rs.getDouble("SUMCHECK"));
             trans.setTax(rs.getDouble("TAX"));
             trans.setDiscount(rs.getDouble("DISCOUNT"));
-            //trans.setTotal(trans.getCash() + trans.getCredit() + trans.getTax());
             trans.setGrossSale((trans.getTotal()) - trans.getTax());
-           // String a = jdbcTemplate.query(sqlQueries.getDailyProfit, new Object[]{startDate,endDate});
-            //TODO WRITE LOGIC OF PROFIT HERE
-            trans.setProfitAmount(0.0);
+            trans.setProfitAmount(rs.getDouble("PROFIT"));
 
             return trans;
 
