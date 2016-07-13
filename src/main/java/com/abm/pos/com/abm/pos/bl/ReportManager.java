@@ -1,6 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +45,9 @@ public class ReportManager {
 
     }
 
+
+
+
     private final class Top50Mapper implements RowMapper<Top50ItemsDto>
     {
         @Override
@@ -67,14 +70,91 @@ public class ReportManager {
 
             int test =+ top50.getQuantity();
 
-           if( rs.isLast())
-           {
-              top50.setRetailPrice(test);
-              System.out.println(test);
-               System.out.println(top50.getRetailPrice());
-               System.out.println("test");
-           }
+            if( rs.isLast())
+            {
+                top50.setRetailPrice(test);
+                System.out.println(test);
+                System.out.println(top50.getRetailPrice());
+                System.out.println("test");
+            }
             return top50;
         }
     }
+
+    public List<CommonComparisonDto> getSalesByCategory(String startDate, String endDate) {
+
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
+
+    }
+
+    public List<CommonComparisonDto> getSalesByVendor(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesVendorDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
+    }
+
+    public List<CommonComparisonDto> getSalesByBrand(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesBrandDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
+    }
+
+    public List<CommonComparisonDto> getSalesByProduct(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesProductDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
+    }
+
+
+    private final class SalesCategoryManager implements RowMapper<CommonComparisonDto>
+    {
+        @Override
+        public CommonComparisonDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            CommonComparisonDto commonComparisonDto = new CommonComparisonDto();
+
+            commonComparisonDto.setCommanName(rs.getString("COMMON_NAME"));
+            commonComparisonDto.setCostPrice(rs.getDouble("COST"));
+            commonComparisonDto.setRetailPrice(rs.getDouble("RETAIL"));
+            commonComparisonDto.setQuantity(rs.getInt("QUANTITY"));
+            commonComparisonDto.setProfitAmount(rs.getDouble("PROFIT"));
+
+            return commonComparisonDto;
+        }
+    }
+
 }

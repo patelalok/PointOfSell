@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
 import com.abm.pos.com.abm.pos.dto.*;
+import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -57,15 +58,22 @@ public class ClosingDetailsController {
         return addClosingDetailsManager.getDailyTransactionDetails(startDate,endDate);
     }
     @RequestMapping(value = "/getWeeklyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<WeekDto> getWeeklyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int month)
+    public List<WeekDto> getWeeklyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
-        return addClosingDetailsManager.getWeeklyTransactionDetails(startDate,endDate,month);
+        return addClosingDetailsManager.getWeeklyTransactionDetails(startDate,endDate);
     }
 
     @RequestMapping(value = "/getMonthlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MonthDto> getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int month)
+    public List<MonthDto> getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
-        return addClosingDetailsManager.getMonthlyTransactionDetails(startDate,endDate,month);
+        return addClosingDetailsManager.getMonthlyTransactionDetails(startDate,endDate);
     }
+
+    @RequestMapping(value = "/getYearlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<YearlyDto> getYearlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
+    {
+        return addClosingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
+    }
+
 
 }

@@ -48,20 +48,31 @@ public class SQLQueries {
                     "TAX_AMOUNT," +
                     "DISCOUNT_AMOUNT," +
                     "SUBTOTAL," +
-                    "TOTALQUANTITY" +
+                    "TOTALQUANTITY," +
                     "CUSTOMER_PHONENO," +
                     "USER_ID," +
                     "PAYMENT_ID_CASH," +
-                    "STATUS,PAID_AMOUNT_CASH," +
+                    "STATUS," +
+                    "PAID_AMOUNT_CASH," +
                     "CHANGE_AMOUNT," +
                     "PAYMENT_ID_CREDIT," +
                     "TOTAL_AMOUNT_CREDIT, " +
-                    "TRANS_CREDIT_ID,LAST_4_DIGITS) " +
-                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "TOTAL_AMOUNT_CHECK," +
+                    "TRANS_CREDIT_ID," +
+                    "LAST_4_DIGITS) " +
+                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
-            "(TRANSACTION_COMP_ID,DATE,PRODUCT_ID,QUANTITY,RETAIL,COST,DISCOUNT,RETAILWITHDISCOUNT,TOTALPRODUCTPRICE)" +
+            "(TRANSACTION_COMP_ID," +
+                    "DATE," +
+                    "PRODUCT_ID," +
+                    "QUANTITY," +
+                    "RETAIL," +
+                    "COST," +
+                    "DISCOUNT," +
+                    "RETAILWITHDISCOUNT," +
+                    "TOTALPRODUCTPRICE)" +
             " VALUES (?,?,?,?,?,?,?,?,?)";
 
  public String addUserQuery
@@ -116,7 +127,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ? ";
             /*"" +
             "" +
             "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
@@ -172,9 +183,7 @@ public class SQLQueries {
     public String getClosingDetails = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ?";
 
 
-    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL " +
-                                        ",sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, " +
-                                        "sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ?";
+    public String getDailyTransaction = "SELECT count(t.TRANSACTION_COMP_ID) NOOFTRANS ,AVG(t.TOTAL_AMOUNT) AVGTOTAL, sum(t.TOTAL_AMOUNT) TOTAL ,sum(t.PAID_AMOUNT_CASH) CASH ,sum(t.TOTAL_AMOUNT_CREDIT) CREDIT ,sum(t.TOTAL_AMOUNT_CHECK) SUMCHECK, sum(t.TAX_AMOUNT) TAX, sum(t.DISCOUNT_AMOUNT) DISCOUNT, sum((l.RETAIL - l.COST) * l.QUANTITY) PROFIT FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND t.TRANSACTION_DATE  BETWEEN ? AND ? ";
 
     public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ?";
 
@@ -185,9 +194,7 @@ public class SQLQueries {
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
 
 
-    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, SUM(PAID_AMOUNT_CASH) SUM_CASH,sum(TOTAL_AMOUNT_CREDIT)" +
-                                            "SUM_CREDIT,sum(TOTAL_AMOUNT) TOTAL,sum(TAX_AMOUNT)  SUM_TAX, sum(DISCOUNT_AMOUNT) DISCOUNT from " +
-                                            "TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(TRANSACTION_DATE)";
+    public String getMonthlyTransDetails = "SELECT date(t.TRANSACTION_DATE) as DATE, SUM(t.PAID_AMOUNT_CASH) SUM_CASH,sum(t.TOTAL_AMOUNT_CREDIT) SUM_CREDIT,sum(t.TOTAL_AMOUNT) TOTAL,sum(t.TAX_AMOUNT)  SUM_TAX, sum(t.DISCOUNT_AMOUNT) DISCOUNT, SUM(l.COST) COST, SUM(l.RETAIL) RETAIL, SUM((l.RETAIL - l.COST) * l.QUANTITY) PROFIT FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND t.TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(t.TRANSACTION_DATE)";
 
     public String getWeeklyTransDetails = "";
     public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_ID = ?";
@@ -201,4 +208,10 @@ public class SQLQueries {
             "FROM TRANSACTION_LINE_ITEM" +
             " WHERE DATE BETWEEN ? AND ? " +
             " GROUP BY hour";
+    public String getYearlyTransaction = "SELECT monthname(t.TRANSACTION_DATE) AS NameOfMonth, sum(t.TOTAL_AMOUNT_CREDIT) CREDIT,sum(t.PAID_AMOUNT_CASH) CASH,SUM(t.TOTAL_AMOUNT_CHECK) CHEC, SUM(t.TAX_AMOUNT) TAX ,SUM(t.DISCOUNT_AMOUNT) DISCOUNT , SUM(t.TOTAL_AMOUNT) TOTAL,  sum(l.COST) COST, sum(l.RETAIL) RETAIL, sum((l.RETAIL - l.COST) * l.QUANTITY) PROFIT FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND TRANSACTION_DATE  BETWEEN ? AND ? GROUP BY NameOfMonth  ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')";
+    public String getDashboardDetailsForMonths = "SELECT monthname(t.TRANSACTION_DATE) AS NameOfMonth,sum(t.TOTAL_AMOUNT_CREDIT) CREDIT,sum(t.PAID_AMOUNT_CASH) CASH,SUM(t.TOTAL_AMOUNT_CHECK) CHEC,SUM(t.TAX_AMOUNT) TAX ,SUM(t.DISCOUNT_AMOUNT) DISCOUNT , SUM(t.TOTAL_AMOUNT) TOTAL, sum(l.RETAIL - l.COST) PROFIT,count(t.TRANSACTION_COMP_ID) NOOFTRANS FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY  NameOfMonth ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')";
+    public String getSalesCategoryDetails = "SELECT  c.CATEGORY_NAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, CATEGORY c, PRODUCT p WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE  BETWEEN ?  AND ? group by c.CATEGORY_NAME";
+    public String getSalesVendorDetails = "SELECT  v.VENDOR_NAME as COMMON_NAME,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, VENDOR v, PRODUCT p WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND v.VENDOR_ID = p.VENDOR_ID AND t.DATE  BETWEEN ?  AND ? group by v.VENDOR_NAME";
+    public String getSalesBrandDetails = "SELECT  b.BRAND_NAME as COMMON_NAME,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, BRAND b, PRODUCT p WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND b.BRAND_ID = p.BRAND_ID AND t.DATE  BETWEEN ?  AND ? group by b.BRAND_NAME";
+    public String getSalesProductDetails = "SELECT p.DESCRIPTION as COMMON_NAME,sum(t.COST) COST,sum(t.RETAIL) RETAIL,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL- t.COST) * t.QUANTITY) PROFIT  FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_ID = p.PRODUCT_ID AND t.DATE BETWEEN ? AND ? group by p.DESCRIPTION";
 }

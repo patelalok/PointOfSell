@@ -105,6 +105,7 @@ public class UserManager {
 
             UserDto user = new UserDto();
 
+            user.setUserId(rs.getInt("USER_ID"));
             user.setUsername(rs.getString("USERNAME"));
             user.setPassword(rs.getString("PASSWORD"));
             user.setUserRole(rs.getString("USER_ROLE"));

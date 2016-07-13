@@ -48,6 +48,7 @@ public class SalesManager {
                         transactionDto.getChangeAmount(),
                         transactionDto.getCreditId(),
                         transactionDto.getPaidAmountCredit(),
+                        transactionDto.getPaidAmountCheck(),
                         transactionDto.getTransCreditId(),
                         transactionDto.getLast4Digits());
 
@@ -68,7 +69,7 @@ public class SalesManager {
 
 
         try {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper());
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(),startDate,endDategit);
             System.out.println("Send Transaction Details Successfully");
         } catch (Exception e) {
             System.out.println(e);
