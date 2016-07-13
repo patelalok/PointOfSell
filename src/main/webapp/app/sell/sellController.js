@@ -349,13 +349,13 @@
 		};
 		$scope.callBackReturnCheckout = function()
 		{
-			var url ="http://localhost:8080/returnTransaction";
+			var url ="http://localhost:8080/addTransaction";
 			var request = new Object();
 			request = {
 				"transactionDate":$scope.returnDate,  
-				"totalAmount":$scope.returnAmount,
-				"tax":$scope.totalTax,
-				"discount":$scope.totalDisc ,
+				"totalAmount":-($scope.returnAmount),
+				"tax":-($scope.totalTax),
+				"discount":-($scope.totalDisc) ,
 				"customerPhoneNo":$scope.returnPhone,
 				"userId":$scope.userIdReturn,
 				"cashId":$scope.returncashId,
@@ -363,10 +363,10 @@
 			"paidAmountCash":$scope.paidAmountReturn,
 			"changeAmount":$scope.changeAmountReturn,
 				"creditId":$scope.creditIdReturn,
-				"paidAmountCredit":$scope.paidAmountCreditReturn,
+				"paidAmountCredit":-($scope.paidAmountCreditReturn),
 			"transactionCompId":$scope.returnId,
-			"subTotal":$scope.subTotal,
-			"totalQuantity":$scope.totalQuantity
+			"subTotal":-($scope.subTotal),
+			"totalQuantity":-($scope.totalQuantity)
 
 			};
 			request = JSON.stringify(request);
