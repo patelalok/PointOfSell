@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
+	paymentPopupController.$inject = [ '$scope','$sce','$window', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
 
-	function paymentPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
+	function paymentPopupController($scope,$sce,$window, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
 	{
 		$scope.color= false;
 		$scope.paidAmountCash =0;
@@ -88,12 +88,14 @@
 			"paidAmountCredit":$scope.paidAmountCredit,
 		"transactionCompId":GlobalVariable.transactionCompletedId,
 		"subTotal":GlobalVariable.totalSub,
-		"totalQuantity":GlobalVariable.quantityTotal
+		"totalQuantity":GlobalVariable.quantityTotal,
+		"transCreditId":$scope.transId,
+		"last4Digits":$scope.last4
 
 			};
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionSuccessHandler,addTransactionErrorHandler,"application/json","application/json");
-			addTransactionSuccessHandler('');
+			//addTransactionSuccessHandler('');
 		};
 		function addTransactionSuccessHandler(response)
 		{	
@@ -117,7 +119,7 @@
 			var url ="http://localhost:8080/addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
-			addTransactionLineItemSuccessHandler('');
+			//addTransactionLineItemSuccessHandler('');
 			
 		};
 		function addTransactionErrorHandler(response)
@@ -130,8 +132,16 @@
 			//TODO
 			//popup to display whther to print receipt or not;
 			//$state.go('sell');
+			var msg= 'Print Receipt or Cancel';
+			msg=$sce.trustAsHtml(msg);	
+			modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Print'}, msg, $scope.callBackCheckoutComplete);
+			
 			$rootScope.totalPayment = '0.00';
 			$rootScope.customerName = '';
+		};
+		$scope.callBackCheckoutComplete = function()
+		{
+			$window.print();
 		};
 		function addTransactionLineItemErrorHandler(response)
 		{
@@ -159,10 +169,39 @@
 				$scope.cashPayout = GlobalVariable.checkOuttotal;
 			
 			
-			var msg= "Your total balance is "+Number(parseFloat($scope.balanceAmount)).toFixed(2);
-				modalService.showModal('', '', msg, $scope.callBackCheckout);
-				$scope.color = true;
+				if(value == 'credit')
+				{
+					var msg='<div class="row padding-top-15">'+
+					'<div class="col-md-6">'+
+                '<label for="transId" class="padding-bottom-5 font-weight-label">Trans ID</label>'+
+                '<input type="text" class="form-control" name="transId" id="transId" data-ng-model="transId"'+
+                'autocomplete="off"  style="width:100%;height:50px;" />'+
+		'</div>'+
+		'<div class="col-md-6">'+
+                '<label for="last4" class="padding-bottom-5 font-weight-label">Last 4 Digits</label>'+
+                '<input type="text" class="form-control" name="last4" id="last4" data-ng-model="last4"'+
+                'autocomplete="off"  style="width:100%;height:50px;" />'+
+		'</div>'+
+	'</div>'; 
+				msg=$sce.trustAsHtml(msg);	
+				modalService.showModal('', '', msg, $scope.callBackCheckoutCredit);
+				}	
+				else
+				{
+					var msg= 'Your total balance <span style="color:red;font-size:30px;">is</span> '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
+					msg=$sce.trustAsHtml(msg);	
+					modalService.showModal('', '', msg, $scope.callBackCheckout);
+						$scope.color = true;
+				}	
 
+		};
+		$scope.callBackCheckoutCredit = function()
+		{
+			console.log($scope.last4+""+$scope.transId);
+			var msg= 'Your total balance is '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
+			msg=$sce.trustAsHtml(msg);	
+			modalService.showModal('', '', msg, $scope.callBackCheckout);
+				$scope.color = true;
 		};
 		$scope.calculateAmount = function(value,means)
 		{

@@ -12,7 +12,7 @@
 		{
 			var url=":http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate+"&month=2";
 			dataService.Get(url,getClosingDetailsSuccessHandler,getClosingDtlsErrorHandler,'application/json','applicaiton/json');
-			getClosingDetailsSuccessHandler('');
+			//getClosingDetailsSuccessHandler('');
 		}
 		function getClosingDetailsSuccessHandler(response)
 		{
@@ -100,7 +100,7 @@
 				  };
 			var url="http://localhost:8080/addClosingDetails";
 			dataService.Post(url,request,getSuccessAddhandler,getErrorAddHandler,'application/json','application/json');
-			getSuccessAddhandler('');
+			//getSuccessAddhandler('');
 
 		};
 		function getSuccessAddhandler(response)
@@ -122,12 +122,12 @@
 		{
 			var url=":http://localhost:8080/getPaidOut?startDate="+startDate+"&endDate="+endDate;
 			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','applicaiton/json');
-			getaddPaidSuccessHandler('');
+			//getaddPaidSuccessHandler('');
 		}
 		function getaddPaidSuccessHandler(response)
 		{
 			$scope.paidOutDtls = response;
-			/*$scope.paidOutDtls = [
+		/*	$scope.paidOutDtls = [
 			                      {
 			                    	    "paidOut1": 1,
 			                    	    "paidOut2": 2,
@@ -161,7 +161,7 @@
 			  };
 			var url="http://localhost:8080/addPaidOut";
 			dataService.Post(url,request,addPaidSuccessHandler,addPaidErrorHandler,'application/json','application/json');
-			addPaidSuccessHandler('');
+			//addPaidSuccessHandler('');
 			
 		};
 		function addPaidSuccessHandler(response)

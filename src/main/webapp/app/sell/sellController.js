@@ -375,6 +375,10 @@
 		function returnTransactionSuccessHandler(response)
 		{
 			$rootScope.testData = [];
+			$scope.totalQuantity = 0;
+			$scope.subTotal = 0;
+			$scope.productTotal = 0;
+			$rootScope.totalPayment = 0;
 		}
 		function returnTransactionErrorHandler(response)
 		{
