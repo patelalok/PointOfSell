@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sun.imageio.plugins.jpeg.JPEG.vendor;
-
 /**
  * Created by asp5045 on 5/24/16.
  */
@@ -156,7 +154,7 @@ public class ProductManager
 
             TransactionLineItemDto productHistory = new TransactionLineItemDto();
 
-            productHistory.setDate(rs.getString("DATE"));
+            productHistory.setTransactionDate(rs.getString("DATE"));
             productHistory.setProductId(rs.getInt("PRODUCT_ID"));
             productHistory.setProductNumber(rs.getString("PRODUCT_NO"));
             productHistory.setProductDescription(rs.getString("DESCRIPTION"));

@@ -18,6 +18,24 @@ public class YearlyDto {
     private double monthAvg;
     private double cost;
     private double retail;
+    private int noOfTrans;
+    private double avgBasketSize;
+
+    public double getAvgBasketSize() {
+        return avgBasketSize;
+    }
+
+    public void setAvgBasketSize(double avgBasketSize) {
+        this.avgBasketSize = avgBasketSize;
+    }
+
+    public int getNoOfTrans() {
+        return noOfTrans;
+    }
+
+    public void setNoOfTrans(int noOfTrans) {
+        this.noOfTrans = noOfTrans;
+    }
 
     public double getCost() {
         return cost;

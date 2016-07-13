@@ -154,7 +154,7 @@ public class SalesManager {
                     TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
 
                     ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
-                    ps.setString(2,transactionLineItemDto1.getDate());
+                    ps.setString(2,transactionLineItemDto1.getTransactionDate());
                     ps.setInt(3, transactionLineItemDto1.getProductId());
 
                     int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
@@ -224,7 +224,7 @@ public class SalesManager {
 
             lineItem.setTransactionLineItemId(rs.getInt("TRANSACTION_LINE_ITEM_ID"));
             lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-            lineItem.setDate(rs.getString("DATE"));
+            lineItem.setTransactionDate(rs.getString("DATE"));
             lineItem.setProductId(rs.getInt("PRODUCT_ID"));
             lineItem.setProductDescription(jdbcTemplate.queryForObject(sqlQuery.getProductDescription, new Object[]{lineItem.getProductId()}, String.class));
             lineItem.setQuantity(rs.getInt("QUANTITY"));

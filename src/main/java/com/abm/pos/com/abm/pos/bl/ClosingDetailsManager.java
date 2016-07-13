@@ -140,6 +140,7 @@ public class ClosingDetailsManager {
             yearlyDto.setCost(rs.getDouble("COST"));
             yearlyDto.setRetail(rs.getDouble("RETAIL"));
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
+            yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
 
 
 

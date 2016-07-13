@@ -13,7 +13,7 @@ public class TransactionLineItemDto {
     private double retail;
     private double cost;
     private double discount;
-    private String date;
+    private String transactionDate;
     private String ProductDescription;
     private String  productCount;
     private double retailWithDis;
@@ -66,12 +66,12 @@ public class TransactionLineItemDto {
         ProductDescription = productDescription;
     }
 
-    public String getDate() {
-        return date;
+    public String getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTransactionDate(String transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     public int getTransactionCompId() {
