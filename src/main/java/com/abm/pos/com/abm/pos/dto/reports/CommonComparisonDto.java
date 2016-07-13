@@ -3,7 +3,7 @@ package com.abm.pos.com.abm.pos.dto.reports;
 /**
  * Created by asp5045 on 7/4/16.
  */
-public class CatogoryComparisonDto {
+public class CommonComparisonDto {
 
     private String commanName;
     private int quantity;

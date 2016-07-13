@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
-import com.abm.pos.com.abm.pos.dto.reports.CatogoryComparisonDto;
+import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,65 +81,79 @@ public class ReportManager {
         }
     }
 
-    public List<CatogoryComparisonDto> getSalesByCategory(String startDate, String endDate) {
+    public List<CommonComparisonDto> getSalesByCategory(String startDate, String endDate) {
 
-        List<CatogoryComparisonDto> catogoryComparisonDtos = new ArrayList<>();
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
 
         try
         {
-            catogoryComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, new SalesCategoryManager(), startDate, endDate);
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, new SalesCategoryManager(), startDate, endDate);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        return catogoryComparisonDtos;
+        return commonComparisonDtos;
 
     }
 
-    public List<CatogoryComparisonDto> getSalesByVendor(String startDate, String endDate) {
-        List<CatogoryComparisonDto> catogoryComparisonDtos = new ArrayList<>();
+    public List<CommonComparisonDto> getSalesByVendor(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
 
         try
         {
-            catogoryComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesVendorDetails, new SalesCategoryManager(), startDate, endDate);
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesVendorDetails, new SalesCategoryManager(), startDate, endDate);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        return catogoryComparisonDtos;
+        return commonComparisonDtos;
     }
 
-    public List<CatogoryComparisonDto> getSalesByBrand(String startDate, String endDate) {
-        List<CatogoryComparisonDto> catogoryComparisonDtos = new ArrayList<>();
+    public List<CommonComparisonDto> getSalesByBrand(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
 
         try
         {
-            catogoryComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesBrandDetails, new SalesCategoryManager(), startDate, endDate);
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesBrandDetails, new SalesCategoryManager(), startDate, endDate);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        return catogoryComparisonDtos;
+        return commonComparisonDtos;
+    }
+
+    public List<CommonComparisonDto> getSalesByProduct(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesProductDetails, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
     }
 
 
-    private final class SalesCategoryManager implements RowMapper<CatogoryComparisonDto>
+    private final class SalesCategoryManager implements RowMapper<CommonComparisonDto>
     {
         @Override
-        public CatogoryComparisonDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public CommonComparisonDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            CatogoryComparisonDto catogoryComparisonDto = new CatogoryComparisonDto();
+            CommonComparisonDto commonComparisonDto = new CommonComparisonDto();
 
-            catogoryComparisonDto.setCommanName(rs.getString("COMMON_NAME"));
-            catogoryComparisonDto.setCostPrice(rs.getDouble("COST"));
-            catogoryComparisonDto.setRetailPrice(rs.getDouble("RETAIL"));
-            catogoryComparisonDto.setQuantity(rs.getInt("QUANTITY"));
-            catogoryComparisonDto.setProfitAmount(rs.getDouble("PROFIT"));
+            commonComparisonDto.setCommanName(rs.getString("COMMON_NAME"));
+            commonComparisonDto.setCostPrice(rs.getDouble("COST"));
+            commonComparisonDto.setRetailPrice(rs.getDouble("RETAIL"));
+            commonComparisonDto.setQuantity(rs.getInt("QUANTITY"));
+            commonComparisonDto.setProfitAmount(rs.getDouble("PROFIT"));
 
-            return catogoryComparisonDto;
+            return commonComparisonDto;
         }
     }
 

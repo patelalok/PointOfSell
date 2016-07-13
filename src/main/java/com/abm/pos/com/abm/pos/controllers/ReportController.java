@@ -1,7 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ReportManager;
-import com.abm.pos.com.abm.pos.dto.reports.CatogoryComparisonDto;
+import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,21 +31,27 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/getSalesByCategory",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CatogoryComparisonDto> getSalesByCategory(@RequestParam String startDate, String endDate)
+    public List<CommonComparisonDto> getSalesByCategory(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByCategory(startDate,endDate);
     }
 
     @RequestMapping(value = "/getSalesByVendor",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CatogoryComparisonDto> getSalesByVendor(@RequestParam String startDate, String endDate)
+    public List<CommonComparisonDto> getSalesByVendor(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByVendor(startDate,endDate);
     }
 
     @RequestMapping(value = "/getSalesByBrand",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CatogoryComparisonDto> getSalesByBrand(@RequestParam String startDate, String endDate)
+    public List<CommonComparisonDto> getSalesByBrand(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByBrand(startDate,endDate);
+    }
+
+    @RequestMapping(value = "/getSalesByProduct",method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CommonComparisonDto> getSalesByProduct(@RequestParam String startDate, String endDate)
+    {
+        return reportManager.getSalesByProduct(startDate,endDate);
     }
 
 
