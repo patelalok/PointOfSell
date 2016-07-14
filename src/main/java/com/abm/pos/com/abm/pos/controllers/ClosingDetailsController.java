@@ -26,7 +26,7 @@ public class ClosingDetailsController {
     }
 
 
-    @RequestMapping(value = "/getClosingDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getClosingDetails", method = RequestMethod.GET, produces = "application/json")
     public List<ClosingDetailsDto> getClosingDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
         return addClosingDetailsManager.getClosingDetailsToDB(startDate,endDate);

@@ -63,13 +63,43 @@ public class ClosingDetailsManager {
         List<ClosingDetailsDto> closingDetails = new ArrayList<>();
 
         try {
-            closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetails, new ClosingMapper(), startDate,endDate);
+            closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate,endDate);
         } catch (Exception e) {
             System.out.println(e);
         }
 
         return closingDetails;
     }
+
+    private final class ClosingMapper implements RowMapper<ClosingDetailsDto> {
+
+        @Override
+        public ClosingDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            ClosingDetailsDto closingDto = new ClosingDetailsDto();
+
+           // closingDto.setUserIdClose(rs.getInt("USER_ID_CLOSE"));
+            closingDto.setReportCash(rs.getDouble("CASH"));
+            closingDto.setReportCredit(rs.getDouble("CREDIT"));
+            closingDto.setReportCheck(rs.getDouble("CHECKAMOUNT"));
+            closingDto.setReportTotalAmount(rs.getDouble("TOTAL"));
+            /*closingDto.setCloseCash(rs.getDouble("CLOSE_CASH"));
+            closingDto.setCloseCredit(rs.getDouble("CLOSE_CREDIT"));
+            closingDto.setCloseDate(rs.getString("CLOSE_DATE"));
+            closingDto.setCloseTotalAmount(rs.getDouble("CLOSE_TOTAL_AMOUNT"));
+            closingDto.setDifferenceCredit(rs.getDouble("CREDIT_DIFFERENCE"));
+            closingDto.setDifferenceCash(rs.getDouble("CASH_DIFFERENCE"));
+            closingDto.setTotalDifference(rs.getDouble("TOTAL_DIFFERENCE"));
+            closingDto.setTotalBusinessAmount(rs.getDouble("TOTAL_BUSINESS_AMOUNT"));
+            closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
+            closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
+            closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
+            closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));*/
+
+            return closingDto;
+        }
+    }
+
 
     public List<HourlyTransactionDto> getHourlyTransactionDetails(String startDate, String endDate) {
 
@@ -125,9 +155,18 @@ public class ClosingDetailsManager {
     }
 
     private final class YearlyMapper implements RowMapper<YearlyDto> {
+        double totalCredit;
+        double totalCash;
+        double totalCheck;
+        double totalTax;
+        double totalDiscount;
+        double grandTotal;
+        double totalProfit;
 
         @Override
         public YearlyDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
 
             YearlyDto yearlyDto = new YearlyDto();
             yearlyDto.setMonthName(rs.getString("NameOfMonth"));
@@ -142,6 +181,24 @@ public class ClosingDetailsManager {
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
             yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
 
+            totalCredit = totalCredit + yearlyDto.getCredit();
+            totalCash = totalCash + yearlyDto.getCash();
+            totalCheck = totalCheck + yearlyDto.getCheck();
+            totalTax = totalTax + yearlyDto.getTax();
+            totalDiscount = totalDiscount + yearlyDto.getDiscount();
+            grandTotal = grandTotal + yearlyDto.getTotal();
+            totalProfit = totalProfit + yearlyDto.getProfit();
+
+            forReportsDto.setTotalCredit(totalCredit);
+            forReportsDto.setTotalCash(totalCash);
+            forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalTax(totalTax);
+            forReportsDto.setTotalDiscount(totalDiscount);
+            forReportsDto.setGrandTotal(grandTotal);
+            forReportsDto.setTotalProfit(totalProfit);
+
+            yearlyDto.setFinalTotalForReportsDtos(forReportsDto);
+
 
 
 
@@ -155,34 +212,6 @@ public class ClosingDetailsManager {
 
 
 
-    private final class ClosingMapper implements RowMapper<ClosingDetailsDto> {
-
-        @Override
-        public ClosingDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-            ClosingDetailsDto closingDto = new ClosingDetailsDto();
-
-            closingDto.setUserIdClose(rs.getInt("USER_ID_CLOSE"));
-            closingDto.setReportCash(rs.getDouble("REPORT_CASH"));
-            closingDto.setReportCredit(rs.getDouble("REPORT_CREDIT"));
-            closingDto.setReportCheck(rs.getDouble("REPORT_CHECK"));
-            closingDto.setReportTotalAmount(rs.getDouble("REPORT_TOTAL_AMOUNT"));
-            closingDto.setCloseCash(rs.getDouble("CLOSE_CASH"));
-            closingDto.setCloseCredit(rs.getDouble("CLOSE_CREDIT"));
-            closingDto.setCloseDate(rs.getString("CLOSE_DATE"));
-            closingDto.setCloseTotalAmount(rs.getDouble("CLOSE_TOTAL_AMOUNT"));
-            closingDto.setDifferenceCredit(rs.getDouble("CREDIT_DIFFERENCE"));
-            closingDto.setDifferenceCash(rs.getDouble("CASH_DIFFERENCE"));
-            closingDto.setTotalDifference(rs.getDouble("TOTAL_DIFFERENCE"));
-            closingDto.setTotalBusinessAmount(rs.getDouble("TOTAL_BUSINESS_AMOUNT"));
-            closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
-            closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
-            closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
-            closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));
-
-            return closingDto;
-        }
-    }
 
 
     public List<MonthDto> getMonthlyTransactionDetails(String startDate, String endDate) {

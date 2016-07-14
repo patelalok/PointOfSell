@@ -1,5 +1,9 @@
 package com.abm.pos.com.abm.pos.dto.reports;
 
+import com.abm.pos.com.abm.pos.dto.FinalTotalForReportsDto;
+
+import java.util.List;
+
 /**
  * Created by asp5045 on 7/10/16.
  */
@@ -20,6 +24,16 @@ public class YearlyDto {
     private double retail;
     private int noOfTrans;
     private double avgBasketSize;
+
+    private FinalTotalForReportsDto finalTotalForReportsDtos;
+
+    public FinalTotalForReportsDto getFinalTotalForReportsDtos() {
+        return finalTotalForReportsDtos;
+    }
+
+    public void setFinalTotalForReportsDtos(FinalTotalForReportsDto finalTotalForReportsDtos) {
+        this.finalTotalForReportsDtos = finalTotalForReportsDtos;
+    }
 
     public double getAvgBasketSize() {
         return avgBasketSize;

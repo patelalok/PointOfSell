@@ -28,7 +28,7 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/getUserDetails", method = RequestMethod.GET, consumes = "application/json")
+    @RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
     public boolean getUserDetails(@RequestParam String username, @RequestParam String password) {
 
         return userManager.getUserDetails(username,password);
