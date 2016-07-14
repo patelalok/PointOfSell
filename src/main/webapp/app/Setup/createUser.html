@@ -1,0 +1,60 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" data-ng-click="closeCreateUser()">&times;</button>
+		<h4 class="modal-title" style="font-size:30px;">New User</h4>
+	</div>
+
+<div class="modal-body" style="padding:0px;">
+
+	<div class="row" style="padding:30px;">
+
+
+	<div class="col-md-12" style="padding-top:20px;">
+		<div class="row">
+				<div class="col-md-12">
+                        <label for="Website" class="padding-bottom-5 font-weight-label">UserName</label>
+                        <input type="text" class="form-control" name="userName" id="userName" data-ng-model="userName"
+                        autocomplete="off" autofocus  style="width:100%;height:50px;" />
+				</div>
+		</div>
+		<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="newPassword" class="padding-bottom-5 font-weight-label">New Password</label>
+                        <input type="password" class="form-control" name="newPassword" id="newPassword" data-ng-model="newPassword"
+                        autocomplete="off"  style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="newRePassword" class="padding-bottom-5 font-weight-label">Re-Enter New Password</label>
+                        <input type="text" class="form-control" name="newRePassword" id="newRePassword" data-ng-model="newRePassword"
+                        autocomplete="off"  style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+                        <label for="firstName" class="padding-bottom-5 font-weight-label">First Name</label>
+                        <input type="password" class="form-control" name="firstName" id="firstName" data-ng-model="firstName"
+                        autocomplete="off"  style="width:100%;height:50px;" />
+				</div>
+				<div class="col-md-6">
+                        <label for="lastName" class="padding-bottom-5 font-weight-label">Last Name</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName" data-ng-model="lastName"
+                        autocomplete="off"  style="width:100%;height:50px;" />
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-12">
+                        <label for="email" class="padding-bottom-5 font-weight-label">Email</label>
+                        <input type="text" class="form-control" name="email" id="email" data-ng-model="email"
+                        autocomplete="off" autofocus  style="width:100%;height:50px;" />
+				</div>
+		</div>
+	</div>
+
+</div>
+</div>
+<div class="modal-footer">
+	 <div class="row alignCenter">
+	 	<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createUser()">Create User</button>
+ 	</div>	
+	</div>
+</div>
