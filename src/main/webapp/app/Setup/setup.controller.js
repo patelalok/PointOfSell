@@ -14,7 +14,13 @@
 		};
 		$scope.addUser = function()
 		{
-			$scope.showAddUser = true;
+			var _tmPath = 'app/Setup/createUser.html';
+			var _ctrlPath = 'CreateUserController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCreateUser);
+			
+		};
+		$scope.callBackCreateUser = function()
+		{
 			
 		};
 		$scope.createUser = function()

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$scope','$sce','$window', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
+	paymentPopupController.$inject = [ '$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
 
-	function paymentPopupController($scope,$sce,$window, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
+	function paymentPopupController($scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
 	{
 		$scope.color= false;
 		$scope.paidAmountCash =0;
@@ -84,13 +84,13 @@
 				"status":"completed",
 			"paidAmountCash":$scope.paidAmountCash,
 			"changeAmount":$scope.changeAmount,
-			"creditId":$scope.creditIdMulty,
-			"paidAmountCredit":$scope.paidAmountCredit,
-		"transactionCompId":GlobalVariable.transactionCompletedId,
-		"subTotal":GlobalVariable.totalSub,
-		"totalQuantity":GlobalVariable.quantityTotal,
-		"transCreditId":$scope.transId,
-		"last4Digits":$scope.last4
+				"creditId":$scope.creditIdMulty,
+				"paidAmountCredit":$scope.paidAmountCredit,
+			"transactionCompId":GlobalVariable.transactionCompletedId,
+			"subTotal":GlobalVariable.totalSub,
+			"totalQuantity":GlobalVariable.quantityTotal,
+			"transCreditId":GlobalVariable.transId,
+			"last4Digits":GlobalVariable.last4
 
 			};
 			request = JSON.stringify(request);
@@ -135,12 +135,14 @@
 			var msg= 'Print Receipt or Cancel';
 			msg=$sce.trustAsHtml(msg);	
 			modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Print'}, msg, $scope.callBackCheckoutComplete);
+				
 			
 			$rootScope.totalPayment = '0.00';
 			$rootScope.customerName = '';
 		};
 		$scope.callBackCheckoutComplete = function()
 		{
+			DialogFactory.close(true);
 			$window.print();
 		};
 		function addTransactionLineItemErrorHandler(response)
@@ -167,11 +169,10 @@
 				$scope.creditcardPayout = GlobalVariable.checkOuttotal;
 				$scope.debitcardPayout = GlobalVariable.checkOuttotal;
 				$scope.cashPayout = GlobalVariable.checkOuttotal;
-			
-			
+				DialogFactory.close(true);
 				if(value == 'credit')
 				{
-					var msg='<div class="row padding-top-15">'+
+					/*var msg='<div class="row padding-top-15">'+
 					'<div class="col-md-6">'+
                 '<label for="transId" class="padding-bottom-5 font-weight-label">Trans ID</label>'+
                 '<input type="text" class="form-control" name="transId" id="transId" data-ng-model="transId"'+
@@ -184,7 +185,10 @@
 		'</div>'+
 	'</div>'; 
 				msg=$sce.trustAsHtml(msg);	
-				modalService.showModal('', '', msg, $scope.callBackCheckoutCredit);
+				modalService.showModal('', '', msg, $scope.callBackCheckoutCredit);*/
+				var _tmPath = 'app/sell/addlastfour.html';
+				var _ctrlPath = 'addLastFourController';
+				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckoutCredit);
 				}	
 				else
 				{
@@ -193,8 +197,15 @@
 					modalService.showModal('', '', msg, $scope.callBackCheckout);
 						$scope.color = true;
 				}	
+				
+			/*var msg= 'Your total balance <span style="color:red;font-size:30px;">is1</span> '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
+			msg=$sce.trustAsHtml(msg);	
+			modalService.showModal('', '', msg, $scope.callBackCheckout);
+				$scope.color = true;*/
+				
 
 		};
+		
 		$scope.callBackCheckoutCredit = function()
 		{
 			console.log($scope.last4+""+$scope.transId);
@@ -203,6 +214,7 @@
 			modalService.showModal('', '', msg, $scope.callBackCheckout);
 				$scope.color = true;
 		};
+		
 		$scope.calculateAmount = function(value,means)
 		{
 			if(value == "")
