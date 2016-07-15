@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
+import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -137,14 +138,20 @@ public class ClosingDetailsManager {
 
 
 
-    public List<YearlyDto> getYearlyTransactionDetails(String startDate, String endDate) {
+    public List<YearlyListDto> getYearlyTransactionDetails(String startDate, String endDate) {
 
-        List<YearlyDto> yearOfMonth = new ArrayList<>();
+        List<YearlyListDto> yearOfMonth = new ArrayList<>();
+
+        List<YearlyDto> yearlyDtos = new ArrayList<>();
+
+        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
+
+
+
 
         try
         {
             yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, new YearlyMapper(), startDate,endDate);
-
         }
         catch (Exception e)
         {
@@ -154,7 +161,8 @@ public class ClosingDetailsManager {
         return yearOfMonth;
     }
 
-    private final class YearlyMapper implements RowMapper<YearlyDto> {
+    private final class YearlyMapper implements RowMapper<YearlyListDto> {
+
         double totalCredit;
         double totalCash;
         double totalCheck;
@@ -164,11 +172,20 @@ public class ClosingDetailsManager {
         double totalProfit;
 
         @Override
-        public YearlyDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public YearlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
 
             YearlyDto yearlyDto = new YearlyDto();
+
+            YearlyListDto yearlyListDto = new YearlyListDto();
+
+            List<YearlyDto> yearlyDtos = new ArrayList<>();
+
+            List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
+
+
+
             yearlyDto.setMonthName(rs.getString("NameOfMonth"));
             yearlyDto.setCredit(rs.getDouble("CREDIT"));
             yearlyDto.setCash(rs.getDouble("CASH"));
@@ -181,6 +198,14 @@ public class ClosingDetailsManager {
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
             yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
 
+            yearlyDtos.add(yearlyDto);
+
+            yearlyListDto.setYearlyListDtos(yearlyDtos);
+
+
+
+
+
             totalCredit = totalCredit + yearlyDto.getCredit();
             totalCash = totalCash + yearlyDto.getCash();
             totalCheck = totalCheck + yearlyDto.getCheck();
@@ -189,20 +214,26 @@ public class ClosingDetailsManager {
             grandTotal = grandTotal + yearlyDto.getTotal();
             totalProfit = totalProfit + yearlyDto.getProfit();
 
-            forReportsDto.setTotalCredit(totalCredit);
-            forReportsDto.setTotalCash(totalCash);
-            forReportsDto.setTotalCheck(totalCheck);
-            forReportsDto.setTotalTax(totalTax);
-            forReportsDto.setTotalDiscount(totalDiscount);
-            forReportsDto.setGrandTotal(grandTotal);
-            forReportsDto.setTotalProfit(totalProfit);
+            if(yearlyDto.getMonthName().equals("December")) {
 
-            yearlyDto.setFinalTotalForReportsDtos(forReportsDto);
+                forReportsDto.setTotalCredit(totalCredit);
+                forReportsDto.setTotalCash(totalCash);
+                forReportsDto.setTotalCheck(totalCheck);
+                forReportsDto.setTotalTax(totalTax);
+                forReportsDto.setTotalDiscount(totalDiscount);
+                forReportsDto.setGrandTotal(grandTotal);
+                forReportsDto.setTotalProfit(totalProfit);
+
+                finalTotalForReportsDtos.add(forReportsDto);
 
 
+                yearlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
 
 
-            return yearlyDto;
+            }
+
+
+            return yearlyListDto;
         }
     }
 

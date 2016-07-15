@@ -1,13 +1,10 @@
 package com.abm.pos.com.abm.pos.dto.reports;
 
-import com.abm.pos.com.abm.pos.dto.FinalTotalForReportsDto;
-
-import java.util.List;
-
 /**
- * Created by asp5045 on 7/10/16.
+ * Created by asp5045 on 7/14/16.
  */
 public class YearlyDto {
+
 
     private String monthName;
     private double credit;
@@ -25,16 +22,6 @@ public class YearlyDto {
     private int noOfTrans;
     private double avgBasketSize;
 
-    private FinalTotalForReportsDto finalTotalForReportsDtos;
-
-    public FinalTotalForReportsDto getFinalTotalForReportsDtos() {
-        return finalTotalForReportsDtos;
-    }
-
-    public void setFinalTotalForReportsDtos(FinalTotalForReportsDto finalTotalForReportsDtos) {
-        this.finalTotalForReportsDtos = finalTotalForReportsDtos;
-    }
-
     public double getAvgBasketSize() {
         return avgBasketSize;
     }
@@ -42,33 +29,6 @@ public class YearlyDto {
     public void setAvgBasketSize(double avgBasketSize) {
         this.avgBasketSize = avgBasketSize;
     }
-
-    public int getNoOfTrans() {
-        return noOfTrans;
-    }
-
-    public void setNoOfTrans(int noOfTrans) {
-        this.noOfTrans = noOfTrans;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public double getRetail() {
-        return retail;
-    }
-
-    public void setRetail(double retail) {
-        this.retail = retail;
-    }
-
-
-
 
     public double getCash() {
         return cash;
@@ -84,6 +44,14 @@ public class YearlyDto {
 
     public void setCheck(double check) {
         this.check = check;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     public double getCredit() {
@@ -126,12 +94,28 @@ public class YearlyDto {
         this.monthName = monthName;
     }
 
+    public int getNoOfTrans() {
+        return noOfTrans;
+    }
+
+    public void setNoOfTrans(int noOfTrans) {
+        this.noOfTrans = noOfTrans;
+    }
+
     public double getProfit() {
         return profit;
     }
 
     public void setProfit(double profit) {
         this.profit = profit;
+    }
+
+    public double getRetail() {
+        return retail;
+    }
+
+    public void setRetail(double retail) {
+        this.retail = retail;
     }
 
     public double getReturnAmount() {
@@ -157,7 +141,5 @@ public class YearlyDto {
     public void setTotal(double total) {
         this.total = total;
     }
-
-
 
 }
