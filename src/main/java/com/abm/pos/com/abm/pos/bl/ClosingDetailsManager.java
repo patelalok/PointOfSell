@@ -170,6 +170,7 @@ public class ClosingDetailsManager {
         double totalDiscount;
         double grandTotal;
         double totalProfit;
+        int noOfTrans;
 
         @Override
         public YearlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -213,8 +214,9 @@ public class ClosingDetailsManager {
             totalDiscount = totalDiscount + yearlyDto.getDiscount();
             grandTotal = grandTotal + yearlyDto.getTotal();
             totalProfit = totalProfit + yearlyDto.getProfit();
+            noOfTrans = noOfTrans + yearlyDto.getNoOfTrans();
 
-            if(yearlyDto.getMonthName().equals("December")) {
+            if(yearlyDto.getMonthName().equals("November")) {
 
                 forReportsDto.setTotalCredit(totalCredit);
                 forReportsDto.setTotalCash(totalCash);
@@ -223,6 +225,8 @@ public class ClosingDetailsManager {
                 forReportsDto.setTotalDiscount(totalDiscount);
                 forReportsDto.setGrandTotal(grandTotal);
                 forReportsDto.setTotalProfit(totalProfit);
+                forReportsDto.setNoOfTrans(noOfTrans);
+                forReportsDto.setAvgBasketSize(12.99);
 
                 finalTotalForReportsDtos.add(forReportsDto);
 
@@ -230,7 +234,7 @@ public class ClosingDetailsManager {
                 yearlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
 
 
-            }
+           }
 
 
             return yearlyListDto;
