@@ -72,60 +72,111 @@
 		function getReportsMonthlyPrevSuccessHandler(response)
 		{
 			$scope.monthlyPrevResponse = response;
-			if($scope.monthlyPrevResponse == [] || $scope.monthlyPrevResponse.length ==0)
+			if($scope.monthlyPrevResponse.yearlyListDtos == null)
 			{
+				$scope.monthlyPrevResponse = {
+											"finalTotalForReportsDtos": [{
+												"totalCredit": 0,
+												"totalCash": 0,
+												"totalCheck": 0,
+												"totalTax": 0,
+												"totalDiscount": 0,
+												"grandTotal": 0,
+												"totalProfit": 0,
+												"totalReturn": 0.0,
+												"avgMargin": 0.0,
+												"noOfTrans": 0,
+												"avgBasketSize": 0
+											}],
+											"yearlyListDtos":[]
+										};
 				for(var i=0;i<12;i++)
 				{
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].total;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].credit;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].cash;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].tax;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].discount;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].profit;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].noOfTrans;
-					$scope.monthlyPrevResponse[i].yearlyListDtos[0].avgBasketSize;
+					$scope.monthlyPrevResponse.yearlyListDtos.push({
+							"total":0,
+							"credit":0,
+							"cash":0,
+							"tax":0,
+							"discount":0,
+							"profit":0,
+							"noOfTrans":0,
+							"avgBasketSize":0
+					});
 				}
-			}	
+			}
+
+			if($scope.monthlyResponse.yearlyListDtos == null)
+			{
+				$cope.monthlyResponse = {
+					"finalTotalForReportsDtos": [{
+						"totalCredit": 0,
+						"totalCash": 0,
+						"totalCheck": 0,
+						"totalTax": 0,
+						"totalDiscount": 0,
+						"grandTotal": 0,
+						"totalProfit": 0,
+						"totalReturn": 0.0,
+						"avgMargin": 0.0,
+						"noOfTrans": 0,
+						"avgBasketSize": 0
+					}],
+					"yearlyListDtos":[]
+				};
+				for(var i=0;i<12;i++)
+				{
+					$scope.monthlyResponse.yearlyListDtos.push({
+						"total":0,
+						"credit":0,
+						"cash":0,
+						"tax":0,
+						"discount":0,
+						"profit":0,
+						"noOfTrans":0,
+						"avgBasketSize":0
+					});
+				}
+			}
 			
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.revData.push($scope.monthlyResponse[i].yearlyListDtos[0].total);
-				$scope.prevRevData.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].total);
+				$scope.revData.push($scope.monthlyResponse.yearlyListDtos[i].total);
+				$scope.prevRevData.push($scope.monthlyPrevResponse.yearlyListDtos[i].total);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.cData.push($scope.monthlyResponse[i].yearlyListDtos[0].cash);
-				$scope.cDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].cash);
+				$scope.cData.push($scope.monthlyResponse.yearlyListDtos[i].cash);
+				$scope.cDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].cash);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.crData.push($scope.monthlyResponse[i].yearlyListDtos[0].credit);
-				$scope.crDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].credit);
+				$scope.crData.push($scope.monthlyResponse.yearlyListDtos[i].credit);
+				$scope.crDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].credit);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.pData.push($scope.monthlyResponse[i].yearlyListDtos[0].profit);
-				$scope.pDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].profit);
+				$scope.pData.push($scope.monthlyResponse.yearlyListDtos[i].profit);
+				$scope.pDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].profit);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.taxData1.push($scope.monthlyResponse[i].yearlyListDtos[0].tax);
-				$scope.taxDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].tax);
+				$scope.taxData1.push($scope.monthlyResponse.yearlyListDtos[i].tax);
+				$scope.taxDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].tax);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.discData1.push($scope.monthlyResponse[i].yearlyListDtos[0].discount);
-				$scope.discDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].discount);
+				$scope.discData1.push($scope.monthlyResponse.yearlyListDtos[i].discount);
+				$scope.discDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].discount);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.nData.push($scope.monthlyResponse[i].yearlyListDtos[0].noOfTrans);
-				$scope.nDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].noOfTrans);
+				$scope.nData.push($scope.monthlyResponse.yearlyListDtos[i].noOfTrans);
+				$scope.nDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].noOfTrans);
 			}
-			for(var i=0;i<12;i++)
+			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.nvgData.push($scope.monthlyResponse[i].yearlyListDtos[0].avgBasketSize);
-				$scope.nvgDataPrev.push($scope.monthlyPrevResponse[i].yearlyListDtos[0].avgBasketSize);
+				$scope.nvgData.push($scope.monthlyResponse.yearlyListDtos[i].avgBasketSize);
+				$scope.nvgDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].avgBasketSize);
 			}	
 			
 			$scope.totalRevenueData.push($scope.revData);$scope.totalRevenueData.push($scope.prevRevData);
@@ -147,7 +198,6 @@
 		{
 			
 			$scope.monthlyResponse = response;
-			$scope.monthlyResponse = GlobalVariable.reportResponse;
 			var urlPreviuos = "http://localhost:8080/getYearlyTransactionDetails?startDate="+$scope.previousStartDate+"&endDate="+$scope.previousEndDate;
 			dataService.Get(urlPreviuos,getReportsMonthlyPrevSuccessHandler,getReportsMonthlyPrevErrorHandler,'application/json','application/json');
 			
