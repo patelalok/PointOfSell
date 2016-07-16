@@ -15,7 +15,7 @@
 		{
 			var url ='http://localhost:8080/getProductHistory?productId='+GlobalVariable.productIdHistory;
 			dataService.Get(url,getProductHistorySuccessHandler,getProductHistroyErrorHandler,"application/json","application/json");
-			getProductHistorySuccessHandler('');
+			
 		}
 		function getProductHistorySuccessHandler(response)
 		{

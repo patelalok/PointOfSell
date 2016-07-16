@@ -7,7 +7,6 @@
 
 	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state) 
 	{
-
 		$scope.restrictCharacter=restrictCharacter;	
 		$scope.closePopup = function()
 		{ 
@@ -27,7 +26,7 @@
 		{
 			var url ='http://localhost:8080/getSalesHistory?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
-			//getSalesHistorySuccessHandler('');
+			
 			
 		}
 		$scope.onDateSelected = function(startDate, endDate, label, element) {
@@ -53,35 +52,7 @@
 		
 		function getSalesHistorySuccessHandler(response)
 		{
-			$scope.salesHistory =  response;
-			/*[
-			                       {
-			                    	    "transactionId": 13,
-			                    	    "transactionDate": "1000-01-01 00:00:00.0",
-			                    	    "totalAmount": 12,
-			                    	    "tax": 12.99,
-			                    	    "discount": 0,
-			                    	    "customerPhoneno": 1234,
-			                    	    "userId": 1,
-			                    	    "paymentId": 1,
-			                    	    "status": "completed",
-			                    	    "paidAmount": 0,
-			                    	    "changeAmount": 0
-			                    	  },
-			                    	  {
-				                    	    "transactionId": 14,
-				                    	    "transactionDate": "1000-01-01 00:00:00.0",
-				                    	    "totalAmount": 12,
-				                    	    "tax": 12.99,
-				                    	    "discount": 0,
-				                    	    "customerPhoneno": 123456789,
-				                    	    "userId": 1,
-				                    	    "paymentId": 1,
-				                    	    "status": "completed",
-				                    	    "paidAmount": 0,
-				                    	    "changeAmount": 0
-				                    	  }
-			                    	];*/
+			$scope.salesHistory = response;
 			GlobalVariable.histroyData = $scope.salesHistory;
 		}
 		function getSalesHistroyErrorHandler(response)
@@ -93,38 +64,13 @@
 			$scope.testPrint = "hi";
 			var url="http://localhost:8080/getReceiptDetails?receiptId="+id;
 			dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
-			//getPrintSuccessHandler('');
+			
 			
 		};
 		function getPrintSuccessHandler(response)
 		{
-			GlobalVariable.receiptData = response;
-			/*[
-			                      {
-			                    	    "transactionCompId": 96,
-			                    	    "transactionDate": "2016-06-17 22:22:14.0",
-			                    	    "totalAmount": 12.99,
-			                    	    "tax": 0,
-			                    	    "transactionDiscount": 0,
-			                    	    "customerPhoneNo": "7707030801",
-			                    	    "userId": 2,
-			                    	    "paymentId": 1,
-			                    	    "status": "completed",
-			                    	    "paidAmount": 100,
-			                    	    "changeAmount": 87.01,
-			                    	    "username": "Alok",
-			                    	    "paymentIdMulty": 0,
-			                    	    "paidAmountMulty": 0,
-			                    	    "transactionLineItemId": 0,
-			                    	    "productId": 4,
-			                    	    "quantity": 1,
-			                    	    "retail": 15.99,
-			                    	    "cost": 1.23,
-			                    	    "productDiscount": 0,
-			                    	    "paymentType": null,
-			                    	    "storeDetails": null
-			                    	  }
-			                    	];*/
+			GlobalVariable.receiptData =response;
+			
 			$timeout(function() {
 				$window.print();
 			}, 2000);
@@ -142,11 +88,13 @@
 			request = JSON.stringify(request);*/
 			var url="http://localhost:8080/getReceiptDetails?receiptId="+transactionCompId;
 			dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
+			
 
 		};
 		function getReturnsSuccessHandler(response)
 		{
 			GlobalVariable.getReturnDetails = response;
+			
 			GlobalVariable.returnProduct = true;
 			$state.go('sell');
 		}

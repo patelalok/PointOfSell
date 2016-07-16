@@ -95,7 +95,7 @@
 			};
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionSuccessHandler,addTransactionErrorHandler,"application/json","application/json");
-			//addTransactionSuccessHandler('');
+			
 		};
 		function addTransactionSuccessHandler(response)
 		{	
@@ -119,7 +119,7 @@
 			var url ="http://localhost:8080/addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
-			//addTransactionLineItemSuccessHandler('');
+			
 			
 		};
 		function addTransactionErrorHandler(response)
