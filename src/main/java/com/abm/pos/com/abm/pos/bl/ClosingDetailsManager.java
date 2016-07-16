@@ -434,9 +434,12 @@ public class ClosingDetailsManager {
 
         List<DailyTransactionDto> trans = new ArrayList<>();
 
-        try {
+        try
+        {
             trans = jdbcTemplate.query(sqlQueries.getDailyTransaction, new DailyTransactionMapper(), startDate, endDate);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.out.println(e);
         }
 

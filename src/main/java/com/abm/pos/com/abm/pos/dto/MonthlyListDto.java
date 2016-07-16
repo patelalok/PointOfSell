@@ -7,9 +7,9 @@ import java.util.List;
  */
 public class MonthlyListDto {
 
-
-    private List<MonthDto> monthDtos;
     private List<FinalTotalForReportsDto> finalTotalForReportsDtos;
+    private List<MonthDto> monthDtos;
+
 
     public List<FinalTotalForReportsDto> getFinalTotalForReportsDtos() {
         return finalTotalForReportsDtos;

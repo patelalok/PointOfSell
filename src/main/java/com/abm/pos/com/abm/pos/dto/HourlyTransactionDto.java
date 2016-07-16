@@ -6,51 +6,23 @@ package com.abm.pos.com.abm.pos.dto;
 public class HourlyTransactionDto {
 
 
+
     private int hour;
+    private double credit;
+    private double cash;
+    private double check;
+    private double tax;
+    private double discount;
+    private  double returnAmount;
+    private double profit;
+    private double marginPercentage;
+    private double total;
+    private double monthAvg;
     private double cost;
     private double retail;
-    private double avgRetail;
-    private int noOfTransactions;
+    private int noOfTrans;
 
 
-    public double getAvgRetail() {
-        return avgRetail;
-    }
 
-    public void setAvgRetail(double avgRetail) {
-        this.avgRetail = avgRetail;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getNoOfTransactions() {
-        return noOfTransactions;
-    }
-
-    public void setNoOfTransactions(int noOfTransactions) {
-        this.noOfTransactions = noOfTransactions;
-    }
-
-    public double getRetail() {
-        return retail;
-    }
-
-    public void setRetail(double retail) {
-        this.retail = retail;
-    }
 
 }
