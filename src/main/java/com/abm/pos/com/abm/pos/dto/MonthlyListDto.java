@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by asp5045 on 7/15/16.
  */
-public class MonthlyDto {
+public class MonthlyListDto {
 
 
     private List<MonthDto> monthDtos;
