@@ -123,11 +123,11 @@ public class ClosingDetailsManager {
 
             HourlyTransactionDto hourlyTransactionDto = new HourlyTransactionDto();
 
-            hourlyTransactionDto.setHour(rs.getInt("HOUR"));
+            /*hourlyTransactionDto.setHour(rs.getInt("HOUR"));
             hourlyTransactionDto.setCost(rs.getDouble("COST"));
             hourlyTransactionDto.setRetail(rs.getDouble("RETAIL"));
             hourlyTransactionDto.setAvgRetail(rs.getDouble("AVG_RETAIL"));
-            hourlyTransactionDto.setNoOfTransactions(rs.getInt("NOTRANS"));
+            hourlyTransactionDto.setNoOfTransactions(rs.getInt("NOTRANS"));*/
 
             return hourlyTransactionDto;
         }
@@ -141,9 +141,12 @@ public class ClosingDetailsManager {
         YearlyMapper yearlyMapper = new YearlyMapper();
 
 
-        try {
-            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper, startDate, endDate);
-        } catch (Exception e) {
+        try
+        {
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper);
+        }
+        catch (Exception e)
+        {
             System.out.println(e);
         }
 
@@ -164,9 +167,6 @@ public class ClosingDetailsManager {
         YearlyListDto yearlyListDto = new YearlyListDto();
 
         List<YearlyDto> yearlyDtos = new ArrayList<>();
-
-        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
-
 
         @Override
         public YearlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -204,7 +204,7 @@ public class ClosingDetailsManager {
             totalProfit = totalProfit + yearlyDto.getProfit();
             noOfTrans = noOfTrans + yearlyDto.getNoOfTrans();
 
-            if (!rs.next()) {
+
 
                 forReportsDto.setTotalCredit(totalCredit);
                 forReportsDto.setTotalCash(totalCash);
@@ -219,7 +219,7 @@ public class ClosingDetailsManager {
                 finalTotalForReportsDtos.add(forReportsDto);
 
                 yearlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
-            }
+
             return yearlyListDto;
         }
     }
