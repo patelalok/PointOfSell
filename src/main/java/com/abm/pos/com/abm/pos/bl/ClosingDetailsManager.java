@@ -138,27 +138,23 @@ public class ClosingDetailsManager {
 
 
 
-    public List<YearlyListDto> getYearlyTransactionDetails(String startDate, String endDate) {
+    public YearlyListDto getYearlyTransactionDetails(String startDate, String endDate) {
 
         List<YearlyListDto> yearOfMonth = new ArrayList<>();
 
-        List<YearlyDto> yearlyDtos = new ArrayList<>();
-
-        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
-
-
+        YearlyMapper yearlyMapper = new YearlyMapper();
 
 
         try
         {
-            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, new YearlyMapper(), startDate,endDate);
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper, startDate,endDate);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
 
-        return yearOfMonth;
+        return yearlyMapper.yearlyListDto;
     }
 
     private final class YearlyMapper implements RowMapper<YearlyListDto> {
@@ -172,16 +168,19 @@ public class ClosingDetailsManager {
         double totalProfit;
         int noOfTrans;
 
+       YearlyListDto yearlyListDto = new YearlyListDto();
+
+        List<YearlyDto> yearlyDtos = new ArrayList<>();
+
+        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
+
+
         @Override
         public YearlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
 
             YearlyDto yearlyDto = new YearlyDto();
-
-            YearlyListDto yearlyListDto = new YearlyListDto();
-
-            List<YearlyDto> yearlyDtos = new ArrayList<>();
 
             List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
 
@@ -249,14 +248,13 @@ public class ClosingDetailsManager {
 
 
 
-    public List<MonthDto> getMonthlyTransactionDetails(String startDate, String endDate) {
+    public MonthlyDto getMonthlyTransactionDetails(String startDate, String endDate) {
 
-
-        List<MonthDto> monthDtos = new ArrayList<>();
-
+        List<MonthlyDto> monthlyDtos = new ArrayList<>();
+        MonthlyDetailsMapper mapper = new MonthlyDetailsMapper();
         try
         {
-            monthDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, new MonthlyDetailsMapper(), startDate,endDate);
+            monthlyDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, mapper, startDate,endDate);
 
         }
         catch (Exception e)
@@ -264,13 +262,30 @@ public class ClosingDetailsManager {
                 System.out.println(e);
         }
 
-        return monthDtos;
+        return mapper.monthlyDto;
 
     }
-    private final class MonthlyDetailsMapper implements RowMapper<MonthDto> {
+    private final class MonthlyDetailsMapper implements RowMapper<MonthlyDto> {
+
+        double totalCredit;
+        double totalCash;
+        double totalCheck;
+        double totalTax;
+        double totalDiscount;
+        double grandTotal;
+        double totalProfit;
+        int noOfTrans;
+
+        MonthlyDto monthlyDto = new MonthlyDto();
+
+        List<MonthDto> monthDtoList = new ArrayList<>();
+
+        FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
+
+        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
 
         @Override
-        public MonthDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public MonthlyDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             MonthDto monthDto = new MonthDto();
 
@@ -283,8 +298,49 @@ public class ClosingDetailsManager {
             monthDto.setCost(rs.getDouble("COST"));
             monthDto.setRetail(rs.getDouble("RETAIL"));
             monthDto.setProfit(rs.getDouble("PROFIT"));
+            monthDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
 
-            return monthDto;
+            monthDtoList.add(monthDto);
+
+            monthlyDto.setMonthDtos(monthDtoList);
+
+            totalCredit = totalCredit + monthDto.getCredit();
+            totalCash = totalCash + monthDto.getCash();
+            totalCheck = totalCheck + monthDto.getCheck();
+            totalTax = totalTax + monthDto.getTax();
+            totalDiscount = totalDiscount + monthDto.getDiscount();
+            grandTotal = grandTotal +monthDto.getTotal();
+            totalProfit = totalProfit + monthDto.getProfit();
+            noOfTrans = noOfTrans + monthDto.getNoOfTrans();
+
+            //if(rs.getFetchSize()) {
+
+            //rs.
+
+            int a = rs.getFetchSize();
+
+            System.out.println("size"+ a);
+
+                forReportsDto.setTotalCredit(totalCredit);
+                forReportsDto.setTotalCash(totalCash);
+                forReportsDto.setTotalCheck(totalCheck);
+                forReportsDto.setTotalTax(totalTax);
+                forReportsDto.setTotalDiscount(totalDiscount);
+                forReportsDto.setGrandTotal(grandTotal);
+                forReportsDto.setTotalProfit(totalProfit);
+                forReportsDto.setNoOfTrans(noOfTrans);
+                forReportsDto.setAvgBasketSize(14.99);
+
+                finalTotalForReportsDtos.add(forReportsDto);
+
+                monthlyDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
+
+
+            //}
+
+
+
+            return monthlyDto;
 
         }
     }

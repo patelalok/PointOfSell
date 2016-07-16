@@ -27,21 +27,21 @@ public class PointOfSaleApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(PointOfSaleApplication.class, args);
 
-		Calendar cal = Calendar.getInstance();
+		/*Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2016);
 		cal.set(Calendar.MONTH, 6);
 		cal.set(Calendar.DAY_OF_MONTH, 28);
 		int start = cal.get(Calendar.WEEK_OF_MONTH);
-		System.out.println(start);
+		System.out.println(start);*/
 
-		Document document = new Document();
+		/*Document document = new Document();
 			try {
-				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("AddImageExample2.pdf"));
+				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/Users/asp5045/Downloads/AddImageExample2.pdf"));
 				document.open();
 				//document.add(new Paragraph("Image Example"));
 
 				//Add Image
-				Image image1 = Image.getInstance("out.png");
+				Image image1 = Image.getInstance("out1.png");
 				//Fixed Positioning
 				image1.setAbsolutePosition(10f, 770f);
 				//Scale to new height and new width of image
@@ -60,7 +60,7 @@ public class PointOfSaleApplication {
 				writer.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}*/
 
 
 		}

@@ -20,6 +20,15 @@ public class MonthDto {
     private double monthAvg;
     private double cost;
     private double retail;
+    private int noOfTrans;
+
+    public int getNoOfTrans() {
+        return noOfTrans;
+    }
+
+    public void setNoOfTrans(int noOfTrans) {
+        this.noOfTrans = noOfTrans;
+    }
 
     public double getCash() {
         return cash;

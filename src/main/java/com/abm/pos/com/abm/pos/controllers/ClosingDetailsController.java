@@ -65,13 +65,13 @@ public class ClosingDetailsController {
     }
 
     @RequestMapping(value = "/getMonthlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MonthDto> getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
+    public MonthlyDto getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
         return addClosingDetailsManager.getMonthlyTransactionDetails(startDate,endDate);
     }
 
     @RequestMapping(value = "/getYearlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<YearlyListDto> getYearlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
+    public YearlyListDto getYearlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
         return addClosingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
     }
