@@ -59,12 +59,12 @@ public class ClosingDetailsManager {
 
     //GET CLOSING DETAILS FROM DB WITH DATE
 
-    public List<ClosingDetailsDto> getClosingDetailsToDB(String startDate,String endDate) {
+    public List<ClosingDetailsDto> getClosingDetailsToDB(String startDate, String endDate) {
 
         List<ClosingDetailsDto> closingDetails = new ArrayList<>();
 
         try {
-            closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate,endDate);
+            closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -79,7 +79,7 @@ public class ClosingDetailsManager {
 
             ClosingDetailsDto closingDto = new ClosingDetailsDto();
 
-           // closingDto.setUserIdClose(rs.getInt("USER_ID_CLOSE"));
+            // closingDto.setUserIdClose(rs.getInt("USER_ID_CLOSE"));
             closingDto.setReportCash(rs.getDouble("CASH"));
             closingDto.setReportCredit(rs.getDouble("CREDIT"));
             closingDto.setReportCheck(rs.getDouble("CHECKAMOUNT"));
@@ -106,13 +106,10 @@ public class ClosingDetailsManager {
 
         List<HourlyTransactionDto> hourlyList = new ArrayList<>();
 
-        try
-        {
+        try {
             hourlyList = jdbcTemplate.query(sqlQueries.getHourlyTransactions, new HourlyMapper(), startDate, endDate);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return hourlyList;
@@ -137,7 +134,6 @@ public class ClosingDetailsManager {
     }
 
 
-
     public YearlyListDto getYearlyTransactionDetails(String startDate, String endDate) {
 
         List<YearlyListDto> yearOfMonth = new ArrayList<>();
@@ -145,12 +141,9 @@ public class ClosingDetailsManager {
         YearlyMapper yearlyMapper = new YearlyMapper();
 
 
-        try
-        {
-            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper, startDate,endDate);
-        }
-        catch (Exception e)
-        {
+        try {
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper, startDate, endDate);
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -168,7 +161,7 @@ public class ClosingDetailsManager {
         double totalProfit;
         int noOfTrans;
 
-       YearlyListDto yearlyListDto = new YearlyListDto();
+        YearlyListDto yearlyListDto = new YearlyListDto();
 
         List<YearlyDto> yearlyDtos = new ArrayList<>();
 
@@ -183,7 +176,6 @@ public class ClosingDetailsManager {
             YearlyDto yearlyDto = new YearlyDto();
 
             List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
-
 
 
             yearlyDto.setMonthName(rs.getString("NameOfMonth"));
@@ -203,9 +195,6 @@ public class ClosingDetailsManager {
             yearlyListDto.setYearlyListDtos(yearlyDtos);
 
 
-
-
-
             totalCredit = totalCredit + yearlyDto.getCredit();
             totalCash = totalCash + yearlyDto.getCash();
             totalCheck = totalCheck + yearlyDto.getCheck();
@@ -215,7 +204,7 @@ public class ClosingDetailsManager {
             totalProfit = totalProfit + yearlyDto.getProfit();
             noOfTrans = noOfTrans + yearlyDto.getNoOfTrans();
 
-            if(yearlyDto.getMonthName().equals("November")) {
+            if (!rs.next()) {
 
                 forReportsDto.setTotalCredit(totalCredit);
                 forReportsDto.setTotalCash(totalCash);
@@ -229,43 +218,28 @@ public class ClosingDetailsManager {
 
                 finalTotalForReportsDtos.add(forReportsDto);
 
-
                 yearlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
-
-
-           }
-
-
+            }
             return yearlyListDto;
         }
     }
 
+    public MonthlyListDto getMonthlyTransactionDetails(String startDate, String endDate) {
 
-
-
-
-
-
-
-
-    public MonthlyDto getMonthlyTransactionDetails(String startDate, String endDate) {
-
-        List<MonthlyDto> monthlyDtos = new ArrayList<>();
+        List<MonthlyListDto> monthlyListDtos = new ArrayList<>();
         MonthlyDetailsMapper mapper = new MonthlyDetailsMapper();
-        try
-        {
-            monthlyDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, mapper, startDate,endDate);
+        try {
+            monthlyListDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, mapper, startDate, endDate);
 
-        }
-        catch (Exception e)
-        {
-                System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
-        return mapper.monthlyDto;
+        return mapper.monthlyListDto;
 
     }
-    private final class MonthlyDetailsMapper implements RowMapper<MonthlyDto> {
+
+    private final class MonthlyDetailsMapper implements RowMapper<MonthlyListDto> {
 
         double totalCredit;
         double totalCash;
@@ -276,7 +250,7 @@ public class ClosingDetailsManager {
         double totalProfit;
         int noOfTrans;
 
-        MonthlyDto monthlyDto = new MonthlyDto();
+        MonthlyListDto monthlyListDto = new MonthlyListDto();
 
         List<MonthDto> monthDtoList = new ArrayList<>();
 
@@ -285,9 +259,14 @@ public class ClosingDetailsManager {
         List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
 
         @Override
-        public MonthlyDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public MonthlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+
+            FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
 
             MonthDto monthDto = new MonthDto();
+
+            List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
 
             monthDto.setDate(rs.getString("DATE"));
             monthDto.setCash(rs.getDouble("SUM_CASH"));
@@ -302,25 +281,18 @@ public class ClosingDetailsManager {
 
             monthDtoList.add(monthDto);
 
-            monthlyDto.setMonthDtos(monthDtoList);
+            monthlyListDto.setMonthDtos(monthDtoList);
 
             totalCredit = totalCredit + monthDto.getCredit();
             totalCash = totalCash + monthDto.getCash();
             totalCheck = totalCheck + monthDto.getCheck();
             totalTax = totalTax + monthDto.getTax();
             totalDiscount = totalDiscount + monthDto.getDiscount();
-            grandTotal = grandTotal +monthDto.getTotal();
+            grandTotal = grandTotal + monthDto.getTotal();
             totalProfit = totalProfit + monthDto.getProfit();
             noOfTrans = noOfTrans + monthDto.getNoOfTrans();
 
-            //if(rs.getFetchSize()) {
-
-            //rs.
-
-            int a = rs.getFetchSize();
-
-            System.out.println("size"+ a);
-
+            if (!rs.next()) {
                 forReportsDto.setTotalCredit(totalCredit);
                 forReportsDto.setTotalCash(totalCash);
                 forReportsDto.setTotalCheck(totalCheck);
@@ -333,18 +305,14 @@ public class ClosingDetailsManager {
 
                 finalTotalForReportsDtos.add(forReportsDto);
 
-                monthlyDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
+                monthlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
+            }
 
 
-            //}
-
-
-
-            return monthlyDto;
+            return monthlyListDto;
 
         }
     }
-
 
 
     public List<WeekDto> getWeeklyTransactionDetails(String startDate, String endDate) {
@@ -353,31 +321,31 @@ public class ClosingDetailsManager {
         List<WeekDto> weeks = new ArrayList<>();
 
 
-            WeekDto weekDto = new WeekDto();
+        WeekDto weekDto = new WeekDto();
 
-            weekDto.setCash1(12.99);
-            weekDto.setCash2(12.99);
-            weekDto.setCash3(12.99);
-            weekDto.setCash4(12.99);
-            weekDto.setCash5(12.99);
+        weekDto.setCash1(12.99);
+        weekDto.setCash2(12.99);
+        weekDto.setCash3(12.99);
+        weekDto.setCash4(12.99);
+        weekDto.setCash5(12.99);
 
-            weekDto.setCredit1(11.99);
-            weekDto.setCredit2(11.99);
-            weekDto.setCredit3(11.99);
-            weekDto.setCredit4(11.99);
-            weekDto.setCredit5(11.99);
+        weekDto.setCredit1(11.99);
+        weekDto.setCredit2(11.99);
+        weekDto.setCredit3(11.99);
+        weekDto.setCredit4(11.99);
+        weekDto.setCredit5(11.99);
 
-            weekDto.setTotal1(24.00);
-            weekDto.setTotal2(24.00);
-            weekDto.setTotal3(24.00);
-            weekDto.setTotal4(24.00);
-            weekDto.setTotal5(24.00);
+        weekDto.setTotal1(24.00);
+        weekDto.setTotal2(24.00);
+        weekDto.setTotal3(24.00);
+        weekDto.setTotal4(24.00);
+        weekDto.setTotal5(24.00);
 
-            weekDto.setWeekAvg(134.99);
+        weekDto.setWeekAvg(134.99);
 
-            weeks.add(0,weekDto);
+        weeks.add(0, weekDto);
 
-            //weeks = jdbcTemplate.query(sqlQueries.getWeeklyTransDetails, new WeeklyDetailsMapper(), startDate,endDate);
+        //weeks = jdbcTemplate.query(sqlQueries.getWeeklyTransDetails, new WeeklyDetailsMapper(), startDate,endDate);
 
         return weeks;
     }
@@ -403,8 +371,7 @@ public class ClosingDetailsManager {
 
     public void addPaidOut(PaidOutDto paidOutDto) {
 
-        try
-        {
+        try {
             jdbcTemplate.update(sqlQueries.addPaidOutDetails,
                     paidOutDto.getPaidOut1(),
                     paidOutDto.getPaidOut2(),
@@ -415,9 +382,7 @@ public class ClosingDetailsManager {
                     paidOutDto.getPaidOutDate());
 
             System.out.println("Paid Amount added successfully");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -426,18 +391,16 @@ public class ClosingDetailsManager {
 
         List<PaidOutDto> paidDto = new ArrayList<>();
 
-        try
-        {
-            paidDto = jdbcTemplate.query(sqlQueries.getPaidOutDetails, new PaidOutMapper(), startDate,endDate);
+        try {
+            paidDto = jdbcTemplate.query(sqlQueries.getPaidOutDetails, new PaidOutMapper(), startDate, endDate);
             System.out.println("Send Paid Amount added successfully");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
         return paidDto;
     }
+
     private final class PaidOutMapper implements RowMapper<PaidOutDto> {
 
         @Override
@@ -462,7 +425,7 @@ public class ClosingDetailsManager {
 // JUST MAPPER TO MAP RESPONSE FROM DB
 
 
-   // public
+    // public
 
 
 // GET DAILY TRANSACTION FROM DB
@@ -471,12 +434,9 @@ public class ClosingDetailsManager {
 
         List<DailyTransactionDto> trans = new ArrayList<>();
 
-        try
-        {
-            trans = jdbcTemplate.query(sqlQueries.getDailyTransaction, new DailyTransactionMapper(), startDate,endDate);
-        }
-        catch (Exception e)
-        {
+        try {
+            trans = jdbcTemplate.query(sqlQueries.getDailyTransaction, new DailyTransactionMapper(), startDate, endDate);
+        } catch (Exception e) {
             System.out.println(e);
         }
 

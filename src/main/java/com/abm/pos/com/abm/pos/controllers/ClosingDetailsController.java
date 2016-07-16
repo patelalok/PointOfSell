@@ -2,7 +2,6 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
 import com.abm.pos.com.abm.pos.dto.*;
-import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -65,7 +64,7 @@ public class ClosingDetailsController {
     }
 
     @RequestMapping(value = "/getMonthlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public MonthlyDto getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
+    public MonthlyListDto getMonthlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
         return addClosingDetailsManager.getMonthlyTransactionDetails(startDate,endDate);
     }
