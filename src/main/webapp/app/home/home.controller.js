@@ -11,6 +11,7 @@
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.totalRevenueData=[];
 		$scope.revData=[];
+		$scope.labels = [];
 		$scope.prevRevData=[];
 		$scope.cashData=[];
 		$scope.cData=[];$scope.cDataPrev=[];
@@ -54,7 +55,7 @@
 			
 			if($scope.dashboardDrop == 'monthWiseDash')
 			{
-				$scope.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July','Aug','Sept','Oct','Nov','Dec'];
+
 				url = "http://localhost:8080/getYearlyTransactionDetails?startDate="+currentStartDate+"&endDate="+currentEndDate;
 				
 				dataService.Get(url,getReportsMonthlySuccessHandler,getReportsMonthlyErrorHandler,'application/json','application/json');
@@ -105,6 +106,35 @@
 				}
 			}
 
+				for(var i=0;i<$scope.monthlyPrevResponse.yearlyListDtos.length;i++)
+				{
+
+					$scope.prevRevData.push($scope.monthlyPrevResponse.yearlyListDtos[i].total);
+					$scope.cDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].cash);
+					$scope.crDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].credit);
+					$scope.pDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].profit);
+					$scope.taxDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].tax);
+					$scope.discDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].discount);
+					$scope.nDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].noOfTrans);
+					$scope.nvgDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].avgBasketSize);
+				}
+				$scope.totalRevenueData.push($scope.prevRevData);
+				$scope.cashData.push($scope.cDataPrev);
+				$scope.creditData.push($scope.crDataPrev);
+				$scope.profitData.push($scope.pDataPrev);
+				$scope.taxData.push($scope.taxDataPrev);
+				$scope.discData.push($scope.discDataPrev);
+				$scope.transData.push($scope.nDataPrev);
+				$scope.basketData.push($scope.nvgDataPrev);
+		}
+		function getReportsMonthlyPrevErrorHandler()
+		{
+			
+		}
+		function getReportsMonthlySuccessHandler(response)
+		{
+			
+			$scope.monthlyResponse = response;
 			if($scope.monthlyResponse.yearlyListDtos == null)
 			{
 				$cope.monthlyResponse = {
@@ -137,67 +167,32 @@
 					});
 				}
 			}
-			
+
+				for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
+				{
+					$scope.revData.push($scope.monthlyResponse.yearlyListDtos[i].total);
+					$scope.cData.push($scope.monthlyResponse.yearlyListDtos[i].cash);
+					$scope.crData.push($scope.monthlyResponse.yearlyListDtos[i].credit);
+					$scope.pData.push($scope.monthlyResponse.yearlyListDtos[i].profit);
+					$scope.taxData1.push($scope.monthlyResponse.yearlyListDtos[i].tax);
+					$scope.discData1.push($scope.monthlyResponse.yearlyListDtos[i].discount);
+					$scope.nData.push($scope.monthlyResponse.yearlyListDtos[i].noOfTrans);
+					$scope.nvgData.push($scope.monthlyResponse.yearlyListDtos[i].avgBasketSize);
+				}
+				$scope.totalRevenueData.push($scope.revData);
+				$scope.cashData.push($scope.cData);
+				$scope.creditData.push($scope.crData);
+				$scope.profitData.push($scope.pData);
+				$scope.taxData.push($scope.taxData1);
+				$scope.discData.push($scope.discData1);
+				$scope.transData.push($scope.nData);
+				$scope.basketData.push($scope.nvgData);
 			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
-				$scope.revData.push($scope.monthlyResponse.yearlyListDtos[i].total);
-				$scope.prevRevData.push($scope.monthlyPrevResponse.yearlyListDtos[i].total);
+				$scope.labels.push($scope.monthlyResponse.yearlyListDtos[i].monthName);
 			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.cData.push($scope.monthlyResponse.yearlyListDtos[i].cash);
-				$scope.cDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].cash);
-			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.crData.push($scope.monthlyResponse.yearlyListDtos[i].credit);
-				$scope.crDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].credit);
-			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.pData.push($scope.monthlyResponse.yearlyListDtos[i].profit);
-				$scope.pDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].profit);
-			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.taxData1.push($scope.monthlyResponse.yearlyListDtos[i].tax);
-				$scope.taxDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].tax);
-			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.discData1.push($scope.monthlyResponse.yearlyListDtos[i].discount);
-				$scope.discDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].discount);
-			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.nData.push($scope.monthlyResponse.yearlyListDtos[i].noOfTrans);
-				$scope.nDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].noOfTrans);
-			}
-			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
-			{
-				$scope.nvgData.push($scope.monthlyResponse.yearlyListDtos[i].avgBasketSize);
-				$scope.nvgDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].avgBasketSize);
-			}	
-			
-			$scope.totalRevenueData.push($scope.revData);$scope.totalRevenueData.push($scope.prevRevData);
-			$scope.cashData.push($scope.cData);$scope.cashData.push($scope.cDataPrev);
-			$scope.creditData.push($scope.crData);$scope.creditData.push($scope.crDataPrev);
-			$scope.profitData.push($scope.pData);$scope.profitData.push($scope.pDataPrev);
-			$scope.taxData.push($scope.taxData1);$scope.taxData.push($scope.taxDataPrev);
-			$scope.discData.push($scope.discData1);$scope.discData.push($scope.discDataPrev);
-			$scope.transData.push($scope.nData);$scope.transData.push($scope.nDataPrev);
-			$scope.basketData.push($scope.nvgData);$scope.basketData.push($scope.nvgDataPrev);
-			
-			
-		}
-		function getReportsMonthlyPrevErrorHandler()
-		{
-			
-		}
-		function getReportsMonthlySuccessHandler(response)
-		{
-			
-			$scope.monthlyResponse = response;
+
+
 			var urlPreviuos = "http://localhost:8080/getYearlyTransactionDetails?startDate="+$scope.previousStartDate+"&endDate="+$scope.previousEndDate;
 			dataService.Get(urlPreviuos,getReportsMonthlyPrevSuccessHandler,getReportsMonthlyPrevErrorHandler,'application/json','application/json');
 			
