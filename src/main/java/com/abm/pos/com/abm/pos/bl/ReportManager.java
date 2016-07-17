@@ -140,6 +140,35 @@ public class ReportManager {
         return commonComparisonDtos;
     }
 
+    public List<CommonComparisonDto> getSalesByUser(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesByUser, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
+    }
+
+    public List<CommonComparisonDto> getSalesByCustomer(String startDate, String endDate) {
+        List<CommonComparisonDto> commonComparisonDtos = new ArrayList<>();
+
+        try
+        {
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesbyCustomer, new SalesCategoryManager(), startDate, endDate);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonComparisonDtos;
+
+    }
+
+
 
     private final class SalesCategoryManager implements RowMapper<CommonComparisonDto>
     {

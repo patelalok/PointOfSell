@@ -55,6 +55,18 @@ public class ReportController {
         return reportManager.getSalesByProduct(startDate,endDate);
     }
 
+    @RequestMapping(value = "/getSalesByUser",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CommonComparisonDto> getSalesByUser(@RequestParam String startDate, String endDate)
+    {
+        return reportManager.getSalesByUser(startDate,endDate);
+    }
+
+    @RequestMapping(value = "/getSalesByCustomer",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CommonComparisonDto> getSalesByCustomer(@RequestParam String startDate, String endDate)
+    {
+        return reportManager.getSalesByCustomer(startDate,endDate);
+    }
+
     @RequestMapping(value = "/getInventoryByCategory",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CommonInventoryDto> getInventoryByCategory()
     {
