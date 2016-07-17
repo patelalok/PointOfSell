@@ -8,12 +8,18 @@
 	function ReportController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter) 
 	{
 		GlobalVariable.isLoginPage = false;
-		$scope.restrictCharacter=restrictCharacter;	
-		
+		$scope.restrictCharacter=restrictCharacter;
+		$scope.maxDate = new Date();
+		$scope.minDate = moment().subtract(1, "days").toDate();
 	    $scope.openStartCalendar = function($event) {
 			$event.preventDefault();
 			$event.stopPropagation();
 			$scope.openStart = true;
+		};
+		$scope.openStartCalendarDaily = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openStartDaily = true;
 		};
 		$scope.openEndCalendar = function($event) {
 			$event.preventDefault();
@@ -22,175 +28,288 @@
 		};
 		$scope.onDateSelected = function(startDate, endDate, label, element) {
 			var receiptIndex = element.attr('data-receipt-index');
-			element.find('span').eq(0).html(endDate.format('MM/DD/YYYY'));
-			$scope.salesDates[receiptIndex] = endDate.format('MM/DD/YYYY');
+			element.find('span').eq(0).html(endDate.format('yyyy-MM-dd'));
 		};
 		function render()
 		{
 			$scope.reportType = 'salesSummary';
-			$scope.measureType = 'yearlySummary'
+			$scope.measureType = 'yearlySummary';
+			$scope.dlyTransType = 'thisDay';
+			$scope.hlyTransType = 'yest';
 			
 			//$scope.startDate = moment();
 			/** Options for the date picker directive * */
 			$scope.dateRangeOptions = {
 				//startDate : moment(),
 				showDropdowns : true,
-				format : 'MM/DD/YYYY',
+				format : 'yyyy-MM-dd',
 				singleDatePicker : true
 			};
+			$scope.yrlyTransType = 'thisYear';
+			$scope.mntTransType = 'Jan';
 			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
 			$scope.endDate = $scope.startDate;
-			var start = js_yyyy_mm_dd('')+''+' 00:00:00';
-			var endM = js_yyyy_mm_dd('M')+''+' 23:59:59';
-			var endY = js_yyyy_mm_dd('Y')+''+' 23:59:59';
-			var endH = js_yyyy_mm_dd('')+''+' 23:59:59';
-			loadSalesMonthlyData(start,endM);
-			loadSalesHourlyData(start,endH);
-			loadSalesYearlyData(start,endY);
+			var years = getCurrentandPreviousYear().split("-");
+			var currentStartDate =years[0]+"-01-01 00:00:00";
+			var currentEndDate =years[0]+"-12-31 23:59:59";
+			loadSalesYearlyData(currentStartDate,currentEndDate);
 			
+		}
+		$scope.checkType = function()
+		{
+			if(reportType == 'salesCategory')
+			{
+
+			}
+		};
+
+		$scope.checkMeasure = function()
+		{
+			if($scope.measureType == 'monthlySummary')
+			{
+				$scope.loadSalesMonthlyData('Jan');
+			}
+			else if($scope.measureType == 'dailySummary')
+			{
+				$scope.loadSalesDailyData('thisDay');
+			}
+			else if($scope.measureType == 'hourlySummary')
+			{
+				$scope.loadSalesHourlyData('yest');
+			}
+			else if($scope.measureType == 'yearlySummary')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				var currentStartDate =years[0]+"-01-01 00:00:00";
+				var currentEndDate =years[0]+"-12-31 23:59:59";
+				loadSalesYearlyData(currentStartDate,currentEndDate);
+			}
+		};
+		$scope.loadSalesHourlyData = function(hr)
+		{
+			var start,end;
+			if(hr == 'yest')
+			{
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
+			}
+			else if(hr == 'lastWeek')
+			{
+					start = getLast7Day()+' 00:00:00';
+					end = getCurrentDay()+' 23:59:59';
+			}
+			else if(hr == 'thisMonth')
+			{
+				start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(hr == 'lastMonth')
+			{
+					start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
+					end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(hr == 'last3Months')
+			{
+				start = getlast3Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(hr == 'last6Months')
+			{
+					start = getlast6Months()+" 00:00:00";
+					end = getCurrentDay()+" 23:59:59";
+			}
+			else if(hr == 'thisYear')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[0]+"-01-01 00:00:00";
+				end =years[0]+"-12-31 23:59:59";
+			}
+			else if(hr == 'lastYear')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[1]+"-01-01 00:00:00";
+				end =years[1]+"-12-31 23:59:59";
+			}
+			else
+			{
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+			}
+			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
+			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
+			//onMonthlySucces('');
+
+		}
+		function onHourlySucces(response)
+		{
+			$scope.hourlySummary = response;
+
+		}
+		function onHourlyError(response)
+		{
+
+		}
+		$scope.applyHourlyMonthly = function()
+		{
+			$scope.loadSalesHourlyData('');
+		};
+
+		$scope.loadSalesDailyData = function(day)
+		{
+			var start,end;
+			if(day == 'thisDay')
+			{
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
+			}
+			else if(day == 'lastDay')
+			{
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
+			}
+			else
+			{
+				start = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd HH:mm:ss");
+				end = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd HH:mm:ss");
+			}
+			var url="http://localhost:8080/getDailyTransactionDetails?startDate="+start+"&endDate="+end;
+				dataService.Get(url,onDailySucces,onDailyError,'application/json','application/json');
+		};
+		function onDailySucces(response)
+		{
+				$scope.dailySummary = response;
+		};
+
+		function onDailyError(response)
+		{
+
+		};
+		$scope.applyDailyMonthly = function()
+		{
+			$scope.loadSalesDailyData('');
+		};
+		$scope.getYearlyTransData = function ()
+		{
+			if($scope.yrlyTransType == 'thisYear')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				var currentStartDate =years[0]+"-01-01 00:00:00";
+				var currentEndDate =years[0]+"-12-31 23:59:59";
+				loadSalesYearlyData(currentStartDate,currentEndDate);
+			}
+			else
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				var currentStartDate =years[1]+"-01-01 00:00:00";
+				var currentEndDate =years[1]+"-12-31 23:59:59";
+				loadSalesYearlyData(currentStartDate,currentEndDate);
+			}
 		}
 		function loadSalesYearlyData(start,end)
 		{
 			var url='http://localhost:8080/getYearlyTransactionDetails?startDate='+start+'&endDate='+end;
 			dataService.Get(url,onYearlySucces,onYearlyError,'application/json','application/json');
-			//onMonthlySucces('');
+
 			
 		}
 		function onYearlySucces(response)
 		{
-			$scope.yearlySummary = response;
-			/*$scope.monthlySummary = [
-			                         {
-			                        	    "date": "2016-06-01",
-			                        	    "credit": 0,
-			                        	    "cash": 32,
-			                        	    "check": 0,
-			                        	    "tax": 32.99,
-			                        	    "discount": 0,
-			                        	    "returnAmount": 0,
-			                        	    "profit": 23,
-			                        	    "marginPercentage": 0,
-			                        	    "total": 0,
-			                        	    "monthAvg": 0,
-			                        	    "cost": 0,
-			                        	    "retail": 23
-			                        	  },
-			                        	  {
-			                        	    "date": "2016-06-22",
-			                        	    "credit": 56.89000000000001,
-			                        	    "cash": 101,
-			                        	    "check": 0,
-			                        	    "tax": 0,
-			                        	    "discount": 0,
-			                        	    "returnAmount": 0,
-			                        	    "profit": 939,
-			                        	    "marginPercentage": 0,
-			                        	    "total": 157.89000000000001,
-			                        	    "monthAvg": 0,
-			                        	    "cost": 948.99,
-			                        	    "retail": 1887.99
-			                        	  }
-			                        	];*/
+			$scope.yearlySummary = response.yearlyListDtos;
+
 		}
 		function onYearlyError(response)
 		{
 			
 		}
-		function loadSalesHourlyData(start,end)
+
+		$scope.loadSalesMonthlyData = function(month)
 		{
-			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
-			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
-			//onMonthlySucces('');
-			
-		}
-		function onHourlySucces(response)
-		{
-			$scope.hourlySummary = response;
-			/*$scope.monthlySummary = [
-			                         {
-			                        	    "date": "2016-06-01",
-			                        	    "credit": 0,
-			                        	    "cash": 32,
-			                        	    "check": 0,
-			                        	    "tax": 32.99,
-			                        	    "discount": 0,
-			                        	    "returnAmount": 0,
-			                        	    "profit": 23,
-			                        	    "marginPercentage": 0,
-			                        	    "total": 0,
-			                        	    "monthAvg": 0,
-			                        	    "cost": 0,
-			                        	    "retail": 23
-			                        	  },
-			                        	  {
-			                        	    "date": "2016-06-22",
-			                        	    "credit": 56.89000000000001,
-			                        	    "cash": 101,
-			                        	    "check": 0,
-			                        	    "tax": 0,
-			                        	    "discount": 0,
-			                        	    "returnAmount": 0,
-			                        	    "profit": 939,
-			                        	    "marginPercentage": 0,
-			                        	    "total": 157.89000000000001,
-			                        	    "monthAvg": 0,
-			                        	    "cost": 948.99,
-			                        	    "retail": 1887.99
-			                        	  }
-			                        	];*/
-		}
-		function onHourlyError(response)
-		{
-			
-		}
-		function loadSalesMonthlyData(start,end)
-		{
-			var url='http://localhost:8080/getMonthlyTransactionDetails?startDate='+start+'&endDate='+end;
+			var startDate,endDate;
+			var years = getCurrentandPreviousYear().split("-");
+			if(month == 'Jan')
+			{
+				startDate = years[0]+'-01-01 00:00:000';
+				endDate = years[0]+'-01-31 23:59:59';
+			}
+			else if(month == 'Feb')
+			{
+				startDate = years[0]+'-02-01 00:00:000';
+				endDate = years[0]+'-02-31 23:59:59';
+			}
+			else if(month == 'Mar')
+			{
+				startDate = years[0]+'-03-01 00:00:000';
+				endDate = years[0]+'-03-31 23:59:59';
+			}
+			else if(month == 'Apr')
+			{
+				startDate = years[0]+'-04-01 00:00:000';
+				endDate = years[0]+'-04-31 23:59:59';
+			}
+			else if(month == 'May')
+			{
+				startDate = years[0]+'-05-01 00:00:000';
+				endDate = years[0]+'-05-31 23:59:59';
+			}
+			else if(month == 'Jun')
+			{
+				startDate = years[0]+'-06-01 00:00:000';
+				endDate = years[0]+'-06-31 23:59:59';
+			}
+			else if(month == 'Jul')
+			{
+				startDate = years[0]+'-07-01 00:00:000';
+				endDate = years[0]+'-07-31 23:59:59';
+			}
+			else if(month == 'Aug')
+			{
+				startDate = years[0]+'-08-01 00:00:000';
+				endDate = years[0]+'-08-31 23:59:59';
+			}
+			else if(month == 'Sep')
+			{
+				startDate = years[0]+'-09-01 00:00:000';
+				endDate = years[0]+'-09-31 23:59:59';
+			}
+			else if(month == 'Oct')
+			{
+				startDate = years[0]+'-10-01 00:00:000';
+				endDate = years[0]+'-10-31 23:59:59';
+			}
+			else if(month == 'Nov')
+			{
+				startDate = years[0]+'-11-01 00:00:000';
+				endDate = years[0]+'-11-31 23:59:59';
+			}
+			else if(month == 'Dec')
+			{
+				startDate = years[0]+'-12-01 00:00:000';
+				endDate = years[0]+'-12-31 23:59:59';
+			}
+			else
+			{
+				startDate = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
+				endDate = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+			}
+			var url='http://localhost:8080/getMonthlyTransactionDetails?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,onMonthlySucces,onMonthlyError,'application/json','application/json');
 			//onMonthlySucces('');
 			
 		}
+		$scope.applyFilterMonthly = function()
+		{
+			$scope.loadSalesMonthlyData('');
+		};
 		function onMonthlySucces(response)
 		{
-			$scope.monthlySummary = response;
-			/*$scope.monthlySummary = [
-			                         {
-			                        	    "date": "2016-06-01",
-			                        	    "credit": 0,
-			                        	    "cash": 32,
-			                        	    "check": 0,
-			                        	    "tax": 32.99,
-			                        	    "discount": 0,
-			                        	    "returnAmount": 0,
-			                        	    "profit": 23,
-			                        	    "marginPercentage": 0,
-			                        	    "total": 0,
-			                        	    "monthAvg": 0,
-			                        	    "cost": 0,
-			                        	    "retail": 23
-			                        	  },
-			                        	  {
-			                        	    "date": "2016-06-22",
-			                        	    "credit": 56.89000000000001,
-			                        	    "cash": 101,
-			                        	    "check": 0,
-			                        	    "tax": 0,
-			                        	    "discount": 0,
-			                        	    "returnAmount": 0,
-			                        	    "profit": 939,
-			                        	    "marginPercentage": 0,
-			                        	    "total": 157.89000000000001,
-			                        	    "monthAvg": 0,
-			                        	    "cost": 948.99,
-			                        	    "retail": 1887.99
-			                        	  }
-			                        	];*/
+			$scope.monthlySummary = response.monthDtos;
+
 		}
 		function onMonthlyError(response)
 		{
 			
 		}
-		function js_yyyy_mm_dd_hh_mm_ss () {
+		function getCurrentDay () {
 			  var now = new Date();
 			  var year = "" + now.getFullYear();
 			  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
@@ -198,47 +317,95 @@
 			 var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
 			  var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
 			  var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
-			  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+			  return year + "-" + month + "-" + day;
 			}
 		render();
-		function js_yyyy_mm_dd (value) {
+		function getPreviousDay () {
 			  var now = new Date();
-			 
+			now.setDate(now.getDate() - 1);
 			  var year = "" + now.getFullYear();
 			  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
 			  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
 			  var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
 			  var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
 			  var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
-			  
-			  if(value == 'Y')
-			  {
-				  //var test = new Date(year,month,day);
-				  now.setMonth(now.getMonth()+12);
-				  now.setDate(now.getDate() +31);
-				  var year = "" + now.getFullYear();
-				  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
-				  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
 				  return year + "-" + month + "-" + day ;
-			  }
-			  else if(value == 'M' )
-			  {
-				  //var test = new Date(year,month,day);
-				  now.setDate(now.getDate() +31);
-				  var year = "" + now.getFullYear();
-				  var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
-				  var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
-				  return year + "-" + month + "-" + day ;
-			  }
-			  else
-			  {
-				  return year + "-" + month + "-" + day ;
-			  }	  
-			  
-			 
-			  
-			  
-			}
+
+		}
+		function getLast7Day () {
+			var now = new Date();
+			now.setDate(now.getDate() - 7);
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getlast6Months () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() - 5); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getlast3Months () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() - 2); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getlastMonth()
+		{
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth()); if (month.length == 1) { month = "0" + month; }
+
+			return month ;
+		}
+		function getcurrentMonth()
+		{
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth()+1); if (month.length == 1) { month = "0" + month; }
+
+			return month ;
+		}
+		function getcurrentYear () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+
+			return year;
+		}
+		function getCurrentandPreviousYear () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var prevoiusYear = now.getFullYear()-1;
+
+			return year + "-" + prevoiusYear;
+		}
+		function getCurrentMonth()
+		{
+			var now = new Date();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+
+			return month;
+		}
 	}
 		
 })();

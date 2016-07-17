@@ -10,7 +10,7 @@
 		$scope.totalInValue = 0;
 		function getClosingDetails(startDate,endDate)
 		{
-			var url=":http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate+"&month=2";
+			var url="http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate;
 			dataService.Get(url,getClosingDetailsSuccessHandler,getClosingDtlsErrorHandler,'application/json','application/json');
 			//getClosingDetailsSuccessHandler('');
 		}
@@ -41,7 +41,7 @@
 			                         ];*/
 			$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
 			$scope.systemCash = $scope.getClosingDtls[0].reportCash;
-			$scope.sysCheck =''
+			$scope.sysCheck =$scope.getClosingDtls[0].reportCheck
 				$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
 			$scope.difDebit = $scope.getClosingDtls[0].differenceCredit;
 			$scope.difCash = $scope.getClosingDtls[0].differenceCash;
@@ -120,8 +120,8 @@
 		}
 		function getPaidOutDetails(startDate,endDate)
 		{
-			var url=":http://localhost:8080/getPaidOut?startDate="+startDate+"&endDate="+endDate;
-			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','applicaiton/json');
+			var url="http://localhost:8080/getPaidOut?startDate="+startDate+"&endDate="+endDate;
+			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','application/json');
 			//getaddPaidSuccessHandler('');
 		}
 		function getaddPaidSuccessHandler(response)
@@ -138,12 +138,14 @@
 			                    	    "paidOutDate": "2016-06-22 10:11:43.0"
 			                    	  }
 			                    	];*/
+		if($scope.paidOutDtls.length != 0) {
 			$scope.amount1 = $scope.paidOutDtls[0].paidOut1;
 			$scope.amount2 = $scope.paidOutDtls[0].paidOut2;
 			$scope.amount3 = $scope.paidOutDtls[0].paidOut3;
 			$scope.reason1 = $scope.paidOutDtls[0].reason1;
 			$scope.reason2 = $scope.paidOutDtls[0].reason2;
 			$scope.reason3 = $scope.paidOutDtls[0].reason3;
+		}
 		}
 		function getaddpaidErrorHandler(response){
 			

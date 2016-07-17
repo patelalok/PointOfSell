@@ -23,7 +23,7 @@
 		<div class="col-md-1" style="width:16%;" ng-show="reportType == 'salesSummary'">
 			<div class="padding-bottom-5"><label>Measure</label></div>
 			<div>
-				<select id="pType" data-ng-model="measureType" class="form-control" ng-change="checkMeasure()" style="height:52px;width:100%;">
+				<select id="mType" data-ng-model="measureType" class="form-control" ng-change="checkMeasure()" style="height:52px;width:100%;">
 								<option value="hourlySummary">Hourly Summary</option>
 								<option value="dailySummary">Daily Summary</option>
 								<option value="weeklySummary">Weekly Summary</option>
@@ -44,55 +44,124 @@
 			  </select>
 			</div>
 		</div>
-		<div class="col-md-1 productBtn" style="width:16%;">
-		
-		<div class="form-group">
-						<label for="sales_Date" class="required">Start Date</label>
-						<div class="input-group calendar-group fromDate">
-							<input type="text" style="height:52px;width:100%;" ng-model="startDate" class="form-control fromDate" datepicker-popup="{{'MM/dd/yyyy'}}" required
-							ng-model-options="{allowInvalid: true}" name="startDate" data-restrict-characters="restrictCharacter.DateField.regExp"
-							is-open="openStart"  date-cleared="dateCleared"  date-length="10"
-							id="startDate" placeholder="mm/dd/yyyy">
-							<span class="input-group-btn">
+
+	 <div class="col-md-1 productBtn" style="width:16%;">
+		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
+		<div ng-show="reportType == 'salesSummary' && measureType=='yearlySummary'">
+			<select id="yrlyTransType" data-ng-model="yrlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="getYearlyTransData()">
+
+				<option value="thisYear">this year</option>
+				<option value="lastYear">last year</option>
+
+			</select>
+		</div>
+		 <div ng-show="reportType == 'salesSummary' && measureType=='monthlySummary'">
+			<select id="mntTransType" data-ng-model="mntTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesMonthlyData(mntTransType)">
+
+				<option value="Jan">Jan</option>
+				<option value="Feb">Feb</option>
+				<option value="Mar">Mar</option>
+				<option value="Apr">Apr</option>
+				<option value="May">May</option>
+				<option value="Jun">Jun</option>
+				<option value="Jul">Jul</option>
+				<option value="Aug">Aug</option>
+				<option value="Sep">Sep</option>
+				<option value="Oct">Oct</option>
+				<option value="Nov">Nov</option>
+				<option value="Dec">Dec</option>
+				<option value="mCustom">custom</option>
+			</select>
+		 </div>
+		 <div ng-show="reportType == 'salesSummary' && measureType=='dailySummary'">
+			<select id="dlyTransType" data-ng-model="dlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesDailyData(dlyTransType)">
+
+				<option value="thisDay">this day</option>
+				<option value="lastDay">last day</option>
+				<option value="dCustom">custom</option>
+
+			</select>
+		 </div>
+		 <div  ng-show="reportType == 'salesSummary' && measureType=='hourlySummary'">
+			<select id="hlyTransType" data-ng-model="hlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesHourlyData(hlyTransType)">
+
+				<option value="yest">Yesterday</option>
+				<option value="lastWeek">last 7 days from today</option>
+				<option value="thisMonth">this month</option>
+				<option value="lastMonth">last month</option>
+				<option value="last3Months">last 3 months from today</option>
+				<option value="last6Months">last 6 months from today</option>
+				<option value="thisYear">this year</option>
+				<option value="lastYear">last year</option>
+				<option value="hCustom">custom</option>
+
+			</select>
+		</div>
+	 </div>
+		<div ng-show="(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
+			<div class="col-md-1 productBtn" style="width:16%;">
+
+				<div class="form-group">
+					<label for="sales_Date" class="required">Start Date</label>
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="startTransDate" disabled="disabled"
+							   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+							   id="startTransDate" placeholder="yyyy-MM-dd">
+						<span class="input-group-btn">
 								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
 									<i class="glyphicon glyphicon-calendar"></i>
 								</button> </span>
-						</div>
-					
 					</div>
-	 </div> 
-	 <div class="col-md-1 productBtn" style="width:16%;">
-		
-		<div class="form-group">
-						<label for="sales_Date" class="required">End Date</label>
-						<div class="input-group calendar-group fromDate">
-							<input type="text" style="height:52px;width:100%;" ng-model="endDate" class="form-control fromDate" datepicker-popup="{{'MM/dd/yyyy'}}" required
-							ng-model-options="{allowInvalid: true}" name="endDate" data-restrict-characters="restrictCharacter.DateField.regExp"
-							is-open="openEnd"  date-cleared="dateCleared"  date-length="10"
-							id="endDate" placeholder="mm/dd/yyyy">
-							<span class="input-group-btn">
+
+				</div>
+			</div>
+			<div class="col-md-1 productBtn" style="width:16%;">
+
+				<div class="form-group">
+					<label for="sales_Date" class="required">End Date</label>
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="endTransDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="endTransDate"
+							   is-open="openEnd"  date-cleared="dateCleared"  date-length="10" disabled="disabled"
+							   id="endTransDate" placeholder="yyyy-MM-dd">
+						<span class="input-group-btn">
 								<button type="button" class="btn btn-default" ng-click="openEndCalendar($event)">
 									<i class="glyphicon glyphicon-calendar"></i>
 								</button> </span>
-						</div>
-					
 					</div>
-	 </div>
-	 <div class="col-md-1 productBtn" style="width:16%;">
-		<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
-		<div>
-			<select id="salesToDay" data-ng-model="transType" class="form-control"  style="height:52px;width:100%;">
-								<option value="yest">Yesterday</option>
-								<option value="lastWeek">last week</option>
-								<option value="thisMonth">this month</option>
-								<option value="lastMonth">last month</option>
-								<option value="last3Months">last 3 months</option>
-								<option value="last6Months">last 6 months</option>
-								<option value="thisYear">this year</option>
-								<option value="lastYear">last year</option>
-			  </select>
+
+				</div>
+			</div>
 		</div>
-	 </div>
+		<div ng-show="reportType == 'salesSummary' && measureType=='dailySummary' && dlyTransType == 'dCustom'">
+			<div class="col-md-1 productBtn" style="width:16%;">
+
+				<div class="form-group">
+					<label for="sales_Date" class="required">Start Date</label>
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startTransDailyDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="startTransDailyDate" disabled="disabled"
+							   is-open="openStartDaily"  date-cleared="dateCleared"  date-length="10"
+							   id="startTransDailyDate" placeholder="yyyy-MM-dd" min-date="minDate" max-date="maxDate">
+						<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendarDaily($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1 productBtn" style="width:16%;">
+			<div class="padding-bottom-5"><label></label></div>
+			<div class="filterBtn">
+				<button ng-show="reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterMonthly()">Apply Filter</button>
+				<button ng-show="reportType == 'salesSummary' && measureType=='dailySummary' && dlyTransType == 'dCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyDailyMonthly()">Apply Filter</button>
+				<button ng-show="reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyHourlyMonthly()">Apply Filter</button>
+
+			</div>
+		</div>
 	
 	</div>
 	
@@ -308,7 +377,7 @@
 	
 	
 	<!-- Monthly Summary -->
-	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesSummary' && measureType == 'monthlySummary'">
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-show="reportType == 'salesSummary' && measureType == 'monthlySummary'">
 		<div class="col-md-12 pageHeader">
 			<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px">Monthly Summary</span>

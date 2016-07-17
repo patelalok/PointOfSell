@@ -330,7 +330,7 @@
 				$rootScope.totalPayment =$scope.productTotal;
 				$scope.returnAmount = $rootScope.totalPayment
 				$scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
-				$scope.returnId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionCompId;
+				$scope.returnId = Math.round(((Math.random() * 10) * 10));
 				$scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
 				$scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
 				$scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
