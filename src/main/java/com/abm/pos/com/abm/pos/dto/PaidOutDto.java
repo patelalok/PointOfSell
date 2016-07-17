@@ -5,15 +5,27 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class PaidOutDto {
 
-    private double paidOut1;
-    private double paidOut2;
-    private double paidOut3;
-
-    private String reason1;
-    private String reason2;
-    private String reason3;
-
+    private int paidOutId;
+    private double paidOutAmount;
+    private String reason;
     private String paidOutDate;
+    private double sumOfPaidOut;
+
+    public double getSumOfPaidOut() {
+        return sumOfPaidOut;
+    }
+
+    public void setSumOfPaidOut(double sumOfPaidOut) {
+        this.sumOfPaidOut = sumOfPaidOut;
+    }
+
+    public double getPaidOutAmount() {
+        return paidOutAmount;
+    }
+
+    public void setPaidOutAmount(double paidOutAmount) {
+        this.paidOutAmount = paidOutAmount;
+    }
 
     public String getPaidOutDate() {
         return paidOutDate;
@@ -23,55 +35,19 @@ public class PaidOutDto {
         this.paidOutDate = paidOutDate;
     }
 
-    public String getReason1() {
-        return reason1;
+    public int getPaidOutId() {
+        return paidOutId;
     }
 
-    public void setReason1(String reason1) {
-        this.reason1 = reason1;
+    public void setPaidOutId(int paidOutId) {
+        this.paidOutId = paidOutId;
     }
 
-    public String getReason2() {
-        return reason2;
+    public String getReason() {
+        return reason;
     }
 
-    public void setReason2(String reason2) {
-        this.reason2 = reason2;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
-
-    public String getReason3() {
-        return reason3;
-    }
-
-    public void setReason3(String reason3) {
-        this.reason3 = reason3;
-    }
-
-
-
-    public double getPaidOut1() {
-        return paidOut1;
-    }
-
-    public void setPaidOut1(double paidOut1) {
-        this.paidOut1 = paidOut1;
-    }
-
-    public double getPaidOut2() {
-        return paidOut2;
-    }
-
-    public void setPaidOut2(double paidOut2) {
-        this.paidOut2 = paidOut2;
-    }
-
-    public double getPaidOut3() {
-        return paidOut3;
-    }
-
-    public void setPaidOut3(double paidOut3) {
-        this.paidOut3 = paidOut3;
-    }
-
-
 }

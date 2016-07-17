@@ -188,7 +188,7 @@ public class SQLQueries {
     public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ?";
 
 
-    public String addPaidOutDetails = "INSERT INTO PAIDOUT (PAIDOUT1,PAIDOUT2,PAIDOUT3,REASON1,REASON2,REASON3,DATE) VALUES (?,?,?,?,?,?,?)";
+    public String addPaidOutDetails = "INSERT INTO PAIDOUT (PAIDOUT,REASON,DATE) VALUES (?,?,?)";
 
 
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
@@ -216,4 +216,7 @@ public class SQLQueries {
 
     public String editPageSetUpDetails = "UPDATE GET_PAGE_SETUP_DETAILS SET TAX = ?, STORE_ADDRESS = ?, STORE_LOGO = ? WHERE GET_PAGE_SETUP_DETAILS_ID = ?";
     public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
+
+    public String editPaidOutDetails = "UPDATE PAIDOUT SET PAIDOUT = ?, REASON = ? WHERE PAIDOUT_ID = ? ";
+    public String getInventoryByCategory = "SELECT c.CATEGORY_NAME , count(p.PRODUCT_ID) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, CATEGORY c WHERE p.CATEGORY_ID = c.CATEGORY_ID GROUP BY c.CATEGORY_NAME";
 }

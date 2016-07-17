@@ -47,6 +47,12 @@ public class ClosingDetailsController {
         return addClosingDetailsManager.getPaidOutDetails(startDate,endDate);
     }
 
+    @RequestMapping(value = "/editPaidOut", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editPaidOut(@RequestBody PaidOutDto paidOutDto)
+    {
+        addClosingDetailsManager.editPaidOut(paidOutDto);
+    }
+
     @RequestMapping(value = "/getHourlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public HourlyListDto getHourlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {

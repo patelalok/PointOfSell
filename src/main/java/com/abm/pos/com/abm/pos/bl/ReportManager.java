@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonDto;
+import com.abm.pos.com.abm.pos.dto.reports.CommonInventoryDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,6 @@ public class ReportManager {
         return top50Items;
 
     }
-
-
 
 
     private final class Top50Mapper implements RowMapper<Top50ItemsDto>
@@ -156,5 +155,40 @@ public class ReportManager {
             return commonComparisonDto;
         }
     }
+
+    public List<CommonInventoryDto> getInventoryByCategory() {
+
+        List<CommonInventoryDto> commonInventoryDtos = new ArrayList<>();
+
+        try
+        {
+            commonInventoryDtos = jdbcTemplate.query(sqlQueries.getInventoryByCategory, new InventoryMapper());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonInventoryDtos;
+
+    }
+
+    private final class InventoryMapper implements RowMapper<CommonInventoryDto>
+    {
+        @Override
+        public CommonInventoryDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            CommonInventoryDto inventoryDto = new CommonInventoryDto();
+
+            inventoryDto.setCommonName(rs.getString("CATEGORY_NAME"));
+            inventoryDto.setNoOfProducts(rs.getInt("NOOFPRODUCTS"));
+            inventoryDto.setCost(rs.getDouble("COST"));
+            inventoryDto.setRetail(rs.getDouble("RETAIL"));
+            inventoryDto.setMargin(rs.getDouble("MARGIN"));
+
+            return inventoryDto;
+        }
+    }
+
+
 
 }

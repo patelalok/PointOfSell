@@ -73,6 +73,8 @@ public class ClosingDetailsManager {
         return closingDetails;
     }
 
+
+
     private final class ClosingMapper implements RowMapper<ClosingDetailsDto> {
 
         @Override
@@ -433,12 +435,8 @@ public class ClosingDetailsManager {
 
         try {
             jdbcTemplate.update(sqlQueries.addPaidOutDetails,
-                    paidOutDto.getPaidOut1(),
-                    paidOutDto.getPaidOut2(),
-                    paidOutDto.getPaidOut3(),
-                    paidOutDto.getReason1(),
-                    paidOutDto.getReason2(),
-                    paidOutDto.getReason3(),
+                    paidOutDto.getPaidOutAmount(),
+                    paidOutDto.getReason(),
                     paidOutDto.getPaidOutDate());
 
             System.out.println("Paid Amount added successfully");
@@ -453,7 +451,7 @@ public class ClosingDetailsManager {
 
         try {
             paidDto = jdbcTemplate.query(sqlQueries.getPaidOutDetails, new PaidOutMapper(), startDate, endDate);
-            System.out.println("Send Paid Amount added successfully");
+            System.out.println("Send Paid Amount successfully");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -463,22 +461,40 @@ public class ClosingDetailsManager {
 
     private final class PaidOutMapper implements RowMapper<PaidOutDto> {
 
+        double sum;
+
         @Override
         public PaidOutDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             PaidOutDto paidOut = new PaidOutDto();
 
-            paidOut.setPaidOut1(rs.getDouble("PAIDOUT1"));
-            paidOut.setPaidOut2(rs.getDouble("PAIDOUT2"));
-            paidOut.setPaidOut3(rs.getDouble("PAIDOUT3"));
-            paidOut.setReason1(rs.getString("REASON1"));
-            paidOut.setReason2(rs.getString("REASON2"));
-            paidOut.setReason3(rs.getString("REASON3"));
+            paidOut.setPaidOutId(rs.getInt("PAIDOUT_ID"));
+            paidOut.setPaidOutAmount(rs.getDouble("PAIDOUT"));
+            paidOut.setReason(rs.getString("REASON"));
             paidOut.setPaidOutDate(rs.getString("DATE"));
+
+            sum = sum + paidOut.getPaidOutAmount();
+
+            paidOut.setSumOfPaidOut(sum);
 
             return paidOut;
 
         }
+    }
+
+    public void editPaidOut(PaidOutDto paidOutDto) {
+
+        try {
+            jdbcTemplate.update(sqlQueries.editPaidOutDetails,
+                    paidOutDto.getPaidOutAmount(),
+                    paidOutDto.getReason(),
+                    paidOutDto.getPaidOutId());
+
+            System.out.println("Paid Amount Edit successfully");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
 
