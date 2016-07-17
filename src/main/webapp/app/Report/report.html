@@ -35,11 +35,10 @@
 		<div class="col-md-1" style="width:16%;" ng-show="reportType == 'inventorySummary'">
 			<div class="padding-bottom-5"><label>CategoryType</label></div>
 			<div>
-				<select id="pType" data-ng-model="cType" class="form-control" ng-change="checkwise()" style="height:52px;width:100%;">
+				<select id="pType" data-ng-model="cType" class="form-control" ng-change="loadSalesIneventory(cType)" style="height:52px;width:100%;">
 								<option value="cat">Category</option>
 								<option value="ven">Vendor</option>
 								<option value="bran">Brand</option>
-								<option value="prod">Product</option>
 								<option value="tin">Total Inventory</option>
 			  </select>
 			</div>
@@ -209,7 +208,7 @@
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Vendor</span>
 		</div>
-		<div data-responsive-table data-ng-model="salesByCategory"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="salesByVendor"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 			<columns>
@@ -238,7 +237,7 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 			<columns>
-				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="BrandName" key="commanName" datatype="string" width="18%" sortable="true"></column>
 				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
 				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
@@ -262,7 +261,7 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 			<columns>
-				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="ProductName" key="commanName" datatype="string" width="18%" sortable="true"></column>
 				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
 				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
@@ -286,7 +285,7 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 			<columns>
-				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="CustomerName" key="commanName" datatype="string" width="18%" sortable="true"></column>
 				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
 				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
@@ -310,7 +309,7 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 			<columns>
-				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="UserName" key="commanName" datatype="string" width="18%" sortable="true"></column>
 				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
 				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
@@ -335,7 +334,7 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="CategoryName" key="categoryName" datatype="string" width="20%" sortable="true"></column>
+					<column name="Name" key="commonName" datatype="string" width="20%" sortable="true"></column>
 					<column name="No Of Products" key="noOfProducts" datatype="string" width="20%"></column>
 					<column name="Cost" key="cost" datatype="string" width="20%"></column>
 					

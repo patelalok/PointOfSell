@@ -37,6 +37,7 @@
 			$scope.dlyTransType = 'thisDay';
 			$scope.hlyTransType = 'yest';
 			$scope.slCatType = 'yestSales';
+			$scope.cType = 'cat';
 			
 			//$scope.startDate = moment();
 			/** Options for the date picker directive * */
@@ -91,7 +92,41 @@
 				var currentEndDate =years[0]+"-12-31 23:59:59";
 				loadSalesYearlyData(currentStartDate,currentEndDate);
 			}
+			else if($scope.reportType == 'inventorySummary')
+			{
+					$scope.loadSalesIneventory('cat');
+			}
 		};
+
+		$scope.loadSalesIneventory = function(type)
+		{
+			var url;
+			if(type == 'cat')
+			{
+				url =' http://localhost:8080/getInventoryByCategory';
+			}
+			else if(type == 'ven')
+			{
+				url =' http://localhost:8080/getInventoryByVendor';
+			}
+			else if(type == 'bran')
+			{
+				url =' http://localhost:8080/getInventoryByBrand';
+			}
+			else if(type == 'tin')
+			{
+
+			}
+			dataService.Get(url,onSalesInvSuccess,onSalesInvError,'application/json','application/json');
+		};
+		function onSalesInvSuccess(response)
+		{
+			$scope.inventorySummary = response;
+		}
+		function onSalesInvError(response)
+		{
+
+		}
 
 		$scope.checkMeasure = function()
 		{
