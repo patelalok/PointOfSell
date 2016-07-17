@@ -107,12 +107,12 @@
 				 <option value="last6MonthsSales">last 6 months from today</option>
 				 <option value="thisYearSales">this year</option>
 				 <option value="lastYearSales">last year</option>
-				<!-- <option value="slCustomSales">custom</option>-->
+				 <option value="slCustomSales">custom</option>
 
 			 </select>
 		 </div>
 	 </div>
-		<div ng-show="(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
+		<div ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' )||(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
 			<div class="col-md-1 productBtn" style="width:16%;">
 
 				<div class="form-group">
@@ -173,6 +173,8 @@
 				<button ng-show="reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterMonthly()">Apply Filter</button>
 				<button ng-show="reportType == 'salesSummary' && measureType=='dailySummary' && dlyTransType == 'dCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyDailyMonthly()">Apply Filter</button>
 				<button ng-show="reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyHourlyMonthly()">Apply Filter</button>
+
+				<button ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' )" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesByType(reportType)">Apply Filter</button>
 
 			</div>
 		</div>
@@ -354,10 +356,10 @@
 			<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px">Yearly Summary</span>
 			 </div>	
-			 <div class="col-md-4">
+			 <!--<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Yearly:</span>
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{yearlySummary.monthAvg}}</span>
-			 </div>
+			 </div>-->
 			 <div class="col-md-4">
 			
 				<div>
@@ -396,10 +398,10 @@
 			<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px">Monthly Summary</span>
 			 </div>	
-			 <div class="col-md-4">
+			 <!--<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Monthly:</span>
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{monthlySummary.monthAvg}}</span>
-			 </div>
+			 </div>-->
 			 <div class="col-md-4">
 			
 				<div>
@@ -438,10 +440,10 @@
 			<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px">Weekly Summary</span>
 			 </div>	
-			 <div class="col-md-4">
+			 <!--<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Weekly:</span>
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{weeklySummary.monthAvg}}</span>
-			 </div>
+			 </div>-->
 			 <div class="col-md-4">
 			
 				<div>
@@ -479,10 +481,10 @@
 			<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px">Daily Summary</span>
 			 </div>	
-			 <div class="col-md-4">
+			 <!--<div class="col-md-4">
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">Avg Daily:</span>
 				<span style="font-weight:bold;font-size:20px;display:inline-block;">{{dailySummary.monthAvg}}</span>
-			 </div>
+			 </div>-->
 			 <div class="col-md-4">
 			
 				<div>
