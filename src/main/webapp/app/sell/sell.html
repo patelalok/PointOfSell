@@ -6,7 +6,7 @@
 			<div class="col-md-8 searchBox">
 				<!-- <input type="text" class="form-control" auto-complete ui-items="productNames" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;">
 			 -->
-			 <input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" typeahead="productName for productName in productNames | filter:$viewValue" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;" >
+			 <input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" typeahead="productName for productName in productNames | filter:$viewValue " typeahead-min-length ="3" placeholder="Start typing or scanning" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;" >
 			
 			 </div>
 			<div class="buttons col-md-4" style="text-align:right;padding-top:10px;">

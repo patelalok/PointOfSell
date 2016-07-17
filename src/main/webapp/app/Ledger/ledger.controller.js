@@ -31,8 +31,7 @@
 		}
 		$scope.onDateSelected = function(startDate, endDate, label, element) {
 			var receiptIndex = element.attr('data-receipt-index');
-			element.find('span').eq(0).html(endDate.format('MM/DD/YYYY'));
-			$scope.salesDates[receiptIndex] = endDate.format('MM/DD/YYYY');
+			element.find('span').eq(0).html(endDate.format('yyyy-MM-dd'));
 		};
 		$scope.filterSalesHistory =  function(value)
 		{
@@ -110,10 +109,10 @@
 			$scope.dateRangeOptions = {
 				//startDate : moment(),
 				showDropdowns : true,
-				format : 'MM/DD/YYYY',
+				format : 'yyyy-MM-dd',
 				singleDatePicker : true
 			};
-			$scope.startDate = $filter('date')(new Date(), "MM/dd/yyyy");
+			$scope.startDate = $filter('date')(new Date(), "yyyy-MM-dd");
 			$scope.endDate = $scope.startDate;
 			var start = js_yyyy_mm_dd()+''+' 00:00:00';
 			var end = js_yyyy_mm_dd()+''+' 23:59:59';
