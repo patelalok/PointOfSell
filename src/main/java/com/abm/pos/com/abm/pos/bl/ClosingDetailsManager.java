@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.*;
+import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
@@ -102,37 +103,97 @@ public class ClosingDetailsManager {
     }
 
 
-    public List<HourlyTransactionDto> getHourlyTransactionDetails(String startDate, String endDate) {
+    public HourlyListDto getHourlyTransactionDetails(String startDate, String endDate) {
 
-        List<HourlyTransactionDto> hourlyList = new ArrayList<>();
+        List<HourlyListDto> hourlyList = new ArrayList<>();
+
+        HourlyMapper mapper = new HourlyMapper();
+
 
         try {
-            hourlyList = jdbcTemplate.query(sqlQueries.getHourlyTransactions, new HourlyMapper(), startDate, endDate);
+            hourlyList = jdbcTemplate.query(sqlQueries.getHourlyTransactions, mapper, startDate, endDate);
 
         } catch (Exception e) {
             System.out.println(e);
         }
-        return hourlyList;
+        return mapper.hourlyListDto;
 
     }
 
-    private final class HourlyMapper implements RowMapper<HourlyTransactionDto> {
+    private final class HourlyMapper implements RowMapper<HourlyListDto> {
+
+        double totalCredit;
+        double totalCash;
+        double totalCheck;
+        double totalTax;
+        double totalDiscount;
+        double grandTotal;
+        double totalProfit;
+        int noOfTrans;
+
+        HourlyListDto hourlyListDto = new HourlyListDto();
+
+        List<HourlyDto> hourlyDtosList = new ArrayList<>();
+
+        FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
+
+        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
+
 
         @Override
-        public HourlyTransactionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public HourlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            HourlyTransactionDto hourlyTransactionDto = new HourlyTransactionDto();
 
-            /*hourlyTransactionDto.setHour(rs.getInt("HOUR"));
-            hourlyTransactionDto.setCost(rs.getDouble("COST"));
-            hourlyTransactionDto.setRetail(rs.getDouble("RETAIL"));
-            hourlyTransactionDto.setAvgRetail(rs.getDouble("AVG_RETAIL"));
-            hourlyTransactionDto.setNoOfTransactions(rs.getInt("NOTRANS"));*/
+            FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
 
-            return hourlyTransactionDto;
+            HourlyDto hourlyDto = new HourlyDto();
+
+            List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
+
+            hourlyDto.setHour(rs.getInt("HOUR"));
+            hourlyDto.setCredit(rs.getDouble("CREDIT"));
+            hourlyDto.setCash(rs.getDouble("CASH"));
+            hourlyDto.setCheck(rs.getDouble("CHEC"));
+            hourlyDto.setTax(rs.getDouble("TAX"));
+            hourlyDto.setDiscount(rs.getDouble("DISCOUNT"));
+            hourlyDto.setTotal(rs.getDouble("TOTAL"));
+            hourlyDto.setCost(rs.getDouble("COST"));
+            hourlyDto.setRetail(rs.getDouble("RETAIL"));
+            hourlyDto.setProfit(rs.getDouble("PROFIT"));
+            hourlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
+
+            hourlyDtosList.add(hourlyDto);
+
+            hourlyListDto.setHourlyDtoList(hourlyDtosList);
+
+            totalCredit = totalCredit + hourlyDto.getCredit();
+            totalCash = totalCash + hourlyDto.getCash();
+            totalCheck = totalCheck + hourlyDto.getCheck();
+            totalTax = totalTax + hourlyDto.getTax();
+            totalDiscount = totalDiscount + hourlyDto.getDiscount();
+            grandTotal = grandTotal + hourlyDto.getTotal();
+            totalProfit = totalProfit + hourlyDto.getProfit();
+            noOfTrans = noOfTrans + hourlyDto.getNoOfTrans();
+
+
+
+            forReportsDto.setTotalCredit(totalCredit);
+            forReportsDto.setTotalCash(totalCash);
+            forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalTax(totalTax);
+            forReportsDto.setTotalDiscount(totalDiscount);
+            forReportsDto.setGrandTotal(grandTotal);
+            forReportsDto.setTotalProfit(totalProfit);
+            forReportsDto.setNoOfTrans(noOfTrans);
+            forReportsDto.setAvgBasketSize(12.99);
+
+            finalTotalForReportsDtos.add(forReportsDto);
+
+            hourlyListDto.setFinalTotalForReportsDtoList(finalTotalForReportsDtos);
+
+            return hourlyListDto;
         }
     }
-
 
     public YearlyListDto getYearlyTransactionDetails(String startDate, String endDate) {
 
@@ -143,7 +204,7 @@ public class ClosingDetailsManager {
 
         try
         {
-            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper);
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper,startDate,endDate);
         }
         catch (Exception e)
         {
@@ -206,19 +267,19 @@ public class ClosingDetailsManager {
 
 
 
-                forReportsDto.setTotalCredit(totalCredit);
-                forReportsDto.setTotalCash(totalCash);
-                forReportsDto.setTotalCheck(totalCheck);
-                forReportsDto.setTotalTax(totalTax);
-                forReportsDto.setTotalDiscount(totalDiscount);
-                forReportsDto.setGrandTotal(grandTotal);
-                forReportsDto.setTotalProfit(totalProfit);
-                forReportsDto.setNoOfTrans(noOfTrans);
-                forReportsDto.setAvgBasketSize(12.99);
+            forReportsDto.setTotalCredit(totalCredit);
+            forReportsDto.setTotalCash(totalCash);
+            forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalTax(totalTax);
+            forReportsDto.setTotalDiscount(totalDiscount);
+            forReportsDto.setGrandTotal(grandTotal);
+            forReportsDto.setTotalProfit(totalProfit);
+            forReportsDto.setNoOfTrans(noOfTrans);
+            forReportsDto.setAvgBasketSize(12.99);
 
-                finalTotalForReportsDtos.add(forReportsDto);
+            finalTotalForReportsDtos.add(forReportsDto);
 
-                yearlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
+            yearlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
 
             return yearlyListDto;
         }
@@ -292,7 +353,7 @@ public class ClosingDetailsManager {
             totalProfit = totalProfit + monthDto.getProfit();
             noOfTrans = noOfTrans + monthDto.getNoOfTrans();
 
-            if (!rs.next()) {
+
                 forReportsDto.setTotalCredit(totalCredit);
                 forReportsDto.setTotalCash(totalCash);
                 forReportsDto.setTotalCheck(totalCheck);
@@ -306,7 +367,6 @@ public class ClosingDetailsManager {
                 finalTotalForReportsDtos.add(forReportsDto);
 
                 monthlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
-            }
 
 
             return monthlyListDto;
@@ -433,10 +493,13 @@ public class ClosingDetailsManager {
     public List<DailyTransactionDto> getDailyTransactionDetails(String startDate, String endDate) {
 
         List<DailyTransactionDto> trans = new ArrayList<>();
+        DailyTransactionDto d = new DailyTransactionDto();
 
         try
         {
+            trans.add(d);
             trans = jdbcTemplate.query(sqlQueries.getDailyTransaction, new DailyTransactionMapper(), startDate, endDate);
+
         }
         catch (Exception e)
         {
@@ -455,6 +518,7 @@ public class ClosingDetailsManager {
 
             DailyTransactionDto trans = new DailyTransactionDto();
 
+           // trans.setDate("2016-06-22");
             trans.setNoOfTransactions(rs.getInt("NOOFTRANS"));
             trans.setAvgTotal(rs.getDouble("AVGTOTAL"));
             trans.setTotal(rs.getDouble("TOTAL"));

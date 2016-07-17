@@ -5,6 +5,7 @@ package com.abm.pos.com.abm.pos.dto;
  */
 public class DailyTransactionDto {
 
+    private String date;
     private double Cash;
     private double credit;
     private double tax;
@@ -15,24 +16,7 @@ public class DailyTransactionDto {
     private int noOfTransactions;
     private double avgTotal;
     private double profitAmount;
-
-    public double getCheck() {
-        return check;
-    }
-
-    public void setCheck(double check) {
-        this.check = check;
-    }
-
     private double check;
-
-    public double getProfitAmount() {
-        return profitAmount;
-    }
-
-    public void setProfitAmount(double profitAmount) {
-        this.profitAmount = profitAmount;
-    }
 
     public double getAvgTotal() {
         return avgTotal;
@@ -40,24 +24,6 @@ public class DailyTransactionDto {
 
     public void setAvgTotal(double avgTotal) {
         this.avgTotal = avgTotal;
-    }
-
-    public int getNoOfTransactions() {
-        return noOfTransactions;
-    }
-
-    public void setNoOfTransactions(int noOfTransactions) {
-        this.noOfTransactions = noOfTransactions;
-    }
-
-
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     public double getCash() {
@@ -68,12 +34,28 @@ public class DailyTransactionDto {
         Cash = cash;
     }
 
+    public double getCheck() {
+        return check;
+    }
+
+    public void setCheck(double check) {
+        this.check = check;
+    }
+
     public double getCredit() {
         return credit;
     }
 
     public void setCredit(double credit) {
         this.credit = credit;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public double getDiscount() {
@@ -100,6 +82,22 @@ public class DailyTransactionDto {
         this.markup = markup;
     }
 
+    public int getNoOfTransactions() {
+        return noOfTransactions;
+    }
+
+    public void setNoOfTransactions(int noOfTransactions) {
+        this.noOfTransactions = noOfTransactions;
+    }
+
+    public double getProfitAmount() {
+        return profitAmount;
+    }
+
+    public void setProfitAmount(double profitAmount) {
+        this.profitAmount = profitAmount;
+    }
+
     public double getTax() {
         return tax;
     }
@@ -108,5 +106,11 @@ public class DailyTransactionDto {
         this.tax = tax;
     }
 
+    public double getTotal() {
+        return total;
+    }
 
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

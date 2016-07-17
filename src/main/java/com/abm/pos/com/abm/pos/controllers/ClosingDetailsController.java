@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
 import com.abm.pos.com.abm.pos.dto.*;
+import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -47,7 +48,7 @@ public class ClosingDetailsController {
     }
 
     @RequestMapping(value = "/getHourlyTransactionDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<HourlyTransactionDto> getHourlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
+    public HourlyListDto getHourlyTransactionDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
         return addClosingDetailsManager.getHourlyTransactionDetails(startDate,endDate);
     }
