@@ -61,11 +61,18 @@ public class ReportController {
         return reportManager.getInventoryByCategory();
     }
 
-   /*@RequestMapping(value = "/getInventoryByVendor",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+   @RequestMapping(value = "/getInventoryByVendor",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CommonInventoryDto> getInventoryByVendor()
     {
         return reportManager.getInventoryByVendor();
-    }*/
+    }
+
+    @RequestMapping(value = "/getInventoryByBrand",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CommonInventoryDto> getInventoryByBrand()
+    {
+        return reportManager.getInventoryByBrand();
+    }
+
 
 
 

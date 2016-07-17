@@ -47,6 +47,8 @@ public class ReportManager {
     }
 
 
+
+
     private final class Top50Mapper implements RowMapper<Top50ItemsDto>
     {
         @Override
@@ -179,7 +181,7 @@ public class ReportManager {
 
             CommonInventoryDto inventoryDto = new CommonInventoryDto();
 
-            inventoryDto.setCommonName(rs.getString("CATEGORY_NAME"));
+            inventoryDto.setCommonName(rs.getString("COMMON_NAME"));
             inventoryDto.setNoOfProducts(rs.getInt("NOOFPRODUCTS"));
             inventoryDto.setCost(rs.getDouble("COST"));
             inventoryDto.setRetail(rs.getDouble("RETAIL"));
@@ -189,6 +191,34 @@ public class ReportManager {
         }
     }
 
+    public List<CommonInventoryDto> getInventoryByVendor() {
 
+        List<CommonInventoryDto> commonInventoryDtos = new ArrayList<>();
+
+        try
+        {
+            commonInventoryDtos = jdbcTemplate.query(sqlQueries.getInventoryByVendor, new InventoryMapper());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonInventoryDtos;
+
+    }
+
+    public List<CommonInventoryDto> getInventoryByBrand() {
+        List<CommonInventoryDto> commonInventoryDtos = new ArrayList<>();
+
+        try
+        {
+            commonInventoryDtos = jdbcTemplate.query(sqlQueries.getInventoryByBrand, new InventoryMapper());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return commonInventoryDtos;
+    }
 
 }
