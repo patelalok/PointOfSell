@@ -36,6 +36,7 @@
 			$scope.measureType = 'yearlySummary';
 			$scope.dlyTransType = 'thisDay';
 			$scope.hlyTransType = 'yest';
+			$scope.slCatType = 'yestSales';
 			
 			//$scope.startDate = moment();
 			/** Options for the date picker directive * */
@@ -57,9 +58,38 @@
 		}
 		$scope.checkType = function()
 		{
-			if(reportType == 'salesCategory')
+			$scope.slCatType = 'yestSales';
+			if($scope.reportType == 'salesCategory')
 			{
-
+				$scope.loadSalesCatData('yestSales','salesCategory');
+			}
+			else if($scope.reportType == 'salesBrand')
+			{
+				$scope.loadSalesCatData('yestSales','salesBrand');
+			}
+			else if($scope.reportType == 'salesVendor')
+			{
+				$scope.loadSalesCatData('yestSales','salesVendor');
+			}
+			else if($scope.reportType == 'salesUser')
+			{
+				$scope.loadSalesCatData('yestSales','salesUser');
+			}
+			else if($scope.reportType == 'salesProduct')
+			{
+				$scope.loadSalesCatData('yestSales','salesProduct');
+			}
+			else if($scope.reportType == 'salesCustomer')
+			{
+				$scope.loadSalesCatData('yestSales','salesCustomer');
+			}
+			else if($scope.reportType == 'salesSummary')
+			{
+				$scope.measureType = 'yearlySummary';
+				var years = getCurrentandPreviousYear().split("-");
+				var currentStartDate =years[0]+"-01-01 00:00:00";
+				var currentEndDate =years[0]+"-12-31 23:59:59";
+				loadSalesYearlyData(currentStartDate,currentEndDate);
 			}
 		};
 
@@ -84,6 +114,126 @@
 				var currentEndDate =years[0]+"-12-31 23:59:59";
 				loadSalesYearlyData(currentStartDate,currentEndDate);
 			}
+		};
+
+		$scope.loadSalesCatData = function(saleDate,type)
+		{
+			var url;
+			var start,end;
+			if(saleDate == 'yestSales')
+			{
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'lastWeekSales')
+			{
+				start = getLast7Day()+' 00:00:00';
+				end = getCurrentDay()+' 23:59:59';
+			}
+			else if(saleDate == 'thisMonthSales')
+			{
+				start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'lastMonthSales')
+			{
+				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'last3MonthsSales')
+			{
+				start = getlast3Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'last6MonthsSales')
+			{
+				start = getlast6Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'thisYearSales')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[0]+"-01-01 00:00:00";
+				end =years[0]+"-12-31 23:59:59";
+			}
+			else if(saleDate == 'lastYearSales')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[1]+"-01-01 00:00:00";
+				end =years[1]+"-12-31 23:59:59";
+			}
+
+
+			if(type == 'salesCategory')
+			{
+				var url='http://localhost:8080/getSalesByCategory?startDate='+start+'&endDate='+end;
+			}
+			else if(type == 'salesBrand')
+			{
+				var url='http://localhost:8080/getSalesByBrand?startDate='+start+'&endDate='+end;
+			}
+			else if(type == 'salesVendor')
+			{
+				var url='http://localhost:8080/getSalesByVendor?startDate='+start+'&endDate='+end;
+			}
+			else if(type == 'salesUser')
+			{
+				var url='http://localhost:8080/getSalesByUser?startDate='+start+'&endDate='+end;
+			}
+			else if(type == 'salesProduct')
+			{
+				var url='http://localhost:8080/getSalesByProduct?startDate='+start+'&endDate='+end;
+			}
+			else if(type == 'salesCustomer')
+			{
+				var url='http://localhost:8080/getSalesByCustomer?startDate='+start+'&endDate='+end;
+			}
+
+
+			/*else
+			{
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+			}*/
+
+			dataService.Get(url,onSalesSuccess,onSalesError,'application/json','application/json');
+		};
+		function onSalesSuccess(response)
+		{
+			if($scope.reportType == 'salesUser')
+			{
+				if(response !== null)
+				$scope.salesByUser = response;
+			}
+			else if($scope.reportType == 'salesCustomer')
+			{
+				if(response !== null)
+				$scope.salesByCustomer = response;
+			}
+			else if($scope.reportType == 'salesProduct')
+			{
+				if(response !== null)
+				$scope.salesByProduct = response;
+			}
+			else if($scope.reportType == 'salesBrand')
+			{
+				if(response !== null)
+				$scope.salesByBrand = response;
+			}
+			else if($scope.reportType == 'salesVendor')
+			{
+				if(response !== null)
+				$scope.salesByVendor = response;
+			}
+			else if($scope.reportType == 'salesCategory')
+			{
+				if(response !== null)
+				$scope.salesByCategory = response;
+			}
+		};
+		function onSalesError(response)
+		{
+
 		};
 		$scope.loadSalesHourlyData = function(hr)
 		{
@@ -137,12 +287,15 @@
 			}
 			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
 			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
-			//onMonthlySucces('');
+
 
 		}
 		function onHourlySucces(response)
 		{
-			$scope.hourlySummary = response;
+			if(response.hourlyDtoList !== null)
+			$scope.hourlySummary = response.hourlyDtoList;
+			else
+				$scope.hourlySummary = [];
 
 		}
 		function onHourlyError(response)

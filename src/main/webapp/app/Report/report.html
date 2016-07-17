@@ -97,6 +97,21 @@
 
 			</select>
 		</div>
+		 <div  ng-show="reportType == 'salesCategory' || reportType == 'salesVendor' || reportType == 'salesBrand' || reportType == 'salesCustomer' || reportType == 'salesProduct' || reportType == 'salesUser'">
+			 <select id="slCatType" data-ng-model="slCatType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesCatData(slCatType,reportType)">
+
+				 <option value="yestSales">Yesterday</option>
+				 <option value="lastWeekSales">last 7 days from today</option>
+				 <option value="thisMonthSales">this month</option>
+				 <option value="lastMonthSales">last month</option>
+				 <option value="last3MonthsSales">last 3 months from today</option>
+				 <option value="last6MonthsSales">last 6 months from today</option>
+				 <option value="thisYearSales">this year</option>
+				 <option value="lastYearSales">last year</option>
+				<!-- <option value="slCustomSales">custom</option>-->
+
+			 </select>
+		 </div>
 	 </div>
 		<div ng-show="(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
 			<div class="col-md-1 productBtn" style="width:16%;">
@@ -174,14 +189,14 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="CategoryName" key="categoryName" datatype="string" width="18%" sortable="true"></column>
+					<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
 					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
-					<column name="Cost" key="cost" datatype="string" width="12%"></column>
+					<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 					
-					<column name="Retail" key="retail" datatype="string" width="12%"></column>
-					<column name="Profit" key="profit" datatype="string" width="12%"></column>
+					<column name="Retail" key="retailPrice" datatype="string" width="12%"></column>
+					<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
 					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
-					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+					<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
 
 				</columns>		
 			</div>
@@ -197,17 +212,17 @@
 		<div data-responsive-table data-ng-model="salesByCategory"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
-				<columns>
-					<column name="VendorName" key="vendorName" datatype="string" width="18%" sortable="true"></column>
-					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
-					<column name="Cost" key="cost" datatype="string" width="12%"></column>
-					
-					<column name="Retail" key="retail" datatype="string" width="12%"></column>
-					<column name="Profit" key="profit" datatype="string" width="12%"></column>
-					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
-					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
-				</columns>		
+				<column name="Retail" key="retailPrice" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
 			</div>
 	
 	</div>
@@ -222,17 +237,17 @@
 		<div data-responsive-table data-ng-model="salesByBrand"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
-				<columns>
-					<column name="BrandName" key="brandName" datatype="string" width="18%" sortable="true"></column>
-					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
-					<column name="Cost" key="cost" datatype="string" width="12%"></column>
-					
-					<column name="Retail" key="retail" datatype="string" width="12%"></column>
-					<column name="Profit" key="profit" datatype="string" width="12%"></column>
-					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
-					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
-				</columns>		
+				<column name="Retail" key="retailPrice" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
 			</div>
 	
 	</div>
@@ -246,17 +261,17 @@
 		<div data-responsive-table data-ng-model="salesByProduct"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
-				<columns>
-					<column name="ProductName" key="productName" datatype="string" width="18%" sortable="true"></column>
-					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
-					<column name="Cost" key="cost" datatype="string" width="12%"></column>
-					
-					<column name="Retail" key="retail" datatype="string" width="12%"></column>
-					<column name="Profit" key="profit" datatype="string" width="12%"></column>
-					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
-					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
-				</columns>		
+				<column name="Retail" key="retailPrice" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
 			</div>
 	
 	</div>
@@ -267,20 +282,20 @@
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:20px">Sales By Customer</span>
 		</div>
-		<div data-responsive-table data-ng-model="salesByBrand"  data-current-page="currentPageIndexArr"
+		<div data-responsive-table data-ng-model="salesByCustomer"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
-				<columns>
-					<column name="CustomerName" key="customerName" datatype="string" width="18%" sortable="true"></column>
-					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
-					<column name="Cost" key="cost" datatype="string" width="12%"></column>
-					
-					<column name="Retail" key="retail" datatype="string" width="12%"></column>
-					<column name="Profit" key="profit" datatype="string" width="12%"></column>
-					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
-					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
-				</columns>		
+				<column name="Retail" key="retailPrice" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
 			</div>
 	
 	</div>
@@ -294,17 +309,17 @@
 		<div data-responsive-table data-ng-model="salesByUser"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
-				<columns>
-					<column name="UserName" key="userrName" datatype="string" width="18%" sortable="true"></column>
-					<column name="Qty" key="quantity" datatype="string" width="12%"></column>
-					<column name="Cost" key="cost" datatype="string" width="12%"></column>
-					
-					<column name="Retail" key="retail" datatype="string" width="12%"></column>
-					<column name="Profit" key="profit" datatype="string" width="12%"></column>
-					<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
-					<column name="% Of Total" key="total" datatype="string" width="12%"></column>
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Cost" key="costPrice" datatype="string" width="12%"></column>
 
-				</columns>		
+				<column name="Retail" key="retailPrice" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
 			</div>
 	
 	</div>
@@ -359,14 +374,14 @@
 				<columns>
 					<column name="Month" key="monthName" datatype="string" width="10%" sortable="true"></column>
 					<column name="Credit" key="credit" datatype="string" width="10%"></column>
-					<column name="Cash" key="cahs" datatype="string" width="10%"></column>
+					<column name="Cash" key="cash" datatype="string" width="10%"></column>
 					
 					<column name="Check" key="check" datatype="string" width="10%"></column>
 					<column name="Tax" key="tax" datatype="string" width="10%"></column>
 					<column name="Discount" key="discount" datatype="string" width="10%"></column>
-					<column name="Return" key="return" datatype="string" width="10%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
 					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
-					<column name="Margin" key="margin" datatype="string" width="10%"></column>
+					<column name="Margin" key="marginPercentage" datatype="string" width="10%"></column>
 					<column name="Total" key="total" datatype="string" width="10%"></column>
 
 				</columns>		
@@ -484,14 +499,14 @@
 				<columns>
 					<column name="Daily" key="month" datatype="string" width="10%" sortable="true"></column>
 					<column name="Credit" key="credit" datatype="string" width="10%"></column>
-					<column name="Cash" key="cahs" datatype="string" width="10%"></column>
+					<column name="Cash" key="cash" datatype="string" width="10%"></column>
 					
 					<column name="Check" key="check" datatype="string" width="10%"></column>
 					<column name="Tax" key="tax" datatype="string" width="10%"></column>
 					<column name="Discount" key="discount" datatype="string" width="10%"></column>
-					<column name="Return" key="return" datatype="string" width="10%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
 					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
-					<column name="Margin" key="margin" datatype="string" width="10%"></column>
+					<column name="Margin" key="marginPercentage" datatype="string" width="10%"></column>
 					<column name="Total" key="total" datatype="string" width="10%"></column>
 
 				</columns>		
@@ -510,11 +525,18 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="Hour" key="hour" datatype="string" width="20%" sortable="true"></column>
-					<column name="cost" key="cost" datatype="string" width="20%"></column>
-					<column name="Retail" key="retail" datatype="string" width="20%"></column>
-					<column name="Avg Retail" key="avgRetail" datatype="string" width="20%"></column>
-					<column name="NoOfTransactions" key="noOfTransactions" datatype="string" width="20%"></column>
+
+					<column name="Hour" key="hour" datatype="string" width="9%" sortable="true"></column>
+					<column name="Credit" key="credit" datatype="string" width="9%"></column>
+					<column name="Cash" key="cash" datatype="string" width="9%"></column>
+					<column name="Check" key="check" datatype="string" width="9%"></column>
+					<column name="Tax" key="tax" datatype="string" width="9%"></column>
+					<column name="Discount" key="discount" datatype="string" width="9%"></column>
+					<column name="Return" key="returnAmount" datatype="string" width="9%"></column>
+					<column name="Porfit" key="profit" datatype="string" width="9%"></column>
+					<column name="Margin" key="marginPercentage" datatype="string" width="9%"></column>
+					<column name="NoOfTransactions" key="noOfTrans" datatype="string" width="9%"></column>
+					<column name="Total" key="total" datatype="string" width="9%"></column>
 
 				</columns>		
 			</div>
