@@ -11,6 +11,10 @@
 
 
         </div>
+        <div class="col-md-6" style="text-align:right;font-size:26px;">
+            <div style="display:inline-block;vertical-align: middle;">Customer Phone:</div>
+            <div style="display:inline-block;vertical-align: middle;">{{returnPhone}}</div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-8" style="background-color:#FFFFFF;padding:10px;padding-top:53px;">
@@ -77,10 +81,10 @@
                     <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{productTotal}}</div>
                 </div>
             </div>
-            <div class="row paymentBtns padding-top-10" style="text-align:center;">
+            <div class="row paymentBtns padding-top-10 returnBtn" style="text-align:center;">
                 <button  class="btn btn-primary margin-top-1 wrap-text payment-btn return-btn-color"  ng-click="returnProduct()" ng-disabled="!(returnData.length > 0)">
                     <span style="float:left;">Return</span>
-                    <span style="float:right;">${{totalPayment}}</span>
+                    <span style="float:right;">${{totalReturnPayment}}</span>
                 </button>
             </div>
         </div>

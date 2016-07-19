@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="onaddFour()">&times;</button>
+
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+        <div class="row" style="padding:30px;font-size:30px;text-align:center;">
+            <div ng-if="GlobalVariable.returnProduct == true"><span>Your total balance is </span>{{totalReturnPayment}}</span></div>
+            <div ng-if="!GlobalVariable.returnProduct == true"><span>Your total balance is </span>{{totalPayment}}</span></div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="onaddFourPrint()">Print</button>
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="onaddFour()">Cancel</button>
+        </div>
+    </div>
+</div>
