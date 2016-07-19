@@ -102,8 +102,8 @@
             GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax) * (parseFloat($scope.totalTax) / 100);
             $scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
 
-            $rootScope.totalPayment = $scope.productTotal;
-            GlobalVariable.checkOuttotal = $rootScope.totalPayment;
+            $rootScope.totalReturnPayment = $scope.productTotal;
+            GlobalVariable.checkOuttotal = $rootScope.totalReturnPayment;
         }
         function render()
         {
@@ -129,12 +129,12 @@
                 $scope.totalDisc =GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
                 $scope.totalTax =GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
                 $scope.productTotal= GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
-                $rootScope.totalPayment =$scope.productTotal;
-                $scope.returnAmount = $rootScope.totalPayment
+                $rootScope.totalReturnPayment =$scope.productTotal;
+                $scope.returnAmount = $rootScope.totalReturnPayment
                 $scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
-                $scope.returnId = Math.round(((Math.random() * 10) * 10));
+                $scope.returnId = Math.round(((Math.random() * 10) * 10)) * 13;
                 $scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
-                $scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
+                $scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
                 $scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
                 $scope.returncashId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].cashId;
                 $scope.paidAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
@@ -146,11 +146,15 @@
         }
         $scope.returnProduct = function()
         {
-            var msg= "Your total balance is "+-(Number(parseFloat($scope.productTotal)).toFixed(2));
-            modalService.showModal('', '', msg, $scope.callBackReturnCheckout);
+           /* var msg= "Your total balance is "+-(Number(parseFloat($scope.productTotal)).toFixed(2));
+            modalService.showModal('', '', msg, $scope.callBackReturnCheckout);*/
+            var _tmPath = 'app/sell/printReceiptModal.html';
+            var _ctrlPath = 'PrintRecepitController';
+            DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackReturnCheckout);
         };
         $scope.callBackReturnCheckout = function()
         {
+            console.log("callback");
             var url ="http://localhost:8080/addTransaction";
             var request = new Object();
             request = {
@@ -176,13 +180,48 @@
         };
         function returnTransactionSuccessHandler(response)
         {
+           /* $rootScope.returnData = [];
+            $scope.totalQuantity = 0;
+            $scope.subTotal = 0;
+            $scope.productTotal = 0;
+            $rootScope.totalPayment = 0;*/
+
+            var request = [];
+            for(var i=0;i< $rootScope.returnData.length ; i++)
+            {
+                request.push({
+
+                    "transactionCompId":$scope.returnId,
+                    "productId":$rootScope.returnData[i].itemNo,
+                    "quantity":$rootScope.returnData[i].quantity,
+                    "retail":$rootScope.returnData[i].retail,
+                    "cost":$rootScope.returnData[i].costPrice,
+                    "discount":$rootScope.returnData[i].discount,
+                    "retailWithDis":$rootScope.returnData[i].discount,
+                    "totalProductPrice":$rootScope.returnData[i].total,
+                    "transactionDate":$scope.returnDate
+
+                });
+            }
+            var url ="http://localhost:8080/addTransactionLineItem";
+            request = JSON.stringify(request);
+            dataService.Post(url,request,returnTransactionLineItemSuccessHandler,returnTransactionLineItemErrorHandler,"application/json","application/json");
+
+        }
+        function returnTransactionErrorHandler(response)
+        {
+
+        }
+        function returnTransactionLineItemSuccessHandler(response)
+        {
             $rootScope.returnData = [];
             $scope.totalQuantity = 0;
             $scope.subTotal = 0;
             $scope.productTotal = 0;
-            $rootScope.totalPayment = 0;
+            $rootScope.totalReturnPayment = 0;
+            $state.go('ledger');
         }
-        function returnTransactionErrorHandler(response)
+        function returnTransactionLineItemErrorHandler()
         {
 
         }

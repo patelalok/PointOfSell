@@ -23,8 +23,9 @@
 			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
 			if($scope.balanceAmount <= 0)
 			{
-				var msg= "Your total balance is "+Number(parseFloat($scope.balanceAmount)).toFixed(2);
-				modalService.showModal('', '', msg, $scope.callBackCheckout);
+				var _tmPath = 'app/sell/printReceiptModal.html';
+				var _ctrlPath = 'PrintRecepitController';
+				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
 				$scope.color = true;
 			}	
 		};
@@ -40,11 +41,10 @@
 			}
 		$scope.callBackCheckout = function()
 		{
-			//TODO 
-			//Database service call to complete transaction request.
+
 			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
 			GlobalVariable.transDate = trasnactionDate;
-			GlobalVariable.transactionCompletedId = Math.round(((Math.random() * 10) * 10))+Math.round(((Math.random() * 10) * 10));
+			GlobalVariable.transactionCompletedId = Math.round(((Math.random() * 10) * 10)) * 11;
 			DialogFactory.close(true);
 			if($scope.balanceAmount == 0)
 			{
@@ -129,22 +129,20 @@
 		function addTransactionLineItemSuccessHandler(response)
 		{
 			$rootScope.testData = [];
-			//TODO
-			//popup to display whther to print receipt or not;
-			//$state.go('sell');
-			var msg= 'Print Receipt or Cancel';
+
+			/*var msg= 'Print Receipt or Cancel';
 			msg=$sce.trustAsHtml(msg);	
 			modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Print'}, msg, $scope.callBackCheckoutComplete);
-				
+			*/
 			
 			$rootScope.totalPayment = '0.00';
 			$rootScope.customerName = '';
 		};
-		$scope.callBackCheckoutComplete = function()
+		/*$scope.callBackCheckoutComplete = function()
 		{
 			DialogFactory.close(true);
 			$window.print();
-		};
+		};*/
 		function addTransactionLineItemErrorHandler(response)
 		{
 			
@@ -192,9 +190,12 @@
 				}	
 				else
 				{
-					var msg= 'Your total balance <span style="color:red;font-size:30px;">is</span> '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
+					/*var msg= 'Your total balance <span style="color:red;font-size:30px;">is</span> '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
 					msg=$sce.trustAsHtml(msg);	
-					modalService.showModal('', '', msg, $scope.callBackCheckout);
+					modalService.showModal('', '', msg, $scope.callBackCheckout);*/
+					var _tmPath = 'app/sell/printReceiptModal.html';
+					var _ctrlPath = 'PrintRecepitController';
+					DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
 						$scope.color = true;
 				}	
 				
@@ -209,9 +210,12 @@
 		$scope.callBackCheckoutCredit = function()
 		{
 			console.log($scope.last4+""+$scope.transId);
-			var msg= 'Your total balance is '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
+			/*var msg= 'Your total balance is '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
 			msg=$sce.trustAsHtml(msg);	
-			modalService.showModal('', '', msg, $scope.callBackCheckout);
+			modalService.showModal('', '', msg, $scope.callBackCheckout);*/
+			var _tmPath = 'app/sell/printReceiptModal.html';
+			var _ctrlPath = 'PrintRecepitController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
 				$scope.color = true;
 		};
 		
@@ -234,8 +238,9 @@
 			$scope.balanceAmount =$scope.remainingBalance;
 			if($scope.balanceAmount <= 0)
 			{
-				var msg= "Your total balance is "+Number(parseFloat($scope.balanceAmount)).toFixed(2);
-				modalService.showModal('', '', msg, $scope.callBackCheckout);
+				var _tmPath = 'app/sell/printReceiptModal.html';
+				var _ctrlPath = 'PrintRecepitController';
+				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
 				$scope.color = true;
 			}
 		};
