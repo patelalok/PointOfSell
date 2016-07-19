@@ -62,7 +62,7 @@
 
 
 
-</div>
+
 <div class="row" style="padding:30px;" print-remove>
 	<div class="col-md-12">
 		<div data-responsive-table data-ng-model="salesHistory"  data-current-page="currentPageIndexArr"
@@ -91,5 +91,108 @@
 					</column>
 				</columns>		
 			</div>
+	</div>
+</div>
+</div>
+<div   print-only style="font-size:20px;margin-left:15px;margin-right:15px;">
+	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
+		<div class="cold-md-4" style="width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;"><div style="display:block;">1234 PEach Tree RD</div>
+		<div style="display:block;">Atlanta Ga,30080</div></div>
+		<div class="col-md-4" style="width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;"><img alt="" src="./assets/images/final-logo.png" height="50"></div>
+
+		<div class="col-md-4" style=" width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+           <!-- <div><span>Date:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</span></div>
+            <div><span>Receipt #:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</span></div>
+-->
+            <div class="customerName">
+                <span>{{GlobalVariable.receiptData[0].transactionDtoList[0].username}}</span>
+            </div>
+            <div><span>Phone Number:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</span></div>
+
+
+        </div>
+	</div>
+	<div style="padding:3px;border-top:1px solid #000000;font-weight: bold;border-bottom:1px solid #000000;font-size:18px;">
+		<div class="row" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;display:table;">
+
+			<div class="display-row" style="display: table-row;">
+				<div  style="text-align: left;display: table-cell;vertical-align: middle;"><span>Sale Date:</span> </div>
+				<div style="text-align: left;display: table-cell;vertical-align: middle;">7/4/2016</div>
+
+
+				<div style="text-align: left;display: table-cell;vertical-align: middle;padding-left:65px;">Sale Time:</div>
+				<div style="text-align: left;display: table-cell;vertical-align: middle;">13:11PM</div>
+
+
+
+				<div style="text-align: left;display: table-cell;vertical-align: middle;padding-left:65px;">CSR:</div>
+				<div style="text-align: left;display: table-cell;vertical-align: middle;">Alok</div>
+
+
+
+				<div style="text-align: left;display: table-cell;vertical-align: middle;padding-left:65px;">Sale Id:</div>
+				<div style="text-align: left;display: table-cell;vertical-align: middle;">3349</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div style="padding-top:10px;padding-bottom:10px;font-size:16px;">
+		<div data-responsive-table data-ng-model="GlobalVariable.receiptData[0].transactionLineItemDtoList"  data-current-page="currentPageIndexArr"
+			 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+			 on-sort="sortColumnData(index)">
+			<columns>
+
+
+				<column name="Product No" key="productNumber" datatype="string" width="18%"></column>
+				<column name="Description" key="productDescription" datatype="string" width="40%"></column>
+				<column name="Retail" key="retail" datatype="string" width="14%"></column>
+				<column name="Discount" key="discount" datatype="string" width="7%"></column>
+				<column name="Qty" key="quantity" datatype="string" width="5%"></column>
+				<column name="Total Price" key="totalProductPrice" datatype="string" width="18%"></column>
+			</columns>
+		</div>
+	</div>
+
+	<div class="row totalColumn display-table tableMainProp" align="center">
+		<div class="display-row">
+			<div class=" inline-vertical display-cell align-left " style="padding-left:200px;">Quantity:</div>
+			<div class=" inline-vertical display-cell align-left padding-left-40" ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalQuantity}}</div>
+		</div>
+		<div class="display-row">
+			<div class=" inline-vertical display-cell align-left" style="padding-left:200px;">SubTotal:</div>
+			<div class=" inline-vertical display-cell align-left padding-left-40" ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].subTotal}}</div>
+		</div>
+		<div class="display-row">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Discount:</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="subTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].discount}}</div>
+		</div>
+		<div class="display-row">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Tax</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
+		</div>
+		<div class="display-row" style="border-bottom:1px solid #000000;">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Total</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount}}</div>
+		</div>
+		<div class="display-row">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Cash/Check</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash}}</div>
+		</div>
+		<div class="display-row">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Credit</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit}}</div>
+		</div>
+		<div class="display-row">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Change</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount}}</div>
+		</div>
+	</div>
+	<div style="text-align:center;padding-top:20px;font-size:15px;">
+		<span>*** Customer Copy ***</span>
+	</div>
+	<div style="text-align:left;padding-top:20px;font-size:10px;">
+		<span>Thank You For ouur business!</span>
 	</div>
 </div>

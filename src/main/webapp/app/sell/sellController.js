@@ -308,82 +308,11 @@
 				$scope.firstNames.push(GlobalVariable.getCustomerDtls[i].firstName);
 			}
 			$scope.loadCheckOutData();
-			if(GlobalVariable.returnProduct == true)
-			{	
-				for(var i=0;i<GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length;i++)
-				{
-					$rootScope.testData.push({"itemNo":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
-						"item":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
-						"quantity":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
-						"retail":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retail,
-						"discount":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
-						"total":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
-						"stock":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
-						"costPrice":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost
-						});
-				}	
-				$scope.totalQuantity =GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalQuantity;
-				$scope.subTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].subTotal;
-				$scope.totalDisc =GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
-				$scope.totalTax =GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
-				$scope.productTotal= GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
-				$rootScope.totalPayment =$scope.productTotal;
-				$scope.returnAmount = $rootScope.totalPayment
-				$scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
-				$scope.returnId = Math.round(((Math.random() * 10) * 10));
-				$scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
-				$scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
-				$scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
-				$scope.returncashId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].cashId;
-				$scope.paidAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
-				$scope.paidAmountCreditReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCredit;
-				$scope.changeAmountReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].changeAmount;
-				$scope.creditIdReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].creditId;
-			
-			}
-		}
-		$scope.returnProduct = function()
-		{
-			var msg= "Your total balance is "+-(Number(parseFloat($scope.productTotal)).toFixed(2));
-			modalService.showModal('', '', msg, $scope.callBackReturnCheckout);
-		};
-		$scope.callBackReturnCheckout = function()
-		{
-			var url ="http://localhost:8080/addTransaction";
-			var request = new Object();
-			request = {
-				"transactionDate":$scope.returnDate,  
-				"totalAmount":-($scope.returnAmount),
-				"tax":-($scope.totalTax),
-				"discount":-($scope.totalDisc) ,
-				"customerPhoneNo":$scope.returnPhone,
-				"userId":$scope.userIdReturn,
-				"cashId":$scope.returncashId,
-				"status":"return",
-			"paidAmountCash":-($scope.paidAmountReturn),
-			"changeAmount":-($scope.changeAmountReturn),
-				"creditId":$scope.creditIdReturn,
-				"paidAmountCredit":-($scope.paidAmountCreditReturn),
-			"transactionCompId":$scope.returnId,
-			"subTotal":-($scope.subTotal),
-			"totalQuantity":-($scope.totalQuantity)
 
-			};
-			request = JSON.stringify(request);
-			dataService.Post(url,request,returnTransactionSuccessHandler,returnTransactionErrorHandler,"application/json","application/json");
-		};
-		function returnTransactionSuccessHandler(response)
-		{
-			$rootScope.testData = [];
-			$scope.totalQuantity = 0;
-			$scope.subTotal = 0;
-			$scope.productTotal = 0;
-			$rootScope.totalPayment = 0;
 		}
-		function returnTransactionErrorHandler(response)
-		{
-			
-		}
+
+
+
 		render();
 	}
 		

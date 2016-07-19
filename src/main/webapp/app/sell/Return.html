@@ -1,0 +1,90 @@
+<div class="container" style="padding-top:59px;">
+
+    <div class="row">
+        <div class="searchItems col-md-6" style="margin-bottom:10px;">
+
+
+            <div class="buttons" style="text-align:left;padding-top:10px;">
+                <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="navigateToSellPage()">Make New Sell</button>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8" style="background-color:#FFFFFF;padding:10px;padding-top:53px;">
+            <div data-responsive-table data-ng-model="returnData"  data-current-page="currentPageIndexArr"
+                 class="full-width" style="height:500px;overflow:auto;">
+                <columns style="bakcground:red;">
+                    <column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true"></column>
+                    <column name="Item Description" key="item" datatype="string" width="50%">
+                        <cell ng-non-bindable>
+                            {{::row.item}}
+                        </cell>
+                    </column>
+                    <column name="Quantity" key="quantity" datatype="string" width="2%">
+
+                    </column>
+                    <column name="Retail" key="retail" datatype="string" width="7%"></column>
+                    <column name="Ret W/Disc" key="discount" datatype="string" width="20%"></column>
+                    <column name="Total" key="total" datatype="string" width="8%">
+                        <cell ng-non-bindable>
+                            {{::row.total}}
+                        </cell>
+                    </column>
+                    <column name="Stock" key="stock" datatype="string" width="5%"></column>
+                    <column name="Delete" key="" datatype="string" width="5%">
+                        <cell ng-non-bindable>
+                            <!-- <span>
+                                <a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
+                            </span> -->
+                            <a ng-click="scope.removeRow(row.itemNo)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+                        </cell>
+                    </column>
+                </columns>
+            </div>
+
+        </div>
+        <div class="cold-md-4" style="background-color:#FFFFFF;padding:10px;padding-top:20px;">
+            <div class="row totalColumn display-table tableMainProp" align="center">
+                <div class="display-row">
+                    <div class=" inline-vertical display-cell align-left">Quantity</div>
+                    <div class=" inline-vertical display-cell align-left padding-left-40" ng-model="totalQuantity">{{totalQuantity}}</div>
+                </div>
+                <div class="display-row">
+                    <div class="padding-top-10 inline-vertical display-cell align-left">Subtotal</div>
+                    <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="subTotal">{{subTotal}}</div>
+                </div>
+                <div class="display-row">
+                    <div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
+                    <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" /></div>
+                </div>
+                <div class="display-row">
+                    <div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
+                    <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
+                        <select id="prType" data-ng-model="totalTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
+                            <option value="select">Select Tax</option>
+                            <option value="Brand">1</option>
+                            <option value="Vendor">2</option>
+                            <option value="Category">3</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="display-row">
+                    <div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
+                    <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{productTotal}}</div>
+                </div>
+            </div>
+            <div class="row paymentBtns padding-top-10" style="text-align:center;">
+                <button  class="btn btn-primary margin-top-1 wrap-text payment-btn return-btn-color"  ng-click="returnProduct()" ng-disabled="!(returnData.length > 0)">
+                    <span style="float:left;">Return</span>
+                    <span style="float:right;">${{totalPayment}}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+</div>

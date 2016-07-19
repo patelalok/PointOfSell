@@ -14,6 +14,7 @@
 		GlobalVarObj.productSuccessAlert = false;
 		GlobalVarObj.addedSucces= false;
 		GlobalVarObj.editedSuccess= false;
+		GlobalVarObj.isPrintPage = false;
 		
 		return GlobalVarObj;
 	}

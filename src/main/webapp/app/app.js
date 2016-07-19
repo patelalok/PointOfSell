@@ -91,6 +91,11 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		    url: '/home',
 		    templateUrl: 'app/home/home.html',
 		    controller: 'HomeController'
-		  });
+		  })
+		.state('return', {
+			url: '/return',
+			templateUrl: 'app/sell/Return.html',
+			controller: 'ReturnController'
+		});
   
 }]);
