@@ -1,5 +1,5 @@
 <div>
-	<div class="row pageHeader" style="padding-left:30px;padding-top:20px;" print-remove>
+	<div class="row pageHeader" style="padding-left:30px;padding-top:20px;">
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:30px">Close Register</span>
 		</div>
@@ -17,8 +17,8 @@
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Credit/</span><span style="display:block;">Debit Card:</span> </div>
 						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userDebit" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-blur="getUserDebit(userDebit)"/></div>
-						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="systemDebit" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difDebit" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="systemDebit" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control color-black"  ng-model="difDebit" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-class="{'color-green':debitColor,'color-red':!debitColor}" /></div>
 					
 					</div>
 				
@@ -27,8 +27,8 @@
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Cash :</span><span style="display:block;visibility:hidden;">Debit Card:</span> </div>
 						<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userCash" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-blur="getUserCash(userCash)" /></div>
-						<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemCash" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difCash" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
+						<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemCash" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control color-black"  ng-model="difCash" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-class="{'color-green':cashColor,'color-red':!cashColor}" /></div>
 					
 					</div>
 				
@@ -36,9 +36,9 @@
 				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Check :</span><span style="display:block;visibility:hidden;">Debit Card:</span> </div>
-						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userCheck" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysCheck" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difCheck" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
+						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userCheck" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-blur="getUserCheck(userCheck)" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysCheck" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control color-black"  ng-model="difCheck" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" ng-class="{'color-green':checkColor,'color-red':!checkColor}" /></div>
 					
 					</div>
 				
@@ -47,7 +47,7 @@
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Actual</span><span style="display:block;">Daily Total:</span> </div>
 						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="totalUser" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalSys" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
+						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalSys" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
 						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalDiff" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
 						
 					</div>
@@ -104,26 +104,49 @@
 									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="reason1"  /></div>
 									<div class="padding-top-10 inline-vertical display-cell align-left" >Amount :</div>
 									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="amount1" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-								</div>
-								<div class="display-row">
-									<div class="padding-top-10 inline-vertical display-cell align-left">Reason :</div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="reason2"  /></div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" >Amount :</div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="amount2" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
-								</div>
-								<div class="display-row">
-									<div class="padding-top-10 inline-vertical display-cell align-left">Reason :</div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="reason3"  /></div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" >Amount :</div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="amount3" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" /></div>
+									<div class="padding-top-10 inline-vertical display-cell align-left" ><button  ng-disabled="getPaidOutDtls.length == 3 " class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="addPaidOut()">Add</button></div>
 								</div>
 								
 					 </div>
-					 <div style="text-align:center;margin-bottom:2px;">
-					 	<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="addPaidOut()">Add Paid Out</button>
-					 </div>
 			</div>
 	
+	</div>
+	<div class="row" style="padding-left:56px;">
+		<div class="col-md-6">
+			<div data-responsive-table data-ng-model="getPaidOutDtls"  data-current-page="currentPageIndexArr"
+				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+				 on-sort="sortColumnData(index)" data-filter-value="bType.filterValue">
+				<columns>
+					<column name="Reason" key="reason" datatype="string" width="10%" sortable="true"></column>
+					<column name="Amount" key="paidOutAmount" datatype="string" width="10%"></column>
+					<column name="" key="" datatype="" width="20%">
+						<cell ng-non-bindable>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editPaidOut(row)"></span>
+							</span>
+							<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span>
+							</span>
+						</cell>
+					</column>
+				</columns>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="padding-top:5px;padding-left:30px;">
+		<div class="col-md-4">
+
+			<div class="totalColumn display-table tableMainProp" align="left">
+				<div class="display-row">
+					<div class="padding-top-10 inline-vertical display-cell align-left">Total :</div>
+					<div style="visibility: hidden;" class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="reason1"  /></div>
+
+					<div class="padding-top-10 inline-vertical display-cell align-left" ><span>{{totalPaidOut}}</span></div>
+					</div>
+
+			</div>
+		</div>
+
 	</div>
 	<div class="row" style="padding-left:30px;text-align:center;padding-top:30px;">
 		

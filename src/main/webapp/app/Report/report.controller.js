@@ -150,7 +150,10 @@
 				loadSalesYearlyData(currentStartDate,currentEndDate);
 			}
 		};
-
+		$scope.applySalesByType = function(type)
+		{
+			$scope.loadSalesCatData('',type);
+		};
 		$scope.loadSalesCatData = function(saleDate,type)
 		{
 			var url;
@@ -196,6 +199,11 @@
 				var years = getCurrentandPreviousYear().split("-");
 				start =years[1]+"-01-01 00:00:00";
 				end =years[1]+"-12-31 23:59:59";
+			}
+			else
+			{
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
 			}
 
 

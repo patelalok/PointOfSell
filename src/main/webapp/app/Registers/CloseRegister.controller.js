@@ -8,6 +8,13 @@
 	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService) {
 		$scope.totalUser = 0;
 		$scope.totalInValue = 0;
+		$scope.userCash = 0;
+		$scope.userDebit = 0;
+		$scope.userCheck = 0;
+		$scope.difDebit =0;
+		$scope.difCash =0;
+		$scope.difCheck =0;
+		$scope.totalDiff =0;
 		function getClosingDetails(startDate,endDate)
 		{
 			var url="http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate;
@@ -17,35 +24,11 @@
 		function getClosingDetailsSuccessHandler(response)
 		{
 			$scope.getClosingDtls = response;
-			/*$scope.getClosingDtls = [
-			                         {
-			                        	    "registerId": 0,
-			                        	    "userIdClose": 1,
-			                        	    "reportCash": 12,
-			                        	    "reportCredit": 12,
-			                        	    "reportTotalAmount": 24,
-			                        	    "closeCash": 23,
-			                        	    "closeCredit": 23,
-			                        	    "closeDate": "2016-06-22 12:23:56.0",
-			                        	    "closeTotalAmount": 12,
-			                        	    "differenceCash": 12,
-			                        	    "differenceCredit": 21,
-			                        	    "totalDifference": 12,
-			                        	    "totalBusinessAmount": 321,
-			                        	    "totalTax": 12,
-			                        	    "totalDiscount": 12,
-			                        	    "totalProfit": 2,
-			                        	    "totalMarkup": 2,
-			                        	    "registerStatus": null
-			                        	  }
-			                         ];*/
+
 			$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
 			$scope.systemCash = $scope.getClosingDtls[0].reportCash;
-			$scope.sysCheck =$scope.getClosingDtls[0].reportCheck
-				$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
-			$scope.difDebit = $scope.getClosingDtls[0].differenceCredit;
-			$scope.difCash = $scope.getClosingDtls[0].differenceCash;
-			$scope.totalDiff = $scope.getClosingDtls[0].totalDifference;
+			$scope.sysCheck =$scope.getClosingDtls[0].reportCheck;
+			$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
 		}
 		function getClosingDtlsErrorHandler(response)
 		{
@@ -53,11 +36,52 @@
 		}
 		$scope.getUserDebit = function(value)
 		{
-			$scope.totalUser = parseFloat($scope.totalUser)+parseFloat(value); 
+			if($scope.userDebit == '')
+				$scope.userDebit = 0;
+			if($scope.userCash == '')
+				$scope.userCash = 0;
+			if($scope.userCheck == '')
+				$scope.userCheck = 0;
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			$scope.difDebit = parseFloat($scope.userDebit)-parseFloat($scope.systemDebit);
+			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
+			if($scope.difDebit >0)
+				$scope.debitColor = true;
+			else
+				$scope.debitColor = false;
 		};
 		$scope.getUserCash = function(value)
 		{
-			$scope.totalUser = parseFloat($scope.totalUser)+parseFloat(value); 
+			if($scope.userDebit == '')
+				$scope.userDebit = 0;
+			if($scope.userCash == '')
+				$scope.userCash = 0;
+			if($scope.userCheck == '')
+				$scope.userCheck = 0;
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			$scope.difCash = parseFloat($scope.userCash)-parseFloat($scope.systemCash);
+			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
+			if($scope.difCash >0)
+				$scope.cashColor = true;
+			else
+				$scope.cashColor = false;
+		};
+		$scope.getUserCheck = function(value)
+		{
+			if($scope.userDebit == '')
+				$scope.userDebit = 0;
+			if($scope.userCash == '')
+				$scope.userCash = 0;
+			if($scope.userCheck == '')
+				$scope.userCheck = 0;
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			$scope.difCheck = parseFloat($scope.userCheck)-parseFloat($scope.sysCheck);
+			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
+
+			if($scope.difCheck >0)
+				$scope.checkColor = true;
+			else
+				$scope.checkColor = false;
 		};
 		$scope.getTotal = function(value,entText)
 		{
@@ -86,7 +110,7 @@
 				    "reportTotalAmount":$scope.totalSys,
 				    "closeCash": $scope.userCash,
 				    "closeCredit":$scope.userDebit,
-				    "closeDate": "2016-06-23 12:23:56.0",
+				    "closeDate": js_yyyy_mm_dd_hh_mm_ss1(),
 				    "closeTotalAmount": $scope.totalUser,
 				    "differenceCash": $scope.difCash,
 				    "differenceCredit": $scope.difDebit,
@@ -100,7 +124,7 @@
 				  };
 			var url="http://localhost:8080/addClosingDetails";
 			dataService.Post(url,request,getSuccessAddhandler,getErrorAddHandler,'application/json','application/json');
-			//getSuccessAddhandler('');
+
 
 		};
 		function getSuccessAddhandler(response)
@@ -122,53 +146,60 @@
 		{
 			var url="http://localhost:8080/getPaidOut?startDate="+startDate+"&endDate="+endDate;
 			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','application/json');
-			//getaddPaidSuccessHandler('');
+
 		}
 		function getaddPaidSuccessHandler(response)
 		{
-			$scope.paidOutDtls = response;
-		/*	$scope.paidOutDtls = [
-			                      {
-			                    	    "paidOut1": 1,
-			                    	    "paidOut2": 2,
-			                    	    "paidOut3": 3,
-			                    	    "reason1": "asd",
-			                    	    "reason2": "asd",
-			                    	    "reason3": "asdas",
-			                    	    "paidOutDate": "2016-06-22 10:11:43.0"
-			                    	  }
-			                    	];*/
-		if($scope.paidOutDtls.length != 0) {
-			$scope.amount1 = $scope.paidOutDtls[0].paidOut1;
-			$scope.amount2 = $scope.paidOutDtls[0].paidOut2;
-			$scope.amount3 = $scope.paidOutDtls[0].paidOut3;
-			$scope.reason1 = $scope.paidOutDtls[0].reason1;
-			$scope.reason2 = $scope.paidOutDtls[0].reason2;
-			$scope.reason3 = $scope.paidOutDtls[0].reason3;
-		}
+			$scope.getPaidOutDtls = response;
+			$scope.totalPaidOut =0;
+			for(var i=0;i<response.length;i++)
+			{
+				$scope.totalPaidOut = $scope.totalPaidOut + parseFloat(response[i].paidOutAmount);
+			}
 		}
 		function getaddpaidErrorHandler(response){
 			
 		}
+		$scope.editPaidOut = function(data)
+		{
+			var request = {
+				"paidOutAmount": data.paidOutAmount,
+				"reason": data.reason,
+				"paidOutId": data.paidOutId
+			};
+			request = JSON.stringify(request);
+			var url='http://localhost:8080/editPaidOut';
+			dataService.Post(url,request,onEditPaidSuccess,onEditPaidError,'application/json','application/json');
+		};
+		function onEditPaidSuccess(response)
+		{
+			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
+			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
+			getPaidOutDetails(startDate,endDate);
+		}
+		function onEditPaidError(response)
+		{
+
+		}
 		$scope.addPaidOut = function()
 		{
 			var request ={
-			    "paidOut1": $scope.amount1,
-			    "paidOut2": $scope.amount2,
-			    "paidOut3": $scope.amount3,
-			    "reason1": $scope.reason1,
-			    "reason2": $scope.reason2,
-			    "reason3": $scope.reason3,
-			    "paidOutDate": js_yyyy_mm_dd_hh_mm_ss()
+
+				"paidOutAmount": $scope.reason1,
+				"reason": $scope.amount1,
+				"paidOutDate": js_yyyy_mm_dd_hh_mm_ss()
 			  };
+			  request = JSON.stringify(request);
 			var url="http://localhost:8080/addPaidOut";
 			dataService.Post(url,request,addPaidSuccessHandler,addPaidErrorHandler,'application/json','application/json');
-			//addPaidSuccessHandler('');
+
 			
 		};
 		function addPaidSuccessHandler(response)
 		{
-			
+			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
+			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
+			getPaidOutDetails(startDate,endDate);
 		}
 		function addPaidErrorHandler(response)
 		{
@@ -185,5 +216,15 @@
 			  var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
 			  return year + "-" + month + "-" + day ;
 			}
+		function js_yyyy_mm_dd_hh_mm_ss1 () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+		}
 	}
 })();

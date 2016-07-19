@@ -1032,3 +1032,11 @@ table th
 {
 	color:#DDD;
 }
+.color-black
+{
+	color:#000000;
+}
+.return-btn-color :hover
+{
+	background-color: red;
+}

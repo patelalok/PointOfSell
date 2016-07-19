@@ -69,9 +69,11 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
+			GlobalVariable.isPrintPage = true;
 			
 			$timeout(function() {
 				$window.print();
+				GlobalVariable.isPrintPage = false;
 			}, 2000);
 			
 		}
@@ -95,7 +97,7 @@
 			GlobalVariable.getReturnDetails = response;
 			
 			GlobalVariable.returnProduct = true;
-			$state.go('sell');
+			$state.go('return');
 		}
 		function getReturnsErrorHandler(response)
 		{
