@@ -9,11 +9,13 @@ import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.core.Response;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 /**
  * Created by asp5045 on 7/18/16.
@@ -22,6 +24,8 @@ import java.io.OutputStream;
 @Component
 public class BarcodeManager {
 
+    Response response;
+
     public static final String DEST = "/Users/asp5045/Desktop/out.png";
     public static final String IMG1 = "/Users/asp5045/Desktop/out.png";
     public static final String IMG2 = "resources/images/dog.bmp";
@@ -29,6 +33,8 @@ public class BarcodeManager {
     Document document = new Document();
 
     public Document getPdf(String productName, double price, int noOfBarcode) throws IOException, DocumentException {
+
+
 
         Image img1 = Image.getInstance("/Users/asp5045/Downloads/PointOfSale/Screen Shot 2016-07-11 at 1.49.18 PM.png");
         try {
@@ -86,6 +92,9 @@ public class BarcodeManager {
             table.addCell(img1);
             table.addCell(img1);
             table.addCell(img1);
+
+
+
 
            /* PdfPTable table1 = new PdfPTable(5); // 3 columns.
 
@@ -242,6 +251,8 @@ public class BarcodeManager {
 
             document.close();
             writer.close();
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

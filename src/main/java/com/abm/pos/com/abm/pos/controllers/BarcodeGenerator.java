@@ -11,7 +11,10 @@ import org.krysalis.barcode4j.impl.upcean.UPCA;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 import java.awt.image.BufferedImage;
@@ -37,10 +41,30 @@ public class BarcodeGenerator {
     @Autowired
     BarcodeManager barcodeManager;
 
+    @Autowired
+    ServletContext context;
+
     @RequestMapping(value="/getpdf", method= RequestMethod.GET,produces = "application/pdf")
-    public Document getBarcode(@RequestParam String productName, @RequestParam double price, @RequestParam int noOfBarcode) throws IOException, DocumentException
+    public ResponseEntity<InputStreamResource> getBarcode(@RequestParam String productName, @RequestParam double price, @RequestParam int noOfBarcode) throws IOException, DocumentException
     {
-       return barcodeManager.getPdf(productName,price,noOfBarcode);
+        String fileName = "AddTableExample1.pdf";
+        ClassPathResource pdfFile = new ClassPathResource("Users/asp5045/Desktop/cmp_image_next_to_text.pdf");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + fileName);
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+
+        //headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+        return response;
+               //barcodeManager.getPdf(productName,price,noOfBarcode);
 
     }
 
