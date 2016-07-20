@@ -59,8 +59,8 @@ public class SQLQueries {
                     "TOTAL_AMOUNT_CREDIT, " +
                     "TOTAL_AMOUNT_CHECK," +
                     "TRANS_CREDIT_ID," +
-                    "LAST_4_DIGITS) " +
-                    "BALANCE" +
+                    "LAST_4_DIGITS, " +
+                    "BALANCE)" +
                      "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
