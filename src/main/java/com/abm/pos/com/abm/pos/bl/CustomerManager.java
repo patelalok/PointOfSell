@@ -99,6 +99,7 @@ public class CustomerManager {
         return customerDto;
     }
 
+
     private static final class CustomerMapper implements RowMapper<CustomerDto>
     {
 
@@ -128,6 +129,18 @@ public class CustomerManager {
 
 
 
+    public String getCustomerBalance(String phoneNo) {
+        String balance = null;
+        try
+        {
+            balance  = (jdbcTemplate.queryForObject(sqlQuery.getCustomerBalance,new Object[] {phoneNo}, String.class));
+        }
+        catch (Exception e)
+        {
+
+        }
+        return balance;
+    }
 
     public void deleteCustomerToDB(String phoneNo) {
 
