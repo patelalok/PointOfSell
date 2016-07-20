@@ -23,6 +23,10 @@
 			regExp : /[^\d.-]/g,
 			label : "Non-numeric characters disallowed, numbers,period and dash allowed"
 		},
+		NumericWithPeriod : {
+			regExp : /[^\d.]/g,
+			label : "Non-numeric characters disallowed, numbers,period and dash allowed"
+		},
 		Alphabet : {
 			regExp : /[^a-zA-Z ]/g,
 			label : "Non-alphabetic characters disallowed"
@@ -51,5 +55,6 @@
 			regExp : /[^0-9/]/g,
 			label : "Non-alphabetic and non-numeric characters disallowed"
 		}
+
 	});
 })();

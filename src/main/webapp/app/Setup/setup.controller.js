@@ -12,7 +12,7 @@
 		{
 			GlobalVariable.totalTaxSetup = $scope.taxSetup;
 		};
-		$scope.addUser = function()
+		$scope.createUser = function()
 		{
 			var _tmPath = 'app/Setup/createUser.html';
 			var _ctrlPath = 'CreateUserController';
