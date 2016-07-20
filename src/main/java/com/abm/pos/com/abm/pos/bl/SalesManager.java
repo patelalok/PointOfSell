@@ -50,7 +50,8 @@ public class SalesManager {
                         transactionDto.getPaidAmountCredit(),
                         transactionDto.getPaidAmountCheck(),
                         transactionDto.getTransCreditId(),
-                        transactionDto.getLast4Digits());
+                        transactionDto.getLast4Digits(),
+                        transactionDto.getBalance());
 
 
                 System.out.println("Transaction Added Successfully");
@@ -105,6 +106,7 @@ public class SalesManager {
                 transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
                 transaction.setStatus(rs.getString("STATUS"));
                 transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+                transaction.setBalance(rs.getDouble("BALANCE"));
             return transaction;
         }
     }

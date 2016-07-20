@@ -47,9 +47,22 @@ public class BarcodeGenerator {
 
     Document document = new Document();
 
+    PdfWriter writer;
+
     @RequestMapping(value="/getpdf", method= RequestMethod.GET,produces = "application/pdf")
     public ResponseEntity<InputStreamResource> getBarcode(@RequestParam String productName, @RequestParam double price, @RequestParam int noOfBarcode) throws IOException, DocumentException
     {
+        String fileName = "AddTableExample.pdf";
+        ClassPathResource pdfFile = new ClassPathResource(fileName);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + fileName);
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
         Image img1 = Image.getInstance("Screen Shot 2016-07-11 at 1.49.18 PM.png");
         try {
 
@@ -85,8 +98,8 @@ public class BarcodeGenerator {
             }
 
 
-            PdfWriter writer = PdfWriter.getInstance(document,new FileOutputStream("AddImageExample.pdf"));
-            document.open();
+            writer = PdfWriter.getInstance(document,new FileOutputStream("AddImageExample.pdf"));
+            /*document.open();
 
             PdfPTable table = new PdfPTable(5); // 3 columns.
 
@@ -105,33 +118,21 @@ public class BarcodeGenerator {
             table.addCell(img1);
 
             document.add(table);
+*/
 
-            document.close();
-            writer.close();
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        String fileName = "AddTableExample.pdf";
-        ClassPathResource pdfFile = new ClassPathResource(fileName);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        headers.add("Access-Control-Allow-Origin", "*");
-        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
-        headers.add("Access-Control-Allow-Headers", "Content-Type");
-        headers.add("Content-Disposition", "filename=" + fileName);
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0");
-
-
-
-       headers.setContentLength(pdfFile.contentLength());
+        headers.setContentLength(pdfFile.contentLength());
         ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
               new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        document.close();
+        writer.close();
+
 
         return response;
 

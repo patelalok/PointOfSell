@@ -60,7 +60,8 @@ public class SQLQueries {
                     "TOTAL_AMOUNT_CHECK," +
                     "TRANS_CREDIT_ID," +
                     "LAST_4_DIGITS) " +
-                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "BALANCE" +
+                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +

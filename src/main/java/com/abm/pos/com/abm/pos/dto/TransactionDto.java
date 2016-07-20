@@ -26,6 +26,15 @@ public class TransactionDto {
     private int totalQuantity;
     private String transCreditId;
     private int last4Digits;
+    private double balance;
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
     public double getPaidAmountCheck() {
         return paidAmountCheck;
