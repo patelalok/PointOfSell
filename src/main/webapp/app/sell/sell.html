@@ -76,8 +76,8 @@
 				</div>
 				<div class="display-row">		
 					<div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
-					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" /></div>
-				</div>	
+					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" /></div>
+				</div>
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
 					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
@@ -89,21 +89,22 @@
 						</select>
 					
 					</div>
-				</div>	
+				</div>
+				<div class="display-row" ng-show="balanceRemaining > 0">
+					<div class="padding-top-10 inline-vertical display-cell align-left">Balance</div>
+					<div class=" inline-vertical display-cell align-left padding-left-40" ng-model="totalQuantity">{{balanceRemaining}}</div>
+				</div>
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
 					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{productTotal}}</div>
 				</div>
 			</div>
 			<div class="row paymentBtns padding-top-10" style="text-align:center;">
-				<button ng-if="GlobalVariable.returnProduct == false" class="btn btn-primary margin-top-1 wrap-text payment-btn payment-btn-color"  ng-click="openCashPopup()" ng-disabled="!(testData.length > 0)">
-				<span style="float:left;" ng-if="GlobalVariable.returnProduct == false">Payment</span>
+				<button  class="btn btn-primary margin-top-1 wrap-text payment-btn payment-btn-color"  ng-click="openCashPopup()" ng-disabled="!(totalPayment > 0)">
+				<span style="float:left;" >Payment</span>
 				<span style="float:right;">${{totalPayment}}</span>
 				</button>
-				<button ng-if="GlobalVariable.returnProduct == true" class="btn btn-primary margin-top-1 wrap-text payment-btn return-btn-color"  ng-click="returnProduct()" ng-disabled="!(testData.length > 0)">
-				<span style="float:left;" ng-if="GlobalVariable.returnProduct == true">Return</span>
-				<span style="float:right;">${{totalPayment}}</span>
-				</button>
+
 			</div>
 		</div>	
 	</div>

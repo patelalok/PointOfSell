@@ -90,7 +90,8 @@
 			"subTotal":GlobalVariable.totalSub,
 			"totalQuantity":GlobalVariable.quantityTotal,
 			"transCreditId":GlobalVariable.transId,
-			"last4Digits":GlobalVariable.last4
+			"last4Digits":GlobalVariable.last4,
+				"balance":$scope.balanceAmount
 
 			};
 			request = JSON.stringify(request);
@@ -137,6 +138,8 @@
 			
 			$rootScope.totalPayment = '0.00';
 			$rootScope.customerName = '';
+			$rootScope.regPhone = '';
+			$rootScope.customerNameOnSearch = '';
 		};
 		/*$scope.callBackCheckoutComplete = function()
 		{
@@ -218,7 +221,13 @@
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
 				$scope.color = true;
 		};
-		
+		$scope.makePartialPayment = function()
+		{
+			DialogFactory.close(true);
+			var _tmPath = 'app/sell/printReceiptModal.html';
+			var _ctrlPath = 'PrintRecepitController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
+		};
 		$scope.calculateAmount = function(value,means)
 		{
 			if(value == "")
@@ -234,8 +243,8 @@
 				$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
 			}
 			
-			$scope.remainingBalance = parseFloat(GlobalVariable.checkOuttotal)-parseFloat(value);
-			$scope.balanceAmount =$scope.remainingBalance;
+			//$scope.remainingBalance = parseFloat(GlobalVariable.checkOuttotal)-parseFloat(value);
+			$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
 			if($scope.balanceAmount <= 0)
 			{
 				var _tmPath = 'app/sell/printReceiptModal.html';

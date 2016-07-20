@@ -6,7 +6,7 @@
 	<div class="modal-body">
 		<div class="row cashbuttons alignCenter">
 			<div class="inline-vertical">CASH</div>
-			<div class="inline-vertical"><input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" placeholder="$O.00" ng-model="cashPayout" ng-blur="calculateAmount(cashPayout,'cash')"/></div>
+			<div class="inline-vertical"><input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" placeholder="$O.00" ng-model="cashPayout" ng-blur="calculateAmount(cashPayout,'cash')"/></div>
 			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;" ng-click="payOutMax('cash')">Max</button></div>
 		</div>
 		<div class="row priceBtns alignCenter padding-top-10">
@@ -22,7 +22,7 @@
 				<span class="displayBlock">CREDIT</span> 
 				<span>CARD</span>
 			</div>
-			<div class="inline-vertical"><input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" placeholder="$O.00" ng-model="creditCardPayout" ng-blur="calculateAmount(creditCardPayout,'credit')" /></div>
+			<div class="inline-vertical"><input type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" placeholder="$O.00" ng-model="creditCardPayout" ng-blur="calculateAmount(creditCardPayout,'credit')" /></div>
 			<div class="inline-vertical"><button type="button" class="btn btn-primary" style="width:75px;font-size:28px;" ng-click="payOutMax('credit')">Max</button></div>
 		</div>
 		<div class="row alignCenter cashbuttons padding-top-10">
@@ -39,11 +39,15 @@
 	</div>
 	<div class="modal-footer">
 	 <div class="row alignCenter">
-	 	<div class="col-md-6">
+	 	<div class="col-md-4">
 		<div class="inline-block" style="font-size:20px;">Total</div>
 		<div class="inline-block" style="padding-left:10px;font-size: 30px;"><span  ng-model="checkPayment" >{{checkPayment}}</span></div>
 		</div>
-		<div class="col-md-6">
+		 <div class="col-md-4">
+			 <button type="button" ng-disabled="balanceAmount == 0 || balanceAmount == ''" class="btn btn-primary" style="" ng-click="makePartialPayment()">Make Partial Payment</button>
+
+		 </div>
+		<div class="col-md-4">
 		<div class="inline-block" style="font-size:20px;">Balance</div>
 		<div class="inline-block" style="padding-left:10px;font-size: 30px;"><span class="color-red" ng-model="balanceAmount" ng-class="{'color-green':color}" >{{balanceAmount}}</span></div>
 		</div>

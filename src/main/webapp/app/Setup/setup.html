@@ -4,29 +4,26 @@
 		<span style="font-weight:bold;font-size:30px">Setup</span>
 	</div>
 </div>
-<div class="row productBtns" style="padding:30px;">	
-  
-	 <div class="col-md-4 productBtn">
-		<div class="padding-bottom-5"><label>Tax</label></div>
-		<div>
-			<input  type="text" class="form-control"  id="name" style="height:52px;width:100%;" ng-model="taxSetup" ng-change="changeTax()"/>
-		</div>
-	 </div>  
+<div class="row productBtns" style="padding:30px;">
 	 <div class="col-md-4 productBtn">
 		<div class="padding-bottom-5" style="visibility:hidden;"><label>Tax</label></div>
 		<div>
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;">Update Tax</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTax();">Tax</button>
 		</div>
 	 </div>
-
-</div>
-<div class="row" style="padding:30px;">
-<div class="col-md-4 productBtn">
-		
+	<div class="col-md-4 productBtn">
+		<div class="padding-bottom-5" style="visibility:hidden;"><label>Tax</label></div>
 		<div>
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="addUser()">Add User</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="createUser();">Create User</button>
 		</div>
-	 </div>
+	</div>
+	<div class="col-md-4 productBtn">
+		<div class="padding-bottom-5" style="visibility:hidden;"><label>Tax</label></div>
+		<div>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getStoreDtls();">Store</button>
+		</div>
+	</div>
+
 </div>
 
 </div>

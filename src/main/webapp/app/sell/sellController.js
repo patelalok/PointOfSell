@@ -11,6 +11,7 @@
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter=restrictCharacter;
 		GlobalVariable.isLoginPage = false;
+		$scope.balanceRemaining =0;
 		
 		var i=0;
 		$scope.pageSize = 10;
@@ -216,6 +217,9 @@
 			$scope.totalQuantity = 0;
 			$scope.subTotal = 0;
 			$scope.productTotal = 0;
+			$scope.regPhone = '';
+			$scope.customerNameOnSearch = '';
+			$scope.balanceRemaining = '';
 			
 		}
 		$scope.test = function()
@@ -254,7 +258,11 @@
 			
 			GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax) * (parseFloat($scope.totalTax) / 100);
 			$scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
-			 
+
+			if($scope.balanceRemaining > 0)
+			{
+				$scope.productTotal = parseFloat($scope.productTotal)+parseFloat($scope.balanceRemaining);
+			}
 			$rootScope.totalPayment = $scope.productTotal;
 			GlobalVariable.checkOuttotal = $rootScope.totalPayment;
 		}
@@ -267,6 +275,8 @@
 				{
 					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName +  ' ' +GlobalVariable.getCustomerDtls[i].lastName;
 					$rootScope.customerPhone= $scope.regPhone;
+					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='+$scope.regPhone;
+					dataService.Get(url,onBalanceSuccess,onBalanceError,'application/json','application/json');
 				}	
 				else
 				{
@@ -277,6 +287,22 @@
 			}	
 			
 		};
+		function onBalanceSuccess(response)
+		{
+			if(response !== null && response !=='')
+			{
+				$scope.balanceRemaining = parseFloat(response);
+				//GlobalVariable.remainingBalanceAmount = $scope.balanceRemaining;
+				$scope.productTotal=$scope.balanceRemaining;
+				$rootScope.totalPayment=$scope.balanceRemaining;
+			}
+
+		}
+		function onBalanceError(response)
+		{
+
+		}
+
 		$scope.searchCustomerByFirst = function()
 		{
 			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
@@ -308,9 +334,40 @@
 				$scope.firstNames.push(GlobalVariable.getCustomerDtls[i].firstName);
 			}
 			$scope.loadCheckOutData();
+			/*if(GlobalVariable.returnProduct == true)
+			{
+				for(var i=0;i<GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length;i++)
+				{
+					$rootScope.testData.push({"itemNo":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
+						"item":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
+						"quantity":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
+						"retail":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retail,
+						"discount":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
+						"total":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
+						"stock":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
+						"costPrice":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost
+						});
+				}
+				$scope.totalQuantity =GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalQuantity;
+				$scope.subTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].subTotal;
+				$scope.totalDisc =GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
+				$scope.totalTax =GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
+				$scope.productTotal= GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
+				$rootScope.totalPayment =$scope.productTotal;
+				$scope.returnAmount = $rootScope.totalPayment
+				$scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
+				$scope.returnId = Math.round(((Math.random() * 10) * 10));
+				$scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
+				$scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
+				$scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
+				$scope.returncashId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].cashId;
+				$scope.paidAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
+				$scope.paidAmountCreditReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCredit;
+				$scope.changeAmountReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].changeAmount;
+				$scope.creditIdReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].creditId;
 
+			}*/
 		}
-
 
 
 		render();
