@@ -33,10 +33,12 @@ public class BarcodeManager {
     public static final String IMG3 = "resources/images/fox.bmp";
     Document document = new Document();
 
-    public Document getPdf(String productName, double price, int noOfBarcode) throws IOException, DocumentException {
+    public void getPdf(String productName, double price, int noOfBarcode) throws IOException, DocumentException {
+
+    }}
 
 
-        Image img1 = Image.getInstance("Screen Shot 2016-07-11 at 1.49.18 PM.png");
+        /*Image img1 = Image.getInstance("Screen Shot 2016-07-11 at 1.49.18 PM.png");
         try {
 
             Code39Bean bean = new Code39Bean();
@@ -101,8 +103,8 @@ public class BarcodeManager {
         }
 
 return document;
-    }
-}
+    }*/
+
         /*Document document = new Document();
 
         try {
