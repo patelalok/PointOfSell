@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Set;
 
 /**
  * Created by asp5045 on 7/18/16.
@@ -18,10 +20,6 @@ import java.io.*;
 @Component
 public class BarcodeManager {
 
-    public static final String DEST = "/Users/asp5045/Desktop/out.png";
-    public static final String IMG1 = "/Users/asp5045/Desktop/out.png";
-    public static final String IMG2 = "resources/images/dog.bmp";
-    public static final String IMG3 = "resources/images/fox.bmp";
 
 
     public void getPdf(String productName, double price, int noOfBarcode) throws IOException, DocumentException {
@@ -54,33 +52,52 @@ public class BarcodeManager {
         } finally {
             out.close();
         }
-        Document document = new Document();
+
 
 try {
 
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/Users/asp5045/Downloads/PointOfSale/src/main/resources/downloads/AddTableExample2.pdf"));
+    Document document = new Document();
+    PdfPTable table = new PdfPTable(5);
+    PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/Users/asp5045/Downloads/PointOfSale/src/main/resources/downloads/AddTableExample2.pdf"));
 
-        document.open();
-        document.add(new Paragraph("Image Example"));
+    document.open();
+    /*document.add(new Paragraph("Image Example"));
+    table.setWidthPercentage(50);
+    table.addCell("Different images, one after the other vertically:");
+    table.addCell("Brazil");
+    //Add Image
+    Image image1 = Image.getInstance("outAlok.png");
+    PdfPCell cell = new PdfPCell();
+    cell.addElement(image1);
+    cell.addElement(image1);
+    table.addCell(cell);
 
-        //Add Image
-        Image image1 = Image.getInstance("outAlok.png");
-        //Fixed Positioning
-        image1.setAbsolutePosition(100f, 550f);
-        //Scale to new height and new width of image
-        image1.scaleAbsolute(200, 200);
-        //Add to document
-        document.add(image1);
+    document.add(table);*/
+    Image image1 = Image.getInstance("outAlok.png");
+    table.setWidthPercentage(100); //Width 100%
+    table.setSpacingBefore(7.5f); //Space before table
+    table.setSpacingAfter(7.5f); //Space after table
+
+    //Set Column widths
+    float[] columnWidths = {1.5f, 1.5f, 1.5f, 1.5f, 1.5f};
+    table.setWidths(columnWidths);
+
+    table.addCell(image1);
+    table.addCell(image1);
+    table.addCell(image1);
+    table.addCell(image1);
+    table.addCell(image1);
+
+    document.add(table);
+
+    document.close();
+
+} catch (Exception e)
+{
+    e.printStackTrace();
+}
 
 
-
-    }
-catch (Exception e)
-    {
-        e.printStackTrace();
-    }
-
-        document.close();
 
         }
 
