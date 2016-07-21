@@ -1,9 +1,12 @@
 package com.abm.pos.com.abm.pos.controllers;
 
+import com.abm.pos.com.abm.pos.bl.BarcodeManager;
 import com.abm.pos.com.abm.pos.bl.ReportManager;
 import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonDto;
 import com.abm.pos.com.abm.pos.dto.reports.CommonInventoryDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,6 +28,9 @@ public class ReportController {
 
     @Autowired
     ReportManager reportManager;
+
+    @Autowired
+    BarcodeManager barcodeManager;
 
     @RequestMapping(value = "/getTop50Items",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Top50ItemsDto> getTop50Items(@RequestParam String startDate, String endDate)
@@ -62,9 +69,8 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/getSalesByCustomer",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByCustomer(@RequestParam String startDate, String endDate)
-    {
-        return reportManager.getSalesByCustomer(startDate,endDate);
+    public List<CommonComparisonDto> getSalesByCustomer(@RequestParam String startDate, String endDate) {
+        return reportManager.getSalesByCustomer(startDate, endDate);
     }
 
     @RequestMapping(value = "/getInventoryByCategory",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

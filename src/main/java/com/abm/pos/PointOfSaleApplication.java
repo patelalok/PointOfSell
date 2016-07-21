@@ -1,6 +1,6 @@
 package com.abm.pos;
 
-import com.itextpdf.text.Image;
+import com.itextpdf.text.*;
 import org.krysalis.barcode4j.impl.code39.Code39Bean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
 import org.krysalis.barcode4j.tools.UnitConv;
@@ -9,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.awt.image.BufferedImage;
@@ -24,8 +21,11 @@ import static java.lang.System.out;
 @SpringBootApplication
 public class PointOfSaleApplication {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, BadElementException {
 		SpringApplication.run(PointOfSaleApplication.class, args);
+
+
+
 
 		/*Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2016);
