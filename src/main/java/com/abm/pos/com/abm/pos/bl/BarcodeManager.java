@@ -47,7 +47,7 @@ public class BarcodeManager {
                     out, "image/x-png", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
 
             //Generate the barcode
-            bean.generateBarcode(canvas,productName + price);
+            bean.generateBarcode(canvas,productName + price+ "alok");
 
             //Signal end of generation
             canvas.finish();
@@ -58,7 +58,8 @@ public class BarcodeManager {
 
 try {
 
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("downloads/AddImageExampleTest.pdf"));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/Users/asp5045/Downloads/PointOfSale/src/main/resources/downloads/AddTableExample2.pdf"));
+
         document.open();
         document.add(new Paragraph("Image Example"));
 

@@ -2,6 +2,8 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.BarcodeManager;
 
+import com.abm.pos.com.abm.pos.dto.FinalTotalForReportsDto;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -38,8 +40,8 @@ public class BarcodeGenerator {
 
         barcodeManager.getPdf(productName,price,noOfBarcode);
 
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
 
-        ClassPathResource pdfFile = new ClassPathResource("downloads/AddImageExampleTest.pdf");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.add("Access-Control-Allow-Origin", "*");
