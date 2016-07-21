@@ -40,28 +40,7 @@ public class SQLQueries {
     //ADD TRANSACTION INTO DATABASE
 
     public String addTransaction =
-            "INSERT INTO TRANSACTION " +
-                    "(" +
-                    "TRANSACTION_COMP_ID," +
-                    "TRANSACTION_DATE," +
-                    "TOTAL_AMOUNT," +
-                    "TAX_AMOUNT," +
-                    "DISCOUNT_AMOUNT," +
-                    "SUBTOTAL," +
-                    "TOTALQUANTITY," +
-                    "CUSTOMER_PHONENO," +
-                    "USER_ID," +
-                    "PAYMENT_ID_CASH," +
-                    "STATUS," +
-                    "PAID_AMOUNT_CASH," +
-                    "CHANGE_AMOUNT," +
-                    "PAYMENT_ID_CREDIT," +
-                    "TOTAL_AMOUNT_CREDIT, " +
-                    "TOTAL_AMOUNT_CHECK," +
-                    "TRANS_CREDIT_ID," +
-                    "LAST_4_DIGITS, " +
-                    "BALANCE)" +
-                     "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "INSERT INTO TRANSACTION(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,SUBTOTAL,TOTALQUANTITY,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID_CASH,STATUS,PAID_AMOUNT_CASH,CHANGE_AMOUNT,PAYMENT_ID_CREDIT,TOTAL_AMOUNT_CREDIT,TOTAL_AMOUNT_CHECK,TRANS_CREDIT_ID,LAST_4_DIGITS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -224,5 +203,6 @@ public class SQLQueries {
     public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_ID) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, BRAND b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
     public String getSalesByUser = "SELECT  c.FIRST_NAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT  FROM TRANSACTION_LINE_ITEM t, CUSTOMER c, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND c.PHONE_NO = l.CUSTOMER_PHONENO AND t.DATE BETWEEN ? AND ? group by c.FIRST_NAME";
     public String getSalesbyCustomer = "SELECT  u.USERNAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, USER u, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND u.USER_ID = l.USER_ID AND t.DATE BETWEEN ? AND ? group by u.USERNAME";
-    public String getCustomerBalance = "SELECT sum(BALANCE) BALANCE FROM TRANSACTION WHERE CUSTOMER_PHONENO = ?";
+    public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
+    public String addBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ? WHERE PHONE_NO = ? ";
 }

@@ -50,8 +50,12 @@ public class SalesManager {
                         transactionDto.getPaidAmountCredit(),
                         transactionDto.getPaidAmountCheck(),
                         transactionDto.getTransCreditId(),
-                        transactionDto.getLast4Digits(),
-                        transactionDto.getBalance());
+                        transactionDto.getLast4Digits());
+
+                        jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
+                                transactionDto.getBalance(),
+                                transactionDto.getCustomerPhoneNo());
+
 
 
                 System.out.println("Transaction Added Successfully");
