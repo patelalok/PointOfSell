@@ -10,8 +10,8 @@ public class CustomerDto {
     private String phoneNo;
     private String email;
     private String dateOfBirth;
+    private String customerType;
     private String gender;
-    private String aptNo;
     private String street;
     private String city;
     private String state;
@@ -19,6 +19,7 @@ public class CustomerDto {
     private String zipcode;
     private String fax;
     private String customerCreatedDate;
+    private double balance;
 
 
     public String getZipcode() {
@@ -27,14 +28,6 @@ public class CustomerDto {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
-    }
-
-    public String getAptNo() {
-        return aptNo;
-    }
-
-    public void setAptNo(String aptNo) {
-        this.aptNo = aptNo;
     }
 
     public String getCity() {
@@ -133,11 +126,21 @@ public class CustomerDto {
         this.street = street;
     }
 
+    public double getBalance() {
+        return balance;
+    }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 
+    public String getCustomerType() {
+        return customerType;
+    }
 
-
-
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
 }
 
 

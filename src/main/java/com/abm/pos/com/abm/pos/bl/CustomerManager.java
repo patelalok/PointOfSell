@@ -34,8 +34,8 @@ public class CustomerManager {
                     customerDto.getPhoneNo(),
                     customerDto.getEmail(),
                     customerDto.getDateOfBirth(),
+                    customerDto.getCustomerType(),
                     customerDto.getGender(),
-                    customerDto.getAptNo(),
                     customerDto.getStreet(),
                     customerDto.getCity(),
                     customerDto.getState(),
@@ -59,17 +59,18 @@ public class CustomerManager {
             jdbcTemplate.update(sqlQuery.editCustomerQuery,
                     customerDto.getFirstName(),
                     customerDto.getLastName(),
-                    customerDto.getPhoneNo(),
+
                     customerDto.getEmail(),
                     customerDto.getDateOfBirth(),
                     customerDto.getGender(),
-                    customerDto.getAptNo(),
+                    customerDto.getCustomerType(),
                     customerDto.getStreet(),
                     customerDto.getCity(),
                     customerDto.getState(),
                     customerDto.getCountry(),
                     customerDto.getZipcode(),
-                    customerDto.getFax());
+                    customerDto.getFax(),
+                    customerDto.getPhoneNo());
 
 
             System.out.println("Customer Edited Successfully");
@@ -113,8 +114,8 @@ public class CustomerManager {
             customer.setPhoneNo(rs.getString("PHONE_NO"));
             customer.setEmail(rs.getString("EMAIL"));
             customer.setDateOfBirth(rs.getString("DATEOFBIRTH"));
+            customer.setCustomerType(rs.getString("CUSTOMER_TYPE"));
             customer.setGender(rs.getString("GENDER"));
-            customer.setAptNo(rs.getString("APT_NO"));
             customer.setStreet(rs.getString("STREET"));
             customer.setCity(rs.getString("CITY"));
             customer.setState(rs.getString("STATE"));
@@ -122,6 +123,7 @@ public class CustomerManager {
             customer.setZipcode(rs.getString("ZIPCODE"));
             customer.setFax(rs.getString("FAX"));
             customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
+            customer.setBalance(rs.getDouble("BALANCE"));
 
             return customer;
         }

@@ -20,7 +20,7 @@ public class SQLQueries {
 
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
-            "(FIRST_NAME,LAST_NAME,PHONE_NO,EMAIL,DATEOFBIRTH,GENDER,APT_NO,STREET,CITY,STATE,COUNTRY,ZIPCODE,FAX,CUSTOMER_CREATE_DATE)" +
+            "(FIRST_NAME,LAST_NAME,PHONE_NO,EMAIL,DATEOFBIRTH,CUSTOMER_TYPE,GENDER,STREET,CITY,STATE,COUNTRY,ZIPCODE,FAX,CUSTOMER_CREATE_DATE)" +
             " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addVendorQuery =
@@ -81,8 +81,8 @@ public class SQLQueries {
             "ATL_NO = ?, DESCRIPTION = ?, COST_PRICE = ?,  MARKUP = ?, RETAIL_PRICE = ?, QUANTITY = ?, MIN_PRODUCT = ?, RETURN_RULE = ?, " +
             "IMAGE = ? WHERE PRODUCT_ID = ?";
 
-    public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, PHONE_NO = ?, EMAIL = ?, DATEOFBIRTH = ?, GENDER = ?, APT_NO = ?," +
-            " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ? WHERE CUSTOMER_ID = ?";
+    public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, EMAIL = ?, DATEOFBIRTH = ?,CUSTOMER_TYPE = ?, GENDER = ?, " +
+            " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ? WHERE PHONE_NO = ?";
 
     public String editVendorQuery = "UPDATE VENDOR SET VENDOR_NAME = ?, COMMISION = ?, PHONENO = ?, COMPANY_NAME = ?, ADDRESS = ? WHERE VENDOR_ID = ?";
 
@@ -90,7 +90,7 @@ public class SQLQueries {
 
     public String editBrandQuery = "UPDATE BRAND SET BRAND_NAME = ?, DESCRIPTION = ? WHERE BRAND_ID = ?";
 
-    public String editUserQuery = "UPDATE USER SET PASSWORD = ?, USER_ROLE = ? WHERE USER_ID = ? AND USERNAME = ?";
+    public String editUserQuery = "UPDATE USER SET PASSWORD = ?, USER_ROLE = ? WHERE USERNAME = ?";
 
 
     //SQL QUERY TO GET  DETAILS FROM DATABASE

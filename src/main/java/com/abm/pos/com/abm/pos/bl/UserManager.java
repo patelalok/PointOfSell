@@ -50,7 +50,6 @@ public class UserManager {
 
                     userDto.getPassword(),
                     userDto.getUserRole(),
-                    userDto.getUserId(),
                     userDto.getUsername());
 
             System.out.println("User Edited Successfully");
@@ -62,7 +61,7 @@ public class UserManager {
         }
     }
 
-    public boolean getUserDetails(String username, String password) {
+    public boolean getUserLoginDetails(String username, String password) {
 
         List<UserDto> user = new ArrayList<>();
         boolean response = false;
@@ -74,7 +73,7 @@ public class UserManager {
             {
                 UserDto u = user.get(i);
 
-                if(u.getUsername().equals(username))
+                if(u.getUsername().equals(username) && u.getPassword().equals(password))
                 {
                     response = true;
                     System.out.println(u.getUsername());
@@ -97,6 +96,9 @@ public class UserManager {
 
         return response;
     }
+
+
+
     private static final class AddUserMapper implements RowMapper<UserDto>
     {
 
@@ -115,6 +117,21 @@ public class UserManager {
         }
     }
 
+    public List<UserDto> getUserDetails() {
+
+        List<UserDto> user = new ArrayList<>();
+
+        try
+        {
+            user = jdbcTemplate.query(sqlQuery.getUserDetails, new UserManager.AddUserMapper());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return user;
+        }
     public void deleteVendorToDB(String vendorId) {
     }
 

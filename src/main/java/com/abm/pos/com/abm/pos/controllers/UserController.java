@@ -5,6 +5,8 @@ import com.abm.pos.com.abm.pos.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by asp5045 on 5/25/16.
  */
@@ -28,10 +30,17 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
-    public boolean getUserDetails(@RequestParam String username, @RequestParam String password) {
+    @RequestMapping(value = "/getUserLoginDetails", method = RequestMethod.GET)
+    public boolean getUserLoginDetails(@RequestParam String username, @RequestParam String password) {
 
-        return userManager.getUserDetails(username,password);
+        return userManager.getUserLoginDetails(username,password);
+
+    }
+
+    @RequestMapping(value = "/getUserDetails", method = RequestMethod.GET, produces = "application/json")
+    public List<UserDto> getUserDetails() {
+
+        return userManager.getUserDetails();
 
     }
 
