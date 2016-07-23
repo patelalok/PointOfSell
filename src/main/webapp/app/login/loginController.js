@@ -10,6 +10,7 @@
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
+		$scope.errorMessage="";
 		
 		GlobalVariable.isLoginPage = true;
 		
@@ -22,18 +23,25 @@
 			/*var request = {};
 			request.email = $scope.loginemail;
 			request.password=$scope.loginpassword;*/
-			var url='http://localhost:8080/getUserDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
+
+			var url='http://localhost:8080/getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
 			dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
 			//$state.go('report');
 		};
 		function onLoginSuccess(response)
 		{
-			if(response == true)
+			if(response == true) {
+				$scope.errorMessage = ''
 				$state.go('home');
+			}
+			else
+			{
+				$scope.errorMessage="Your login is incorrect. Please re-enter your User Name and Password. "
+			}
 		}
 		function onLoginError(response)
 		{
-			
+			$scope.errorMessage="Your login is incorrect. Please re-enter your User Name and Password. "
 		}
 	}
 })();

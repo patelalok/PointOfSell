@@ -18,6 +18,9 @@
 				</div>
 			</div> -->
 			<div class="loginForm padding-top-10">
+				<div id="loginMessageDiv" ng-show="errorMessage" class="alert alert-danger">
+					{{errorMessage}}
+				</div>
 				<form id="login-form" name="login" novalidate autocomplete="off" ng-submit="onLoginClicked($event)">
 					<div class="form-group">
                         <label for="login-email" class="padding-bottom-5">Email Or Username</label>

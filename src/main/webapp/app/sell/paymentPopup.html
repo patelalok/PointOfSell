@@ -44,7 +44,7 @@
 		<div class="inline-block" style="padding-left:10px;font-size: 30px;"><span  ng-model="checkPayment" >{{checkPayment}}</span></div>
 		</div>
 		 <div class="col-md-4">
-			 <button type="button" ng-disabled="balanceAmount == 0 || balanceAmount == ''" class="btn btn-primary" style="" ng-click="makePartialPayment()">Make Partial Payment</button>
+			 <button type="button" ng-disabled="(balanceAmount == 0 || balanceAmount == '') &&(GlobalVariable.customerFound = false)" class="btn btn-primary" style="" ng-click="makePartialPayment()">Make Partial Payment</button>
 
 		 </div>
 		<div class="col-md-4">

@@ -12,6 +12,7 @@
 		$scope.restrictCharacter=restrictCharacter;
 		GlobalVariable.isLoginPage = false;
 		$scope.balanceRemaining =0;
+		GlobalVariable.customerFound = false;
 		
 		var i=0;
 		$scope.pageSize = 10;
@@ -104,7 +105,7 @@
 					$scope.discount =0;
 					 for(var i=0;i<GlobalVariable.getProducts.length;i++)
 					    {
-					    	if(searchTxt === GlobalVariable.getProducts[i].prodcutNo)
+					    	if(searchTxt === GlobalVariable.getProducts[i].productNo)
 					    	{
 					    		$rootScope.testData.push({"itemNo":GlobalVariable.getProducts[i].productId,
 									"item":GlobalVariable.getProducts[i].description,
@@ -277,6 +278,7 @@
 					$rootScope.customerPhone= $scope.regPhone;
 					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='+$scope.regPhone;
 					dataService.Get(url,onBalanceSuccess,onBalanceError,'application/json','application/json');
+					GlobalVariable.customerFound = true;
 				}	
 				else
 				{

@@ -12,7 +12,7 @@
 	<div class="col-md-12" style="padding-top:20px;">
 		<div class="row">
 				<div class="col-md-12">
-                        <label for="Website" class="padding-bottom-5 font-weight-label">UserName</label>
+                        <label for="userName" class="padding-bottom-5 font-weight-label">UserName</label>
                         <input type="text" class="form-control" name="userName" id="userName" data-ng-model="userName"
                         autocomplete="off" autofocus  style="width:100%;height:50px;" />
 				</div>
@@ -25,14 +25,14 @@
 				</div>
 				<div class="col-md-6">
                         <label for="newRePassword" class="padding-bottom-5 font-weight-label">Re-Enter New Password</label>
-                        <input type="text" class="form-control" name="newRePassword" id="newRePassword" data-ng-model="newRePassword"
+                        <input type="password" class="form-control" name="newRePassword" id="newRePassword" data-ng-model="newRePassword"
                         autocomplete="off"  style="width:100%;height:50px;" />
 				</div>
 			</div>
 			<div class="row padding-top-15">
 				<div class="col-md-6">
                         <label for="firstName" class="padding-bottom-5 font-weight-label">First Name</label>
-                        <input type="password" class="form-control" name="firstName" id="firstName" data-ng-model="firstName"
+                        <input type="text" class="form-control" name="firstName" id="firstName" data-ng-model="firstName"
                         autocomplete="off"  style="width:100%;height:50px;" />
 				</div>
 				<div class="col-md-6">
@@ -43,8 +43,8 @@
 			</div>
 			<div class="row padding-top-15">
 				<div class="col-md-12">
-                        <label for="email" class="padding-bottom-5 font-weight-label">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" data-ng-model="email"
+                        <label for="userRole" class="padding-bottom-5 font-weight-label">User Role</label>
+                        <input type="text" class="form-control" name="userRole" id="userRole" data-ng-model="userRole"
                         autocomplete="off" autofocus  style="width:100%;height:50px;" />
 				</div>
 		</div>
@@ -54,7 +54,8 @@
 </div>
 <div class="modal-footer">
 	 <div class="row alignCenter">
-	 	<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="createUser()">Create User</button>
+	 	<button ng-show="!GlobalVariable.editUser" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addUser()">Create User</button>
+		 <button ng-show="GlobalVariable.editUser" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="editUser()">Edit User</button>
  	</div>	
 	</div>
 </div>

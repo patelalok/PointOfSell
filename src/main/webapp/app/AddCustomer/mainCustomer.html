@@ -1,35 +1,32 @@
 <div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successCustAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedCustSuccessfull">Customer Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editCustSuccess">Customer Edited Successfully</span>
+		</div>
+	</div>
 <div class="row padding-top-20" style="padding:30px;">
 	<div class="col-md-1" style="width:16%;">
-		<div class="padding-bottom-5"><label>Name</label></div>
+		<div class="padding-bottom-5"><label>Search By Phone</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;"/>
+			<input type="tel" data-ng-model="regPhone" class="form-control" name="reg-phone" id="reg-phone" ui-mask="(999) 999-9999"
+				   placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"   />
 		</div>
 	</div>
 	<div class="col-md-1" style="width:16%;">
-		<div class="padding-bottom-5"><label>Email</label></div>
+		<div class="padding-bottom-5"><label>Search By First Name</label></div>
 		<div>
-			<input  type="email" class="form-control" data-ng-model="name" id="name" style="height:52px;width:100%;"/>
+			<input type="text" data-ng-model="customerNameOnSearch" class="form-control"  style="width:100%;height:52px;" />
 		</div>
 	</div>
-	<div class="col-md-1" style="width:16%;">
-		<div class="padding-bottom-5"><label>Customer Group</label></div>
-		<div>
-			<select id="prType" data-ng-model="pType" class="form-control" style="height:52px;width:100%;">
-							<option value="">Select All</option>
-						</select>
-		</div>
-	</div>
+
 	<div class="col-md-1" style="width:16%;">
 	<div class="padding-bottom-5"><label></label></div>
 		<div class="filterBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;">Apply Filter</button>
-	</div>
-	</div>
-	<div class="col-md-1" style="width:16%;">
-	<div class="padding-bottom-5"><label></label></div>
-		<div class="filterBtn">
-		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="navigateToAddProduct('product')">Add Customer</button>
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="addNewCustomerDetails()">Add Customer</button>
 	</div>
 	</div>
 
@@ -40,22 +37,23 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)">
 				<columns>
-					<column name="Contact" key="contact" datatype="string" width="10%" sortable="true"></column>
-					<column name="Company" key="company" datatype="string" width="10%"></column>
-					<column name="Suburb" key="suburb" datatype="string" width="10%"></column>
+					<column name="First Name" key="firstName" datatype="string" width="10%" sortable="true"></column>
+					<column name="Last Name" key="lastName" datatype="string" width="10%"></column>
+					<column name="Phone No" key="phoneNo" datatype="string" width="10%"></column>
+					<column name="Email" key="email" datatype="string" width="10%"></column>
 					<column name="City" key="city" datatype="string" width="10%"></column>
-					<column name="Code" key="code" datatype="string" width="10%"></column>
-					<column name="Group" key="group" datatype="string" width="10%"></column>
-					<column name="$ 12mnths" key="pend" datatype="string" width="10%"></column>
-					<column name="$ balance" key="balance" datatype="string" width="10%"></column>
+					<column name="Customer Type" key="customerType" datatype="string" width="10%"></column>
+					<column name="12mths Spending" key="spending" datatype="string" width="10%"></column>
+					<column name="Balance" key="balance" datatype="string" width="10%"></column>
 					<column name="" key="" datatype="" width="10%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
 								<a style="cursor:pointer">View</a>
 							</span>
 							<span class="inline-vertical">
-								<a style="cursor:pointer">Edit</a>
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editCustomerDetails(row)"></span>
 							</span>
+
 						</cell>
 					</column>
 				</columns>		

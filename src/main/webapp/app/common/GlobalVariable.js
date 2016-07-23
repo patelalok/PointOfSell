@@ -15,6 +15,9 @@
 		GlobalVarObj.addedSucces= false;
 		GlobalVarObj.editedSuccess= false;
 		GlobalVarObj.isPrintPage = false;
+		GlobalVarObj.editUser == false;
+		GlobalVarObj.editTax = false;
+		GlobalVarObj.editCustomer = false;
 		
 		return GlobalVarObj;
 	}

@@ -885,7 +885,7 @@ font-weight: bold;
 }
 .color-green
 {
-	color:green !important;
+	color:green;
 }
 .color-red
 {
@@ -1032,11 +1032,15 @@ table th
 {
 	color:#DDD;
 }
-.color-black
+/*.color-black
 {
 	color:#000000;
-}
+}*/
 .returnBtn :hover
 {
 	background-color: red;
+}
+.verticalLine {
+	border-right: 1px solid #CCC;
+	height: 500px;
 }

@@ -1,26 +1,77 @@
 <div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successUsesAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedSuccessfull">User Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editSuccess">User Edited Successfully</span>
+		</div>
+	</div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successTaxAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedSuccessfull">Tax Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editSuccess">Tax Edited Successfully</span>
+		</div>
+	</div>
 <div class="row pageHeader" style="padding:30px;">
 	<div class="col-md-12 pageHeader">
 		<span style="font-weight:bold;font-size:30px">Setup</span>
 	</div>
 </div>
 <div class="row productBtns" style="padding:30px;">
-	 <div class="col-md-4 productBtn">
-		<div class="padding-bottom-5" style="visibility:hidden;"><label>Tax</label></div>
-		<div>
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTax();">Tax</button>
+	 <div class="col-md-6 productBtn verticalLine">
+
+		<div style="text-align: center;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTax()">Tax</button>
 		</div>
+		 <div data-responsive-table data-ng-model="getTaxDtls"  data-current-page="currentPageIndexArr"
+			  class="full-width" style="padding-top:10px;">
+			 <columns>
+				 <column name="Tax Id" key="id" datatype="string" width="30%" sortable="true"></column>
+				 <column name="Tax Value" key="tax" datatype="string" width="30%"></column>
+				 <column name="" key="" datatype="" width="30%">
+					 <cell ng-non-bindable>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editTax(row)"></span>
+							</span>
+						 <span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scoep.deleteTax(row.id)"></span>
+							</span>
+
+					 </cell>
+				 </column>
+			 </columns>
+		 </div>
 	 </div>
-	<div class="col-md-4 productBtn">
-		<div class="padding-bottom-5" style="visibility:hidden;"><label>Tax</label></div>
-		<div>
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="createUser();">Create User</button>
+
+	<div class="col-md-6 productBtn">
+
+		<div style="text-align: center;">
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="createNewUser()">Create User</button>
 		</div>
-	</div>
-	<div class="col-md-4 productBtn">
-		<div class="padding-bottom-5" style="visibility:hidden;"><label>Tax</label></div>
-		<div>
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getStoreDtls();">Store</button>
+		<div data-responsive-table data-ng-model="getUserDtls"  data-current-page="currentPageIndexArr"
+			 class="full-width" style="padding-top:10px;">
+			<columns>
+				<column name="User Id" key="userId" datatype="string" width="20%" sortable="true"></column>
+				<column name="User Name" key="username" datatype="string" width="20%"></column>
+				<column name="User Role" key="userRole" datatype="string" width="20%"></column>
+				<column name="Created Date" key="createdDate" datatype="string" width="20%"></column>
+				<column name="" key="" datatype="" width="20%">
+					<cell ng-non-bindable>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editUser(row)"></span>
+							</span>
+						<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scope.deleteUser(row.id)"></span>
+							</span>
+
+					</cell>
+				</column>
+			</columns>
 		</div>
 	</div>
 

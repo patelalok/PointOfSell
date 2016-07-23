@@ -23,6 +23,8 @@
 			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
 			if($scope.balanceAmount <= 0)
 			{
+				$rootScope.amountBalance =0;
+				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
 				var _ctrlPath = 'PrintRecepitController';
 				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
@@ -165,6 +167,7 @@
 			}
 			
 				$scope.balanceAmount =0;
+			$rootScope.amountBalance =0;
 				
 				$scope.checkPayout = GlobalVariable.checkOuttotal;
 				$scope.creditcardPayout = GlobalVariable.checkOuttotal;
@@ -223,6 +226,7 @@
 		};
 		$scope.makePartialPayment = function()
 		{
+			$rootScope.amountBalance = $scope.balanceAmount;
 			DialogFactory.close(true);
 			var _tmPath = 'app/sell/printReceiptModal.html';
 			var _ctrlPath = 'PrintRecepitController';
@@ -247,6 +251,8 @@
 			$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
 			if($scope.balanceAmount <= 0)
 			{
+				$rootScope.amountBalance =0;
+				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
 				var _ctrlPath = 'PrintRecepitController';
 				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);

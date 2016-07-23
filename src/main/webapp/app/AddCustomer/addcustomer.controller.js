@@ -3,19 +3,132 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory) 
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService)
 	{
-		
+		GlobalVariable.addedCustSuccessfull = false;
+		GlobalVariable.successCustAlert = false;
+		GlobalVariable.editCustSuccess = false;
+		$scope.GlobalVariable = GlobalVariable;
 		$scope.closePopup = function()
 		{
 			DialogFactory.close(true);
 		};
+		$scope.openEndCalendar = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openEnd = true;
+		};
+		$scope.onDateSelected = function(startDate, endDate, label, element) {
+			var receiptIndex = element.attr('data-receipt-index');
+			element.find('span').eq(0).html(endDate.format('dd-MM-yyyy'));
+		};
+		$scope.createNewCustomer = function()
+		{
+			var request = {};
+			request = {
+				"firstName": $scope.firstName,
+				"lastName": $scope.lastName,
+				"phoneNo": $scope.phoneNumber,
+				"email": $scope.email,
+				"dateOfBirth": $scope.DOB,
+				"customerType": $scope.custType,
+				"gender": $scope.gender,
+				"street":$scope.street,
+				"city": $scope.City,
+				"state": $scope.State,
+				"country": $scope.Country,
+				"zipcode": $scope.postalCode,
+				"fax": null,
+				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss (),
+				"balance": 0
+			};
+			request = JSON.stringify(request);
+			var url='http://localhost:8080/addCustomer';
+			dataService.Post(url,request,onAddCustDtlsSuccess,onAddCustDtlsError,'application/json','application/json');
 
+		};
+		$scope.editNewCustomer = function()
+		{
+			var request = {};
+			request = {
+				"firstName": $scope.firstName,
+				"lastName": $scope.lastName,
+				"phoneNo": $scope.phoneNumber,
+				"email": $scope.email,
+				"dateOfBirth": $scope.DOB,
+				"customerType": $scope.custType,
+				"gender": $scope.gender,
+				"street":$scope.street,
+				"city": $scope.City,
+				"state": $scope.State,
+				"country": $scope.Country,
+				"zipcode": $scope.postalCode,
+				"fax": "TestFax",
+				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss ()
+			};
+			request = JSON.stringify(request);
+			var url='http://localhost:8080/editCustomer';
+			dataService.Post(url,request,onEditCustDtlsSuccess,onEditCustDtlsError,'application/json','application/json');
+		};
+		function onEditCustDtlsSuccess(response)
+		{
+			DialogFactory.close(true);
+			GlobalVariable.editCustSuccess = true;
+			GlobalVariable.successCustAlert = true;
+		}
+		function onEditCustDtlsError(response)
+		{
+			DialogFactory.close(true);
+			GlobalVariable.editCustSuccess = false;
+			GlobalVariable.successCustAlert = false;
+		}
+		function onAddCustDtlsSuccess(response)
+		{
+			DialogFactory.close(true);
+			GlobalVariable.addedCustSuccessfull = true;
+			GlobalVariable.successCustAlert = true;
+		}
+		function onAddCustDtlsError(response)
+		{
+			DialogFactory.close(true);
+			GlobalVariable.addedCustSuccessfull = false;
+			GlobalVariable.successCustAlert = false;
+		}
 		function render()
 		{
-			
+			$scope.dateRangeOptions = {
+				//startDate : moment(),
+				showDropdowns : true,
+				format : 'dd-MM-yyyy',
+				singleDatePicker : true
+			};
+			if(GlobalVariable.editCustomer == true)
+			{
+				$scope.firstName = GlobalVariable.editedFirstName;
+				 $scope.lastName = GlobalVariable.editedLastName;
+				$scope.phoneNumber = GlobalVariable.editedPhone;
+				$scope.email= GlobalVariable.editedFEmail;
+				$scope.DOB = GlobalVariable.editedDOB;
+				$scope.custType = GlobalVariable.editedCusyType
+				$scope.gender = GlobalVariable.editedGender;
+				$scope.street = GlobalVariable.editedStreet;
+				$scope.City = GlobalVariable.editedCity;
+				 $scope.State = GlobalVariable.editedState;
+				$scope.Country = GlobalVariable.editedCountry;
+				$scope.postalCode = GlobalVariable.editedCode;
+			}
+		}
+		function js_yyyy_mm_dd_hh_mm_ss () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 		}
 		render();
 	}

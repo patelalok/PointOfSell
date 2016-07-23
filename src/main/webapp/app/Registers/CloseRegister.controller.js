@@ -46,9 +46,19 @@
 			$scope.difDebit = parseFloat($scope.userDebit)-parseFloat($scope.systemDebit);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 			if($scope.difDebit >0)
-				$scope.debitColor = true;
+				$scope.debitColor = 'green';
+			else if($scope.difDebit < 0)
+				$scope.debitColor = 'red';
 			else
-				$scope.debitColor = false;
+				$scope.debitColor = 'black';
+
+
+			if($scope.totalDiff >0)
+				$scope.totalColor = 'green';
+			else if($scope.totalDiff < 0)
+				$scope.totalColor = 'red';
+			else
+				$scope.totalColor = 'black';
 		};
 		$scope.getUserCash = function(value)
 		{
@@ -62,9 +72,19 @@
 			$scope.difCash = parseFloat($scope.userCash)-parseFloat($scope.systemCash);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 			if($scope.difCash >0)
-				$scope.cashColor = true;
+				$scope.cashColor = 'green';
+			else if($scope.difCash < 0)
+				$scope.cashColor = 'red';
 			else
-				$scope.cashColor = false;
+				$scope.cashColor = 'black';
+
+
+			if($scope.totalDiff >0)
+				$scope.totalColor = 'green';
+			else if($scope.totalDiff < 0)
+				$scope.totalColor = 'red';
+			else
+				$scope.totalColor = 'black';
 		};
 		$scope.getUserCheck = function(value)
 		{
@@ -79,9 +99,18 @@
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 
 			if($scope.difCheck >0)
-				$scope.checkColor = true;
+				$scope.checkColor = 'green';
+			else if($scope.difCheck < 0)
+				$scope.checkColor = 'red';
 			else
-				$scope.checkColor = false;
+				$scope.checkColor = 'black';
+
+			if($scope.totalDiff >0)
+				$scope.totalColor = 'green';
+			else if($scope.totalDiff < 0)
+				$scope.totalColor = 'red';
+			else
+				$scope.totalColor = 'black';
 		};
 		$scope.getTotal = function(value,entText)
 		{
@@ -185,8 +214,8 @@
 		{
 			var request ={
 
-				"paidOutAmount": $scope.reason1,
-				"reason": $scope.amount1,
+				"paidOutAmount": $scope.amount1,
+				"reason":$scope.reason1,
 				"paidOutDate": js_yyyy_mm_dd_hh_mm_ss()
 			  };
 			  request = JSON.stringify(request);

@@ -205,6 +205,7 @@
 													false);
 											column.wordWrap = getBooleanAttributeValue(columnElement, 'word-wrap', false, true);
 											column.width = getAttributeValue(columnElement, 'width' , true);
+											column.padding = getAttributeValue(columnElement, 'padding' , false,true);
 											watchHidden(scope, column, columnElement);
 
 											column.cell = null;

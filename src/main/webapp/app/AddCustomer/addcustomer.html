@@ -32,28 +32,24 @@
 				
 				<div class="col-md-6">
                         <label for="dob" class="padding-bottom-5 font-weight-label">Date of birth</label>
-                        <input type="text" class="form-control" name="dob" id="dob" data-ng-model="dob"
-                        autocomplete="off"  placeholder = "YYYY-MM-DD" style="width:100%;height:50px;" />
+					<div class="input-group calendar-group fromDate">
+						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="DOB" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+							   ng-model-options="{allowInvalid: true}" name="DOB"
+							   is-open="openEnd"  date-cleared="dateCleared"  date-length="10"
+							   id="endDate" placeholder="dd-MM-yyyy" disabled="disabled">
+						<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openEndCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+					</div>
 				</div>
 				<div class="col-md-6">
                         <label for="customerCode" class="padding-bottom-5 font-weight-label">Customer Code</label>
 						<select id="custType" data-ng-model="custType" class="form-control"  style="height:50px;width:100%;">
-											<option value="rCustomer">Retail Customer</option>
-											<option value="WholeSale">Whole sale Customer</option>
+											<option value="Business">Business Customer</option>
+											<option value="Retail">Retail Customer</option>
 						  </select>
 		
-				</div>
-			</div>
-			<div class="row padding-top-15">
-				<div class="col-md-6">
-                        <label for="postCode" class="padding-bottom-5 font-weight-label">Postcode</label>
-                        <input type="text" class="form-control" name="postCode" id="postCode" data-ng-model="postCode"
-                        autocomplete="off" autofocus placeholder = "Enter postcode" style="width:100%;height:50px;" />
-				</div>
-				<div class="col-md-6">
-                        <label for="state" class="padding-bottom-5 font-weight-label">State</label>
-                        <input type="text" class="form-control" name="state" id="state" data-ng-model="state"
-                        autocomplete="off" autofocus placeholder = "Enter state" style="width:100%;height:50px;" />
 				</div>
 			</div>
 			<div class="row padding-top-15">
@@ -61,10 +57,10 @@
                         <label for="gender" class="padding-bottom-5 font-weight-label">Gender</label>
                         <div class="genderRadio padding-top-10">
 						      <label class="radio-inline">
-						      <input type="radio" name="optradio">Male
+						      <input type="radio" name="optradio" ng-model="gender">Male
 						    </label>
 						    <label class="radio-inline">
-						      <input type="radio" name="optradio">Female
+						      <input type="radio" name="optradio" ng-model="gender">Female
 						    </label>
 						  </div>  
 				</div>
@@ -89,22 +85,11 @@
                         <hr />
 				</div>
 			</div>
+
 			<div class="row padding-top-15">
 				<div class="col-md-6">
-                        <label for="Street" class="padding-bottom-5 font-weight-label">Street</label>
-                        <input type="text" class="form-control" name="Street" id="Street" data-ng-model="Street"
-                        autocomplete="off" autofocus placeholder = "Enter Street" style="width:100%;height:50px;" />
-				</div>
-				<div class="col-md-6">
-                        <label for="Street" class="padding-bottom-5 font-weight-label">Street</label>
-                        <input type="text" class="form-control" name="Street" id="Street" data-ng-model="email"
-                        autocomplete="off" autofocus placeholder = "Enter Street" style="width:100%;height:50px;" />
-				</div>
-			</div>
-			<div class="row padding-top-15">
-				<div class="col-md-6">
-                        <label for="Suburb" class="padding-bottom-5 font-weight-label">Suburb</label>
-                        <input type="text" class="form-control" name="Suburb" id="Suburb" data-ng-model="Suburb"
+                        <label for="street" class="padding-bottom-5 font-weight-label">Street</label>
+                        <input type="text" class="form-control" name="street" id="street" data-ng-model="street"
                         autocomplete="off" autofocus placeholder = "Enter Suburb" style="width:100%;height:50px;" />
 				</div>
 				<div class="col-md-6">
@@ -135,7 +120,9 @@
 	</div>
 	<div class="modal-footer">
 	 <div class="bottomButtons" style="text-align:right;">
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;">Create new customer</button>
-		</div>	
+			<button ng-show="!GlobalVariable.editCustomer" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="createNewCustomer()">Create new customer</button>
+		 <button ng-show="GlobalVariable.editCustomer" class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" data-ng-click="editNewCustomer()">Editcustomer</button>
+
+	 </div>
 	</div>
 </div>
