@@ -3,14 +3,23 @@ package com.abm.pos.com.abm.pos.bl;
 import com.abm.pos.com.abm.pos.dto.PageSetUpDto;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -56,7 +65,78 @@ public class PageSetUpManager {
         return pageSetUpDto;
     }
 
-    private final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
+    public List<ProductDto> readExcelSheet() {
+
+        List<ProductDto> productList = new ArrayList<>();
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream("/Users/asp5045/Desktop/Test1.xlsx");
+
+            // Using XSSF for xlsx format, for xls use HSSF
+            Workbook workbook = new XSSFWorkbook(fis);
+
+            int numberOfSheets = workbook.getNumberOfSheets();
+
+            //looping over each workbook sheet
+            for (int i = 0; i < numberOfSheets; i++) {
+                Sheet sheet = workbook.getSheetAt(i);
+                Iterator rowIterator = sheet.iterator();
+
+                //iterating over each row
+                while (rowIterator.hasNext()) {
+
+                    ProductDto product = new ProductDto();
+                    Row row = (Row) rowIterator.next();
+                    Iterator cellIterator = row.cellIterator();
+
+                    //Iterating over each cell (column wise)  in a particular row.
+                    while (cellIterator.hasNext()) {
+
+                        Cell cell = (Cell) cellIterator.next();
+                        //The Cell Containing String will is name.
+                        if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
+
+                            if (cell.getColumnIndex() == 3) {
+                                product.setDescription(cell.getStringCellValue());
+                            }
+                            //The Cell Containing numeric value will contain marks
+                        } else if (Cell.CELL_TYPE_NUMERIC == cell.getCellType()) {
+
+                            //Cell with index 1 contains marks in Maths
+                            if (cell.getColumnIndex() == 0) {
+                                product.setProductNo(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 2 contains marks in Science
+                            else if (cell.getColumnIndex() == 8) {
+                                product.setCostPrice(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in English
+                            else if (cell.getColumnIndex() == 9) {
+                                product.setRetailPrice(String.valueOf(cell.getNumericCellValue()));
+                            }
+                        }
+                    }
+                    //end iterating a row, add all the elements of a row in list
+                    productList.add(product);
+                }
+            }
+
+            fis.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+
+
+}
+
+    final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
 
         @Override
         public PageSetUpDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -72,4 +152,3 @@ public class PageSetUpManager {
         }
     }
 
-}
