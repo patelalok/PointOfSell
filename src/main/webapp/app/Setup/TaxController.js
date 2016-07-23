@@ -17,8 +17,8 @@
         {
             var request= {};
             request={
-                'taxName':$scope.taxId,
-                'taxValue':$scope.taxValue
+                'id':$scope.taxId,
+                'tax':$scope.taxValue
             };
             request = JSON.stringify(request);
             var url="http://localhost:8080/addTax";

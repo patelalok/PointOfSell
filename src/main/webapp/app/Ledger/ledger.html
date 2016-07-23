@@ -69,16 +69,16 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)" data-filter-value="filterHistory">
 				<columns>
-					<column name="Date" key="transactionDate" datatype="string" width="25%" sortable="true" padding="5px"></column>
-					<column name="CustomerPhone" key="customerPhoneno" datatype="string" width="15%" padding="5px"></column>
-					<column name="UserID" key="userId" datatype="string" width="10%" padding="5px"></column>
+					<column name="Date" key="transactionDate" datatype="string" width="25%" sortable="true" ></column>
+					<column name="CustomerPhone" key="customerPhoneno" datatype="string" width="15%"></column>
+					<column name="UserID" key="userId" datatype="string" width="10%" ></column>
 					
-					<column name="Tax" key="tax" datatype="string" width="5%" padding="5px"></column>
-					<column name="Discount" key="discount" datatype="string" width="5%" padding="5px"></column>
-					<column name="TotalAmount" key="totalAmount" datatype="string" width="10%" padding="5px"></column>
-					<column name="Receipt No" key="transactionCompId" datatype="string" width="15%" padding="5px"></column>
+					<column name="Tax" key="tax" datatype="string" width="5%" ></column>
+					<column name="Discount" key="discount" datatype="string" width="5%" ></column>
+					<column name="TotalAmount" key="totalAmount" datatype="string" width="10%" ></column>
+					<column name="Receipt No" key="transactionCompId" datatype="string" width="15%" ></column>
 					
-					<column name="" key="" datatype="" width="20%" padding="5px">
+					<column name="" key="" datatype="" width="20%" >
 						<cell ng-non-bindable>
 						<span class="inline-vertical">
 								
@@ -96,16 +96,18 @@
 </div>
 <div   print-only style="font-size:20px;margin-left:15px;margin-right:15px;font-size:14px;">
 	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
-		<div class="cold-md-4" style="width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;"><div style="display:block;">1234 PEach Tree RD</div>
+		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;"><div style="display:block;">1234 Peach Tree RD</div>
 		<div style="display:block;">Atlanta Ga,30080</div></div>
-		<div class="col-md-4" style="width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;"><img alt="" src="./assets/images/final-logo.png" height="50"></div>
+		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:25px;"><img alt="" src="./assets/images/final-logo.png" height="50"></div>
 
-		<div class="col-md-4" style=" width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+		<div class="col-md-4" style=" text-align:center;width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
            <!-- <div><span>Date:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</span></div>
             <div><span>Receipt #:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</span></div>
 -->
             <div class="customerName">
-                <span>{{GlobalVariable.receiptData[0].transactionDtoList[0].username}}</span>
+                <div>{{GlobalVariable.receiptData[0].transactionDtoList[0].username}}</div>
+				<div>1011 Vinings TRL SE</div>
+				<div>SMyrna gA</div>
             </div>
             <div><span>Phone Number:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</span></div>
 
@@ -145,12 +147,12 @@
 			<columns>
 
 
-				<column name="Product No" key="productNumber" datatype="string" width="18%" padding="5px"></column>
-				<column name="Description" key="productDescription" datatype="string" width="40%" padding="5px"></column>
-				<column name="Retail" key="retail" datatype="string" width="14%" padding="5px"></column>
-				<column name="Discount" key="discount" datatype="string" width="7%" padding="5px"></column>
-				<column name="Qty" key="quantity" datatype="string" width="5%" padding="5px"></column>
-				<column name="Total Price" key="totalProductPrice" datatype="string" width="18%" padding="5px"></column>
+				<column name="Product No" key="productNumber" datatype="string" width="18%" padding="3px" border="0px"></column>
+				<column name="Description" key="productDescription" datatype="string" width="40%" padding="3px" border="0px"></column>
+				<column name="Retail" key="retail" datatype="string" width="14%" padding="1px" border="0px"></column>
+				<column name="Discount" key="discount" datatype="string" width="7%" padding="3px" border="0px"></column>
+				<column name="Qty" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
+				<column name="Total Price" key="totalProductPrice" datatype="string" width="18%" padding="3px" border="0px"></column>
 			</columns>
 		</div>
 	</div>

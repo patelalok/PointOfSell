@@ -30,7 +30,7 @@
 			<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
 			<tr data-ng-repeat="row in sortedData  | limitTo : pageSize | filter : valueFilter">
 				<td data-ng-repeat="column in columns" data-ng-class="{'wrapword': column.wordWrap}" data-ng-if="!column.toggle"
-					data-ng-hide="column.hidden" data-ng-style="{'width': column.width,'padding': column.padding}">
+					data-ng-hide="column.hidden" data-ng-style="{'width': column.width,'padding': column.padding,'border':column.border}">
 					<span data-ng-if="!column.cell">
 						<span data-ng-if="column.cellClick">
 							<a data-ng-click="cellClick(row, column)" class="hyperlink">{{::row[column.key]}}</a>
