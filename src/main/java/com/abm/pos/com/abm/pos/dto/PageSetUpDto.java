@@ -6,15 +6,6 @@ package com.abm.pos.com.abm.pos.dto;
 public class PageSetUpDto {
 
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private int tax;
     private String storeAddress;
     private String storeLogo;
@@ -42,6 +33,15 @@ public class PageSetUpDto {
     public void setTax(int tax) {
         this.tax = tax;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
 
 }
