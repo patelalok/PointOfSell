@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('sellController', sellController);
 
-	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types','dataService','$state'];
+	sellController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','RestrictedCharacter.Types','dataService','$state','$timeout'];
 
-	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter,dataService,$state) {
+	function sellController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,restrictCharacter,dataService,$state,$timeout) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -73,6 +73,7 @@
 				alert( "Something gone wrong" );
 			}
 			$rootScope.testData.splice( index, 1 );
+			$scope.loadCheckOutData();
 		}	
 	}
 	$scope.changeQuantity= function()
@@ -91,8 +92,8 @@
 								"item":GlobalVariable.getProducts[i].description,
 								"quantity":GlobalVariable.getProducts[i].quantity,
 								"retail":GlobalVariable.getProducts[i].retailPrice,
-								"discount":parseFloat($scope.discount),
-								"total":(parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity),
+								"discount":(parseFloat($scope.discount)).toFixed(2),
+								"total":((parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity)).toFixed(2),
 								"stock":GlobalVariable.getProducts[i].stock,
 								"costPrice":GlobalVariable.getProducts[i].costPrice});
 				    	}	
@@ -111,8 +112,8 @@
 									"item":GlobalVariable.getProducts[i].description,
 									"quantity":GlobalVariable.getProducts[i].quantity,
 									"retail":GlobalVariable.getProducts[i].retailPrice,
-									"discount":parseFloat($scope.discount),
-									"total":(parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity),
+									"discount":(parseFloat($scope.discount)).toFixed(2),
+									"total":((parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity)).toFixed(2),
 									"stock":GlobalVariable.getProducts[i].stock,
 									"costPrice":GlobalVariable.getProducts[i].costPrice});
 					    	}	
@@ -131,12 +132,12 @@
 						}
 						else
 						{
-							$scope.discount = parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.searchValue);
+							$scope.discount = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.searchValue)).toFixed(2);
 						}	
 						if($scope.discount == 0)
-							$scope.total = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-$scope.discount)*parseFloat($scope.quantity);
+							$scope.total = ((parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-$scope.discount)*parseFloat($scope.quantity)).toFixed(2);
 						else
-							$scope.total = ($scope.discount)*parseFloat($scope.quantity);
+							$scope.total = (($scope.discount)*parseFloat($scope.quantity)).toFixed(2);
 					}
 					else
 					{
@@ -151,10 +152,10 @@
 						}
 						if($scope.discount !== 0)
 							{
-							  $scope.total = parseFloat($scope.quantity) * parseFloat($scope.discount);
+							  $scope.total = (parseFloat($scope.quantity) * parseFloat($scope.discount)).toFixed(2);
 							}
 						else
-						$scope.total = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.discount))*parseFloat($scope.quantity);
+						$scope.total = ((parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.discount))*parseFloat($scope.quantity)).toFixed(2);
 					}	
 					
 					$rootScope.testData.push({"itemNo":$rootScope.testData[$rootScope.testData.length-1].itemNo,
@@ -211,7 +212,19 @@
 		{
 			var _tmPath = 'app/AddCustomer/addcustomer.html';
 			var _ctrlPath = 'addCustomerController';
-			DialogFactory.show(_tmPath, _ctrlPath, callbackPayment);
+			DialogFactory.show(_tmPath, _ctrlPath, callbackCust);
+		};
+		function callbackCust()
+		{
+			$timeout(function() {
+				$scope.closeBootstrapAlert();
+			}, 9000);
+		}
+		$scope.closeBootstrapAlert = function()
+		{
+			GlobalVariable.successCustAlert = false;
+			GlobalVariable.addedCustSuccessfull = false;
+			GlobalVariable.editCustSuccess = false;
 		};
 		function callbackPayment()
 		{
@@ -221,6 +234,9 @@
 			$scope.regPhone = '';
 			$scope.customerNameOnSearch = '';
 			$scope.balanceRemaining = '';
+			$rootScope.testData = [];
+			$scope.loadCheckOutData();
+			GlobalVariable.customerFound = false;
 			
 		}
 		$scope.test = function()
@@ -237,6 +253,8 @@
 				$scope.subTotal = parseFloat($scope.subTotal) + parseFloat($rootScope.testData[i].total);
 				
 			}
+			$scope.totalQuantity = (parseFloat($scope.totalQuantity)).toFixed(2);
+			$scope.subTotal = (parseFloat($scope.subTotal)).toFixed(2);
 			GlobalVariable.quantityTotal = $scope.totalQuantity;
 			GlobalVariable.totalSub = $scope.subTotal;
 			if($scope.totalDisc == undefined)
@@ -254,9 +272,13 @@
 				$scope.productTotalWithoutTax =0;
 			}	
 			
-			if($scope.totalTax == undefined)
+			if($scope.selectTax == undefined)
 				$scope.totalTax = 0;
-			
+			else if($scope.selectTax == 'default')
+				$scope.totalTax = parseFloat($scope.totalDefaultTax);
+			else if($scope.selectTax == 'noTax')
+				$scope.totalTax =0;
+
 			GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax) * (parseFloat($scope.totalTax) / 100);
 			$scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
 
@@ -326,7 +348,7 @@
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;
-			$scope.totalTax=GlobalVariable.totalTaxSetup;
+			getTaxDetails();
 			for(var i=0;i<GlobalVariable.getProducts.length;i++)
 			{
 				$scope.productNames.push(GlobalVariable.getProducts[i].description);
@@ -335,43 +357,27 @@
 			{
 				$scope.firstNames.push(GlobalVariable.getCustomerDtls[i].firstName);
 			}
-			$scope.loadCheckOutData();
-			/*if(GlobalVariable.returnProduct == true)
-			{
-				for(var i=0;i<GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length;i++)
-				{
-					$rootScope.testData.push({"itemNo":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
-						"item":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
-						"quantity":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
-						"retail":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retail,
-						"discount":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
-						"total":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
-						"stock":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
-						"costPrice":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost
-						});
-				}
-				$scope.totalQuantity =GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalQuantity;
-				$scope.subTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].subTotal;
-				$scope.totalDisc =GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
-				$scope.totalTax =GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
-				$scope.productTotal= GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
-				$rootScope.totalPayment =$scope.productTotal;
-				$scope.returnAmount = $rootScope.totalPayment
-				$scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
-				$scope.returnId = Math.round(((Math.random() * 10) * 10));
-				$scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
-				$scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
-				$scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
-				$scope.returncashId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].cashId;
-				$scope.paidAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
-				$scope.paidAmountCreditReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCredit;
-				$scope.changeAmountReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].changeAmount;
-				$scope.creditIdReturn =GlobalVariable.getReturnDetails[0].transactionDtoList[0].creditId;
 
-			}*/
+
+
 		}
 
+		function getTaxDetails()
+		{
+			var url='http://localhost:8080/getPageSetUpDetails';
+			dataService.Get(url,onGetTaxSuccess,onGetTaxError,'application/json','application/json');
+		}
+		function onGetTaxSuccess(response)
+		{
+			$scope.totalDefaultTax = response[0].tax;
 
+			$scope.selectTax = "default";
+			$scope.loadCheckOutData();
+		}
+		function onGetTaxError(response)
+		{
+
+		}
 		render();
 	}
 		

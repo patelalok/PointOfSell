@@ -11,8 +11,7 @@
 						<label for="productId" class="display-cell">Product ID:</label>
 						<input  type="text" class="form-control display-cell" data-ng-model="productId" id="productId" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
 						<div class="display-cell"><button class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;" ng-click="generateRandomId()">Generate</button></div>
-						<div class="display-cell"><button class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;">Img</button></div>
-					</div>
+						</div>
 					<div class="form-group display-row">
 						<label for="vendorId" class="display-cell">Vendor:</label>
 						<div class="btn-group pull-left prd-drop" dropdown is-open="status.isopen" ng-class="{'full-width': device.isMobile}">
@@ -49,6 +48,10 @@
 				                </ul>
 				            </div>
 					</div>
+					<div class="form-group display-row" ng-if="selectedCategoryType == 'Phone'">
+						<label for="altNo" class="display-cell">IMEI</label>
+						<input  type="text" class="form-control display-cell" data-ng-model="IMEI" id="IMEI" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
+					</div>
 					<div class="form-group display-row">
 						<label for="depart" class="display-cell">Brand:</label>
 						<div class="btn-group pull-left  prd-drop" dropdown is-open="cat.isopen" ng-class="{'full-width': device.isMobile}">
@@ -83,21 +86,21 @@
 					<div class="display-row">
 						<div class="form-group display-cell">
 							<div><label for="cost" class="">CostPrice</label></div>
-							<div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" data-ng-model="prodCP" id="prodCP" style="width:100px;"  data-ng-change="populateRetailPrice()"/></div>
+							<div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="prodCP" id="prodCP" style="width:100px;"  data-ng-change="populateRetailPrice()"/></div>
 						</div>
 						<div class="display-cell">
 							<div><label>X</label></div>
 						</div>
 						<div class="form-group display-cell">
 							<div><label for="Retail" class="">Markup</label></div>
-							<div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" data-ng-model="prodMarkup" id="prodMarkup" style="width:100px;" data-ng-change="populateRetailPrice()"/></div>
+							<div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="prodMarkup" id="prodMarkup" style="width:100px;" data-ng-change="populateRetailPrice()"/></div>
 						</div>
 						<div class="display-cell">
 							<div><label>=</label></div>
 						</div>
 						<div class="form-group display-cell">
 							<div><label for="Retail" class="">RetailPrice</label></div>
-							<div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" data-ng-model="prodRetail" id="prodRetail" style="width:100px;"  /></div>
+							<div><input  type="text" class="form-control" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="prodRetail" id="prodRetail" style="width:100px;"  data-ng-change="populateMarkup()" /></div>
 						</div>
 					</div>	
 				</div>
@@ -109,21 +112,37 @@
 				</div>
 				<div class="content display-table">
 					<div class="form-group display-row">
-							<label for="Stock" class="display-cell">Quantity:</label>
+
 							<div class="btn-group pull-left  prd-drop" dropdown is-open="return.isopen" ng-class="{'full-width': device.isMobile}">
 				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
 				                ng-class="{'full-width left-align': device.isMobile}">
-				                    <span ng-hide="selectedSearchType">Select Vendor</span>
-				                    <span class="caret margin-left-caret"></span>
+									<span ng-show="selectedReturnType">{{selectedReturnType}}</span>
+				                    <span ng-hide="selectedReturnType">Select Return Policy</span>
+				                    <span class="caret"></span>
 				                </button>
 				                <ul class="dropdown-menu drp-min-width" role="menu">
 				                    <li>
-				                        <a ng-click="setSearchType()">Search Brand</a>
+				                        <a ng-click="setReturnType('One Day')">One Day</a>
 				                    </li>
+									<li>
+										<a ng-click="setReturnType('One Week')">One Week</a>
+									</li>
+									<li>
+										<a ng-click="setReturnType('One Month')">One Month</a>
+									</li>
+									<li>
+										<a ng-click="setReturnType('Custom')">Custom</a>
+									</li>
 				                    
 				                </ul>
+
+
 				            </div>
 						</div>
+					<div class="form-group display-cell" ng-if="selectedReturnType == 'Custom'">
+						<div><label for="Retail" class="">Return Policy</label></div>
+						<div><input  type="text" class="form-control"  data-ng-model="customReturn" id="customReturn" /></div>
+					</div>
 				</div>
 			</div>
 		<div class="panel-body">

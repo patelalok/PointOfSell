@@ -6,9 +6,10 @@
 	<div class="modal-body" style="height:340px;overflow-y:scroll;">
 			<div class="row">
 				<div class="col-md-6">
-                        <label for="firstName" class="padding-bottom-5 font-weight-label">First Name</label>
+                        <label for="firstName" class="padding-bottom-5 font-weight-label">First Name <span style="color:red;">*</span></label>
                         <input type="text" class="form-control" name="firstName" id="firstName" data-ng-model="firstName"
-                        autocomplete="off" autofocus placeholder = "Enter postcode" style="width:100%;height:50px;"/>
+                        autocomplete="off" autofocus placeholder = "Enter FirstName" style="width:100%;height:50px;" data-proxtra-message="REGAUTH11"/>
+					<div id="firstNameMessageDiv"></div>
 				</div>
 				<div class="col-md-6">
                         <label for="lastName" class="padding-bottom-5 font-weight-label">Last Name</label>
@@ -18,9 +19,10 @@
 			</div>
 			<div class="row padding-top-15">
 				<div class="col-md-6">
-                        <label for="phoneNumber" class="padding-bottom-5 font-weight-label">Phone Number</label>
-                        <input type="tel" class="form-control" name="phoneNumber" id="phoneNumber" data-ng-model="phoneNumber"
-                        autocomplete="off" autofocus placeholder = "Enter phoneNumber" style="width:100%;height:50px;" />
+                        <label for="phoneNumber" class="padding-bottom-5 font-weight-label">Phone Number <span style="color:red;">*</span></label>
+					<input type="tel" data-ng-model="phoneNumber" class="form-control" name="phoneNumber" id="phoneNumber" ui-mask="(999) 999-9999"
+						   placeholder="(xxx) xxx-xxxx" tabindex="350" style="width:100%;height:52px;"  data-proxtra-message="REGAUTH10" />
+					<div id="phoneMessageDiv"></div>
 				</div>
 				<div class="col-md-6">
                         <label for="email" class="padding-bottom-5 font-weight-label">Email</label>
@@ -90,7 +92,7 @@
 				<div class="col-md-6">
                         <label for="street" class="padding-bottom-5 font-weight-label">Street</label>
                         <input type="text" class="form-control" name="street" id="street" data-ng-model="street"
-                        autocomplete="off" autofocus placeholder = "Enter Suburb" style="width:100%;height:50px;" />
+                        autocomplete="off" autofocus placeholder = "Enter Strret" style="width:100%;height:50px;" />
 				</div>
 				<div class="col-md-6">
                         <label for="City" class="padding-bottom-5 font-weight-label">City</label>

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('CloseRegisterController', CloseRegisterController);
 
-	CloseRegisterController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService'];
+	CloseRegisterController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','RestrictedCharacter.Types'];
 
-	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService) {
+	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService,restrictCharacter) {
 		$scope.totalUser = 0;
 		$scope.totalInValue = 0;
 		$scope.userCash = 0;
@@ -15,6 +15,7 @@
 		$scope.difCash =0;
 		$scope.difCheck =0;
 		$scope.totalDiff =0;
+		$scope.restrictCharacter=restrictCharacter;
 		function getClosingDetails(startDate,endDate)
 		{
 			var url="http://localhost:8080/getClosingDetails?startDate="+startDate+"&endDate="+endDate;
@@ -192,8 +193,8 @@
 		$scope.editPaidOut = function(data)
 		{
 			var request = {
-				"paidOutAmount": data.paidOutAmount,
-				"reason": data.reason,
+				"paidOutAmount": $scope.amount1,
+				"reason":$scope.reason1,
 				"paidOutId": data.paidOutId
 			};
 			request = JSON.stringify(request);

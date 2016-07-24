@@ -16,6 +16,7 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		$scope.enabled = true;
+		loadCDetails();
 		/*GlobalVariable.productSuccessAlert = false;
 		GlobalVariable.addedSucces= false;
 		GlobalVariable.editedSuccess= false;*/
@@ -90,17 +91,21 @@
 			$scope.curPageOnTotalLen = 0;
 			$scope.totalLength = 0;
 			$scope.productType = "select";
-			
-			$scope.brandOptions = GlobalVariable.getBrands;
-			$scope.categoryOptions = GlobalVariable.getCategory;
-			$scope.vendorOptions = GlobalVariable.getVendors;
-			$scope.getProductDtls = GlobalVariable.getProducts;
+
+			//$scope.loadCDetails();
 			$timeout(function() {
 				$scope.closeBootstrapAlert();
 			}, 9000);
 			
 				
 		}
+		function loadCDetails()
+		{
+			$scope.brandOptions = GlobalVariable.getBrands;
+			$scope.categoryOptions = GlobalVariable.getCategory;
+			$scope.vendorOptions = GlobalVariable.getVendors;
+			$scope.getProductDtls = GlobalVariable.getProducts;
+		};
 		$scope.closeBootstrapAlert = function()
 		{
 			GlobalVariable.productSuccessAlert = false;

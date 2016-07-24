@@ -11,6 +11,7 @@
 		$scope.paidAmountCash =0;
 		$scope.paidAmountCredit =0;
 		$scope.restrictCharacter=restrictCharacter;
+		$scope.GlobalVariable = GlobalVariable;
 		
 		$scope.closePopup = function()
 		{
@@ -23,7 +24,7 @@
 			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
 			if($scope.balanceAmount <= 0)
 			{
-				$rootScope.amountBalance =0;
+				$rootScope.amountBalance =$scope.balanceAmount;
 				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
 				var _ctrlPath = 'PrintRecepitController';
@@ -90,7 +91,7 @@
 				"paidAmountCredit":$scope.paidAmountCredit,
 			"transactionCompId":GlobalVariable.transactionCompletedId,
 			"subTotal":GlobalVariable.totalSub,
-			"totalQuantity":GlobalVariable.quantityTotal,
+			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
 				"balance":$scope.balanceAmount

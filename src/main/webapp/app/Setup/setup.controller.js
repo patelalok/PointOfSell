@@ -21,6 +21,7 @@
 			GlobalVariable.successUsesAlert = false;
 			GlobalVariable.addedSuccessfull = false;
 			GlobalVariable.editSuccess = false;
+			GlobalVariable.successTaxAlert = false;
 		};
 		$scope.createNewUser = function()
 		{

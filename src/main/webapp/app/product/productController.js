@@ -30,6 +30,21 @@
 				$scope.prodRetail = 0;
 			}	
 		};
+
+		$scope.populateMarkup = function()
+		{
+			if($scope.prodRetail !== '' && $scope.prodRetail !== undefined)
+			{
+				if($scope.prodCP !== '' && $scope.prodCP !== undefined)
+				{
+					$scope.prodMarkup = ((parseFloat($scope.prodRetail) -(parseFloat($scope.prodCP)))/(parseFloat($scope.prodCP))) * 100;
+				}
+			}
+			else
+			{
+				$scope.prodRetail = 0;
+			}
+		};
 		$scope.setVendorType = function(vendorId,vendorName)
 		{
 			$scope.selectedVendorType = vendorName;
@@ -39,6 +54,10 @@
 		{
 			$scope.selectedBrandType = brandName;
 			$scope.brandId = brandId;
+		};
+		$scope.setReturnType = function(returnType)
+		{
+				$scope.selectedReturnType = returnType;
 		};
 		$scope.setCategoryType = function(categoryId,categoryName,categoryDescription)
 		{
@@ -54,6 +73,15 @@
 		{
 			if(GlobalVariable.editProduct == true)
 			{
+				if($scope.selectedReturnType == 'Custom')
+					$scope.retType = $scope.customReturn;
+				else
+					$scope.retType = $scope.selectedReturnType;
+
+				if(selectedCategoryType == 'Phone')
+					$scope.phoneIMEI = $scope.IMEI
+				else
+					$scope.phoneIMEI = '';
 				var request={
 						"productId": GlobalVariable.editProductDetails.productId,
 						"productNo":GlobalVariable.editProductDetails.productNo,
@@ -67,7 +95,8 @@
 						"retailPrice": $scope.prodRetail,
 						"quantity": $scope.prodQuantity,
 						"minProductQuantity": $scope.prodMinquantity,
-						"returnRule": "NextWeek",
+						"returnRule":$scope.retType,
+					"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00"
 					};
@@ -75,6 +104,16 @@
 			}
 			else
 			{
+				if($scope.selectedReturnType == 'Custom')
+					$scope.retType = $scope.customReturn;
+				else
+					$scope.retType = $scope.selectedReturnType;
+
+
+				if(selectedCategoryType == 'Phone')
+					$scope.phoneIMEI = $scope.IMEI
+				else
+					$scope.phoneIMEI = '';
 				var request = {
 		        	    
 		        	    "productNo":$scope.productId,
@@ -88,7 +127,8 @@
 						"retailPrice": $scope.prodRetail,
 						"quantity": $scope.prodQuantity,
 						"minProductQuantity": $scope.prodMinquantity,
-						"returnRule": "NextWeek",
+						"returnRule": $scope.retType,
+						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00"
 		        	  };

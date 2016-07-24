@@ -19,59 +19,7 @@
 		function onGetCustDtlsSuccess(response)
 		{
 				$scope.customerData = response;
-			$scope.customerData=[
-				{
-					"firstName": "asdas",
-					"lastName": null,
-					"phoneNo": "1234",
-					"email": null,
-					"dateOfBirth": null,
-					"customerType": null,
-					"gender": null,
-					"street": null,
-					"city": null,
-					"state": null,
-					"country": null,
-					"zipcode": null,
-					"fax": null,
-					"customerCreatedDate": null,
-					"balance": 0
-				},
-				{
-					"firstName": "b",
-					"lastName": "a",
-					"phoneNo": "12345",
-					"email": null,
-					"dateOfBirth": null,
-					"customerType": null,
-					"gender": null,
-					"street": null,
-					"city": null,
-					"state": null,
-					"country": null,
-					"zipcode": null,
-					"fax": null,
-					"customerCreatedDate": null,
-					"balance": 0
-				},
-				{
-					"firstName": "Alok",
-					"lastName": "Patel",
-					"phoneNo": "7707030801",
-					"email": "alok@alok",
-					"dateOfBirth": "12/12/12",
-					"customerType": null,
-					"gender": "male",
-					"street": "12",
-					"city": "sdf",
-					"state": "gz",
-					"country": "us",
-					"zipcode": "23423",
-					"fax": null,
-					"customerCreatedDate": null,
-					"balance": 24
-				}
-			];
+
 		}
 		function onGetCustDtlsError(response)
 		{
