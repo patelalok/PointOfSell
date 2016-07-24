@@ -24,6 +24,7 @@ public class ProductDto {
     private String brandName;
     private String vendorName;
     private String imeiNo;
+    private String tax;
 
     private int quantityForSell;
 
@@ -202,5 +203,13 @@ public class ProductDto {
 
     public void setImeiNo(String imeiNo) {
         this.imeiNo = imeiNo;
+    }
+
+    public String getTax() {
+        return tax;
+    }
+
+    public void setTax(String tax) {
+        this.tax = tax;
     }
 }

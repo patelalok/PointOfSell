@@ -132,10 +132,6 @@ public class PageSetUpManager {
         return productList;
     }
 
-
-
-}
-
     final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
 
         @Override
@@ -151,4 +147,7 @@ public class PageSetUpManager {
             return setUpDto;
         }
     }
+
+
+}
 
