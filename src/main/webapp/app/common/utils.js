@@ -84,27 +84,27 @@
 		};
 		// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 		utilClass.showErrorFields = function(_showFieldID) {
-			if (!_.isArray(_showFieldID)) {
+			if (!Array.isArray(_showFieldID)) {
 				$("#" + _showFieldID).removeClass('input').addClass('errorStyle');
 			} else {
-				_.each(_showFieldID, function(k, v) {
+				Array.each(_showFieldID, function(k, v) {
 					$("#" + k).removeClass('input').addClass('errorStyle');
 				});
 			}
 		};
 		// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 		utilClass.clearErrorFields = function(_showFieldID) {
-			if (!_.isArray(_showFieldID)) {
+			if (!Array.isArray(_showFieldID)) {
 				$("#" + _showFieldID).removeClass('errorStyle').addClass('input');
 			} else {
-				_.each(_showFieldID, function(k, v) {
+				Array.each(_showFieldID, function(k, v) {
 					$("#" + k).removeClass('errorStyle').addClass('input');
 				});
 			}
 		};
 		// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 		utilClass.focus = function(_elemId) {
-			if (!_.isArray(_elemId)) {
+			if (!Array.isArray(_elemId)) {
 				$("#" + _elemId).focus();
 			} else {
 				$("#" + _elemId[0]).focus();
@@ -115,7 +115,7 @@
 			$("#" + _msgDiv).html('');
 			$("#" + _msgDiv).append(this.throwMessage('error', _msg));
 			this.showErrorFields(_elemId);
-			if (!_.isArray(_elemId)) {
+			if (!Array.isArray(_elemId)) {
 				$("#" + _elemId).focus();
 			} else {
 				$("#" + _elemId[0]).focus();
@@ -193,12 +193,12 @@
 			show : function(_elemId, _msg) {
 				var elem, thisInstance;
 				thisInstance = this;
-				if (!_.isArray(_elemId)) {
+				if (!Array.isArray(_elemId)) {
 					elem = $("#" + _elemId.id);
 					this.create(elem, _elemId.msg);
 					elem.focus();
 				} else {
-					_.each(_elemId, function(k, v) {
+					angular.forEach(_elemId, function(k, v) {
 						elem = $("#" + k.id);
 						thisInstance.create(elem, k.msg);
 					});
@@ -212,11 +212,11 @@
 			hide : function(_elemId) {
 				var elem, thisInstance;
 				thisInstance = this;
-				if (!_.isArray(_elemId)) {
+				if (!Array.isArray(_elemId)) {
 					elem = $("#" + _elemId);
 					this.destroy(elem);
 				} else {
-					_.each(_elemId, function(k, v) {
+					angular.forEach(_elemId, function(k, v) {
 						elem = $("#" + k);
 						thisInstance.destroy(elem);
 					});
@@ -305,7 +305,7 @@
 		// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 		utilClass.convertObjectToArray = function(object) {
 			var _arrObject = new Array();
-			if (_.isObject(object)) {
+			if (Array.isObject(object)) {
 				_arrObject = $.makeArray(object);
 			} else {
 				_arrObject = object;

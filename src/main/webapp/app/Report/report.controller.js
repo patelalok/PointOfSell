@@ -8,6 +8,7 @@
 	function ReportController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter) 
 	{
 		GlobalVariable.isLoginPage = false;
+		$scope.yearlySummary = [];
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.maxDate = new Date();
 		$scope.minDate = moment().subtract(1, "days").toDate();
@@ -429,7 +430,29 @@
 		{
 			if(response.yearlyListDtos !== null && response.yearlyListDtos !== '')
 			{
-				$scope.yearlySummary = response.yearlyListDtos;
+				//$scope.yearlySummary = response.yearlyListDtos;
+				for(var i=0;i<response.yearlyListDtos.length;i++)
+				{
+					$scope.yearlySummary.push({
+						"monthName": response.yearlyListDtos[i].monthName,
+						"credit": parseFloat(response.yearlyListDtos[i].credit).toFixed(2),
+						"cash": parseFloat(response.yearlyListDtos[i].cash).toFixed(2),
+						"check": parseFloat(response.yearlyListDtos[i].check).toFixed(2),
+						"tax": parseFloat(response.yearlyListDtos[i].tax).toFixed(2),
+						"discount": parseFloat(response.yearlyListDtos[i].discount).toFixed(2),
+						"returnAmount": parseFloat(response.yearlyListDtos[i].returnAmount).toFixed(2),
+						"profit": parseFloat(response.yearlyListDtos[i].profit).toFixed(2),
+						"marginPercentage": parseFloat(response.yearlyListDtos[i].marginPercentage).toFixed(2),
+						"total": parseFloat(response.yearlyListDtos[i].total).toFixed(2),
+						"monthAvg": parseFloat(response.yearlyListDtos[i].monthAvg).toFixed(2),
+						"cost": parseFloat(response.yearlyListDtos[i].cost).toFixed(2),
+						"retail": parseFloat(response.yearlyListDtos[i].retail).toFixed(2),
+						"noOfTrans": parseFloat(response.yearlyListDtos[i].noOfTrans).toFixed(2),
+						"avgBasketSize": parseFloat(response.yearlyListDtos[i].avgBasketSize).toFixed(2)
+
+
+					});
+				}
 				$scope.yearlySummary.push({
 				"monthName": "Total",
 				"credit": parseFloat(response.finalTotalForReportsDtos[0].totalCredit).toFixed(2),
@@ -447,7 +470,7 @@
 				"noOfTrans": parseFloat(response.finalTotalForReportsDtos[0].noOfTrans).toFixed(2),
 				"avgBasketSize": parseFloat(response.finalTotalForReportsDtos[0].avgBasketSize).toFixed(2)});
 			}
-			$scope.yearlySummary = response.yearlyListDtos;
+			//$scope.yearlySummary = response.yearlyListDtos;
 
 		}
 		function onYearlyError(response)

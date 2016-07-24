@@ -378,7 +378,9 @@
 					<column name="Cash" key="cash" datatype="string" width="10%"></column>
 					
 					<column name="Check" key="check" datatype="string" width="10%"></column>
-					<column name="Tax" key="tax" datatype="string" width="10%"></column>
+					<column name="Tax" key="tax" datatype="number" width="10%">
+
+					</column>
 					<column name="Discount" key="discount" datatype="string" width="10%"></column>
 					<column name="Return" key="returnAmount" datatype="string" width="10%"></column>
 					<column name="Porfit" key="profit" datatype="string" width="10%"></column>
@@ -528,7 +530,12 @@
 				<columns>
 
 					<column name="Hour" key="hour" datatype="string" width="9%" sortable="true"></column>
-					<column name="Credit" key="credit" datatype="string" width="9%"></column>
+					<column name="Credit" key="credit" datatype="string" width="9%">
+						<cell ng-non-bindable>
+							{{::row.credit.toFixed(2)}}
+
+						</cell>
+					</column>
 					<column name="Cash" key="cash" datatype="string" width="9%"></column>
 					<column name="Check" key="check" datatype="string" width="9%"></column>
 					<column name="Tax" key="tax" datatype="string" width="9%"></column>

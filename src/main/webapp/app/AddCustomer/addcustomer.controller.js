@@ -3,14 +3,15 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService)
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util)
 	{
 		GlobalVariable.addedCustSuccessfull = false;
 		GlobalVariable.successCustAlert = false;
 		GlobalVariable.editCustSuccess = false;
 		$scope.GlobalVariable = GlobalVariable;
+		var authElemArray = new Array();
 		$scope.closePopup = function()
 		{
 			DialogFactory.close(true);
@@ -24,29 +25,57 @@
 			var receiptIndex = element.attr('data-receipt-index');
 			element.find('span').eq(0).html(endDate.format('dd-MM-yyyy'));
 		};
+		$scope.validations = function()
+		{
+			authElemArray = new Array();
+			if($scope.firstName == '' || $scope.firstName == undefined)
+			{
+				authElemArray.push({
+					'id' : 'firstName',
+					'msg' : 'First Name cannot be empty'
+				});
+			}
+			if($scope.phoneNumber == '' || $scope.phoneNumber == undefined)
+			{
+				authElemArray.push({
+					'id' : 'phoneNumber',
+					'msg' : 'Phone Number cannot be empty'
+				});
+			}
+			if (authElemArray.length >= 1) {
+				util.customError.show(authElemArray, "");
+
+				return false;
+			} else {
+				return true;
+			}
+		};
 		$scope.createNewCustomer = function()
 		{
-			var request = {};
-			request = {
-				"firstName": $scope.firstName,
-				"lastName": $scope.lastName,
-				"phoneNo": $scope.phoneNumber,
-				"email": $scope.email,
-				"dateOfBirth": $scope.DOB,
-				"customerType": $scope.custType,
-				"gender": $scope.gender,
-				"street":$scope.street,
-				"city": $scope.City,
-				"state": $scope.State,
-				"country": $scope.Country,
-				"zipcode": $scope.postalCode,
-				"fax": null,
-				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss (),
-				"balance": 0
-			};
-			request = JSON.stringify(request);
-			var url='http://localhost:8080/addCustomer';
-			dataService.Post(url,request,onAddCustDtlsSuccess,onAddCustDtlsError,'application/json','application/json');
+			util.customError.hide(['firstName','phoneNumber']);
+			if($scope.validations()) {
+				var request = {};
+				request = {
+					"firstName": $scope.firstName,
+					"lastName": $scope.lastName,
+					"phoneNo": $scope.phoneNumber,
+					"email": $scope.email,
+					"dateOfBirth": $scope.DOB,
+					"customerType": $scope.custType,
+					"gender": $scope.gender,
+					"street": $scope.street,
+					"city": $scope.City,
+					"state": $scope.State,
+					"country": $scope.Country,
+					"zipcode": $scope.postalCode,
+					"fax": null,
+					"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss(),
+					"balance": 0
+				};
+				request = JSON.stringify(request);
+				var url = 'http://localhost:8080/addCustomer';
+				dataService.Post(url, request, onAddCustDtlsSuccess, onAddCustDtlsError, 'application/json', 'application/json');
+			}
 
 		};
 		$scope.editNewCustomer = function()

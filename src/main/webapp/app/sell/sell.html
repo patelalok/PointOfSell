@@ -1,4 +1,13 @@
 <div class="container" style="padding-top:59px;">
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.successCustAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedCustSuccessfull">Customer Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editCustSuccess">Customer Edited Successfully</span>
+		</div>
+	</div>
 	<div class="row">
 	<div class="searchItems col-md-12" style="margin-bottom:10px;">
 	 	<div class="searchProducts col-md-6">
@@ -81,11 +90,9 @@
 				<div class="display-row">	
 					<div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
 					<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
-					<select id="prType" data-ng-model="totalTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
-							<option value="select">Select Tax</option>
-							<option value="Brand">1</option>
-							<option value="Vendor">2</option>
-							<option value="Category">3</option>
+					<select id="totalTax" data-ng-model="selectTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
+							<option value="default">Default Tax</option>
+							<option value="noTax">No Tax</option>
 						</select>
 					
 					</div>

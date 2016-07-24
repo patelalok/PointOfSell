@@ -208,7 +208,7 @@
 											column.padding = getAttributeValue(columnElement, 'padding' , false,true);
 											column.border = getAttributeValue(columnElement, 'border' , false,true);
 											watchHidden(scope, column, columnElement);
-
+											console.log(column.key);
 											column.cell = null;
 											column.header = null;
 
