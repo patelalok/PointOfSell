@@ -23,6 +23,7 @@ public class ProductDto {
     private String categoryName;
     private String brandName;
     private String vendorName;
+    private String imeiNo;
 
     private int quantityForSell;
 
@@ -195,9 +196,11 @@ public class ProductDto {
         this.createdDate = createdDate;
     }
 
+    public String getImeiNo() {
+        return imeiNo;
+    }
 
-
-
-
-
+    public void setImeiNo(String imeiNo) {
+        this.imeiNo = imeiNo;
+    }
 }

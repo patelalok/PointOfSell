@@ -42,7 +42,8 @@ public class ProductManager
                     productDto.getMinProductQuantity(),
                     productDto.getReturnRule(),
                     productDto.getImage(),
-                    productDto.getCreatedDate());
+                    productDto.getCreatedDate(),
+                    productDto.getImeiNo());
             System.out.println("Product Added Successfully");
         }
         catch (Exception e)
@@ -69,7 +70,8 @@ public class ProductManager
                     productDto.getMinProductQuantity(),
                     productDto.getReturnRule(),
                     productDto.getImage(),
-                    productDto.getProductId());
+                    productDto.getProductId(),
+                    productDto.getImeiNo());
 
             System.out.println("Product Edited Successfully");
         }
@@ -122,6 +124,7 @@ public class ProductManager
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
+                product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 //product.setQuantityForSell(1);
 
 

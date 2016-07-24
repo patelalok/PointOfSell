@@ -15,8 +15,8 @@ public class SQLQueries {
    public String addProductQuery =
 
            "INSERT INTO PRODUCT" +
-           " (PRODUCT_NO,CATEGORY_ID,VENDOR_ID,BRAND_ID,ATL_NO,DESCRIPTION,COST_PRICE,MARKUP,RETAIL_PRICE,QUANTITY,MIN_PRODUCT,RETURN_RULE,IMAGE,CREATED_DATE)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+           " (PRODUCT_NO,CATEGORY_ID,VENDOR_ID,BRAND_ID,ATL_NO,DESCRIPTION,COST_PRICE,MARKUP,RETAIL_PRICE,QUANTITY,MIN_PRODUCT,RETURN_RULE,IMAGE,CREATED_DATE,IMEI_NUMBER)" +
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
@@ -79,7 +79,7 @@ public class SQLQueries {
 
     public String editProductQuery = "UPDATE PRODUCT SET PRODUCT_NO = ?, CATEGORY_ID = ?, VENDOR_ID = ?, BRAND_ID = ?, " +
             "ATL_NO = ?, DESCRIPTION = ?, COST_PRICE = ?,  MARKUP = ?, RETAIL_PRICE = ?, QUANTITY = ?, MIN_PRODUCT = ?, RETURN_RULE = ?, " +
-            "IMAGE = ? WHERE PRODUCT_ID = ?";
+            "IMAGE = ?, IMEI_NUMBER = ? WHERE PRODUCT_ID = ?";
 
     public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, EMAIL = ?, DATEOFBIRTH = ?,CUSTOMER_TYPE = ?, GENDER = ?, " +
             " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ? WHERE PHONE_NO = ?";
