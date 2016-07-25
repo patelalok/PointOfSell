@@ -326,6 +326,7 @@
 				//GlobalVariable.remainingBalanceAmount = $scope.balanceRemaining;
 				$scope.productTotal=$scope.balanceRemaining;
 				$rootScope.totalPayment=$scope.balanceRemaining;
+				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
 			}
 
 		}
