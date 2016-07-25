@@ -250,7 +250,7 @@
 				$scope.creditIdMulty = 2;
 				$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
 				if($scope.balanceAmount <= 0)
-					$scope.paidAmountCash =  GlobalVariable.checkOuttotal;
+					$scope.paidAmountCredit =  GlobalVariable.checkOuttotal;
 			}
 			
 			//$scope.remainingBalance = parseFloat(GlobalVariable.checkOuttotal)-parseFloat(value);
