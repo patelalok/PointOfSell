@@ -42,7 +42,8 @@ public class CustomerManager {
                     customerDto.getCountry(),
                     customerDto.getZipcode(),
                     customerDto.getFax(),
-                    customerDto.getCustomerCreatedDate());
+                    customerDto.getCustomerCreatedDate(),
+                    customerDto.getTaxId());
             System.out.println("Customer Added Successfully");
         }
         catch (Exception e)
@@ -59,7 +60,6 @@ public class CustomerManager {
             jdbcTemplate.update(sqlQuery.editCustomerQuery,
                     customerDto.getFirstName(),
                     customerDto.getLastName(),
-
                     customerDto.getEmail(),
                     customerDto.getDateOfBirth(),
                     customerDto.getGender(),
@@ -70,6 +70,7 @@ public class CustomerManager {
                     customerDto.getCountry(),
                     customerDto.getZipcode(),
                     customerDto.getFax(),
+                    customerDto.getTaxId(),
                     customerDto.getPhoneNo());
 
 
@@ -124,6 +125,7 @@ public class CustomerManager {
             customer.setFax(rs.getString("FAX"));
             customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
             customer.setBalance(rs.getDouble("BALANCE"));
+            customer.setTaxId(rs.getString("TAX_ID"));
 
             return customer;
         }

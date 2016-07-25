@@ -26,15 +26,7 @@ public class TransactionDto {
     private int totalQuantity;
     private String transCreditId;
     private int last4Digits;
-    private double balance;
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
+    private double prevBalance;
 
     public double getPaidAmountCheck() {
         return paidAmountCheck;
@@ -214,9 +206,11 @@ public class TransactionDto {
         this.userId = userId;
     }
 
+    public double getPrevBalance() {
+        return prevBalance;
+    }
 
-
-
-
-
+    public void setPrevBalance(double prevBalance) {
+        this.prevBalance = prevBalance;
+    }
 }

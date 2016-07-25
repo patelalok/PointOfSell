@@ -235,7 +235,7 @@
 			$scope.regPhone = '';
 			$scope.customerNameOnSearch = '';
 			$scope.balanceRemaining = '';
-			$rootScope.testData = [];
+			//$rootScope.testData = [];
 			$scope.loadCheckOutData();
 			GlobalVariable.customerFound = false;
 			$scope.balanceRemaining = 0;
