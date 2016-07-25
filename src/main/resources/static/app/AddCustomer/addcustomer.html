@@ -14,7 +14,7 @@
 				<div class="col-md-6">
                         <label for="lastName" class="padding-bottom-5 font-weight-label">Last Name</label>
                         <input type="text" class="form-control" name="lastName" id="lastName" data-ng-model="lastName"
-                        autocomplete="off"  placeholder = "Enter state" style="width:100%;height:50px;" />
+                        autocomplete="off"  placeholder = "Enter LastName" style="width:100%;height:50px;" />
 				</div>
 			</div>
 			<div class="row padding-top-15">
@@ -31,9 +31,24 @@
 				</div>
 			</div>
 			<div class="row padding-top-15">
-				
+
 				<div class="col-md-6">
-                        <label for="dob" class="padding-bottom-5 font-weight-label">Date of birth</label>
+					<label for="taxId" class="padding-bottom-5 font-weight-label">Tax Id</label>
+					<input type="text" class="form-control" name="taxId" id="taxId" data-ng-model="taxId"
+						   autocomplete="off"   style="width:100%;height:50px;" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
+				</div>
+				<div class="col-md-6">
+                        <label for="customerCode" class="padding-bottom-5 font-weight-label">Customer Type</label>
+						<select id="custType" data-ng-model="custType" class="form-control"  style="height:50px;width:100%;">
+											<option value="Business">Business Customer</option>
+											<option value="Retail">Retail Customer</option>
+						  </select>
+		
+				</div>
+			</div>
+			<div class="row padding-top-15">
+				<div class="col-md-6">
+					<label for="dob" class="padding-bottom-5 font-weight-label">Date of birth</label>
 					<div class="input-group calendar-group fromDate">
 						<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="DOB" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
 							   ng-model-options="{allowInvalid: true}" name="DOB"
@@ -45,16 +60,6 @@
 								</button> </span>
 					</div>
 				</div>
-				<div class="col-md-6">
-                        <label for="customerCode" class="padding-bottom-5 font-weight-label">Customer Code</label>
-						<select id="custType" data-ng-model="custType" class="form-control"  style="height:50px;width:100%;">
-											<option value="Business">Business Customer</option>
-											<option value="Retail">Retail Customer</option>
-						  </select>
-		
-				</div>
-			</div>
-			<div class="row padding-top-15">
 				<div class="col-md-6">
                         <label for="gender" class="padding-bottom-5 font-weight-label">Gender</label>
                         <div class="genderRadio padding-top-10">
