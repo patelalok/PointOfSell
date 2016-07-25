@@ -55,9 +55,7 @@ public class SalesManager {
                         jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
                                 transactionDto.getPrevBalance(),
                                 transactionDto.getCustomerPhoneNo());
-
-
-
+                System.out.println("Customer Balance Added Successfully");
                 System.out.println("Transaction Added Successfully");
 
 
@@ -110,7 +108,7 @@ public class SalesManager {
                 transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
                 transaction.setStatus(rs.getString("STATUS"));
                 transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
-                transaction.setPrevBalance(rs.getDouble("BALANCE"));
+              //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
 
             return transaction;
         }
