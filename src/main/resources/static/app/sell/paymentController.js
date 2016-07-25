@@ -22,7 +22,7 @@
 			$scope.paidAmountCash =parseFloat($scope.paidAmountCash)+parseFloat(amount);
 			$scope.cashId = 1;
 			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
-			if($scope.balanceAmount <= 0)
+			if($scope.balanecAmount <= 0)
 			{
 				$scope.paidAmountCash = GlobalVariable.checkOuttotal;
 				$rootScope.amountBalance =$scope.balanceAmount;
@@ -242,11 +242,15 @@
 			{
 				$scope.cashId =1;
 				$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
+				if($scope.balanceAmount <= 0)
+					$scope.paidAmountCash =  GlobalVariable.checkOuttotal;
 			}
 			else
 			{
 				$scope.creditIdMulty = 2;
 				$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
+				if($scope.balanceAmount <= 0)
+					$scope.paidAmountCash =  GlobalVariable.checkOuttotal;
 			}
 			
 			//$scope.remainingBalance = parseFloat(GlobalVariable.checkOuttotal)-parseFloat(value);
