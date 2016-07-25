@@ -22,7 +22,7 @@
 			$scope.paidAmountCash =parseFloat($scope.paidAmountCash)+parseFloat(amount);
 			$scope.cashId = 1;
 			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
-			if($scope.balanecAmount <= 0)
+			if($scope.balanecAmount <= 0 && $scope.paidAmountCredit ==0)
 			{
 				$scope.paidAmountCash = GlobalVariable.checkOuttotal;
 				$rootScope.amountBalance =$scope.balanceAmount;
@@ -241,18 +241,37 @@
 			if(means == 'cash')
 			{
 				$scope.cashId =1;
-				$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
+				if($scope.balanceAmount > value )
+				{
+					$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
+				}
+				else
+				{
+					$scope.paidAmountCash =  parseFloat($scope.paidAmountCash) + parseFloat(value) - $scope.balanceAmount  ;
+				}
 				$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
-				if($scope.balanceAmount <= 0)
-					$scope.paidAmountCash =  GlobalVariable.checkOuttotal;
+				if($scope.balanceAmount <= 0 && $scope.paidAmountCredit == 0) {
+
+					$scope.paidAmountCash = GlobalVariable.checkOuttotal;
+				}
+
 			}
 			else
 			{
 				$scope.creditIdMulty = 2;
-				$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
+				if($scope.balanceAmount > value )
+				{
+					$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
+				}
+				else
+				{
+					$scope.paidAmountCredit =  parseFloat($scope.paidAmountCredit) + parseFloat(value) - $scope.balanceAmount  ;
+				}
 				$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
-				if($scope.balanceAmount <= 0)
-					$scope.paidAmountCredit =  GlobalVariable.checkOuttotal;
+				if($scope.balanceAmount <= 0 && $scope.paidAmountCash == 0) {
+
+					$scope.paidAmountCredit = GlobalVariable.checkOuttotal;
+				}
 			}
 			
 			//$scope.remainingBalance = parseFloat(GlobalVariable.checkOuttotal)-parseFloat(value);
