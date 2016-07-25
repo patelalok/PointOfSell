@@ -252,7 +252,7 @@
 			$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
 			if($scope.balanceAmount <= 0)
 			{
-				$rootScope.amountBalance =0;
+				$rootScope.amountBalance =$scope.balanceAmount;
 				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
 				var _ctrlPath = 'PrintRecepitController';
