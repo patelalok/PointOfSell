@@ -3,13 +3,14 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util)
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter)
 	{
 		GlobalVariable.addedCustSuccessfull = false;
 		GlobalVariable.successCustAlert = false;
 		GlobalVariable.editCustSuccess = false;
+		$scope.restrictCharacter = restrictCharacter;
 		$scope.GlobalVariable = GlobalVariable;
 		var authElemArray = new Array();
 		$scope.closePopup = function()
@@ -70,7 +71,8 @@
 					"zipcode": $scope.postalCode,
 					"fax": null,
 					"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss(),
-					"balance": 0
+					"balance": 0,
+					"taxId":$scope.taxId
 				};
 				request = JSON.stringify(request);
 				var url = 'http://localhost:8080/addCustomer';
@@ -95,7 +97,8 @@
 				"country": $scope.Country,
 				"zipcode": $scope.postalCode,
 				"fax": "TestFax",
-				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss ()
+				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss (),
+				"taxId":$scope.taxId
 			};
 			request = JSON.stringify(request);
 			var url='http://localhost:8080/editCustomer';

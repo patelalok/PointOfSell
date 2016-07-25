@@ -96,6 +96,7 @@
 								"total":((parseFloat(GlobalVariable.getProducts[i].retailPrice)-(parseFloat($scope.discount)))*parseFloat(GlobalVariable.getProducts[i].quantity)).toFixed(2),
 								"stock":GlobalVariable.getProducts[i].stock,
 								"costPrice":GlobalVariable.getProducts[i].costPrice});
+
 				    	}	
 				    }	
 				    
@@ -132,7 +133,7 @@
 						}
 						else
 						{
-							$scope.discount = (parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-parseFloat($scope.searchValue)).toFixed(2);
+							$scope.discount = (parseFloat($scope.searchValue)).toFixed(2);
 						}	
 						if($scope.discount == 0)
 							$scope.total = ((parseFloat($rootScope.testData[$rootScope.testData.length-1].retail)-$scope.discount)*parseFloat($scope.quantity)).toFixed(2);
@@ -237,6 +238,7 @@
 			$rootScope.testData = [];
 			$scope.loadCheckOutData();
 			GlobalVariable.customerFound = false;
+			$scope.balanceRemaining = 0;
 			
 		}
 		$scope.test = function()
@@ -301,6 +303,11 @@
 					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='+$scope.regPhone;
 					dataService.Get(url,onBalanceSuccess,onBalanceError,'application/json','application/json');
 					GlobalVariable.customerFound = true;
+					GlobalVariable.custTypeCd = GlobalVariable.getCustomerDtls[i].customerType;
+					if(GlobalVariable.custTypeCd == 'Business')
+					$scope.selectTax = 'noTax';
+					else if(GlobalVariable.custTypeCd == 'Retail')
+						$scope.selectTax = 'default';
 				}	
 				else
 				{

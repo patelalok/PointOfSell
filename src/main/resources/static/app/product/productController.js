@@ -98,7 +98,8 @@
 						"returnRule":$scope.retType,
 					"imeiNo":$scope.phoneIMEI,
 						"image": "image",
-						"createdDate": "1000-01-01 00:00:00"
+						"createdDate": "1000-01-01 00:00:00",
+						"tax":$scope.productYesyNO
 					};
 				var url ="http://localhost:8080/editProduct";
 			}
@@ -130,7 +131,8 @@
 						"returnRule": $scope.retType,
 						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
-						"createdDate": "1000-01-01 00:00:00"
+						"createdDate": "1000-01-01 00:00:00",
+						"tax":$scope.productYesyNO
 		        	  };
 				var url ="http://localhost:8080/addProduct";
 			}	
@@ -180,6 +182,7 @@
 				$scope.prodRetail = GlobalVariable.editProductDetails.retailPrice;
 				$scope.prodQuantity = GlobalVariable.editProductDetails.quantity;
 				$scope.prodMinquantity = GlobalVariable.editProductDetails.minProductQuantity;
+				$scope.productYesyNO = GlobalVariable.editProductDetails.tax;
 			}	
 		}
 		render();

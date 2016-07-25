@@ -70,7 +70,7 @@
 				on-sort="sortColumnData(index)" data-filter-value="filterHistory">
 				<columns>
 					<column name="Date" key="transactionDate" datatype="string" width="25%" sortable="true" ></column>
-					<column name="CustomerPhone" key="customerPhoneno" datatype="string" width="15%"></column>
+					<column name="Customer Phone" key="customerPhoneNo" datatype="string" width="25%" sortable="true" ></column>
 					<column name="UserID" key="userId" datatype="string" width="10%" ></column>
 					
 					<column name="Tax" key="tax" datatype="string" width="5%" ></column>
@@ -171,8 +171,12 @@
 			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="subTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].discount}}</div>
 		</div>
 		<div class="display-row">
-			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Tax</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Tax:</div>
 			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
+		</div>
+		<div class="display-row" style="border-bottom:1px solid #000000;">
+			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Prev Balance:</div>
+			<div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance}}</div>
 		</div>
 		<div class="display-row" style="border-bottom:1px solid #000000;">
 			<div class="padding-top-10 inline-vertical display-cell align-left" style="padding-left:200px;">Total</div>
