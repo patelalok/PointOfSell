@@ -325,6 +325,7 @@
 				$scope.balanceRemaining = parseFloat(response);
 				//GlobalVariable.remainingBalanceAmount = $scope.balanceRemaining;
 				$scope.productTotal=$scope.balanceRemaining;
+				GlobalVariable.custBalance = $scope.balanceRemaining;
 				$rootScope.totalPayment=$scope.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
 			}

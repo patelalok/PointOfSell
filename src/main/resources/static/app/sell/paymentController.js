@@ -24,6 +24,7 @@
 			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
 			if($scope.balanceAmount <= 0)
 			{
+				$scope.paidAmountCash = GlobalVariable.checkOuttotal;
 				$rootScope.amountBalance =$scope.balanceAmount;
 				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
@@ -94,7 +95,7 @@
 			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
-				"balance":$scope.balanceAmount
+				"prevBalance":$scope.balanceAmount
 
 			};
 			request = JSON.stringify(request);
