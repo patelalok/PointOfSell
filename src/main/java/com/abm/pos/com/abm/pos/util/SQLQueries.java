@@ -20,8 +20,8 @@ public class SQLQueries {
 
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
-            "(FIRST_NAME,LAST_NAME,PHONE_NO,EMAIL,DATEOFBIRTH,CUSTOMER_TYPE,GENDER,STREET,CITY,STATE,COUNTRY,ZIPCODE,FAX,CUSTOMER_CREATE_DATE)" +
-            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "(FIRST_NAME,LAST_NAME,PHONE_NO,EMAIL,DATEOFBIRTH,CUSTOMER_TYPE,GENDER,STREET,CITY,STATE,COUNTRY,ZIPCODE,FAX,CUSTOMER_CREATE_DATE,TAX_ID)" +
+            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addVendorQuery =
             "INSERT INTO VENDOR " +
@@ -82,7 +82,7 @@ public class SQLQueries {
             "IMAGE = ?, IMEI_NUMBER = ?, TAX = ? WHERE PRODUCT_ID = ?";
 
     public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, EMAIL = ?, DATEOFBIRTH = ?,CUSTOMER_TYPE = ?, GENDER = ?, " +
-            " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ? WHERE PHONE_NO = ?";
+            " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ?, TAX_ID = ? WHERE PHONE_NO = ?";
 
     public String editVendorQuery = "UPDATE VENDOR SET VENDOR_NAME = ?, COMMISION = ?, PHONENO = ?, COMPANY_NAME = ?, ADDRESS = ? WHERE VENDOR_ID = ?";
 
@@ -143,7 +143,7 @@ public class SQLQueries {
     public String getCategoryFromProductTable = "SELECT COUNT(CATEGORY_ID) FROM PRODUCT WHERE CATEGORY_ID = ?";
     public String getUsernameFromUser = "SELECT USERNAME FROM USER WHERE USER_ID = ?";
 
-    public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
+    public String getTransactionDetailsForReceipt = "SELECT t.*,c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND t.TRANSACTION_COMP_ID = ?";
 
             /*"SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT," +
             "t.TAX_AMOUNT,t.DISCOUNT_AMOUNT,t.CUSTOMER_PHONENO,t.USER_ID,l.PRODUCT_ID,l.QUANTITY,l.COST,l.DISCOUNT,l.RETAIL" +

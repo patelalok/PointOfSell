@@ -20,6 +20,7 @@ public class CustomerDto {
     private String fax;
     private String customerCreatedDate;
     private double balance;
+    private String taxId;
 
 
     public String getZipcode() {
@@ -140,6 +141,14 @@ public class CustomerDto {
 
     public void setCustomerType(String customerType) {
         this.customerType = customerType;
+    }
+
+    public String getTaxId() {
+        return taxId;
+    }
+
+    public void setTaxId(String taxId) {
+        this.taxId = taxId;
     }
 }
 
