@@ -229,9 +229,9 @@
 		};
 		function callbackPayment()
 		{
-			$scope.totalQuantity = 0;
-			$scope.subTotal = 0;
-			$scope.productTotal = 0;
+			$rootScope.totalQuantity = 0;
+			$rootScope.subTotal = 0;
+			$rootScope.productTotal = 0;
 			$scope.regPhone = '';
 			$scope.customerNameOnSearch = '';
 			$scope.balanceRemaining = '';
@@ -247,26 +247,26 @@
 		};
 		$scope.loadCheckOutData = function()
 		{
-			$scope.totalQuantity=0;
-			$scope.subTotal = 0;
+			$rootScope.totalQuantity=0;
+			$rootScope.subTotal = 0;
 			for(var i=0;i<$rootScope.testData.length;i++)
 			{
-				$scope.totalQuantity = parseFloat( $scope.totalQuantity) + parseFloat($rootScope.testData[i].quantity);
-				$scope.subTotal = parseFloat($scope.subTotal) + parseFloat($rootScope.testData[i].total);
+				$rootScope.totalQuantity = parseFloat( $rootScope.totalQuantity) + parseFloat($rootScope.testData[i].quantity);
+				$rootScope.subTotal = parseFloat($rootScope.subTotal) + parseFloat($rootScope.testData[i].total);
 				
 			}
-			$scope.totalQuantity = (parseFloat($scope.totalQuantity)).toFixed(2);
-			$scope.subTotal = (parseFloat($scope.subTotal)).toFixed(2);
-			GlobalVariable.quantityTotal = $scope.totalQuantity;
-			GlobalVariable.totalSub = $scope.subTotal;
+			$rootScope.totalQuantity = (parseFloat($rootScope.totalQuantity)).toFixed(2);
+			$rootScope.subTotal = (parseFloat($rootScope.subTotal)).toFixed(2);
+			GlobalVariable.quantityTotal = $rootScope.totalQuantity;
+			GlobalVariable.totalSub = $rootScope.subTotal;
 			if($scope.totalDisc == undefined)
 				$scope.totalDisc = 0;
 			
 			GlobalVariable.discountTotal = $scope.totalDisc ;
 			if($scope.totalDisc == "")
-				$scope.productTotalWithoutTax = Number(parseFloat( $scope.subTotal)).toFixed(2);
+				$scope.productTotalWithoutTax = Number(parseFloat( $rootScope.subTotal)).toFixed(2);
 			else
-			$scope.productTotalWithoutTax = Number(parseFloat( $scope.subTotal) - parseFloat($scope.totalDisc)).toFixed(2);
+			$scope.productTotalWithoutTax = Number(parseFloat( $rootScope.subTotal) - parseFloat($scope.totalDisc)).toFixed(2);
 			
 			
 			if($scope.productTotalWithoutTax == 'NaN')
@@ -282,13 +282,13 @@
 				$scope.totalTax =0;
 
 			GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax) * (parseFloat($scope.totalTax) / 100);
-			$scope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
+			$rootScope.productTotal = Number(parseFloat($scope.productTotalWithoutTax)+(((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100 )).toFixed(2);
 
 			if($scope.balanceRemaining > 0)
 			{
-				$scope.productTotal = parseFloat($scope.productTotal)+parseFloat($scope.balanceRemaining);
+				$rootScope.productTotal = parseFloat($rootScope.productTotal)+parseFloat($scope.balanceRemaining);
 			}
-			$rootScope.totalPayment = $scope.productTotal;
+			$rootScope.totalPayment = $rootScope.productTotal;
 			GlobalVariable.checkOuttotal = $rootScope.totalPayment;
 		}
 		$scope.searchCustomer = function()
@@ -324,7 +324,7 @@
 			{
 				$scope.balanceRemaining = parseFloat(response);
 				//GlobalVariable.remainingBalanceAmount = $scope.balanceRemaining;
-				$scope.productTotal=$scope.balanceRemaining;
+				$rootScope.productTotal=$scope.balanceRemaining;
 				GlobalVariable.custBalance = $scope.balanceRemaining;
 				$rootScope.totalPayment=$scope.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
