@@ -74,7 +74,20 @@
 				$scope.creditIdMulty = '';
 			if($scope.paidAmountCredit == undefined)
 				$scope.paidAmountCredit = '';
-			
+			if(GlobalVariable.customerFound == true)
+			{
+				if($scope.balanceAmount > 0)
+					GlobalVariable.custBalance = $scope.balanceAmount;
+				else
+					GlobalVariable.custBalance = 0;
+			}
+			else
+			{
+				GlobalVariable.custBalance = 0;
+			}
+
+
+
 			var url ="http://localhost:8080/addTransaction";
 			var request = new Object();
 			request = {
@@ -95,7 +108,7 @@
 			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
-				"prevBalance":$scope.balanceAmount
+				"prevBalance":GlobalVariable.custBalance
 
 			};
 			request = JSON.stringify(request);
@@ -144,6 +157,7 @@
 			$rootScope.customerName = '';
 			$rootScope.regPhone = '';
 			$rootScope.customerNameOnSearch = '';
+			GlobalVariable.customerFound = false;
 		};
 		/*$scope.callBackCheckoutComplete = function()
 		{
@@ -241,15 +255,15 @@
 			if(means == 'cash')
 			{
 				$scope.cashId =1;
-				if($scope.balanceAmount > value )
+				if(parseFloat($scope.balanceAmount) > parseFloat(value))
 				{
 					$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
 				}
 				else
 				{
-					$scope.paidAmountCash =  parseFloat($scope.paidAmountCash) + parseFloat(value) - $scope.balanceAmount  ;
+					$scope.paidAmountCash =  parseFloat($scope.paidAmountCash) +  $scope.balanceAmount  ;
 				}
-				$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
+				$scope.balanceAmount =parseFloat($scope.balanceAmount)-parseFloat(value);
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCredit == 0) {
 
 					$scope.paidAmountCash = GlobalVariable.checkOuttotal;
@@ -259,15 +273,15 @@
 			else
 			{
 				$scope.creditIdMulty = 2;
-				if($scope.balanceAmount > value )
+				if(parseFloat($scope.balanceAmount) > parseFloat(value) )
 				{
 					$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
 				}
 				else
 				{
-					$scope.paidAmountCredit =  parseFloat($scope.paidAmountCredit) + parseFloat(value) - $scope.balanceAmount  ;
+					$scope.paidAmountCredit =  parseFloat($scope.paidAmountCredit) +  $scope.balanceAmount  ;
 				}
-				$scope.balanceAmount =$scope.balanceAmount-parseFloat(value);
+				$scope.balanceAmount =parseFloat($scope.balanceAmount)-parseFloat(value);
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCash == 0) {
 
 					$scope.paidAmountCredit = GlobalVariable.checkOuttotal;
