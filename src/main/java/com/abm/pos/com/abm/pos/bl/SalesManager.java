@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -93,7 +95,19 @@ public class SalesManager {
 
 
                 transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-                transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+                DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date d = null;
+                try {
+                    d = f.parse(rs.getString("TRANSACTION_DATE"));
+                }catch (ParseException e) {
+                e.printStackTrace();
+            }
+            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat time = new SimpleDateFormat("hh:mm:ss");
+            System.out.println("Date: " + date.format(d));
+            System.out.println("Time: " + time.format(d));
+                transaction.setTransactionDate(date.format(d));
+                transaction.setTransactionTime(time.format(d));
                 transaction.setTransactionTime("12:10:34");
                 transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
                 transaction.setTax(rs.getDouble("TAX_AMOUNT"));
