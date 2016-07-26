@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -72,7 +73,7 @@ public class SalesManager {
 
 
         try {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapper(),startDate,endDategit);
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapperWithOutCustomer(),startDate,endDategit);
             System.out.println("Send Transaction Details Successfully");
         } catch (Exception e) {
             System.out.println(e);
@@ -82,7 +83,7 @@ public class SalesManager {
     }
 
 
-    private final class TransactionMapper implements RowMapper<TransactionDto>
+    private final class TransactionMapperWithOutCustomer implements RowMapper<TransactionDto>
     {
 
         @Override
@@ -93,6 +94,7 @@ public class SalesManager {
 
                 transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
                 transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+                transaction.setTransactionTime("12:10:34");
                 transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
                 transaction.setTax(rs.getDouble("TAX_AMOUNT"));
                 transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
@@ -114,7 +116,8 @@ public class SalesManager {
         }
     }
 
-    public List<ReceiptDto> getReceiptDetails(int receiptId)
+
+    public List<ReceiptDto> getReceiptDetails(int receiptId,String phoneNo)
     {
        List<ReceiptDto> receiptDtos = new ArrayList<>();
 
@@ -127,13 +130,29 @@ public class SalesManager {
         try
         {
 
-            transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceipt, new TransactionMapper(),receiptId);
-            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails,new TransactionLineItemMapper(),receiptId);
-
+            transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
+            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
             receiptDto.setTransactionDtoList(transactionDtos);
             receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
 
             receiptDtos.add(receiptDto);
+            //checking that customer is choosed or not to get the PREVIOUS BALANCE
+            /*if(phoneNo.equals(""))
+            {
+
+                transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
+                System.out.println("Receipt Without Customer");
+            }
+            else
+            {
+                transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithCustomer, new TransactionMapperWithCustomer(), receiptId);
+                System.out.println("Receipt With Customer");
+            }
+            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
+                receiptDto.setTransactionDtoList(transactionDtos);
+                receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
+
+                receiptDtos.add(receiptDto);*/
 
         }
         catch (Exception e)
@@ -296,6 +315,37 @@ public class SalesManager {
 
 }
 
+   /* private final class TransactionMapperWithCustomer implements RowMapper<TransactionDto>
+    {
+
+        @Override
+        public TransactionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            TransactionDto transaction = new TransactionDto();
+
+
+            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+            transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+            transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
+            transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+            transaction.setUserId(rs.getInt("USER_ID"));
+            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
+            transaction.setUsername(username);
+            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
+            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
+            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+            transaction.setStatus(rs.getString("STATUS"));
+            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            transaction.setPrevBalance(rs.getDouble("BALANCE"));
+
+            return transaction;
+        }
+    }*/
 
 
 

@@ -107,7 +107,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ?";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ? ";
             /*"" +
             "" +
             "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
@@ -143,7 +143,7 @@ public class SQLQueries {
     public String getCategoryFromProductTable = "SELECT COUNT(CATEGORY_ID) FROM PRODUCT WHERE CATEGORY_ID = ?";
     public String getUsernameFromUser = "SELECT USERNAME FROM USER WHERE USER_ID = ?";
 
-    public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
+    public String getTransactionDetailsForReceipt = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 
             /*"SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT," +
             "t.TAX_AMOUNT,t.DISCOUNT_AMOUNT,t.CUSTOMER_PHONENO,t.USER_ID,l.PRODUCT_ID,l.QUANTITY,l.COST,l.DISCOUNT,l.RETAIL" +
@@ -194,7 +194,7 @@ public class SQLQueries {
     public String getSalesProductDetails = "SELECT p.DESCRIPTION as COMMON_NAME,sum(t.COST) COST,sum(t.RETAIL) RETAIL,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL- t.COST) * t.QUANTITY) PROFIT  FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_ID = p.PRODUCT_ID AND t.DATE BETWEEN ? AND ? group by p.DESCRIPTION";
 
 
-    public String editPageSetUpDetails = "UPDATE GET_PAGE_SETUP_DETAILS SET TAX = ?, STORE_ADDRESS = ?, STORE_LOGO = ? WHERE GET_PAGE_SETUP_DETAILS_ID = ?";
+    public String editPageSetUpDetails = "UPDATE GET_PAGE_SETUP_DETAILS SET TAX = ?, STORE_ADDRESS = ?, STORE_LOGO = ?, FOOTER_RECEIPT = ? WHERE GET_PAGE_SETUP_DETAILS_ID = ?";
     public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
 
     public String editPaidOutDetails = "UPDATE PAIDOUT SET PAIDOUT = ?, REASON = ? WHERE PAIDOUT_ID = ? ";
@@ -205,4 +205,6 @@ public class SQLQueries {
     public String getSalesbyCustomer = "SELECT  u.USERNAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, USER u, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND u.USER_ID = l.USER_ID AND t.DATE BETWEEN ? AND ? group by u.USERNAME";
     public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
     public String addBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ? WHERE PHONE_NO = ? ";
+    public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
+    public String getTransactionDetailsForReceiptWithCustomer = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 }

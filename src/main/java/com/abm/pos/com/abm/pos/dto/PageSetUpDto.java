@@ -9,6 +9,15 @@ public class PageSetUpDto {
     private int tax;
     private String storeAddress;
     private String storeLogo;
+    private String footerReceipt;
+
+    public String getFooterReceipt() {
+        return footerReceipt;
+    }
+
+    public void setFooterReceipt(String footerReceipt) {
+        this.footerReceipt = footerReceipt;
+    }
 
     public String getStoreAddress() {
         return storeAddress;

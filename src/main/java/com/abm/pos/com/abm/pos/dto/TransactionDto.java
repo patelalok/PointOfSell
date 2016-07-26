@@ -9,6 +9,7 @@ public class TransactionDto {
 
     private int transactionCompId;
     private String transactionDate;
+    private String transactionTime;
     private double totalAmount;
     private double tax;
     private double discount;
@@ -37,6 +38,14 @@ public class TransactionDto {
     }
 
     private double paidAmountCheck;
+
+    public String getTransactionTime() {
+        return transactionTime;
+    }
+
+    public void setTransactionTime(String transactionTime) {
+        this.transactionTime = transactionTime;
+    }
 
     public int getLast4Digits() {
         return last4Digits;

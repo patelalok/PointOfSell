@@ -36,9 +36,9 @@ public class SalesController {
 
 
     @RequestMapping(value = "/getReceiptDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ReceiptDto> getReceiptDetails(@RequestParam int receiptId)
+    public List<ReceiptDto> getReceiptDetails(@RequestParam int receiptId,@RequestParam String phoneNo)
     {
-       return salesManager.getReceiptDetails(receiptId);
+       return salesManager.getReceiptDetails(receiptId,phoneNo);
     }
 
 
