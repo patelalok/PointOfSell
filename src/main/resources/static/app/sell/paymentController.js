@@ -92,23 +92,23 @@
 			var request = new Object();
 			request = {
 				"transactionDate":trasnactionDate,  
-				"totalAmount":GlobalVariable.checkOuttotal,
-				"tax":GlobalVariable.taxTotal,
-				"discount":GlobalVariable.discountTotal ,
+				"totalAmount":parseFloat(GlobalVariable.checkOuttotal).toFixed(2),
+				"tax":parseFloat(GlobalVariable.taxTotal).toFixed(2),
+				"discount":parseFloat(GlobalVariable.discountTotal).toFixed(2) ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":"2",
 				"cashId":$scope.cashId,
 				"status":"completed",
-			"paidAmountCash":$scope.paidAmountCash,
-			"changeAmount":$scope.changeAmount,
+			"paidAmountCash":parseFloat($scope.paidAmountCash).toFixed(2),
+			"changeAmount":parseFloat($scope.changeAmount).toFixed(2),
 				"creditId":$scope.creditIdMulty,
-				"paidAmountCredit":$scope.paidAmountCredit,
+				"paidAmountCredit":parseFloat($scope.paidAmountCredit).toFixed(2),
 			"transactionCompId":GlobalVariable.transactionCompletedId,
-			"subTotal":GlobalVariable.totalSub,
+			"subTotal":parseFloat(GlobalVariable.totalSub).toFixed(2),
 			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
-				"prevBalance":GlobalVariable.custBalance
+				"prevBalance":parseFloat(GlobalVariable.custBalance).toFixed(2)
 
 			};
 			request = JSON.stringify(request);
@@ -158,6 +158,11 @@
 			$rootScope.regPhone = '';
 			$rootScope.customerNameOnSearch = '';
 			GlobalVariable.customerFound = false;
+			$rootScope.totalQuantity = 0;
+			$rootScope.subTotal = 0;
+			$rootScope.productTotal = 0;
+
+
 		};
 		/*$scope.callBackCheckoutComplete = function()
 		{

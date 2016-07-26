@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('CloseRegisterController', CloseRegisterController);
 
-	CloseRegisterController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','RestrictedCharacter.Types'];
+	CloseRegisterController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','RestrictedCharacter.Types','$filter'];
 
-	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService,restrictCharacter) {
+	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService,restrictCharacter,$filter) {
 		$scope.totalUser = 0;
 		$scope.totalInValue = 0;
 		$scope.userCash = 0;
@@ -43,7 +43,9 @@
 				$scope.userCash = 0;
 			if($scope.userCheck == '')
 				$scope.userCheck = 0;
-			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)+parseFloat($scope.userPaid);
 			$scope.difDebit = parseFloat($scope.userDebit)-parseFloat($scope.systemDebit);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 			if($scope.difDebit >0)
@@ -69,7 +71,9 @@
 				$scope.userCash = 0;
 			if($scope.userCheck == '')
 				$scope.userCheck = 0;
-			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)+parseFloat($scope.userPaid);
 			$scope.difCash = parseFloat($scope.userCash)-parseFloat($scope.systemCash);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 			if($scope.difCash >0)
@@ -87,7 +91,7 @@
 			else
 				$scope.totalColor = 'black';
 		};
-		$scope.getUserCheck = function(value)
+		$scope.getUserPaid = function(value)
 		{
 			if($scope.userDebit == '')
 				$scope.userDebit = 0;
@@ -95,16 +99,18 @@
 				$scope.userCash = 0;
 			if($scope.userCheck == '')
 				$scope.userCheck = 0;
-			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)+parseFloat($scope.userPaid);
 			$scope.difCheck = parseFloat($scope.userCheck)-parseFloat($scope.sysCheck);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 
-			if($scope.difCheck >0)
-				$scope.checkColor = 'green';
-			else if($scope.difCheck < 0)
-				$scope.checkColor = 'red';
+			if($scope.difPaid >0)
+				$scope.paidColor = 'green';
+			else if($scope.difPaid < 0)
+				$scope.paidColor = 'red';
 			else
-				$scope.checkColor = 'black';
+				$scope.paidColor = 'black';
 
 			if($scope.totalDiff >0)
 				$scope.totalColor = 'green';
@@ -167,8 +173,15 @@
 		};
 		function render()
 		{
+			$scope.dateRangeOptions = {
+				//startDate : moment(),
+				showDropdowns : true,
+				format : 'yyyy-MM-dd',
+				singleDatePicker : true
+			};
 			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
 			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
+			$scope.startDate = $filter('date')(new Date(), "yyyy-MM-dd");
 			getClosingDetails(startDate,endDate);
 			getPaidOutDetails(startDate,endDate);
 		}
@@ -178,14 +191,30 @@
 			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','application/json');
 
 		}
+		$scope.openStartCalendar = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openStart = true;
+		};
+		$scope.onDateSelected = function(startDate, endDate, label, element) {
+			var receiptIndex = element.attr('data-receipt-index');
+			element.find('span').eq(0).html(endDate.format('yyyy-MM-dd'));
+
+		};
+		$scope.changeDtls = function()
+		{
+			var start = $filter('date')($scope.startDate, "yyyy-MM-dd")+''+' 00:00:00';
+			var end = $filter('date')($scope.startDate, "yyyy-MM-dd")+''+' 23:59:59';
+			getPaidOutDetails(start,end);
+		};
 		function getaddPaidSuccessHandler(response)
 		{
 			$scope.getPaidOutDtls = response;
-			$scope.totalPaidOut =0;
+			/*$scope.totalPaidOut =0;
 			for(var i=0;i<response.length;i++)
 			{
 				$scope.totalPaidOut = $scope.totalPaidOut + parseFloat(response[i].paidOutAmount);
-			}
+			}*/
 		}
 		function getaddpaidErrorHandler(response){
 			

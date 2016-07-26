@@ -1,7 +1,22 @@
 <div>
 	<div class="row pageHeader" style="padding-left:30px;padding-top:20px;">
-		<div class="col-md-12 pageHeader">
+		<div class="col-md-2 pageHeader">
 			<span style="font-weight:bold;font-size:30px">Close Register</span>
+		</div>
+		<div class="col-md-4 pageHeader">
+			<div class="form-group">
+				<div class="input-group calendar-group fromDate">
+					<input type="text" style="height:52px;width:100%;background-color:#FFFFFF;" ng-model="startDate" class="form-control fromDate" datepicker-popup="{{'yyyy-MM-dd'}}" required
+						   ng-model-options="{allowInvalid: true}" name="startDate"
+						   is-open="openStart"  date-cleared="dateCleared"  date-length="10"
+						   id="startDate" placeholder="YYYY-MM-DD" disabled="disabled" data-ng-change="changeDtls()">
+					<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="openStartCalendar($event)">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button> </span>
+				</div>
+
+			</div>
 		</div>
 	</div>
 	<div class="row" style="padding-top:5px;padding-left:30px;">
@@ -43,6 +58,27 @@
 					</div>
 				
 				</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out</span><span style="display:block;">Reason:</span><span style="display:block;visbility:hidden;">Reason Rea</span> </div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userReason"   /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysReason"  disabled="disabled" style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difReason"  disabled="disabled" style="background-color: #FFFFFF;"  /></div>
+
+				</div>
+
+			</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out </span><span style="display:block;">Amount:</span><span style="display:block;visibility: hidden;">Reason Rea</span> </div>
+					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserPaid(userPaid)" /></div>
+					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;"ng-style="{color: paidColor}" /></div>
+
+				</div>
+
+			</div>
+
 				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Actual</span><span style="display:block;">Daily Total:</span> </div>
@@ -93,7 +129,7 @@
 		</div>
 		
 	</div>
-	<div class="row" style="padding-top:5px;padding-left:30px;">
+	<!--<div class="row" style="padding-top:5px;padding-left:30px;">
 		<div class="col-md-6">
 				 	<div class="" style="padding:10px;text-align:center">
 				 			<span>Add Paid Out</span>
@@ -112,9 +148,9 @@
 
 
 	
-	</div>
+	</div>-->
 	<div class="row" style="padding-left:56px;">
-		<div class="col-md-6">
+		<!--<div class="col-md-6">
 			<div data-responsive-table data-ng-model="getPaidOutDtls"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				 on-sort="sortColumnData(index)" data-filter-value="bType.filterValue">
@@ -133,26 +169,12 @@
 					</column>
 				</columns>
 			</div>
-		</div>
+		</div>-->
 		<div class="col-md-6" style="text-align: center;">
 			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="closeRegister()">Close Register</button>
-
+			<button  ng-disabled="getPaidOutDtls.length == 3 " class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="addPaidOut()">Add Paid Out</button>
 		</div>
 	</div>
-	<div class="row" style="padding-top:5px;padding-left:30px;">
-		<div class="col-md-4">
 
-			<div class="totalColumn display-table tableMainProp" align="left">
-				<div class="display-row">
-					<div class="padding-top-10 inline-vertical display-cell align-left">Total :</div>
-					<div style="visibility: hidden;" class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="reason1"  /></div>
-
-					<div class="padding-top-10 inline-vertical display-cell align-left" ><span>{{totalPaidOut}}</span></div>
-					</div>
-
-			</div>
-		</div>
-
-	</div>
 
 </div>
