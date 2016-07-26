@@ -83,11 +83,11 @@ public class ClosingDetailsManager {
             ClosingDetailsDto closingDto = new ClosingDetailsDto();
 
             // closingDto.setUserIdClose(rs.getInt("USER_ID_CLOSE"));
-            closingDto.setReportCash(rs.getDouble("CASH"));
-            closingDto.setReportCredit(rs.getDouble("CREDIT"));
-            closingDto.setReportCheck(rs.getDouble("CHECKAMOUNT"));
-            closingDto.setReportTotalAmount(rs.getDouble("TOTAL"));
-            /*closingDto.setCloseCash(rs.getDouble("CLOSE_CASH"));
+            closingDto.setReportCash(rs.getDouble("REPORT_CASH"));
+            closingDto.setReportCredit(rs.getDouble("REPORT_CREDIT"));
+            closingDto.setReportCheck(rs.getDouble("REPORT_CHECK"));
+            closingDto.setReportTotalAmount(rs.getDouble("REPORT_TOTAL_AMOUNT"));
+            closingDto.setCloseCash(rs.getDouble("CLOSE_CASH"));
             closingDto.setCloseCredit(rs.getDouble("CLOSE_CREDIT"));
             closingDto.setCloseDate(rs.getString("CLOSE_DATE"));
             closingDto.setCloseTotalAmount(rs.getDouble("CLOSE_TOTAL_AMOUNT"));
@@ -98,7 +98,7 @@ public class ClosingDetailsManager {
             closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
             closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
             closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
-            closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));*/
+            closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));
 
             return closingDto;
         }

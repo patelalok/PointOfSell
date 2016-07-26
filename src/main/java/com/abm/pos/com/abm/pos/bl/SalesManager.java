@@ -118,8 +118,9 @@ public class SalesManager {
     {
        List<ReceiptDto> receiptDtos = new ArrayList<>();
 
-        List<TransactionLineItemDto> transactionLineItemDtos = new ArrayList<>();
+
         List<TransactionDto> transactionDtos = new ArrayList<>();
+        List<TransactionLineItemDto> transactionLineItemDtos = new ArrayList<>();
 
         ReceiptDto receiptDto = new ReceiptDto();
 

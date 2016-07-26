@@ -107,7 +107,7 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ? ";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ?";
             /*"" +
             "" +
             "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
@@ -143,7 +143,7 @@ public class SQLQueries {
     public String getCategoryFromProductTable = "SELECT COUNT(CATEGORY_ID) FROM PRODUCT WHERE CATEGORY_ID = ?";
     public String getUsernameFromUser = "SELECT USERNAME FROM USER WHERE USER_ID = ?";
 
-    public String getTransactionDetailsForReceipt = "SELECT t.*,c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND t.TRANSACTION_COMP_ID = ?";
+    public String getTransactionDetailsForReceipt = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
 
             /*"SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT," +
             "t.TAX_AMOUNT,t.DISCOUNT_AMOUNT,t.CUSTOMER_PHONENO,t.USER_ID,l.PRODUCT_ID,l.QUANTITY,l.COST,l.DISCOUNT,l.RETAIL" +
@@ -160,7 +160,7 @@ public class SQLQueries {
     public static String getProductHistoryCount = "SELECT SUM(QUANTITY) FROM TRANSACTION_LINE_ITEM where PRODUCT_ID = ?";
    public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
 
-    public String getClosingDetailsFromSystem = "SELECT sum(TOTAL_AMOUNT_CREDIT) CREDIT, sum(PAID_AMOUNT_CASH) CASH, sum(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where TRANSACTION_DATE BETWEEN ? AND ? ";
+    public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
 
 
     public String getDailyTransaction = "SELECT count(t.TRANSACTION_COMP_ID) NOOFTRANS ,AVG(t.TOTAL_AMOUNT) AVGTOTAL, sum(t.TOTAL_AMOUNT) TOTAL ,sum(t.PAID_AMOUNT_CASH) CASH ,sum(t.TOTAL_AMOUNT_CREDIT) CREDIT ,sum(t.TOTAL_AMOUNT_CHECK) SUMCHECK, sum(t.TAX_AMOUNT) TAX, sum(t.DISCOUNT_AMOUNT) DISCOUNT, sum((l.RETAIL - l.COST) * l.QUANTITY) PROFIT FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND t.TRANSACTION_DATE  BETWEEN ? AND ? ";
