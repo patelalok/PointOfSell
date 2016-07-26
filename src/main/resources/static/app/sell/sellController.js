@@ -237,7 +237,7 @@
 			$scope.balanceRemaining = '';
 			//$rootScope.testData = [];
 			$scope.loadCheckOutData();
-			GlobalVariable.customerFound = false;
+			//GlobalVariable.customerFound = false;
 			$scope.balanceRemaining = 0;
 			
 		}
