@@ -87,6 +87,48 @@ public class SalesManager {
     }
 
 
+
+
+    public List<ReceiptDto> getReceiptDetails(int receiptId)
+    {
+       List<ReceiptDto> receiptDtos = new ArrayList<>();
+
+
+        List<TransactionDto> transactionDtos = new ArrayList<>();
+        List<TransactionLineItemDto> transactionLineItemDtos = new ArrayList<>();
+        List<CustomerDto> customerDtos = new ArrayList<>();
+
+        ReceiptDto receiptDto = new ReceiptDto();
+
+        try
+        {
+
+            transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
+            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
+
+            //Getting customer phone no to check the transaction history
+            String custPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhone,new Object[] {receiptId}, String.class);
+
+            //Checking and calling customer db to get all details of the customer for receipt
+            if(custPhoneNo != null)
+            {
+                customerDtos = jdbcTemplate.query(sqlQuery.getCustomerDetailsForReceipt, new CustomerMapper(), custPhoneNo);
+            }
+
+            receiptDto.setTransactionDtoList(transactionDtos);
+            receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
+            receiptDto.setCustomerDtosList(customerDtos);
+
+            receiptDtos.add(receiptDto);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return receiptDtos;
+    }
+
     private final class TransactionMapperWithOutCustomer implements RowMapper<TransactionDto>
     {
 
@@ -96,37 +138,37 @@ public class SalesManager {
             TransactionDto transaction = new TransactionDto();
 
 
-                transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-                DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date d = null;
-                try {
-                    d = f.parse(rs.getString("TRANSACTION_DATE"));
-                }catch (ParseException e) {
+            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d = null;
+            try {
+                d = f.parse(rs.getString("TRANSACTION_DATE"));
+            }catch (ParseException e) {
                 e.printStackTrace();
             }
             DateFormat date = new SimpleDateFormat("MM/dd/yyyy");
             DateFormat time = new SimpleDateFormat("hh:mm:ss");
             System.out.println("Date: " + date.format(d));
             System.out.println("Time: " + time.format(d));
-                transaction.setTransactionDate(date.format(d));
-                transaction.setTransactionTime(time.format(d));
-                transaction.setTransactionTime("12:10:34");
-                transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-                transaction.setTax(rs.getDouble("TAX_AMOUNT"));
-                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
-                transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
-                transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
-                transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
-                transaction.setUserId(rs.getInt("USER_ID"));
-                String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
-                transaction.setUsername(username);
-                transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
-                transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
-                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
-                transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
-                transaction.setStatus(rs.getString("STATUS"));
-                transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
-              //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
+            transaction.setTransactionDate(date.format(d));
+            transaction.setTransactionTime(time.format(d));
+            transaction.setTransactionTime("12:10:34");
+            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+            transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+            transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
+            transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+            transaction.setUserId(rs.getInt("USER_ID"));
+            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
+            transaction.setUsername(username);
+            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
+            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
+            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+            transaction.setStatus(rs.getString("STATUS"));
+            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
 
 
 
@@ -160,66 +202,6 @@ public class SalesManager {
             return customer;
         }
     }
-
-
-    public List<ReceiptDto> getReceiptDetails(int receiptId)
-    {
-       List<ReceiptDto> receiptDtos = new ArrayList<>();
-
-
-        List<TransactionDto> transactionDtos = new ArrayList<>();
-        List<TransactionLineItemDto> transactionLineItemDtos = new ArrayList<>();
-        List<CustomerDto> customerDtos = new ArrayList<>();
-
-        ReceiptDto receiptDto = new ReceiptDto();
-
-        try
-        {
-
-            transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
-            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
-
-            String custPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhone,new Object[] {receiptId}, String.class);
-
-            if(custPhoneNo != null)
-            {
-                customerDtos = jdbcTemplate.query(sqlQuery.getCustomerDetailsForReceipt, new CustomerMapper(), custPhoneNo);
-            }
-
-            receiptDto.setTransactionDtoList(transactionDtos);
-            receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
-            receiptDto.setCustomerDtosList(customerDtos);
-
-
-
-            receiptDtos.add(receiptDto);
-            //checking that customer is choosed or not to get the PREVIOUS BALANCE
-            /*if(phoneNo.equals(""))
-            {
-
-                transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
-                System.out.println("Receipt Without Customer");
-            }
-            else
-            {
-                transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithCustomer, new TransactionMapperWithCustomer(), receiptId);
-                System.out.println("Receipt With Customer");
-            }
-            transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
-                receiptDto.setTransactionDtoList(transactionDtos);
-                receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
-
-                receiptDtos.add(receiptDto);*/
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-
-        return receiptDtos;
-    }
-
 
 
     public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto) {

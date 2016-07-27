@@ -30,28 +30,57 @@ public class ClosingDetailsManager {
 
     public void addClosingDetailsToDB(ClosingDetailsDto closingDetailsDto) {
 
+        //Checking if register_id is 0 that means closing details is inserting first time and if not then i need to edit it.
         try {
 
+            if (closingDetailsDto.getRegisterId() == 0)
+            {
 
-            jdbcTemplate.update(sqlQueries.addClosingDetails,
-                    closingDetailsDto.getUserIdClose(),
-                    closingDetailsDto.getReportCash(),
-                    closingDetailsDto.getReportCredit(),
-                    closingDetailsDto.getReportTotalAmount(),
-                    closingDetailsDto.getCloseCash(),
-                    closingDetailsDto.getCloseCredit(),
-                    closingDetailsDto.getCloseDate(),
-                    closingDetailsDto.getCloseTotalAmount(),
-                    closingDetailsDto.getDifferenceCash(),
-                    closingDetailsDto.getDifferenceCredit(),
-                    closingDetailsDto.getTotalDifference(),
-                    closingDetailsDto.getTotalBusinessAmount(),
-                    closingDetailsDto.getTotalTax(),
-                    closingDetailsDto.getTotalDiscount(),
-                    closingDetailsDto.getTotalProfit(),
-                    closingDetailsDto.getTotalMarkup());
+                jdbcTemplate.update(sqlQueries.addClosingDetails,
+                        closingDetailsDto.getUserIdClose(),
+                        closingDetailsDto.getReportCash(),
+                        closingDetailsDto.getReportCredit(),
+                        closingDetailsDto.getReportTotalAmount(),
+                        closingDetailsDto.getCloseCash(),
+                        closingDetailsDto.getCloseCredit(),
+                        closingDetailsDto.getCloseDate(),
+                        closingDetailsDto.getCloseTotalAmount(),
+                        closingDetailsDto.getDifferenceCash(),
+                        closingDetailsDto.getDifferenceCredit(),
+                        closingDetailsDto.getTotalDifference(),
+                        closingDetailsDto.getTotalBusinessAmount(),
+                        closingDetailsDto.getTotalTax(),
+                        closingDetailsDto.getTotalDiscount(),
+                        closingDetailsDto.getTotalProfit(),
+                        closingDetailsDto.getTotalMarkup());
 
             System.out.println("Closing Details Added Successfully");
+        }
+
+            else
+            {
+                jdbcTemplate.update(sqlQueries.editClosingDetails,
+                        closingDetailsDto.getUserIdClose(),
+                        closingDetailsDto.getReportCash(),
+                        closingDetailsDto.getReportCredit(),
+                        closingDetailsDto.getReportTotalAmount(),
+                        closingDetailsDto.getCloseCash(),
+                        closingDetailsDto.getCloseCredit(),
+                        closingDetailsDto.getCloseDate(),
+                        closingDetailsDto.getCloseTotalAmount(),
+                        closingDetailsDto.getDifferenceCash(),
+                        closingDetailsDto.getDifferenceCredit(),
+                        closingDetailsDto.getTotalDifference(),
+                        closingDetailsDto.getTotalBusinessAmount(),
+                        closingDetailsDto.getTotalTax(),
+                        closingDetailsDto.getTotalDiscount(),
+                        closingDetailsDto.getTotalProfit(),
+                        closingDetailsDto.getTotalMarkup(),
+                        closingDetailsDto.getRegisterId());
+
+                System.out.println("Closing Details Edited Successfully");
+
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -83,7 +112,7 @@ public class ClosingDetailsManager {
 
             ClosingDetailsDto closingDto = new ClosingDetailsDto();
 
-            // closingDto.setUserIdClose(rs.getInt("USER_ID_CLOSE"));
+            closingDto.setRegisterId(rs.getInt("REGISTER_ID"));
             closingDto.setReportCash(rs.getDouble("REPORT_CASH"));
             closingDto.setReportCredit(rs.getDouble("REPORT_CREDIT"));
             closingDto.setReportCheck(rs.getDouble("REPORT_CHECK"));
@@ -434,13 +463,23 @@ public class ClosingDetailsManager {
 
     public void addPaidOut(PaidOutDto paidOutDto) {
 
-        try {
-            jdbcTemplate.update(sqlQueries.addPaidOutDetails,
-                    paidOutDto.getPaidOutAmount(),
-                    paidOutDto.getReason(),
-                    paidOutDto.getPaidOutDate());
 
-            System.out.println("Paid Amount added successfully");
+
+        try {
+
+            if(paidOutDto.getPaidOutId() == 0) {
+                jdbcTemplate.update(sqlQueries.addPaidOutDetails,
+                        paidOutDto.getPaidOutAmount(),
+                        paidOutDto.getReason(),
+                        paidOutDto.getPaidOutDate());
+
+                System.out.println("Paid Amount added successfully");
+            }
+
+            else
+            {
+                editPaidOut(paidOutDto);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
