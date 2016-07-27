@@ -32,6 +32,8 @@ public class SalesManager {
     @Autowired
     CustomerManager customerManager;
 
+
+
     public void addTransaction(TransactionDto transactionDto) {
 
         try {
@@ -126,7 +128,36 @@ public class SalesManager {
                 transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
               //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
 
+
+
             return transaction;
+        }
+    }
+    private static final class CustomerMapper implements RowMapper<CustomerDto>
+    {
+
+        @Override
+        public CustomerDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            CustomerDto customer = new CustomerDto();
+
+            customer.setFirstName(rs.getString("FIRST_NAME"));
+            customer.setLastName(rs.getString("LAST_NAME"));
+            customer.setPhoneNo(rs.getString("PHONE_NO"));
+            customer.setEmail(rs.getString("EMAIL"));
+            customer.setDateOfBirth(rs.getString("DATEOFBIRTH"));
+            customer.setCustomerType(rs.getString("CUSTOMER_TYPE"));
+            customer.setGender(rs.getString("GENDER"));
+            customer.setStreet(rs.getString("STREET"));
+            customer.setCity(rs.getString("CITY"));
+            customer.setState(rs.getString("STATE"));
+            customer.setCountry(rs.getString("COUNTRY"));
+            customer.setZipcode(rs.getString("ZIPCODE"));
+            customer.setFax(rs.getString("FAX"));
+            customer.setBalance(rs.getDouble("BALANCE"));
+
+
+            return customer;
         }
     }
 
@@ -148,11 +179,18 @@ public class SalesManager {
             transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
             transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
 
-            //if()
-            customerDtos = customerManager.getCustomerDetailsFromDB();
+            String custPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhone,new Object[] {receiptId}, String.class);
+
+            if(custPhoneNo != null)
+            {
+                customerDtos = jdbcTemplate.query(sqlQuery.getCustomerDetailsForReceipt, new CustomerMapper(), custPhoneNo);
+            }
 
             receiptDto.setTransactionDtoList(transactionDtos);
             receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
+            receiptDto.setCustomerDtosList(customerDtos);
+
+
 
             receiptDtos.add(receiptDto);
             //checking that customer is choosed or not to get the PREVIOUS BALANCE
