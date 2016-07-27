@@ -6,7 +6,7 @@ package com.abm.pos.com.abm.pos.dto;
 public class ProductDto {
 
     private int productId;
-    private double productNo;
+    private String productNo;
     private String categoryId;
     private String vendorId;
     private String brandId;
@@ -140,11 +140,11 @@ public class ProductDto {
         this.productId = productId;
     }
 
-    public double getProductNo() {
+    public String getProductNo() {
         return productNo;
     }
 
-    public void setProductNo(double productNo) {
+    public void setProductNo(String productNo) {
         this.productNo = productNo;
     }
 
