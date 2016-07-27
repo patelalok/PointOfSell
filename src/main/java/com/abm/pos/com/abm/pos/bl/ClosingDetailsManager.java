@@ -66,6 +66,7 @@ public class ClosingDetailsManager {
 
         try {
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
+            System.out.println("Send Closing details Successfully");
         } catch (Exception e) {
             System.out.println(e);
         }

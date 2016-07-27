@@ -108,23 +108,23 @@ public class ProductManager
                 ProductDto product = new ProductDto();
 
                 product.setProductId(rs.getInt("PRODUCT_ID"));
-                product.setProductNo(rs.getString("PRODUCT_NO"));
-                product.setCategoryId(rs.getInt("CATEGORY_ID"));
+               // product.setProductNo(rs.getString("PRODUCT_NO"));
+                //product.setCategoryId(rs.getInt("CATEGORY_ID"));
                 product.setCategoryName(jdbcTemplate.queryForObject(sqlQuery.getCategoryName, new Object[] {product.getCategoryId()},String.class));
-                product.setVendorId(rs.getInt("VENDOR_ID"));
+               // product.setVendorId(rs.getInt("VENDOR_ID"));
                 product.setVendorName(jdbcTemplate.queryForObject(sqlQuery.getVendorName, new Object[] {product.getVendorId()},String.class));
                 product.setAltNo(rs.getString("ATL_NO"));
                 product.setDescription(rs.getString("DESCRIPTION"));
                 product.setCostPrice(rs.getString("COST_PRICE"));
                 product.setMarkup(rs.getString("MARKUP"));
                 product.setRetailPrice(rs.getString("RETAIL_PRICE"));
-                product.setStock(rs.getString("QUANTITY"));
+               // product.setStock(rs.getString("QUANTITY"));
                 product.setQuantity("1");
                 product.setMinProductQuantity(rs.getString("MIN_PRODUCT"));
                 product.setReturnRule(rs.getString("RETURN_RULE"));
                 product.setImage(rs.getString("IMAGE"));
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
-                product.setBrandId(rs.getInt("BRAND_ID"));
+                //product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
                 product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 product.setTax(rs.getString("TAX"));

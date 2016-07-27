@@ -9,6 +9,7 @@ public class ReceiptDto {
 
     List<TransactionDto> transactionDtoList;
     List<TransactionLineItemDto> transactionLineItemDtoList;
+    List<CustomerDto> customerDtosList;
 
     public List<TransactionDto> getTransactionDtoList() {
         return transactionDtoList;
@@ -24,6 +25,14 @@ public class ReceiptDto {
 
     public void setTransactionLineItemDtoList(List<TransactionLineItemDto> transactionLineItemDtoList) {
         this.transactionLineItemDtoList = transactionLineItemDtoList;
+    }
+
+    public List<CustomerDto> getCustomerDtosList() {
+        return customerDtosList;
+    }
+
+    public void setCustomerDtosList(List<CustomerDto> customerDtosList) {
+        this.customerDtosList = customerDtosList;
     }
 }
 

@@ -72,7 +72,7 @@ public class PageSetUpManager {
 
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream("/Users/asp5045/Desktop/Test1.xlsx");
+            fis = new FileInputStream("/Users/asp5045/Desktop/Workbook1.xlsx");
 
             // Using XSSF for xlsx format, for xls use HSSF
             Workbook workbook = new XSSFWorkbook(fis);
@@ -95,28 +95,50 @@ public class PageSetUpManager {
                     while (cellIterator.hasNext()) {
 
                         Cell cell = (Cell) cellIterator.next();
-                        //The Cell Containing String will is name.
-                        if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
 
-                            if (cell.getColumnIndex() == 3) {
+
+                            if (cell.getColumnIndex() == 0) {
+                                product.setProductNo((cell.getNumericCellValue()));
+                            }
+                        //The Cell Containing String will is name.
+                        /*if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
+
+                            if (cell.getColumnIndex() == 1) {
                                 product.setDescription(cell.getStringCellValue());
                             }
                             //The Cell Containing numeric value will contain marks
-                        } else if (Cell.CELL_TYPE_NUMERIC == cell.getCellType()) {
+                        } */
+                        /*else if (Cell.CELL_TYPE_NUMERIC == cell.getCellType()) {
 
-                            //Cell with index 1 contains marks in Maths
+                            //Cell with index 1 contains marks in upc
                             if (cell.getColumnIndex() == 0) {
                                 product.setProductNo(String.valueOf(cell.getNumericCellValue()));
                             }
-                            //Cell with index 2 contains marks in Science
-                            else if (cell.getColumnIndex() == 8) {
+                            //Cell with index 2 contains marks in quantity
+                            else if (cell.getColumnIndex() == 2) {
+                                product.setQuantity(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in cost
+                            else if (cell.getColumnIndex() == 3) {
                                 product.setCostPrice(String.valueOf(cell.getNumericCellValue()));
                             }
-                            //Cell with index 3 contains marks in English
-                            else if (cell.getColumnIndex() == 9) {
+                            //Cell with index 3 contains marks in retail
+                            else if (cell.getColumnIndex() == 4) {
                                 product.setRetailPrice(String.valueOf(cell.getNumericCellValue()));
                             }
-                        }
+                            //Cell with index 3 contains marks in category
+                            else if (cell.getColumnIndex() == 5) {
+                                product.setCategoryId(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in brand
+                            else if (cell.getColumnIndex() == 6) {
+                                product.setBrandId(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in vendor
+                            else if (cell.getColumnIndex() == 7) {
+                                product.setVendorId(String.valueOf(cell.getNumericCellValue()));
+                            }
+                        }*/
                     }
                     //end iterating a row, add all the elements of a row in list
                     productList.add(product);

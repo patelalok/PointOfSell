@@ -1,9 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.ReceiptDto;
-import com.abm.pos.com.abm.pos.dto.TransactionDto;
-import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
-import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -31,6 +28,9 @@ public class SalesManager {
 
     @Autowired
     SQLQueries sqlQuery;
+
+    @Autowired
+    CustomerManager customerManager;
 
     public void addTransaction(TransactionDto transactionDto) {
 
@@ -131,13 +131,14 @@ public class SalesManager {
     }
 
 
-    public List<ReceiptDto> getReceiptDetails(int receiptId,String phoneNo)
+    public List<ReceiptDto> getReceiptDetails(int receiptId)
     {
        List<ReceiptDto> receiptDtos = new ArrayList<>();
 
 
         List<TransactionDto> transactionDtos = new ArrayList<>();
         List<TransactionLineItemDto> transactionLineItemDtos = new ArrayList<>();
+        List<CustomerDto> customerDtos = new ArrayList<>();
 
         ReceiptDto receiptDto = new ReceiptDto();
 
@@ -146,6 +147,10 @@ public class SalesManager {
 
             transactionDtos = jdbcTemplate.query(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperWithOutCustomer(), receiptId);
             transactionLineItemDtos = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), receiptId);
+
+            //if()
+            customerDtos = customerManager.getCustomerDetailsFromDB();
+
             receiptDto.setTransactionDtoList(transactionDtos);
             receiptDto.setTransactionLineItemDtoList(transactionLineItemDtos);
 
