@@ -207,4 +207,6 @@ public class SQLQueries {
     public String addBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ? WHERE PHONE_NO = ? ";
     public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
     public String getTransactionDetailsForReceiptWithCustomer = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
+    public String getCustomerPhone = "SELECT CUSTOMER_PHONENO FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
+    public String getCustomerDetailsForReceipt = "SELECT * FROM CUSTOMER WHERE PHONE_NO = ?";
 }
