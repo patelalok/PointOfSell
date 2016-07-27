@@ -26,10 +26,14 @@
 		{
 			$scope.getClosingDtls = response;
 
-			$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
-			$scope.systemCash = $scope.getClosingDtls[0].reportCash;
-			$scope.sysCheck =$scope.getClosingDtls[0].reportCheck;
-			$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
+			if(response.length !== 0)
+			{
+				$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
+				$scope.systemCash = $scope.getClosingDtls[0].reportCash;
+				$scope.sysCheck =$scope.getClosingDtls[0].reportCheck;
+				$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
+			}
+
 		}
 		function getClosingDtlsErrorHandler(response)
 		{
@@ -206,6 +210,7 @@
 			var start = $filter('date')($scope.startDate, "yyyy-MM-dd")+''+' 00:00:00';
 			var end = $filter('date')($scope.startDate, "yyyy-MM-dd")+''+' 23:59:59';
 			getPaidOutDetails(start,end);
+			getClosingDetails(start,end);
 		};
 		function getaddPaidSuccessHandler(response)
 		{
