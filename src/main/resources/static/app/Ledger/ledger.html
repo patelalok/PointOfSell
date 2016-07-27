@@ -96,8 +96,10 @@
 </div>
 <div   print-only style="font-size:20px;margin-left:15px;margin-right:15px;font-size:14px;">
 	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
-		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;"><div style="display:block;"> From: 1234 Peach Tree RD</div>
-		<div style="display:block;">Atlanta Ga,30080</div></div>
+		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+			<div style="display:block;"> From: {{GlobalVariable.storeAddress}}</div>
+		<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
 		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:25px;"><img alt="" src="./assets/images/newLogo.jpg" height="100" width="600"></div>
 
 		<div class="col-md-4" style=" text-align:center;width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
@@ -196,10 +198,13 @@
 		</div>
 	</div>
 	</div>
-	<div style="text-align:center;padding-top:20px;font-size:15px;">
+	<div style="text-align:left;padding-top:10px;font-size:10px;">
+		<span>Return Policy*</span><span style="padding-left:5px;">{{GlobalVariable.footerReceipt}}</span>
+	</div>
+	<div style="text-align:center;padding-top:10px;font-size:15px;">
 		<span>*** Customer Copy ***</span>
 	</div>
-	<div style="text-align:left;padding-top:20px;font-size:10px;">
+	<div style="text-align:left;padding-top:10px;font-size:10px;">
 		<span>Thank You For ouur business!</span>
 	</div>
 </div>

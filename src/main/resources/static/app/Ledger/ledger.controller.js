@@ -119,6 +119,21 @@
 			var start = js_yyyy_mm_dd()+''+' 00:00:00';
 			var end = js_yyyy_mm_dd()+''+' 23:59:59';
 			loadSalesHistoryData(start,end);
+			getStoreAddress();
+		}
+		function getStoreAddress()
+		{
+			var url='http://localhost:8080/getPageSetUpDetails';
+			dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
+		}
+		function onStoreSuccess(response)
+		{
+			GlobalVariable.storeAddress = response[0].storeAddress;
+			GlobalVariable.footerReceipt = response[0].footerReceipt;
+		}
+		function onStoreError(error)
+		{
+
 		}
 $scope.applyFilterHistory = function()
 {
