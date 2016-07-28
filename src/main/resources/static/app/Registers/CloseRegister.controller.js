@@ -31,7 +31,18 @@
 				$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
 				$scope.systemCash = $scope.getClosingDtls[0].reportCash;
 				$scope.sysCheck =$scope.getClosingDtls[0].reportCheck;
+				$scope.userCash=$scope.getClosingDtls[0].closeCash;
+					$scope.userDebit=$scope.getClosingDtls[0].closeCash;
 				$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
+				$scope.registerId = $scope.getClosingDtls[0].registerId;
+				$scope.totalUser = $scope.getClosingDtls[0].closeTotalAmount;
+				$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
+				$scope.difCash =$scope.getClosingDtls[0].differenceCash;
+					$scope.difDebit =$scope.getClosingDtls[0].differenceCredit;
+				$scope.totalDiff = $scope.getClosingDtls[0].totalDifference;
+				$scope.totalProfit =$scope.getClosingDtls[0].totalProfit;
+					$scope.totalDisc=$scope.getClosingDtls[0].totalDiscount;
+						$scope.totalTax =$scope.getClosingDtls[0].totalTax;
 			}
 
 		}
@@ -47,9 +58,9 @@
 				$scope.userCash = 0;
 			if($scope.userCheck == '')
 				$scope.userCheck = 0;
-			if($scope.userPaid == '')
-				$scope.userPaid = 0;
-			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)+parseFloat($scope.userPaid);
+
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difDebit = parseFloat($scope.userDebit)-parseFloat($scope.systemDebit);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 			if($scope.difDebit >0)
@@ -75,9 +86,9 @@
 				$scope.userCash = 0;
 			if($scope.userCheck == '')
 				$scope.userCheck = 0;
-			if($scope.userPaid == '')
-				$scope.userPaid = 0;
-			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)+parseFloat($scope.userPaid);
+
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCash = parseFloat($scope.userCash)-parseFloat($scope.systemCash);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 			if($scope.difCash >0)
@@ -95,7 +106,7 @@
 			else
 				$scope.totalColor = 'black';
 		};
-		$scope.getUserPaid = function(value)
+		$scope.getUserCheck = function(value)
 		{
 			if($scope.userDebit == '')
 				$scope.userDebit = 0;
@@ -103,18 +114,18 @@
 				$scope.userCash = 0;
 			if($scope.userCheck == '')
 				$scope.userCheck = 0;
-			if($scope.userPaid == '')
-				$scope.userPaid = 0;
-			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)+parseFloat($scope.userPaid);
+
+			$scope.totalUser = parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck);
+			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCheck = parseFloat($scope.userCheck)-parseFloat($scope.sysCheck);
 			$scope.totalDiff = parseFloat($scope.totalUser)-parseFloat($scope.totalSys)
 
-			if($scope.difPaid >0)
-				$scope.paidColor = 'green';
-			else if($scope.difPaid < 0)
-				$scope.paidColor = 'red';
+			if($scope.difCheck >0)
+				$scope.checkColor = 'green';
+			else if($scope.difCheck < 0)
+				$scope.checkColor = 'red';
 			else
-				$scope.paidColor = 'black';
+				$scope.checkColor = 'black';
 
 			if($scope.totalDiff >0)
 				$scope.totalColor = 'green';
@@ -144,23 +155,24 @@
 		$scope.closeRegister = function()
 		{
 			var request = {
-				    "userIdClose": 1,
-				    "reportCash": $scope.systemCash,
-				    "reportCredit": $scope.systemDebit,
-				    "reportTotalAmount":$scope.totalSys,
-				    "closeCash": $scope.userCash,
-				    "closeCredit":$scope.userDebit,
+				    "userIdClose": $scope.registerId,
+				    "reportCash": parseFloat($scope.systemCash).toFixed(2),
+				    "reportCredit": parseFloat($scope.systemDebit).toFixed(2),
+				    "reportTotalAmount":parseFloat($scope.totalSys).toFixed(2),
+				    "closeCash": parseFloat($scope.userCash).toFixed(2),
+				    "closeCredit":parseFloat($scope.userDebit).toFixed(2),
 				    "closeDate": js_yyyy_mm_dd_hh_mm_ss1(),
-				    "closeTotalAmount": $scope.totalUser,
-				    "differenceCash": $scope.difCash,
-				    "differenceCredit": $scope.difDebit,
-				    "totalDifference": $scope.totalDiff,
+				    "closeTotalAmount": parseFloat($scope.totalUser).toFixed(2),
+				    "differenceCash": parseFloat($scope.difCash).toFixed(2),
+				    "differenceCredit": parseFloat($scope.difDebit).toFixed(2),
+				    "totalDifference": parseFloat($scope.totalDiff).toFixed(2),
 				    "totalBusinessAmount": 321,
 				    "totalTax": 12,
 				    "totalDiscount": 12,
 				    "totalProfit": 2,
 				    "totalMarkup": 2,
-				    "registerStatus": null
+				    "registerStatus": null,
+				"registerId": $scope.registerId,
 				  };
 			var url="http://localhost:8080/addClosingDetails";
 			dataService.Post(url,request,getSuccessAddhandler,getErrorAddHandler,'application/json','application/json');
@@ -169,7 +181,9 @@
 		};
 		function getSuccessAddhandler(response)
 		{
-			
+			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
+			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
+			getClosingDetails(startDate,endDate)
 		};
 		function getErrorAddHandler(response)
 		{
@@ -193,7 +207,7 @@
 		{
 			var url="http://localhost:8080/getPaidOut?startDate="+startDate+"&endDate="+endDate;
 			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','application/json');
-
+			getaddPaidSuccessHandler('');
 		}
 		$scope.openStartCalendar = function($event) {
 			$event.preventDefault();
@@ -214,7 +228,31 @@
 		};
 		function getaddPaidSuccessHandler(response)
 		{
-			$scope.getPaidOutDtls = response;
+			//$scope.getPaidOutDtls = response;
+			/*response=[
+				{
+					"paidOutId": 13,
+					"paidOutAmount1": 32.99,
+					"paidOutAmount2": 23,
+					"paidOutAmount3": 32,
+					"paidOutReason1": "test",
+					"paidOutReason2": null,
+					"paidOutReason3": null,
+					"paidOutDate": "2016-07-17 00:00:00.0",
+					"sumPaidOut": 0
+				}
+			];*/
+			if(response.length!==0) {
+				$scope.userPaid = response[0].paidOutAmount1;
+				$scope.userReason = response[0].paidOutReason1;
+				$scope.systemPaid = response[0].paidOutAmount2;
+				$scope.sysReason = response[0].paidOutReason2;
+				$scope.difPaid = response[0].paidOutAmount3;
+				$scope.difReason = response[0].paidOutReason3;
+				$scope.paidOutId = response[0].paidOutId;
+			}
+
+
 			/*$scope.totalPaidOut =0;
 			for(var i=0;i<response.length;i++)
 			{
@@ -224,41 +262,20 @@
 		function getaddpaidErrorHandler(response){
 			
 		}
-		$scope.editPaidOut = function(data)
-		{
-			var request = {
-				"paidOutAmount": $scope.amount1,
-				"reason":$scope.reason1,
-				"paidOutId": data.paidOutId
-			};
-			request = JSON.stringify(request);
-			var url='http://localhost:8080/editPaidOut';
-			dataService.Post(url,request,onEditPaidSuccess,onEditPaidError,'application/json','application/json');
-		};
-		function onEditPaidSuccess(response)
-		{
-			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
-			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
-			getPaidOutDetails(startDate,endDate);
-		}
-		function onEditPaidError(response)
-		{
 
-		}
 		$scope.addPaidOut = function()
 		{
 			var request ={
 
 				"paidOutAmount1": $scope.userPaid,
-				"reason1":$scope.userReason,
+				"paidOutReason1":$scope.userReason,
 				"paidOutAmount2": $scope.systemPaid,
-				"reason2":$scope.sysReason,
+				"paidOutReason2":$scope.sysReason,
 				"paidOutAmount3": $scope.difPaid,
-				"reason3":$scope.difReason,
-				"paidOutId1":'',
-				"paidOutId2":'',
-				"paidOutId3":'',
-				"paidOutDate": js_yyyy_mm_dd_hh_mm_ss()
+				"paidOutReason3":$scope.difReason,
+				"paidOutId":$scope.paidOutId,
+				"paidOutDate": js_yyyy_mm_dd_hh_mm_ss(),
+				'sumPaidOut':parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid)
 			  };
 			  request = JSON.stringify(request);
 			var url="http://localhost:8080/addPaidOut";
@@ -271,6 +288,7 @@
 			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
 			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
 			getPaidOutDetails(startDate,endDate);
+			getClosingDetails(startDate,endDate);
 		}
 		function addPaidErrorHandler(response)
 		{

@@ -60,10 +60,10 @@
 				</div>
 			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 				<div class="display-row">
-					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out</span><span style="display:block;">Reason:</span><span style="display:block;visbility:hidden;">Reason Rea</span> </div>
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out</span><span style="display:block;">Reason:</span><span style="display:block;visibility:hidden;">Reason Rea</span> </div>
 					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userReason"   /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysReason"  disabled="disabled" style="background-color: #FFFFFF;" /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difReason"  disabled="disabled" style="background-color: #FFFFFF;"  /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="sysReason"   style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difReason"   style="background-color: #FFFFFF;"  /></div>
 
 				</div>
 
@@ -72,8 +72,18 @@
 				<div class="display-row">
 					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out </span><span style="display:block;">Amount:</span><span style="display:block;visibility: hidden;">Reason Rea</span> </div>
 					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserPaid(userPaid)" /></div>
-					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;"ng-style="{color: paidColor}" /></div>
+					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;"ng-style="{color: paidColor}" /></div>
+
+				</div>
+
+			</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total Profit :</span><span style="display:block;">Total Tax:</span><span style="display:block;">Total Disc:</span> </div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="totalProfit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalTax" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalDisc" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;"  /></div>
 
 				</div>
 
