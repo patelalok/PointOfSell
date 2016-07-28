@@ -21,7 +21,7 @@ public class ProductController {
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST, consumes = "application/json")
     public void addProduct(@RequestBody ProductDto productDto) {
 
-        //productManager.addProductToDB(productDto);
+        productManager.addProductToDB(productDto);
     }
 
     @RequestMapping(value = "/editProduct", method = RequestMethod.POST, consumes = "application/json")

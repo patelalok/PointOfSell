@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.PageSetUpManager;
+import com.abm.pos.com.abm.pos.dto.MultyAddProductDto;
 import com.abm.pos.com.abm.pos.dto.PageSetUpDto;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PageSetUpController {
 
 
     @RequestMapping(value = "/readExcel", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ProductDto> readExcelSheet() {
+    public List<MultyAddProductDto> readExcelSheet() {
 
         return pageSetUpManager.readExcelSheet();
     }
@@ -40,6 +41,12 @@ public class PageSetUpController {
     public List<PageSetUpDto> getProduct() {
 
         return pageSetUpManager.getPageSetUpDetails();
+    }
+
+    @RequestMapping(value = "/addMultipleProducts", method = RequestMethod.POST, consumes = "application/json")
+    public void addProduct(@RequestBody List<MultyAddProductDto> productDto) {
+
+        pageSetUpManager.addProductToDB(productDto);
     }
 
 
