@@ -70,15 +70,14 @@
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
 				on-sort="sortColumnData(index)" data-filter-value="bType.filterValue">
 				<columns>
-					<column name="Product No" key="productNo" datatype="string" width="10%" sortable="true"></column>
-					<column name="Product Name" key="description" datatype="string" width="10%"></column>
+					<column name="Product No" key="productNo" datatype="string" width="8%" sortable="true"></column>
+					<column name="Product Name" key="description" datatype="string" width="27%"></column>
 					<column name="Brand Name" key="brandName" datatype="string" width="10%"></column>
 					<column name="Category Name" key="categoryName" datatype="string" width="10%"></column>
 					<column name="Vendor Name" key="vendorName" datatype="string" width="10%"></column>
 					<column name="Stock" key="stock" datatype="string" width="5%"></column>
 					<column name="Retail Price" key="retailPrice" datatype="string" width="10%"></column>
-					<column name="Alt No" key="altNo" datatype="string" width="5%"></column>
-					<column name="" key="" datatype="" width="20%">
+					<column name="" key="" datatype="" width="10%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editProduct(row)"></span>
@@ -87,10 +86,10 @@
 								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span>
 							</span>
 							<span class="inline-vertical padding-left-10">
-								<span  aria-hidden="true" style="color:green;" ng-click="scope.navigateToSales(row.productId)">Product History</span>
+								<span  aria-hidden="true" style="color:green;" ng-click="scope.navigateToSales(row.productId)">History</span>
 							</span>
 							<span class="inline-vertical padding-left-10">
-								<span  aria-hidden="true" style="color:orange;">Bar Code</span>
+								<span  aria-hidden="true" style="color:orange;">Tag</span>
 							</span>
 						</cell>
 					</column>
