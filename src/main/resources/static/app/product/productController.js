@@ -111,7 +111,7 @@
 					$scope.retType = $scope.selectedReturnType;
 
 
-				if(selectedCategoryType == 'Phone')
+				if($scope.selectedCategoryType == 'Phone')
 					$scope.phoneIMEI = $scope.IMEI
 				else
 					$scope.phoneIMEI = '';
