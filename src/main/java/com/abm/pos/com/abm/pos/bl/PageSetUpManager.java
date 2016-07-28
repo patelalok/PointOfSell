@@ -1,7 +1,9 @@
 package com.abm.pos.com.abm.pos.bl;
 
+import com.abm.pos.com.abm.pos.dto.MultyAddProductDto;
 import com.abm.pos.com.abm.pos.dto.PageSetUpDto;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
+import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Cell;
@@ -10,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -18,6 +21,7 @@ import java.io.FileInputStream;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -86,16 +90,63 @@ public class PageSetUpManager {
             }
 
 
-
-
-
-    public List<ProductDto> readExcelSheet() {
-
-        List<ProductDto> productList = new ArrayList<>();
-
-       /* FileInputStream fis = null;
+    public void addProductToDB(final List<MultyAddProductDto> multyAddProductDtos) {
         try {
-            fis = new FileInputStream("/Users/asp5045/Desktop/Workbook5.xlsx");
+
+            jdbcTemplate.batchUpdate(sqlQueries.addProductQuery, new BatchPreparedStatementSetter() {
+
+
+
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    MultyAddProductDto multyAddProductDto = multyAddProductDtos.get(i);
+
+                    ps.setString(1, multyAddProductDto.getProductNo());
+                    ps.setString(2, multyAddProductDto.getCategoryId());
+                    ps.setString(3, multyAddProductDto.getVendorId());
+                    ps.setString(4, multyAddProductDto.getBrandId());
+                    ps.setString(5, multyAddProductDto.getAltNo());
+                    ps.setString(6, multyAddProductDto.getDescription());
+                    ps.setString(7, multyAddProductDto.getCostPrice());
+                    ps.setString(8, multyAddProductDto.getMarkup());
+                    ps.setString(9, multyAddProductDto.getRetailPrice());
+                    ps.setString(10, multyAddProductDto.getQuantity());
+                    ps.setInt(11, multyAddProductDto.getMinProductQuantity());
+                    ps.setString(12, multyAddProductDto.getReturnRule());
+                    ps.setString(13, multyAddProductDto.getImage());
+                    ps.setString(14, multyAddProductDto.getCreatedDate());
+                    ps.setString(15, multyAddProductDto.getImeiNo());
+                    ps.setString(16, multyAddProductDto.getTax());
+
+
+
+                    System.out.println("All Products Added Successfully");
+
+
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return multyAddProductDtos.size();
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+
+    public List<MultyAddProductDto> readExcelSheet() {
+
+        List<MultyAddProductDto> multyAddProductDtos = new ArrayList<>();
+
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream("/Users/asp5045/Desktop/Workbook6.xlsx");
 
             // Using XSSF for xlsx format, for xls use HSSF
             Workbook workbook = new XSSFWorkbook(fis);
@@ -110,7 +161,7 @@ public class PageSetUpManager {
                 //iterating over each row
                 while (rowIterator.hasNext()) {
 
-                    ProductDto product = new ProductDto();
+                    MultyAddProductDto product = new MultyAddProductDto();
                     Row row = (Row) rowIterator.next();
                     Iterator cellIterator = row.cellIterator();
 
@@ -123,6 +174,10 @@ public class PageSetUpManager {
                         if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
                             if (cell.getColumnIndex() == 1) {
                                 product.setDescription(cell.getStringCellValue());
+
+
+
+
                             }
                             else if (cell.getColumnIndex() == 0) {
                                 product.setProductNo(cell.getStringCellValue());
@@ -158,7 +213,7 @@ public class PageSetUpManager {
                         }
                     }
                     //end iterating a row, add all the elements of a row in list
-                    productList.add(product);
+                    multyAddProductDtos.add(product);
                 }
             }
 
@@ -168,8 +223,8 @@ public class PageSetUpManager {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-        return productList;
+        }
+        return multyAddProductDtos;
     }
 
 }

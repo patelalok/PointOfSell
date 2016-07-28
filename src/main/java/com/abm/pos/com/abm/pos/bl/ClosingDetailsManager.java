@@ -92,9 +92,16 @@ public class ClosingDetailsManager {
     public List<ClosingDetailsDto> getClosingDetailsToDB(String startDate, String endDate) {
 
         List<ClosingDetailsDto> closingDetails = new ArrayList<>();
+        ClosingDetailsDto closingDto = new ClosingDetailsDto();
 
         try {
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
+            closingDto.setTotalTax(jdbcTemplate.queryForObject(sqlQueries.getTotalTaxForCloseRegister, new Object[] {startDate,endDate}, double.class));
+            closingDto.setTotalDiscount(jdbcTemplate.queryForObject(sqlQueries.getTotalDiscountForCloseRegister, new Object[] {startDate,endDate}, double.class));
+            closingDto.setTotalProfit(jdbcTemplate.queryForObject(sqlQueries.getTotalProfitForCloseRegister, new Object[] {startDate,endDate}, double.class));
+
+            closingDetails.add(closingDto);
+
             System.out.println("Send Closing details Successfully");
         } catch (Exception e) {
             System.out.println(e);
@@ -125,9 +132,9 @@ public class ClosingDetailsManager {
             closingDto.setDifferenceCash(rs.getDouble("CASH_DIFFERENCE"));
             closingDto.setTotalDifference(rs.getDouble("TOTAL_DIFFERENCE"));
             closingDto.setTotalBusinessAmount(rs.getDouble("TOTAL_BUSINESS_AMOUNT"));
-            closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
-            closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
-            closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
+           // closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
+            //closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
+           // closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
             closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));
 
             return closingDto;
