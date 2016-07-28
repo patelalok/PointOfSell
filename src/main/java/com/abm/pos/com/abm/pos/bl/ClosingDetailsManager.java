@@ -469,9 +469,14 @@ public class ClosingDetailsManager {
 
             if(paidOutDto.getPaidOutId() == 0) {
                 jdbcTemplate.update(sqlQueries.addPaidOutDetails,
-                        paidOutDto.getPaidOutAmount(),
-                        paidOutDto.getReason(),
+                        paidOutDto.getPaidOutAmount1(),
+                        paidOutDto.getPaidOutAmount2(),
+                        paidOutDto.getPaidOutAmount3(),
+                        paidOutDto.getPaidOutReason1(),
+                        paidOutDto.getPaidOutReason2(),
+                        paidOutDto.getPaidOutReason3(),
                         paidOutDto.getPaidOutDate());
+
 
                 System.out.println("Paid Amount added successfully");
             }
@@ -509,13 +514,13 @@ public class ClosingDetailsManager {
             PaidOutDto paidOut = new PaidOutDto();
 
             paidOut.setPaidOutId(rs.getInt("PAIDOUT_ID"));
-            paidOut.setPaidOutAmount(rs.getDouble("PAIDOUT"));
-            paidOut.setReason(rs.getString("REASON"));
+            paidOut.setPaidOutAmount1(rs.getDouble("PAIDOUT1"));
+            paidOut.setPaidOutAmount2(rs.getDouble("PAIDOUT2"));
+            paidOut.setPaidOutAmount3(rs.getDouble("PAIDOUT3"));
+            paidOut.setPaidOutReason1(rs.getString("REASON1"));
+            paidOut.setPaidOutReason1(rs.getString("REASON2"));
+            paidOut.setPaidOutReason1(rs.getString("REASON3"));
             paidOut.setPaidOutDate(rs.getString("DATE"));
-
-            sum = sum + paidOut.getPaidOutAmount();
-
-            paidOut.setSumOfPaidOut(sum);
 
             return paidOut;
 
@@ -526,8 +531,13 @@ public class ClosingDetailsManager {
 
         try {
             jdbcTemplate.update(sqlQueries.editPaidOutDetails,
-                    paidOutDto.getPaidOutAmount(),
-                    paidOutDto.getReason(),
+                    paidOutDto.getPaidOutAmount1(),
+                    paidOutDto.getPaidOutAmount2(),
+                    paidOutDto.getPaidOutAmount3(),
+                    paidOutDto.getPaidOutReason1(),
+                    paidOutDto.getPaidOutReason2(),
+                    paidOutDto.getPaidOutReason3(),
+                    paidOutDto.getPaidOutDate(),
                     paidOutDto.getPaidOutId());
 
             System.out.println("Paid Amount Edit successfully");

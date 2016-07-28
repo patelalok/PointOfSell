@@ -249,8 +249,15 @@
 		{
 			var request ={
 
-				"paidOutAmount": $scope.amount1,
-				"reason":$scope.reason1,
+				"paidOutAmount1": $scope.userPaid,
+				"reason1":$scope.userReason,
+				"paidOutAmount2": $scope.systemPaid,
+				"reason2":$scope.sysReason,
+				"paidOutAmount3": $scope.difPaid,
+				"reason3":$scope.difReason,
+				"paidOutId1":'',
+				"paidOutId2":'',
+				"paidOutId3":'',
 				"paidOutDate": js_yyyy_mm_dd_hh_mm_ss()
 			  };
 			  request = JSON.stringify(request);

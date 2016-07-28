@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -67,14 +68,34 @@ public class PageSetUpManager {
         return pageSetUpDto;
     }
 
+            final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
+
+                @Override
+                public PageSetUpDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+                    PageSetUpDto setUpDto = new PageSetUpDto();
+
+                    setUpDto.setId(rs.getInt("GET_PAGE_SETUP_DETAILS_ID"));
+                    setUpDto.setTax(rs.getInt("TAX"));
+                    setUpDto.setStoreAddress(rs.getString("STORE_ADDRESS"));
+                    setUpDto.setStoreLogo(rs.getString("STORE_LOGO"));
+                    setUpDto.setFooterReceipt(rs.getString("FOOTER_RECEIPT"));
+
+                    return setUpDto;
+                }
+            }
+
+
+
+
 
     public List<ProductDto> readExcelSheet() {
 
         List<ProductDto> productList = new ArrayList<>();
 
-        FileInputStream fis = null;
+       /* FileInputStream fis = null;
         try {
-            fis = new FileInputStream("/Users/asp5045/Desktop/Workbook3.xlsx");
+            fis = new FileInputStream("/Users/asp5045/Desktop/Workbook5.xlsx");
 
             // Using XSSF for xlsx format, for xls use HSSF
             Workbook workbook = new XSSFWorkbook(fis);
@@ -98,50 +119,61 @@ public class PageSetUpManager {
 
                         Cell cell = (Cell) cellIterator.next();
 
-                        if (cell.getColumnIndex() == 0) { 
-                            product.setProductNo((cell.getNumericCellValue())); 
-                        } //The Cell Containing String will is name. 
-                         if (Cell.CELL_TYPE_STRING == cell.getCellType())
-                         {  
-                             if (cell.getColumnIndex() == 1) { 
-                                 product.setDescription(cell.getStringCellValue()); 
-                             }     //The Cell Containing numeric value will contain marks 
-                              }  else if (Cell.CELL_TYPE_NUMERIC == cell.getCellType())
-                        {      //Cell with index 1 contains marks in upc     if (cell.getColumnIndex() == 0) {         product.setProductNo(String.valueOf(cell.getNumericCellValue()));     }     //Cell with index 2 contains marks in quantity     else if (cell.getColumnIndex() == 2) {         product.setQuantity(String.valueOf(cell.getNumericCellValue()));     }     //Cell with index 3 contains marks in cost     else if (cell.getColumnIndex() == 3) {         product.setCostPrice(String.valueOf(cell.getNumericCellValue()));     }     //Cell with index 3 contains marks in retail     else if (cell.getColumnIndex() == 4) {         product.setRetailPrice(String.valueOf(cell.getNumericCellValue()));     }     //Cell with index 3 contains marks in category     else if (cell.getColumnIndex() == 5) {         product.setCategoryId(String.valueOf(cell.getNumericCellValue()));     }     //Cell with index 3 contains marks in brand     else if (cell.getColumnIndex() == 6) {         product.setBrandId(String.valueOf(cell.getNumericCellValue()));     }     //Cell with index 3 contains marks in vendor     else if (cell.getColumnIndex() == 7) {         product.setVendorId(String.valueOf(cell.getNumericCellValue()));     } }
+                        //The Cell Containing String will is name.
+                        if (Cell.CELL_TYPE_STRING == cell.getCellType()) {
+                            if (cell.getColumnIndex() == 1) {
+                                product.setDescription(cell.getStringCellValue());
+                            }
+                            else if (cell.getColumnIndex() == 0) {
+                                product.setProductNo(cell.getStringCellValue());
+                            }
+                            //The Cell Containing numeric value will contain marks
+                        } else if (Cell.CELL_TYPE_NUMERIC == cell.getCellType()) {
+                            //Cell with index 1 contains marks in upc
 
-
+                            //Cell with index 2 contains marks in quantity
+                            if (cell.getColumnIndex() == 2) {
+                                product.setQuantity(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in cost
+                            else if (cell.getColumnIndex() == 3) {
+                                product.setCostPrice(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in retail
+                            else if (cell.getColumnIndex() == 4) {
+                                product.setRetailPrice(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in category
+                            else if (cell.getColumnIndex() == 5) {
+                                product.setCategoryId(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in brand
+                            else if (cell.getColumnIndex() == 6) {
+                                product.setBrandId(String.valueOf(cell.getNumericCellValue()));
+                            }
+                            //Cell with index 3 contains marks in vendor
+                            else if (cell.getColumnIndex() == 7) {
+                                product.setVendorId(String.valueOf(cell.getNumericCellValue()));
+                            }
+                        }
                     }
-
-
+                    //end iterating a row, add all the elements of a row in list
+                    productList.add(product);
                 }
             }
 
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
+            fis.close();
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         return productList;
     }
 
-            final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
-
-                @Override
-                public PageSetUpDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-                    PageSetUpDto setUpDto = new PageSetUpDto();
-
-                    setUpDto.setId(rs.getInt("GET_PAGE_SETUP_DETAILS_ID"));
-                    setUpDto.setTax(rs.getInt("TAX"));
-                    setUpDto.setStoreAddress(rs.getString("STORE_ADDRESS"));
-                    setUpDto.setStoreLogo(rs.getString("STORE_LOGO"));
-                    setUpDto.setFooterReceipt(rs.getString("FOOTER_RECEIPT"));
-
-                    return setUpDto;
-                }
-            }
+}
 
 
-        }
+
 

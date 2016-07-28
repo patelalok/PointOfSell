@@ -7,16 +7,16 @@ public class ProductDto {
 
     private int productId;
     private String productNo;
-    private String categoryId;
-    private String vendorId;
-    private String brandId;
+    private int categoryId;
+    private int vendorId;
+    private int brandId;
     private String altNo;
     private String description;
-    private String costPrice;
-    private String markup;
-    private String retailPrice;
-    private String quantity;
-    private String minProductQuantity;
+    private double costPrice;
+    private double markup;
+    private double retailPrice;
+    private int quantity;
+    private int minProductQuantity;
     private String returnRule;
     private String image;
     private String createdDate;
@@ -25,30 +25,31 @@ public class ProductDto {
     private String vendorName;
     private String imeiNo;
     private String tax;
+    private int stock;
 
     private int quantityForSell;
 
-    public String getVendorId() {
-        return vendorId;
-    }
-
-    public void setVendorId(String vendorId) {
-        this.vendorId = vendorId;
-    }
-
     public String getAltNo() {
         return altNo;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public void setAltNo(String altNo) {
         this.altNo = altNo;
     }
 
-    public String getBrandId() {
+    public int getBrandId() {
         return brandId;
     }
 
-    public void setBrandId(String brandId) {
+    public void setBrandId(int brandId) {
         this.brandId = brandId;
     }
 
@@ -60,11 +61,11 @@ public class ProductDto {
         this.brandName = brandName;
     }
 
-    public String getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -76,11 +77,11 @@ public class ProductDto {
         this.categoryName = categoryName;
     }
 
-    public String getCostPrice() {
+    public double getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(String costPrice) {
+    public void setCostPrice(double costPrice) {
         this.costPrice = costPrice;
     }
 
@@ -116,19 +117,19 @@ public class ProductDto {
         this.imeiNo = imeiNo;
     }
 
-    public String getMarkup() {
+    public double getMarkup() {
         return markup;
     }
 
-    public void setMarkup(String markup) {
+    public void setMarkup(double markup) {
         this.markup = markup;
     }
 
-    public String getMinProductQuantity() {
+    public int getMinProductQuantity() {
         return minProductQuantity;
     }
 
-    public void setMinProductQuantity(String minProductQuantity) {
+    public void setMinProductQuantity(int minProductQuantity) {
         this.minProductQuantity = minProductQuantity;
     }
 
@@ -148,11 +149,11 @@ public class ProductDto {
         this.productNo = productNo;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -164,11 +165,11 @@ public class ProductDto {
         this.quantityForSell = quantityForSell;
     }
 
-    public String getRetailPrice() {
+    public double getRetailPrice() {
         return retailPrice;
     }
 
-    public void setRetailPrice(String retailPrice) {
+    public void setRetailPrice(double retailPrice) {
         this.retailPrice = retailPrice;
     }
 
@@ -186,6 +187,14 @@ public class ProductDto {
 
     public void setTax(String tax) {
         this.tax = tax;
+    }
+
+    public int getVendorId() {
+        return vendorId;
+    }
+
+    public void setVendorId(int vendorId) {
+        this.vendorId = vendorId;
     }
 
     public String getVendorName() {

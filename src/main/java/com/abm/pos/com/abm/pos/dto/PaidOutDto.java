@@ -6,25 +6,37 @@ package com.abm.pos.com.abm.pos.dto;
 public class PaidOutDto {
 
     private int paidOutId;
-    private double paidOutAmount;
-    private String reason;
+    private double paidOutAmount1;
+    private double paidOutAmount2;
+    private double paidOutAmount3;
+    private String paidOutReason1;
+    private String paidOutReason2;
+    private String paidOutReason3;
     private String paidOutDate;
-    private double sumOfPaidOut;
+    private double sumPaidOut;
 
-    public double getSumOfPaidOut() {
-        return sumOfPaidOut;
+    public double getPaidOutAmount1() {
+        return paidOutAmount1;
     }
 
-    public void setSumOfPaidOut(double sumOfPaidOut) {
-        this.sumOfPaidOut = sumOfPaidOut;
+    public void setPaidOutAmount1(double paidOutAmount1) {
+        this.paidOutAmount1 = paidOutAmount1;
     }
 
-    public double getPaidOutAmount() {
-        return paidOutAmount;
+    public double getPaidOutAmount2() {
+        return paidOutAmount2;
     }
 
-    public void setPaidOutAmount(double paidOutAmount) {
-        this.paidOutAmount = paidOutAmount;
+    public void setPaidOutAmount2(double paidOutAmount2) {
+        this.paidOutAmount2 = paidOutAmount2;
+    }
+
+    public double getPaidOutAmount3() {
+        return paidOutAmount3;
+    }
+
+    public void setPaidOutAmount3(double paidOutAmount3) {
+        this.paidOutAmount3 = paidOutAmount3;
     }
 
     public String getPaidOutDate() {
@@ -43,11 +55,35 @@ public class PaidOutDto {
         this.paidOutId = paidOutId;
     }
 
-    public String getReason() {
-        return reason;
+    public String getPaidOutReason1() {
+        return paidOutReason1;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setPaidOutReason1(String paidOutReason1) {
+        this.paidOutReason1 = paidOutReason1;
+    }
+
+    public String getPaidOutReason2() {
+        return paidOutReason2;
+    }
+
+    public void setPaidOutReason2(String paidOutReason2) {
+        this.paidOutReason2 = paidOutReason2;
+    }
+
+    public String getPaidOutReason3() {
+        return paidOutReason3;
+    }
+
+    public void setPaidOutReason3(String paidOutReason3) {
+        this.paidOutReason3 = paidOutReason3;
+    }
+
+    public double getSumPaidOut() {
+        return sumPaidOut;
+    }
+
+    public void setSumPaidOut(double sumPaidOut) {
+        this.sumPaidOut = sumPaidOut;
     }
 }
