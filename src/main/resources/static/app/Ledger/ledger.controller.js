@@ -70,6 +70,18 @@
 		{
 			GlobalVariable.receiptData =response;
 			GlobalVariable.isPrintPage = true;
+			if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
+			{
+				$scope.printFirstName=GlobalVariable.receiptData[0].customerDtosList[0].firstName;
+					$scope.printLastName =GlobalVariable.receiptData[0].customerDtosList[0].lastName;
+						$scope.printStreet=GlobalVariable.receiptData[0].customerDtosList[0].street;
+							$scope.printCity=GlobalVariable.receiptData[0].customerDtosList[0].city;
+								$scope.printState=GlobalVariable.receiptData[0].customerDtosList[0].state;
+									$scope.printCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
+										$scope.printzipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
+				$scope.printPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+
+			}
 			
 			$timeout(function() {
 				$window.print();

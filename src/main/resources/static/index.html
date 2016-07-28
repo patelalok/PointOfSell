@@ -87,25 +87,24 @@
 
 	<section class="fixed-header-wrap" print-remove>
 		<header class="mainHeader" ng-show="!GlobalVariable.isLoginPage">
-			<div class="leftItems">
+            <div class="row">
+			<div class="leftItems col-md-6" style="text-align:left;">
 			<a class="toggle-nav" data-ng-click="openNav()" ng-show="!device.isTC70 && (device.isMobile || device.isTablet)"> <i class="fa fa-bars"></i> </a>
-				<img class="nickImage" src="./assets/images/leftImage.JPG"/>
-				<span class="nickText">Nicks</span>
-			
+				<img class="nickImage" src="./assets/images/final-logo.png" height="30" width="80"/>
+            </div>
+			<div class="headerRightItems col-md-6" style="text-align:right;">
+                <div class="row">
+                <div class="headerName inline-vertical col-md-10" style="text-align:right;">
+
+					<span style="display:block;">Excell</span>
+                    <span style="display:block;font-size:10px;">Wireless</span>
+				</div>
+                <div class="headerImage inline-vertical col-md-2" style="text-align:right;" ng-click="logOut()">
+                    <span><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</span>
+                </div>
+                </div>
 			</div>
-			<div class="headerRightItems">
-			
-				<div class="help inline-vertical padding-right-30">
-					<span> Help </span>
-				</div>
-				<div class="headerImage inline-vertical padding-right-30">
-					<img src="./assets/images/bell.JPG"/>
-				</div>
-				<div class="headerName inline-vertical">
-				
-					<span>Alok Patel</span>
-				</div>
-			</div>
+            </div>
 		</header>
 	</section>
 		

@@ -107,9 +107,10 @@
             <div><span>Receipt #:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</span></div>
 -->
             <div class="customerName">
-                <div><span>Bill To:</span><span>{{GlobalVariable.receiptData[0].transactionDtoList[0].username}}</span></div>
-				<div>1011 Vinings TRL SE</div>
-				<div>SMyrna gA</div>
+                <div><span>Bill To:</span><span>{{printFirstName}} {{printLastName}}</span></div>
+				<div>{{printStreet}} {{printCity}} </div>
+				<div>{{printState}} {{printCountry}} {{printzipCode}}</div>
+				<div>{{printPhone}}</div>
             </div>
             <div><span>Phone Number:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</span></div>
 

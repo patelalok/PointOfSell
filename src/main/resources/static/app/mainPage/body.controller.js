@@ -75,6 +75,10 @@
 		{
 			getProductDetails.getProductValues();
 		}
+		$scope.logOut = function()
+		{
+			$state.go('login');
+		};
 		render();
 	}
 })();

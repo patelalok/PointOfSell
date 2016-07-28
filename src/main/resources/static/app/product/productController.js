@@ -168,7 +168,7 @@
 			$scope.prodRetail = 0;
 			if(GlobalVariable.editProduct == true)
 			{
-				$scope.productId = GlobalVariable.editProductDetails.productId;
+				$scope.productId = GlobalVariable.editProductDetails.productNo;
 				$scope.setVendorType(GlobalVariable.editProductDetails.vendorId,GlobalVariable.editProductDetails.vendorName);
 				$scope.setBrandType(GlobalVariable.editProductDetails.brandId,GlobalVariable.editProductDetails.brandName);
 				$scope.setCategoryType(GlobalVariable.editProductDetails.categoryId,GlobalVariable.editProductDetails.categoryName,'');
