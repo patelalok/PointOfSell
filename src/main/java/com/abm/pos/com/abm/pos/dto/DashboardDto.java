@@ -9,6 +9,7 @@ public class DashboardDto {
     private double total;
     private double cash;
     private double credit;
+    private double check;
     private double profit;
     private double tax;
     private double discount;
@@ -43,6 +44,14 @@ public class DashboardDto {
 
     public double getCredit() {
         return credit;
+    }
+
+    public double getCheck() {
+        return check;
+    }
+
+    public void setCheck(double check) {
+        this.check = check;
     }
 
     public void setCredit(double credit) {

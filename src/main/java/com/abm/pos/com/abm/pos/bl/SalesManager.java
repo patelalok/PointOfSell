@@ -232,6 +232,7 @@ public class SalesManager {
 
                     //System.out.println("transQuantity:"+transQuantity);
 
+                    //reducing quantity into Stock for transaction
                     productQuantity = productQuantity - transQuantity;
 
 
@@ -290,6 +291,7 @@ public class SalesManager {
             lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             lineItem.setTransactionDate(rs.getString("DATE"));
             lineItem.setProductId(rs.getInt("PRODUCT_ID"));
+            lineItem.setProductNumber(jdbcTemplate.queryForObject(sqlQuery.getProductNumber, new Object[]{lineItem.getProductId()}, String.class));
             lineItem.setProductDescription(jdbcTemplate.queryForObject(sqlQuery.getProductDescription, new Object[]{lineItem.getProductId()}, String.class));
             lineItem.setQuantity(rs.getInt("QUANTITY"));
             lineItem.setRetail(rs.getDouble("RETAIL"));

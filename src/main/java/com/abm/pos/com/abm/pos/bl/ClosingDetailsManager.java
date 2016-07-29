@@ -5,6 +5,7 @@ import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -92,15 +93,46 @@ public class ClosingDetailsManager {
     public List<ClosingDetailsDto> getClosingDetailsToDB(String startDate, String endDate) {
 
         List<ClosingDetailsDto> closingDetails = new ArrayList<>();
-        ClosingDetailsDto closingDto = new ClosingDetailsDto();
+        DashboardDto dashboardDto = new DashboardDto();
+        //TODO
+
+        // I NEED TO CHANGE CLOSING DETAISL TO OBJECT INSTADE OF ARRY LIST CAUSE IT DOESNT MAKE ANY SENSE.
 
         try {
+            //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOENT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
-            closingDto.setTotalTax(jdbcTemplate.queryForObject(sqlQueries.getTotalTaxForCloseRegister, new Object[] {startDate,endDate}, double.class));
-            closingDto.setTotalDiscount(jdbcTemplate.queryForObject(sqlQueries.getTotalDiscountForCloseRegister, new Object[] {startDate,endDate}, double.class));
-            closingDto.setTotalProfit(jdbcTemplate.queryForObject(sqlQueries.getTotalProfitForCloseRegister, new Object[] {startDate,endDate}, double.class));
 
-            closingDetails.add(closingDto);
+
+            //THIS CALL WILL SEND THE SYSTEM DATE TO UI WHICH IS USING TRANSACTION TABLE
+            dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate,endDate);
+
+            if(null != closingDetails && !closingDetails.isEmpty()){
+
+                closingDetails.get(0).setReportCash(dashboardDto.getCash());
+                closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
+                closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
+                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
+                closingDetails.get(0).setTotalTax(dashboardDto.getTax());
+                closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
+                closingDetails.get(0).setTotalProfit(dashboardDto.getProfit());
+
+            }else{
+                closingDetails = new ArrayList<>();
+                ClosingDetailsDto closingDetailsDto= new ClosingDetailsDto();
+
+                closingDetailsDto.setReportCash(dashboardDto.getCash());
+                closingDetailsDto.setReportCredit(dashboardDto.getCredit());
+                closingDetailsDto.setReportCheck(dashboardDto.getCheck());
+                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
+                closingDetailsDto.setTotalTax(dashboardDto.getTax());
+                closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
+                closingDetailsDto.setTotalProfit(dashboardDto.getProfit());
+                closingDetails.add(closingDetailsDto);
+            }
+
+
+
+
 
             System.out.println("Send Closing details Successfully");
         } catch (Exception e) {
@@ -111,6 +143,25 @@ public class ClosingDetailsManager {
     }
 
 
+//I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
+    private final class TransactionCloseMapper implements RowMapper<DashboardDto> {
+
+        @Override
+        public DashboardDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            DashboardDto closingDto = new DashboardDto();
+
+            closingDto.setCash(rs.getDouble("CASH"));
+            closingDto.setCredit(rs.getDouble("CREDIT"));
+            closingDto.setCheck(rs.getDouble("CHECKAMOUNT"));
+            closingDto.setTotal(rs.getDouble("TOTAL"));
+            closingDto.setTax(rs.getDouble("TAX"));
+            closingDto.setDiscount(rs.getDouble("DISCOUNT"));
+            closingDto.setProfit(rs.getDouble("PROFIT"));
+
+            return closingDto;
+        }
+    }
 
     private final class ClosingMapper implements RowMapper<ClosingDetailsDto> {
 
@@ -132,9 +183,9 @@ public class ClosingDetailsManager {
             closingDto.setDifferenceCash(rs.getDouble("CASH_DIFFERENCE"));
             closingDto.setTotalDifference(rs.getDouble("TOTAL_DIFFERENCE"));
             closingDto.setTotalBusinessAmount(rs.getDouble("TOTAL_BUSINESS_AMOUNT"));
-           // closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
+            // closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
             //closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
-           // closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
+            // closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
             closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));
 
             return closingDto;
@@ -525,9 +576,13 @@ public class ClosingDetailsManager {
             paidOut.setPaidOutAmount2(rs.getDouble("PAIDOUT2"));
             paidOut.setPaidOutAmount3(rs.getDouble("PAIDOUT3"));
             paidOut.setPaidOutReason1(rs.getString("REASON1"));
-            paidOut.setPaidOutReason1(rs.getString("REASON2"));
-            paidOut.setPaidOutReason1(rs.getString("REASON3"));
+            paidOut.setPaidOutReason2(rs.getString("REASON2"));
+            paidOut.setPaidOutReason3(rs.getString("REASON3"));
+
+            //Adding all paid out and sending sum of it to ui
+            paidOut.setSumPaidOut(paidOut.getPaidOutAmount1() + paidOut.getPaidOutAmount2() + paidOut.getPaidOutAmount3());
             paidOut.setPaidOutDate(rs.getString("DATE"));
+
 
             return paidOut;
 
