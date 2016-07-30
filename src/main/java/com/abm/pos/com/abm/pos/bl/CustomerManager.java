@@ -102,7 +102,7 @@ public class CustomerManager {
     }
 
 
-    private static final class CustomerMapper implements RowMapper<CustomerDto>
+    private final class CustomerMapper implements RowMapper<CustomerDto>
     {
 
         @Override
@@ -126,6 +126,9 @@ public class CustomerManager {
             customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
             customer.setBalance(rs.getDouble("BALANCE"));
             customer.setTaxId(rs.getString("TAX_ID"));
+
+            //TODO : I need to for last 12 months but here i am not putting between date condition i need to fox it.
+            customer.setLast12MonthsSpend(jdbcTemplate.queryForObject(sqlQuery.getCustomersLast12MonthSpend, new Object[] {customer.getPhoneNo()}, double.class));
 
             return customer;
         }

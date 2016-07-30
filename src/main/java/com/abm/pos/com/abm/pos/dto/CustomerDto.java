@@ -21,7 +21,7 @@ public class CustomerDto {
     private String customerCreatedDate;
     private double balance;
     private String taxId;
-
+    private double last12MonthsSpend;
 
     public String getZipcode() {
         return zipcode;
@@ -149,6 +149,14 @@ public class CustomerDto {
 
     public void setTaxId(String taxId) {
         this.taxId = taxId;
+    }
+
+    public double getLast12MonthsSpend() {
+        return last12MonthsSpend;
+    }
+
+    public void setLast12MonthsSpend(double last12MonthsSpend) {
+        this.last12MonthsSpend = last12MonthsSpend;
     }
 }
 

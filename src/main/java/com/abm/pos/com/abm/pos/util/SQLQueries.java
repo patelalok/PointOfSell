@@ -15,32 +15,83 @@ public class SQLQueries {
    public String addProductQuery =
 
            "INSERT INTO PRODUCT" +
-           " (PRODUCT_NO,CATEGORY_ID,VENDOR_ID,BRAND_ID,ATL_NO,DESCRIPTION,COST_PRICE,MARKUP,RETAIL_PRICE,QUANTITY,MIN_PRODUCT,RETURN_RULE,IMAGE,CREATED_DATE,IMEI_NUMBER,TAX)" +
+           " (" +
+                   "PRODUCT_NO," +
+                   "CATEGORY_ID," +
+                   "VENDOR_ID," +
+                   "BRAND_ID,ATL_NO," +
+                   "DESCRIPTION," +
+                   "COST_PRICE," +
+                   "MARKUP," +
+                   "RETAIL_PRICE," +
+                   "QUANTITY," +
+                   "MIN_PRODUCT," +
+                   "RETURN_RULE," +
+                   "IMAGE," +
+                   "CREATED_DATE,IMEI_NUMBER,TAX)" +
            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
-            "(FIRST_NAME,LAST_NAME,PHONE_NO,EMAIL,DATEOFBIRTH,CUSTOMER_TYPE,GENDER,STREET,CITY,STATE,COUNTRY,ZIPCODE,FAX,CUSTOMER_CREATE_DATE,TAX_ID)" +
+            "(" +
+                    "FIRST_NAME," +
+                    "LAST_NAME," +
+                    "PHONE_NO," +
+                    "EMAIL," +
+                    "DATEOFBIRTH," +
+                    "CUSTOMER_TYPE," +
+                    "GENDER," +
+                    "STREET," +
+                    "CITY," +
+                    "STATE," +
+                    "COUNTRY," +
+                    "ZIPCODE," +
+                    "FAX," +
+                    "CUSTOMER_CREATE_DATE," +
+                    "TAX_ID)" +
             " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addVendorQuery =
             "INSERT INTO VENDOR " +
-            "(VENDOR_NAME,COMMISION,PHONENO,COMPANY_NAME,ADDRESS) " +
+            "(" +
+                    "VENDOR_NAME," +
+                    "COMMISION,PHONENO," +
+                    "COMPANY_NAME,ADDRESS) " +
             "VALUES(?,?,?,?,?)";
 
     public String addCategoryQuery =
             "INSERT INTO CATEGORY " +
-                    "(CATEGORY_NAME,DESCRIPTION) " +
+                    "(CATEGORY_NAME," +
+                    "DESCRIPTION) " +
                     "VALUES(?,?)";
     public String addBrandQuery =
             "INSERT INTO BRAND " +
-            "(BRAND_NAME,DESCRIPTION)" +
+            "(" +
+                    "BRAND_NAME," +
+                    "DESCRIPTION)" +
             "VALUES(?,?)";
 
     //ADD TRANSACTION INTO DATABASE
 
     public String addTransaction =
-            "INSERT INTO TRANSACTION(TRANSACTION_COMP_ID,TRANSACTION_DATE,TOTAL_AMOUNT,TAX_AMOUNT,DISCOUNT_AMOUNT,SUBTOTAL,TOTALQUANTITY,CUSTOMER_PHONENO,USER_ID,PAYMENT_ID_CASH,STATUS,PAID_AMOUNT_CASH,CHANGE_AMOUNT,PAYMENT_ID_CREDIT,TOTAL_AMOUNT_CREDIT,TOTAL_AMOUNT_CHECK,TRANS_CREDIT_ID,LAST_4_DIGITS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            "INSERT INTO TRANSACTION(TRANSACTION_COMP_ID," +
+                    "TRANSACTION_DATE," +
+                    "TOTAL_AMOUNT," +
+                    "TAX_AMOUNT," +
+                    "DISCOUNT_AMOUNT," +
+                    "SUBTOTAL," +
+                    "TOTALQUANTITY," +
+                    "CUSTOMER_PHONENO," +
+                    "USER_ID," +
+                    "PAYMENT_ID_CASH," +
+                    "STATUS," +
+                    "PAID_AMOUNT_CASH," +
+                    "CHANGE_AMOUNT," +
+                    "PAYMENT_ID_CREDIT," +
+                    "TOTAL_AMOUNT_CREDIT," +
+                    "TOTAL_AMOUNT_CHECK," +
+                    "TRANS_CREDIT_ID," +
+                    "LAST_4_DIGITS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -55,17 +106,26 @@ public class SQLQueries {
                     "TOTALPRODUCTPRICE)" +
             " VALUES (?,?,?,?,?,?,?,?,?)";
 
- public String addUserQuery
-         = "INSERT INTO USER" +
-         " (USERNAME,PASSWORD,USER_ROLE,USER_CREATED_DATE) " +
+ public String addUserQuery =
+          "INSERT INTO USER" +
+         " (" +
+                  "USERNAME," +
+                  "PASSWORD," +
+                  "USER_ROLE," +
+                  "USER_CREATED_DATE) " +
          "VALUES (?,?,?,?)";
 
     //ADD CLOSING DETAILS INTO DATABASE
 
-    public String addOpeningDetails = "INSERT INTO CASH_REGISTER " +
-            "(USER_ID_OPEN,OPEN_AMOUNT,OPEN_DATE VALUES (?,?,?)";
+    public String addOpeningDetails =
+            "INSERT INTO CASH_REGISTER " +
+            "(" +
+                    "USER_ID_OPEN," +
+                    "OPEN_AMOUNT," +
+                    "OPEN_DATE VALUES (?,?,?)";
 
-    public String addClosingDetails = "INSERT INTO CASH_REGISTER (USER_ID_CLOSE , REPORT_CASH , REPORT_CREDIT , REPORT_TOTAL_AMOUNT , " +
+    public String addClosingDetails = "INSERT INTO CASH_REGISTER " +
+            "(USER_ID_CLOSE , REPORT_CASH , REPORT_CREDIT , REPORT_TOTAL_AMOUNT , " +
             "CLOSE_CASH , CLOSE_CREDIT , CLOSE_DATE , CLOSE_TOTAL_AMOUNT , CASH_DIFFERENCE , CREDIT_DIFFERENCE ," +
             "TOTAL_DIFFERENCE , TOTAL_BUSINESS_AMOUNT , TOTAL_TAX , TOTAL_DISCOUNT , TOTAL_PROFIT , TOTAL_MARKUP) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -217,4 +277,7 @@ public class SQLQueries {
     public String getTotalProfitForCloseRegister =   "SELECT SUM(RETAIL - COST) PROFIT FROM TRANSACTION_LINE_ITEM  WHERE DATE BETWEEN ? AND ? ";
     public String getProductNumber = "SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_ID = ?";
     public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(t.PAID_AMOUNT_CASH) CASH, SUM(t.TOTAL_AMOUNT_CREDIT) CREDIT, SUM(t.TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(t.TOTAL_AMOUNT) TOTAL,SUM(t.TAX_AMOUNT) TAX,SUM(t.DISCOUNT_AMOUNT) DISCOUNT, SUM(l.RETAIL-l.COST) PROFIT FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE DATE BETWEEN ? AND ?";
+
+    //TODO : I need to for last 12 months but here i am not putting between date condition i need to fox it.
+    public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";
 }
