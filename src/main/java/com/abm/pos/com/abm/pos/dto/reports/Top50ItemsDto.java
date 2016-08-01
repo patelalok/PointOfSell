@@ -77,7 +77,7 @@ public class Top50ItemsDto {
     public void setRetailPrice(double retailPrice) {
         this.retailPrice = retailPrice;
     }
-    //TODO FIND THE WAY TO GET THESE #3 AS WELL
+    // FIND THE WAY TO GET THESE #3 AS WELL
    /* private String vendorName;
     private String categoryName;
     private String brandName;

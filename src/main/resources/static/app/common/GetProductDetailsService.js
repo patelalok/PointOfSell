@@ -9,7 +9,9 @@
 	function getProductDetails(dataService,GlobalVariable) {
 		
 		var getProductDetails = {
-				
+
+
+			
 				getProductValues:getProductValues,
 				getVendorDetails:getVendorDetails,
 				getBrandDetails:getBrandDetails,

@@ -65,7 +65,7 @@
 				 * return (sortAscending) ? sorted : sorted.reverse(); };
 				 */
 
-				// TODO: RXP8292 - Move this function to utility
+				//  RXP8292 - Move this function to utility
 				// class.
 				var sortExistingData = function(array, predicate, type, isAscending, sortFunction) {
 

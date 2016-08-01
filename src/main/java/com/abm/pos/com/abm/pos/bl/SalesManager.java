@@ -72,6 +72,43 @@ public class SalesManager {
         }
 
     }
+
+    public void editTransaction(TransactionDto transactionDto) {
+        try {
+            jdbcTemplate.update(sqlQuery.editTransaction,
+                    transactionDto.getTransactionDate(),
+                    transactionDto.getTotalAmount(),
+                    transactionDto.getTax(),
+                    transactionDto.getDiscount(),
+                    transactionDto.getSubTotal(),
+                    transactionDto.getTotalQuantity(),
+                    transactionDto.getCustomerPhoneNo(),
+                    transactionDto.getUserId(),
+                    transactionDto.getCashId(),
+                    transactionDto.getStatus(),
+                    transactionDto.getPaidAmountCash(),
+                    transactionDto.getChangeAmount(),
+                    transactionDto.getCreditId(),
+                    transactionDto.getPaidAmountCredit(),
+                    transactionDto.getPaidAmountCheck(),
+                    transactionDto.getTransCreditId(),
+                    transactionDto.getLast4Digits(),
+                    transactionDto.getTransactionCompId());
+
+            jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
+                    transactionDto.getPrevBalance(),
+                    transactionDto.getCustomerPhoneNo());
+            System.out.println("Customer Balance Edited Successfully");
+            System.out.println("Transaction Edited Successfully");
+
+
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
     public List<TransactionDto> getTransactionDetails(String startDate, String endDategit ) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
@@ -129,6 +166,8 @@ public class SalesManager {
         return receiptDtos;
     }
 
+
+
     private final class TransactionMapperWithOutCustomer implements RowMapper<TransactionDto>
     {
 
@@ -146,13 +185,12 @@ public class SalesManager {
             }catch (ParseException e) {
                 e.printStackTrace();
             }
-            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
             DateFormat time = new SimpleDateFormat("hh:mm:ss");
             System.out.println("Date: " + date.format(d));
             System.out.println("Time: " + time.format(d));
             transaction.setTransactionDate(date.format(d));
             transaction.setTransactionTime(time.format(d));
-            transaction.setTransactionTime("12:10:34");
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setTax(rs.getDouble("TAX_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));

@@ -146,7 +146,7 @@ public class PageSetUpManager {
 
         FileInputStream fis = null;
         try {
-            fis = new FileInputStream("/Users/asp5045/Desktop/Workbook6.xlsx");
+            fis = new FileInputStream("/Users/asp5045/Desktop/SimplyPrepadenurbhai.xlsx");
 
             // Using XSSF for xlsx format, for xls use HSSF
             Workbook workbook = new XSSFWorkbook(fis);

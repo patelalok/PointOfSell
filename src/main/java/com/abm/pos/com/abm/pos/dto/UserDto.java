@@ -10,6 +10,8 @@ public class UserDto {
     private String password;
     private String userRole;
     private String createdDate;
+    private String clockInTime;
+    private String clockOutTime;
 
     public String getCreatedDate() {
         return createdDate;
@@ -51,7 +53,19 @@ public class UserDto {
         this.userRole = userRole;
     }
 
+    public String getClockInTime() {
+        return clockInTime;
+    }
 
+    public void setClockInTime(String clockInTime) {
+        this.clockInTime = clockInTime;
+    }
 
+    public String getClockOutTime() {
+        return clockOutTime;
+    }
 
+    public void setClockOutTime(String clockOutTime) {
+        this.clockOutTime = clockOutTime;
+    }
 }

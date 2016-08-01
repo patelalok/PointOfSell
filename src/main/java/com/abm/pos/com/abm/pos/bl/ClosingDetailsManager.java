@@ -5,7 +5,6 @@ import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,14 +12,20 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
- * Created by asp5045 on 5/20/16.
+ * Created by asp5045 on 7/31/16.
  */
+
 @Component
 public class ClosingDetailsManager {
+
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -41,13 +46,14 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getUserIdClose(),
                         closingDetailsDto.getReportCash(),
                         closingDetailsDto.getReportCredit(),
+                        closingDetailsDto.getReportCheck(),
                         closingDetailsDto.getReportTotalAmount(),
                         closingDetailsDto.getCloseCash(),
                         closingDetailsDto.getCloseCredit(),
                         closingDetailsDto.getCloseDate(),
                         closingDetailsDto.getCloseTotalAmount(),
-                        closingDetailsDto.getDifferenceCash(),
                         closingDetailsDto.getDifferenceCredit(),
+                        closingDetailsDto.getDifferenceCash(),
                         closingDetailsDto.getTotalDifference(),
                         closingDetailsDto.getTotalBusinessAmount(),
                         closingDetailsDto.getTotalTax(),
@@ -55,8 +61,8 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup());
 
-            System.out.println("Closing Details Added Successfully");
-        }
+                System.out.println("Closing Details Added Successfully");
+            }
 
             else
             {
@@ -64,13 +70,14 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getUserIdClose(),
                         closingDetailsDto.getReportCash(),
                         closingDetailsDto.getReportCredit(),
+                        closingDetailsDto.getReportCheck(),
                         closingDetailsDto.getReportTotalAmount(),
                         closingDetailsDto.getCloseCash(),
                         closingDetailsDto.getCloseCredit(),
                         closingDetailsDto.getCloseDate(),
                         closingDetailsDto.getCloseTotalAmount(),
-                        closingDetailsDto.getDifferenceCash(),
                         closingDetailsDto.getDifferenceCredit(),
+                        closingDetailsDto.getDifferenceCash(),
                         closingDetailsDto.getTotalDifference(),
                         closingDetailsDto.getTotalBusinessAmount(),
                         closingDetailsDto.getTotalTax(),
@@ -88,35 +95,37 @@ public class ClosingDetailsManager {
 
     }
 
-    //GET CLOSING DETAILS FROM DB WITH DATE
-
     public List<ClosingDetailsDto> getClosingDetailsToDB(String startDate, String endDate) {
 
         List<ClosingDetailsDto> closingDetails = new ArrayList<>();
         DashboardDto dashboardDto = new DashboardDto();
-        //TODO
 
         // I NEED TO CHANGE CLOSING DETAISL TO OBJECT INSTADE OF ARRY LIST CAUSE IT DOESNT MAKE ANY SENSE.
 
         try {
-            //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOENT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
+
+            //GETTING CURRENT DATE
+
+            dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate,endDate);
+            //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOSE NOT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
 
-
-            //THIS CALL WILL SEND THE SYSTEM DATE TO UI WHICH IS USING TRANSACTION TABLE
-            dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate,endDate);
+            double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
 
             if(null != closingDetails && !closingDetails.isEmpty()){
 
+                //THIS CALL WILL SEND THE SYSTEM DATE TO UI WHICH IS USING TRANSACTION TABLE
                 closingDetails.get(0).setReportCash(dashboardDto.getCash());
                 closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
                 closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
                 closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
-                closingDetails.get(0).setTotalProfit(dashboardDto.getProfit());
+                closingDetails.get(0).setTotalProfit(profit);
 
-            }else{
+            }
+
+        else{
                 closingDetails = new ArrayList<>();
                 ClosingDetailsDto closingDetailsDto= new ClosingDetailsDto();
 
@@ -126,24 +135,21 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
                 closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
-                closingDetailsDto.setTotalProfit(dashboardDto.getProfit());
+                closingDetailsDto.setTotalProfit(profit);
                 closingDetails.add(closingDetailsDto);
+
+                return closingDetails;
             }
-
-
-
-
-
-            System.out.println("Send Closing details Successfully");
+                System.out.println("Send Closing details Successfully");
         } catch (Exception e) {
-            System.out.println(e);
+                System.out.println(e);
         }
 
         return closingDetails;
     }
 
 
-//I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
+    //I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
     private final class TransactionCloseMapper implements RowMapper<DashboardDto> {
 
         @Override
@@ -157,7 +163,9 @@ public class ClosingDetailsManager {
             closingDto.setTotal(rs.getDouble("TOTAL"));
             closingDto.setTax(rs.getDouble("TAX"));
             closingDto.setDiscount(rs.getDouble("DISCOUNT"));
-            closingDto.setProfit(rs.getDouble("PROFIT"));
+
+
+            //closingDto.setProfit(rs.getDouble("PROFIT"));
 
             return closingDto;
         }
@@ -191,7 +199,6 @@ public class ClosingDetailsManager {
             return closingDto;
         }
     }
-
 
     public HourlyListDto getHourlyTransactionDetails(String startDate, String endDate) {
 
@@ -284,6 +291,7 @@ public class ClosingDetailsManager {
             return hourlyListDto;
         }
     }
+
 
     public YearlyListDto getYearlyTransactionDetails(String startDate, String endDate) {
 
@@ -444,26 +452,25 @@ public class ClosingDetailsManager {
             noOfTrans = noOfTrans + monthDto.getNoOfTrans();
 
 
-                forReportsDto.setTotalCredit(totalCredit);
-                forReportsDto.setTotalCash(totalCash);
-                forReportsDto.setTotalCheck(totalCheck);
-                forReportsDto.setTotalTax(totalTax);
-                forReportsDto.setTotalDiscount(totalDiscount);
-                forReportsDto.setGrandTotal(grandTotal);
-                forReportsDto.setTotalProfit(totalProfit);
-                forReportsDto.setNoOfTrans(noOfTrans);
-                forReportsDto.setAvgBasketSize(14.99);
+            forReportsDto.setTotalCredit(totalCredit);
+            forReportsDto.setTotalCash(totalCash);
+            forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalTax(totalTax);
+            forReportsDto.setTotalDiscount(totalDiscount);
+            forReportsDto.setGrandTotal(grandTotal);
+            forReportsDto.setTotalProfit(totalProfit);
+            forReportsDto.setNoOfTrans(noOfTrans);
+            forReportsDto.setAvgBasketSize(14.99);
 
-                finalTotalForReportsDtos.add(forReportsDto);
+            finalTotalForReportsDtos.add(forReportsDto);
 
-                monthlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
+            monthlyListDto.setFinalTotalForReportsDtos(finalTotalForReportsDtos);
 
 
             return monthlyListDto;
 
         }
     }
-
 
     public List<WeekDto> getWeeklyTransactionDetails(String startDate, String endDate) {
 
@@ -646,7 +653,7 @@ public class ClosingDetailsManager {
 
             DailyTransactionDto trans = new DailyTransactionDto();
 
-           // trans.setDate("2016-06-22");
+            // trans.setDate("2016-06-22");
             trans.setNoOfTransactions(rs.getInt("NOOFTRANS"));
             trans.setAvgTotal(rs.getDouble("AVGTOTAL"));
             trans.setTotal(rs.getDouble("TOTAL"));
@@ -662,5 +669,5 @@ public class ClosingDetailsManager {
 
         }
     }
-}
 
+}

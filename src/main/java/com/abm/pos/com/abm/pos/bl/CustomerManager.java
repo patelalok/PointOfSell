@@ -127,9 +127,6 @@ public class CustomerManager {
             customer.setBalance(rs.getDouble("BALANCE"));
             customer.setTaxId(rs.getString("TAX_ID"));
 
-            //TODO : I need to for last 12 months but here i am not putting between date condition i need to fox it.
-            customer.setLast12MonthsSpend(jdbcTemplate.queryForObject(sqlQuery.getCustomersLast12MonthSpend, new Object[] {customer.getPhoneNo()}, double.class));
-
             return customer;
         }
     }
