@@ -340,6 +340,7 @@
 		}
 		$scope.addIMEI = function ()
 		{
+
 			GlobalVariable.editIMEI = false;
 			var _tmPath = 'app/product/addIMEI.html';
 			var _ctrlPath = 'IMEIController';

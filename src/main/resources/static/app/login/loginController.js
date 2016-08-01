@@ -11,7 +11,7 @@
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.errorMessage="";
-		$scope.productKeyAdded = true;
+
 		
 		GlobalVariable.isLoginPage = true;
 		
@@ -21,6 +21,14 @@
 		
 		$scope.onLoginClicked = function($event)
 		{
+			if(sessionStorage.productKeyAdded1 == undefined)
+			{
+				$scope.productKeyAdded = false;
+			}
+			else
+			{
+				$scope.productKeyAdded = sessionStorage.productKeyAdded1;
+			}
 			var date = new Date();
 			var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
 			var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -48,7 +56,7 @@
 		function onProductKeySuccess(response)
 		{
 			if(response == true) {
-				$scope.productKeyAdded = true;
+				sessionStorage.productKeyAdded1 = true;
 				sessionStorage.userName = $scope.loginemail;
 				var url = 'http://localhost:8080/getUserLoginDetails?username=' + $scope.loginemail + '&password=' + $scope.loginpassword;
 				dataService.Get(url, onLoginSuccess, onLoginError, 'application/json', 'application/json');

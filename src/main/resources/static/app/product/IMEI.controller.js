@@ -64,11 +64,26 @@
             dataService.Post(url,request,onAddIMEISuccess,onAddIMEIError,'application/json','application/json');
 
         };
-        function onAddIMEISuccess(response)
+        $scope.editIMEI = function()
+        {
+            var url='http://localhost:8080/addIMEINo';
+            var request={
+                "productNo":(GlobalVariable.IMEIProductID).toString(),
+                "imeiNo":$scope.imeiNumber,
+                "costPrice":$scope.prodIMEICP,
+                "retailPrice":$scope.prodIMEIRetail,
+                "markup":$scope.prodIMEIMarkup,
+                "lastUpdatedTimeStamp":js_yyyy_mm_dd_hh_mm_ss(),
+                "phoneId":GlobalVariable.editIMEIDtls.phoneId
+            };
+            request=JSON.stringify(request);
+            dataService.Post(url,request,onEditIMEISuccess,onEditIMEIError,'application/json','application/json');
+        };
+        function onEditIMEISuccess(response)
         {
             DialogFactory.close(true);
         }
-        function onAddIMEIError(response)
+        function onEditIMEIError(response)
         {
 
         }
@@ -89,6 +104,10 @@
             $scope.prodIMEIRetail = 0;
                 if(GlobalVariable.editIMEI == true)
                 {
+                        $scope.imeiNumber = GlobalVariable.editIMEIDtls.imeiNo;
+                    $scope.prodIMEICP=GlobalVariable.editIMEIDtls.costPrice;
+                   $scope.prodIMEIRetail=GlobalVariable.editIMEIDtls.retailPrice;
+                 $scope.prodIMEIMarkup=GlobalVariable.editIMEIDtls.markup;
 
                 }
         }
