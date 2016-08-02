@@ -31,8 +31,8 @@ public class PageSetUpController {
         return pageSetUpManager.readExcelSheet();
     }
 
-    @RequestMapping(value = "/editPageSetUpDetails", method = RequestMethod.POST, consumes = "application/json")
-    public void addProduct(@RequestBody PageSetUpDto pageSetUpDto) {
+    @RequestMapping(value = "/editPageSetUpDetails", method = RequestMethod.POST)
+    public void editPageSetupDetails(@RequestBody PageSetUpDto pageSetUpDto) {
 
         pageSetUpManager.editPageSetupDetails(pageSetUpDto);
     }

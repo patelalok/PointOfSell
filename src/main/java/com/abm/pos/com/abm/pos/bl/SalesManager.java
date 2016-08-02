@@ -168,6 +168,7 @@ public class SalesManager {
 
 
 
+
     private final class TransactionMapperWithOutCustomer implements RowMapper<TransactionDto>
     {
 
@@ -257,6 +258,87 @@ public class SalesManager {
 
                     ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
                     ps.setString(2,transactionLineItemDto1.getTransactionDate());
+                    ps.setString(3,transactionLineItemDto1.getTransactionStatus());
+                    ps.setInt(4, transactionLineItemDto1.getProductId());
+
+                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
+                            {transactionLineItemDto1.getProductId()}, Integer.class);
+
+                    //System.out.println("Quantity: "+productQuantity);
+
+                    ps.setInt(5, transactionLineItemDto1.getQuantity());
+
+                    int transQuantity = transactionLineItemDto1.getQuantity();
+
+                    //System.out.println("transQuantity:"+transQuantity);
+
+                    //reducing quantity into Stock for transaction
+                    productQuantity = productQuantity - transQuantity;
+
+
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity,transactionLineItemDto1.getProductId());
+
+
+                   // System.out.println("DONE:)");
+
+                    ps.setDouble(6, transactionLineItemDto1.getRetail());
+                    ps.setDouble(7, transactionLineItemDto1.getCost());
+                    ps.setDouble(8, transactionLineItemDto1.getDiscount());
+                    ps.setDouble(9, transactionLineItemDto1.getDiscountPercentage());
+                    ps.setDouble(10,transactionLineItemDto1.getRetailWithDis());
+                    ps.setDouble(11,transactionLineItemDto1.getTotalProductPrice());
+
+                    System.out.println("Transaction Line Item Added Successfully");
+
+
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return transactionLineItemDto.size();
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+    public void ediTransactionLineItemToDB(List<TransactionLineItemDto> transactionLineItemDto) {
+
+        try {
+
+
+
+
+
+
+            jdbcTemplate.batchUpdate(sqlQuery.editTransactionLineItem, new BatchPreparedStatementSetter() {
+
+
+
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
+                    List<TransactionLineItemDto> lineItemDtoList = new ArrayList<>();
+
+                    lineItemDtoList = getTransactionLineItemDetails(transactionLineItemDto1.getTransactionCompId());
+
+                    //Check For Null
+                    for(int j = 0; j<= lineItemDtoList.size(); j++)
+                    {
+                        System.out.println(lineItemDtoList.get(j).getProductId());
+                        System.out.println(lineItemDtoList.get(j).getQuantity());
+                        jdbcTemplate.update(sqlQuery.updateProductQuantity,lineItemDtoList.get(j).getQuantity(),lineItemDtoList.get(j).getProductId());
+
+                        System.out.println("Transaction line item edited successfully");
+                    }
+
+
+                    ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
+                    ps.setString(2,transactionLineItemDto1.getTransactionDate());
                     ps.setInt(3, transactionLineItemDto1.getProductId());
 
                     int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
@@ -277,7 +359,7 @@ public class SalesManager {
                     jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity,transactionLineItemDto1.getProductId());
 
 
-                   // System.out.println("DONE:)");
+                    // System.out.println("DONE:)");
 
                     ps.setDouble(5, transactionLineItemDto1.getRetail());
                     ps.setDouble(6, transactionLineItemDto1.getCost());
@@ -300,7 +382,12 @@ public class SalesManager {
         {
             System.out.println(e);
         }
+
+
+
     }
+
+
 
 
     public List<TransactionLineItemDto> getTransactionLineItemDetails(int  transactionCompId) {
@@ -335,6 +422,7 @@ public class SalesManager {
             lineItem.setRetail(rs.getDouble("RETAIL"));
             lineItem.setCost(rs.getDouble("COST"));
             lineItem.setDiscount(rs.getDouble("DISCOUNT"));
+            lineItem.setDiscountPercentage(rs.getDouble("DISCOUNT_PERCENTAGE"));
             lineItem.setRetailWithDis(rs.getDouble("RETAILWITHDISCOUNT"));
             lineItem.setTotalProductPrice(rs.getDouble("TOTALPRODUCTPRICE"));
 

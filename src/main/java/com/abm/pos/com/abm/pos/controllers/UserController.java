@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.UserManager;
 import com.abm.pos.com.abm.pos.dto.UserDto;
+import com.abm.pos.com.abm.pos.dto.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/getUserLoginDetails", method = RequestMethod.GET)
-    public boolean getUserLoginDetails(@RequestParam String username, @RequestParam String password) {
+    public UserLogin getUserLoginDetails(@RequestParam String username, @RequestParam String password) {
 
         return userManager.getUserLoginDetails(username,password);
 

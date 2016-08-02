@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.UserDto;
+import com.abm.pos.com.abm.pos.dto.UserLogin;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -61,9 +62,11 @@ public class UserManager {
         }
     }
 
-    public boolean getUserLoginDetails(String username, String password) {
+    public UserLogin getUserLoginDetails(String username, String password) {
 
         List<UserDto> user = new ArrayList<>();
+
+        UserLogin userLogin = new UserLogin();
         boolean response = false;
         try
         {
@@ -73,31 +76,26 @@ public class UserManager {
             {
                 UserDto u = user.get(i);
 
-                if(u.getUsername().equals(username) && u.getPassword().equals(password))
+                if(u.getUsername().equalsIgnoreCase(username) && u.getPassword().equals(password))
                 {
-                    response = true;
-                    System.out.println(u.getUsername());
+                    userLogin.setValidUser(true);
+                    userLogin.setUserRole(u.getUserRole());
                     break;
                 }
                 else
                 {
-                    response = false;
+                    userLogin.setValidUser(false);
+                    userLogin.setUserRole(null);
                 }
-
             }
-
-
-
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
 
-        return response;
+        return userLogin;
     }
-
-
 
     private static final class AddUserMapper implements RowMapper<UserDto>
     {

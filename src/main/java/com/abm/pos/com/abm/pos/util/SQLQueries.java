@@ -97,14 +97,16 @@ public class SQLQueries {
             "INSERT INTO TRANSACTION_LINE_ITEM " +
             "(TRANSACTION_COMP_ID," +
                     "DATE," +
+                    "TRANSACTION_STATUS," +
                     "PRODUCT_ID," +
                     "QUANTITY," +
                     "RETAIL," +
                     "COST," +
                     "DISCOUNT," +
+                    "DISCOUNT_PERCENTAGE," +
                     "RETAILWITHDISCOUNT," +
                     "TOTALPRODUCTPRICE)" +
-            " VALUES (?,?,?,?,?,?,?,?,?)";
+            " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
  public String addUserQuery =
           "INSERT INTO USER" +
@@ -301,4 +303,5 @@ public class SQLQueries {
             "SET LAST_4_DIGITS = ?" +
             "WHERE TRANSACTION_COMP_ID = ?";
     public String getPrpfitForCloseRegister = "SELECT SUM(RETAIL-COST) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ?";
+    public String editTransactionLineItem = "UPDATE TRANSACTION_LINE_ITEM SET DATE = ?, PRODUCT_ID = ?, QUANTITY = ?, RETAIL = ?, COST = ?, DISCOUNT = ?, RETAILWITHDISCOUNT = ?, TOTALPRODUCTPRICE = ? WHERE TRANSACTION_COMP_ID = ?";
 }

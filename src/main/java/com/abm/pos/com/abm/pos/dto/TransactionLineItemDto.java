@@ -18,6 +18,8 @@ public class TransactionLineItemDto {
     private String  productCount;
     private double retailWithDis;
     private double totalProductPrice;
+    private double discountPercentage;
+    private String transactionStatus;
 
     public double getRetailWithDis() {
         return retailWithDis;
@@ -135,6 +137,19 @@ public class TransactionLineItemDto {
     }
 
 
+    public double getDiscountPercentage() {
+        return discountPercentage;
+    }
 
+    public void setDiscountPercentage(double discountPercentage) {
+        this.discountPercentage = discountPercentage;
+    }
 
+    public String getTransactionStatus() {
+        return transactionStatus;
+    }
+
+    public void setTransactionStatus(String transactionStatus) {
+        this.transactionStatus = transactionStatus;
+    }
 }
