@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').directive('responsiveTable', ResponsiveTableTwo);
 
-	ResponsiveTableTwo.$inject = [ '$rootScope','$timeout', '$compile', '$window', '$filter', 'screenSize','modalService' ];
+	ResponsiveTableTwo.$inject = [ '$rootScope','$timeout', '$compile', '$window', '$filter', 'screenSize','modalService','GlobalVariable' ];
 
-	function ResponsiveTableTwo($rootScope,$timeout, $compile, $window, $filter, screenSize,modalService) {
+	function ResponsiveTableTwo($rootScope,$timeout, $compile, $window, $filter, screenSize,modalService,GlobalVariable) {
 
 		return {
 			restrict : 'EA',
@@ -313,9 +313,7 @@
 								 */
 								scope.sortedData = sortExistingData(scope.ngModel, column.key, column.datatype,
 										scope.sortAscending, column.sortFunction ? scope.$eval(column.sortFunction) : undefined);
-								scope.onSort({
-									index : columnIndex
-								})
+
 							}
 						};
 						scope.scope = scope.$parent;

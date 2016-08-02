@@ -92,7 +92,7 @@
 
 				"username": sessionStorage.userName,
 				"clockInTime": sessionStorage.clockTime,
-				"clockOutTime": js_yyyy_mm_dd_hh_mm_ss
+				"clockOutTime": js_yyyy_mm_dd_hh_mm_ss()
 			};
 			request= JSON.stringify(request);
 			dataService.Post(url,request,onClockSuccess,OnClockError,'application/json','application/json');
