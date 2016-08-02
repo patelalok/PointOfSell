@@ -3,14 +3,15 @@
 
 	angular.module('sampleApp').controller('loginController',loginFunction);
 
-	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService'];
+	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory'];
 
-	function loginFunction($scope, $rootScope, device,$state,GlobalVariable,dataService) {
+	function loginFunction($scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory) {
 		
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.errorMessage="";
+		$scope.productKeyAdded = true;
 		
 		GlobalVariable.isLoginPage = true;
 		
@@ -20,15 +21,41 @@
 		
 		$scope.onLoginClicked = function($event)
 		{
-			/*var request = {};
-			request.email = $scope.loginemail;
-			request.password=$scope.loginpassword;*/
+			var date = new Date();
+			var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+			var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+			var day = date.getUTCDate()-1;
+			if((day == firstDay.getDate()) && ($scope.productKeyAdded == false))
+			{
+				var _tmPath = 'app/login/licensing.html';
+				var _ctrlPath = 'LicensingController';
+				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackProductKey);
+			}
+			else
+			{
+				sessionStorage.userName = $scope.loginemail;
+				var url='http://localhost:8080/getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
+				dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
+			}
 
+
+		};
+		$scope.callBackProductKey = function()
+		{
+			var url='http://localhost:8080/getUserLoginDetails?username='+GlobalVariable.productKey;
+			dataService.Get(url,onProductKeySuccess,onProductKeyError,'application/json','application/json');
+		};
+		function onProductKeySuccess(response)
+		{
+			$scope.productKeyAdded = true;
 			sessionStorage.userName = $scope.loginemail;
 			var url='http://localhost:8080/getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
 			dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
-			//$state.go('report');
-		};
+		}
+		function onProductKeyError(response)
+		{
+
+		}
 		function js_yyyy_mm_dd_hh_mm_ss () {
 			var now = new Date();
 			var year = "" + now.getFullYear();

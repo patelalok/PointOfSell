@@ -55,12 +55,17 @@
 				<label>Search For Customers</label>
 			</div>
 			<div>
-				<input type="text" class="form-control"
+				<!--<input type="text" class="form-control"
 					   data-ng-model="customerPhone" id="customerPhone"
 					   ui-mask="(999) 999-9999" name="customerPhone"
 					   placeholder="(xxx) xxx-xxxx" style="height: 52px; width: 100%;"
 					   ng-change="checkfilterValue(customerPhone)"
-					   ng-enter="filterSalesHistory(customerPhone)" />
+					   ng-enter="filterSalesHistory(customerPhone)" />-->
+				<input type="text" class="form-control" data-ng-model="custName"
+					   data-restrict-characters="restrictCharacter.Alphabet.regExp"
+					   id="custName" style="height: 52px; width: 100%;"
+					   ng-change="checkfilterValue(custName)"
+					   ng-enter="filterSalesHistory(custName)" />
 			</div>
 		</div>
 		<div class="col-md-4 productBtn">
@@ -96,12 +101,15 @@
 				 data-page-size="pageSize" data-sort-column="selectedIndex"
 				 data-sort-ascending="isAsc" on-sort="sortColumnData(index)"
 				 data-filter-value="filterHistory">
-				<columns> <column name="Date" key="transactionDate"
-								  datatype="string" width="12%" sortable="true"></column> <column
-						name="Time" key="transactionTime" datatype="string" width="13%"
-						sortable="true"></column> <column name="Customer Phone"
-														  key="customerPhoneNo" datatype="string" width="20%" sortable="true"></column>
-					<column name="UserName" key="username" datatype="string" width="10%"></column>
+				<columns>
+					<column name="Date" key="transactionDate"
+								  datatype="string" width="10%" sortable="true"></column>
+					<column
+						name="Time" key="transactionTime" datatype="string" width="10%"
+						sortable="true"></column>
+					<column name="Customer Phone" key="customerPhoneNo" datatype="string" width="10%" sortable="true"></column>
+					<column name="Customer Name" key="customerName"  datatype="string" width="15%"></column>
+					<column name="UserName" key="username"  datatype="string" width="10%"></column>
 
 					<column name="Tax" key="tax" datatype="string" width="5%"></column>
 					<column name="Discount" key="discount" datatype="string" width="5%"></column>

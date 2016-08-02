@@ -101,30 +101,33 @@
 		$scope.editNewCustomer = function()
 		{
 			var request = {};
-			request = {
-				"customerId":GlobalVariable.editedcustomerId,
-				"onlyFirstName": $scope.firstName,
-				"firstName":$scope.firstName,
-				"lastName": $scope.lastName,
-				"phoneNo": $scope.phoneNumber,
-				"oldPhoneNo":GlobalVariable.editedPhone,
-				"email": $scope.email,
-				"dateOfBirth": $filter('date')($scope.DOB, "yyyy-MM-dd"),
-				"customerType": $scope.custType,
-				"gender": $scope.gender,
-				"street":$scope.street,
-				"city": $scope.City,
-				"state": $scope.State,
-				"country": $scope.Country,
-				"zipcode": $scope.postalCode,
-				"fax": "TestFax",
-				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss (),
-				"taxId":$scope.taxId,
-				"companyName":$scope.companyName
-			};
-			request = JSON.stringify(request);
-			var url='http://localhost:8080/editCustomer';
-			dataService.Post(url,request,onEditCustDtlsSuccess,onEditCustDtlsError,'application/json','application/json');
+			if($scope.validations()) {
+				request = {
+					"customerId": GlobalVariable.editedcustomerId,
+					"onlyFirstName": $scope.firstName,
+					"firstName": $scope.firstName,
+					"lastName": $scope.lastName,
+					"phoneNo": $scope.phoneNumber,
+					"oldPhoneNo": GlobalVariable.editedPhone,
+					"email": $scope.email,
+					"dateOfBirth": $filter('date')($scope.DOB, "yyyy-MM-dd"),
+					"customerType": $scope.custType,
+					"gender": $scope.gender,
+					"street": $scope.street,
+					"city": $scope.City,
+					"state": $scope.State,
+					"country": $scope.Country,
+					"zipcode": $scope.postalCode,
+					"fax": "TestFax",
+					"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss(),
+					"taxId": $scope.taxId,
+					"companyName": $scope.companyName
+				};
+
+				request = JSON.stringify(request);
+				var url = 'http://localhost:8080/editCustomer';
+				dataService.Post(url, request, onEditCustDtlsSuccess, onEditCustDtlsError, 'application/json', 'application/json');
+			}
 		};
 		function onEditCustDtlsSuccess(response)
 		{

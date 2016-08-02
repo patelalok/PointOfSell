@@ -556,7 +556,7 @@
 
 					break;
 				} else {
-					$rootScope.customerNameOnSearch = 'No customer found';
+					GlobalVariable.customerNameOnSearch = 'No customer found';
 					$rootScope.customerPhone = '';
 					GlobalVariable.userPhone ='';
 					GlobalVariable.userFName = '';
@@ -625,7 +625,7 @@
 		}
 		function render() {
 			$scope.currentPageIndexArr = 0;
-			$rootScope.customerNameOnSearch = '';
+			GlobalVariable.customerNameOnSearch= '';
 
 			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '')
 			{

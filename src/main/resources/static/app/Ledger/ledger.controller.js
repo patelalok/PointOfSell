@@ -43,8 +43,8 @@
 		};
 		$scope.checkfilterValue = function(value)
 		{
-			if(($scope.customerPhone == undefined && $scope.receiptNumber == undefined) || ($scope.customerPhone == "" && $scope.receiptNumber == "")
-					||($scope.customerPhone == undefined && $scope.receiptNumber == "")||($scope.customerPhone == "" && $scope.receiptNumber == undefined))
+			if(($scope.custName == undefined && $scope.receiptNumber == undefined) || ($scope.custName == "" && $scope.receiptNumber == "")
+					||($scope.custName == undefined && $scope.receiptNumber == "")||($scope.custName == "" && $scope.receiptNumber == undefined))
 			{
 				$scope.filterHistory= '';
 			}
