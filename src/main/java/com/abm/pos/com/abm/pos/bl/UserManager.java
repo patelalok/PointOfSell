@@ -97,6 +97,9 @@ public class UserManager {
         return userLogin;
     }
 
+
+
+
     private static final class AddUserMapper implements RowMapper<UserDto>
     {
 
@@ -130,6 +133,57 @@ public class UserManager {
 
         return user;
         }
+
+    //ADDING CLOCK IN AND CLOCK OUT TIME OF THE USER GETTING AT THE ONLY LOGOUT TIME.
+    public void addUserClockIn(UserDto userDto) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.addUserClockIn,
+                    userDto.getUsername(),
+                    userDto.getClockInTime(),
+                    userDto.getClockOutTime());
+            System.out.println("User Clocked in Successfully");
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+//TO GET CLOCK IN AND CLOCK OUT DETAILS OF USER.
+    public List<UserDto> getUserClockIn(String username) {
+
+        List<UserDto> user = new ArrayList<>();
+
+        try
+        {
+            user = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserManager.UserClockInMapper(),username );
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return user;
+    }
+
+    private static final class UserClockInMapper implements RowMapper<UserDto>
+    {
+
+        @Override
+        public UserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            UserDto user = new UserDto();
+
+
+            user.setUsername(rs.getString("USERNAME"));
+            user.setClockInTime(rs.getString("CLOCK_IN"));
+            user.setClockOutTime(rs.getString("CLOCK_OUT"));
+
+            return user;
+        }
+    }
     public void deleteVendorToDB(String vendorId) {
     }
 

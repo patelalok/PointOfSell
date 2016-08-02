@@ -304,4 +304,6 @@ public class SQLQueries {
             "WHERE TRANSACTION_COMP_ID = ?";
     public String getPrpfitForCloseRegister = "SELECT SUM(RETAIL-COST) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ?";
     public String editTransactionLineItem = "UPDATE TRANSACTION_LINE_ITEM SET DATE = ?, PRODUCT_ID = ?, QUANTITY = ?, RETAIL = ?, COST = ?, DISCOUNT = ?, RETAILWITHDISCOUNT = ?, TOTALPRODUCTPRICE = ? WHERE TRANSACTION_COMP_ID = ?";
+    public String addUserClockIn = "INSERT INTO USER_CLOCK_IN (USERNAME,CLOCK_IN,CLOCK_OUT) VALUES (?,?,?)";
+    public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ?";
 }
