@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -16,6 +16,7 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		$scope.enabled = true;
+		//util.Wait(true);
 		loadCDetails();
 		/*GlobalVariable.productSuccessAlert = false;
 		GlobalVariable.addedSucces= false;
@@ -96,15 +97,21 @@
 			$timeout(function() {
 				$scope.closeBootstrapAlert();
 			}, 9000);
+
+
 			
 				
 		}
 		function loadCDetails()
 		{
+			/*util.Wait(true);*/
 			$scope.brandOptions = GlobalVariable.getBrands;
 			$scope.categoryOptions = GlobalVariable.getCategory;
 			$scope.vendorOptions = GlobalVariable.getVendors;
 			$scope.getProductDtls = GlobalVariable.getProducts;
+			/*$timeout(function() {
+				util.Wait(false);
+			}, 9000);*/
 		};
 		$scope.closeBootstrapAlert = function()
 		{

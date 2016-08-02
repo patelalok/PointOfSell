@@ -67,7 +67,7 @@
 					return false;
 				}
 				$.blockUI({
-					message : '<img src="./assets/images/core/progressIndicator.gif" class="spin-loader"/>',
+					message : '<img src="./assets/images/progressIndicator.gif" class="spin-loader"/>',
 					baseZ : 10001,
 					onUnblock : function() {
 					},

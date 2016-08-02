@@ -39,10 +39,15 @@
 				{
 					$scope.prodMarkup = ((parseFloat($scope.prodRetail) -(parseFloat($scope.prodCP)))/(parseFloat($scope.prodCP))) * 100;
 				}
+				if($scope.prodMarkup == 'Infinity')
+				{
+					$scope.prodMarkup = 0;
+				}
 			}
 			else
 			{
 				$scope.prodRetail = 0;
+				$scope.prodMarkup =0;
 			}
 		};
 		$scope.setVendorType = function(vendorId,vendorName)
@@ -166,6 +171,7 @@
 			$scope.prodCP = 0;
 			$scope.prodMarkup = 0;
 			$scope.prodRetail = 0;
+			$scope.productYesyNO= true;
 			if(GlobalVariable.editProduct == true)
 			{
 				$scope.productId = GlobalVariable.editProductDetails.productNo;

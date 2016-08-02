@@ -130,6 +130,7 @@
 		}
 		function render()
 		{
+			$scope.custType = 'Retail';
 			$scope.dateRangeOptions = {
 				//startDate : moment(),
 				showDropdowns : true,

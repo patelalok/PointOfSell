@@ -15,6 +15,7 @@
 		$scope.difCash =0;
 		$scope.difCheck =0;
 		$scope.totalDiff =0;
+		$scope.maxDate = new Date();
 		$scope.restrictCharacter=restrictCharacter;
 		function getClosingDetails(startDate,endDate)
 		{
@@ -32,7 +33,7 @@
 				$scope.systemCash = $scope.getClosingDtls[0].reportCash;
 				$scope.sysCheck =$scope.getClosingDtls[0].reportCheck;
 				$scope.userCash=$scope.getClosingDtls[0].closeCash;
-					$scope.userDebit=$scope.getClosingDtls[0].closeCash;
+					$scope.userDebit=$scope.getClosingDtls[0].closeCredit;
 				$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
 				$scope.registerId = $scope.getClosingDtls[0].registerId;
 				$scope.totalUser = $scope.getClosingDtls[0].closeTotalAmount;
@@ -43,6 +44,27 @@
 				$scope.totalProfit =$scope.getClosingDtls[0].totalProfit;
 					$scope.totalDisc=$scope.getClosingDtls[0].totalDiscount;
 						$scope.totalTax =$scope.getClosingDtls[0].totalTax;
+				$scope.totalMarkup = $scope.getClosingDtls[0].totalMarkup;
+				$scope.totalBusinessAmount = $scope.getClosingDtls[0].totalBusinessAmount;
+			}
+			else
+			{
+				$scope.systemDebit = 0;
+				$scope.systemCash=0;
+				$scope.sysCheck=0;
+				$scope.userCash=0;
+				$scope.userDebit=0;
+				$scope.totalSys = 0;
+				$scope.registerId = 0;
+				$scope.totalUser = 0;
+				$scope.totalUser = 0;
+				$scope.difCash =0;
+				$scope.difDebit =0;
+				$scope.totalDiff = 0;
+				$scope.totalProfit =0;
+				$scope.totalDisc=0;
+				$scope.totalTax =0;
+
 			}
 
 		}
@@ -166,13 +188,13 @@
 				    "differenceCash": parseFloat($scope.difCash).toFixed(2),
 				    "differenceCredit": parseFloat($scope.difDebit).toFixed(2),
 				    "totalDifference": parseFloat($scope.totalDiff).toFixed(2),
-				    "totalBusinessAmount": 321,
-				    "totalTax": 12,
-				    "totalDiscount": 12,
-				    "totalProfit": 2,
-				    "totalMarkup": 2,
+				    "totalBusinessAmount": $scope.totalBusinessAmount,
+				    "totalTax": parseFloat($scope.totalTax).toFixed(2),
+				    "totalDiscount": parseFloat($scope.totalDisc).toFixed(2),
+				    "totalProfit": parseFloat($scope.totalProfit).toFixed(2),
+				    "totalMarkup": $scope.totalMarkup,
 				    "registerStatus": null,
-				"registerId": $scope.registerId,
+				"registerId": $scope.registerId
 				  };
 			var url="http://localhost:8080/addClosingDetails";
 			dataService.Post(url,request,getSuccessAddhandler,getErrorAddHandler,'application/json','application/json');
@@ -183,7 +205,8 @@
 		{
 			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
 			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
-			getClosingDetails(startDate,endDate)
+			getClosingDetails(startDate,endDate);
+			$scope.addPaidOut();
 		};
 		function getErrorAddHandler(response)
 		{
@@ -207,7 +230,7 @@
 		{
 			var url="http://localhost:8080/getPaidOut?startDate="+startDate+"&endDate="+endDate;
 			dataService.Get(url,getaddPaidSuccessHandler,getaddpaidErrorHandler,'application/json','application/json');
-			getaddPaidSuccessHandler('');
+			//getaddPaidSuccessHandler('');
 		}
 		$scope.openStartCalendar = function($event) {
 			$event.preventDefault();
@@ -251,6 +274,16 @@
 				$scope.difReason = response[0].paidOutReason3;
 				$scope.paidOutId = response[0].paidOutId;
 			}
+			else
+			{
+				$scope.userPaid = 0;
+				$scope.userReason = '';
+				$scope.systemPaid = 0;
+				$scope.sysReason = '';
+				$scope.difPaid = 0;
+				$scope.difReason = '';
+				$scope.paidOutId ='';
+			}
 
 
 			/*$scope.totalPaidOut =0;
@@ -288,7 +321,7 @@
 			var startDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 00:00:00';
 			var endDate = js_yyyy_mm_dd_hh_mm_ss()+''+' 23:59:59';
 			getPaidOutDetails(startDate,endDate);
-			getClosingDetails(startDate,endDate);
+			//getClosingDetails(startDate,endDate);
 		}
 		function addPaidErrorHandler(response)
 		{

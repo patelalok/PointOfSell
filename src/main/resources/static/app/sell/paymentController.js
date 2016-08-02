@@ -120,6 +120,7 @@
 			var request = [];
 			for(var i=0;i< $rootScope.testData.length ; i++)
 			{
+				var discPer = (((parseFloat($rootScope.testData[i].retail)-parse($rootScope.testData[i].discount))/parseFloat($rootScope.testData[i].retail))*100).toFixed(2);
 				request.push({
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
@@ -127,10 +128,11 @@
 					"quantity":$rootScope.testData[i].quantity,
 					 "retail":$rootScope.testData[i].retail,
 					 "cost":$rootScope.testData[i].costPrice,
-					 "discount":$rootScope.testData[i].discount,
+					 "discount":(parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount)).toFixed(2),
 					 "retailWithDis":$rootScope.testData[i].discount,
 					 "totalProductPrice":$rootScope.testData[i].total,
-					 "transactionDate":GlobalVariable.transDate
+					 "transactionDate":GlobalVariable.transDate,
+					"discountPercentage":discPer
 					 
 			});
 			}	

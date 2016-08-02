@@ -10,6 +10,7 @@
         <link href="assets/css/angularPrint.css" rel="stylesheet">
        <link href="assets/css/custom.css" rel="stylesheet">
        <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="libs/jquery.blockUI.js"></script>
        <script type="text/javascript" src="libs/jquery-ui.js"></script>
        <script type="text/javascript" src="libs/daterangepicker.js"></script>
        <script type="text/javascript" src="libs/moment.min.js"></script>
@@ -100,7 +101,7 @@
                     <span style="display:block;font-size:10px;">Wireless</span>
 				</div>
                 <div class="headerImage inline-vertical col-md-2" style="text-align:right;" ng-click="logOut()">
-                    <span><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</span>
+                   <a style="cursor: pointer;text-decoration: none;color:#CCC;" class="logout"><span><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</span></a>
                 </div>
                 </div>
 			</div>

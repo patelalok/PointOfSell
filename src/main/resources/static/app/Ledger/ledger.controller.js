@@ -7,7 +7,8 @@
 
 	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state) 
 	{
-		$scope.restrictCharacter=restrictCharacter;	
+		$scope.restrictCharacter=restrictCharacter;
+		$scope.maxDate = new Date();
 		$scope.closePopup = function()
 		{ 
 			DialogFactory.close(true);

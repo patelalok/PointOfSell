@@ -79,9 +79,9 @@
 					/**
 					 * Return the original array, as the type is not supported *
 					 */
-					if (_.indexOf(defaultTypes, type) === -1 || type === 'custom' && sortFunction === undefined) {
+					/*if (_.indexOf(defaultTypes, type) === -1 || type === 'custom' && sortFunction === undefined) {
 						return array;
-					}
+					}*/
 
 					array.sort(function(a, b) {
 						var vala = ((a[predicate] != undefined) ? a[predicate] : '');
@@ -282,6 +282,14 @@
 							if(isOKClicked)
 							{
 								$rootScope.testData = [];
+								$rootScope.totalPayment = '0.00';
+								$rootScope.customerName = '';
+								$rootScope.regPhone = '';
+								$rootScope.customerNameOnSearch = '';
+								GlobalVariable.customerFound = false;
+								$rootScope.totalQuantity = 0;
+								$rootScope.subTotal = 0;
+								$rootScope.productTotal = 0;
 							}	
 						}
 						scope.sortByColumn = function(columnIndex, column) {
