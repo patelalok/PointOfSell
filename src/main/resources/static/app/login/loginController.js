@@ -30,7 +30,8 @@
 		};
 		function onLoginSuccess(response)
 		{
-			if(response == true) {
+			if(response.validUser == true) {
+				sessionStorage.userRole = response.userRole;
 				$scope.errorMessage = ''
 				$state.go('home');
 			}
