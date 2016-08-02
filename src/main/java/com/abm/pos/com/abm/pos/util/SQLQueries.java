@@ -306,4 +306,6 @@ public class SQLQueries {
     public String editTransactionLineItem = "UPDATE TRANSACTION_LINE_ITEM SET DATE = ?, PRODUCT_ID = ?, QUANTITY = ?, RETAIL = ?, COST = ?, DISCOUNT = ?, RETAILWITHDISCOUNT = ?, TOTALPRODUCTPRICE = ? WHERE TRANSACTION_COMP_ID = ?";
     public String addUserClockIn = "INSERT INTO USER_CLOCK_IN (USERNAME,CLOCK_IN,CLOCK_OUT) VALUES (?,?,?)";
     public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ?";
+    public String getTransactionLineItemIds = "SELECT TRANSACTION_LINE_ITEM_ID FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
+    public String updateLineItemDetailsStatus = "update TRANSACTION_LINE_ITEM SET TRANSACTION_STATUS = 'returned' WHERE TRANSACTION_LINE_ITEM_ID = ?";
 }

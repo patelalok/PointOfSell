@@ -305,89 +305,99 @@ public class SalesManager {
         }
     }
 
-    public void ediTransactionLineItemToDB(List<TransactionLineItemDto> transactionLineItemDto) {
+    public void ediTransactionLineItemToDB(List<TransactionLineItemDto> transactionLineItemDto,String previousTransId) {
 
         try {
 
+            //Checking if transaction return is complete or partial
+            boolean isCompleteReturn = checkReturn(transactionLineItemDto);
+
+            //if there previousTransId = null means this is new transaction no return invovled in this.
+            if (null == previousTransId) {
+
+                if(null != transactionLineItemDto)
+                {
+                    addTransactionLineItemToDB(transactionLineItemDto);
+                }
+                else
+                {
+                    System.out.println("transactionLineItemDto is null");
+                }
+
+            }
+            //If the previousTransId = null then this is return.
+            else
+            {
+                List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
 
 
+                //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity.
+                lineItemDtoList1 = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(),previousTransId);
 
 
+                for (int j = 0; j < lineItemDtoList1.size(); j++) {
+                    System.out.println(lineItemDtoList1.get(j).getProductId());
+                    System.out.println(lineItemDtoList1.get(j).getQuantity());
 
-            jdbcTemplate.batchUpdate(sqlQuery.editTransactionLineItem, new BatchPreparedStatementSetter() {
+                    int productQuantity = 0;
+
+                    int productQuantity1 = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
+                            {lineItemDtoList1.get(j).getProductId()}, Integer.class);
+
+                    productQuantity = productQuantity1 + lineItemDtoList1.get(j).getQuantity();
+
+                    System.out.println(productQuantity);
+
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductId());
+
+                    System.out.println("Transaction line item edited successfully");
+                }
 
 
+                for (int i = 0; i<=transactionLineItemDto.size() ;i++)
+                {
+                    System.out.println(transactionLineItemDto.get(i).getTransactionLineItemId());
+                    jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus,transactionLineItemDto.get(i).getTransactionLineItemId());
+                }
 
-                @Override
-                public void setValues(PreparedStatement ps, int i) throws SQLException {
 
-                    TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
-                    List<TransactionLineItemDto> lineItemDtoList = new ArrayList<>();
-
-                    lineItemDtoList = getTransactionLineItemDetails(transactionLineItemDto1.getTransactionCompId());
-
-                    //Check For Null
-                    for(int j = 0; j<= lineItemDtoList.size(); j++)
+                    if(null != transactionLineItemDto)
                     {
-                        System.out.println(lineItemDtoList.get(j).getProductId());
-                        System.out.println(lineItemDtoList.get(j).getQuantity());
-                        jdbcTemplate.update(sqlQuery.updateProductQuantity,lineItemDtoList.get(j).getQuantity(),lineItemDtoList.get(j).getProductId());
-
-                        System.out.println("Transaction line item edited successfully");
+                        addTransactionLineItemToDB(transactionLineItemDto);
+                        System.out.println("Added partially returned items successfully");
                     }
 
 
-                    ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
-                    ps.setString(2,transactionLineItemDto1.getTransactionDate());
-                    ps.setInt(3, transactionLineItemDto1.getProductId());
+            }
+        } catch (Exception e)
 
-                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
-                            {transactionLineItemDto1.getProductId()}, Integer.class);
-
-                    //System.out.println("Quantity: "+productQuantity);
-
-                    ps.setInt(4, transactionLineItemDto1.getQuantity());
-
-                    int transQuantity = transactionLineItemDto1.getQuantity();
-
-                    //System.out.println("transQuantity:"+transQuantity);
-
-                    //reducing quantity into Stock for transaction
-                    productQuantity = productQuantity - transQuantity;
-
-
-                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity,transactionLineItemDto1.getProductId());
-
-
-                    // System.out.println("DONE:)");
-
-                    ps.setDouble(5, transactionLineItemDto1.getRetail());
-                    ps.setDouble(6, transactionLineItemDto1.getCost());
-                    ps.setDouble(7, transactionLineItemDto1.getDiscount());
-                    ps.setDouble(8,transactionLineItemDto1.getRetailWithDis());
-                    ps.setDouble(9,transactionLineItemDto1.getTotalProductPrice());
-
-                    System.out.println("Transaction Line Item Added Successfully");
-
-
-                }
-
-                @Override
-                public int getBatchSize() {
-                    return transactionLineItemDto.size();
-                }
-            });
-        }
-        catch (Exception e)
         {
             System.out.println(e);
         }
 
 
-
     }
 
+    private boolean checkReturn(List<TransactionLineItemDto> transactionLineItemDto) {
 
+        boolean isCompleteReturn = false;
+
+        for(int i = 0; i<= transactionLineItemDto.size(); i++)
+        {
+            if(transactionLineItemDto.get(i).getTransactionStatus() == "returned")
+            {
+                isCompleteReturn = true;
+                continue;
+            }
+            else
+            {
+                isCompleteReturn = false;
+                break;
+            }
+        }
+
+        return isCompleteReturn;
+    }
 
 
     public List<TransactionLineItemDto> getTransactionLineItemDetails(int  transactionCompId) {
