@@ -75,10 +75,37 @@
 		{
 			getProductDetails.getProductValues();
 		}
+		function js_yyyy_mm_dd_hh_mm_ss () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+		}
 		$scope.logOut = function()
 		{
-			$state.go('login');
+			var url="http://localhost:8080/addUserClockIn";
+			var request={
+
+				"username": sessionStorage.userName,
+				"clockInTime": sessionStorage.clockTime,
+				"clockOutTime": js_yyyy_mm_dd_hh_mm_ss
+			};
+			request= JSON.stringify(request);
+			dataService.Post(url,request,onClockSuccess,OnClockError,'application/json','application/json');
+
 		};
+		function onClockSuccess(response)
+		{
+			$state.go('login');
+		}
+		function OnClockError(error)
+		{
+
+		}
 		render();
 	}
 })();

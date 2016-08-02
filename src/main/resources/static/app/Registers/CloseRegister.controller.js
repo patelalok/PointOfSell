@@ -348,5 +348,13 @@
 			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
 			return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 		}
+		$scope.printCloseRegister = function()
+		{
+			GlobalVariable.isPrintPage = true;
+			$timeout(function() {
+				$window.print();
+				GlobalVariable.isPrintPage = false;
+			}, 2000);
+		};
 	}
 })();
