@@ -73,34 +73,27 @@ public class SalesManager {
 
     }
 
-    public void editTransaction(TransactionDto transactionDto) {
+    public void editTransaction(TransactionDto transactionDto, String prevTransId) {
         try {
-            jdbcTemplate.update(sqlQuery.editTransaction,
-                    transactionDto.getTransactionDate(),
-                    transactionDto.getTotalAmount(),
-                    transactionDto.getTax(),
-                    transactionDto.getDiscount(),
-                    transactionDto.getSubTotal(),
-                    transactionDto.getTotalQuantity(),
-                    transactionDto.getCustomerPhoneNo(),
-                    transactionDto.getUserId(),
-                    transactionDto.getCashId(),
-                    transactionDto.getStatus(),
-                    transactionDto.getPaidAmountCash(),
-                    transactionDto.getChangeAmount(),
-                    transactionDto.getCreditId(),
-                    transactionDto.getPaidAmountCredit(),
-                    transactionDto.getPaidAmountCheck(),
-                    transactionDto.getTransCreditId(),
-                    transactionDto.getLast4Digits(),
-                    transactionDto.getTransactionCompId());
 
-            jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
+            jdbcTemplate.update(sqlQuery.editTransactionStatus, prevTransId);
+
+            if(null != transactionDto)
+            {
+                addTransaction(transactionDto);
+                System.out.println("Returned Partial Transaction added returned completely");
+
+            }
+            else
+            {
+                System.out.println("Transaction returned completely");
+            }
+
+
+            /*jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
                     transactionDto.getPrevBalance(),
                     transactionDto.getCustomerPhoneNo());
-            System.out.println("Customer Balance Edited Successfully");
-            System.out.println("Transaction Edited Successfully");
-
+            System.out.println("Customer Balance Edited Successfully");*/
 
         }
 

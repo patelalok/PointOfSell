@@ -284,8 +284,8 @@ public class SQLQueries {
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";
 
     //Can not update customer's phone no thats why i have removed edit customers phone number
-    public String editTransaction = "UPDATE TRANSACTION" +
-            "SET TRANSACTION_DATE = ?," +
+    public String editTransactionStatus = "UPDATE TRANSACTION SET STATUS = 'returned' WHERE TRANSACTION_COMP_ID = ?";
+            /*"SET TRANSACTION_DATE = ?," +
             "SET TOTAL_AMOUNT = ? ," +
             "SET TAX_AMOUNT = ?," +
             "SET DISCOUNT_AMOUNT = ?," +
@@ -301,7 +301,7 @@ public class SQLQueries {
             "SET TOTAL_AMOUNT_CHECK = ?," +
             "SET TRANS_CREDIT_ID = ?," +
             "SET LAST_4_DIGITS = ?" +
-            "WHERE TRANSACTION_COMP_ID = ?";
+            "WHERE TRANSACTION_COMP_ID = ?";*/
     public String getPrpfitForCloseRegister = "SELECT SUM(RETAIL-COST) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ?";
     public String editTransactionLineItem = "UPDATE TRANSACTION_LINE_ITEM SET DATE = ?, PRODUCT_ID = ?, QUANTITY = ?, RETAIL = ?, COST = ?, DISCOUNT = ?, RETAILWITHDISCOUNT = ?, TOTALPRODUCTPRICE = ? WHERE TRANSACTION_COMP_ID = ?";
     public String addUserClockIn = "INSERT INTO USER_CLOCK_IN (USERNAME,CLOCK_IN,CLOCK_OUT) VALUES (?,?,?)";
