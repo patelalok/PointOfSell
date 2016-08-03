@@ -143,7 +143,7 @@ public class UserManager {
                     userDto.getUsername(),
                     userDto.getClockInTime(),
                     userDto.getClockOutTime());
-            System.out.println("User Clocked in Successfully");
+            System.out.println("User Clocked in and Clocked out in Successfully");
 
         }
         catch (Exception e)

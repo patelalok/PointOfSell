@@ -102,12 +102,13 @@ public class SalesManager {
             System.out.println(e);
         }
     }
-    public List<TransactionDto> getTransactionDetails(String startDate, String endDategit ) {
+    public List<TransactionDto> getsalesHistory(String startDate, String endDategit ) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
 
         try {
             transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapperWithOutCustomer(),startDate,endDategit);
+
             System.out.println("Send Transaction Details Successfully");
         } catch (Exception e) {
             System.out.println(e);
@@ -181,13 +182,31 @@ public class SalesManager {
             }
             DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
             DateFormat time = new SimpleDateFormat("hh:mm:ss");
-            System.out.println("Date: " + date.format(d));
-            System.out.println("Time: " + time.format(d));
+            //System.out.println("Date: " + date.format(d));
+            //System.out.println("Time: " + time.format(d));
             transaction.setTransactionDate(date.format(d));
             transaction.setTransactionTime(time.format(d));
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setTax(rs.getDouble("TAX_AMOUNT"));
-            transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+
+
+            //Getting sum of discount on line item table and adding into transaction discount to show only total discount.
+            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQuery.getDiscountFromLineItem, new Object[] {rs.getInt("TRANSACTION_COMP_ID")}, String.class);
+
+            if(null != lineItemDiscount)
+            {
+                double lineItemDiscountDouble  = Double.parseDouble(lineItemDiscount);
+                System.out.println(lineItemDiscount);
+                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT") + lineItemDiscountDouble);
+            }
+            else {
+
+                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+                System.out.println(lineItemDiscount);
+            }
+
+
+
             transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
             transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));

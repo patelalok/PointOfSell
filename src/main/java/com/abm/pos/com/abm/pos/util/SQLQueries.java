@@ -169,7 +169,10 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM USER";
 
-    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ? ";
+    public String getTransactionDetails = "SELECT * FROM TRANSACTION WHERE TRANSACTION_DATE between ? ANd ? order by TRANSACTION_DATE";
+
+//This query to get discount from lineitem table and then i am gonna apand it with main transaction discount.
+    public String getDiscountFromLineItem = "SELECT SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
             /*"" +
             "" +
             "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
