@@ -66,7 +66,7 @@ public class SalesController {
         return salesManager.getTransactionLineItemDetails(transactionCompId);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
+   /* @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
     public void addTransactionPayment(TransactionPaymentDto transactionPaymentDto)
     {
         salesManager.addTransactionPaymentToDB(transactionPaymentDto);
@@ -76,5 +76,5 @@ public class SalesController {
     public void getTransactionPayment(TransactionPaymentDto transactionPaymentDto)
     {
         salesManager.getTransactionPaymentDetails(transactionPaymentDto);
-    }
+    }*/
 }

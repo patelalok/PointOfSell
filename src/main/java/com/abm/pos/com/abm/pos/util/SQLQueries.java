@@ -173,12 +173,7 @@ public class SQLQueries {
 
 //This query to get discount from lineitem table and then i am gonna apand it with main transaction discount.
     public String getDiscountFromLineItem = "SELECT SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
-            /*"" +
-            "" +
-            "SELECT t.TRANSACTION_COMP_ID,t.TRANSACTION_DATE,t.TOTAL_AMOUNT,t.TAX_AMOUNT,t.DISCOUNT_AMOUNT," +
-            "t.CUSTOMER_PHONENO,t.USER_ID, u.USERNAME,t.PAYMENT_ID_CASH,t.STATUS,t.PAID_AMOUNT_CASH,t.CHANGE_AMOUNT,t.PAYMENT_ID_CREDIT," +
-            "t.TOTAL_AMOUNT_CREDIT FROM TRANSACTION t, USER u WHERE t.USER_ID = u.USER_ID AND t.USER_ID = ? AND TRANSACTION_DATE BETWEEN " +
-            "? AND ?";*/
+
 
     public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
 
