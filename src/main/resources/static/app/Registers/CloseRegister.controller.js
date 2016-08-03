@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('CloseRegisterController', CloseRegisterController);
 
-	CloseRegisterController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','RestrictedCharacter.Types','$filter'];
+	CloseRegisterController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','RestrictedCharacter.Types','$filter','$timeout','$window'];
 
-	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService,restrictCharacter,$filter) {
+	function CloseRegisterController($scope, $rootScope, device,GlobalVariable,$state,dataService,restrictCharacter,$filter,$timeout,$window) {
 		$scope.totalUser = 0;
 		$scope.totalInValue = 0;
 		$scope.userCash = 0;
@@ -16,6 +16,7 @@
 		$scope.difCheck =0;
 		$scope.totalDiff =0;
 		$scope.maxDate = new Date();
+		$scope.showCloseRegister = true;
 		$scope.restrictCharacter=restrictCharacter;
 		function getClosingDetails(startDate,endDate)
 		{
@@ -244,8 +245,17 @@
 		};
 		$scope.changeDtls = function()
 		{
+			var chnDt =$filter('date')($scope.startDate, "yyyy-MM-dd");
 			var start = $filter('date')($scope.startDate, "yyyy-MM-dd")+''+' 00:00:00';
 			var end = $filter('date')($scope.startDate, "yyyy-MM-dd")+''+' 23:59:59';
+			if(chnDt < js_yyyy_mm_dd_hh_mm_ss ())
+			{
+				$scope.showCloseRegister = false;
+			}
+			else
+			{
+				$scope.showCloseRegister = true;
+			}
 			getPaidOutDetails(start,end);
 			getClosingDetails(start,end);
 		};
@@ -273,6 +283,7 @@
 				$scope.difPaid = response[0].paidOutAmount3;
 				$scope.difReason = response[0].paidOutReason3;
 				$scope.paidOutId = response[0].paidOutId;
+				$scope.totalPaid = parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
 			}
 			else
 			{
