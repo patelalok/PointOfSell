@@ -43,9 +43,11 @@
 	<div class="col-md-8" style="background-color:#FFFFFF;padding:10px;padding-top:53px;">
 		<div data-responsive-table data-ng-model="testData"  data-current-page="currentPageIndexArr"
 				 class="full-width" style="height:500px;overflow:auto;">
-				<columns style="bakcground:red;">
-					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true"></column>
-					<column name="Item Description" key="item" datatype="string" width="50%">
+				<columns style="bakcground:red;" >
+					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true">
+
+					</column>
+					<column name="Item Description" key="item" datatype="string" width="47%">
 					<cell ng-non-bindable>
 						{{::row.item}}
 					</cell>
@@ -53,20 +55,23 @@
 					<column name="Quantity" key="quantity" datatype="string" width="2%">
 					
 					</column>
-					<column name="Retail" key="retail" datatype="string" width="7%"></column>
-					<column name="Ret W/Disc" key="discount" datatype="string" width="20%"></column>
+					<column name="Retail" key="retail" datatype="string" width="6%"></column>
+					<column name="Ret W/Disc" key="discount" datatype="string" width="19%"></column>
 					<column name="Total" key="total" datatype="string" width="8%">
 					<cell ng-non-bindable>
 							{{::row.total}}
 						</cell>
 					</column>
 					<column name="Stock" key="stock" datatype="string" width="5%"></column>
-					<column name="Delete" key="" datatype="string" width="5%">
+					<column name="Delete" key="" datatype="string" width="10%">
 						<cell ng-non-bindable>
 							<!-- <span>
 								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
 							</span> -->
-							<a ng-click="scope.removeRow(row.itemNo)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+							<a ng-click="scope.removeRow(row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editRow(row)"></span>
+							</span>
 						</cell>
 					</column>
 				</columns>		

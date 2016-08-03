@@ -13,6 +13,7 @@
 		GlobalVariable.isLoginPage = false;
 		$scope.balanceRemaining =0;
 		GlobalVariable.customerFound = false;
+		$scope.showEditableFields = false;
 		
 		var i=0;
 		$scope.pageSize = 10;
@@ -37,9 +38,10 @@
 			
 			$state.go('product');
 		};
-		$scope.removeRow = function(itemNo){	
-			
-			GlobalVariable.itemNoToDelete = itemNo;
+		$scope.removeRow = function(row){
+
+			GlobalVariable.editValues = row;
+			GlobalVariable.itemNoToDelete = row.itemNo;
 			modalService.showModal('', {
 				isCancel : true
 			}, "Are you Sure Want to Delete ? ", $scope.callBackAction);
@@ -65,6 +67,8 @@
 			var comArr = eval( $rootScope.testData );
 			for( var i = 0; i < comArr.length; i++ ) {
 				if( comArr[i].itemNo === GlobalVariable.itemNoToDelete ) {
+
+					comArr[i].quantity = 20;
 					index = i;
 					break;
 				}
@@ -73,9 +77,21 @@
 				alert( "Something gone wrong" );
 			}
 			$rootScope.testData.splice( index, 1 );
+			/*$rootScope.testData.splice(index,0,{"itemNo":GlobalVariable.editValues.itemNo,
+				"item":GlobalVariable.editValues.item,
+				"quantity":12,
+				"retail":GlobalVariable.editValues.retail,
+				"discount":GlobalVariable.editValues.discount,
+				"total": GlobalVariable.editValues.total,
+					"stock":GlobalVariable.editValues.stock,
+				"costPrice":GlobalVariable.editValues.costPrice});*/
 			$scope.loadCheckOutData();
 		}	
 	}
+	$scope.editItemNo = function(row)
+	{
+		console.log(row);
+	};
 	$scope.changeQuantity= function()
 	{
 		var searchTxt = $scope.searchValue.toString();
@@ -288,9 +304,42 @@
 			{
 				$rootScope.productTotal = parseFloat($rootScope.productTotal)+parseFloat($scope.balanceRemaining);
 			}
-			$rootScope.totalPayment = $rootScope.productTotal;
-			GlobalVariable.checkOuttotal = $rootScope.totalPayment;
+			$rootScope.totalPayment = parseFloat($rootScope.productTotal).toFixed(2);
+			GlobalVariable.checkOuttotal = parseFloat($rootScope.totalPayment).toFixed(2);
 		}
+		$scope.editRow = function(row)
+		{
+			GlobalVariable.editQuanDtls = row;
+			var _tmPath = 'app/sell/editQuant.html';
+			var _ctrlPath = 'EditQuantityController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackEditQuan);
+		};
+		$scope.callBackEditQuan = function()
+		{
+			var index = -1;
+			var comArr = eval( $rootScope.testData );
+			for( var i = 0; i < comArr.length; i++ ) {
+				if( comArr[i].itemNo === GlobalVariable.editQuanDtls.itemNo ) {
+
+
+					index = i;
+					break;
+				}
+			}
+			if( index === -1 ) {
+				alert( "Something gone wrong" );
+			}
+			$rootScope.testData.splice( index, 1 );
+			$rootScope.testData.splice(index,0,{"itemNo":GlobalVariable.editQuanDtls.itemNo,
+			 "item":GlobalVariable.editQuanDtls.item,
+			 "quantity":GlobalVariable.editQuanDtls.quantity,
+			 "retail":GlobalVariable.editQuanDtls.retail,
+			 "discount":GlobalVariable.editQuanDtls.discount,
+			 "total": (parseFloat(GlobalVariable.editQuanDtls.quantity)*parseFloat(GlobalVariable.editQuanDtls.discount)).toFixed(2),
+			 "stock":GlobalVariable.editQuanDtls.stock,
+			 "costPrice":GlobalVariable.editQuanDtls.costPrice});
+			$scope.loadCheckOutData();
+		};
 		$scope.searchCustomer = function()
 		{
 			// $scope.customerPhone;

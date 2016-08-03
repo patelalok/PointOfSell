@@ -120,7 +120,16 @@
 			var request = [];
 			for(var i=0;i< $rootScope.testData.length ; i++)
 			{
-				var discPer = (((parseFloat($rootScope.testData[i].retail)-parse($rootScope.testData[i].discount))/parseFloat($rootScope.testData[i].retail))*100).toFixed(2);
+				if(parseFloat($rootScope.testData[i].discount) !== 0)
+				{
+					var discPer = (((parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount))/parseFloat($rootScope.testData[i].retail))*100).toFixed(2);
+					var discValue = (parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount)).toFixed(2)
+				}
+				else
+				{
+					var discPer = 0;
+					var discValue =0;
+				}
 				request.push({
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
@@ -128,7 +137,7 @@
 					"quantity":$rootScope.testData[i].quantity,
 					 "retail":$rootScope.testData[i].retail,
 					 "cost":$rootScope.testData[i].costPrice,
-					 "discount":(parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount)).toFixed(2),
+					 "discount":discValue,
 					 "retailWithDis":$rootScope.testData[i].discount,
 					 "totalProductPrice":$rootScope.testData[i].total,
 					 "transactionDate":GlobalVariable.transDate,
