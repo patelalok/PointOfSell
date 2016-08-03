@@ -1080,3 +1080,7 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 {
 	color:#FFFFFF;
 }
+.dropdown-menu > li > a:hover
+{
+	background-color: rgb(66,139,202) !important;
+}

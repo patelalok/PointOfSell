@@ -330,12 +330,20 @@
 				alert( "Something gone wrong" );
 			}
 			$rootScope.testData.splice( index, 1 );
+			if(parseFloat(GlobalVariable.editQuanDtls.discount) !== 0)
+			{
+				var editSub =(parseFloat(GlobalVariable.editQuanDtls.quantity)*parseFloat(GlobalVariable.editQuanDtls.discount)).toFixed(2);
+			}
+			else
+			{
+				var editSub = (parseFloat(GlobalVariable.editQuanDtls.quantity)*parseFloat(GlobalVariable.editQuanDtls.retail)).toFixed(2)
+			}
 			$rootScope.testData.splice(index,0,{"itemNo":GlobalVariable.editQuanDtls.itemNo,
 			 "item":GlobalVariable.editQuanDtls.item,
 			 "quantity":GlobalVariable.editQuanDtls.quantity,
 			 "retail":GlobalVariable.editQuanDtls.retail,
 			 "discount":GlobalVariable.editQuanDtls.discount,
-			 "total": (parseFloat(GlobalVariable.editQuanDtls.quantity)*parseFloat(GlobalVariable.editQuanDtls.discount)).toFixed(2),
+			 "total": editSub,
 			 "stock":GlobalVariable.editQuanDtls.stock,
 			 "costPrice":GlobalVariable.editQuanDtls.costPrice});
 			$scope.loadCheckOutData();
