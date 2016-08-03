@@ -48,11 +48,11 @@
 			</div>
 		</div>
 		<div class="col-md-4 productBtn">
-			<div class="" style="visibility:hidden;"><label>Search For Customers</label></div>
+			<div class="" ><label>Search With Receipt No</label></div>
 			<input  type="text" class="form-control" data-ng-model="receiptNumber" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" id="receiptNumber" style="height:52px;width:100%;" ng-change="checkfilterValue(receiptNumber)" ng-enter="filterSalesHistory(receiptNumber)"/>
 		</div>
 		<div class="col-md-1" style="width:16%;">
-			<div class="padding-bottom-5"><label>Search With Receipt No</label></div>
+			<div class="padding-bottom-5"><label></label></div>
 			<div class="filterBtn">
 				<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyFilterHistory()">Apply Filter</button>
 			</div>
@@ -103,20 +103,7 @@
 		</div>
 		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:25px;"><img alt="" src="./assets/images/newLogo.jpg" height="100" width="600"></div>
 
-		<div class="col-md-4" style=" text-align:center;width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
-			<!-- <div><span>Date:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</span></div>
-             <div><span>Receipt #:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</span></div>
- -->
-			<div class="customerName">
-				<div><span>Bill To:</span><span>{{printFirstName}} {{printLastName}}</span></div>
-				<div>{{printStreet}} {{printCity}} </div>
-				<div>{{printState}} {{printCountry}} {{printzipCode}}</div>
-				<div>{{printPhone}}</div>
-			</div>
-			<div><span>Phone Number:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</span></div>
 
-
-		</div>
 	</div>
 	<div style="border-top:1px solid #000000;font-weight: bold;border-bottom:1px solid #000000;font-size:12px;">
 		<div class="row" align="left" style="margin-left:0px;margin-right:auto;border-spacing:3px;display:table;">

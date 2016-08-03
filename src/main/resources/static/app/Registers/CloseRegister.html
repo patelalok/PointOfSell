@@ -1,4 +1,4 @@
-<div>
+<div print-remove>
 	<div class="row pageHeader" style="padding-left:30px;padding-top:20px;">
 		<div class="col-md-2 pageHeader">
 			<span style="font-weight:bold;font-size:30px">Close Register</span>
@@ -102,7 +102,7 @@
 
 				</div>
 
-</div>
+				</div>
 
 				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 					<div class="display-row">
@@ -154,52 +154,144 @@
 		</div>
 		
 	</div>
-	<!--<div class="row" style="padding-top:5px;padding-left:30px;">
-		<div class="col-md-6">
-				 	<div class="" style="padding:10px;text-align:center">
-				 			<span>Add Paid Out</span>
-				 	</div>
-					 	<div class="totalColumn display-table tableMainProp" align="left">
-								<div class="display-row">
-									<div class="padding-top-10 inline-vertical display-cell align-left">Reason :</div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="reason1"  /></div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" >Amount :</div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="amount1" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" /></div>
-									<div class="padding-top-10 inline-vertical display-cell align-left" ><button  ng-disabled="getPaidOutDtls.length == 3 " class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="addPaidOut()">Add</button></div>
-								</div>
-								
-					 </div>
-			</div>
 
-
-	
-	</div>-->
 	<div class="row" style="padding-left:56px;">
-		<!--<div class="col-md-6">
-			<div data-responsive-table data-ng-model="getPaidOutDtls"  data-current-page="currentPageIndexArr"
-				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
-				 on-sort="sortColumnData(index)" data-filter-value="bType.filterValue">
-				<columns>
-					<column name="Reason" key="reason" datatype="string" width="10%" sortable="true"></column>
-					<column name="Amount" key="paidOutAmount" datatype="string" width="10%"></column>
-					<column name="" key="" datatype="" width="20%">
-						<cell ng-non-bindable>
-							<span class="inline-vertical">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editPaidOut(row)"></span>
-							</span>
-							<span class="inline-vertical padding-left-10">
-								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span>
-							</span>
-						</cell>
-					</column>
-				</columns>
-			</div>
-		</div>-->
+
 		<div class="col-md-6" style="text-align: center;">
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="closeRegister()">Close Register</button>
-			<!--<button   class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="addPaidOut()">Add Paid Out</button>-->
+			<button ng-show="showCloseRegister" class="btn btn-primary margin-top-1 wrap-text" style="font-size:20px;" ng-click="closeRegister()">Close Register</button>
+
 		</div>
 	</div>
 
 
+</div>
+
+<div   print-only style="font-size:20px;margin-left:15px;margin-right:15px;font-size:14px;">
+	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
+		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+			<div style="display:block;"> From: {{GlobalVariable.storeAddress}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:25px;"><img alt="" src="./assets/images/newLogo.jpg" height="100" width="600"></div>
+
+		<div class="col-md-4" style=" text-align:center;width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+			<!-- <div><span>Date:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</span></div>
+             <div><span>Receipt #:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</span></div>
+ -->
+			<div class="customerName">
+				<div><span>Bill To:</span><span>{{printFirstName}} {{printLastName}}</span></div>
+				<div>{{printStreet}} {{printCity}} </div>
+				<div>{{printState}} {{printCountry}} {{printzipCode}}</div>
+				<div>{{printPhone}}</div>
+			</div>
+			<div><span>Phone Number:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</span></div>
+
+
+		</div>
+	</div>
+	<div style="padding-top:10px;">
+		<div style="text-align:center;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+			<span>2016-08-03</span>
+
+		</div>
+		<div style="text-align:center;float:right;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
+			<span>14:14:14</span>
+
+		</div>
+	</div>
+	<div style="text-align:center;margin-left:0;margin-right:0;position:relative;padding-left:200px;">
+
+
+				<div class="row totalColumn display-table tableMainProp" align="center" style="margin-left:0px;margin-right:auto;border-spacing:15px;">
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left" ><span style="visibility:hidden;">Credit/</span><span style="visibility:hidden;">Debit Crad:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >From User</div>
+						<div class=" inline-vertical display-cell align-left ">From System</div>
+						<div class=" inline-vertical display-cell align-left ">Difference</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Credit/ Debit</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userDebit}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{systemDebit}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difDebit}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Cash :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userCash}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{systemCash}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difCash}}</div>
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Check :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userCheck}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{sysCheck}}</div>
+						<div class=" inline-vertical display-cell align-left ">{{difCheck}}</div>
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Net Sales :</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{userCheck}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Tax :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{totalTax}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Gross Sales :</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{userCheck}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Discount :</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{totalDisc}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">PaidOut1:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{userPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">PaidOut2:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{systemPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paidout3:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{difPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total PaidOut:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{totalPaid}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total Amount:</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{totalBusinessAmount}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Profit:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{totalProfit}}</div>
+
+					</div>
+
+		</div>
+	</div>
+
+
+
+	<div style="text-align:left;padding-top:10px;font-size:10px;">
+		<span>Return Policy*</span><span style="padding-left:5px;">{{GlobalVariable.footerReceipt}}</span>
+	</div>
+	<div style="text-align:center;padding-top:10px;font-size:15px;">
+		<span>*** Customer Copy ***</span>
+	</div>
+	<div style="text-align:left;padding-top:10px;font-size:15px;">
+		<span>Thank You For ouur business!</span>
+	</div>
 </div>
