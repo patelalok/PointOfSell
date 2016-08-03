@@ -47,6 +47,8 @@
 						$scope.totalTax =$scope.getClosingDtls[0].totalTax;
 				$scope.totalMarkup = $scope.getClosingDtls[0].totalMarkup;
 				$scope.totalBusinessAmount = $scope.getClosingDtls[0].totalBusinessAmount;
+				$scope.netSales = ParseFloat($scope.userCash)+parseFloat($scope.userDebit)+ParseFloat($scope.userCheck)+parseFloat($scope.totalTax);
+				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
 			}
 			else
 			{
@@ -284,6 +286,7 @@
 				$scope.difReason = response[0].paidOutReason3;
 				$scope.paidOutId = response[0].paidOutId;
 				$scope.totalPaid = parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
+				$scope.netSales = parseFloat($scope.netSales )+$scope.totalPaid;
 			}
 			else
 			{

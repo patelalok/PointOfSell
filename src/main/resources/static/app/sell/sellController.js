@@ -377,7 +377,7 @@
 		};
 		function onBalanceSuccess(response)
 		{
-			if(response !== null && response !=='')
+			if(response !== null && response !=='' && parseFloat(response )!== 0)
 			{
 				$scope.balanceRemaining = parseFloat(response);
 				//GlobalVariable.remainingBalanceAmount = $scope.balanceRemaining;
@@ -385,6 +385,11 @@
 				GlobalVariable.custBalance = $scope.balanceRemaining;
 				$rootScope.totalPayment=$scope.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
+			}
+			else
+			{
+				$scope.balanceRemaining = parseFloat(response);
+				GlobalVariable.custBalance = $scope.balanceRemaining;
 			}
 
 		}

@@ -166,38 +166,19 @@
 
 </div>
 
-<div   print-only style="font-size:20px;margin-left:15px;margin-right:15px;font-size:14px;">
+<div   print-only style="font-size:25px;margin-left:15px;margin-right:15px;">
 	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
-		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
-			<div style="display:block;"> From: {{GlobalVariable.storeAddress}}</div>
-			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
-		</div>
+
 		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:25px;"><img alt="" src="./assets/images/newLogo.jpg" height="100" width="600"></div>
 
-		<div class="col-md-4" style=" text-align:center;width:40%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
-			<!-- <div><span>Date:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionDate}}</span></div>
-             <div><span>Receipt #:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionCompId}}</span></div>
- -->
-			<div class="customerName">
-				<div><span>Bill To:</span><span>{{printFirstName}} {{printLastName}}</span></div>
-				<div>{{printStreet}} {{printCity}} </div>
-				<div>{{printState}} {{printCountry}} {{printzipCode}}</div>
-				<div>{{printPhone}}</div>
-			</div>
-			<div><span>Phone Number:</span><span style="padding-left:10px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</span></div>
 
-
-		</div>
 	</div>
 	<div style="padding-top:10px;">
-		<div style="text-align:center;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
-			<span>2016-08-03</span>
+		<div style="text-align:center;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:35px;">
+			<span>{{dateTime}}</span>
 
 		</div>
-		<div style="text-align:center;float:right;position:relative;min-height:1px;padding-right:15px;padding-left:15px;">
-			<span>14:14:14</span>
 
-		</div>
 	</div>
 	<div style="text-align:center;margin-left:0;margin-right:0;position:relative;padding-left:200px;">
 
@@ -231,7 +212,7 @@
 					</div>
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Net Sales :</span> </div>
-						<div class=" inline-vertical display-cell align-left " >{{userCheck}}</div>
+						<div class=" inline-vertical display-cell align-left " >{{netSales}}</div>
 
 					</div>
 					<div class="display-row">
@@ -271,7 +252,7 @@
 					</div>
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Total Amount:</span> </div>
-						<div class=" inline-vertical display-cell align-left " >{{totalBusinessAmount}}</div>
+						<div class=" inline-vertical display-cell align-left " >{{totalUser}}</div>
 
 					</div>
 					<div class="display-row">
