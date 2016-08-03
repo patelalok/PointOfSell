@@ -110,20 +110,34 @@ public class ClosingDetailsManager {
             //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOSE NOT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
 
+            //Getting the discount from the lineitem table to get product level discount.
+            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getgetDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
+
             double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
 
-            if(null != closingDetails && !closingDetails.isEmpty()){
+            //this is first call from UI to get close register data cause i dont have any data into cash register table
+            if(null != closingDetails && !closingDetails.isEmpty()) {
 
-                //THIS CALL WILL SEND THE SYSTEM DATE TO UI WHICH IS USING TRANSACTION TABLE
+                //THIS CALL WILL SEND THE SYSTEM DATA TO UI WHICH IS USING TRANSACTION TABLE
                 closingDetails.get(0).setReportCash(dashboardDto.getCash());
                 closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
-                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
-                closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
-                closingDetails.get(0).setTotalProfit(profit);
+                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal() + dashboardDto.getTax());
+                if (null != lineItemDiscount) {
+                    double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
+                    //System.out.println(lineItemDiscount);
+                    closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount() + lineItemDiscountDouble);
+                } else {
+                    closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
+                }
 
+                closingDetails.get(0).setTotalProfit(profit);
             }
+
+
+
+            //This mean user is closing the register 2nd time so call comes here.
 
         else{
                 closingDetails = new ArrayList<>();
@@ -132,16 +146,24 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportCash(dashboardDto.getCash());
                 closingDetailsDto.setReportCredit(dashboardDto.getCredit());
                 closingDetailsDto.setReportCheck(dashboardDto.getCheck());
-                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
-                closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
+                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal() + dashboardDto.getTax());
+
+                if (null != lineItemDiscount) {
+                    double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
+                    //System.out.println(lineItemDiscount);
+                    closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount() + lineItemDiscountDouble);
+                } else {
+                    closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
+                }
                 closingDetailsDto.setTotalProfit(profit);
                 closingDetails.add(closingDetailsDto);
 
                 return closingDetails;
             }
                 System.out.println("Send Closing details Successfully");
-        } catch (Exception e) {
+        }
+            catch (Exception e) {
                 System.out.println(e);
         }
 
