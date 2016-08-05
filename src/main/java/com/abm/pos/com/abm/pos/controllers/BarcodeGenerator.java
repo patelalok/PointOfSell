@@ -36,7 +36,7 @@ public class BarcodeGenerator {
 
     @RequestMapping(value= "/getPdf", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<InputStreamResource> getBarcode(@RequestParam String productName,@RequestParam double price, @RequestParam int noOfBarcode) throws IOException, DocumentException {
-       // System.out.println(productName + price + noOfBarcode);
+        System.out.println(productName + price + noOfBarcode);
 
         barcodeManager.getPdf(productName,price,noOfBarcode);
 

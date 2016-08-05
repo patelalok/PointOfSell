@@ -133,6 +133,7 @@
                 $scope.returnAmount = $rootScope.totalReturnPayment
                 $scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
                 $scope.returnId = Math.round(((Math.random() * 10) * 10)) * 13;
+                $scope.previousId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionCompId
                 $scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
                 $scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
                 $scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
@@ -155,24 +156,24 @@
         $scope.callBackReturnCheckout = function()
         {
             console.log("callback");
-            var url ="http://localhost:8080/addTransaction";
+            var url ="http://localhost:8080/editTransaction?previousTransId="+$scope.previousId;
             var request = new Object();
             request = {
                 "transactionDate":$scope.returnDate,
-                "totalAmount":-($scope.returnAmount),
-                "tax":-($scope.totalTax),
-                "discount":-($scope.totalDisc) ,
+                "totalAmount":$scope.returnAmount,
+                "tax":($scope.totalTax),
+                "discount":($scope.totalDisc) ,
                 "customerPhoneNo":$scope.returnPhone,
                 "userId":$scope.userIdReturn,
                 "cashId":$scope.returncashId,
-                "status":"return",
-                "paidAmountCash":-($scope.paidAmountReturn),
-                "changeAmount":-($scope.changeAmountReturn),
+                "status":"completed",
+                "paidAmountCash":($scope.paidAmountReturn),
+                "changeAmount":($scope.changeAmountReturn),
                 "creditId":$scope.creditIdReturn,
-                "paidAmountCredit":-($scope.paidAmountCreditReturn),
+                "paidAmountCredit":($scope.paidAmountCreditReturn),
                 "transactionCompId":$scope.returnId,
-                "subTotal":-($scope.subTotal),
-                "totalQuantity":-($scope.totalQuantity)
+                "subTotal":($scope.subTotal),
+                "totalQuantity":($scope.totalQuantity)
 
             };
             request = JSON.stringify(request);
@@ -199,11 +200,12 @@
                     "discount":$rootScope.returnData[i].discount,
                     "retailWithDis":$rootScope.returnData[i].discount,
                     "totalProductPrice":$rootScope.returnData[i].total,
-                    "transactionDate":$scope.returnDate
+                    "transactionDate":$scope.returnDate,
+                    "transactionStatus":"completed"
 
                 });
             }
-            var url ="http://localhost:8080/addTransactionLineItem";
+            var url ="http://localhost:8080/editTransactionLineItem?previousTransId="+$scope.previousId;
             request = JSON.stringify(request);
             dataService.Post(url,request,returnTransactionLineItemSuccessHandler,returnTransactionLineItemErrorHandler,"application/json","application/json");
 

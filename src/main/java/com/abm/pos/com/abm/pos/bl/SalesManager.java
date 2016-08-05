@@ -295,7 +295,7 @@ public class SalesManager {
                 }
 
             }
-            //If the previousTransId = null then this is return.
+            //If the previousTransId != null then this is return.
             else {
                 List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
 
@@ -323,7 +323,7 @@ public class SalesManager {
                 }
 
 
-                for (int i = 0; i <= transactionLineItemDto.size(); i++) {
+                for (int i = 0; i < transactionLineItemDto.size(); i++) {
                     System.out.println(transactionLineItemDto.get(i).getTransactionLineItemId());
                     jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, transactionLineItemDto.get(i).getTransactionLineItemId());
                 }
@@ -349,7 +349,7 @@ public class SalesManager {
 
         boolean isCompleteReturn = false;
 
-        for (int i = 0; i <= transactionLineItemDto.size(); i++) {
+        for (int i = 0; i < transactionLineItemDto.size(); i++) {
             if (transactionLineItemDto.get(i).getTransactionStatus() == "returned") {
                 isCompleteReturn = true;
                 continue;

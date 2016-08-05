@@ -75,11 +75,13 @@ try {
     document.add(table);*/
     Image image1 = Image.getInstance("outAlok.png");
     table.setWidthPercentage(100); //Width 100%
-    table.setSpacingBefore(7.5f); //Space before table
-    table.setSpacingAfter(7.5f); //Space after table
+    table.setSpacingBefore(0.5f); //Space before table
+    table.setSpacingAfter(0.5f); //Space after table
+
 
     //Set Column widths
     float[] columnWidths = {1.5f, 1.5f, 1.5f, 1.5f, 1.5f};
+
     table.setWidths(columnWidths);
 
     table.addCell(image1);

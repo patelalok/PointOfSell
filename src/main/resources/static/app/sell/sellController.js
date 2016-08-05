@@ -372,7 +372,8 @@
 					$rootScope.customerPhone = $scope.regPhone;
 				}	
 		
-			}	
+			}
+            $scope.loadCheckOutData();
 			
 		};
 		function onBalanceSuccess(response)
