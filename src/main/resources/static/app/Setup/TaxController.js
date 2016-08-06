@@ -22,17 +22,23 @@
             };
             request = JSON.stringify(request);
             var url="http://localhost:8080/addTax";
-            dataService.Post(url,request,onAddTaxSuccess,onAddTaxError,'application/json','application/json');
+            dataService.Get(url,request,onAddTaxSuccess,onAddTaxError,'application/json','application/json');
         };
         $scope.editTax = function()
         {
-            var request= {};
-            request={
-                'id':$scope.taxId,
-                'tax':$scope.taxValue
-            };
+            var request={};
+
+            request=
+                {
+                    "id": parseFloat($scope.taxId),
+                    "tax": parseFloat($scope.taxValue),
+                    "storeAddress": "3210 Tucker Norcross Rd Suite J, Tucker, Gorgia 30084",
+                    "storeLogo": null,
+                    "footerReceipt": "Phones can be returned within 7 days with a restocking fee of 25% with the receipt.  No exception. Accessory sales sre final, no refunds or exchnage."
+                };
+
             request = JSON.stringify(request);
-            var url="http://localhost:8080/editTax";
+            var url="http://localhost:8080/editPageSetUpDetails";
             dataService.Post(url,request,onEditTaxSuccess,onEditTaxError,'application/json','application/json');
         };
         function onEditTaxSuccess(response)

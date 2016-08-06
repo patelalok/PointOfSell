@@ -1084,3 +1084,14 @@ input.parsley-error, select.parsley-error, textarea.parsley-error {
 {
 	background-color: rgb(66,139,202) !important;
 }
+
+.btn-primary:hover
+{
+	background-color:#52BE80 !important;
+}
+
+button.parsley-error {
+	color: #B94A48;
+	background-color: #F2DEDE;
+	border: 1px solid #B94A48 !important;
+}

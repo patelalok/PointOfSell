@@ -90,7 +90,11 @@
                 $scope.productTotalWithoutTax = 0;
             }
 
-            if ($scope.totalTax == undefined)
+            if ($scope.selectTax == undefined)
+                $scope.totalTax = 0;
+            else if ($scope.selectTax == 'default')
+                $scope.totalTax = parseFloat($scope.totalDefaultTax);
+            else if ($scope.selectTax == 'noTax')
                 $scope.totalTax = 0;
 
             GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax)
