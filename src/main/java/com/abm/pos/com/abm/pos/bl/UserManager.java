@@ -158,7 +158,7 @@ public class UserManager {
 
         try
         {
-            user = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserManager.UserClockInMapper(),username );
+            user = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserClockInMapper(), username );
         }
         catch (Exception e)
         {
@@ -180,6 +180,7 @@ public class UserManager {
             user.setUsername(rs.getString("USERNAME"));
             user.setClockInTime(rs.getString("CLOCK_IN"));
             user.setClockOutTime(rs.getString("CLOCK_OUT"));
+            user.setNoOfhours("10");
 
             return user;
         }

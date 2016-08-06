@@ -12,6 +12,7 @@ public class UserDto {
     private String createdDate;
     private String clockInTime;
     private String clockOutTime;
+    private String noOfhours;
 
     public String getCreatedDate() {
         return createdDate;
@@ -67,5 +68,13 @@ public class UserDto {
 
     public void setClockOutTime(String clockOutTime) {
         this.clockOutTime = clockOutTime;
+    }
+
+    public String getNoOfhours() {
+        return noOfhours;
+    }
+
+    public void setNoOfhours(String noOfhours) {
+        this.noOfhours = noOfhours;
     }
 }

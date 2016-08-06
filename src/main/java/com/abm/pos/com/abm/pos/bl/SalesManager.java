@@ -56,7 +56,7 @@ public class SalesManager {
                     transactionDto.getTransCreditId(),
                     transactionDto.getLast4Digits());
 
-            jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
+            jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
                     transactionDto.getPrevBalance(),
                     transactionDto.getCustomerPhoneNo());
             System.out.println("Customer Balance Added Successfully");
@@ -69,27 +69,92 @@ public class SalesManager {
 
     }
 
-    public void editTransaction(TransactionDto transactionDto, String prevTransId) {
+
+
+    public void editTransaction(TransactionDto transactionDto) {
         try {
 
-            jdbcTemplate.update(sqlQuery.editTransactionStatus, prevTransId);
-
-            if (null != transactionDto) {
-                addTransaction(transactionDto);
-                System.out.println("Returned Partial Transaction added returned completely");
-
-            } else {
-                System.out.println("Transaction returned completely");
-            }
+            TransactionDto transactionDtoPrevious = new TransactionDto();
 
 
-            /*jdbcTemplate.update(sqlQuery.addBlanceToCustomerProfile,
+            //Getting the previous Transaction details
+            transactionDtoPrevious =  jdbcTemplate.queryForObject(sqlQuery.getTransactionDetailsForReceiptWithoutCustomer, new TransactionMapperForReturn(),transactionDto.getTransactionCompId());
+
+
+
+            //After getting previous transaction details now subtracting new values from old vlaue and storing into db.
+            //For both scenario partial return and full return.
+
+            jdbcTemplate.update(sqlQuery.editTransactionStatus,
+                    transactionDto.getTransactionDate(),
+                    transactionDtoPrevious.getTotalAmount() - transactionDto.getTotalAmount(),
+                    transactionDtoPrevious.getTax() - transactionDto.getTax(),
+                    transactionDtoPrevious.getDiscount(),
+                    transactionDtoPrevious.getSubTotal() - transactionDto.getSubTotal(),
+                    transactionDtoPrevious.getTotalQuantity() - transactionDto.getTotalQuantity(),
+                    transactionDto.getUserId(),
+                    transactionDto.getCashId(),
+                    transactionDto.getStatus(),
+                    transactionDto.getPaidAmountCash(),
+                    transactionDto.getChangeAmount(),
+                    transactionDto.getCreditId(),
+                    transactionDto.getPaidAmountCredit(),
+                    transactionDto.getPaidAmountCheck(),
+                    transactionDto.getTransCreditId(),
+                    transactionDto.getLast4Digits(),
+                    transactionDto.getTransactionCompId());
+
+
+            /*jdbcTemplate.update(sqlQuery.UpdateBlanceToCustomerProfile,
                     transactionDto.getPrevBalance(),
                     transactionDto.getCustomerPhoneNo());
             System.out.println("Customer Balance Edited Successfully");*/
 
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    private final class TransactionMapperForReturn implements RowMapper<TransactionDto> {
+
+        @Override
+        public TransactionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            TransactionDto transaction = new TransactionDto();
+
+
+            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+
+            //Getting sum of discount on line item table and adding into transaction discount to show only total discount.
+            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQuery.getDiscountFromLineItem, new Object[]{rs.getInt("TRANSACTION_COMP_ID")}, String.class);
+
+            if (null != lineItemDiscount) {
+                double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
+                //System.out.println(lineItemDiscount);
+                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT") + lineItemDiscountDouble);
+            } else {
+
+                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+                //System.out.println(lineItemDiscount);
+            }
+            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+            transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
+            transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+            transaction.setUserId(rs.getInt("USER_ID"));
+            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
+            transaction.setUsername(username);
+            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
+            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
+            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+            transaction.setStatus(rs.getString("STATUS"));
+            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
+
+            return transaction;
         }
     }
 

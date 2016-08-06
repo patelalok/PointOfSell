@@ -29,9 +29,9 @@ public class SalesController {
     }
 
     @RequestMapping(value = "/editTransaction", method = RequestMethod.POST, consumes = "application/json")
-    public void editTransactionToDB(@RequestBody TransactionDto transactionDto, @RequestParam String previousTransId)
+    public void editTransactionToDB(@RequestBody TransactionDto transactionDto)
     {
-        salesManager.editTransaction(transactionDto,previousTransId);
+        salesManager.editTransaction(transactionDto);
     }
 
     @RequestMapping(value = "/getSalesHistory", method = RequestMethod.GET, produces = "application/json")

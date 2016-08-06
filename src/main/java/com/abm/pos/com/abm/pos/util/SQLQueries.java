@@ -267,7 +267,7 @@ public class SQLQueries {
     public String getSalesbyCustomer = "SELECT  c.FIRST_NAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT  FROM TRANSACTION_LINE_ITEM t, CUSTOMER c, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND c.PHONE_NO = l.CUSTOMER_PHONENO AND t.DATE BETWEEN ? AND ? group by c.FIRST_NAME";
     public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, USER u, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND u.USER_ID = l.USER_ID AND t.DATE BETWEEN ? AND ? group by u.USERNAME";
     public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
-    public String addBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ? WHERE PHONE_NO = ? ";
+    public String updateBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ? WHERE PHONE_NO = ? ";
     public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
     public String getTransactionDetailsForReceiptWithCustomer = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
     public String getCustomerPhone = "SELECT CUSTOMER_PHONENO FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
@@ -283,8 +283,8 @@ public class SQLQueries {
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";
 
     //Can not update customer's phone no thats why i have removed edit customers phone number
-    public String editTransactionStatus = "UPDATE TRANSACTION SET STATUS = 'returned' WHERE TRANSACTION_COMP_ID = ?";
-            /*"SET TRANSACTION_DATE = ?," +
+    public String editTransactionStatus = "UPDATE TRANSACTION" +
+            "SET TRANSACTION_DATE = ?," +
             "SET TOTAL_AMOUNT = ? ," +
             "SET TAX_AMOUNT = ?," +
             "SET DISCOUNT_AMOUNT = ?," +
@@ -300,11 +300,13 @@ public class SQLQueries {
             "SET TOTAL_AMOUNT_CHECK = ?," +
             "SET TRANS_CREDIT_ID = ?," +
             "SET LAST_4_DIGITS = ?" +
-            "WHERE TRANSACTION_COMP_ID = ?";*/
+            "WHERE TRANSACTION_COMP_ID = ?";
+
+
     public String getPrpfitForCloseRegister = "SELECT SUM(RETAIL-COST) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ?";
     public String editTransactionLineItem = "UPDATE TRANSACTION_LINE_ITEM SET DATE = ?, PRODUCT_ID = ?, QUANTITY = ?, RETAIL = ?, COST = ?, DISCOUNT = ?, RETAILWITHDISCOUNT = ?, TOTALPRODUCTPRICE = ? WHERE TRANSACTION_COMP_ID = ?";
     public String addUserClockIn = "INSERT INTO USER_CLOCK_IN (USERNAME,CLOCK_IN,CLOCK_OUT) VALUES (?,?,?)";
-    public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ?";
+    public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? ";
     public String getTransactionLineItemIds = "SELECT TRANSACTION_LINE_ITEM_ID FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
     public String updateLineItemDetailsStatus = "update TRANSACTION_LINE_ITEM SET TRANSACTION_STATUS = 'returned' WHERE TRANSACTION_LINE_ITEM_ID = ?";
     public String productNoAndAltNoDTOs = "SELECT PRODUCT_NO,ATL_NO FROM PRODUCT";
