@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ProductManager;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
+import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,13 @@ public class ProductController {
 
         return productManager.getProductHistoryFromDB(productId);
     }
+
+    @RequestMapping(value = "/getProductNoAndAltNo", method = RequestMethod.GET)
+    public List<ProductNoAndAltNoDTO> getProductNoAndAltNo() {
+
+        return productManager.getProductNoAndAltNo();
+    }
+
 
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")
     public void deleteProduct(@RequestBody String productNo) {

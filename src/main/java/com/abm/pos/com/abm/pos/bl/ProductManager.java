@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.ProductDto;
+import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +103,8 @@ public class ProductManager
             return productList;
         }
 
+
+
     private final class ProductMapper implements RowMapper<ProductDto>
         {
 
@@ -178,6 +181,34 @@ public class ProductManager
             productHistory.setProductCount(jdbcTemplate.queryForObject(SQLQueries.getProductHistoryCount,new Object[] {productHistory.getProductId()}, String.class));
 
             return productHistory;
+        }
+    }
+
+    //This methode is for ui, to send the all product no and Atl No to check that they are unique by the time of add or edit product.
+
+    public List<ProductNoAndAltNoDTO> getProductNoAndAltNo() {
+
+        List<ProductNoAndAltNoDTO> productNoAndAltNoDTOs = new ArrayList<>();
+
+        productNoAndAltNoDTOs = jdbcTemplate.query(sqlQuery.productNoAndAltNoDTOs, new ProductNoAltNoMapper());
+
+        return productNoAndAltNoDTOs;
+
+
+    }
+
+    private final class ProductNoAltNoMapper implements RowMapper<ProductNoAndAltNoDTO>
+    {
+
+        @Override
+        public ProductNoAndAltNoDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            ProductNoAndAltNoDTO productNoAndAltNoDTO = new ProductNoAndAltNoDTO();
+
+            productNoAndAltNoDTO.setProductNo(rs.getString("PRODUCT_NO"));
+            productNoAndAltNoDTO.setAtlNo(rs.getString("ATL_NO"));
+
+            return productNoAndAltNoDTO;
         }
     }
     public void deleteProductToDB(String productNo) {

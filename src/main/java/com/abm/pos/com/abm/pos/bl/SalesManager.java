@@ -300,7 +300,7 @@ public class SalesManager {
                 List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
 
 
-                //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity.
+                //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity in product.
                 lineItemDtoList1 = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), previousTransId);
 
 
