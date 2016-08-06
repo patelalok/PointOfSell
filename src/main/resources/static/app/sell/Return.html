@@ -76,6 +76,10 @@
 
                     </div>
                 </div>
+                <div class="display-row" ng-show="returnprevBalance > 0">
+                    <div class="padding-top-10 inline-vertical display-cell align-left">Prev Balance</div>
+                    <div class=" inline-vertical display-cell align-left padding-left-40" ng-model="returnprevBalance">{{returnprevBalance}}</div>
+                </div>
                 <div class="display-row">
                     <div class="padding-top-10 inline-vertical display-cell align-left">Total</div>
                     <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40" ng-model="productTotal">{{productTotal}}</div>

@@ -123,7 +123,8 @@
 				if(parseFloat($rootScope.testData[i].discount) !== 0)
 				{
 					var discPer = (((parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount))/parseFloat($rootScope.testData[i].retail))*100).toFixed(2);
-					var discValue = (parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount)).toFixed(2)
+					var discValue = (parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount)).toFixed(2);
+					discValue= (parseFloat($rootScope.testData[i].quantity) * discValue).toFixed(2);
 				}
 				else
 				{

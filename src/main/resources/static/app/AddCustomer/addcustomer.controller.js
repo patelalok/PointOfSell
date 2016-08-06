@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter)
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails)
 	{
 		GlobalVariable.addedCustSuccessfull = false;
 		GlobalVariable.successCustAlert = false;
@@ -121,6 +121,7 @@
 			DialogFactory.close(true);
 			GlobalVariable.addedCustSuccessfull = true;
 			GlobalVariable.successCustAlert = true;
+			getProductDetails.getCustomerDetails();
 		}
 		function onAddCustDtlsError(response)
 		{

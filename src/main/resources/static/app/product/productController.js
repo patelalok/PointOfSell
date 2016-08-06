@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('productController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails) {
+	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util) {
 		
 		$scope.device = device;
 		$scope.restrictCharacter=restrictCharacter;
@@ -14,6 +14,7 @@
 		GlobalVariable.productSuccessAlert = false;
 		GlobalVariable.addedSucces= false;
 		GlobalVariable.editedSuccess= false;
+		var authElemArray = new Array();
 	
 		
 		$scope.populateRetailPrice = function()
@@ -74,20 +75,63 @@
 		{
 			$scope.productId = Math.round(((Math.random() * 10) * 10)+1000000000);
 		}
+		function addValidated()
+		{
+			authElemArray = new Array();
+			if($scope.productId == '' || $scope.productId== undefined)
+			{
+				authElemArray.push({
+					'id' : 'productId',
+					'msg' : 'Product Number cannot be empty'
+				});
+			}
+			if($scope.selectedVendorType == undefined)
+			{
+				authElemArray.push({
+					'id' : 'vendName',
+					'msg' : 'Product Number cannot be empty'
+				});
+			}
+			if($scope.selectedCategoryType == undefined) {
+				authElemArray.push({
+					'id': 'categoryName',
+					'msg': 'Product Number cannot be empty'
+				});
+			}
+
+				if($scope.selectedBrandType == undefined) {
+					authElemArray.push({
+						'id': 'brandName',
+						'msg': 'Product Number cannot be empty'
+					});
+				}
+			if (authElemArray.length >= 1) {
+				util.customError.show(authElemArray, "");
+
+				return false;
+			} else {
+				return true;
+			}
+
+
+		}
 		$scope.addProduct = function()
 		{
-			if(GlobalVariable.editProduct == true)
+			util.customError.hide(['vendName','categoryName','brandName','productId']);
+			if(addValidated())
 			{
-				if($scope.selectedReturnType == 'Custom')
-					$scope.retType = $scope.customReturn;
-				else
-					$scope.retType = $scope.selectedReturnType;
+				if(GlobalVariable.editProduct == true)
+				{
+					if($scope.selectedReturnType == 'Custom')
+						$scope.retType = $scope.customReturn;
+					else
+						$scope.retType = $scope.selectedReturnType;
 
-				if(selectedCategoryType == 'Phone')
-					$scope.phoneIMEI = $scope.IMEI
-				else
-					$scope.phoneIMEI = '';
-				var request={
+					if($scope.selectedCategoryType == 'Phone')
+						$scope.phoneIMEI = $scope.IMEI;
+					else
+						$scope.phoneIMEI = '';
+					var request={
 						"productId": GlobalVariable.editProductDetails.productId,
 						"productNo":GlobalVariable.editProductDetails.productNo,
 						"categoryId": $scope.categoryId,
@@ -101,28 +145,29 @@
 						"quantity": $scope.prodQuantity,
 						"minProductQuantity": $scope.prodMinquantity,
 						"returnRule":$scope.retType,
-					"imeiNo":$scope.phoneIMEI,
+						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
 						"tax":$scope.productYesyNO
 					};
-				var url ="http://localhost:8080/editProduct";
-			}
-			else
-			{
-				if($scope.selectedReturnType == 'Custom')
-					$scope.retType = $scope.customReturn;
+					var url ="http://localhost:8080/editProduct";
+				}
 				else
-					$scope.retType = $scope.selectedReturnType;
+				{
+
+					if($scope.selectedReturnType == 'Custom')
+						$scope.retType = $scope.customReturn;
+					else
+						$scope.retType = $scope.selectedReturnType;
 
 
-				if($scope.selectedCategoryType == 'Phone')
-					$scope.phoneIMEI = $scope.IMEI
-				else
-					$scope.phoneIMEI = '';
-				var request = {
-		        	    
-		        	    "productNo":$scope.productId,
+					if($scope.selectedCategoryType == 'Phone')
+						$scope.phoneIMEI = $scope.IMEI
+					else
+						$scope.phoneIMEI = '';
+					var request = {
+
+						"productNo":$scope.productId,
 						"categoryId": $scope.categoryId,
 						"vendorId": $scope.vendorId,
 						"brandId": $scope.brandId,
@@ -138,14 +183,16 @@
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
 						"tax":$scope.productYesyNO
-		        	  };
-				var url ="http://localhost:8080/addProduct";
-			}	
-			
-			 
-			request= JSON.stringify(request);
-			
-			dataService.Post(url,request,addProductSuccessHandler,addProductErrorHandler,"application/json","application/json");
+					};
+					var url ="http://localhost:8080/addProduct";
+				}
+
+
+				request= JSON.stringify(request);
+
+				dataService.Post(url,request,addProductSuccessHandler,addProductErrorHandler,"application/json","application/json");
+			}
+
 		}
 		function addProductSuccessHandler(response)
 		{
@@ -165,6 +212,10 @@
 		{
 			
 		}
+		$scope.cancelProduct = function()
+		{
+			$state.go('productmain');
+		};
 		function render()
 		{
 			console.log("params = "+$state.params);
