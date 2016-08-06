@@ -9,14 +9,14 @@
 				<div class="content display-table" >
 					<div class="form-group display-row">
 						<label for="productId" class="display-cell">Product ID:</label>
-						<input  type="text" class="form-control display-cell" data-ng-model="productId" id="productId" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
-						<div class="display-cell"><button class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;" ng-click="generateRandomId()">Generate</button></div>
+						<input data-proxtra-message="REGAUTH18"  ng-disabled="GlobalVariable.editProduct" type="text" class="form-control display-cell" data-ng-model="productId" id="productId" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
+						<div class="display-cell"><button ng-disabled="GlobalVariable.editProduct" class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;" ng-click="generateRandomId()">Generate</button></div>
 						</div>
 					<div class="form-group display-row">
 						<label for="vendorId" class="display-cell">Vendor:</label>
 						<div class="btn-group pull-left prd-drop" dropdown is-open="status.isopen" ng-class="{'full-width': device.isMobile}">
 				                <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
-				                ng-class="{'full-width left-align': device.isMobile}">
+				                ng-class="{'full-width left-align': device.isMobile}" id="vendName" data-proxtra-message="REGAUTH16">
 				                    <span ng-show="selectedVendorType">{{selectedVendorType}}</span>
                     				<span ng-hide="selectedVendorType">Search By</span>
 				                    <span class="caret margin-left-caret"></span>
@@ -36,7 +36,7 @@
 						<label for="upc" class="display-cell">Category:</label>
 						<div class="btn-group pull-left  prd-drop" dropdown is-open="brand.isopen" ng-class="{'full-width': device.isMobile}">
 				                 <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
-				                ng-class="{'full-width left-align': device.isMobile}">
+				                ng-class="{'full-width left-align': device.isMobile}" id="categoryName" data-proxtra-message="REGAUTH14">
 				                    <span ng-show="selectedCategoryType">{{selectedCategoryType}}</span>
                     				<span ng-hide="selectedCategoryType">Search By</span>
 				                    <span class="caret margin-left-caret"></span>
@@ -56,7 +56,7 @@
 						<label for="depart" class="display-cell">Brand:</label>
 						<div class="btn-group pull-left  prd-drop" dropdown is-open="cat.isopen" ng-class="{'full-width': device.isMobile}">
 				                 <button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
-				                ng-class="{'full-width left-align': device.isMobile}">
+				                ng-class="{'full-width left-align': device.isMobile}" id="brandName" data-proxtra-message="REGAUTH12">
 				                    <span ng-show="selectedBrandType">{{selectedBrandType}}</span>
                     				<span ng-hide="selectedBrandType">Search By</span>
 				                    <span class="caret margin-left-caret"></span>
@@ -173,7 +173,7 @@
 		<div class="bottomButtons" style="text-align:center;">
 			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;">Next</button>
 			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;" ng-click="addProduct()"><span ng-if="GlobalVariable.editProduct !== true">OK</span><span ng-if="GlobalVariable.editProduct == true">Edit</span></button>
-			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;">Cancel</button>
+			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;" data-ng-click="cancelProduct()">Cancel</button>
 		</div>
 	</div>
 	
