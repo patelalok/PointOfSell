@@ -105,6 +105,36 @@
 						'msg': 'Product Number cannot be empty'
 					});
 				}
+			if(GlobalVariable.editProduct == false)
+			{
+				for(var i=0;i<$scope.prodAltNo.length;i++)
+				{
+					if($scope.productId == $scope.prodAltNo[i].productNo)
+					{
+						authElemArray.push({
+							'id' : 'productId',
+							'msg' : 'Product Number already exists'
+						});
+
+					}
+				}
+			}
+
+				if($scope.altNo !==''  && $scope.altNo != undefined)
+				{
+					for(var i=0;i<$scope.prodAltNo.length;i++)
+					{
+						if($scope.altNo == $scope.prodAltNo[i].altNo)
+						{
+							authElemArray.push({
+								'id' : 'altNo',
+								'msg' : 'Alt Number already exists'
+							});
+
+						}
+					}
+				}
+
 			if (authElemArray.length >= 1) {
 				util.customError.show(authElemArray, "");
 
@@ -216,9 +246,23 @@
 		{
 			$state.go('productmain');
 		};
+		function getProAlt()
+		{
+			var url='http://localhost:8080/getProductNoAndAltNo';
+			dataService.Get(url,getProAltSuccess,getProAltError,"application/json","application/json");
+		}
+		function getProAltSuccess(response)
+		{
+			$scope.prodAltNo = response;
+		}
+		function getProAltError(response)
+		{
+
+		}
 		function render()
 		{
 			console.log("params = "+$state.params);
+			getProAlt();
 			$scope.prodCP = 0;
 			$scope.prodMarkup = 0;
 			$scope.prodRetail = 0;

@@ -8,9 +8,11 @@
 	function SetupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout)
 	{
 		$scope.showAddUser = false;
+		$scope.showUserDtls = false;
 		GlobalVariable.successUsesAlert = false;
 		GlobalVariable.addedSuccessfull = false;GlobalVariable.editSuccess= false;
 		GlobalVariable.successTaxAlert = false;
+		$scope.showTaxDtls = true;
 
 		$scope.changeTax = function()
 		{
@@ -33,7 +35,7 @@
 		};
 		$scope.callBackCreateUser = function()
 		{
-			getUserDetails();
+			$scope.getUserDetails();
 			$timeout(function() {
 				$rootScope.closeBootstrapAlert();
 			}, 9000);
@@ -48,13 +50,15 @@
 		};
 		$scope.callBackAddTax = function()
 		{
-			getTaxDetails();
+			$scope.getTaxDetails();
 			$timeout(function() {
 				$rootScope.closeBootstrapAlert();
 			}, 9000);
 		};
-		function getTaxDetails()
+		$scope.getTaxDetails = function()
 		{
+			$scope.showTaxDtls = true;
+			$scope.showUserDtls = false;
 			var url='http://localhost:8080/getPageSetUpDetails';
 			dataService.Get(url,onGetTaxSuccess,onGetTaxError,'application/json','application/json');
 		}
@@ -76,11 +80,13 @@
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackAddTax);
 
 		};
-		function getUserDetails()
+		$scope.getUserDetails = function()
 		{
+			$scope.showTaxDtls = false;
+			$scope.showUserDtls = true;
 			var url='http://localhost:8080/getUserDetails';
 			dataService.Get(url,onGetUserDtlsSuccess,onGetUserDtlsError,'application/json','application/json');
-		}
+		};
 		function onGetUserDtlsSuccess(response)
 		{
 			$scope.getUserDtls = response;
@@ -108,8 +114,19 @@
 				{
 				$scope.taxSetup = GlobalVariable.totalTaxSetup;
 				}
-				getTaxDetails();
-				getUserDetails();
+				$scope.getTaxDetails();
+				//$scope.getUserDetails();
+
+		}
+		$scope.navigateToClockInDtls=function(username)
+		{
+			GlobalVariable.usernameCust = username;
+			var _tmPath = 'app/Setup/clockPopup.html';
+			var _ctrlPath = 'clockPopupController';
+			DialogFactory.show(_tmPath, _ctrlPath, callbackClockHistory,undefined, undefined, 'lg');
+		};
+		function callbackClockHistory()
+		{
 
 		}
 		render();

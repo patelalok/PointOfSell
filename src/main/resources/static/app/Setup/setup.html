@@ -22,37 +22,52 @@
 		<span style="font-weight:bold;font-size:30px">Setup</span>
 	</div>
 </div>
-<div class="row productBtns" style="padding:30px;">
-	 <div class="col-md-6 productBtn verticalLine">
 
+<div class="row productBtns" style="padding:30px;">
+<div class="col-md-6 productBtn">
+	<div style="text-align: center;">
+		<button ng-disabled="showTaxDtls" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTaxDetails()">Tax</button>
+	</div>
+
+</div>
+	<div class="col-md-6 productBtn">
 		<div style="text-align: center;">
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTax()">Tax</button>
+			<button ng-disabled="showUserDtls" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getUserDetails()">User</button>
 		</div>
-		 <div data-responsive-table data-ng-model="getTaxDtls"  data-current-page="currentPageIndexArr"
-			  class="full-width" style="padding-top:10px;">
-			 <columns>
-				 <column name="Tax Id" key="id" datatype="string" width="30%" sortable="true"></column>
-				 <column name="Tax Value" key="tax" datatype="string" width="30%"></column>
-				 <column name="" key="" datatype="" width="30%">
-					 <cell ng-non-bindable>
+
+	</div>
+
+</div>
+
+<div class="row productBtns" style="padding:30px;"ng-if="showTaxDtls">
+	<div data-responsive-table data-ng-model="getTaxDtls"  data-current-page="currentPageIndexArr"
+		 class="full-width" style="padding-top:10px;">
+		<columns>
+			<column name="Tax Id" key="id" datatype="string" width="30%" sortable="true"></column>
+			<column name="Tax Value" key="tax" datatype="string" width="30%"></column>
+			<column name="" key="" datatype="" width="30%">
+				<cell ng-non-bindable>
 							<span class="inline-vertical">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editTax(row)"></span>
 							</span>
-						 <span class="inline-vertical padding-left-10">
+					<span class="inline-vertical padding-left-10">
 								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scoep.deleteTax(row.id)"></span>
 							</span>
 
-					 </cell>
-				 </column>
-			 </columns>
-		 </div>
-	 </div>
+				</cell>
+			</column>
+		</columns>
+	</div>
 
-	<div class="col-md-6 productBtn">
+	<div class="row" style="text-align: center;padding-top:10px;">
 
-		<div style="text-align: center;">
-			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="createNewUser()">Create User</button>
-		</div>
+		<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="getTax()">Add Tax</button>
+
+	</div>
+
+</div>
+
+	<div class="row productBtns" style="padding:30px;" ng-if="showUserDtls">
 		<div data-responsive-table data-ng-model="getUserDtls"  data-current-page="currentPageIndexArr"
 			 class="full-width" style="padding-top:10px;">
 			<columns>
@@ -62,7 +77,10 @@
 				<column name="Created Date" key="createdDate" datatype="string" width="20%"></column>
 				<column name="" key="" datatype="" width="20%">
 					<cell ng-non-bindable>
-							<span class="inline-vertical">
+						<span class="inline-vertical">
+								<span  aria-hidden="true" style="color:green;" ng-click="scope.navigateToClockInDtls(row.username)">ClockInDtls</span>
+							</span>
+							<span class="inline-vertical padding-left-10">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editUser(row)"></span>
 							</span>
 						<span class="inline-vertical padding-left-10">
@@ -73,8 +91,12 @@
 				</column>
 			</columns>
 		</div>
+		<div class="row" style="text-align: center;padding-top:10px;">
+
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="createNewUser()">Create User</button>
+
+		</div>
 	</div>
 
-</div>
 
 </div>
