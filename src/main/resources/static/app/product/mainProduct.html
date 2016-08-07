@@ -1,13 +1,5 @@
 <div>
-<div class="row alert alert-success" data-ng-show="GlobalVariable.productSuccessAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
-	    <div>
-	    <button  type="button" class="close" ng-click="closeBootstrapAlert()">
-	        &times;
-	    </button>
-	   <span data-ng-show="GlobalVariable.addedSucces == true">Product Added Successfully</span> 
-	   <span data-ng-show="GlobalVariable.editedSuccess == true">Product Edited Successfully</span> 
-		</div>
-		</div>
+
 <div class="row padding-top-20" style="padding:30px;">
 	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Name/SKU/Handle</label></div>
@@ -79,10 +71,10 @@
 					<column name="Retail Price" key="retailPrice" datatype="string" width="10%"></column>
 					<column name="" key="" datatype="" width="20%">
 						<cell ng-non-bindable>
-							<span class="inline-vertical">
+							<span class="inline-vertical" ng-show="row.categoryName != 'Phone'">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editProduct(row)"></span>
 							</span>
-							<span class="inline-vertical padding-left-10">
+							<span class="inline-vertical padding-left-10" ng-show="row.categoryName != 'Phone'">
 								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span>
 							</span>
 							<span class="inline-vertical padding-left-10">

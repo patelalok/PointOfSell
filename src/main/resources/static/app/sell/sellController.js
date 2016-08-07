@@ -355,7 +355,7 @@
 						$scope.selectTax = 'default';
 				} else {
 					$rootScope.customerNameOnSearch = 'No customer found';
-					$rootScope.customerPhone = $scope.regPhone;
+					$rootScope.customerPhone = '';
 				}
 
 			}
@@ -389,6 +389,10 @@
 						+ ' ' + GlobalVariable.getCustomerDtls[i].lastName;
 					$rootScope.customerPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
 					$scope.regPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
+				}
+				else
+				{
+					$rootScope.customerPhone = '';
 				}
 				/*
 				 * else { $rootScope.customerName = 'No customer found';
@@ -426,6 +430,7 @@
 		function onGetTaxError(response) {
 
 		}
+
 		render();
 	}
 

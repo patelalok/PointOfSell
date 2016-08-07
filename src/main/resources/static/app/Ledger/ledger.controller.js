@@ -80,7 +80,7 @@
 								$scope.printState=GlobalVariable.receiptData[0].customerDtosList[0].state;
 									$scope.printCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
 										$scope.printzipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
-				$scope.printPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+						$scope.printPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
 
 			}
 			

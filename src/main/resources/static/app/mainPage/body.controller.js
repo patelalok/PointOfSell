@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BodyController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService'];
 
-	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails) {
+	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService) {
 		
 		var vm = this;
 		vm.device = device;
@@ -61,7 +61,21 @@
 		$scope.openNav = function() {
 			$rootScope.displaySideBar = !$rootScope.displaySideBar;
 		};
-		
+
+		$window.onbeforeunload = function (event) {
+			var msg= 'Are you sure want to close broswer?';
+
+			//var message = 'Important: Please click on \'Save\' button to leave this page.';
+			if (typeof event == 'undefined') {
+				event = $window.event;
+			}
+			if (event) {
+				event.returnValue = msg;
+			}
+			return msg;
+		};
+
+
 		$scope.navigate = function(code,page)
 		{
 			$scope.selectedMenuCd = code;

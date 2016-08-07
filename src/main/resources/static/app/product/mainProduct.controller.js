@@ -94,9 +94,9 @@
 			$scope.productType = "select";
 
 			//$scope.loadCDetails();
-			$timeout(function() {
+			/*$timeout(function() {
 				$scope.closeBootstrapAlert();
-			}, 9000);
+			}, 9000);*/
 
 
 			
@@ -113,12 +113,12 @@
 				util.Wait(false);
 			}, 9000);*/
 		};
-		$scope.closeBootstrapAlert = function()
+		/*$scope.closeBootstrapAlert = function()
 		{
 			GlobalVariable.productSuccessAlert = false;
 			GlobalVariable.addedSucces= false;
 			GlobalVariable.editedSuccess= false;
-		};
+		};*/
 		render();
 		
 	}

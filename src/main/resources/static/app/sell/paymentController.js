@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
+	paymentPopupController.$inject = [ '$timeout','$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
 
-	function paymentPopupController($scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
+	function paymentPopupController($timeout,$scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
 	{
 		$scope.color= false;
 		$scope.paidAmountCash =0;
@@ -161,7 +161,7 @@
 			$rootScope.testData = [];
 
 			/*var msg= 'Print Receipt or Cancel';
-			msg=$sce.trustAsHtml(msg);	
+			msg=$sce.trustAsHtml(msg);
 			modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Print'}, msg, $scope.callBackCheckoutComplete);
 			*/
 			
@@ -174,8 +174,47 @@
 			$rootScope.subTotal = 0;
 			$rootScope.productTotal = 0;
 
+			if(GlobalVariable.printReceiptTrans == true)
+			{
+				var url="http://localhost:8080/getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
+				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+			}
+
+
+
 
 		};
+		function getPrintSuccessHandler(response)
+		{
+			GlobalVariable.receiptData =response;
+			GlobalVariable.isPrintPage = true;
+			if(response.length !==0)
+			{
+				if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
+				{
+					$scope.printFirstName=GlobalVariable.receiptData[0].customerDtosList[0].firstName;
+					$scope.printLastName =GlobalVariable.receiptData[0].customerDtosList[0].lastName;
+					$scope.printStreet=GlobalVariable.receiptData[0].customerDtosList[0].street;
+					$scope.printCity=GlobalVariable.receiptData[0].customerDtosList[0].city;
+					$scope.printState=GlobalVariable.receiptData[0].customerDtosList[0].state;
+					$scope.printCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
+					$scope.printzipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
+					$scope.printPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+
+				}
+			}
+
+
+			$timeout(function() {
+				$window.print();
+				GlobalVariable.isPrintPage = false;
+			}, 2000);
+
+		}
+		function getPrintErrorHandler(response)
+		{
+
+		}
 		/*$scope.callBackCheckoutComplete = function()
 		{
 			DialogFactory.close(true);

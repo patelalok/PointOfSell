@@ -24,7 +24,7 @@
 			label : "Non-numeric characters disallowed, numbers,period and dash allowed"
 		},
 		NumericWithPeriod : {
-			regExp : /[^\d.]/g,
+			regExp : /[^\d. ]/g,
 			label : "Non-numeric characters disallowed, numbers,period and dash allowed"
 		},
 		Alphabet : {

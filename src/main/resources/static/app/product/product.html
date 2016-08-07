@@ -1,5 +1,15 @@
 <div>
+	<div class="row alert alert-success" data-ng-show="GlobalVariable.productSuccessAlert" style="margin-top:10px;text-align:center;width:50%;margin-left:auto;margin-right:auto;">
+		<div>
+			<button  type="button" class="close" ng-click="closeBootstrapAlert()">
+				&times;
+			</button>
+			<span data-ng-show="GlobalVariable.addedSucces == true">Product Added Successfully</span>
+			<span data-ng-show="GlobalVariable.editedSuccess == true">Product Edited Successfully</span>
+		</div>
+	</div>
 	<div class="row" style="padding-top:20px;">
+
 		<section class="col-md-6 col-xs-12" ng-class="{'leftProductInfo':!device.isMobile}">
 			<div class="panel-body inline-vertical">
 				<div>
@@ -71,7 +81,7 @@
 					
 					<div class="form-group display-row">
 						<label for="altNo" class="display-cell">Alt No:</label>
-						<input data-proxtra-message="REGAUTH22"  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
+						<input ng-disabled="GlobalVariable.editProduct" data-proxtra-message="REGAUTH22"  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
 					</div>
 					<div class="checkbox">
 						<label>

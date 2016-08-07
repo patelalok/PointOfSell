@@ -136,7 +136,14 @@
 			<img alt="" src="./assets/images/newLogo.jpg" height="100"
 				 width="600">
 		</div>
-
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<div style="display: block;">{{printFirstName}} {{printLastName}}</div>
+			<div style="display:block">{{printStreet}}</div>
+			<div style="display:block">{{printCity}}, {{printState}}</div>
+			<div style="display:block">{{printCountry}}, {{printzipCode}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
 
 	</div>
 	<div
@@ -202,6 +209,11 @@
 	<div style="text-align: right;">
 		<div class="row totalColumn display-table tableMainProp"
 			 align="center">
+			<div class="display-row" style="border-bottom: 1px solid #000000;">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Item Total</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount}}</div>
+			</div>
 			<div class="display-row">
 				<div class=" inline-vertical display-cell align-left "
 					 style="padding-left: 500px;">Quantity:</div>

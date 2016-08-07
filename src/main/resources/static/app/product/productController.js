@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('productController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util','$timeout'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util) {
+	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util,$timeout) {
 		
 		$scope.device = device;
 		$scope.restrictCharacter=restrictCharacter;
@@ -15,8 +15,13 @@
 		GlobalVariable.addedSucces= false;
 		GlobalVariable.editedSuccess= false;
 		var authElemArray = new Array();
-	
-		
+
+		$scope.closeBootstrapAlert = function()
+		{
+			GlobalVariable.productSuccessAlert = false;
+			GlobalVariable.addedSucces= false;
+			GlobalVariable.editedSuccess= false;
+		};
 		$scope.populateRetailPrice = function()
 		{
 			if($scope.prodCP !== '' && $scope.prodCP !== undefined)
@@ -118,13 +123,12 @@
 
 					}
 				}
-			}
 
 				if($scope.altNo !==''  && $scope.altNo != undefined)
 				{
 					for(var i=0;i<$scope.prodAltNo.length;i++)
 					{
-						if($scope.altNo == $scope.prodAltNo[i].altNo)
+						if($scope.altNo == $scope.prodAltNo[i].atlNo)
 						{
 							authElemArray.push({
 								'id' : 'altNo',
@@ -134,6 +138,9 @@
 						}
 					}
 				}
+			}
+
+
 
 			if (authElemArray.length >= 1) {
 				util.customError.show(authElemArray, "");
@@ -147,7 +154,7 @@
 		}
 		$scope.addProduct = function()
 		{
-			util.customError.hide(['vendName','categoryName','brandName','productId']);
+			util.customError.hide(['vendName','categoryName','brandName','productId','altNo']);
 			if(addValidated())
 			{
 				if(GlobalVariable.editProduct == true)
@@ -234,9 +241,34 @@
 				GlobalVariable.editedSuccess= true;
 			}
 			else
+			{
 				GlobalVariable.addedSucces= true;
+				resetValues();
+			}
+
 			getProductDetails.getProductDetail();
-			$state.go('productmain');
+			//$state.go('productmain');
+			$timeout(function() {
+				$scope.closeBootstrapAlert();
+			}, 9000);
+
+		}
+		function resetValues()
+		{
+			$scope.productId = '';
+			$scope.selectedVendorType = '';
+			$scope.selectedBrandType = '';
+			$scope.selectedCategoryType='';
+			$scope.description ='';
+			$scope.IMEI ='';
+			$scope.altNo ='';
+			$scope.prodCP =0;
+			$scope.prodMarkup=0;
+			$scope.prodRetail=0;
+			$scope.selectedReturnType ='';
+			$scope.customReturn='';
+			$scope.prodQuantity ='';
+			$scope.prodMinquantity='';
 		}
 		function addProductErrorHandler(response)
 		{
@@ -284,7 +316,9 @@
 				$scope.prodQuantity = GlobalVariable.editProductDetails.quantity;
 				$scope.prodMinquantity = GlobalVariable.editProductDetails.minProductQuantity;
 				$scope.productYesyNO = GlobalVariable.editProductDetails.tax;
-			}	
+				$scope.selectedReturnType = GlobalVariable.editProductDetails.returnRule;
+			}
+
 		}
 		render();
 	}
