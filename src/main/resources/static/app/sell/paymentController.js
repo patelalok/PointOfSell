@@ -173,6 +173,7 @@
 			$rootScope.totalQuantity = 0;
 			$rootScope.subTotal = 0;
 			$rootScope.productTotal = 0;
+			$rootScope.customerPhone = '';
 
 			if(GlobalVariable.printReceiptTrans == true)
 			{
