@@ -22,6 +22,7 @@ public class CustomerDto {
     private double balance;
     private String taxId;
     private double last12MonthsSpend;
+    private String companyName;
 
     public String getZipcode() {
         return zipcode;
@@ -157,6 +158,14 @@ public class CustomerDto {
 
     public void setLast12MonthsSpend(double last12MonthsSpend) {
         this.last12MonthsSpend = last12MonthsSpend;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }
 

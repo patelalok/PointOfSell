@@ -1,9 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.MultyAddProductDto;
-import com.abm.pos.com.abm.pos.dto.PageSetUpDto;
-import com.abm.pos.com.abm.pos.dto.ProductDto;
-import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Cell;
@@ -137,6 +134,45 @@ public class PageSetUpManager {
             System.out.println(e);
         }
     }
+
+
+    public void addMultyCustomer(final List<CustomerDto> customerDto) {
+
+        try {
+
+            jdbcTemplate.batchUpdate(sqlQueries.addMultyCustomerQuery, new BatchPreparedStatementSetter() {
+
+
+
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    CustomerDto customerDto1 = customerDto.get(i);
+
+                    ps.setString(1, customerDto1.getFirstName());
+                    ps.setString(2, customerDto1.getLastName());
+                    ps.setString(3, customerDto1.getPhoneNo());
+                    ps.setString(4, customerDto1.getEmail());
+                    ps.setString(5, customerDto1.getTaxId());
+                    ps.setString(6, customerDto1.getCompanyName());
+
+                    System.out.println("All Customers Added Successfully");
+
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return customerDto.size();
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+
+
 
 
     public List<MultyAddProductDto> readExcelSheet() {

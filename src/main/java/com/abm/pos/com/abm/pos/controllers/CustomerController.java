@@ -23,6 +23,9 @@ public class CustomerController {
         customerManager.addCustomerToDB(customerDto);
     }
 
+
+
+
     @RequestMapping(value = "/editCustomer",method = RequestMethod.POST, consumes = "application/json")
     public void editCustomer(@RequestBody CustomerDto customerDto)
     {

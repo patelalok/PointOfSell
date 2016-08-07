@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.PageSetUpManager;
+import com.abm.pos.com.abm.pos.dto.CustomerDto;
 import com.abm.pos.com.abm.pos.dto.MultyAddProductDto;
 import com.abm.pos.com.abm.pos.dto.PageSetUpDto;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
@@ -47,5 +48,11 @@ public class PageSetUpController {
     public void addProduct(@RequestBody List<MultyAddProductDto> productDto) {
 
         pageSetUpManager.addProductToDB(productDto);
+    }
+
+    @RequestMapping(value = "/addMultyCustomer",method = RequestMethod.POST, consumes = "application/json")
+    public void addMultyCustomer(@RequestBody List<CustomerDto> customerDto)
+    {
+        pageSetUpManager.addMultyCustomer(customerDto);
     }
 }

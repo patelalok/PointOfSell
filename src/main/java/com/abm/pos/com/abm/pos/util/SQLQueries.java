@@ -48,8 +48,18 @@ public class SQLQueries {
                     "ZIPCODE," +
                     "FAX," +
                     "CUSTOMER_CREATE_DATE," +
-                    "TAX_ID)" +
-            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "TAX_ID,COMPANY_NAME)" +
+            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public String addMultyCustomerQuery =
+            "INSERT INTO CUSTOMER " +
+                    "(" +
+                    "FIRST_NAME," +
+                    "LAST_NAME," +
+                    "PHONE_NO," +
+                    "EMAIL," +
+                    "TAX_ID,COMPANY_NAME)" +
+                    " VALUES(?,?,?,?,?,?)";
 
     public String addVendorQuery =
             "INSERT INTO VENDOR " +
