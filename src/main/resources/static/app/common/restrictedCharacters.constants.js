@@ -12,7 +12,7 @@
 			label : "Special characters disallowed"
 		},
 		Special : {
-			regExp : /[^a-zA-Z0-9 ]/g,
+			regExp : /[^a-zA-Z0-9. ]/g,
 			label : "Non-alphabetic and non-numeric characters disallowed"
 		},
 		TIN : {
@@ -24,7 +24,7 @@
 			label : "Non-numeric characters disallowed, numbers,period and dash allowed"
 		},
 		NumericWithPeriod : {
-			regExp : /[^\d. ]/g,
+			regExp : /[^\d.]/g,
 			label : "Non-numeric characters disallowed, numbers,period and dash allowed"
 		},
 		Alphabet : {

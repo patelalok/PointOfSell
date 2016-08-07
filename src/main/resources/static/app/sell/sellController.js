@@ -353,6 +353,8 @@
 						$scope.selectTax = 'noTax';
 					else if (GlobalVariable.custTypeCd == 'Retail')
 						$scope.selectTax = 'default';
+
+					break;
 				} else {
 					$rootScope.customerNameOnSearch = 'No customer found';
 					$rootScope.customerPhone = '';
@@ -389,6 +391,8 @@
 						+ ' ' + GlobalVariable.getCustomerDtls[i].lastName;
 					$rootScope.customerPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
 					$scope.regPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
+					GlobalVariable.customerFound = true;
+					break;
 				}
 				else
 				{
