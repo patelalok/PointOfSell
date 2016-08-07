@@ -152,9 +152,9 @@ public class ClosingDetailsManager {
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
                     //System.out.println(lineItemDiscount);
-                    closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount() + lineItemDiscountDouble);
+                    closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount() + lineItemDiscountDouble);
                 } else {
-                    closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
+                    closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
                 }
                 closingDetailsDto.setTotalProfit(profit);
                 closingDetails.add(closingDetailsDto);
@@ -325,6 +325,8 @@ public class ClosingDetailsManager {
         try
         {
             yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper,startDate,endDate);
+
+            //Need Think of Adding Discount and Profit here
         }
         catch (Exception e)
         {
@@ -412,6 +414,8 @@ public class ClosingDetailsManager {
         try {
             monthlyListDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, mapper, startDate, endDate);
 
+            //Need Think of Adding Discount and Profit here
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -455,9 +459,6 @@ public class ClosingDetailsManager {
             monthDto.setTotal(rs.getDouble("TOTAL"));
             monthDto.setTax(rs.getDouble("SUM_TAX"));
             monthDto.setDiscount(rs.getDouble("DISCOUNT"));
-            monthDto.setCost(rs.getDouble("COST"));
-            monthDto.setRetail(rs.getDouble("RETAIL"));
-            monthDto.setProfit(rs.getDouble("PROFIT"));
             monthDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
 
             monthDtoList.add(monthDto);
@@ -637,25 +638,34 @@ public class ClosingDetailsManager {
         }
 
     }
-
-
-// JUST MAPPER TO MAP RESPONSE FROM DB
-
-
-    // public
-
-
 // GET DAILY TRANSACTION FROM DB
 
     public List<DailyTransactionDto> getDailyTransactionDetails(String startDate, String endDate) {
 
         List<DailyTransactionDto> trans = new ArrayList<>();
-        DailyTransactionDto d = new DailyTransactionDto();
+        //DailyTransactionDto d = new DailyTransactionDto();
 
         try
         {
-            trans.add(d);
             trans = jdbcTemplate.query(sqlQueries.getDailyTransaction, new DailyTransactionMapper(), startDate, endDate);
+
+            //Getting profit = (RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY and PROFIT - TRANSACTION DISCOUNT(trans.get(0).getDiscount()) then subtracting total Transaction level discount from total profit form the Line item table and then subtracting the profit amount from the Total Transaction level discount.
+            double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
+            trans.get(0).setProfitAmount(profit - trans.get(0).getDiscount());
+            //System.out.println(profit);
+           // System.out.println(profit-trans.get(0).getDiscount());
+
+            //Getting discount from lineItem table and adding with transaction table discount cause they 2 separate discounts
+            double lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getgetDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, double.class);
+           // System.out.println(lineItemDiscount + trans.get(0).getDiscount());
+            trans.get(0).setDiscount(trans.get(0).getDiscount() + lineItemDiscount);
+          //  System.out.println(trans.get(0).getDiscount());
+          //  System.out.println(lineItemDiscount);
+
+
+
+
+
 
         }
         catch (Exception e)
@@ -675,21 +685,30 @@ public class ClosingDetailsManager {
 
             DailyTransactionDto trans = new DailyTransactionDto();
 
-            // trans.setDate("2016-06-22");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+            trans.setDate(dateFormat.format(date));
+            System.out.println(dateFormat.format(date));
             trans.setNoOfTransactions(rs.getInt("NOOFTRANS"));
             trans.setAvgTotal(rs.getDouble("AVGTOTAL"));
-            trans.setTotal(rs.getDouble("TOTAL"));
+            trans.setTotal(rs.getDouble("TOTAL") + rs.getDouble("TAX"));
             trans.setCash(rs.getDouble("CASH"));
             trans.setCredit(rs.getDouble("CREDIT"));
             trans.setCheck(rs.getDouble("SUMCHECK"));
             trans.setTax(rs.getDouble("TAX"));
             trans.setDiscount(rs.getDouble("DISCOUNT"));
             trans.setGrossSale((trans.getTotal()) - trans.getTax());
-            trans.setProfitAmount(rs.getDouble("PROFIT"));
 
             return trans;
 
         }
+    }
+
+    public String getLineItemDiscount(String startDate, String endDate)
+    {
+        String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getgetDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
+
+        return lineItemDiscount;
     }
 
 }

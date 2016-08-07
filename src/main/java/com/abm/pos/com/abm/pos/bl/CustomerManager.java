@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -126,6 +130,37 @@ public class CustomerManager {
             customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
             customer.setBalance(rs.getDouble("BALANCE"));
             customer.setTaxId(rs.getString("TAX_ID"));
+
+
+            String totalSpending = jdbcTemplate.queryForObject(sqlQuery.getCustomersLast12MonthSpend, new Object[] {rs.getString("PHONE_NO")}, String.class);
+
+            if(null != totalSpending)
+            {
+                customer.setLast12MonthsSpend(Double.parseDouble(totalSpending));
+            }
+            else
+            {
+                customer.setLast12MonthsSpend(0.0);
+            }
+
+            //This code is to get last year date from current date.
+            /*DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Calendar cal = Calendar.getInstance();
+
+            String currentDate = df.format(cal.getTime());
+            System.out.println("Test" + currentDate);
+
+            System.out.println("Today : " + df.format(cal.getTime()));
+
+
+            // Substract 1 year from the calendar
+            cal.add(Calendar.YEAR, -1);
+            System.out.println("1 year ago: " + df.format(cal.getTime()));
+
+            String last12MonthDate = df.format(cal.getTime());*/
+
+
+
 
             return customer;
         }
