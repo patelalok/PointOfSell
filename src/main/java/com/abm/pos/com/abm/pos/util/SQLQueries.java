@@ -38,6 +38,7 @@ public class SQLQueries {
                     "LAST_NAME," +
                     "PHONE_NO," +
                     "EMAIL," +
+                    "TAX_ID," +
                     "DATEOFBIRTH," +
                     "CUSTOMER_TYPE," +
                     "GENDER," +
@@ -48,7 +49,7 @@ public class SQLQueries {
                     "ZIPCODE," +
                     "FAX," +
                     "CUSTOMER_CREATE_DATE," +
-                    "TAX_ID,COMPANY_NAME)" +
+                    "COMPANY_NAME)" +
             " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addMultyCustomerQuery =
@@ -153,8 +154,22 @@ public class SQLQueries {
             "ATL_NO = ?, DESCRIPTION = ?, COST_PRICE = ?,  MARKUP = ?, RETAIL_PRICE = ?, QUANTITY = ?, MIN_PRODUCT = ?, RETURN_RULE = ?, " +
             "IMAGE = ?, IMEI_NUMBER = ?, TAX = ? WHERE PRODUCT_ID = ?";
 
-    public String editCustomerQuery = "UPDATE CUSTOMER SET FIRST_NAME = ?,  LAST_NAME = ?, EMAIL = ?, DATEOFBIRTH = ?,CUSTOMER_TYPE = ?, GENDER = ?, " +
-            " STREET = ?, CITY = ?, STATE = ?, COUNTRY = ?, ZIPCODE = ?, FAX = ?, TAX_ID = ? WHERE PHONE_NO = ?";
+    public String editCustomerQuery = "UPDATE CUSTOMER" +
+            " SET FIRST_NAME = ?,  " +
+            "LAST_NAME = ?, " +
+            "EMAIL = ?, " +
+            "TAX_ID = ?,  " +
+            "DATEOFBIRTH = ?," +
+            "CUSTOMER_TYPE = ?, " +
+            "GENDER = ?, " +
+            " STREET = ?," +
+            " CITY = ?, " +
+            "STATE = ?, " +
+            "COUNTRY = ?, " +
+            "ZIPCODE = ?, " +
+            "FAX = ?, " +
+            "COMPANY_NAME = ? " +
+            "WHERE PHONE_NO = ?";
 
     public String editVendorQuery = "UPDATE VENDOR SET VENDOR_NAME = ?, COMMISION = ?, PHONENO = ?, COMPANY_NAME = ?, ADDRESS = ? WHERE VENDOR_ID = ?";
 

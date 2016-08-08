@@ -40,6 +40,7 @@ public class CustomerManager {
                     customerDto.getLastName(),
                     customerDto.getPhoneNo(),
                     customerDto.getEmail(),
+                    customerDto.getTaxId(),
                     customerDto.getDateOfBirth(),
                     customerDto.getCustomerType(),
                     customerDto.getGender(),
@@ -50,7 +51,6 @@ public class CustomerManager {
                     customerDto.getZipcode(),
                     customerDto.getFax(),
                     customerDto.getCustomerCreatedDate(),
-                    customerDto.getTaxId(),
                     customerDto.getCompanyName());
             System.out.println("Customer Added Successfully");
         }
@@ -69,16 +69,17 @@ public class CustomerManager {
                     customerDto.getFirstName(),
                     customerDto.getLastName(),
                     customerDto.getEmail(),
+                    customerDto.getTaxId(),
                     customerDto.getDateOfBirth(),
-                    customerDto.getGender(),
                     customerDto.getCustomerType(),
+                    customerDto.getGender(),
                     customerDto.getStreet(),
                     customerDto.getCity(),
                     customerDto.getState(),
                     customerDto.getCountry(),
                     customerDto.getZipcode(),
                     customerDto.getFax(),
-                    customerDto.getTaxId(),
+                    customerDto.getCompanyName(),
                     customerDto.getPhoneNo());
 
 
