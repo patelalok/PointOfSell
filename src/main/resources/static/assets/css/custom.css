@@ -1095,3 +1095,8 @@ button.parsley-error {
 	background-color: #F2DEDE;
 	border: 1px solid #B94A48 !important;
 }
+
+.constrained {
+	height:550px;
+	overflow-y:scroll;
+}
