@@ -189,13 +189,11 @@ public class UserManager {
             return user;
         }
     }
-
     public void editUserClockIn(UserClockInDto userDto) {
 
         try
         {
             jdbcTemplate.update(sqlQuery.updateUserClockInDetails,
-                    userDto.getUsername(),
                     userDto.getClockInTime(),
                     userDto.getClockOutTime(),
                     userDto.getNoOfhours(),
