@@ -1,5 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
+import com.abm.pos.com.abm.pos.dto.UserClockInDto;
 import com.abm.pos.com.abm.pos.dto.UserDto;
 import com.abm.pos.com.abm.pos.dto.UserLogin;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
@@ -135,14 +136,16 @@ public class UserManager {
         }
 
     //ADDING CLOCK IN AND CLOCK OUT TIME OF THE USER GETTING AT THE ONLY LOGOUT TIME.
-    public void addUserClockIn(UserDto userDto) {
+    public void addUserClockIn(UserClockInDto userClockIn) {
 
         try
         {
             jdbcTemplate.update(sqlQuery.addUserClockIn,
-                    userDto.getUsername(),
-                    userDto.getClockInTime(),
-                    userDto.getClockOutTime());
+                    userClockIn.getUsername(),
+                    userClockIn.getClockInTime(),
+                    userClockIn.getClockOutTime(),
+                    userClockIn.getNoOfhours());
+
             System.out.println("User Clocked in and Clocked out in Successfully");
 
         }
@@ -152,38 +155,58 @@ public class UserManager {
         }
     }
 //TO GET CLOCK IN AND CLOCK OUT DETAILS OF USER.
-    public List<UserDto> getUserClockIn(String username) {
+    public List<UserClockInDto> getUserClockIn(String username) {
 
-        List<UserDto> user = new ArrayList<>();
+        List<UserClockInDto> userClockInDtoList = new ArrayList<>();
 
         try
         {
-            user = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserClockInMapper(), username );
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserClockInMapper(), username );
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
 
-        return user;
+        return userClockInDtoList;
     }
 
-    private static final class UserClockInMapper implements RowMapper<UserDto>
+    private static final class UserClockInMapper implements RowMapper<UserClockInDto>
     {
 
         @Override
-        public UserDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public UserClockInDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            UserDto user = new UserDto();
+            UserClockInDto user = new UserClockInDto();
 
 
             user.setUsername(rs.getString("USERNAME"));
             user.setClockInTime(rs.getString("CLOCK_IN"));
             user.setClockOutTime(rs.getString("CLOCK_OUT"));
-            user.setNoOfhours("10");
+            user.setNoOfhours(rs.getString("NOOFHOURS"));
+            user.setDate(rs.getString("DATE"));
 
             return user;
         }
+    }
+
+    public void editUserClockIn(UserClockInDto userDto) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.updateUserClockInDetails,
+                    userDto.getUsername(),
+                    userDto.getClockInTime(),
+                    userDto.getClockOutTime(),
+                    userDto.getNoOfhours(),
+                    userDto.getClockInId());
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
     }
     public void deleteVendorToDB(String vendorId) {
     }

@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.UserManager;
+import com.abm.pos.com.abm.pos.dto.UserClockInDto;
 import com.abm.pos.com.abm.pos.dto.UserDto;
 import com.abm.pos.com.abm.pos.dto.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +47,24 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUserClockIn", method = RequestMethod.POST, consumes = "application/json")
-    public void addUserClockIn(@RequestBody UserDto userDto) {
+    public void addUserClockIn(@RequestBody UserClockInDto userDto) {
 
         userManager.addUserClockIn(userDto);
     }
 
     @RequestMapping(value = "/getUserClockIn", method = RequestMethod.GET, produces = "application/json")
-    public List<UserDto> getUserClockIn(@RequestParam String username) {
+    public List<UserClockInDto> getUserClockIn(@RequestParam String username) {
 
         return userManager.getUserClockIn(username);
 
     }
+    @RequestMapping(value = "/editUserClockIn", method = RequestMethod.POST, consumes = "application/json")
+    public void editUserClockIn(@RequestBody UserClockInDto userDto) {
+
+        userManager.editUserClockIn(userDto);
+
+    }
+
 
 
 

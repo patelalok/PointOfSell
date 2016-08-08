@@ -335,4 +335,5 @@ public class SQLQueries {
     public String getTransactionLineItemIds = "SELECT TRANSACTION_LINE_ITEM_ID FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
     public String updateLineItemDetailsStatus = "update TRANSACTION_LINE_ITEM SET TRANSACTION_STATUS = 'returned' WHERE TRANSACTION_LINE_ITEM_ID = ?";
     public String productNoAndAltNoDTOs = "SELECT PRODUCT_NO,ATL_NO FROM PRODUCT";
+    public String updateUserClockInDetails = "UPDATE ";
 }
