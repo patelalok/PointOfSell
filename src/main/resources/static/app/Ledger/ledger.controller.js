@@ -150,9 +150,9 @@
 		}
 $scope.applyFilterHistory = function()
 {
-	//$scope.startDate = $filter('date')($scope.startDate, "yyyy-MM-dd HH:mm:ss");
-	//$scope.endDate = $filter('date')($scope.endDate, "yyyy-MM-dd HH:mm:ss");
-	loadSalesHistoryData($filter('date')($scope.startDate, "yyyy-MM-dd HH:mm:ss"),$filter('date')($scope.endDate, "yyyy-MM-dd HH:mm:ss"));
+	var start = $filter('date')($scope.startDate, "yyyy-MM-dd")+" 00:00:00";
+	var end = $filter('date')($scope.endDate, "yyyy-MM-dd")+" 23:59:59";
+	loadSalesHistoryData(start,end);
 };
 function js_yyyy_mm_dd_hh_mm_ss () {
 	  var now = new Date();

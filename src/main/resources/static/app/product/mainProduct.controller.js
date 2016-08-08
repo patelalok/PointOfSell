@@ -113,6 +113,18 @@
 				util.Wait(false);
 			}, 9000);*/
 		};
+
+		$scope.barLimit = 100;
+		$scope.increaseLimit = function () {
+			$scope.barLimit += 50;
+			console.log('Increase Bar Limit', $scope.barLimit)
+		}
+		/*$scope.loadMore = function() {
+			var last = $scope.getProductDtls[$scope.images.length - 1];
+			for(var i = 1; i <= $scope.getProductDtls.length; i++) {
+				$scope.getProductDtls.push(last + i);
+			}
+		};*/
 		/*$scope.closeBootstrapAlert = function()
 		{
 			GlobalVariable.productSuccessAlert = false;
