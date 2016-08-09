@@ -9,6 +9,8 @@
 	{
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.maxDate = new Date();
+		$scope.Math = window.Math;
+		$scope.modifiedData = [];
 		$scope.closePopup = function()
 		{ 
 			DialogFactory.close(true);
@@ -70,6 +72,21 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
+			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
+			{
+				$scope.modifiedData.push(
+					{
+						"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productNumber,
+						"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
+						"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
+						"discountPercentage":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
+						"retwdisc":(parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail)/parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
+						"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
+						"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
+					}
+				);
+			}
+
 			GlobalVariable.isPrintPage = true;
 			if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
 			{
