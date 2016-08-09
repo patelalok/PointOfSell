@@ -188,7 +188,7 @@
 
 	<div style="padding-top: 10px; padding-bottom: 4px;">
 		<div data-responsive-table
-			 data-ng-model="GlobalVariable.receiptData[0].transactionLineItemDtoList"
+			 data-ng-model="modifiedData"
 			 data-current-page="currentPageIndexArr" class="full-width"
 			 data-page-size="pageSize" data-sort-column="selectedIndex"
 			 data-sort-ascending="isAsc" on-sort="sortColumnData(index)">
@@ -201,7 +201,9 @@
 						{{::row.discountPercentage}}%
 					</cell>
 				</column>
-				<column name="Ret w"></column>
+				<column name="Ret w/disc" key="retwdisc" datatype="string" width="9" padding="1px" border="0px">
+
+				</column>
 				<column name="Qty" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
 				<column name="Total Price" key="totalProductPrice" datatype="string" width="8%" padding="3px" border="0px"></column>
 			</columns>
