@@ -52,9 +52,9 @@
 				$scope.totalTax = $scope.getClosingDtls[0].totalTax;
 				$scope.totalMarkup = $scope.getClosingDtls[0].totalMarkup;
 				$scope.totalBusinessAmount = $scope.getClosingDtls[0].totalBusinessAmount;
-				$scope.netSales = ParseFloat($scope.userCash)
+				$scope.netSales = parseFloat($scope.userCash)
 					+ parseFloat($scope.userDebit)
-					+ ParseFloat($scope.userCheck)
+					+ parseFloat($scope.userCheck)
 					+ parseFloat($scope.totalTax);
 				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
 			} else {

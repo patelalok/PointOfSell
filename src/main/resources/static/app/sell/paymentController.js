@@ -174,7 +174,7 @@
 			$rootScope.subTotal = 0;
 			$rootScope.productTotal = 0;
 			$rootScope.customerPhone = '';
-
+			GlobalVariable.addProductClicked = false;
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				var url="http://localhost:8080/getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;

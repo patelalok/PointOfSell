@@ -169,7 +169,25 @@
 <div   print-only style="font-size:25px;margin-left:15px;margin-right:15px;">
 	<div class="row printImage" style="padding-top:10px;padding-left:10px;padding-bottom:10px;">
 
-		<div class="col-md-4" style="text-align:center;width:30%;float:left;position:relative;min-height:1px;padding-right:15px;padding-left:25px;"><img alt="" src="./assets/images/newLogo.jpg" height="100" width="600"></div>
+		<div class="col-md-4"
+			 style="visibility:hidden;text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+			<div style="display: block;">
+				{{GlobalVariable.storeAddress}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
+		<div class="col-md-4"
+			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<img alt="" src="./assets/images/newLogo.jpg" height="100"
+				 width="600">
+		</div>
+		<div class="col-md-4"
+			 style="visibility:hidden;text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
+			<div style="display: block;">{{printFirstName}} {{printLastName}}</div>
+			<div style="display:block">{{printStreet}}</div>
+			<div style="display:block">{{printCity}} {{printState}}</div>
+			<div style="display:block">{{printCountry}} {{printzipCode}}</div>
+			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
+		</div>
 
 
 	</div>
@@ -180,7 +198,7 @@
 		</div>
 
 	</div>
-	<div style="text-align:center;margin-left:0;margin-right:0;position:relative;padding-left:200px;">
+	<div style="text-align:center;margin-left:0;margin-right:0;position:relative;padding-left:50px;">
 
 
 				<div class="row totalColumn display-table tableMainProp" align="center" style="margin-left:0px;margin-right:auto;border-spacing:15px;">

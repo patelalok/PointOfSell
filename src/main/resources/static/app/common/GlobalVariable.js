@@ -18,6 +18,8 @@
 		GlobalVarObj.editUser == false;
 		GlobalVarObj.editTax = false;
 		GlobalVarObj.editCustomer = false;
+		GlobalVarObj.onAddProduct = '';
+		GlobalVarObj.addProductClicked= false;
 		
 		return GlobalVarObj;
 	}

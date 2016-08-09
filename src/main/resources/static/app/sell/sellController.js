@@ -18,6 +18,7 @@
 		$scope.balanceRemaining = 0;
 		GlobalVariable.customerFound = false;
 		$scope.showEditableFields = false;
+		//GlobalVariable.addProductClicked= false;
 
 		var i = 0;
 		$scope.pageSize = 10;
@@ -35,7 +36,7 @@
 			 *
 			 * $scope.loadCheckOutData();
 			 */
-
+			GlobalVariable.addProductClicked= true;
 			$state.go('product');
 		};
 		$scope.removeRow = function(row) {
@@ -296,6 +297,7 @@
 				.toFixed(2);
 			GlobalVariable.checkOuttotal = parseFloat($rootScope.totalPayment)
 				.toFixed(2);
+			GlobalVariable.onAddProduct = $rootScope.testData;
 		}
 		$scope.editRow = function(row) {
 			GlobalVariable.editQuanDtls = row;
@@ -408,6 +410,10 @@
 		function render() {
 			$scope.currentPageIndexArr = 0;
 			$rootScope.customerNameOnSearch = '';
+			if(GlobalVariable.addProductClicked)
+			{
+				$rootScope.testData = GlobalVariable.onAddProduct;
+			}	
 			getTaxDetails();
 			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 				$scope.productNames
@@ -419,7 +425,13 @@
 			}
 
 		}
-
+		$scope.$watch('GlobalVariable.getCustomerDtls',function(newValue)
+		{
+			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
+				$scope.firstNames
+					.push(GlobalVariable.getCustomerDtls[i].firstName);
+			}
+		});
 		function getTaxDetails() {
 			var url = 'http://localhost:8080/getPageSetUpDetails';
 			dataService.Get(url, onGetTaxSuccess, onGetTaxError,
