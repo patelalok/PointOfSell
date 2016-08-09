@@ -115,6 +115,8 @@ public class SalesManager {
         }
     }
 
+
+
     private final class TransactionMapperForReturn implements RowMapper<TransactionDto> {
 
         @Override
@@ -462,6 +464,14 @@ public class SalesManager {
 
             return lineItem;
         }
+    }
+
+    //THIS WILL GIVE LAST TRANSACTION COMP ID WHICH HELP UI TO GENERATE NEXT ID
+    public int getLastTransactionId() {
+
+       int lastTransactionID = jdbcTemplate.queryForObject(sqlQuery.getLastTransactionId, new Object[] {},Integer.class);
+
+        return lastTransactionID;
     }
 
     /*public void addTransactionPaymentToDB(TransactionPaymentDto transactionPaymentDto) {

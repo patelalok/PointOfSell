@@ -65,6 +65,12 @@ public class SalesController {
     {
         return salesManager.getTransactionLineItemDetails(transactionCompId);
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/getLastTransactionId", produces = "application/json")
+    public int getTransactionLineItem()
+    {
+        return salesManager.getLastTransactionId();
+    }
+
 
    /* @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
     public void addTransactionPayment(TransactionPaymentDto transactionPaymentDto)
