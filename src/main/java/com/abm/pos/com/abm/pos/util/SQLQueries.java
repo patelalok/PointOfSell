@@ -482,5 +482,5 @@ public class SQLQueries {
     public String getTransactionLineItemIds = "SELECT TRANSACTION_LINE_ITEM_ID FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
 
     public String productNoAndAltNoDTOs = "SELECT PRODUCT_NO,ATL_NO FROM PRODUCT";
-    public String getLastTransactionId = "SELECT Last(TRANSACTION_COMP_ID) FROM TRANSACTION";
+    public String getLastTransactionId = "SELECT max(TRANSACTION_COMP_ID) FROM POINTOFSALE.TRANSACTION;";
 }
