@@ -29,7 +29,7 @@
 				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
 				var _ctrlPath = 'PrintRecepitController';
-				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
+				DialogFactory.show(_tmPath, _ctrlPath, $scope.getLastTransId);
 				$scope.color = true;
 			}	
 		};
@@ -43,12 +43,27 @@
 			  var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
 			  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 			}
+		$scope.getLastTransId = function()
+		{
+			var url='http://localhost:8080/getLastTransactionId';
+			dataService.Get(url,lastTransSuccess,lastTransError,'application/json','application/json');
+		}
+		function lastTransSuccess(response)
+		{
+			sessionStorage.lastTransId = parseInt(response);
+			GlobalVariable.lastTransId =  parseInt(response);
+			$scope.callBackCheckout();
+		}
+		function lastTransError(response)
+		{
+
+		}
 		$scope.callBackCheckout = function()
 		{
 
 			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
 			GlobalVariable.transDate = trasnactionDate;
-			GlobalVariable.transactionCompletedId = Math.round(((Math.random() * 10) * 10)) * 11;
+			GlobalVariable.transactionCompletedId = parseInt(GlobalVariable.lastTransId) +1;
 			DialogFactory.close(true);
 			if($scope.balanceAmount == 0)
 			{
@@ -274,7 +289,7 @@
 					modalService.showModal('', '', msg, $scope.callBackCheckout);*/
 					var _tmPath = 'app/sell/printReceiptModal.html';
 					var _ctrlPath = 'PrintRecepitController';
-					DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
+					DialogFactory.show(_tmPath, _ctrlPath, $scope.getLastTransId);
 						$scope.color = true;
 				}	
 				
@@ -294,7 +309,7 @@
 			modalService.showModal('', '', msg, $scope.callBackCheckout);*/
 			var _tmPath = 'app/sell/printReceiptModal.html';
 			var _ctrlPath = 'PrintRecepitController';
-			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.getLastTransId);
 				$scope.color = true;
 		};
 		$scope.makePartialPayment = function()
@@ -303,7 +318,7 @@
 			DialogFactory.close(true);
 			var _tmPath = 'app/sell/printReceiptModal.html';
 			var _ctrlPath = 'PrintRecepitController';
-			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.getLastTransId);
 		};
 		$scope.calculateAmount = function(value,means)
 		{
@@ -353,7 +368,7 @@
 				DialogFactory.close(true);
 				var _tmPath = 'app/sell/printReceiptModal.html';
 				var _ctrlPath = 'PrintRecepitController';
-				DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCheckout);
+				DialogFactory.show(_tmPath, _ctrlPath,$scope.getLastTransId);
 				$scope.color = true;
 			}
 		};
