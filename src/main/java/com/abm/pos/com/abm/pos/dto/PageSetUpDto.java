@@ -10,6 +10,7 @@ public class PageSetUpDto {
     private String storeAddress;
     private String storeLogo;
     private String footerReceipt;
+    private String storeEmail;
 
     public String getFooterReceipt() {
         return footerReceipt;
@@ -52,5 +53,11 @@ public class PageSetUpDto {
     }
 
 
+    public String getStoreEmail() {
+        return storeEmail;
+    }
 
+    public void setStoreEmail(String storeEmail) {
+        this.storeEmail = storeEmail;
+    }
 }
