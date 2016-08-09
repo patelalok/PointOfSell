@@ -3,13 +3,14 @@
 
 	angular.module('sampleApp').controller('mainCustomerController', mainCustomerController);
 
-	mainCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','dataService'];
+	mainCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','dataService','RestrictedCharacter.Types'];
 
-	function mainCustomerController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,dataService) {
+	function mainCustomerController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,dataService,restrictCharacter) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		GlobalVariable.isLoginPage = false;
+		$scope.restrictCharacter = restrictCharacter;
 
 		function getCustomerDetails()
 		{

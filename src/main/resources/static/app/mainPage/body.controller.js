@@ -63,6 +63,7 @@
 		};
 
 		$window.onbeforeunload = function (event) {
+			$scope.logOut();
 			var msg= 'Are you sure want to close broswer?';
 
 			//var message = 'Important: Please click on \'Save\' button to leave this page.';
@@ -71,6 +72,7 @@
 			}
 			if (event) {
 				event.returnValue = msg;
+
 			}
 			return msg;
 		};
@@ -101,6 +103,7 @@
 		}
 		$scope.logOut = function()
 		{
+			//alert("logout");
 			var url="http://localhost:8080/addUserClockIn";
 			var request={
 
