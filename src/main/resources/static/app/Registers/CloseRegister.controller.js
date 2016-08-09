@@ -342,7 +342,7 @@
 
 		};
 		function addPaidSuccessHandler(response) {
-			sendEmail('alokpatel.au@gmail.com', "hi", "hello");
+			//sendEmail('alokpatel.au@gmail.com', "hi", "hello");
 			var startDate = js_yyyy_mm_dd_hh_mm_ss() + '' + ' 00:00:00';
 			var endDate = js_yyyy_mm_dd_hh_mm_ss() + '' + ' 23:59:59';
 			getPaidOutDetails(startDate, endDate);
