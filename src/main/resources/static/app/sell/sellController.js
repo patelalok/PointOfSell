@@ -37,6 +37,7 @@
 			 * $scope.loadCheckOutData();
 			 */
 			GlobalVariable.addProductClicked= true;
+			GlobalVariable.editProduct = false;
 			$state.go('product');
 		};
 		$scope.removeRow = function(row) {

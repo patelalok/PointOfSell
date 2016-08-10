@@ -46,6 +46,7 @@ public class PageSetUpManager {
                     pageSetUpDto.getStoreAddress(),
                     pageSetUpDto.getStoreLogo(),
                     pageSetUpDto.getFooterReceipt(),
+                    pageSetUpDto.getStoreEmail(),
                     pageSetUpDto.getId());
 
 
@@ -81,6 +82,7 @@ public class PageSetUpManager {
                     setUpDto.setStoreAddress(rs.getString("STORE_ADDRESS"));
                     setUpDto.setStoreLogo(rs.getString("STORE_LOGO"));
                     setUpDto.setFooterReceipt(rs.getString("FOOTER_RECEIPT"));
+                    setUpDto.setStoreEmail(rs.getString("STORE_EMAIL"));
 
                     return setUpDto;
                 }
