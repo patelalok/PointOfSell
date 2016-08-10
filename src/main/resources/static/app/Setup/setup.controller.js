@@ -57,14 +57,17 @@
 		};
 		$scope.getTaxDetails = function()
 		{
+
 			$scope.showTaxDtls = true;
 			$scope.showUserDtls = false;
+			$scope.showRcptDtls = false;
 			var url='http://localhost:8080/getPageSetUpDetails';
 			dataService.Get(url,onGetTaxSuccess,onGetTaxError,'application/json','application/json');
 		}
 		function onGetTaxSuccess(response)
 		{
 			$scope.getTaxDtls = response;
+			$scope.footerReceipt = response[0].footerReceipt;
 		}
 		function onGetTaxError(response)
 		{
@@ -84,6 +87,7 @@
 		{
 			$scope.showTaxDtls = false;
 			$scope.showUserDtls = true;
+			$scope.showRcptDtls = false;
 			var url='http://localhost:8080/getUserDetails';
 			dataService.Get(url,onGetUserDtlsSuccess,onGetUserDtlsError,'application/json','application/json');
 		};
@@ -95,6 +99,12 @@
 		{
 
 		}
+		$scope.getReceiptDetails = function()
+		{
+			$scope.showTaxDtls = false;
+			$scope.showUserDtls = false;
+			$scope.showRcptDtls = true;
+		};
 		$scope.editUser = function(row)
 		{
 			GlobalVariable.editUser = true;

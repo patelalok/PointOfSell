@@ -12,6 +12,7 @@
 		$scope.paidAmountCredit =0;
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.GlobalVariable = GlobalVariable;
+		$rootScope.modifiedTransData = [];
 		
 		$scope.closePopup = function()
 		{
@@ -203,6 +204,22 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
+
+			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
+			{
+				$rootScope.modifiedTransData.push(
+					{
+						"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productNumber,
+						"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
+						"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
+						"discountPercentage":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
+						"retwdisc":(parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail)/parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
+						"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
+						"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
+					}
+				);
+			}
+
 			GlobalVariable.isPrintPage = true;
 			if(response.length !==0)
 			{

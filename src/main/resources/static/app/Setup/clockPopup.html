@@ -1,11 +1,35 @@
 <div>
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" data-ng-click="closePopup()">&times;</button>
-        <h4 class="modal-title" style="font-size:24px;">Clock In History</h4>
+    <div class="row pageHeader" style="padding: 30px;">
+        <div class="col-md-12 pageHeader">
+            <span style="font-weight: bold; font-size: 30px">Sales History</span>
+        </div>
     </div>
-    <div class="modal-body" style="padding:0px;">
+    <div class="row productBtns" style="padding: 30px;">
+        <div class="col-md-4 productBtn">
 
-        <div >
+            <div class="form-group">
+                <label for="sales_Date" class="required">Start Date</label>
+                <div class="input-group calendar-group fromDate">
+                    <input type="text"
+                           style="height: 52px; width: 100%; background-color: #FFFFFF;"
+                           ng-model="startDate" class="form-control fromDate"
+                           datepicker-popup="{{'yyyy-MM-dd'}}" required
+                           ng-model-options="{allowInvalid: true}" name="startDate"
+                           is-open="openStart" date-cleared="dateCleared" date-length="10"
+                           id="startDate" placeholder="YYYY-MM-DD" disabled="disabled"
+                           max-date="maxDate"> <span class="input-group-btn">
+						<button type="button" class="btn btn-default"
+                                ng-click="openStartCalendar($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row productBtns" style="padding: 30px;">
+        <div class="col-md-12">
             <div data-responsive-table data-ng-model="getClockHistory"  data-current-page="currentPageIndexArr"
                  class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
                  on-sort="sortColumnData(index)" >
@@ -14,12 +38,23 @@
                     <column name="Clock In Time" key="clockInTime" datatype="string" width="25%"></column>
                     <column name="Clock Out Time" key="clockOutTime" datatype="string" width="25%"></column>
                     <column name="No Of Hours" key="noOfhours" datatype="string" width="25%"></column>
+                    <column name="HrlyRate" key="HrlyRate" datatype="string" width="25%"></column>
+                    <column name="Total" key="HrlyRate" datatype="string" width="25%"></column>
+                    <column name="" key="" datatype="" width="20%">
+                        <cell ng-non-bindable>
+
+                            <span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editUser(row)"></span>
+							</span>
+                            <span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scope.deleteUser(row.id)"></span>
+							</span>
+
+                        </cell>
+                    </column>
                 </columns>
+            </div>
             </div>
         </div>
 
-    </div>
-    <div class="modal-footer">
-
-    </div>
 </div>

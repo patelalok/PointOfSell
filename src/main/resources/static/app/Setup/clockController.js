@@ -7,10 +7,7 @@
 
 	function clockPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
 	{
-		$scope.closePopup = function()
-		{
-			DialogFactory.close(true);
-		};
+
 		function loadHistoryData()
 		{
 			var url =' http://localhost:8080/getUserClockIn?username='+GlobalVariable.usernameCust;

@@ -1100,3 +1100,15 @@ button.parsley-error {
 	height:550px;
 	overflow-y:scroll;
 }
+.btn-outline-primary:hover
+{
+	color: #fff;
+	background-color: #14b999;
+	border-color: #14b999;
+}
+.btn-outline-primary
+{
+
+
+	border-color: #14b999;
+}
