@@ -15,16 +15,30 @@
         $scope.GlobalVariable = GlobalVariable;
         $scope.restrictCharacter = restrictCharacter;
         GlobalVariable.isLoginPage = false;
+        $scope.itemDeleted = false;
 
         var i = 0;
         $scope.pageSize = 10;
 
         $rootScope.returnData = [];
         $scope.productNames = [];
+        $rootScope.returnBackData = [];
 
-        $scope.removeRow = function(itemNo) {
+        $scope.removeRow = function(itemNo,details) {
 
             GlobalVariable.itemNoToDelete = itemNo;
+            $scope.itemDeleted = true;
+            $rootScope.returnBackData
+                .push({
+                    "itemNo" : details.itemNo,
+                    "item" : details.item,
+                    "quantity" : details.quantity,
+                    "retail" : details.retail,
+                    "discount" : details.discount,
+                    "total" : details.total,
+                    "stock" : details.stock,
+                    "costPrice" : details.costPrice
+                });
             modalService.showModal('', {
                 isCancel : true
             }, "Are you Sure Want to Delete ? ", $scope.callBackAction);
@@ -52,6 +66,7 @@
                 }
                 $rootScope.returnData.splice(index, 1);
                 $scope.loadCheckOutData();
+                $scope.loadDeletedCheckoutData();
             }
         }
 
@@ -65,36 +80,41 @@
         $scope.loadCheckOutData = function() {
             $scope.totalQuantity = 0;
             $scope.subTotal = 0;
+            $scope.totalDelRetail = 0;
+            $scope.totalDelRetailDisc = 0;
+            $scope.totalDisc =0;
+
+
             for (var i = 0; i < $rootScope.returnData.length; i++) {
                 $scope.totalQuantity = parseFloat($scope.totalQuantity)
                     + parseFloat($rootScope.returnData[i].quantity);
                 $scope.subTotal = parseFloat($scope.subTotal)
                     + parseFloat($rootScope.returnData[i].total);
+                $scope.totalRetail = parseFloat($scope.totalRetail)+parseFloat($rootScope.returnData[i].retail);
+                $scope.totalRetailDisc = parseFloat($scope.totalRetailDisc)+parseFloat($rootScope.returnData[i].discount);
 
             }
+           // $scope.totalDisc = Number(parseFloat($scope.totalRetail)-parseFloat($scope.totalRetailDisc)).toFixed(2);
             GlobalVariable.quantityTotal = $scope.totalQuantity;
             GlobalVariable.totalSub = $scope.subTotal;
             if ($scope.totalDisc == undefined)
                 $scope.totalDisc = 0;
 
             GlobalVariable.discountTotal = $scope.totalDisc;
-            if ($scope.totalDisc == "")
+
                 $scope.productTotalWithoutTax = Number(
                     parseFloat($scope.subTotal)).toFixed(2);
-            else
-                $scope.productTotalWithoutTax = Number(
-                    parseFloat($scope.subTotal)
-                    - parseFloat($scope.totalDisc)).toFixed(2);
+
 
             if ($scope.productTotalWithoutTax == 'NaN') {
                 $scope.productTotalWithoutTax = 0;
             }
 
-            if ($scope.selectTax == undefined)
+            if ($scope.selectReturnTax == undefined)
                 $scope.totalTax = 0;
-            else if ($scope.selectTax == 'default')
+            else if ($scope.selectReturnTax == 'default')
                 $scope.totalTax = parseFloat($scope.totalDefaultTax);
-            else if ($scope.selectTax == 'noTax')
+            else if ($scope.selectReturnTax == 'noTax')
                 $scope.totalTax = 0;
 
             GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax)
@@ -110,11 +130,13 @@
             }
             $rootScope.totalReturnPayment = $scope.productTotal;
             GlobalVariable.checkOuttotal = $rootScope.totalReturnPayment;
+            $scope.getLastTransId();
         }
         function render() {
             $scope.currentPageIndexArr = 0;
             $scope.totalTax = GlobalVariable.totalTaxSetup;
-            $scope.loadCheckOutData();
+            getTaxDetails();
+           // $scope.loadCheckOutData();
             if (GlobalVariable.returnProduct == true) {
                 for (var i = 0; i < GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length; i++) {
                     $rootScope.returnData
@@ -163,30 +185,124 @@
             DialogFactory.show(_tmPath, _ctrlPath,
                 $scope.callBackReturnCheckout);
         };
+        $scope.loadDeletedCheckoutData = function()
+        {
+            $scope.totalDelQuantity = 0;
+            $scope.subDelTotal = 0;
+            $scope.totalDelRetail = 0;
+            $scope.totalDelRetailDisc = 0;
+
+
+
+            for (var i = 0; i < $rootScope.returnBackData.length; i++) {
+                $scope.totalDelQuantity = parseFloat($scope.totaDelQuantity)
+                    + parseFloat($rootScope.returnBackData[i].quantity);
+                $scope.subDelTotal = parseFloat($scope.subDelTotal)
+                    + parseFloat($rootScope.returnBackData[i].total);
+                $scope.totalDelRetail = parseFloat($scope.totalDelRetail)+parseFloat($rootScope.returnBackData[i].retail);
+                $scope.totalDelRetailDisc = parseFloat($scope.totalDelRetailDisc)+parseFloat($rootScope.returnBackData[i].discount);
+
+            }
+
+           $scope.totalDelDisc = Number(parseFloat($scope.totalDelRetail)-parseFloat($scope.totalDelRetailDisc)).toFixed(2);
+
+            $scope.productTotalWithoutDelTax = Number(
+                parseFloat($scope.subDelTotal)).toFixed(2);
+
+
+            if ($scope.productTotalWithoutDelTax == 'NaN') {
+                $scope.productTotalWithoutDelTax = 0;
+            }
+
+            if ($scope.selectReturnTax == undefined)
+                $scope.totalTax = 0;
+            else if ($scope.selectReturnTax == 'default')
+                $scope.totalTax = parseFloat($scope.totalDefaultTax);
+            else if ($scope.selectReturnTax == 'noTax')
+                $scope.totalTax = 0;
+
+            GlobalVariable.taxDelTotal = parseFloat($scope.productTotalWithoutDelTax)
+                * (parseFloat($scope.totalTax) / 100);
+            $scope.productDelTotal = Number(
+                parseFloat($scope.productTotalWithoutDelTax)
+                + (((parseFloat($scope.productTotalWithoutDelTax) * parseFloat($scope.totalTax))) / 100))
+                .toFixed(2);
+
+            if ($scope.returnprevBalance > 0) {
+                $scope.productDelTotal = parseFloat($scope.productDelTotal)
+                    + parseFloat($scope.returnprevBalance);
+            }
+            $rootScope.totalReturnPayment = $scope.productDelTotal;
+            $scope.productTotal = $scope.productDelTotal;
+            GlobalVariable.checkOuttotal = $rootScope.totalReturnPayment;
+            $scope.getLastTransId();
+
+        };
+        $scope.getLastTransId = function()
+        {
+            var url='http://localhost:8080/getLastTransactionId';
+            dataService.Get(url,lastTransSuccess,lastTransError,'application/json','application/json');
+        }
+        function lastTransSuccess(response)
+        {
+
+            $scope.lastTransId =  parseInt(response);
+
+        }
+        function lastTransError(response)
+        {
+
+        }
         $scope.callBackReturnCheckout = function() {
             console.log("callback");
             var url = "http://localhost:8080/editTransaction?previousTransId="
                 + $scope.previousId;
             var request = new Object();
-            request = {
-                "transactionDate" : $scope.returnDate,
-                "totalAmount" : $scope.returnAmount,
-                "tax" : ($scope.totalTax),
-                "discount" : ($scope.totalDisc),
-                "customerPhoneNo" : $scope.returnPhone,
-                "userId" : $scope.userIdReturn,
-                "cashId" : $scope.returncashId,
-                "status" : "completed",
-                "paidAmountCash" : ($scope.paidAmountReturn),
-                "changeAmount" : ($scope.changeAmountReturn),
-                "creditId" : $scope.creditIdReturn,
-                "paidAmountCredit" : ($scope.paidAmountCreditReturn),
-                "transactionCompId" : $scope.returnId,
-                "subTotal" : ($scope.subTotal),
-                "totalQuantity" : ($scope.totalQuantity)
+            if($scope.itemDeleted == true)
+            {
+                var paidRTCh =0;
+                var paidRTCr =0;
+                if(parseInt($scope.paidAmountReturn) == 0)
+                {
+                    paidRTCh = $scope.productTotal;
+                    paidRTCr =0;
+                }
+                else if(parseInt($scope.paidAmountCreditReturn) == 0)
+                {
+                    paidRTCh = 0;
+                    paidRTCr =$scope.productTotal;
+                }
+                else
+                {
+                    paidRTCh = $scope.productTotal;
+                    paidRTCr =0;
+                }
+                request = {
+                    "transactionDate" : js_yyyy_mm_dd_hh_mm_ss(),
+                    "totalAmount" : $scope.productTotal,
+                    "tax" : GlobalVariable.taxTotal,
+                    "discount" : $scope.totalDisc,
+                    "customerPhoneNo" : $scope.returnPhone,
+                    "userId" : $scope.userIdReturn,
+                    "cashId" : $scope.returncashId,
+                    "status" : "c",
+                    "paidAmountCash" : paidRTCh,
+                    "changeAmount" : 0,
+                    "creditId" : $scope.creditIdReturn,
+                    "paidAmountCredit" : paidRTCr,
+                    "transactionCompId" : parseInt($scope.lastTransId) +1,
+                    "subTotal" : ($scope.subTotal),
+                    "totalQuantity" : ($scope.totalQuantity)
 
-            };
-            request = JSON.stringify(request);
+                };
+                request = JSON.stringify(request);
+            }
+            else
+            {
+                request=[];
+            }
+
+
             dataService.Post(url, request, returnTransactionSuccessHandler,
                 returnTransactionErrorHandler, "application/json",
                 "application/json");
@@ -199,25 +315,34 @@
              */
 
             var request = [];
-            for (var i = 0; i < $rootScope.returnData.length; i++) {
-                request.push({
+            if($scope.itemDeleted == true)
+            {
+                for (var i = 0; i < $rootScope.returnData.length; i++) {
+                    request.push({
 
-                    "transactionCompId" : $scope.returnId,
-                    "productId" : $rootScope.returnData[i].itemNo,
-                    "quantity" : $rootScope.returnData[i].quantity,
-                    "retail" : $rootScope.returnData[i].retail,
-                    "cost" : $rootScope.returnData[i].costPrice,
-                    "discount" : $rootScope.returnData[i].discount,
-                    "retailWithDis" : $rootScope.returnData[i].discount,
-                    "totalProductPrice" : $rootScope.returnData[i].total,
-                    "transactionDate" : $scope.returnDate,
-                    "transactionStatus" : "completed"
+                        "transactionCompId" : parseInt($scope.lastTransId) +1,
+                        "productId" : $rootScope.returnData[i].itemNo,
+                        "quantity" : $rootScope.returnData[i].quantity,
+                        "retail" : $rootScope.returnData[i].retail,
+                        "cost" : $rootScope.returnData[i].costPrice,
+                        "discount" : $rootScope.returnData[i].discount,
+                        "retailWithDis" : $rootScope.returnData[i].discount,
+                        "totalProductPrice" : $rootScope.returnData[i].total,
+                        "transactionDate" : js_yyyy_mm_dd_hh_mm_ss(),
+                        "transactionStatus" : "c"
 
-                });
+                    });
+                }
+                request = JSON.stringify(request);
             }
+            else
+            {
+                request=[];
+            }
+
             var url = "http://localhost:8080/editTransactionLineItem?previousTransId="
                 + $scope.previousId;
-            request = JSON.stringify(request);
+
             dataService.Post(url, request,
                 returnTransactionLineItemSuccessHandler,
                 returnTransactionLineItemErrorHandler, "application/json",
@@ -241,6 +366,30 @@
         $scope.navigateToSellPage = function() {
             $state.go('sell');
         };
+        function getTaxDetails() {
+            var url = 'http://localhost:8080/getPageSetUpDetails';
+            dataService.Get(url, onGetTaxSuccess, onGetTaxError,
+                'application/json', 'application/json');
+        }
+        function onGetTaxSuccess(response) {
+            $scope.totalDefaultTax = response[0].tax;
+
+            $scope.selectReturnTax = "default";
+            $scope.loadCheckOutData();
+        }
+        function onGetTaxError(response) {
+
+        }
+        function js_yyyy_mm_dd_hh_mm_ss () {
+            var now = new Date();
+            var year = "" + now.getFullYear();
+            var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+            var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+            var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+            var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+            var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+            return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+        }
         render();
     }
 

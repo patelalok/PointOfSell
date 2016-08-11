@@ -298,6 +298,7 @@
 					+ parseFloat($scope.difPaid);
 				$scope.netSales = parseFloat($scope.netSales)
 					+ $scope.totalPaid;
+				$scope.grossSales = (parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)).toFixed(2);
 			} else {
 				$scope.userPaid = 0;
 				$scope.userReason = '';

@@ -43,7 +43,7 @@
                             <!-- <span>
                                 <a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
                             </span> -->
-                            <a ng-click="scope.removeRow(row.itemNo)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+                            <a ng-click="scope.removeRow(row.itemNo,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
                         </cell>
                     </column>
                 </columns>
@@ -62,12 +62,12 @@
                 </div>
                 <div class="display-row">
                     <div class="padding-top-10 inline-vertical display-cell align-left">Discount</div>
-                    <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40"><input type="text" style="width:70%;" class="form-control" placeholder="In dollars" ng-model="totalDisc" ng-change="loadCheckOutData()" data-restrict-characters="restrictCharacter.NumericPeriod.regExp" /></div>
+                    <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">{{totalDisc}}</div>
                 </div>
                 <div class="display-row">
                     <div class="padding-top-10 inline-vertical display-cell align-left">Tax</div>
                     <div class="padding-top-10 inline-vertical display-cell align-left padding-left-40">
-                        <select id="prType" data-ng-model="selectTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
+                        <select id="totalTax" data-ng-model="selectReturnTax" class="form-control" ng-change="loadCheckOutData()" style="height:52px;width:100%;">
                             <option value="default">Default Tax</option>
                             <option value="noTax">No Tax</option>
                         </select>

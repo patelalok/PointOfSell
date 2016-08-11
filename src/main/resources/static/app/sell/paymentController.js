@@ -12,6 +12,7 @@
 		$scope.paidAmountCredit =0;
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.GlobalVariable = GlobalVariable;
+		$rootScope.modifiedTransData = [];
 		
 		$scope.closePopup = function()
 		{
@@ -113,7 +114,7 @@
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":"2",
 				"cashId":$scope.cashId,
-				"status":"completed",
+				"status":"c",
 			"paidAmountCash":parseFloat($scope.paidAmountCash).toFixed(2),
 			"changeAmount":parseFloat($scope.changeAmount).toFixed(2),
 				"creditId":$scope.creditIdMulty,
@@ -157,7 +158,8 @@
 					 "retailWithDis":$rootScope.testData[i].discount,
 					 "totalProductPrice":$rootScope.testData[i].total,
 					 "transactionDate":GlobalVariable.transDate,
-					"discountPercentage":discPer
+					"discountPercentage":discPer,
+					"transactionStatus":"c"
 					 
 			});
 			}	
@@ -203,6 +205,22 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
+
+			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
+			{
+				$rootScope.modifiedTransData.push(
+					{
+						"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productNumber,
+						"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
+						"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
+						"discountPercentage":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
+						"retwdisc":(parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail)/parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
+						"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
+						"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
+					}
+				);
+			}
+
 			GlobalVariable.isPrintPage = true;
 			if(response.length !==0)
 			{
