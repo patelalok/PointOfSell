@@ -71,10 +71,24 @@ public class SalesManager {
 
 
 
-    public void editTransaction(TransactionDto transactionDto) {
+    public void editTransaction(TransactionDto transactionDto, String previousTransId) {
         try {
 
-            TransactionDto transactionDtoPrevious = new TransactionDto();
+
+            jdbcTemplate.update(sqlQuery.updateTransactionStatus, 'r', previousTransId);
+
+            if (null != transactionDto)
+            {
+                addTransaction(transactionDto);
+
+                //jdbcTemplate.update(sqlQuery.addReturnEntryToTransactionMapper, previousTransId, transactionDto.getTransactionCompId());
+            }
+            else {
+                System.out.println("that was complete return");
+            }
+
+
+           /* TransactionDto transactionDtoPrevious = new TransactionDto();
 
 
             //Getting the previous Transaction details
@@ -87,11 +101,11 @@ public class SalesManager {
 
             jdbcTemplate.update(sqlQuery.editTransactionStatus,
                     transactionDto.getTransactionDate(),
-                    transactionDtoPrevious.getTotalAmount() - transactionDto.getTotalAmount(),
-                    transactionDtoPrevious.getTax() - transactionDto.getTax(),
-                    transactionDtoPrevious.getDiscount(),
-                    transactionDtoPrevious.getSubTotal() - transactionDto.getSubTotal(),
-                    transactionDtoPrevious.getTotalQuantity() - transactionDto.getTotalQuantity(),
+                    transactionDto.getTotalAmount() - transactionDtoPrevious.getTotalAmount(),
+                    transactionDto.getTax() - transactionDtoPrevious.getTax(),
+                    transactionDto.getDiscount() - transactionDtoPrevious.getDiscount(),
+                    transactionDto.getSubTotal() - transactionDtoPrevious.getSubTotal(),
+                    transactionDto.getTotalQuantity() - transactionDtoPrevious.getTotalQuantity(),
                     transactionDto.getUserId(),
                     transactionDto.getCashId(),
                     transactionDto.getStatus(),
@@ -102,7 +116,7 @@ public class SalesManager {
                     transactionDto.getPaidAmountCheck(),
                     transactionDto.getTransCreditId(),
                     transactionDto.getLast4Digits(),
-                    transactionDto.getTransactionCompId());
+                    transactionDto.getTransactionCompId());*/
 
 
             /*jdbcTemplate.update(sqlQuery.UpdateBlanceToCustomerProfile,
@@ -350,10 +364,10 @@ public class SalesManager {
         try {
 
             //Checking if transaction return is complete or partial
-            boolean isCompleteReturn = checkReturn(transactionLineItemDto);
+           // boolean isCompleteReturn = checkReturn(transactionLineItemDto);
 
             //if there previousTransId = null means this is new transaction no return invovled in this.
-            if (null == previousTransId) {
+            /*if (null == previousTransId) {
 
                 if (null != transactionLineItemDto) {
                     addTransactionLineItemToDB(transactionLineItemDto);
@@ -361,9 +375,9 @@ public class SalesManager {
                     System.out.println("transactionLineItemDto is null");
                 }
 
-            }
+            }*/
             //If the previousTransId != null then this is return.
-            else {
+
                 List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
 
 
@@ -386,13 +400,13 @@ public class SalesManager {
 
                     jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductId());
 
-                    System.out.println("Transaction line item edited successfully");
+                    System.out.println("Porduct Quantity updated successfully");
                 }
 
 
-                for (int i = 0; i < transactionLineItemDto.size(); i++) {
-                    System.out.println(transactionLineItemDto.get(i).getTransactionLineItemId());
-                    jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, transactionLineItemDto.get(i).getTransactionLineItemId());
+                for (int i = 0; i < lineItemDtoList1.size(); i++) {
+                    System.out.println(lineItemDtoList1.get(i).getTransactionLineItemId());
+                    jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, lineItemDtoList1.get(i).getTransactionLineItemId());
                 }
 
 
@@ -403,7 +417,9 @@ public class SalesManager {
 
 
             }
-        } catch (Exception e)
+
+
+         catch (Exception e)
 
         {
             System.out.println(e);

@@ -55,4 +55,6 @@ public class PageSetUpController {
     {
         pageSetUpManager.addMultyCustomer(customerDto);
     }
+
+
 }
