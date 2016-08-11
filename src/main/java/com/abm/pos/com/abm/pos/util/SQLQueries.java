@@ -484,6 +484,6 @@ public class SQLQueries {
 
     public String productNoAndAltNoDTOs = "SELECT PRODUCT_NO,ATL_NO FROM PRODUCT";
     public String getLastTransactionId = "SELECT max(TRANSACTION_COMP_ID) FROM POINTOFSALE.TRANSACTION;";
-    public String updateTransactionStatus = "UPDATE TRANSACTION SET STATUS = ? WHERE TRANSACTION_COMP_ID = ? ";
+    public String updateTransactionStatus = "UPDATE TRANSACTION SET STATUS = 'r' WHERE TRANSACTION_COMP_ID = ? ";
     public String addReturnEntryToTransactionMapper = "INSERT INTO TRANSACTION_MAPPER " ;
 }

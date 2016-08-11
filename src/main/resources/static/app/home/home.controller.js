@@ -137,7 +137,7 @@
 			$scope.monthlyResponse = response;
 			if($scope.monthlyResponse.yearlyListDtos == null)
 			{
-				$cope.monthlyResponse = {
+				$scope.monthlyResponse = {
 					"finalTotalForReportsDtos": [{
 						"totalCredit": 0,
 						"totalCash": 0,

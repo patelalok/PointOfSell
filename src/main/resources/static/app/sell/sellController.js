@@ -441,7 +441,7 @@
 		function onGetTaxSuccess(response) {
 			$scope.totalDefaultTax = response[0].tax;
 
-			$scope.selectTax = "selectReturnTax";
+			$scope.selectTax = "default";
 			$scope.loadCheckOutData();
 		}
 		function onGetTaxError(response) {

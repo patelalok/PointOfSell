@@ -6,6 +6,7 @@ import com.abm.pos.com.abm.pos.dto.TransactionDto;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class SalesController {
     }
 
     @RequestMapping(value = "/editTransaction", method = RequestMethod.POST, consumes = "application/json")
-    public void editTransactionToDB(@RequestBody TransactionDto transactionDto, @RequestParam String previousTransId)
+    public void editTransactionToDB(@RequestBody (required = false)TransactionDto transactionDto , @RequestParam String previousTransId)
     {
         salesManager.editTransaction(transactionDto,previousTransId);
     }
@@ -55,7 +56,7 @@ public class SalesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/editTransactionLineItem", consumes = "application/json")
-    public void ediTransactionLineItem(@RequestBody List<TransactionLineItemDto> transactionLineItemDto,@RequestParam String previousTransId)
+    public void ediTransactionLineItem(@RequestBody (required = false) List<TransactionLineItemDto> transactionLineItemDto,@RequestParam String previousTransId)
     {
         salesManager.ediTransactionLineItemToDB(transactionLineItemDto,previousTransId);
     }

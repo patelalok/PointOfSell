@@ -75,7 +75,10 @@ public class SalesManager {
         try {
 
 
-            jdbcTemplate.update(sqlQuery.updateTransactionStatus, 'r', previousTransId);
+
+            jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
+
+            System.out.println("Update the status successfully");
 
             if (null != transactionDto)
             {
@@ -409,10 +412,14 @@ public class SalesManager {
                     jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, lineItemDtoList1.get(i).getTransactionLineItemId());
                 }
 
-
+                //This means this is partial return so i am adding partial return to the line item table
                 if (null != transactionLineItemDto) {
                     addTransactionLineItemToDB(transactionLineItemDto);
-                    System.out.println("Added partially returned items successfully");
+                    System.out.println("Added partially Transaction Line itemreturned items successfully");
+                }
+            else
+                {
+                    System.out.println("This was complete line item return");
                 }
 
 
