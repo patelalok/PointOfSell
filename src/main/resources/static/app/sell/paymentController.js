@@ -114,7 +114,7 @@
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":"2",
 				"cashId":$scope.cashId,
-				"status":"completed",
+				"status":"c",
 			"paidAmountCash":parseFloat($scope.paidAmountCash).toFixed(2),
 			"changeAmount":parseFloat($scope.changeAmount).toFixed(2),
 				"creditId":$scope.creditIdMulty,
@@ -158,7 +158,8 @@
 					 "retailWithDis":$rootScope.testData[i].discount,
 					 "totalProductPrice":$rootScope.testData[i].total,
 					 "transactionDate":GlobalVariable.transDate,
-					"discountPercentage":discPer
+					"discountPercentage":discPer,
+					"transactionStatus":"c"
 					 
 			});
 			}	
