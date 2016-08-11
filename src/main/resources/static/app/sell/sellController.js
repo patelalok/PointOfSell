@@ -106,9 +106,33 @@
 									"total" : ((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
 										.toFixed(2),
 									"stock" : GlobalVariable.getProducts[i].stock,
-									"costPrice" : GlobalVariable.getProducts[i].costPrice
+									"costPrice" : GlobalVariable.getProducts[i].costPrice,
+									"categoryName":GlobalVariable.getProducts[i].categoryName
 								});
-
+							if(GlobalVariable.getProducts[i].categoryName == 'Plans')
+							{
+								for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+									if(GlobalVariable.getProducts[i].productId = "3212763711")
+									{
+										$rootScope.testData
+											.push({
+												"itemNo" : GlobalVariable.getProducts[i].productId,
+												"item" : GlobalVariable.getProducts[i].description,
+												"quantity" : GlobalVariable.getProducts[i].quantity,
+												"retail" : GlobalVariable.getProducts[i].retailPrice,
+												"discount" : (parseFloat($scope.discount))
+													.toFixed(2),
+												"total" : ((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+													.toFixed(2),
+												"stock" : GlobalVariable.getProducts[i].stock,
+												"costPrice" : GlobalVariable.getProducts[i].costPrice,
+												"categoryName":GlobalVariable.getProducts[i].categoryName
+											});
+										break;
+									}
+								}
+							}
+							break;
 						}
 					}
 
@@ -128,7 +152,8 @@
 									"total" : ((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
 										.toFixed(2),
 									"stock" : GlobalVariable.getProducts[i].stock,
-									"costPrice" : GlobalVariable.getProducts[i].costPrice
+									"costPrice" : GlobalVariable.getProducts[i].costPrice,
+									"categoryName":GlobalVariable.getProducts[i].categoryName
 								});
 						}
 					}
@@ -173,7 +198,8 @@
 							"discount" : $scope.discount,
 							"total" : $scope.total,
 							"stock" : $rootScope.testData[$rootScope.testData.length - 1].stock,
-							"costPrice" : $rootScope.testData[$rootScope.testData.length - 1].costPrice
+							"costPrice" : $rootScope.testData[$rootScope.testData.length - 1].costPrice,
+							"categoryName":$rootScope.testData[$rootScope.testData.length - 1].categoryName
 						});
 					// for(var i=0;i<$rootScope.testData.length-1;i++)
 					// {
@@ -335,7 +361,8 @@
 				"discount" : GlobalVariable.editQuanDtls.discount,
 				"total" : editSub,
 				"stock" : GlobalVariable.editQuanDtls.stock,
-				"costPrice" : GlobalVariable.editQuanDtls.costPrice
+				"costPrice" : GlobalVariable.editQuanDtls.costPrice,
+				"categoryName" : GlobalVariable.editQuanDtls.categoryName
 			});
 			$scope.loadCheckOutData();
 		};
