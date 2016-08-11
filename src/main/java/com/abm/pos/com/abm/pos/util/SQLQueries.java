@@ -258,7 +258,8 @@ public class SQLQueries {
                     "TAX = ?, " +
                     "STORE_ADDRESS = ?, " +
                     "STORE_LOGO = ?, " +
-                    "FOOTER_RECEIPT = ? " +
+                    "FOOTER_RECEIPT = ?, " +
+                    "STORE_EMAIL = ? " +
                     "WHERE GET_PAGE_SETUP_DETAILS_ID = ?";
 
     public String editPaidOutDetails =
@@ -301,7 +302,7 @@ public class SQLQueries {
 
     public String updateLineItemDetailsStatus =
             "UPDATE TRANSACTION_LINE_ITEM SET " +
-                    "TRANSACTION_STATUS = 'returned' " +
+                    "TRANSACTION_STATUS = 'r' " +
                     "WHERE TRANSACTION_LINE_ITEM_ID = ?";
 
     public String updateProductQuantity =
@@ -407,13 +408,13 @@ public class SQLQueries {
 
     public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
 
-    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL ,sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ? ";
+    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL ,sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND STATUS = 'c' ";
 
-    public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ?";
+    public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ";
 
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
 
-    public String getMonthlyTransDetails = "SELECT date(t.TRANSACTION_DATE) as DATE, SUM(t.PAID_AMOUNT_CASH) SUM_CASH,sum(t.TOTAL_AMOUNT_CREDIT) SUM_CREDIT,sum(t.TOTAL_AMOUNT) TOTAL,sum(t.TAX_AMOUNT)  SUM_TAX, sum(t.DISCOUNT_AMOUNT) DISCOUNT, SUM(l.COST) COST, SUM(l.RETAIL) RETAIL, SUM((l.RETAIL - l.COST) * l.QUANTITY) PROFIT,count(t.TRANSACTION_COMP_ID) NOOFTRANS FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND t.TRANSACTION_DATE BETWEEN ? AND ? GROUP BY date(t.TRANSACTION_DATE)";
+    public String getMonthlyTransDetails = "SELECT date(t.TRANSACTION_DATE) as DATE, SUM(t.PAID_AMOUNT_CASH) SUM_CASH,sum(t.TOTAL_AMOUNT_CREDIT) SUM_CREDIT,sum(t.TOTAL_AMOUNT) TOTAL,sum(t.TAX_AMOUNT)  SUM_TAX, sum(t.DISCOUNT_AMOUNT) DISCOUNT, SUM(l.COST) COST, SUM(l.RETAIL) RETAIL, SUM((l.RETAIL - l.COST) * l.QUANTITY) PROFIT,count(t.TRANSACTION_COMP_ID) NOOFTRANS FROM TRANSACTION t, TRANSACTION_LINE_ITEM l  WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID AND t.TRANSACTION_DATE BETWEEN ? AND ? AND t.STATUS = 'c' AND l.TRANSACTION_STATUS = 'c' GROUP BY date(t.TRANSACTION_DATE)";
 
     public String getWeeklyTransDetails = "";
 
@@ -470,12 +471,12 @@ public class SQLQueries {
 
     public String getProductNumber = "SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_ID = ?";
 
-    public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(PAID_AMOUNT_CASH) CASH, SUM(TOTAL_AMOUNT_CREDIT) CREDIT, SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(TOTAL_AMOUNT) TOTAL,SUM(TAX_AMOUNT) TAX,SUM(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
+    public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(PAID_AMOUNT_CASH) CASH, SUM(TOTAL_AMOUNT_CREDIT) CREDIT, SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(TOTAL_AMOUNT) TOTAL,SUM(TAX_AMOUNT) TAX,SUM(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c' ";
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";
 
-    public String getPrpfitForCloseRegister = "SELECT SUM(( RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? ";
+    public String getPrpfitForCloseRegister = "SELECT SUM(( RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ";
 
     public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? ";
 
@@ -483,4 +484,6 @@ public class SQLQueries {
 
     public String productNoAndAltNoDTOs = "SELECT PRODUCT_NO,ATL_NO FROM PRODUCT";
     public String getLastTransactionId = "SELECT max(TRANSACTION_COMP_ID) FROM POINTOFSALE.TRANSACTION;";
+    public String updateTransactionStatus = "UPDATE TRANSACTION SET STATUS = ? WHERE TRANSACTION_COMP_ID = ? ";
+    public String addReturnEntryToTransactionMapper = "INSERT INTO TRANSACTION_MAPPER " ;
 }
