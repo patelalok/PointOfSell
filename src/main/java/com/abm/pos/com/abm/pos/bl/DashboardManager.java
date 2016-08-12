@@ -32,6 +32,9 @@ public class DashboardManager {
         {
             dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDateCurrent,endDateCurrent);
 
+
+            //HERE I NEED TO ADD THE LINE ITEM DISCOUNT CAUSE RIGHT NOW ITS SHOWING ONLY TRANSACTION DISCOUNT
+
         }
         catch (Exception e)
         {

@@ -214,7 +214,7 @@
 						"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
 						"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
 						"discountPercentage":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
-						"retwdisc":(parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail)/parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
+						"retwdisc":(parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice)/parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
 						"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
 						"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
 					}

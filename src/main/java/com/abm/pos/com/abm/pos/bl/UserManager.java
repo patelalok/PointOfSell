@@ -81,6 +81,7 @@ public class UserManager {
                 {
                     userLogin.setValidUser(true);
                     userLogin.setUserRole(u.getUserRole());
+                    userLogin.setUserId(u.getUserId());
                     break;
                 }
                 else

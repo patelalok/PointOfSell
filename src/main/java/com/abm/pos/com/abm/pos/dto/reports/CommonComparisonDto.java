@@ -7,10 +7,11 @@ public class CommonComparisonDto {
 
     private String commanName;
     private int quantity;
-    private double costPrice;
-    private double retailPrice;
+    private double salesTotal;
+    private double avgSalesTotal;
     private double profitAmount;
     private double markup;
+    private double discount;
     private double perOfTotalProfit;
 
 
@@ -20,14 +21,6 @@ public class CommonComparisonDto {
 
     public void setCommanName(String commanName) {
         this.commanName = commanName;
-    }
-
-    public double getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(double costPrice) {
-        this.costPrice = costPrice;
     }
 
     public double getMarkup() {
@@ -62,13 +55,27 @@ public class CommonComparisonDto {
         this.quantity = quantity;
     }
 
-    public double getRetailPrice() {
-        return retailPrice;
+    public double getAvgSalesTotal() {
+        return avgSalesTotal;
     }
 
-    public void setRetailPrice(double retailPrice) {
-        this.retailPrice = retailPrice;
+    public void setAvgSalesTotal(double avgSalesTotal) {
+        this.avgSalesTotal = avgSalesTotal;
     }
 
+    public double getSalesTotal() {
+        return salesTotal;
+    }
 
+    public void setSalesTotal(double salesTotal) {
+        this.salesTotal = salesTotal;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
 }

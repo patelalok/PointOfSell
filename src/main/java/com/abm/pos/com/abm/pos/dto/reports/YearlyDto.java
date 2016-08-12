@@ -17,8 +17,8 @@ public class YearlyDto {
     private double marginPercentage;
     private double total;
     private double monthAvg;
-    private double cost;
-    private double retail;
+    //private double cost;
+    //private double retail;
     private int noOfTrans;
     private double avgBasketSize;
 
@@ -44,14 +44,6 @@ public class YearlyDto {
 
     public void setCheck(double check) {
         this.check = check;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
     }
 
     public double getCredit() {
@@ -108,14 +100,6 @@ public class YearlyDto {
 
     public void setProfit(double profit) {
         this.profit = profit;
-    }
-
-    public double getRetail() {
-        return retail;
-    }
-
-    public void setRetail(double retail) {
-        this.retail = retail;
     }
 
     public double getReturnAmount() {
