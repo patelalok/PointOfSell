@@ -74,6 +74,7 @@
             $scope.totalQuantity = 0;
             $scope.subTotal = 0;
             $scope.productTotal = 0;
+            $scope.undelProdTotal =0;
 
         }
 
@@ -123,9 +124,15 @@
                 parseFloat($scope.productTotalWithoutTax)
                 + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
                 .toFixed(2);
+            $scope.undelProdTotal = Number(
+                parseFloat($scope.productTotalWithoutTax)
+                + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
+                .toFixed(2);
 
             if ($scope.returnprevBalance > 0) {
                 $scope.productTotal = parseFloat($scope.productTotal)
+                    + parseFloat($scope.returnprevBalance);
+                $scope.undelProdTotal = parseFloat($scope.productTotal)
                     + parseFloat($scope.returnprevBalance);
             }
             $rootScope.totalReturnPayment = $scope.productTotal;
@@ -264,22 +271,22 @@
                 var paidRTCr =0;
                 if(parseInt($scope.paidAmountReturn) == 0)
                 {
-                    paidRTCh = $scope.productTotal;
+                    paidRTCh = $scope.undelProdTotal;
                     paidRTCr =0;
                 }
                 else if(parseInt($scope.paidAmountCreditReturn) == 0)
                 {
                     paidRTCh = 0;
-                    paidRTCr =$scope.productTotal;
+                    paidRTCr =$scope.undelProdTotal;
                 }
                 else
                 {
-                    paidRTCh = $scope.productTotal;
+                    paidRTCh = $scope.undelProdTotal;
                     paidRTCr =0;
                 }
                 request = {
                     "transactionDate" : js_yyyy_mm_dd_hh_mm_ss(),
-                    "totalAmount" : $scope.productTotal,
+                    "totalAmount" : $scope.undelProdTotal,
                     "tax" : GlobalVariable.taxTotal,
                     "discount" : $scope.totalDisc,
                     "customerPhoneNo" : $scope.returnPhone,
@@ -296,16 +303,20 @@
 
                 };
                 request = JSON.stringify(request);
+                dataService.Post(url, request, returnTransactionSuccessHandler,
+                    returnTransactionErrorHandler, "application/json",
+                    "application/json");
             }
             else
             {
-                request=[];
+                request='';
+                dataService.Post(url, '', returnTransactionSuccessHandler,
+                    returnTransactionErrorHandler, "application/json",
+                    "application/json");
             }
 
 
-            dataService.Post(url, request, returnTransactionSuccessHandler,
-                returnTransactionErrorHandler, "application/json",
-                "application/json");
+
         };
         function returnTransactionSuccessHandler(response) {
             /*
@@ -313,7 +324,8 @@
              * $scope.subTotal = 0; $scope.productTotal = 0;
              * $rootScope.totalPayment = 0;
              */
-
+            var url = "http://localhost:8080/editTransactionLineItem?previousTransId="
+                + $scope.previousId;
             var request = [];
             if($scope.itemDeleted == true)
             {
@@ -334,19 +346,23 @@
                     });
                 }
                 request = JSON.stringify(request);
+                dataService.Post(url, request,
+                    returnTransactionLineItemSuccessHandler,
+                    returnTransactionLineItemErrorHandler, "application/json",
+                    "application/json");
             }
             else
             {
                 request=[];
+                dataService.Post(url, '',
+                    returnTransactionLineItemSuccessHandler,
+                    returnTransactionLineItemErrorHandler, "application/json",
+                    "application/json");
             }
 
-            var url = "http://localhost:8080/editTransactionLineItem?previousTransId="
-                + $scope.previousId;
 
-            dataService.Post(url, request,
-                returnTransactionLineItemSuccessHandler,
-                returnTransactionLineItemErrorHandler, "application/json",
-                "application/json");
+
+
 
         }
         function returnTransactionErrorHandler(response) {
