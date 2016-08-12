@@ -45,6 +45,7 @@
 				sessionStorage.userRole = response.userRole;
 				$scope.errorMessage = '';
 				sessionStorage.clockTime = js_yyyy_mm_dd_hh_mm_ss();
+				sessionStorage.userId =response.userId;
 
 				$state.go('home');
 			}

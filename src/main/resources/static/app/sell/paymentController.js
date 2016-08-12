@@ -112,7 +112,7 @@
 				"tax":parseFloat(GlobalVariable.taxTotal).toFixed(2),
 				"discount":parseFloat(GlobalVariable.discountTotal).toFixed(2) ,
 				"customerPhoneNo":$rootScope.customerPhone,
-				"userId":"2",
+				"userId":sessionStorage.userId,
 				"cashId":$scope.cashId,
 				"status":"c",
 			"paidAmountCash":parseFloat($scope.paidAmountCash).toFixed(2),

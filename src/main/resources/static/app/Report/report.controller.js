@@ -203,8 +203,8 @@
 			}
 			else
 			{
-				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
-				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 
 
@@ -326,8 +326,8 @@
 			}
 			else
 			{
-				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
-				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
 			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
@@ -383,8 +383,8 @@
 			}
 			else
 			{
-				start = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd HH:mm:ss");
-				end = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd HH:mm:ss");
+				start = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			var url="http://localhost:8080/getDailyTransactionDetails?startDate="+start+"&endDate="+end;
 				dataService.Get(url,onDailySucces,onDailyError,'application/json','application/json');
@@ -544,8 +544,8 @@
 			}
 			else
 			{
-				startDate = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
-				endDate = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+				startDate = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				endDate = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			var url='http://localhost:8080/getMonthlyTransactionDetails?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,onMonthlySucces,onMonthlyError,'application/json','application/json');

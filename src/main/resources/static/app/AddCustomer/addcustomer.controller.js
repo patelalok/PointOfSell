@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails','StateResponse'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails)
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails,StateResponse)
 	{
 		GlobalVariable.addedCustSuccessfull = false;
 		GlobalVariable.successCustAlert = false;
@@ -42,6 +42,16 @@
 					'id' : 'phoneNumber',
 					'msg' : 'Phone Number cannot be empty'
 				});
+			}
+			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
+			{
+				if($scope.phoneNumber == GlobalVariable.getCustomerDtls[i].phoneNo)
+				{
+					authElemArray.push({
+						'id' : 'phoneNumber',
+						'msg' : 'Phone Number already exists'
+					});
+				}
 			}
 			if (authElemArray.length >= 1) {
 				util.customError.show(authElemArray, "");
@@ -153,6 +163,8 @@
 				$scope.Country = GlobalVariable.editedCountry;
 				$scope.postalCode = GlobalVariable.editedCode;
 			}
+
+			$scope.stateOptions = StateResponse.stateResponse.Response.stateDetail;
 		}
 		function js_yyyy_mm_dd_hh_mm_ss () {
 			var now = new Date();
