@@ -111,7 +111,7 @@ public class ClosingDetailsManager {
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
 
             //Getting the discount from the lineitem table to get product level discount.
-            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getgetDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
+            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
 
             double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
 
@@ -123,7 +123,7 @@ public class ClosingDetailsManager {
                 closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
-                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal() + dashboardDto.getTax());
+                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
                     //System.out.println(lineItemDiscount);
@@ -147,7 +147,7 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportCredit(dashboardDto.getCredit());
                 closingDetailsDto.setReportCheck(dashboardDto.getCheck());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
-                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal() + dashboardDto.getTax());
+                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
 
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
@@ -228,9 +228,16 @@ public class ClosingDetailsManager {
 
         HourlyMapper mapper = new HourlyMapper();
 
-
         try {
-            hourlyList = jdbcTemplate.query(sqlQueries.getHourlyTransactions, mapper, startDate, endDate);
+
+            hourlyList = jdbcTemplate.query(sqlQueries.getHourlyTransactions, mapper, startDate, endDate, startDate, endDate);
+
+
+
+            //jdbcTemplate.query(sqlQueries.getHorlyProfit);
+
+
+
 
         } catch (Exception e) {
             System.out.println(e);
@@ -254,11 +261,6 @@ public class ClosingDetailsManager {
 
         List<HourlyDto> hourlyDtosList = new ArrayList<>();
 
-        FinalTotalForReportsDto forReportsDto = new FinalTotalForReportsDto();
-
-        List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
-
-
         @Override
         public HourlyListDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -276,10 +278,11 @@ public class ClosingDetailsManager {
             hourlyDto.setTax(rs.getDouble("TAX"));
             hourlyDto.setDiscount(rs.getDouble("DISCOUNT"));
             hourlyDto.setTotal(rs.getDouble("TOTAL"));
-            hourlyDto.setCost(rs.getDouble("COST"));
-            hourlyDto.setRetail(rs.getDouble("RETAIL"));
-            hourlyDto.setProfit(rs.getDouble("PROFIT"));
             hourlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
+            //hourlyDto.setCost(rs.getDouble("COST"));
+           // hourlyDto.setRetail(rs.getDouble("RETAIL"));
+            hourlyDto.setProfit(rs.getDouble("PROFIT"));
+
 
             hourlyDtosList.add(hourlyDto);
 
@@ -314,6 +317,22 @@ public class ClosingDetailsManager {
         }
     }
 
+    private final class HourlyProfitMapper implements RowMapper<HourlyDto> {
+
+
+        @Override
+        public HourlyDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+
+            HourlyDto hourlyDto = new HourlyDto();
+
+            hourlyDto.setProfit(rs.getDouble("PROFIT"));
+
+            return hourlyDto;
+        }
+    }
+
+
 
     public YearlyListDto getYearlyTransactionDetails(String startDate, String endDate) {
 
@@ -324,7 +343,7 @@ public class ClosingDetailsManager {
 
         try
         {
-            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper,startDate,endDate);
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper,startDate,endDate, startDate, endDate);
 
             //Need Think of Adding Discount and Profit here
         }
@@ -368,8 +387,8 @@ public class ClosingDetailsManager {
             yearlyDto.setTax(rs.getDouble("TAX"));
             yearlyDto.setDiscount(rs.getDouble("DISCOUNT"));
             yearlyDto.setTotal(rs.getDouble("TOTAL"));
-            yearlyDto.setCost(rs.getDouble("COST"));
-            yearlyDto.setRetail(rs.getDouble("RETAIL"));
+            //yearlyDto.setCost(rs.getDouble("COST"));
+            //yearlyDto.setRetail(rs.getDouble("RETAIL"));
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
             yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
 
@@ -412,7 +431,7 @@ public class ClosingDetailsManager {
         List<MonthlyListDto> monthlyListDtos = new ArrayList<>();
         MonthlyDetailsMapper mapper = new MonthlyDetailsMapper();
         try {
-            monthlyListDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, mapper, startDate, endDate);
+            monthlyListDtos = jdbcTemplate.query(sqlQueries.getMonthlyTransDetails, mapper, startDate, endDate, startDate, endDate);
 
             //Need Think of Adding Discount and Profit here
 
@@ -656,7 +675,7 @@ public class ClosingDetailsManager {
            // System.out.println(profit-trans.get(0).getDiscount());
 
             //Getting discount from lineItem table and adding with transaction table discount cause they 2 separate discounts
-            double lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getgetDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, double.class);
+            double lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, double.class);
            // System.out.println(lineItemDiscount + trans.get(0).getDiscount());
             trans.get(0).setDiscount(trans.get(0).getDiscount() + lineItemDiscount);
           //  System.out.println(trans.get(0).getDiscount());
@@ -691,7 +710,7 @@ public class ClosingDetailsManager {
             System.out.println(dateFormat.format(date));
             trans.setNoOfTransactions(rs.getInt("NOOFTRANS"));
             trans.setAvgTotal(rs.getDouble("AVGTOTAL"));
-            trans.setTotal(rs.getDouble("TOTAL") + rs.getDouble("TAX"));
+            trans.setTotal(rs.getDouble("TOTAL"));
             trans.setCash(rs.getDouble("CASH"));
             trans.setCredit(rs.getDouble("CREDIT"));
             trans.setCheck(rs.getDouble("SUMCHECK"));
@@ -706,7 +725,7 @@ public class ClosingDetailsManager {
 
     public String getLineItemDiscount(String startDate, String endDate)
     {
-        String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getgetDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
+        String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
 
         return lineItemDiscount;
     }

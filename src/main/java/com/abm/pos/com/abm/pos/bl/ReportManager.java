@@ -178,10 +178,14 @@ public class ReportManager {
             CommonComparisonDto commonComparisonDto = new CommonComparisonDto();
 
             commonComparisonDto.setCommanName(rs.getString("COMMON_NAME"));
-            commonComparisonDto.setCostPrice(rs.getDouble("COST"));
-            commonComparisonDto.setRetailPrice(rs.getDouble("RETAIL"));
+            commonComparisonDto.setSalesTotal(rs.getDouble("SALESTOTAL"));
             commonComparisonDto.setQuantity(rs.getInt("QUANTITY"));
             commonComparisonDto.setProfitAmount(rs.getDouble("PROFIT"));
+            commonComparisonDto.setDiscount(rs.getDouble("DISCOUNT"));
+            //commonComparisonDto.setCostPrice(rs.getDouble("COST"));
+            //commonComparisonDto.setRetailPrice(rs.getDouble("RETAIL"));
+
+
 
             return commonComparisonDto;
         }
