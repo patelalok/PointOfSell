@@ -84,6 +84,7 @@
 		 <div  ng-show="reportType == 'salesSummary' && measureType=='hourlySummary'">
 			<select id="hlyTransType" data-ng-model="hlyTransType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesHourlyData(hlyTransType)">
 
+				<option value="today">Today</option>
 				<option value="yest">Yesterday</option>
 				<option value="lastWeek">last 7 days from today</option>
 				<option value="thisMonth">this month</option>
@@ -99,6 +100,7 @@
 		 <div  ng-show="reportType == 'salesCategory' || reportType == 'salesVendor' || reportType == 'salesBrand' || reportType == 'salesCustomer' || reportType == 'salesProduct' || reportType == 'salesUser'">
 			 <select id="slCatType" data-ng-model="slCatType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesCatData(slCatType,reportType)">
 
+				 <option value="todaySales">Today</option>
 				 <option value="yestSales">Yesterday</option>
 				 <option value="lastWeekSales">last 7 days from today</option>
 				 <option value="thisMonthSales">this month</option>

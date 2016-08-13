@@ -113,8 +113,12 @@
 				</div>
 				<div class="col-md-6">
                         <label for="State" class="padding-bottom-5 font-weight-label">State</label>
-                        <input type="text" class="form-control" name="State" id="State" data-ng-model="State"
-                        autocomplete="off" autofocus placeholder = "Enter State" style="width:100%;height:50px;" />
+                        <!--<input type="text" class="form-control" name="State" id="State" data-ng-model="State"
+                        autocomplete="off" autofocus placeholder = "Enter State" style="width:100%;height:50px;" />-->
+					<select name="repeatSelect" id="State" ng-model="State">
+						<option ng-repeat="state in stateOptions" value="{{state.stateCode}}">{{state.stateDecsription}}</option>
+					</select>
+
 				</div>
 			</div>
 			<div class="row padding-top-15">

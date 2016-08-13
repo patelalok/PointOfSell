@@ -65,6 +65,11 @@
 			var _ctrlPath = 'addCustomerController';
 			DialogFactory.show(_tmPath, _ctrlPath, callbackAddCustomer);
 		};
+		$scope.barLimit = 50;
+		$scope.increaseLimit = function () {
+			$scope.barLimit += 50;
+			console.log('Increase Bar Limit', $scope.barLimit)
+		}
 		function render()
 		{
 

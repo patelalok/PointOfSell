@@ -112,7 +112,7 @@
 				"tax":parseFloat(GlobalVariable.taxTotal).toFixed(2),
 				"discount":parseFloat(GlobalVariable.discountTotal).toFixed(2) ,
 				"customerPhoneNo":$rootScope.customerPhone,
-				"userId":"2",
+				"userId":sessionStorage.userId,
 				"cashId":$scope.cashId,
 				"status":"c",
 			"paidAmountCash":parseFloat($scope.paidAmountCash).toFixed(2),
@@ -162,7 +162,12 @@
 					"transactionStatus":"c"
 					 
 			});
-			}	
+			}
+			if(GlobalVariable.printReceiptTrans == true)
+			{
+				var url="http://localhost:8080/getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
+				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+			}
 			var url ="http://localhost:8080/addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
@@ -171,8 +176,8 @@
 		};
 		function addTransactionErrorHandler(response)
 		{
-			
-		};
+
+		}
 		function addTransactionLineItemSuccessHandler(response)
 		{
 			$rootScope.testData = [];

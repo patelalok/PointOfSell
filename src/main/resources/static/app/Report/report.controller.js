@@ -63,27 +63,27 @@
 			$scope.slCatType = 'yestSales';
 			if($scope.reportType == 'salesCategory')
 			{
-				$scope.loadSalesCatData('yestSales','salesCategory');
+				$scope.loadSalesCatData('todaySales','salesCategory');
 			}
 			else if($scope.reportType == 'salesBrand')
 			{
-				$scope.loadSalesCatData('yestSales','salesBrand');
+				$scope.loadSalesCatData('todaySales','salesBrand');
 			}
 			else if($scope.reportType == 'salesVendor')
 			{
-				$scope.loadSalesCatData('yestSales','salesVendor');
+				$scope.loadSalesCatData('todaySales','salesVendor');
 			}
 			else if($scope.reportType == 'salesUser')
 			{
-				$scope.loadSalesCatData('yestSales','salesUser');
+				$scope.loadSalesCatData('todaySales','salesUser');
 			}
 			else if($scope.reportType == 'salesProduct')
 			{
-				$scope.loadSalesCatData('yestSales','salesProduct');
+				$scope.loadSalesCatData('todaySales','salesProduct');
 			}
 			else if($scope.reportType == 'salesCustomer')
 			{
-				$scope.loadSalesCatData('yestSales','salesCustomer');
+				$scope.loadSalesCatData('todaySales','salesCustomer');
 			}
 			else if($scope.reportType == 'salesSummary')
 			{
@@ -141,7 +141,7 @@
 			}
 			else if($scope.measureType == 'hourlySummary')
 			{
-				$scope.loadSalesHourlyData('yest');
+				$scope.loadSalesHourlyData('today');
 			}
 			else if($scope.measureType == 'yearlySummary')
 			{
@@ -159,7 +159,13 @@
 		{
 			var url;
 			var start,end;
-			if(saleDate == 'yestSales')
+
+			if(hr=='todaySales')
+			{
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'yestSales')
 			{
 				start = getPreviousDay()+''+' 00:00:00';
 				end = getPreviousDay()+''+' 23:59:59';
@@ -203,8 +209,8 @@
 			}
 			else
 			{
-				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
-				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 
 
@@ -282,7 +288,13 @@
 		$scope.loadSalesHourlyData = function(hr)
 		{
 			var start,end;
-			if(hr == 'yest')
+
+			if(hr=='today')
+			{
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
+			}
+			else if(hr == 'yest')
 			{
 				start = getPreviousDay()+''+' 00:00:00';
 				end = getPreviousDay()+''+' 23:59:59';
@@ -326,8 +338,8 @@
 			}
 			else
 			{
-				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
-				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
 			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
@@ -383,8 +395,8 @@
 			}
 			else
 			{
-				start = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd HH:mm:ss");
-				end = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd HH:mm:ss");
+				start = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			var url="http://localhost:8080/getDailyTransactionDetails?startDate="+start+"&endDate="+end;
 				dataService.Get(url,onDailySucces,onDailyError,'application/json','application/json');
@@ -544,8 +556,8 @@
 			}
 			else
 			{
-				startDate = $filter('date')($scope.startTransDate, "yyyy-MM-dd HH:mm:ss");
-				endDate = $filter('date')($scope.endTransDate, "yyyy-MM-dd HH:mm:ss");
+				startDate = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				endDate = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			var url='http://localhost:8080/getMonthlyTransactionDetails?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,onMonthlySucces,onMonthlyError,'application/json','application/json');
