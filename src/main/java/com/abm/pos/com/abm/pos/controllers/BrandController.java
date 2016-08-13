@@ -3,6 +3,7 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.BrandManager;
 import com.abm.pos.com.abm.pos.dto.BrandDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -37,9 +38,9 @@ public class BrandController {
        return brandManager.getBrandDetails();
     }
 
-   /* @RequestMapping(method = RequestMethod.DELETE, value = "/{brandId}")
-    public void deleteVendor(@PathVariable int  brandId) {
+    @RequestMapping(value = "/deleteBrand" ,method = RequestMethod.DELETE)
+    public void deleteVendor(@RequestParam int  brandId) {
 
-        brandManager.deleteBrandFromDB(brandId);
-    }*/
+       brandManager.deleteBrandFromDB(brandId);
+    }
 }

@@ -386,7 +386,7 @@ public class SQLQueries {
 
     //SQL QUERY TO DELETE FROM DATABASE
 
-    public String deleteProduct = "DELETE FROM PRODUCT WHERE ";
+    public String deleteProduct = "DELETE FROM PRODUCT WHERE PRODUCT_ID = ?";
 
     public String deleteCustomer = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
 
