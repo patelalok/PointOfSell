@@ -113,7 +113,6 @@ public class ProductManager
 
                 ProductDto product = new ProductDto();
 
-                product.setProductId(rs.getInt("PRODUCT_ID"));
                 product.setProductNo(rs.getString("PRODUCT_NO"));
                 product.setCategoryId(rs.getInt("CATEGORY_ID"));
                 product.setCategoryName(jdbcTemplate.queryForObject(sqlQuery.getCategoryName, new Object[] {product.getCategoryId()},String.class));
