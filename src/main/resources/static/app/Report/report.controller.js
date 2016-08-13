@@ -36,8 +36,8 @@
 			$scope.reportType = 'salesSummary';
 			$scope.measureType = 'yearlySummary';
 			$scope.dlyTransType = 'thisDay';
-			$scope.hlyTransType = 'yest';
-			$scope.slCatType = 'yestSales';
+			$scope.hlyTransType = 'today';
+			$scope.slCatType = 'todaySales';
 			$scope.cType = 'cat';
 			
 			//$scope.startDate = moment();
@@ -60,7 +60,7 @@
 		}
 		$scope.checkType = function()
 		{
-			$scope.slCatType = 'yestSales';
+			$scope.slCatType = 'todaySales';
 			if($scope.reportType == 'salesCategory')
 			{
 				$scope.loadSalesCatData('todaySales','salesCategory');
@@ -160,7 +160,7 @@
 			var url;
 			var start,end;
 
-			if(hr=='todaySales')
+			if(saleDate=='todaySales')
 			{
 				start = getCurrentDay()+''+' 00:00:00';
 				end = getCurrentDay()+''+' 23:59:59';

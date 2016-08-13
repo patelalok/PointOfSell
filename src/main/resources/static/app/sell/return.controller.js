@@ -148,8 +148,8 @@
                 for (var i = 0; i < GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length; i++) {
                     $rootScope.returnData
                         .push({
-                            "itemNo" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
-                            "item" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
+                            "itemNo" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
+                            "item" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productDescription,
                             "quantity" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
                             "retail" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retail,
                             "discount" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
