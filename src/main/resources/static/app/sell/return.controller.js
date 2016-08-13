@@ -333,7 +333,7 @@
                     request.push({
 
                         "transactionCompId" : parseInt($scope.lastTransId) +1,
-                        "productId" : $rootScope.returnData[i].itemNo,
+                        "productNumber" : $rootScope.returnData[i].itemNo,
                         "quantity" : $rootScope.returnData[i].quantity,
                         "retail" : $rootScope.returnData[i].retail,
                         "cost" : $rootScope.returnData[i].costPrice,

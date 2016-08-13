@@ -18,7 +18,8 @@
             var request= {};
             request={
                 'id':$scope.taxId,
-                'tax':$scope.taxValue
+                'tax':$scope.taxValue,
+                'storeAddress':$scope.stireAdd
             };
             request = JSON.stringify(request);
             var url="http://localhost:8080/addTax";
@@ -32,7 +33,7 @@
                 {
                     "id": parseFloat($scope.taxId),
                     "tax": parseFloat($scope.taxValue),
-                    "storeAddress": "3210 Tucker Norcross Rd Suite J, Tucker, Gorgia 30084",
+                    "storeAddress": $scope.stireAdd,
                     "storeLogo": null,
                     "footerReceipt": "Phones can be returned within 7 days with a restocking fee of 25% with the receipt.  No exception. Accessory sales sre final, no refunds or exchnage."
                 };
@@ -71,6 +72,7 @@
                 {
                     $scope.taxId= GlobalVariable.editTaxId;
                     $scope.taxValue = GlobalVariable.editedTax;
+                    $scope.stireAdd=GlobalVariable.strAdd;
                 }
         }
         render();

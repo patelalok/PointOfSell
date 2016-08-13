@@ -78,6 +78,7 @@
 			GlobalVariable.editTax = true;
 			GlobalVariable.editTaxId = row.id;
 			GlobalVariable.editedTax = row.tax;
+			GlobalVariable.strAdd = row.storeAddress;
 			var _tmPath = 'app/Setup/TaxDetails.html';
 			var _ctrlPath = 'TaxController';
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackAddTax);

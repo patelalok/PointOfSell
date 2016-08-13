@@ -17,7 +17,7 @@
                            ng-model-options="{allowInvalid: true}" name="startDate"
                            is-open="openStart" date-cleared="dateCleared" date-length="10"
                            id="startDate" placeholder="YYYY-MM-DD" disabled="disabled"
-                           max-date="maxDate"> <span class="input-group-btn">
+                           min-date="minDate" max-date="maxDate"> <span class="input-group-btn" >
 						<button type="button" class="btn btn-default"
                                 ng-click="openStartCalendar($event)">
 							<i class="glyphicon glyphicon-calendar"></i>
@@ -30,7 +30,7 @@
     </div>
     <div class="row productBtns" style="padding: 30px;">
         <div class="col-md-12">
-            <div data-responsive-table data-ng-model="getClockHistory"  data-current-page="currentPageIndexArr"
+            <div data-responsive-table data-ng-model="clockdata"  data-current-page="currentPageIndexArr"
                  class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
                  on-sort="sortColumnData(index)" >
                 <columns>
@@ -38,8 +38,8 @@
                     <column name="Clock In Time" key="clockInTime" datatype="string" width="14%"></column>
                     <column name="Clock Out Time" key="clockOutTime" datatype="string" width="14%"></column>
                     <column name="No Of Hours" key="noOfhours" datatype="string" width="14%"></column>
-                    <column name="HrlyRate" key="HrlyRate" datatype="string" width="14%"></column>
-                    <column name="Total" key="HrlyRate" datatype="string" width="14%"></column>
+                    <column name="HrlyRate" key="hrlyRate" datatype="string" width="14%"></column>
+                    <column name="Total" key="total" datatype="string" width="14%"></column>
                     <column name="" key="" datatype="" width="16%">
                         <cell ng-non-bindable>
 

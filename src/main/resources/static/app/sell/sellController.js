@@ -112,7 +112,7 @@
 							if(GlobalVariable.getProducts[i].categoryName == 'Plans')
 							{
 								for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
-									if(GlobalVariable.getProducts[i].productId = "1000000027")
+									if(GlobalVariable.getProducts[i].productNo = "1000000027")
 									{
 										$rootScope.testData
 											.push({
