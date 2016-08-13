@@ -109,7 +109,7 @@ public class SQLQueries {
             "(TRANSACTION_COMP_ID," +
                     "DATE," +
                     "TRANSACTION_STATUS," +
-                    "PRODUCT_ID," +
+                    "PRODUCT_NO," +
                     "QUANTITY," +
                     "RETAIL," +
                     "COST," +
@@ -207,7 +207,7 @@ public class SQLQueries {
                     "IMAGE = ?, " +
                     "IMEI_NUMBER = ?, " +
                     "TAX = ? " +
-                    "WHERE PRODUCT_ID = ?";
+                    "WHERE PRODUCT_NO = ?";
 
     public String editCustomerQuery = "UPDATE CUSTOMER" +
             " SET FIRST_NAME = ?,  " +
@@ -308,12 +308,12 @@ public class SQLQueries {
     public String updateProductQuantity =
             "UPDATE PRODUCT SET " +
                     "QUANTITY = ? " +
-                    "WHERE PRODUCT_ID = ?";
+                    "WHERE PRODUCT_NO = ?";
 
     public String editTransactionLineItem =
             "UPDATE TRANSACTION_LINE_ITEM SET " +
                     "DATE = ?, " +
-                    "PRODUCT_ID = ?, " +
+                    "PRODUCT_NO = ?, " +
                     "QUANTITY = ?, " +
                     "RETAIL = ?, " +
                     "COST = ?, " +
@@ -386,7 +386,7 @@ public class SQLQueries {
 
     //SQL QUERY TO DELETE FROM DATABASE
 
-    public String deleteProduct = "DELETE FROM PRODUCT WHERE PRODUCT_ID = ?";
+    public String deleteProduct = "DELETE FROM PRODUCT WHERE PRODUCT_NO = ?";
 
     public String deleteCustomer = "DELETE FROM CUSTOMER WHERE CUSTOMER_ID = ?";
 
@@ -410,11 +410,11 @@ public class SQLQueries {
 
     public String getTransactionDetailsForReceipt = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 
-    public static String getProductHistory = "SELECT t.DATE,p.PRODUCT_ID,p.PRODUCT_NO,p.DESCRIPTION,t.QUANTITY,t.RETAIL," +
-                                            "t.COST,t.DISCOUNT FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_ID=p.PRODUCT_ID AND t.PRODUCT_ID = ?";
-    public static String getProductHistoryCount = "SELECT SUM(QUANTITY) FROM TRANSACTION_LINE_ITEM where PRODUCT_ID = ?";
+    public static String getProductHistory = "SELECT t.DATE,p.PRODUCT_NO,p.DESCRIPTION,t.QUANTITY,t.RETAIL," +
+                                            "t.COST,t.DISCOUNT FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_NO=p.PRODUCT_NO AND t.PRODUCT_NO = ?";
+    public static String getProductHistoryCount = "SELECT SUM(QUANTITY) FROM TRANSACTION_LINE_ITEM where PRODUCT_NO = ?";
 
-    public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_ID = ?";
+    public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 
     public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
 
@@ -438,11 +438,11 @@ public class SQLQueries {
 
     public String getWeeklyTransDetails = "";
 
-    public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_ID = ?";
+    public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_NO = ?";
 
     public String getTop50Items = "SELECT PRODUCT.PRODUCT_NO,PRODUCT.DESCRIPTION,sum(TRANSACTION_LINE_ITEM.QUANTITY) QUANTITY," +
                                   "sum(TRANSACTION_LINE_ITEM.RETAIL) RETAIL, sum(TRANSACTION_LINE_ITEM.COST) COST FROM PRODUCT JOIN " +
-                                  "TRANSACTION_LINE_ITEM on TRANSACTION_LINE_ITEM.PRODUCT_ID=PRODUCT.PRODUCT_ID WHERE DATE BETWEEN " +
+                                  "TRANSACTION_LINE_ITEM on TRANSACTION_LINE_ITEM.PRODUCT_NO=PRODUCT.PRODUCT_NO WHERE DATE BETWEEN " +
                                   "? AND ? GROUP BY PRODUCT.PRODUCT_NO";
 
     public String getYearlyTransaction = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth, " +
@@ -481,7 +481,7 @@ public class SQLQueries {
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE " +
             "FROM TRANSACTION_LINE_ITEM t, CATEGORY c, PRODUCT p " +
-            "WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE " +
+            "WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE " +
             "BETWEEN ? AND ? AND t.TRANSACTION_STATUS = 'c' group by c.CATEGORY_NAME ";
 
     public String getHourlyTransactions = "SELECT Hour(t.TRANSACTION_DATE) AS HOUR, " +
@@ -504,7 +504,7 @@ public class SQLQueries {
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) " +
             "FROM TRANSACTION_LINE_ITEM t, VENDOR v, PRODUCT p " +
-            "WHERE t.PRODUCT_ID = p.PRODUCT_ID  " +
+            "WHERE t.PRODUCT_NO = p.PRODUCT_NO  " +
             "AND v.VENDOR_ID = p.VENDOR_ID " +
             "AND t.DATE  " +
             "BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
@@ -517,7 +517,7 @@ public class SQLQueries {
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) " +
             "FROM TRANSACTION_LINE_ITEM t, BRAND b, PRODUCT p " +
-            "WHERE t.PRODUCT_ID = p.PRODUCT_ID " +
+            "WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
             "AND b.BRAND_ID = p.BRAND_ID " +
             "AND t.DATE " +
             "BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
@@ -530,18 +530,18 @@ public class SQLQueries {
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) " +
             "FROM TRANSACTION_LINE_ITEM t, PRODUCT p " +
-            "WHERE t.PRODUCT_ID = p.PRODUCT_ID " +
+            "WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
             "AND t.DATE " +
             "BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
             "group by p.DESCRIPTION" ;
 
     public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
 
-    public String getInventoryByCategory = "SELECT c.CATEGORY_NAME as COMMON_NAME, count(p.PRODUCT_ID) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, CATEGORY c WHERE p.CATEGORY_ID = c.CATEGORY_ID GROUP BY c.CATEGORY_NAME";
+    public String getInventoryByCategory = "SELECT c.CATEGORY_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, CATEGORY c WHERE p.CATEGORY_ID = c.CATEGORY_ID GROUP BY c.CATEGORY_NAME";
 
-    public String getInventoryByVendor = "SELECT v.VENDOR_NAME as COMMON_NAME, count(p.PRODUCT_ID) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, VENDOR v WHERE p.VENDOR_ID = v.VENDOR_ID GROUP BY  v.VENDOR_NAME";
+    public String getInventoryByVendor = "SELECT v.VENDOR_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, VENDOR v WHERE p.VENDOR_ID = v.VENDOR_ID GROUP BY  v.VENDOR_NAME";
 
-    public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_ID) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, BRAND b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
+    public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, BRAND b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
 
     public String getSalesbyCustomer = "SELECT  c.FIRST_NAME as COMMON_NAME , " +
             "sum(t.TOTALPRODUCTPRICE) SALESTOTAL, " +
@@ -550,12 +550,12 @@ public class SQLQueries {
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT " +
             "FROM TRANSACTION_LINE_ITEM t, CUSTOMER c, PRODUCT p, " +
-            "TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID " +
+            "TRANSACTION l WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
             "AND c.PHONE_NO = l.CUSTOMER_PHONENO " +
             "AND t.DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
             "group by c.FIRST_NAME";
 
-    public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, USER u, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_ID = p.PRODUCT_ID  AND u.USER_ID = l.USER_ID AND t.DATE BETWEEN ? AND ? group by u.USERNAME";
+    public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, USER u, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND u.USER_ID = l.USER_ID AND t.DATE BETWEEN ? AND ? group by u.USERNAME";
 
     public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
 
@@ -575,7 +575,7 @@ public class SQLQueries {
 
     public String getTotalProfitForCloseRegister =   "SELECT SUM(RETAIL - COST) PROFIT FROM TRANSACTION_LINE_ITEM  WHERE DATE BETWEEN ? AND ? ";
 
-    public String getProductNumber = "SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_ID = ?";
+    public String getProductNumber = "SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_NO = ?";
 
     public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(PAID_AMOUNT_CASH) CASH, SUM(TOTAL_AMOUNT_CREDIT) CREDIT, SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(TOTAL_AMOUNT) TOTAL,SUM(TAX_AMOUNT) TAX,SUM(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c' ";
 

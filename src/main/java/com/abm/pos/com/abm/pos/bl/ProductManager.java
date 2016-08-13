@@ -169,7 +169,6 @@ public class ProductManager
             TransactionLineItemDto productHistory = new TransactionLineItemDto();
 
             productHistory.setTransactionDate(rs.getString("DATE"));
-            productHistory.setProductId(rs.getInt("PRODUCT_ID"));
             productHistory.setProductNumber(rs.getString("PRODUCT_NO"));
             productHistory.setProductDescription(rs.getString("DESCRIPTION"));
             productHistory.setQuantity(rs.getInt("QUANTITY"));
@@ -178,7 +177,7 @@ public class ProductManager
             productHistory.setDiscount(rs.getDouble("DISCOUNT"));
 
             // NEED TO FIND THE LOGIC TO TAKE THIS DB CALL OUT FROM SUM OF QUANTITY
-            productHistory.setProductCount(jdbcTemplate.queryForObject(SQLQueries.getProductHistoryCount,new Object[] {productHistory.getProductId()}, String.class));
+            productHistory.setProductCount(jdbcTemplate.queryForObject(SQLQueries.getProductHistoryCount,new Object[] {productHistory.getProductNumber()}, String.class));
 
             return productHistory;
         }

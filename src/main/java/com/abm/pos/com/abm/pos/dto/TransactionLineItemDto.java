@@ -7,7 +7,6 @@ public class TransactionLineItemDto {
 
     private int transactionLineItemId;
     private int transactionCompId;
-    private int productId;
     private String productNumber;
     private int quantity;
     private double retail;
@@ -82,17 +81,6 @@ public class TransactionLineItemDto {
 
     public void setTransactionCompId(int transactionCompId) {
         this.transactionCompId = transactionCompId;
-    }
-
-
-
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
     }
 
     public double getCost() {

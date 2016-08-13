@@ -329,9 +329,9 @@ public class SalesManager {
                     ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
                     ps.setString(2, transactionLineItemDto1.getTransactionDate());
                     ps.setString(3, transactionLineItemDto1.getTransactionStatus());
-                    ps.setInt(4, transactionLineItemDto1.getProductId());
+                    ps.setString(4, transactionLineItemDto1.getProductNumber());
 
-                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[] {transactionLineItemDto1.getProductId()}, Integer.class);
+                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[] {transactionLineItemDto1.getProductNumber()}, Integer.class);
 
                     ps.setInt(5, transactionLineItemDto1.getQuantity());
 
@@ -340,7 +340,7 @@ public class SalesManager {
                     //reducing quantity into Stock for transaction
                     productQuantity = productQuantity - transQuantity;
 
-                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, transactionLineItemDto1.getProductId());
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, transactionLineItemDto1.getProductNumber());
 
                     ps.setDouble(6, transactionLineItemDto1.getRetail());
                     ps.setDouble(7, transactionLineItemDto1.getCost());
@@ -389,19 +389,19 @@ public class SalesManager {
 
 
                 for (int j = 0; j < lineItemDtoList1.size(); j++) {
-                    System.out.println(lineItemDtoList1.get(j).getProductId());
+                    System.out.println(lineItemDtoList1.get(j).getProductNumber());
                     System.out.println(lineItemDtoList1.get(j).getQuantity());
 
                     int productQuantity = 0;
 
                     int productQuantity1 = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
-                            {lineItemDtoList1.get(j).getProductId()}, Integer.class);
+                            {lineItemDtoList1.get(j).getProductNumber()}, Integer.class);
 
                     productQuantity = productQuantity1 + lineItemDtoList1.get(j).getQuantity();
 
                     System.out.println(productQuantity);
 
-                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductId());
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductNumber());
 
                     System.out.println("Porduct Quantity updated successfully");
                 }
@@ -474,9 +474,8 @@ public class SalesManager {
             lineItem.setTransactionLineItemId(rs.getInt("TRANSACTION_LINE_ITEM_ID"));
             lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             lineItem.setTransactionDate(rs.getString("DATE"));
-            lineItem.setProductId(rs.getInt("PRODUCT_ID"));
-            lineItem.setProductNumber(jdbcTemplate.queryForObject(sqlQuery.getProductNumber, new Object[]{lineItem.getProductId()}, String.class));
-            lineItem.setProductDescription(jdbcTemplate.queryForObject(sqlQuery.getProductDescription, new Object[]{lineItem.getProductId()}, String.class));
+            lineItem.setProductNumber(jdbcTemplate.queryForObject(sqlQuery.getProductNumber, new Object[]{lineItem.getProductNumber()}, String.class));
+            lineItem.setProductDescription(jdbcTemplate.queryForObject(sqlQuery.getProductDescription, new Object[]{lineItem.getProductNumber()}, String.class));
             lineItem.setQuantity(rs.getInt("QUANTITY"));
             lineItem.setRetail(rs.getDouble("RETAIL"));
             lineItem.setCost(rs.getDouble("COST"));
