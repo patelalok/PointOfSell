@@ -6,6 +6,7 @@ package com.abm.pos.com.abm.pos.dto;
 public class CustomerDto {
 
     private String firstName;
+    private String onlyFirstName;
     private String lastName;
     private String phoneNo;
     private String email;
@@ -38,6 +39,14 @@ public class CustomerDto {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getOnlyFirstName() {
+        return onlyFirstName;
+    }
+
+    public void setOnlyFirstName(String onlyFirstName) {
+        this.onlyFirstName = onlyFirstName;
     }
 
     public String getCountry() {
