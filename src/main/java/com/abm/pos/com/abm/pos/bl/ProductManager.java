@@ -211,7 +211,9 @@ public class ProductManager
             return productNoAndAltNoDTO;
         }
     }
-    public void deleteProductToDB(String productNo) {
+    public void deleteProductToDB(String productId) {
+
+        jdbcTemplate.update(sqlQuery.deleteProduct, productId);
 
     }
 

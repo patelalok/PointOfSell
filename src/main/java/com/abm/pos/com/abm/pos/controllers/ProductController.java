@@ -50,10 +50,12 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")
-    public void deleteProduct(@RequestBody String productNo) {
+    @RequestMapping(value = "/deleteProduct", method = RequestMethod.DELETE, consumes = "application/json")
+    public void deleteProduct(@RequestParam String productId) {
 
-        productManager.deleteProductToDB(productNo);
+        productManager.deleteProductToDB(productId);
+
+        System.out.println("Product Deleted Successfully !!!");
     }
 
 
