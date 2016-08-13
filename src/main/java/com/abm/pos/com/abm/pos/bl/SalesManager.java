@@ -474,7 +474,7 @@ public class SalesManager {
             lineItem.setTransactionLineItemId(rs.getInt("TRANSACTION_LINE_ITEM_ID"));
             lineItem.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             lineItem.setTransactionDate(rs.getString("DATE"));
-            lineItem.setProductNumber(jdbcTemplate.queryForObject(sqlQuery.getProductNumber, new Object[]{lineItem.getProductNumber()}, String.class));
+            lineItem.setProductNumber(rs.getString("PRODUCT_NO"));
             lineItem.setProductDescription(jdbcTemplate.queryForObject(sqlQuery.getProductDescription, new Object[]{lineItem.getProductNumber()}, String.class));
             lineItem.setQuantity(rs.getInt("QUANTITY"));
             lineItem.setRetail(rs.getDouble("RETAIL"));
