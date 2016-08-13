@@ -99,7 +99,7 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 		})
 		.state('clock', {
 			url: '/clock',
-			templateUrl: 'app/sell/clockPopup.html',
+			templateUrl: 'app/Setup/clockPopup.html',
 			controller: 'clockPopupController'
 		});
   
