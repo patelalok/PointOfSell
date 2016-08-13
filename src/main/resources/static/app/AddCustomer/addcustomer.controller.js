@@ -43,16 +43,22 @@
 					'msg' : 'Phone Number cannot be empty'
 				});
 			}
-			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
+			else
 			{
-				if($scope.phoneNumber == GlobalVariable.getCustomerDtls[i].phoneNo)
+				for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
 				{
-					authElemArray.push({
-						'id' : 'phoneNumber',
-						'msg' : 'Phone Number already exists'
-					});
+					if($scope.phoneNumber == GlobalVariable.getCustomerDtls[i].phoneNo)
+					{
+						authElemArray.push({
+							'id' : 'phoneNumber',
+							'msg' : 'Phone Number already exists'
+						});
+					}
 				}
 			}
+
+
+
 			if (authElemArray.length >= 1) {
 				util.customError.show(authElemArray, "");
 

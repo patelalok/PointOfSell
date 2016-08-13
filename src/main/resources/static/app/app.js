@@ -96,6 +96,11 @@ app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($st
 			url: '/return',
 			templateUrl: 'app/sell/Return.html',
 			controller: 'ReturnController'
+		})
+		.state('clock', {
+			url: '/clock',
+			templateUrl: 'app/sell/clockPopup.html',
+			controller: 'clockPopupController'
 		});
   
 }]);

@@ -97,7 +97,7 @@
 						if (searchTxt === GlobalVariable.getProducts[i].description) {
 							$rootScope.testData
 								.push({
-									"itemNo" : GlobalVariable.getProducts[i].productNo,
+									"itemNo" : GlobalVariable.getProducts[i].productNumber,
 									"item" : GlobalVariable.getProducts[i].description,
 									"quantity" : GlobalVariable.getProducts[i].quantity,
 									"retail" : GlobalVariable.getProducts[i].retailPrice,
@@ -116,7 +116,7 @@
 									{
 										$rootScope.testData
 											.push({
-												"itemNo" : GlobalVariable.getProducts[i].productNo,
+												"itemNo" : GlobalVariable.getProducts[i].productNumber,
 												"item" : GlobalVariable.getProducts[i].description,
 												"quantity" : GlobalVariable.getProducts[i].quantity,
 												"retail" : GlobalVariable.getProducts[i].retailPrice,
@@ -143,7 +143,7 @@
 						if (searchTxt === GlobalVariable.getProducts[i].productNo) {
 							$rootScope.testData
 								.push({
-									"itemNo" : GlobalVariable.getProducts[i].productNo,
+									"itemNo" : GlobalVariable.getProducts[i].productNumber,
 									"item" : GlobalVariable.getProducts[i].description,
 									"quantity" : GlobalVariable.getProducts[i].quantity,
 									"retail" : GlobalVariable.getProducts[i].retailPrice,
@@ -354,7 +354,7 @@
 					.toFixed(2)
 			}
 			$rootScope.testData.splice(index, 0, {
-				"itemNo" : GlobalVariable.editQuanDtls.productNo,
+				"itemNo" : GlobalVariable.editQuanDtls.productNumber,
 				"item" : GlobalVariable.editQuanDtls.item,
 				"quantity" : GlobalVariable.editQuanDtls.quantity,
 				"retail" : GlobalVariable.editQuanDtls.retail,

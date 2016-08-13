@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('SetupController', SetupController);
 
-	SetupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout'];
+	SetupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state'];
 
-	function SetupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout)
+	function SetupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state)
 	{
 		$scope.showAddUser = false;
 		$scope.showUserDtls = false;
@@ -131,9 +131,10 @@
 		$scope.navigateToClockInDtls=function(username)
 		{
 			GlobalVariable.usernameCust = username;
-			var _tmPath = 'app/Setup/clockPopup.html';
+			$state.go('clock');
+/*			var _tmPath = 'app/Setup/clockPopup.html';
 			var _ctrlPath = 'clockPopupController';
-			DialogFactory.show(_tmPath, _ctrlPath, callbackClockHistory,undefined, undefined, 'lg');
+			DialogFactory.show(_tmPath, _ctrlPath, callbackClockHistory,undefined, undefined, 'lg');*/
 		};
 		function callbackClockHistory()
 		{
