@@ -370,8 +370,7 @@
 			// $scope.customerPhone;
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
 				if ($scope.regPhone == GlobalVariable.getCustomerDtls[i].phoneNo) {
-					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName
-						+ ' ' + GlobalVariable.getCustomerDtls[i].lastName;
+					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
 					$rootScope.customerPhone = $scope.regPhone;
 					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
 						+ $scope.regPhone;
@@ -417,8 +416,7 @@
 		$scope.searchCustomerByFirst = function() {
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
 				if ($scope.customerNameOnSearch == GlobalVariable.getCustomerDtls[i].firstName) {
-					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName
-						+ ' ' + GlobalVariable.getCustomerDtls[i].lastName;
+					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
 					$rootScope.customerPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
 					$scope.regPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
 					GlobalVariable.customerFound = true;
@@ -470,6 +468,28 @@
 
 			$scope.selectTax = "default";
 			$scope.loadCheckOutData();
+		}
+		$scope.clearValue = function(value)
+		{
+			if(value == '' || value == undefined)
+			{
+				$scope.regPhone = '';
+				$scope.customerNameOnSearch = '';
+				$rootScope.customerPhone = '';
+				GlobalVariable.customerFound=false;
+				$scope.selectTax = "default";
+			}
+		};
+		$scope.clearValuePhone = function()
+		{
+			console.log("$scope.regPhone= "+$scope.regPhone);
+			if($scope.regPhone == '')
+			{
+				$scope.customerNameOnSearch = '';
+				$rootScope.customerPhone = '';
+				GlobalVariable.customerFound=false;
+				$scope.selectTax = "default";
+			}
 		}
 		function onGetTaxError(response) {
 
