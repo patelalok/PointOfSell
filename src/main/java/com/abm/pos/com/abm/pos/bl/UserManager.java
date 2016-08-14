@@ -181,6 +181,7 @@ public class UserManager {
             UserClockInDto user = new UserClockInDto();
 
 
+            user.setClockInId(rs.getInt("USER_CLOCK_IN_ID"));
             user.setUsername(rs.getString("USERNAME"));
             user.setClockInTime(rs.getString("CLOCK_IN"));
             user.setClockOutTime(rs.getString("CLOCK_OUT"));

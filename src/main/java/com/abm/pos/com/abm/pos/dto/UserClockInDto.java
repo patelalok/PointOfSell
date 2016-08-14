@@ -10,6 +10,7 @@ public class UserClockInDto {
     private String clockInTime;
     private String clockOutTime;
     private String noOfhours;
+    private double horlyRate;
     private String date;
 
     public int getClockInId() {
@@ -46,6 +47,14 @@ public class UserClockInDto {
 
     public String getNoOfhours() {
         return noOfhours;
+    }
+
+    public double getHorlyRate() {
+        return horlyRate;
+    }
+
+    public void setHorlyRate(double horlyRate) {
+        this.horlyRate = horlyRate;
     }
 
     public void setNoOfhours(String noOfhours) {

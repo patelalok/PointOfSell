@@ -10,6 +10,7 @@ public class UserDto {
     private String password;
     private String userRole;
     private String createdDate;
+    private double horlyRate;
 
 
     public String getCreatedDate() {
@@ -46,6 +47,14 @@ public class UserDto {
 
     public String getUserRole() {
         return userRole;
+    }
+
+    public double getHorlyRate() {
+        return horlyRate;
+    }
+
+    public void setHorlyRate(double horlyRate) {
+        this.horlyRate = horlyRate;
     }
 
     public void setUserRole(String userRole) {
