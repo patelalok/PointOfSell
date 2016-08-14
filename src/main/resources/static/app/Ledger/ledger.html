@@ -222,21 +222,7 @@
 			<div class="display-row" style="border-bottom: 1px solid #000000;">
 				<div class="inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Item Total</div>
-				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount}}</div>
-			</div>
-			<div class="display-row">
-				<div class=" inline-vertical display-cell align-left "
-					 style="padding-left: 500px;">Quantity:</div>
-				<div
-						class=" inline-vertical display-cell align-left padding-left-40"
-						ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalQuantity}}</div>
-			</div>
-			<div class="display-row">
-				<div class=" inline-vertical display-cell align-left"
-					 style="padding-left: 500px;">SubTotal:</div>
-				<div
-						class=" inline-vertical display-cell align-left padding-left-40"
-						ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].subTotal}}</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">{{itemTotal}}</div>
 			</div>
 			<div class="display-row">
 				<div class="inline-vertical display-cell align-left"
@@ -246,14 +232,29 @@
 			</div>
 			<div class="display-row">
 				<div class=" inline-vertical display-cell align-left"
-					 style="padding-left: 500px;">Tax:</div>
-				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
+					 style="padding-left: 500px;">SubTotal:</div>
+				<div
+						class=" inline-vertical display-cell align-left padding-left-40"
+						ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].subTotal}}</div>
+			</div>
+
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left "
+					 style="padding-left: 500px;">Quantity:</div>
+				<div
+						class=" inline-vertical display-cell align-left padding-left-40"
+						ng-model="totalQuantity">{{GlobalVariable.receiptData[0].transactionDtoList[0].totalQuantity}}</div>
 			</div>
 			<div class="display-row" style="border-bottom: 1px solid #000000;"
 				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance !==0">
 				<div class="inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Prev Balance:</div>
 				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance}}</div>
+			</div>
+			<div class="display-row">
+				<div class=" inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Tax:</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
 			</div>
 			<div class="display-row" style="border-bottom: 1px solid #000000;">
 				<div class="inline-vertical display-cell align-left"
@@ -290,6 +291,6 @@
 		<span>*** Customer Copy ***</span>
 	</div>
 	<div style="text-align: center; padding-top: 20px; font-size: 15px;">
-		<span>Thank You For ouur business!</span>
+		<span>Thank You For your business!</span>
 	</div>
 </div>
