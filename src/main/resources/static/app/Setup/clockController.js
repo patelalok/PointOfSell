@@ -57,6 +57,10 @@
 		{
 			
 		}
+		$scope.editClockIn = function()
+		{
+
+		};
 		function render()
 		{
 			loadHistoryData();
