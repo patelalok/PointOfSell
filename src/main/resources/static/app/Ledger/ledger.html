@@ -132,7 +132,7 @@
 		 style="padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
 		<div class="col-md-4"
 			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
-			<div style="display: block;">From:
+			<div style="display: block;" ng-if="GlobalVariable.storeAddress">From:
 				{{GlobalVariable.storeAddress}}</div>
 			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
 		</div>
@@ -143,11 +143,12 @@
 		</div>
 		<div class="col-md-4"
 			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
-			<div style="display:block;">Phone Number: {{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
-			<div style="display: block;">{{printFirstName}} {{printLastName}}</div>
-			<div style="display:block">{{printStreet}}</div>
-			<div style="display:block">{{printCity}} {{printState}}</div>
-			<div style="display:block">{{printCountry}} {{printzipCode}}</div>
+
+			<div style="display:block;" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo">Phone Number: {{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
+			<div style="display: block;" ng-if="printFirstName">{{printFirstName}} {{printLastName}}</div>
+			<div style="display:block" ng-if="printStreet">{{printStreet}}</div>
+			<div style="display:block" ng-if="printCity">{{printCity}}, {{printState}}</div>
+			<div style="display:block" ng-if="printCountry">{{printCountry}}, {{printzipCode}}</div>
 			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
 		</div>
 

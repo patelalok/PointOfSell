@@ -1112,3 +1112,10 @@ button.parsley-error {
 
 	border-color: #14b999;
 }
+
+@media print {
+	div.divFooter {
+		position: fixed;
+		bottom: 0;
+	}
+}
