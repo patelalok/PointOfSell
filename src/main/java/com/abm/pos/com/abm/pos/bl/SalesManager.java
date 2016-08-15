@@ -277,7 +277,7 @@ public class SalesManager {
             transaction.setUsername(username);
             transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
             transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
-            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
@@ -348,6 +348,7 @@ public class SalesManager {
                     ps.setDouble(9, transactionLineItemDto1.getDiscountPercentage());
                     ps.setDouble(10, transactionLineItemDto1.getRetailWithDis());
                     ps.setDouble(11, transactionLineItemDto1.getTotalProductPrice());
+                    ps.setDouble(12,transactionLineItemDto1.getTotalProductPriceWithTax());
 
                     System.out.println("Transaction Line Item Added Successfully");
                 }
@@ -558,7 +559,7 @@ public class SalesManager {
             transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
             transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+            transaction.setAddTax(rs.getDouble("TAX_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
             transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
             transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));

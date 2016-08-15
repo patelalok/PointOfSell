@@ -147,6 +147,14 @@
 					var discPer = 0;
 					var discValue =0;
 				}
+				if(GlobalVariable.selectedTaxDrp == 'default')
+				{
+					var totalProductPriceWithTax = $rootScope.testData[i].totalWithTax;
+				}
+				else if(GlobalVariable.selectedTaxDrp == 'noTax')
+				{
+					var totalProductPriceWithTax = $rootScope.testData[i].total;
+				}
 				request.push({
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
@@ -159,7 +167,8 @@
 					 "totalProductPrice":$rootScope.testData[i].total,
 					 "transactionDate":GlobalVariable.transDate,
 					"discountPercentage":discPer,
-					"transactionStatus":"c"
+					"transactionStatus":"c",
+					"totalProductPriceWithTax":totalProductPriceWithTax
 					 
 			});
 			}

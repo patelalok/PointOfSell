@@ -24,7 +24,7 @@ public class ProductDto {
     private String brandName;
     private String vendorName;
     private String imeiNo;
-    private String tax;
+    private boolean addTax;
     private int stock;
 
     private int quantityForSell;
@@ -181,12 +181,12 @@ public class ProductDto {
         this.returnRule = returnRule;
     }
 
-    public String getTax() {
-        return tax;
+    public boolean isAddTax() {
+        return addTax;
     }
 
-    public void setTax(String tax) {
-        this.tax = tax;
+    public void setAddTax(boolean addTax) {
+        this.addTax = addTax;
     }
 
     public int getVendorId() {

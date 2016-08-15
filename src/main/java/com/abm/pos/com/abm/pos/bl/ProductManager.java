@@ -5,12 +5,10 @@ import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,7 +45,7 @@ public class ProductManager
                     productDto.getImage(),
                     productDto.getCreatedDate(),
                     productDto.getImeiNo(),
-                    productDto.getTax());
+                    productDto.isAddTax());
             System.out.println("Product Added Successfully");
         }
         catch (Exception e)
@@ -76,7 +74,7 @@ public class ProductManager
                     productDto.getReturnRule(),
                     productDto.getImage(),
                     productDto.getImeiNo(),
-                    productDto.getTax(),
+                    productDto.isAddTax(),
                     productDto.getProductId());
 
             System.out.println("Product Edited Successfully");
@@ -132,7 +130,8 @@ public class ProductManager
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
                 product.setImeiNo(rs.getString("IMEI_NUMBER"));
-                product.setTax(rs.getString("TAX"));
+                product.setAddTax(rs.getBoolean("TAX"));
+                //System.out.println(rs.getBoolean("TAX"));
 
 
                 //product.setQuantityForSell(1);

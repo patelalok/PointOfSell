@@ -17,6 +17,7 @@ public class TransactionLineItemDto {
     private String  productCount;
     private double retailWithDis;
     private double totalProductPrice;
+    private double totalProductPriceWithTax;
     private double discountPercentage;
     private String transactionStatus;
 
@@ -124,6 +125,13 @@ public class TransactionLineItemDto {
         this.transactionLineItemId = transactionLineItemId;
     }
 
+    public double getTotalProductPriceWithTax() {
+        return totalProductPriceWithTax;
+    }
+
+    public void setTotalProductPriceWithTax(double totalProductPriceWithTax) {
+        this.totalProductPriceWithTax = totalProductPriceWithTax;
+    }
 
     public double getDiscountPercentage() {
         return discountPercentage;

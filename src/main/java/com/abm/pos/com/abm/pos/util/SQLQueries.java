@@ -116,8 +116,9 @@ public class SQLQueries {
                     "DISCOUNT," +
                     "DISCOUNT_PERCENTAGE," +
                     "RETAILWITHDISCOUNT," +
-                    "TOTALPRODUCTPRICE)" +
-            " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    "TOTALPRODUCTPRICE," +
+                    "TOTAL_PRODUCT_PRICE_WITH_TAX)" +
+            " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
  public String addUserQuery =
           "INSERT INTO USER" +
@@ -484,7 +485,7 @@ public class SQLQueries {
             "WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE " +
             "BETWEEN ? AND ? AND t.TRANSACTION_STATUS = 'c' group by c.CATEGORY_NAME ";
 
-    public String getHourlyTransactions = "SELECT Hour(t.TRANSACTION_DATE) AS HOUR, " +
+    public String getHourlyTransactions = "SELECT Hour(TRANSACTION_DATE) AS HOUR, " +
             "sum( TOTAL_AMOUNT_CREDIT) CREDIT, " +
             "sum( PAID_AMOUNT_CASH) CASH, " +
             "SUM( TOTAL_AMOUNT_CHECK) CHEC, " +
@@ -493,7 +494,7 @@ public class SQLQueries {
             "SUM( TOTAL_AMOUNT) TOTAL, " +
             "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
             "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ) as PROFIT " +
-            "FROM TRANSACTION t " +
+            "FROM TRANSACTION " +
             "WHERE STATUS = 'c' " +
             "AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY hour";
 
@@ -502,7 +503,7 @@ public class SQLQueries {
             "sum(t.QUANTITY) QUANTITY, " +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
-            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) " +
+            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
             "FROM TRANSACTION_LINE_ITEM t, VENDOR v, PRODUCT p " +
             "WHERE t.PRODUCT_NO = p.PRODUCT_NO  " +
             "AND v.VENDOR_ID = p.VENDOR_ID " +
@@ -515,7 +516,7 @@ public class SQLQueries {
             "sum(t.QUANTITY) QUANTITY, " +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
-            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) " +
+            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
             "FROM TRANSACTION_LINE_ITEM t, BRAND b, PRODUCT p " +
             "WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
             "AND b.BRAND_ID = p.BRAND_ID " +
@@ -528,7 +529,7 @@ public class SQLQueries {
             "sum(t.QUANTITY) QUANTITY, " +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
-            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) " +
+            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
             "FROM TRANSACTION_LINE_ITEM t, PRODUCT p " +
             "WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
             "AND t.DATE " +
@@ -548,7 +549,7 @@ public class SQLQueries {
             "sum(t.QUANTITY) QUANTITY, " +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
-            "sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT " +
+            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
             "FROM TRANSACTION_LINE_ITEM t, CUSTOMER c, PRODUCT p, " +
             "TRANSACTION l WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
             "AND c.PHONE_NO = l.CUSTOMER_PHONENO " +

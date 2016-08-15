@@ -192,7 +192,7 @@ public class ReceiptDto {
         return tax;
     }
 
-    public void setTax(double tax) {
+    public void setAddTax(double tax) {
         this.tax = tax;
     }
 
