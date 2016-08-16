@@ -3,6 +3,7 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.ProductManager;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
 import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
+import com.abm.pos.com.abm.pos.dto.RelatedProductDto;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,13 @@ public class ProductController {
         productManager.addProductToDB(productDto);
     }
 
+    @RequestMapping(value = "/addRelatedProduct", method = RequestMethod.POST, consumes = "application/json")
+    public void addRelatedProduct(@RequestBody List<RelatedProductDto> relatedProductDtosList) {
+
+        productManager.addRelatedProduct(relatedProductDtosList);
+    }
+
+
     @RequestMapping(value = "/editProduct", method = RequestMethod.POST, consumes = "application/json")
     public void editProduct(@RequestBody ProductDto productDto) {
 
@@ -36,6 +44,14 @@ public class ProductController {
 
         return productManager.getProductDetails();
     }
+
+    @RequestMapping(value = "/getRelatedProduct", method = RequestMethod.GET, produces = "application/json")
+    public List<ProductDto> getRelatedProduct(@RequestParam String productNo) {
+
+        return productManager.getRelatedProduct(productNo);
+    }
+
+
 
     @RequestMapping(value = "/getProductHistory", method = RequestMethod.GET)
     public List<TransactionLineItemDto> getProductHistory(@RequestParam int productId) {

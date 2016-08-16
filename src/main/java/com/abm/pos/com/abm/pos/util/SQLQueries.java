@@ -34,6 +34,9 @@ public class SQLQueries {
                    "IS_RELATED_PRODUCT)" +
            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+    public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
+
+
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
             "(" +
@@ -607,4 +610,6 @@ public class SQLQueries {
             "SUM(( RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) " +
             "FROM TRANSACTION_LINE_ITEM " +
             "WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' GROUP BY hour";
+
+    public String getRelatedProducts = "SELECT * FROM RELATED_PRODUCTS WHERE PRODUCT_NO = ?";
 }

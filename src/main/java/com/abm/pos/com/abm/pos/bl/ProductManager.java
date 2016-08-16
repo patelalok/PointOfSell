@@ -2,13 +2,16 @@ package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.ProductDto;
 import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
+import com.abm.pos.com.abm.pos.dto.RelatedProductDto;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -103,6 +106,13 @@ public class ProductManager
             return productList;
         }
 
+    public List<ProductDto> getRelatedProduct(String productNo) {
+
+        List<ProductDto> productDtoList = new ArrayList<>();
+
+        productDtoList = jdbcTemplate.query(sqlQuery.getRelatedProducts, productNo);
+
+    }
 
 
     private final class ProductMapper implements RowMapper<ProductDto>
@@ -143,6 +153,37 @@ public class ProductManager
                 return product;
             }
         }
+
+    public void addRelatedProduct(final List<RelatedProductDto> relatedProductDtoList) {
+
+        try {
+
+            jdbcTemplate.batchUpdate(sqlQuery.addRelatedProduct, new BatchPreparedStatementSetter() {
+
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    RelatedProductDto relatedProductDtoList1 = relatedProductDtoList.get(i);
+
+                    ps.setString(1,relatedProductDtoList1.getProductNo());
+                    ps.setString(2,relatedProductDtoList1.getRelatedProductNo());
+
+                }
+
+                @Override
+                public int getBatchSize() {
+                    return relatedProductDtoList.size();
+                }
+
+            });
+
+        }
+        catch (Exception e)
+
+        {
+            System.out.println(e);
+        }
+    }
 
     public List<TransactionLineItemDto> getProductHistoryFromDB(int productId) {
 
