@@ -355,11 +355,11 @@
 			GlobalVariable.discountTotal = $scope.totalDisc;
 			
 			if ($scope.totalDisc == "")
-				$scope.productTotalWithoutTax = Number(
-					parseFloat($rootScope.subTotal)).toFixed(2);
+				$rootScope.totalProductPriceAfterTax = Number(
+					parseFloat($rootScope.totalProductPriceAfterTax)).toFixed(2);
 			else
-				$scope.productTotalWithoutTax = Number(
-					parseFloat($rootScope.subTotal)
+				$rootScope.totalProductPriceAfterTax = Number(
+					parseFloat($rootScope.totalProductPriceAfterTax)
 					- parseFloat($scope.totalDisc)).toFixed(2);
 
 			// if ($scope.productTotalWithoutTax == 'NaN') {
