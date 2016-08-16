@@ -28,8 +28,11 @@ public class SQLQueries {
                    "MIN_PRODUCT," +
                    "RETURN_RULE," +
                    "IMAGE," +
-                   "CREATED_DATE,IMEI_NUMBER,TAX)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                   "CREATED_DATE," +
+                   "IMEI_NUMBER," +
+                   "TAX, " +
+                   "IS_RELATED_PRODUCT)" +
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addCustomerQuery =
             "INSERT INTO CUSTOMER " +
@@ -208,6 +211,7 @@ public class SQLQueries {
                     "IMAGE = ?, " +
                     "IMEI_NUMBER = ?, " +
                     "TAX = ? " +
+                    "IS_RELATED_PRODUCT = ?" +
                     "WHERE PRODUCT_NO = ?";
 
     public String editCustomerQuery = "UPDATE CUSTOMER" +

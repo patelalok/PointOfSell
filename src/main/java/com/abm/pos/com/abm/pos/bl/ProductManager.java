@@ -45,7 +45,8 @@ public class ProductManager
                     productDto.getImage(),
                     productDto.getCreatedDate(),
                     productDto.getImeiNo(),
-                    productDto.isAddTax());
+                    productDto.isAddTax(),
+                    productDto.isRelatedProduct());
             System.out.println("Product Added Successfully");
         }
         catch (Exception e)
@@ -75,6 +76,7 @@ public class ProductManager
                     productDto.getImage(),
                     productDto.getImeiNo(),
                     productDto.isAddTax(),
+                    productDto.isRelatedProduct(),
                     productDto.getProductId());
 
             System.out.println("Product Edited Successfully");
@@ -131,6 +133,7 @@ public class ProductManager
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
                 product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 product.setAddTax(rs.getBoolean("TAX"));
+                product.setRelatedProduct(rs.getBoolean("IS_RELATED_PRODUCT"));
                 //System.out.println(rs.getBoolean("TAX"));
 
 

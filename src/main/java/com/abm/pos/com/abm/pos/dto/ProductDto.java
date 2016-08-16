@@ -26,8 +26,8 @@ public class ProductDto {
     private String imeiNo;
     private boolean addTax;
     private int stock;
-
     private int quantityForSell;
+    private boolean isRelatedProduct;
 
     public String getAltNo() {
         return altNo;
@@ -203,5 +203,13 @@ public class ProductDto {
 
     public void setVendorName(String vendorName) {
         this.vendorName = vendorName;
+    }
+
+    public boolean isRelatedProduct() {
+        return isRelatedProduct;
+    }
+
+    public void setRelatedProduct(boolean relatedProduct) {
+        isRelatedProduct = relatedProduct;
     }
 }
