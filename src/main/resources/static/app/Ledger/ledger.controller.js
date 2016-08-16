@@ -73,7 +73,7 @@
 		{
 			GlobalVariable.receiptData =response;
 			$scope.itemTotal =Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal)+parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].discount)).toFixed(2);
-
+			$scope.modifiedData=[];
 			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
 			{
 				$scope.modifiedData.push(

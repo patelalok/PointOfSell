@@ -476,8 +476,9 @@ public class SQLQueries {
             "ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December') ";
 
     public String getSalesCategoryDetails = "SELECT  c.CATEGORY_NAME as COMMON_NAME , " +
-            "sum(t.TOTALPRODUCTPRICE) SALESTOTAL, " +
+            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
             "sum(t.QUANTITY) QUANTITY, " +
+            "sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX," +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT, " +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE " +
@@ -499,8 +500,9 @@ public class SQLQueries {
             "AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY hour";
 
     public String getSalesVendorDetails = "SELECT v.VENDOR_NAME as COMMON_NAME, " +
-            "sum(t.TOTALPRODUCTPRICE) SALESTOTAL, " +
+            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
             "sum(t.QUANTITY) QUANTITY, " +
+            "sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX," +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
@@ -512,8 +514,9 @@ public class SQLQueries {
             "group by v.VENDOR_NAME ";
 
     public String getSalesBrandDetails = "SELECT  b.BRAND_NAME as COMMON_NAME, " +
-            "sum(t.TOTALPRODUCTPRICE) SALESTOTAL, " +
+            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
             "sum(t.QUANTITY) QUANTITY, " +
+            "sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX," +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
@@ -525,8 +528,9 @@ public class SQLQueries {
             "group by b.BRAND_NAME ";
 
     public String getSalesProductDetails = "SELECT p.DESCRIPTION as COMMON_NAME, " +
-            "sum(t.TOTALPRODUCTPRICE) SALESTOTAL, " +
+            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
             "sum(t.QUANTITY) QUANTITY, " +
+            "sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX," +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
@@ -545,8 +549,9 @@ public class SQLQueries {
     public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, BRAND b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
 
     public String getSalesbyCustomer = "SELECT  c.FIRST_NAME as COMMON_NAME , " +
-            "sum(t.TOTALPRODUCTPRICE) SALESTOTAL, " +
+            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
             "sum(t.QUANTITY) QUANTITY, " +
+            "sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX," +
             "sum(t.DISCOUNT) DISCOUNT, " +
             "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
             "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +

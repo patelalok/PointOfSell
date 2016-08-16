@@ -3,6 +3,7 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.BarcodeManager;
 import com.abm.pos.com.abm.pos.bl.ReportManager;
 import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonDto;
+import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonTotalDto;
 import com.abm.pos.com.abm.pos.dto.reports.CommonInventoryDto;
 import com.abm.pos.com.abm.pos.dto.reports.Top50ItemsDto;
 import com.itextpdf.text.Document;
@@ -39,39 +40,39 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/getSalesByCategory",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByCategory(@RequestParam String startDate, String endDate)
+    public CommonComparisonTotalDto getSalesByCategory(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByCategory(startDate,endDate);
     }
 
     @RequestMapping(value = "/getSalesByVendor",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByVendor(@RequestParam String startDate, String endDate)
+    public CommonComparisonTotalDto getSalesByVendor(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByVendor(startDate,endDate);
     }
 
     @RequestMapping(value = "/getSalesByBrand",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByBrand(@RequestParam String startDate, String endDate)
+    public CommonComparisonTotalDto getSalesByBrand(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByBrand(startDate,endDate);
     }
 
     @RequestMapping(value = "/getSalesByProduct",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByProduct(@RequestParam String startDate, String endDate)
+    public CommonComparisonTotalDto getSalesByProduct(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByProduct(startDate,endDate);
     }
 
-    @RequestMapping(value = "/getSalesByUser",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByUser(@RequestParam String startDate, String endDate)
+    /*@RequestMapping(value = "/getSalesByUser",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CommonComparisonTotalDto> getSalesByUser(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByUser(startDate,endDate);
     }
 
     @RequestMapping(value = "/getSalesByCustomer",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonComparisonDto> getSalesByCustomer(@RequestParam String startDate, String endDate) {
+    public List<CommonComparisonTotalDto> getSalesByCustomer(@RequestParam String startDate, String endDate) {
         return reportManager.getSalesByCustomer(startDate, endDate);
-    }
+    }*/
 
     @RequestMapping(value = "/getInventoryByCategory",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CommonInventoryDto> getInventoryByCategory()

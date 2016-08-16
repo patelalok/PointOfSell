@@ -255,6 +255,7 @@
 				$scope.loadCheckOutData();
 				$scope.searchValue = '';
 			}
+			angular.element("#dataTable").scrollTop(angular.element("#table tr:last").position().top);
 		};
 		$scope.removeRowOnSearch = function(itemNo) {
 			var index = -1;

@@ -484,6 +484,7 @@ public class SalesManager {
             lineItem.setDiscountPercentage(rs.getDouble("DISCOUNT_PERCENTAGE"));
             lineItem.setRetailWithDis(rs.getDouble("RETAILWITHDISCOUNT"));
             lineItem.setTotalProductPrice(rs.getDouble("TOTALPRODUCTPRICE"));
+            lineItem.setTotalProductPriceWithTax(rs.getDouble("TOTAL_PRODUCT_PRICE_WITH_TAX"));
 
             return lineItem;
         }

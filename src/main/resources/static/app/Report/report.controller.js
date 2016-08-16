@@ -440,6 +440,7 @@
 		}
 		function onYearlySucces(response)
 		{
+			$scope.yearlySummary = [];
 			if(response.yearlyListDtos !== null && response.yearlyListDtos !== '')
 			{
 				//$scope.yearlySummary = response.yearlyListDtos;

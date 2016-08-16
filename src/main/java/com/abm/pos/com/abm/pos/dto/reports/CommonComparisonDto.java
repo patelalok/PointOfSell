@@ -7,6 +7,7 @@ public class CommonComparisonDto {
 
     private String commanName;
     private int quantity;
+    private double tax;
     private double salesTotal;
     private double avgSalesTotal;
     private double profitAmount;
@@ -73,6 +74,14 @@ public class CommonComparisonDto {
 
     public double getDiscount() {
         return discount;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public void setDiscount(double discount) {
