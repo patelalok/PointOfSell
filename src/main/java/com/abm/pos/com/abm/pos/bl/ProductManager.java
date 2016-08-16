@@ -110,9 +110,49 @@ public class ProductManager
 
         List<ProductDto> productDtoList = new ArrayList<>();
 
-        productDtoList = jdbcTemplate.query(sqlQuery.getRelatedProducts, productNo);
+        List<RelatedProductDto> relatedProductDtosList = new ArrayList<>();
+
+        relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
+
+        if(null != relatedProductDtosList) {
+
+            for (int i = 0; i < relatedProductDtosList.size(); i++) {
+
+                productDtoList = jdbcTemplate.query(sqlQuery.getProductDetailsWithProductNo, new ProductMapper(), relatedProductDtosList.get(i).getRelatedProductNo());
+
+                return productDtoList;
+
+            }
+        }
+        else
+        {
+            System.out.println("relatedProductDtosList is Null thats why going in else!!!");
+        }
+
+        return productDtoList;
 
     }
+
+    private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
+    {
+
+        @Override
+        public RelatedProductDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            RelatedProductDto relatedProductDto = new RelatedProductDto();
+
+
+            relatedProductDto.setRelatedProductNo(rs.getString("RELATED_PRODUCT_NO"));
+            //System.out.println(rs.getBoolean("TAX"));
+
+
+            //product.setQuantityForSell(1);
+
+
+            return relatedProductDto;
+        }
+    }
+
 
 
     private final class ProductMapper implements RowMapper<ProductDto>

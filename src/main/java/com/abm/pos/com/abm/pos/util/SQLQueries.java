@@ -612,4 +612,6 @@ public class SQLQueries {
             "WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' GROUP BY hour";
 
     public String getRelatedProducts = "SELECT * FROM RELATED_PRODUCTS WHERE PRODUCT_NO = ?";
+
+    public String getProductDetailsWithProductNo = "SELECT * FROM PRODUCT WHERE PRODUCT_NO = ?";
 }
