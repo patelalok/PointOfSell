@@ -90,6 +90,7 @@ public class ReportManager {
         {
             commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, mapper, startDate, endDate);
 
+            //String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
 
         }
         catch (Exception e)

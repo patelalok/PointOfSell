@@ -34,7 +34,6 @@ public class ClosingDetailsController {
         return closingDetailsManager.getClosingDetailsToDB(startDate,endDate);
     }
 
-
     @RequestMapping(value = "/addPaidOut", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addPaidOut(@RequestBody PaidOutDto paidOutDto)
     {
