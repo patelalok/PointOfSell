@@ -555,20 +555,30 @@ public class SQLQueries {
 
     public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, BRAND b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
 
-    public String getSalesbyCustomer = "SELECT  c.FIRST_NAME as COMMON_NAME , " +
-            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
-            "sum(t.QUANTITY) QUANTITY, " +
-            "sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX," +
-            "sum(t.DISCOUNT) DISCOUNT, " +
-            "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
-            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
-            "FROM TRANSACTION_LINE_ITEM t, CUSTOMER c, PRODUCT p, " +
-            "TRANSACTION l WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
-            "AND c.PHONE_NO = l.CUSTOMER_PHONENO " +
-            "AND t.DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
-            "group by c.FIRST_NAME";
+    public String getSalesbyCustomer = "SELECT  c.FIRST_NAME as COMMON_NAME ," +
+            "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
+            "            sum(t.QUANTITY) QUANTITY, " +
+            "            sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX, " +
+            "            sum(t.DISCOUNT) DISCOUNT, " +
+            "            avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
+            "            sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
+            "            FROM TRANSACTION_LINE_ITEM t, CUSTOMER c, " +
+            "            TRANSACTION l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID " +
+            "            AND c.PHONE_NO = l.CUSTOMER_PHONENO " +
+            "            AND t.DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
+            "            group by c.FIRST_NAME";
 
-    public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME ,sum(t.COST) COST,sum(t.RETAIL) RETAIL ,sum(t.QUANTITY) QUANTITY, sum((t.RETAIL - t.COST)* t.QUANTITY) PROFIT FROM TRANSACTION_LINE_ITEM t, USER u, PRODUCT p, TRANSACTION l WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND u.USER_ID = l.USER_ID AND t.DATE BETWEEN ? AND ? group by u.USERNAME";
+    public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME ," +
+            "Sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL," +
+            "sum(t.QUANTITY) QUANTITY," +
+            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX - t.TOTALPRODUCTPRICE) TAX," +
+            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT," +
+            "sum(t.DISCOUNT) DISCOUNT," +
+            "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE" +
+            "FROM TRANSACTION_LINE_ITEM t, USER u, TRANSACTION l " +
+            "WHERE u.USER_ID = l.USER_ID AND t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID " +
+            "AND t.DATE " +
+            "BETWEEN ? AND ? group by u.USERNAME";
 
     public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
 
