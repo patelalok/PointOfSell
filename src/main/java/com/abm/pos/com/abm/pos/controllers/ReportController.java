@@ -67,8 +67,8 @@ public class ReportController {
     public List<CommonComparisonTotalDto> getSalesByUser(@RequestParam String startDate, String endDate)
     {
         return reportManager.getSalesByUser(startDate,endDate);
-    }
-
+    }*/
+/*
     @RequestMapping(value = "/getSalesByCustomer",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CommonComparisonTotalDto> getSalesByCustomer(@RequestParam String startDate, String endDate) {
         return reportManager.getSalesByCustomer(startDate, endDate);
