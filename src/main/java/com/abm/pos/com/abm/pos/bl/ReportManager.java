@@ -89,6 +89,8 @@ public class ReportManager {
         try
         {
             commonComparisonDtos = jdbcTemplate.query(sqlQueries.getSalesCategoryDetails, mapper, startDate, endDate);
+
+
         }
         catch (Exception e)
         {

@@ -73,7 +73,7 @@
 			if($scope.validations()) {
 				var request = {};
 				request = {
-					"firstName": $scope.firstName,
+					"onlyFirstName": $scope.firstName,
 					"lastName": $scope.lastName,
 					"phoneNo": $scope.phoneNumber,
 					"email": $scope.email,
@@ -100,7 +100,7 @@
 		{
 			var request = {};
 			request = {
-				"firstName": $scope.firstName,
+				"onlyFirstName": $scope.firstName,
 				"lastName": $scope.lastName,
 				"phoneNo": $scope.phoneNumber,
 				"email": $scope.email,

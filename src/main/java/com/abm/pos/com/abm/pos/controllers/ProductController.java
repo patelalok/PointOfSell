@@ -32,6 +32,11 @@ public class ProductController {
         productManager.addRelatedProduct(relatedProductDtosList);
     }
 
+    /*@RequestMapping(value = "/editRelatedProduct", method = RequestMethod.POST, consumes = "application/json")
+    public void editRelatedProduct(@RequestBody List<RelatedProductDto> relatedProductDtosList) {
+
+        productManager.editRelatedProduct(relatedProductDtosList);
+    }*/
 
     @RequestMapping(value = "/editProduct", method = RequestMethod.POST, consumes = "application/json")
     public void editProduct(@RequestBody ProductDto productDto) {

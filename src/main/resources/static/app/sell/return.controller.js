@@ -155,8 +155,11 @@
                             "discount" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
                             "total" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
                             "stock" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
-                            "costPrice" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost
+                            "costPrice" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost,
+                            "totalWithTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax
                         });
+
+
                 }
                 $scope.totalQuantity = GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalQuantity;
                 $scope.subTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].subTotal;

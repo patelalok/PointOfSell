@@ -120,6 +120,8 @@ public class CustomerManager {
         public CustomerDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             CustomerDto customer = new CustomerDto();
+
+            customer.setCustomerId(rs.getInt("CUSTOMER_ID"));
             customer.setOnlyFirstName(rs.getString("FIRST_NAME"));
             customer.setFirstName(rs.getString("FIRST_NAME") + "  " +rs.getString("LAST_NAME"));
             customer.setLastName(rs.getString("LAST_NAME"));

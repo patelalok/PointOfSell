@@ -144,11 +144,12 @@
 		<div class="col-md-4"
 			 style="text-align: center; width: 30%; float: left; position: relative; min-height: 1px; padding-right: 15px; padding-left: 25px;">
 
-			<div style="display:block;" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo">Phone Number: {{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
 			<div style="display: block;" ng-if="printFirstName">{{printFirstName}} {{printLastName}}</div>
 			<div style="display:block" ng-if="printStreet">{{printStreet}}</div>
 			<div style="display:block" ng-if="printCity">{{printCity}}, {{printState}}</div>
 			<div style="display:block" ng-if="printCountry">{{printCountry}}, {{printzipCode}}</div>
+			<div style="display:block;" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo">{{GlobalVariable.receiptData[0].transactionDtoList[0].customerPhoneNo}}</div>
+
 			<!--<div style="display:block;">Atlanta Ga,30080</div>-->
 		</div>
 
@@ -228,7 +229,7 @@
 				<div class="inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Discount:</div>
 				<div class="inline-vertical display-cell align-left padding-left-40"
-					 ng-model="subTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].discount}}</div>
+					 ng-model="subTotal">({{GlobalVariable.receiptData[0].transactionDtoList[0].discount}})</div>
 			</div>
 			<div class="display-row">
 				<div class=" inline-vertical display-cell align-left"

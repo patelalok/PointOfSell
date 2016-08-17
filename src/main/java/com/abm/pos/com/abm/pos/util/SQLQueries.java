@@ -214,8 +214,8 @@ public class SQLQueries {
                     "IMAGE = ?, " +
                     "IMEI_NUMBER = ?, " +
                     "TAX = ? " +
-                    "IS_RELATED_PRODUCT = ?" +
-                    "WHERE PRODUCT_NO = ?";
+                    "IS_RELATED_PRODUCT = ? " +
+                    "WHERE PRODUCT_ID = ? ";
 
     public String editCustomerQuery = "UPDATE CUSTOMER" +
             " SET FIRST_NAME = ?,  " +
@@ -568,17 +568,17 @@ public class SQLQueries {
             "            AND t.DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
             "            group by c.FIRST_NAME";
 
-    public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME ," +
-            "Sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL," +
-            "sum(t.QUANTITY) QUANTITY," +
-            "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX - t.TOTALPRODUCTPRICE) TAX," +
-            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT," +
-            "sum(t.DISCOUNT) DISCOUNT," +
-            "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE" +
-            "FROM TRANSACTION_LINE_ITEM t, USER u, TRANSACTION l " +
-            "WHERE u.USER_ID = l.USER_ID AND t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID " +
-            "AND t.DATE " +
-            "BETWEEN ? AND ? group by u.USERNAME";
+    public String  getSalesByUser = "SELECT  u.USERNAME as COMMON_NAME," +
+            "            Sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL," +
+            "            sum(t.QUANTITY) QUANTITY," +
+            "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX - t.TOTALPRODUCTPRICE) TAX," +
+            "            sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT," +
+            "            sum(t.DISCOUNT) DISCOUNT," +
+            "            avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE" +
+            "            FROM TRANSACTION_LINE_ITEM t, USER u, TRANSACTION l " +
+            "            WHERE u.USER_ID = l.USER_ID AND t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID " +
+            "            AND t.DATE " +
+            "            BETWEEN ? AND ? group by u.USERNAME";
 
     public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
 

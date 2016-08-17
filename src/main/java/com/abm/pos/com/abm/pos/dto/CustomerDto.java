@@ -24,6 +24,7 @@ public class CustomerDto {
     private String taxId;
     private double last12MonthsSpend;
     private String companyName;
+    private int customerId;
 
     public String getZipcode() {
         return zipcode;
@@ -175,6 +176,14 @@ public class CustomerDto {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }
 

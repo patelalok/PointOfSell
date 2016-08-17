@@ -208,14 +208,30 @@
 			GlobalVariable.addProductClicked = false;
 			if(GlobalVariable.printReceiptTrans == true)
 			{
+				getStoreAddress();
 				var url="http://localhost:8080/getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
 				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+
 			}
 
 
 
 
 		};
+		function getStoreAddress()
+		{
+			var url='http://localhost:8080/getPageSetUpDetails';
+			dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
+		}
+		function onStoreSuccess(response)
+		{
+			GlobalVariable.storeAddress = response[0].storeAddress;
+			GlobalVariable.footerReceipt = response[0].footerReceipt;
+		}
+		function onStoreError(error)
+		{
+
+		}
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
@@ -242,14 +258,14 @@
 			{
 				if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
 				{
-					$scope.printFirstName=GlobalVariable.receiptData[0].customerDtosList[0].firstName;
-					$scope.printLastName =GlobalVariable.receiptData[0].customerDtosList[0].lastName;
-					$scope.printStreet=GlobalVariable.receiptData[0].customerDtosList[0].street;
-					$scope.printCity=GlobalVariable.receiptData[0].customerDtosList[0].city;
-					$scope.printState=GlobalVariable.receiptData[0].customerDtosList[0].state;
-					$scope.printCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
-					$scope.printzipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
-					$scope.printPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+					$rootScope.printTransFirstName=GlobalVariable.receiptData[0].customerDtosList[0].firstName;
+					$rootScope.printTransLastName =GlobalVariable.receiptData[0].customerDtosList[0].lastName;
+					$rootScope.printTransStreet=GlobalVariable.receiptData[0].customerDtosList[0].street;
+					$rootScope.printTransCity=GlobalVariable.receiptData[0].customerDtosList[0].city;
+					$rootScope.printTransState=GlobalVariable.receiptData[0].customerDtosList[0].state;
+					$rootScope.printTransCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
+					$rootScope.printTranszipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
+					$rootScope.printTransPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
 
 				}
 			}

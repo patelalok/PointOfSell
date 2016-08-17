@@ -78,7 +78,7 @@
 				<tbody >
 				<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
 				<tr data-ng-repeat="row in customerData   | filter : cust.filter | limitTo:barLimit">
-					<td class="wrapword" style="width:10%;"><span>{{row.firstName}}</span></td>
+					<td class="wrapword" style="width:10%;"><span>{{row.onlyFirstName}}</span></td>
 					<td class="wrapword" style="width:10%;"><span>{{row.lastName}}</span></td>
 					<td class="wrapword" style="width:10%;"><span>{{row.phoneNo}}</span></td>
 					<td class="wrapword" style="width:10%;"><span>{{row.email}}</span></td>
