@@ -172,11 +172,7 @@
 					 
 			});
 			}
-			if(GlobalVariable.printReceiptTrans == true)
-			{
-				var url="http://localhost:8080/getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
-				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
-			}
+
 			var url ="http://localhost:8080/addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
