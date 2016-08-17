@@ -40,7 +40,7 @@
 				$scope.sysCheck = $scope.getClosingDtls[0].reportCheck;
 				$scope.userCash = $scope.getClosingDtls[0].closeCash;
 				$scope.userDebit = $scope.getClosingDtls[0].closeCredit;
-				$scope.totalSys = $scope.getClosingDtls[0].reportTotalAmount;
+				$scope.totalSys = parseFloat($scope.getClosingDtls[0].reportTotalAmount).toFixed(2);
 				$scope.registerId = $scope.getClosingDtls[0].registerId;
 				$scope.totalUser = $scope.getClosingDtls[0].closeTotalAmount;
 				$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
@@ -55,7 +55,7 @@
 				$scope.netSales = parseFloat($scope.userCash)
 					+ parseFloat($scope.userDebit)
 					+ parseFloat($scope.userCheck)
-					+ parseFloat($scope.totalTax);
+					- parseFloat($scope.totalTax);
 				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
 			} else {
 				$scope.systemDebit = 0;
@@ -293,13 +293,7 @@
 				$scope.difPaid = response[0].paidOutAmount3;
 				$scope.difReason = response[0].paidOutReason3;
 				$scope.paidOutId = response[0].paidOutId;
-				$scope.totalPaid = parseFloat($scope.userPaid)
-					+ parseFloat($scope.systemPaid)
-					+ parseFloat($scope.difPaid);
-				$scope.netSales = parseFloat($scope.netSales)
-					+ $scope.totalPaid;
-				$scope.grossSales = (parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)).toFixed(2);
-			} else {
+				} else {
 				$scope.userPaid = 0;
 				$scope.userReason = '';
 				$scope.systemPaid = 0;
@@ -308,6 +302,13 @@
 				$scope.difReason = '';
 				$scope.paidOutId = '';
 			}
+			$scope.totalPaid = parseFloat($scope.userPaid)
+				+ parseFloat($scope.systemPaid)
+				+ parseFloat($scope.difPaid);
+			$scope.netSales = parseFloat($scope.netSales)
+				+ $scope.totalPaid;
+			$scope.grossSales = (parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)).toFixed(2);
+
 
 			/*
 			 * $scope.totalPaidOut =0; for(var i=0;i<response.length;i++) {
