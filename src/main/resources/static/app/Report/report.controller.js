@@ -9,6 +9,12 @@
 	{
 		GlobalVariable.isLoginPage = false;
 		$scope.yearlySummary = [];
+		$scope.salesByUser = [];
+		$scope.salesByCategory = [];
+		$scope.salesByBrand = [];
+		$scope.salesByVendor = [];
+		$scope.salesByProduct =[];
+		$scope.salesByCustomer = [];
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.maxDate = new Date();
 		$scope.minDate = moment().subtract(1, "days").toDate();
@@ -252,33 +258,219 @@
 		{
 			if($scope.reportType == 'salesUser')
 			{
-				if(response !== null)
-				$scope.salesByUser = response;
+				$scope.salesByUser = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByUser.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByUser.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByUser = [];
+				}
 			}
 			else if($scope.reportType == 'salesCustomer')
 			{
-				if(response !== null)
-				$scope.salesByCustomer = response;
+				$scope.salesByCustomer = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByCustomer.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByCustomer.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByCustomer= [];
+				}
 			}
 			else if($scope.reportType == 'salesProduct')
 			{
-				if(response !== null)
-				$scope.salesByProduct = response;
+				$scope.salesByProduct = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByProduct.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByProduct.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByProduct= [];
+				}
 			}
 			else if($scope.reportType == 'salesBrand')
 			{
-				if(response !== null)
-				$scope.salesByBrand = response;
+				$scope.salesByBrand = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByBrand.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByBrand.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByBrand= [];
+				}
 			}
 			else if($scope.reportType == 'salesVendor')
 			{
-				if(response !== null)
-				$scope.salesByVendor = response;
+				$scope.salesByVendor = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByVendor.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByVendor.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByVendor= [];
+				}
 			}
 			else if($scope.reportType == 'salesCategory')
 			{
-				if(response !== null)
-				$scope.salesByCategory = response;
+				$scope.salesByCategory = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByCategory.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByCategory.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByCategory= [];
+				}
 			}
 		};
 		function onSalesError(response)

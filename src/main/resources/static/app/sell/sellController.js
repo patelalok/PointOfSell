@@ -43,7 +43,7 @@
 		$scope.removeRow = function(row) {
 
 			GlobalVariable.editValues = row;
-			GlobalVariable.itemNoToDelete = row.itemNo;
+			GlobalVariable.itemNoToDelete = row.itemId;
 			modalService.showModal('', {
 				isCancel : true
 			}, "Are you Sure Want to Delete ? ", $scope.callBackAction);
@@ -60,7 +60,7 @@
 				var index = -1;
 				var comArr = eval($rootScope.testData);
 				for (var i = 0; i < comArr.length; i++) {
-					if (comArr[i].itemNo === GlobalVariable.itemNoToDelete) {
+					if (comArr[i].itemId === GlobalVariable.itemNoToDelete) {
 
 						comArr[i].quantity = 20;
 						index = i;
@@ -111,6 +111,7 @@
 							}
 							$rootScope.testData
 								.push({
+									"itemId":GlobalVariable.getProducts[i].productId,
 									"itemNo" : GlobalVariable.getProducts[i].productNo,
 									"item" : GlobalVariable.getProducts[i].description,
 									"quantity" : GlobalVariable.getProducts[i].quantity,
@@ -131,6 +132,7 @@
 									{
 										$rootScope.testData
 											.push({
+												"itemId":GlobalVariable.getProducts[i].productId,
 												"itemNo" : GlobalVariable.getProducts[i].productNo,
 												"item" : GlobalVariable.getProducts[i].description,
 												"quantity" : GlobalVariable.getProducts[i].quantity,
@@ -174,6 +176,7 @@
 
 							$rootScope.testData
 								.push({
+									"itemId":GlobalVariable.getProducts[i].productId,
 									"itemNo" : GlobalVariable.getProducts[i].productNo,
 									"item" : GlobalVariable.getProducts[i].description,
 									"quantity" : GlobalVariable.getProducts[i].quantity,
@@ -200,12 +203,22 @@
 							$scope.discount = (parseFloat($scope.searchValue))
 								.toFixed(2);
 						}
-						if ($scope.discount == 0)
+						if ($scope.discount == 0) {
 							$scope.total = ((parseFloat($rootScope.testData[$rootScope.testData.length - 1].retail) - $scope.discount) * parseFloat($scope.quantity))
 								.toFixed(2);
-						else
+						}
+						else {
 							$scope.total = (($scope.discount) * parseFloat($scope.quantity))
 								.toFixed(2);
+						}
+						if($rootScope.testData[$rootScope.testData.length - 1].total == $rootScope.testData[$rootScope.testData.length - 1].totalWithTax)
+						{
+							$scope.tWTax = parseFloat($scope.total);
+						}
+						else
+						{
+							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*8)/100);
+						}
 					} else {
 						$scope.quantity = $scope.searchValue;
 						if (parseFloat($rootScope.testData[$rootScope.testData.length - 1].discount) == 'NaN') {
@@ -216,34 +229,37 @@
 						if ($scope.discount !== 0) {
 							$scope.total = (parseFloat($scope.quantity) * parseFloat($scope.discount))
 								.toFixed(2);
-						} else
+
+						} else {
 							$scope.total = ((parseFloat($rootScope.testData[$rootScope.testData.length - 1].retail) - parseFloat($scope.discount)) * parseFloat($scope.quantity))
 								.toFixed(2);
-					}
-					if(GlobalVariable.getProducts[i].addTax == true)
-					{
-						var totalWithOutTax = parseFloat($scope.total);
-						var totalWithTax = parseFloat(totalWithOutTax) + (($scope.totalDefaultTax /100) * parseFloat(totalWithOutTax));
-					}
-					else
-					{
-						var totalWithOutTax = parseFloat($scope.total);
-						var totalWithTax = totalWithOutTax;
+
+						}
+
+						if($rootScope.testData[$rootScope.testData.length - 1].total == $rootScope.testData[$rootScope.testData.length - 1].totalWithTax)
+						{
+							$scope.tWTax = parseFloat($scope.total);
+						}
+						else
+						{
+							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*8)/100);
+						}
 					}
 
 					$rootScope.testData
 						.push({
+							"itemId":$rootScope.testData[$rootScope.testData.length - 1].productId,
 							"itemNo" : $rootScope.testData[$rootScope.testData.length - 1].itemNo,
 							"item" : $rootScope.testData[$rootScope.testData.length - 1].item,
 							"quantity" : $scope.quantity,
 							"retail" : $rootScope.testData[$rootScope.testData.length - 1].retail,
 							"discount" : $scope.discount,
-							"total" : totalWithOutTax,
+							"total" : parseFloat($scope.total),
 							"stock" : $rootScope.testData[$rootScope.testData.length - 1].stock,
 							"costPrice" : $rootScope.testData[$rootScope.testData.length - 1].costPrice,
 							"categoryName":$rootScope.testData[$rootScope.testData.length - 1].categoryName,
-							"totalWithTax":totalWithOutTax,
-							"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
+							"totalWithTax":parseFloat($scope.tWTax),
+							"totalTax":parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax)
 						});
 					// for(var i=0;i<$rootScope.testData.length-1;i++)
 					// {
@@ -346,7 +362,7 @@
 			}
 			$rootScope.totalQuantity = (parseFloat($rootScope.totalQuantity))
 				.toFixed(2);
-			$rootScope.subTotal = (parseFloat($rootScope.subTotal)).toFixed(2);
+			$rootScope.subTotal = Number(parseFloat($rootScope.subTotal)).toFixed(2);
 			GlobalVariable.quantityTotal = $rootScope.totalQuantity;
 			GlobalVariable.totalSub = $rootScope.subTotal;
 			if ($scope.totalDisc == undefined)
@@ -422,13 +438,14 @@
 			}
 			if(GlobalVariable.editQuanDtls.total == GlobalVariable.editQuanDtls.totalWithTax)
 			{
-				var editSubTax = editSub;
+				var editSubTax = parseFloat(editSub);
 			}
 			else
 			{
-				var editSubTax = editSub + (($scope.totalDefaultTax /100) * editSub);
+				var editSubTax = parseFloat(editSub) + (($scope.totalDefaultTax /100) * parseFloat(editSub));
 			}
 			$rootScope.testData.splice(index, 0, {
+				"itemId":GlobalVariable.editQuanDtls.itemId,
 				"itemNo" : GlobalVariable.editQuanDtls.itemNo,
 				"item" : GlobalVariable.editQuanDtls.item,
 				"quantity" : GlobalVariable.editQuanDtls.quantity,
