@@ -103,6 +103,7 @@
 				"onlyFirstName": $scope.firstName,
 				"lastName": $scope.lastName,
 				"phoneNo": $scope.phoneNumber,
+				"oldPhoneNo":GlobalVariable.editedPhone,
 				"email": $scope.email,
 				"dateOfBirth": $scope.DOB,
 				"customerType": $scope.custType,

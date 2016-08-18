@@ -170,7 +170,8 @@
 						$scope.phoneIMEI = '';
 					var request={
 						"productId": GlobalVariable.editProductDetails.productId,
-						"productNo":GlobalVariable.editProductDetails.productNo,
+						"productNo":$scope.productId,
+						"oldProductNo":GlobalVariable.editProductDetails.productNo,
 						"categoryId": $scope.categoryId,
 						"vendorId": $scope.vendorId,
 						"brandId": $scope.brandId,
