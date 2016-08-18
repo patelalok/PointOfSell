@@ -171,6 +171,8 @@ public class ClosingDetailsManager {
     }
 
 
+
+
     //I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
     private final class TransactionCloseMapper implements RowMapper<DashboardDto> {
 
@@ -721,6 +723,11 @@ public class ClosingDetailsManager {
             return trans;
 
         }
+    }
+
+    public void printClosingDetails(String startDate, String endDate) {
+
+
     }
 
     public String getLineItemDiscount(String startDate, String endDate)

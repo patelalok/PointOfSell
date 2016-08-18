@@ -26,13 +26,15 @@ public class ReportManager {
     SQLQueries sqlQueries;
 
 
-    public List<Top50ItemsDto> getTop50Items(String startDate, String endDate) {
+    public CommonComparisonTotalDto getTop50Items(String startDate, String endDate) {
 
-        List<Top50ItemsDto> top50Items = new ArrayList<>();
+        List<CommonComparisonTotalDto> commonComparisonDtos = new ArrayList<>();
+
+        SalesCategoryManager mapper = new SalesCategoryManager();
 
         try
         {
-            top50Items = jdbcTemplate.query(sqlQueries.getTop50Items, new Top50Mapper(), startDate,endDate);
+            commonComparisonDtos = jdbcTemplate.query(sqlQueries.getTop50Items, mapper, startDate,endDate);
 
         }
         catch (Exception e)
@@ -40,14 +42,14 @@ public class ReportManager {
             System.out.println(e);
         }
 
-        return top50Items;
+        return mapper.commonComparisonTotalDto;
 
     }
 
 
 
 
-    private final class Top50Mapper implements RowMapper<Top50ItemsDto>
+   /* private final class Top50Mapper implements RowMapper<Top50ItemsDto>
     {
         @Override
         public Top50ItemsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -78,7 +80,7 @@ public class ReportManager {
             }
             return top50;
         }
-    }
+    }*/
 
     public CommonComparisonTotalDto getSalesByCategory(String startDate, String endDate) {
 

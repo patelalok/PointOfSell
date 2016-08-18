@@ -34,7 +34,7 @@ public class ReportController {
     BarcodeManager barcodeManager;
 
     @RequestMapping(value = "/getTop50Items",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Top50ItemsDto> getTop50Items(@RequestParam String startDate, String endDate)
+    public CommonComparisonTotalDto getTop50Items(@RequestParam String startDate, String endDate)
     {
         return reportManager.getTop50Items(startDate,endDate);
     }
@@ -85,6 +85,8 @@ public class ReportController {
     {
         return reportManager.getInventoryByVendor();
     }
+
+
 
     @RequestMapping(value = "/getInventoryByBrand",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CommonInventoryDto> getInventoryByBrand()

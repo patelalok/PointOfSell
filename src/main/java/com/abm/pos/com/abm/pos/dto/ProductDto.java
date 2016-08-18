@@ -7,6 +7,7 @@ public class ProductDto {
 
     private int productId;
     private String productNo;
+    private String oldProductNo;
     private int categoryId;
     private int vendorId;
     private int brandId;
@@ -181,6 +182,14 @@ public class ProductDto {
         this.returnRule = returnRule;
     }
 
+    public boolean isRelatedProduct() {
+        return isRelatedProduct;
+    }
+
+    public void setRelatedProduct(boolean relatedProduct) {
+        isRelatedProduct = relatedProduct;
+    }
+
     public boolean isAddTax() {
         return addTax;
     }
@@ -205,11 +214,11 @@ public class ProductDto {
         this.vendorName = vendorName;
     }
 
-    public boolean isRelatedProduct() {
-        return isRelatedProduct;
+    public String getOldProductNo() {
+        return oldProductNo;
     }
 
-    public void setRelatedProduct(boolean relatedProduct) {
-        isRelatedProduct = relatedProduct;
+    public void setOldProductNo(String oldProductNo) {
+        this.oldProductNo = oldProductNo;
     }
 }

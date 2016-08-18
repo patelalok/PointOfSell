@@ -68,6 +68,7 @@ public class CustomerManager {
             jdbcTemplate.update(sqlQuery.editCustomerQuery,
                     customerDto.getFirstName(),
                     customerDto.getLastName(),
+                    customerDto.getPhoneNo(),
                     customerDto.getEmail(),
                     customerDto.getTaxId(),
                     customerDto.getDateOfBirth(),
@@ -80,7 +81,8 @@ public class CustomerManager {
                     customerDto.getZipcode(),
                     customerDto.getFax(),
                     customerDto.getCompanyName(),
-                    customerDto.getPhoneNo());
+                    customerDto.getCustomerId(),
+                    customerDto.getOldPhoneNo());
 
 
             System.out.println("Customer Edited Successfully");

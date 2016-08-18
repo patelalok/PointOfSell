@@ -9,6 +9,7 @@ public class CustomerDto {
     private String onlyFirstName;
     private String lastName;
     private String phoneNo;
+    private String oldPhoneNo;
     private String email;
     private String dateOfBirth;
     private String customerType;
@@ -52,6 +53,14 @@ public class CustomerDto {
 
     public String getCountry() {
         return country;
+    }
+
+    public String getOldPhoneNo() {
+        return oldPhoneNo;
+    }
+
+    public void setOldPhoneNo(String oldPhoneNo) {
+        this.oldPhoneNo = oldPhoneNo;
     }
 
     public void setCountry(String country) {

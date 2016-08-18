@@ -79,6 +79,12 @@ public class ProductController {
         System.out.println("Product Deleted Successfully !!!");
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getLastProductNo", produces = "application/json")
+    public long getLastProductNo()
+    {
+        return productManager.getLastProductNo();
+    }
+
 
 
 }

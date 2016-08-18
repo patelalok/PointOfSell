@@ -50,6 +50,8 @@ public class ProductManager
                     productDto.getImeiNo(),
                     productDto.isAddTax(),
                     productDto.isRelatedProduct());
+
+            System.out.println(productDto.isAddTax());
             System.out.println("Product Added Successfully");
         }
         catch (Exception e)
@@ -80,9 +82,11 @@ public class ProductManager
                     productDto.getImeiNo(),
                     productDto.isAddTax(),
                     productDto.isRelatedProduct(),
-                    productDto.getProductId());
+                    productDto.getProductId(),
+                    productDto.getOldProductNo());
 
             System.out.println("Product Edited Successfully");
+            System.out.println(productDto.isAddTax());
         }
         catch (Exception e)
         {
@@ -135,6 +139,8 @@ public class ProductManager
         return productDtoList;
 
     }
+
+
 
     private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
     {
@@ -300,6 +306,13 @@ public class ProductManager
 
         jdbcTemplate.update(sqlQuery.deleteProduct, productId);
 
+    }
+
+    public long getLastProductNo() {
+
+        long lastProductNo = jdbcTemplate.queryForObject(sqlQuery.getLastProductNo, new Object[] {},Long.class);
+
+        return lastProductNo;
     }
 
 

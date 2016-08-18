@@ -42,10 +42,10 @@ public class VendorController {
         return  vendorManager.getVendorDetails();
     }
 
-    /*@RequestMapping(value = "/deleteVendor", method = RequestMethod.POST, consumes = "application/json")
-    public void deleteVendor(@RequestBody String  vendorId) {
+    @RequestMapping(value = "/deleteVendor", method = RequestMethod.POST, consumes = "application/json")
+    public void deleteVendor(@RequestBody int  vendorId) {
 
         vendorManager.deleteVendorToDB(vendorId);
-    }*/
+    }
 }
 

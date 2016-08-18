@@ -213,13 +213,14 @@ public class SQLQueries {
                     "RETURN_RULE = ?, " +
                     "IMAGE = ?, " +
                     "IMEI_NUMBER = ?, " +
-                    "TAX = ? " +
+                    "TAX = ?, " +
                     "IS_RELATED_PRODUCT = ? " +
-                    "WHERE PRODUCT_ID = ? ";
+                    "WHERE PRODUCT_ID = ? AND PRODUCT_NO = ?";
 
     public String editCustomerQuery = "UPDATE CUSTOMER" +
             " SET FIRST_NAME = ?,  " +
             "LAST_NAME = ?, " +
+            "PHONE_NO = ?, " +
             "EMAIL = ?, " +
             "TAX_ID = ?,  " +
             "DATEOFBIRTH = ?," +
@@ -232,7 +233,7 @@ public class SQLQueries {
             "ZIPCODE = ?, " +
             "FAX = ?, " +
             "COMPANY_NAME = ? " +
-            "WHERE PHONE_NO = ?";
+            "WHERE CUSTOMER_ID = ? AND PHONE_NO = ?";
 
     public String editVendorQuery =
             "UPDATE VENDOR SET " +
@@ -448,10 +449,19 @@ public class SQLQueries {
 
     public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_NO = ?";
 
-    public String getTop50Items = "SELECT PRODUCT.PRODUCT_NO,PRODUCT.DESCRIPTION,sum(TRANSACTION_LINE_ITEM.QUANTITY) QUANTITY," +
-                                  "sum(TRANSACTION_LINE_ITEM.RETAIL) RETAIL, sum(TRANSACTION_LINE_ITEM.COST) COST FROM PRODUCT JOIN " +
-                                  "TRANSACTION_LINE_ITEM on TRANSACTION_LINE_ITEM.PRODUCT_NO=PRODUCT.PRODUCT_NO WHERE DATE BETWEEN " +
-                                  "? AND ? GROUP BY PRODUCT.PRODUCT_NO";
+    public String getTop50Items = "SELECT p.DESCRIPTION as COMMON_NAME," +
+            "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
+            "            sum(t.QUANTITY) QUANTITY, " +
+            "            sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX, " +
+            "            sum(t.DISCOUNT) DISCOUNT, " +
+            "            avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE, " +
+            "            sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) PROFIT " +
+            "            FROM TRANSACTION_LINE_ITEM t, PRODUCT p " +
+            "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  " +
+            "            AND t.DATE " +
+            "            BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' " +
+            "            group by p.DESCRIPTION " +
+            "            order by SALESTOTAL desc limit 50";
 
     public String getYearlyTransaction = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth, " +
             "sum(TOTAL_AMOUNT_CREDIT) CREDIT, " +
@@ -624,4 +634,6 @@ public class SQLQueries {
     public String getRelatedProducts = "SELECT * FROM RELATED_PRODUCTS WHERE PRODUCT_NO = ?";
 
     public String getProductDetailsWithProductNo = "SELECT * FROM PRODUCT WHERE PRODUCT_NO = ?";
+
+    public String getLastProductNo = "SELECT max(CAST(PRODUCT_NO AS SIGNED)) FROM PRODUCT";
 }

@@ -4,10 +4,17 @@ import com.abm.pos.com.abm.pos.bl.ClosingDetailsManager;
 import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -82,5 +89,33 @@ public class ClosingDetailsController {
         return closingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
     }
 
+    @RequestMapping(value= "/getPrintClosingDetails", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> getPrintClosingDetails(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
 
+        closingDetailsManager.printClosingDetails(startDate,endDate);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/ClosingDetails.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddTableExample1.pdf");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
 }
+
+
+
+

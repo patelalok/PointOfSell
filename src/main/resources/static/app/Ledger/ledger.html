@@ -103,7 +103,7 @@
 														  key="customerPhoneNo" datatype="string" width="20%" sortable="true"></column>
 					<column name="UserName" key="username" datatype="string" width="10%"></column>
 
-					<column name="Tax" key="tax" datatype="string" width="5%"></column>
+					<column name="Tax" key="addTax" datatype="string" width="5%"></column>
 					<column name="Discount" key="discount" datatype="string" width="5%"></column>
 					<column name="TotalAmount" key="totalAmount" datatype="string"
 							width="10%"></column>
@@ -255,7 +255,7 @@
 			<div class="display-row">
 				<div class=" inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Tax:</div>
-				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].tax}}</div>
+				<div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptData[0].transactionDtoList[0].addTax}}</div>
 			</div>
 			<div class="display-row" style="border-bottom: 1px solid #000000;">
 				<div class="inline-vertical display-cell align-left"
