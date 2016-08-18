@@ -185,7 +185,7 @@
 						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
-						"tax":$scope.productYesyNO
+						"addTax":$scope.productYesyNO
 					};
 					var url ="http://localhost:8080/editProduct";
 				}
@@ -219,7 +219,7 @@
 						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
-						"tax":$scope.productYesyNO
+						"addTax":$scope.productYesyNO
 					};
 					var url ="http://localhost:8080/addProduct";
 				}
