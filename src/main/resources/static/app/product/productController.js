@@ -78,7 +78,16 @@
 		};
 		$scope.generateRandomId = function()
 		{
-			$scope.productId = Math.round(((Math.random() * 10) * 10)+1000000000);
+			var url="http://localhost:8080/getLastProductNo";
+			dataService.Get(url,onLastProdNoSuccess,onLastProdNoError,'application/json','application/json');
+		};
+		function onLastProdNoSuccess(response)
+		{
+			$scope.productId = 10000000+parseInt(response);
+		}
+		function onLastProdNoError(response)
+		{
+
 		}
 		function addValidated()
 		{

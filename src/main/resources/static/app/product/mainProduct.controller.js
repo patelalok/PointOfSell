@@ -58,9 +58,9 @@
 		};*/
 		$scope.checkValue = function()
 		{
-			if($scope.cType == undefined && $scope.bType == undefined && $scope.vType == undefined)
+			if($scope.bType == undefined)
 				{
-				$scope.bType.filterValue = '';
+				$scope.bType = '';
 				}
 			if($scope.productType == "select")
 				$scope.bType.filterValue = '';
@@ -118,19 +118,18 @@
 		$scope.increaseLimit = function () {
 			$scope.barLimit += 50;
 			console.log('Increase Bar Limit', $scope.barLimit)
-		}
-		/*$scope.loadMore = function() {
-			var last = $scope.getProductDtls[$scope.images.length - 1];
-			for(var i = 1; i <= $scope.getProductDtls.length; i++) {
-				$scope.getProductDtls.push(last + i);
-			}
-		};*/
-		/*$scope.closeBootstrapAlert = function()
+		};
+		$scope.showRelatedProducts = function(prodNo)
 		{
-			GlobalVariable.productSuccessAlert = false;
-			GlobalVariable.addedSucces= false;
-			GlobalVariable.editedSuccess= false;
-		};*/
+			GlobalVariable.mainProductNo = prodNo;
+			var _tmPath = 'app/product/relatedProducts.html';
+			var _ctrlPath = 'RelatedProductsController';
+			DialogFactory.show(_tmPath, _ctrlPath, callbackRelatedProducts,undefined, undefined, 'lg');
+		};
+		function callbackRelatedProducts()
+		{
+
+		}
 		render();
 		
 	}

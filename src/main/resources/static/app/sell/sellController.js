@@ -125,10 +125,10 @@
 									"totalWithTax":totalWithTax,
 									"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
 								});
-							if(GlobalVariable.getProducts[i].categoryName == 'Plans')
+							if(GlobalVariable.getProducts[i].categoryName == 'Related Product')
 							{
 								for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
-									if(GlobalVariable.getProducts[i].productNo = "1000000027")
+									if(GlobalVariable.getProducts[i].relatedProduct = true)
 									{
 										$rootScope.testData
 											.push({
@@ -190,6 +190,32 @@
 									"totalWithTax":totalWithTax,
 									"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
 								});
+							if(GlobalVariable.getProducts[i].categoryName == 'Related Product')
+							{
+								for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+									if(GlobalVariable.getProducts[i].relatedProduct = true)
+									{
+										$rootScope.testData
+											.push({
+												"itemId":GlobalVariable.getProducts[i].productId,
+												"itemNo" : GlobalVariable.getProducts[i].productNo,
+												"item" : GlobalVariable.getProducts[i].description,
+												"quantity" : GlobalVariable.getProducts[i].quantity,
+												"retail" : GlobalVariable.getProducts[i].retailPrice,
+												"discount" : (parseFloat($scope.discount))
+													.toFixed(2),
+												"total" : totalWithOutTax,
+												"stock" : GlobalVariable.getProducts[i].stock,
+												"costPrice" : GlobalVariable.getProducts[i].costPrice,
+												"categoryName":GlobalVariable.getProducts[i].categoryName,
+												"totalWithTax":totalWithTax,
+												"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
+											});
+										break;
+									}
+								}
+							}
+							break;
 						}
 					}
 				} else {
