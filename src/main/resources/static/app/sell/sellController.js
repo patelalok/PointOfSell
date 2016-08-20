@@ -5,13 +5,14 @@
 
 	sellController.$inject = [ '$scope', '$rootScope', 'device.utility',
 		'GlobalVariable', 'DialogFactory', 'modalService',
-		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout' ];
+		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce'];
 
 	function sellController($scope, $rootScope, device, GlobalVariable,
 							DialogFactory, modalService, restrictCharacter, dataService,
-							$state, $timeout) {
+							$state, $timeout,$sce) {
 
 		$scope.device = device;
+		$scope.productFound = false;
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter = restrictCharacter;
 		GlobalVariable.isLoginPage = false;
@@ -21,7 +22,7 @@
 		//GlobalVariable.addProductClicked= false;
 
 		var i = 0;
-		$scope.pageSize = 10;
+
 
 		$rootScope.testData = [];
 		$scope.productNames = [];
@@ -36,7 +37,7 @@
 			 *
 			 * $scope.loadCheckOutData();
 			 */
-			GlobalVariable.addProductClicked= true;
+			//GlobalVariable.addProductClicked= true;
 			GlobalVariable.editProduct = false;
 			$state.go('product');
 		};
@@ -159,6 +160,7 @@
 					$scope.discount = 0;
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 						if (searchTxt === GlobalVariable.getProducts[i].productNo) {
+							$scope.productFound = true;
 							if(GlobalVariable.getProducts[i].addTax == true)
 							{
 								var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
@@ -217,7 +219,21 @@
 							}
 							break;
 						}
+						else
+						{
+							$scope.productFound = false;
+						}
 					}
+					if($scope.productFound == false)
+					{
+						var msg= 'Item is not in this system,do you want to add this product?';
+						 msg=$sce.trustAsHtml(msg);
+						 modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Add'}, msg, $scope.callBackAddProduct);
+					}
+					/*else
+					{
+						$scope.productFound = false;
+					}*/
 				} else {
 					if (searchTxt.indexOf(".") > 0) {
 						$scope.quantity = $rootScope.testData[$rootScope.testData.length - 1].quantity;
@@ -297,7 +313,24 @@
 				$scope.loadCheckOutData();
 				$scope.searchValue = '';
 			}
+			if($rootScope.testData.length !==0)
+			{
+				GlobalVariable.addProductClicked= true;
+			}
+			else
+			{
+				GlobalVariable.addProductClicked= false;
+			}
 			angular.element("#dataTable").scrollTop(angular.element("#table tr:last").position().top);
+		};
+		$scope.callBackAddProduct = function(ok)
+		{
+			if(ok)
+			{
+				$state.go('product');
+
+			}
+			//$scope.productFound = true;
 		};
 		$scope.removeRowOnSearch = function(itemNo) {
 			var index = -1;
@@ -492,6 +525,8 @@
 				if ($scope.regPhone == GlobalVariable.getCustomerDtls[i].phoneNo) {
 					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
 					$rootScope.customerPhone = $scope.regPhone;
+					GlobalVariable.userPhone = $rootScope.customerPhone;
+					GlobalVariable.userFName = $scope.customerNameOnSearch;
 					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
 						+ $scope.regPhone;
 					dataService.Get(url, onBalanceSuccess, onBalanceError,
@@ -511,6 +546,8 @@
 				} else {
 					$rootScope.customerNameOnSearch = 'No customer found';
 					$rootScope.customerPhone = '';
+					GlobalVariable.userPhone ='';
+					GlobalVariable.userFName = '';
 				}
 
 			}
@@ -543,12 +580,16 @@
 					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
 					$rootScope.customerPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
 					$scope.regPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
+					GlobalVariable.userPhone = $rootScope.customerPhone;
+					GlobalVariable.userFName = $scope.customerNameOnSearch;
 					GlobalVariable.customerFound = true;
 					break;
 				}
 				else
 				{
 					$rootScope.customerPhone = '';
+					GlobalVariable.userPhone ='';
+					GlobalVariable.userFName = '';
 				}
 				/*
 				 * else { $rootScope.customerName = 'No customer found';
@@ -560,6 +601,12 @@
 		function render() {
 			$scope.currentPageIndexArr = 0;
 			$rootScope.customerNameOnSearch = '';
+
+			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '')
+			{
+				$scope.customerNameOnSearch = GlobalVariable.userFName;
+				$scope.regPhone = GlobalVariable.userPhone;
+			}
 			if(GlobalVariable.addProductClicked)
 			{
 				$rootScope.testData = GlobalVariable.onAddProduct;
@@ -603,6 +650,8 @@
 				GlobalVariable.customerFound=false;
 				$scope.selectTax = "default";
 				GlobalVariable.selectedTaxDrp = "default";
+				GlobalVariable.userPhone = '' ;
+				GlobalVariable.userFName = '';
 			}
 		};
 		$scope.clearValuePhone = function()
@@ -615,6 +664,8 @@
 				GlobalVariable.customerFound=false;
 				$scope.selectTax = "default";
 				GlobalVariable.selectedTaxDrp = "default";
+				GlobalVariable.userPhone = '' ;
+				GlobalVariable.userFName = '';
 			}
 		}
 		function onGetTaxError(response) {

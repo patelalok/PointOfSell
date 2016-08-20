@@ -202,6 +202,8 @@
 			$rootScope.productTotal = 0;
 			$rootScope.customerPhone = '';
 			GlobalVariable.addProductClicked = false;
+			GlobalVariable.userPhone ='';
+			GlobalVariable.userFName = '';
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				getStoreAddress();
