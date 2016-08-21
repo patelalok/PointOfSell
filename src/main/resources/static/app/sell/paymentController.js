@@ -108,23 +108,23 @@
 			var request = new Object();
 			request = {
 				"transactionDate":trasnactionDate,  
-				"totalAmount":parseFloat(GlobalVariable.checkOuttotal).toFixed(2),
-				"tax":parseFloat(GlobalVariable.taxTotal).toFixed(2),
-				"discount":parseFloat(GlobalVariable.discountTotal).toFixed(2) ,
+				"totalAmount":parseFloat(parseFloat(GlobalVariable.checkOuttotal).toFixed(2)),
+				"tax":parseFloat(parseFloat(GlobalVariable.taxTotal).toFixed(2)),
+				"discount":parseFloat(parseFloat(GlobalVariable.discountTotal).toFixed(2)) ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":sessionStorage.userId,
 				"cashId":$scope.cashId,
 				"status":"c",
-			"paidAmountCash":parseFloat($scope.paidAmountCash).toFixed(2),
-			"changeAmount":parseFloat($scope.changeAmount).toFixed(2),
+			"paidAmountCash":parseFloat(parseFloat($scope.paidAmountCash).toFixed(2)),
+			"changeAmount":parseFloat(parseFloat($scope.changeAmount).toFixed(2)),
 				"creditId":$scope.creditIdMulty,
-				"paidAmountCredit":parseFloat($scope.paidAmountCredit).toFixed(2),
+				"paidAmountCredit":parseFloat(parseFloat($scope.paidAmountCredit).toFixed(2)),
 			"transactionCompId":GlobalVariable.transactionCompletedId,
-			"subTotal":parseFloat(GlobalVariable.totalSub).toFixed(2),
+			"subTotal":parseFloat(parseFloat(GlobalVariable.totalSub).toFixed(2)),
 			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
-				"prevBalance":parseFloat(GlobalVariable.custBalance).toFixed(2)
+				"prevBalance":parseFloat(parseFloat(GlobalVariable.custBalance).toFixed(2))
 
 			};
 			request = JSON.stringify(request);
@@ -159,16 +159,16 @@
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
 					 "productNumber":$rootScope.testData[i].itemNo,
-					"quantity":$rootScope.testData[i].quantity,
-					 "retail":$rootScope.testData[i].retail,
-					 "cost":$rootScope.testData[i].costPrice,
-					 "discount":discValue,
-					 "retailWithDis":$rootScope.testData[i].discount,
-					 "totalProductPrice":$rootScope.testData[i].total,
+					"quantity":parseInt($rootScope.testData[i].quantity),
+					 "retail":parseFloat(parseFloat($rootScope.testData[i].retail).toFixed(2)),
+					 "cost":parseFloat(parseFloat($rootScope.testData[i].costPrice).toFixed(2)),
+					 "discount":parseFloat(parseFloat(discValue).toFixed(2)),
+					 "retailWithDis":parseFloat(parseFloat($rootScope.testData[i].discount).toFixed(2)),
+					 "totalProductPrice":parseFloat(parseFloat($rootScope.testData[i].total).toFixed(2)),
 					 "transactionDate":GlobalVariable.transDate,
 					"discountPercentage":discPer,
 					"transactionStatus":"c",
-					"totalProductPriceWithTax":totalProductPriceWithTax
+					"totalProductPriceWithTax":parseFloat(parseFloat(totalProductPriceWithTax).toFixed(2))
 					 
 			});
 			}
