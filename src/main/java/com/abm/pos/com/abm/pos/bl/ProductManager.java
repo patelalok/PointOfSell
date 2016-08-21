@@ -116,20 +116,20 @@ public class ProductManager
 
         List<RelatedProductDto> relatedProductDtosList = new ArrayList<>();
 
+        ProductMapper mapper = new ProductMapper();
+
 
         //Here getting the product no to get the related product no to particular product from Related Product table
         relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
 
         if(null != relatedProductDtosList) {
 
-            //getting all related product no and then adding into list and sending to UI
-            for (int i = 0; i < relatedProductDtosList.size(); i++) {
+            for(int i = 0; i<relatedProductDtosList.size(); i++) {
 
-                productDtoList = jdbcTemplate.query(sqlQuery.getProductDetailsWithProductNo, new ProductMapper(), relatedProductDtosList.get(i).getRelatedProductNo());
-
-                return productDtoList;
-
+                //getting all related product no and then adding into list and sending to UI
+                productDtoList = jdbcTemplate.query(sqlQuery.getProductDetailsWithProductNo, mapper, relatedProductDtosList.get(i).getRelatedProductNo());
             }
+
         }
         else
         {

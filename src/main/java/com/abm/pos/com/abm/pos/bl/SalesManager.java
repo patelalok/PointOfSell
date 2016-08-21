@@ -134,6 +134,7 @@ public class SalesManager {
 
 
 
+
     private final class TransactionMapperForReturn implements RowMapper<TransactionDto> {
 
         @Override
@@ -579,6 +580,15 @@ public class SalesManager {
             return transaction;
         }
     }*/
+
+    public void getReceiptDetailsAlok(int receiptId) {
+
+        List<ReceiptDto> receiptDtosList =  new ArrayList<>();
+
+        receiptDtosList = getReceiptDetails(receiptId);
+
+
+    }
 }
 
 

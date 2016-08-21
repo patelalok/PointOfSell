@@ -7,9 +7,15 @@ import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -70,6 +76,30 @@ public class SalesController {
     public int getTransactionLineItem()
     {
         return salesManager.getLastTransactionId();
+    }
+
+
+    @RequestMapping(value = "/getReceiptDetailsAlok", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> getReceiptDetailsAlok(@RequestParam int receiptId) throws IOException {
+
+        salesManager.getReceiptDetailsAlok(receiptId);
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddTableExample1.pdf");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
     }
 
 

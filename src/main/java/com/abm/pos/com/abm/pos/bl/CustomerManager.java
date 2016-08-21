@@ -36,7 +36,7 @@ public class CustomerManager {
         try
         {
             jdbcTemplate.update(sqlQuery.addCustomerQuery,
-                    customerDto.getFirstName(),
+                    customerDto.getOnlyFirstName(),
                     customerDto.getLastName(),
                     customerDto.getPhoneNo(),
                     customerDto.getEmail(),
