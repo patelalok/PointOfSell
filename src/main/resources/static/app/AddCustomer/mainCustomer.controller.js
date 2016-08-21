@@ -60,6 +60,10 @@
 			 GlobalVariable.editedCountry = row.country;
 			GlobalVariable.editedCode =row.zipcode;
 			GlobalVariable.editedCusyType = row.customerType;
+			GlobalVariable.editedcompanyName = row.companyName;
+			GlobalVariable.editedtaxId = row.taxId;
+			GlobalVariable.editedcustomerId = row.customerId;
+
 			GlobalVariable.editCustomer = true;
 			var _tmPath = 'app/AddCustomer/addcustomer.html';
 			var _ctrlPath = 'addCustomerController';

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails','StateResponse'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails','StateResponse','$filter'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails,StateResponse)
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails,StateResponse,$filter)
 	{
 		GlobalVariable.addedCustSuccessfull = false;
 		GlobalVariable.successCustAlert = false;
@@ -74,10 +74,11 @@
 				var request = {};
 				request = {
 					"onlyFirstName": $scope.firstName,
+					"firstName":$scope.firstName,
 					"lastName": $scope.lastName,
 					"phoneNo": $scope.phoneNumber,
 					"email": $scope.email,
-					"dateOfBirth": $scope.DOB,
+					"dateOfBirth": $filter('date')($scope.DOB, "yyyy-MM-dd"),
 					"customerType": $scope.custType,
 					"gender": $scope.gender,
 					"street": $scope.street,
@@ -88,7 +89,8 @@
 					"fax": null,
 					"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss(),
 					"balance": 0,
-					"taxId":$scope.taxId
+					"taxId":$scope.taxId,
+					"companyName":$scope.companyName
 				};
 				request = JSON.stringify(request);
 				var url = 'http://localhost:8080/addCustomer';
@@ -100,13 +102,14 @@
 		{
 			var request = {};
 			request = {
-				"customerId":GlobalVariable.customerId,
+				"customerId":GlobalVariable.editedcustomerId,
 				"onlyFirstName": $scope.firstName,
+				"firstName":$scope.firstName,
 				"lastName": $scope.lastName,
 				"phoneNo": $scope.phoneNumber,
 				"oldPhoneNo":GlobalVariable.editedPhone,
 				"email": $scope.email,
-				"dateOfBirth": $scope.DOB,
+				"dateOfBirth": $filter('date')($scope.DOB, "yyyy-MM-dd"),
 				"customerType": $scope.custType,
 				"gender": $scope.gender,
 				"street":$scope.street,
@@ -116,7 +119,8 @@
 				"zipcode": $scope.postalCode,
 				"fax": "TestFax",
 				"customerCreatedDate": js_yyyy_mm_dd_hh_mm_ss (),
-				"taxId":$scope.taxId
+				"taxId":$scope.taxId,
+				"companyName":$scope.companyName
 			};
 			request = JSON.stringify(request);
 			var url='http://localhost:8080/editCustomer';
@@ -170,6 +174,8 @@
 				 $scope.State = GlobalVariable.editedState;
 				$scope.Country = GlobalVariable.editedCountry;
 				$scope.postalCode = GlobalVariable.editedCode;
+				$scope.companyName = GlobalVariable.editedcompanyName;
+				$scope.taxId = GlobalVariable.editedtaxId	;
 			}
 
 			$scope.stateOptions = StateResponse.stateResponse.Response.stateDetail;

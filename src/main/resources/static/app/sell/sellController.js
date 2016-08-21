@@ -16,7 +16,7 @@
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter = restrictCharacter;
 		GlobalVariable.isLoginPage = false;
-		$scope.balanceRemaining = 0;
+		GlobalVariable.balanceRemaining = 0;
 		GlobalVariable.customerFound = false;
 		$scope.showEditableFields = false;
 		//GlobalVariable.addProductClicked= false;
@@ -96,6 +96,7 @@
 					$scope.discount = 0;
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 						if (searchTxt === GlobalVariable.getProducts[i].description) {
+
 							if(GlobalVariable.getProducts[i].addTax == true)
 							{
 								var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
@@ -126,36 +127,19 @@
 									"totalWithTax":totalWithTax,
 									"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
 								});
-							if(GlobalVariable.getProducts[i].categoryName == 'Related Product')
-							{
-								for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
-									if(GlobalVariable.getProducts[i].relatedProduct = true)
+								if(GlobalVariable.getProducts[i].relatedProduct = true)
 									{
-										$rootScope.testData
-											.push({
-												"itemId":GlobalVariable.getProducts[i].productId,
-												"itemNo" : GlobalVariable.getProducts[i].productNo,
-												"item" : GlobalVariable.getProducts[i].description,
-												"quantity" : GlobalVariable.getProducts[i].quantity,
-												"retail" : GlobalVariable.getProducts[i].retailPrice,
-												"discount" : (parseFloat($scope.discount))
-													.toFixed(2),
-												"total" : totalWithOutTax,
-												"stock" : GlobalVariable.getProducts[i].stock,
-												"costPrice" : GlobalVariable.getProducts[i].costPrice,
-												"categoryName":GlobalVariable.getProducts[i].categoryName,
-												"totalWithTax":totalWithTax,
-												"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
-											});
+
+										var url=" http://localhost:8080/getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+										dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
 										break;
 									}
-								}
-							}
+
 							break;
 						}
 					}
 
-				} else if (searchTxt.length > 5) {
+				} else if (searchTxt.length > 4) {
 					console.log("" + $scope.searchValue);
 					$scope.discount = 0;
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
@@ -192,30 +176,12 @@
 									"totalWithTax":totalWithTax,
 									"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
 								});
-							if(GlobalVariable.getProducts[i].categoryName == 'Related Product')
+							if(GlobalVariable.getProducts[i].relatedProduct = true)
 							{
-								for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
-									if(GlobalVariable.getProducts[i].relatedProduct = true)
-									{
-										$rootScope.testData
-											.push({
-												"itemId":GlobalVariable.getProducts[i].productId,
-												"itemNo" : GlobalVariable.getProducts[i].productNo,
-												"item" : GlobalVariable.getProducts[i].description,
-												"quantity" : GlobalVariable.getProducts[i].quantity,
-												"retail" : GlobalVariable.getProducts[i].retailPrice,
-												"discount" : (parseFloat($scope.discount))
-													.toFixed(2),
-												"total" : totalWithOutTax,
-												"stock" : GlobalVariable.getProducts[i].stock,
-												"costPrice" : GlobalVariable.getProducts[i].costPrice,
-												"categoryName":GlobalVariable.getProducts[i].categoryName,
-												"totalWithTax":totalWithTax,
-												"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
-											});
-										break;
-									}
-								}
+
+								var url=" http://localhost:8080/getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+								dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
+								break;
 							}
 							break;
 						}
@@ -332,6 +298,52 @@
 			}
 			//$scope.productFound = true;
 		};
+
+		function onGetRelatedSuccess(response)
+		{
+			if(response.length !== 0)
+			{
+			  for(var k=0;k<response.length;k++) {
+				  if(response[i].addTax == true)
+				  {
+					  var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[i].quantity))
+						  .toFixed(2);
+					  totalWithOutTax = parseFloat(totalWithOutTax);
+					  var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+				  }
+				  else
+				  {
+					  var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[i].quantity))
+						  .toFixed(2);
+					  totalWithOutTax = parseFloat(totalWithOutTax);
+					  var totalWithTax = totalWithOutTax;
+				  }
+
+				  $rootScope.testData
+					  .push({
+						  "itemId": response[k].productId,
+						  "itemNo": response[k].productNo,
+						  "item": response[k].description,
+						  "quantity": response[k].quantity,
+						  "retail": response[k].retailPrice,
+						  "discount": (parseFloat($scope.discount))
+							  .toFixed(2),
+						  "total": totalWithOutTax,
+						  "stock": response[k].stock,
+						  "costPrice": response[k].costPrice,
+						  "categoryName": response[k].categoryName,
+						  "totalWithTax": totalWithTax,
+						  "totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax)
+					  });
+			  }
+			}
+			$scope.loadCheckOutData();
+
+		}
+		function onGetRelatedError(response)
+		{
+
+		}
 		$scope.removeRowOnSearch = function(itemNo) {
 			var index = -1;
 			var comArr = eval($rootScope.testData);
@@ -380,13 +392,13 @@
 			$rootScope.subTotal = 0;
 			$rootScope.productTotal = 0;
 			//$rootScope.totalProductPriceAfterTax = 0;
-			$scope.regPhone = '';
-			$scope.customerNameOnSearch = '';
-			$scope.balanceRemaining = '';
+			//GlobalVariable.regPhone1 = '';
+			//GlobalVariable.customerNameOnSearch = '';
+			//GlobalVariable.balanceRemaining= '';
 			// $rootScope.testData = [];
 			$scope.loadCheckOutData();
 			// GlobalVariable.customerFound = false;
-			$scope.balanceRemaining = 0;
+			//GlobalVariable.balanceRemaining = 0;
 			//GlobalVariable.taxTotal=0;
 
 		}
@@ -457,9 +469,9 @@
 				// + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
 				// .toFixed(2);
 
-			if ($scope.balanceRemaining > 0) {
+			if (GlobalVariable.balanceRemaining> 0) {
 				$rootScope.productTotal = parseFloat($rootScope.productTotal)
-					+ parseFloat($scope.balanceRemaining);
+					+ parseFloat(GlobalVariable.balanceRemaining);
 			}
 			$rootScope.totalPayment = parseFloat($rootScope.productTotal)
 				.toFixed(2);
@@ -522,13 +534,13 @@
 		$scope.searchCustomer = function() {
 			// $scope.customerPhone;
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
-				if ($scope.regPhone == GlobalVariable.getCustomerDtls[i].phoneNo) {
-					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
-					$rootScope.customerPhone = $scope.regPhone;
+				if (GlobalVariable.regPhone1 == GlobalVariable.getCustomerDtls[i].phoneNo) {
+					GlobalVariable.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
+					$rootScope.customerPhone = GlobalVariable.regPhone1;
 					GlobalVariable.userPhone = $rootScope.customerPhone;
-					GlobalVariable.userFName = $scope.customerNameOnSearch;
+					GlobalVariable.userFName = GlobalVariable.customerNameOnSearch;
 					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
-						+ $scope.regPhone;
+						+ GlobalVariable.regPhone1;
 					dataService.Get(url, onBalanceSuccess, onBalanceError,
 						'application/json', 'application/json');
 					GlobalVariable.customerFound = true;
@@ -557,16 +569,16 @@
 		function onBalanceSuccess(response) {
 			if (response !== null && response !== ''
 				&& parseFloat(response) !== 0) {
-				$scope.balanceRemaining = parseFloat(response);
+				GlobalVariable.balanceRemaining= parseFloat(response);
 				// GlobalVariable.remainingBalanceAmount =
-				// $scope.balanceRemaining;
-				$rootScope.productTotal = $scope.balanceRemaining;
-				GlobalVariable.custBalance = $scope.balanceRemaining;
-				$rootScope.totalPayment = $scope.balanceRemaining;
+				// GlobalVariable.balanceRemaining;
+				$rootScope.productTotal = GlobalVariable.balanceRemaining;
+				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
+				$rootScope.totalPayment = GlobalVariable.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
 			} else {
-				$scope.balanceRemaining = parseFloat(response);
-				GlobalVariable.custBalance = $scope.balanceRemaining;
+				GlobalVariable.balanceRemaining = parseFloat(response);
+				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
 			}
 
 		}
@@ -576,13 +588,26 @@
 
 		$scope.searchCustomerByFirst = function() {
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
-				if ($scope.customerNameOnSearch == GlobalVariable.getCustomerDtls[i].firstName) {
-					$scope.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
+				if (GlobalVariable.customerNameOnSearch == GlobalVariable.getCustomerDtls[i].firstName) {
+					GlobalVariable.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
 					$rootScope.customerPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
-					$scope.regPhone = GlobalVariable.getCustomerDtls[i].phoneNo;
+					GlobalVariable.regPhone1 = GlobalVariable.getCustomerDtls[i].phoneNo;
 					GlobalVariable.userPhone = $rootScope.customerPhone;
-					GlobalVariable.userFName = $scope.customerNameOnSearch;
+					GlobalVariable.userFName = GlobalVariable.customerNameOnSearch;
 					GlobalVariable.customerFound = true;
+					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
+						+ GlobalVariable.regPhone1;
+					dataService.Get(url, onBalanceSuccess, onBalanceError,
+						'application/json', 'application/json');
+					GlobalVariable.custTypeCd = GlobalVariable.getCustomerDtls[i].customerType;
+					if (GlobalVariable.custTypeCd == 'Business') {
+						$scope.selectTax = 'noTax';
+						GlobalVariable.selectedTaxDrp = 'noTax';
+					}
+					else if (GlobalVariable.custTypeCd == 'Retail') {
+						$scope.selectTax = 'default';
+						GlobalVariable.selectedTaxDrp = 'default';
+					}
 					break;
 				}
 				else
@@ -593,7 +618,7 @@
 				}
 				/*
 				 * else { $rootScope.customerName = 'No customer found';
-				 * $rootScope.customerPhone = $scope.regPhone; }
+				 * $rootScope.customerPhone = GlobalVariable.regPhone1; }
 				 */
 
 			}
@@ -604,8 +629,14 @@
 
 			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '')
 			{
-				$scope.customerNameOnSearch = GlobalVariable.userFName;
-				$scope.regPhone = GlobalVariable.userPhone;
+				GlobalVariable.customerFound = true;
+				GlobalVariable.customerNameOnSearch = GlobalVariable.userFName;
+				GlobalVariable.regPhone1 = GlobalVariable.userPhone;
+				var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
+					+ GlobalVariable.regPhone1;
+				dataService.Get(url, onBalanceSuccess, onBalanceError,
+					'application/json', 'application/json');
+				//$scope.prevBalance = GlobalVariable.balanceRemaining;
 			}
 			if(GlobalVariable.addProductClicked)
 			{
@@ -644,8 +675,8 @@
 		{
 			if(value == '' || value == undefined)
 			{
-				$scope.regPhone = '';
-				$scope.customerNameOnSearch = '';
+				GlobalVariable.regPhone1 = '';
+				GlobalVariable.customerNameOnSearch = '';
 				$rootScope.customerPhone = '';
 				GlobalVariable.customerFound=false;
 				$scope.selectTax = "default";
@@ -656,10 +687,10 @@
 		};
 		$scope.clearValuePhone = function()
 		{
-			console.log("$scope.regPhone= "+$scope.regPhone);
-			if($scope.regPhone == '')
+			console.log("GlobalVariable.regPhone1= "+GlobalVariable.regPhone1);
+			if(GlobalVariable.regPhone1 == '')
 			{
-				$scope.customerNameOnSearch = '';
+				GlobalVariable.customerNameOnSearch = '';
 				$rootScope.customerPhone = '';
 				GlobalVariable.customerFound=false;
 				$scope.selectTax = "default";

@@ -204,6 +204,11 @@
 			GlobalVariable.addProductClicked = false;
 			GlobalVariable.userPhone ='';
 			GlobalVariable.userFName = '';
+			GlobalVariable.customerNameOnSearch = '';
+			GlobalVariable.regPhone1 ='';
+			GlobalVariable.balanceRemaining = 0;
+			GlobalVariable.transId = '';
+			GlobalVariable.last4='';
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				getStoreAddress();
@@ -351,7 +356,7 @@
 		
 		$scope.callBackCheckoutCredit = function()
 		{
-			console.log($scope.last4+""+$scope.transId);
+			console.log($rootScope.last4+""+$rootScope.transId);
 			/*var msg= 'Your total balance is '+Number(parseFloat($scope.balanceAmount)).toFixed(2);
 			msg=$sce.trustAsHtml(msg);	
 			modalService.showModal('', '', msg, $scope.callBackCheckout);*/
