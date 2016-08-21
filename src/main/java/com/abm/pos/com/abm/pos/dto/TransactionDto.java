@@ -15,6 +15,8 @@ public class TransactionDto {
     private double discount;
     private double subTotal;
     private String customerPhoneNo;
+    private String customerName;
+
     private int userId;
     private int cashId;
     private int creditId;
@@ -221,5 +223,13 @@ public class TransactionDto {
 
     public void setPrevBalance(double prevBalance) {
         this.prevBalance = prevBalance;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

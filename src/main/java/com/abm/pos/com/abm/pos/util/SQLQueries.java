@@ -636,4 +636,7 @@ public class SQLQueries {
     public String getProductDetailsWithProductNo = "SELECT * FROM PRODUCT WHERE PRODUCT_NO = ?";
 
     public String getLastProductNo = "SELECT max(CAST(PRODUCT_NO AS SIGNED)) FROM PRODUCT";
+    public String getFirstName = "SELECT FIRST_NAME FROM CUSTOMER WHERE PHONE_NO = ?";
+
+    public String getLastName = "SELECT LAST_NAME FROM CUSTOMER WHERE PHONE_NO = ?";
 }

@@ -273,6 +273,24 @@ public class SalesManager {
             transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
             transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+
+            if(null == rs.getString("CUSTOMER_PHONENO") || rs.getString("CUSTOMER_PHONENO").isEmpty()) {
+
+                transaction.setCustomerName("");
+
+
+            }
+            else
+            {
+                //getting first and last name of customer to show on the sales history
+                String firstName = jdbcTemplate.queryForObject(sqlQuery.getFirstName, new Object[]{rs.getString("CUSTOMER_PHONENO")}, String.class);
+                String lastName = jdbcTemplate.queryForObject(sqlQuery.getLastName, new Object[]{rs.getString("CUSTOMER_PHONENO")}, String.class);
+
+                //merging first and last name.
+                transaction.setCustomerName(firstName + " " + lastName);
+            }
+
+
             transaction.setUserId(rs.getInt("USER_ID"));
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
             transaction.setUsername(username);
