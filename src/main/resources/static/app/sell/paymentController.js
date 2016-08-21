@@ -109,7 +109,7 @@
 			request = {
 				"transactionDate":trasnactionDate,  
 				"totalAmount":parseFloat(parseFloat(GlobalVariable.checkOuttotal).toFixed(2)),
-				"tax":parseFloat(parseFloat(GlobalVariable.taxTotal).toFixed(2)),
+				"tax":Math.abs(parseFloat(parseFloat(GlobalVariable.taxTotal).toFixed(2))),
 				"discount":parseFloat(parseFloat(GlobalVariable.discountTotal).toFixed(2)) ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":sessionStorage.userId,
