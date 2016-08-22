@@ -100,15 +100,13 @@ public class SQLQueries {
                     "TOTALQUANTITY," +
                     "CUSTOMER_PHONENO," +
                     "USER_ID," +
-                    "PAYMENT_ID_CASH," +
                     "STATUS," +
                     "PAID_AMOUNT_CASH," +
                     "CHANGE_AMOUNT," +
-                    "PAYMENT_ID_CREDIT," +
                     "TOTAL_AMOUNT_CREDIT," +
                     "TOTAL_AMOUNT_CHECK," +
                     "TRANS_CREDIT_ID," +
-                    "LAST_4_DIGITS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "LAST_4_DIGITS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +

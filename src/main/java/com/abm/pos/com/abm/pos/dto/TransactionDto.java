@@ -18,8 +18,6 @@ public class TransactionDto {
     private String customerName;
 
     private int userId;
-    private int cashId;
-    private int creditId;
     private String status;
     private double  paidAmountCash;
     private double changeAmount;
@@ -86,29 +84,12 @@ public class TransactionDto {
     }
 
 
-
-    public int getCreditId() {
-        return creditId;
-    }
-
-    public void setCreditId(int creditId) {
-        this.creditId = creditId;
-    }
-
     public double getSubTotal() {
         return subTotal;
     }
 
     public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
-    }
-
-    public int getCashId() {
-        return cashId;
-    }
-
-    public void setCashId(int cashId) {
-        this.cashId = cashId;
     }
 
     public double getPaidAmountCash() {

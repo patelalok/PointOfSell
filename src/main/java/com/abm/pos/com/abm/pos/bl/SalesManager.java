@@ -46,11 +46,9 @@ public class SalesManager {
                     transactionDto.getTotalQuantity(),
                     transactionDto.getCustomerPhoneNo(),
                     transactionDto.getUserId(),
-                    transactionDto.getCashId(),
                     transactionDto.getStatus(),
                     transactionDto.getPaidAmountCash(),
                     transactionDto.getChangeAmount(),
-                    transactionDto.getCreditId(),
                     transactionDto.getPaidAmountCredit(),
                     transactionDto.getPaidAmountCheck(),
                     transactionDto.getTransCreditId(),
@@ -166,8 +164,6 @@ public class SalesManager {
             transaction.setUserId(rs.getInt("USER_ID"));
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
             transaction.setUsername(username);
-            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
-            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
             transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
@@ -294,8 +290,6 @@ public class SalesManager {
             transaction.setUserId(rs.getInt("USER_ID"));
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
             transaction.setUsername(username);
-            transaction.setCashId(rs.getInt("PAYMENT_ID_CASH"));
-            transaction.setCreditId(rs.getInt("PAYMENT_ID_CREDIT"));
             transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
