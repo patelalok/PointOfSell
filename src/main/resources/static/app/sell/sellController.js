@@ -622,6 +622,7 @@
 				 */
 
 			}
+			$scope.loadCheckOutData();
 		}
 		function render() {
 			$scope.currentPageIndexArr = 0;

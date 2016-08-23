@@ -102,7 +102,18 @@
 				GlobalVariable.custBalance = 0;
 			}
 
-
+            if(parseFloat($scope.balanceAmount == parseFloat($scope.checkPayment)))
+            {
+                var paidAmtCash = 0;
+                var paidAmtCredit =0;
+                var chnAmount =0;
+            }
+            else
+            {
+                var paidAmtCash = parseFloat(parseFloat($scope.paidAmountCash).toFixed(2));
+                var paidAmtCredit =parseFloat(parseFloat($scope.paidAmountCredit).toFixed(2));
+                var chnAmount =parseFloat(parseFloat($scope.changeAmount).toFixed(2));
+            }
 
 			var url ="http://localhost:8080/addTransaction";
 			var request = new Object();
@@ -113,12 +124,11 @@
 				"discount":parseFloat(parseFloat(GlobalVariable.discountTotal).toFixed(2)) ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":sessionStorage.userId,
-				"cashId":$scope.cashId,
 				"status":"c",
-			"paidAmountCash":parseFloat(parseFloat($scope.paidAmountCash).toFixed(2)),
-			"changeAmount":parseFloat(parseFloat($scope.changeAmount).toFixed(2)),
-				"creditId":$scope.creditIdMulty,
-				"paidAmountCredit":parseFloat(parseFloat($scope.paidAmountCredit).toFixed(2)),
+			"paidAmountCash":paidAmtCash,
+			"changeAmount":chnAmount,
+
+				"paidAmountCredit":paidAmtCredit,
 			"transactionCompId":GlobalVariable.transactionCompletedId,
 			"subTotal":parseFloat(parseFloat(GlobalVariable.totalSub).toFixed(2)),
 			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
@@ -367,6 +377,7 @@
 		};
 		$scope.makePartialPayment = function()
 		{
+		    GlobalVariable.partialPaymentClicked=true;
 			$rootScope.amountBalance = $scope.balanceAmount;
 			DialogFactory.close(true);
 			var _tmPath = 'app/sell/printReceiptModal.html';
