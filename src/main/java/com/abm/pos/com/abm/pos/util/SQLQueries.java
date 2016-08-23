@@ -637,4 +637,9 @@ public class SQLQueries {
     public String getFirstName = "SELECT FIRST_NAME FROM CUSTOMER WHERE PHONE_NO = ?";
 
     public String getLastName = "SELECT LAST_NAME FROM CUSTOMER WHERE PHONE_NO = ?";
+
+    public String changeRelatedProdcutStatus = "UPDATE PRODUCT SET IS_RELATED_PRODUCT = ? WHERE PRODUCT_NO = ?";
+
+    public String deleteRelatedProduct = "DELETE FROM RELATED_PRODUCTS WHERE RELATED_PRODUCT_ID = ?";
+    public String getLowStockProductDetails = "SELECT * FROM PRODUCT WHERE QUANTITY <= MIN_PRODUCT or QUANTITY<=0 ";
 }

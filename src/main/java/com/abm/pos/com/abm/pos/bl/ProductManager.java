@@ -140,6 +140,18 @@ public class ProductManager
 
     }
 
+    public List<RelatedProductDto> getRelatedProductForProductPage(String productNo) {
+
+        List<RelatedProductDto> relatedProductDtosList = new ArrayList<>();
+
+        relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
+
+
+        return relatedProductDtosList;
+
+
+
+    }
 
 
     private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
@@ -151,7 +163,9 @@ public class ProductManager
             RelatedProductDto relatedProductDto = new RelatedProductDto();
 
 
+            relatedProductDto.setRelatedProductId(rs.getInt("RELATED_PRODUCT_ID"));
             relatedProductDto.setRelatedProductNo(rs.getString("RELATED_PRODUCT_NO"));
+
             //System.out.println(rs.getBoolean("TAX"));
 
 
@@ -218,6 +232,12 @@ public class ProductManager
                     ps.setString(1,relatedProductDtoList1.getProductNo());
                     ps.setString(2,relatedProductDtoList1.getRelatedProductNo());
 
+                    System.out.println("Related products added successfully");
+
+                    jdbcTemplate.update(sqlQuery.changeRelatedProdcutStatus, true, relatedProductDtoList1.getProductNo());
+
+                    System.out.println("Related products Flag updates to true successfully");
+
                 }
 
                 @Override
@@ -226,6 +246,9 @@ public class ProductManager
                 }
 
             });
+
+            //When user is adding related product, here i am updting the product Related falg to true so ui can know that, it need to pull the other related products.
+
 
         }
         catch (Exception e)
@@ -316,5 +339,38 @@ public class ProductManager
     }
 
 
+    public void deleteRelatedProduct(String relatedProductId) {
+
+        try {
+
+            jdbcTemplate.update(sqlQuery.deleteRelatedProduct, relatedProductId);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
     }
+
+
+    public List<ProductDto> getLowStockProductDetails() {
+
+        List<ProductDto> productList = new ArrayList<>();
+
+        try
+        {
+            productList = jdbcTemplate.query(sqlQuery.getLowStockProductDetails,new ProductMapper());
+
+            System.out.println("Send Low Stock Product Details Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return productList;
+    }
+
+
+
+}
 

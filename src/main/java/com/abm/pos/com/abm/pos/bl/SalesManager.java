@@ -174,12 +174,12 @@ public class SalesManager {
         }
     }
 
-    public List<TransactionDto> getsalesHistory(String startDate, String endDategit) {
+    public List<TransactionDto> getsalesHistory(String startDate, String endDate) {
         List<TransactionDto> transactionDto = new ArrayList<>();
 
 
         try {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapperWithOutCustomer(), startDate, endDategit);
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapperWithOutCustomer(), startDate, endDate);
 
             System.out.println("Send Transaction Details Successfully");
         } catch (Exception e) {

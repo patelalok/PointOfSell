@@ -7,6 +7,7 @@ public class RelatedProductDto {
 
     private String productNo;
     private String relatedProductNo;
+    private int relatedProductId;
 
     public String getProductNo() {
         return productNo;
@@ -22,5 +23,13 @@ public class RelatedProductDto {
 
     public void setRelatedProductNo(String relatedProductNo) {
         this.relatedProductNo = relatedProductNo;
+    }
+
+    public int getRelatedProductId() {
+        return relatedProductId;
+    }
+
+    public void setRelatedProductId(int relatedProductId) {
+        this.relatedProductId = relatedProductId;
     }
 }

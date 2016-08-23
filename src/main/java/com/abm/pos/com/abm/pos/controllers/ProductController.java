@@ -56,7 +56,11 @@ public class ProductController {
         return productManager.getRelatedProduct(productNo);
     }
 
+    @RequestMapping(value = "/getRelatedProductForProductPage", method = RequestMethod.GET, produces = "application/json")
+    public List<RelatedProductDto> getRelatedProductForProductPage(@RequestParam String productNo) {
 
+        return productManager.getRelatedProductForProductPage(productNo);
+    }
 
     @RequestMapping(value = "/getProductHistory", method = RequestMethod.GET)
     public List<TransactionLineItemDto> getProductHistory(@RequestParam int productId) {
@@ -85,7 +89,19 @@ public class ProductController {
         return productManager.getLastProductNo();
     }
 
+    @RequestMapping(value = "/deleteRelatedProduct", method = RequestMethod.DELETE, consumes = "application/json")
+    public void deleteRelatedProduct(@RequestParam String relatedProductId) {
 
+        productManager.deleteRelatedProduct(relatedProductId);
+
+        System.out.println("Product Deleted Successfully !!!");
+    }
+
+    @RequestMapping(value = "/LowStockProductDetails", method = RequestMethod.GET)
+    public List<ProductDto> getLowStockProductDetails() {
+
+        return productManager.getLowStockProductDetails();
+    }
 
 }
 
