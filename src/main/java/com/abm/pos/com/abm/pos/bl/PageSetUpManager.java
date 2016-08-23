@@ -70,7 +70,9 @@ public class PageSetUpManager {
         return pageSetUpDto;
     }
 
-            final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
+
+
+    final class SetupDetailsMapper implements RowMapper<PageSetUpDto> {
 
                 @Override
                 public PageSetUpDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -263,6 +265,58 @@ public class PageSetUpManager {
             e.printStackTrace();
         }
         return multyAddProductDtos;
+    }
+
+    public boolean getLicenceKey(String licenceKeyFromUi) {
+
+        List<LicenseDto> licenseList = new ArrayList<>();
+
+       boolean isValidKey = false;
+
+        try
+        {
+            licenseList = jdbcTemplate.query(sqlQueries.getLicenceKey, new LicenceMapper());
+
+            for(int i=0;i<licenseList.size(); i++) {
+
+                if (licenceKeyFromUi.equals(licenseList.get(i).getLicenseKey())) {
+                    isValidKey = true;
+
+                    System.out.println("License key validate Successfully");
+
+                    jdbcTemplate.update(sqlQueries.deleteLicenseKey, licenseList.get(i).getId());
+
+                    System.out.println("License key Deleted Successfully");
+                }
+            }
+
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return isValidKey;
+
+
+    }
+
+
+    final class LicenceMapper implements RowMapper<LicenseDto> {
+
+        @Override
+        public LicenseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            LicenseDto licenseDto = new LicenseDto();
+
+            licenseDto.setId(rs.getInt("LICENCE_ID"));
+            licenseDto.setLicenseKey(rs.getString("LICENCE_KEY"));
+
+
+
+            return licenseDto;
+        }
     }
 
 }

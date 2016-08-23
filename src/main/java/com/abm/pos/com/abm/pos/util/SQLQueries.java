@@ -642,4 +642,6 @@ public class SQLQueries {
 
     public String deleteRelatedProduct = "DELETE FROM RELATED_PRODUCTS WHERE RELATED_PRODUCT_ID = ?";
     public String getLowStockProductDetails = "SELECT * FROM PRODUCT WHERE QUANTITY <= MIN_PRODUCT or QUANTITY<=0 ";
+    public String getLicenceKey = "SELECT * FROM PRODUCT_LICENCE";
+    public String deleteLicenseKey = "DELETE FROM PRODUCT_LICENCE WHERE LICENCE_ID = ?";
 }

@@ -7,10 +7,7 @@ import com.abm.pos.com.abm.pos.dto.PageSetUpDto;
 import com.abm.pos.com.abm.pos.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,6 +51,12 @@ public class PageSetUpController {
     public void addMultyCustomer(@RequestBody List<CustomerDto> customerDto)
     {
         pageSetUpManager.addMultyCustomer(customerDto);
+    }
+
+    @RequestMapping(value = "/getLicenceKey", method = RequestMethod.GET)
+    public boolean getLicenceKey(@RequestParam String licenceKey) {
+
+        return pageSetUpManager.getLicenceKey(licenceKey);
     }
 
 
