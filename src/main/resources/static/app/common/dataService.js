@@ -36,7 +36,7 @@
 				var headerObj = {
 						Accept : accept
 				};
-				_reqData = _reqData ? (_reqData) : {};
+				_reqData = _reqData ? (_reqData) : null;
 
 
 				$http({
