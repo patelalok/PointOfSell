@@ -313,7 +313,7 @@
             else
             {
                 request='';
-                dataService.Post(url, '', returnTransactionSuccessHandler,
+                dataService.Post(url, null, returnTransactionSuccessHandler,
                     returnTransactionErrorHandler, "application/json",
                     "application/json");
             }
@@ -357,7 +357,7 @@
             else
             {
                 request=[];
-                dataService.Post(url, '',
+                dataService.Post(url, null,
                     returnTransactionLineItemSuccessHandler,
                     returnTransactionLineItemErrorHandler, "application/json",
                     "application/json");

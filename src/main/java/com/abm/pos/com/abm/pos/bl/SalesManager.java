@@ -52,7 +52,8 @@ public class SalesManager {
                     transactionDto.getPaidAmountCredit(),
                     transactionDto.getPaidAmountCheck(),
                     transactionDto.getTransCreditId(),
-                    transactionDto.getLast4Digits());
+                    transactionDto.getLast4Digits(),
+                    transactionDto.getPrevBalance());
 
             jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
                     transactionDto.getPrevBalance(),
@@ -168,6 +169,7 @@ public class SalesManager {
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
             //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
 
             return transaction;
@@ -294,6 +296,8 @@ public class SalesManager {
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+            transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
+
             //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
 
             return transaction;

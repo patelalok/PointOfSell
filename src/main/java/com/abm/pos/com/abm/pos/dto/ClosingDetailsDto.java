@@ -25,6 +25,7 @@ public class ClosingDetailsDto {
     private double totalMarkup;
     private String registerStatus;
     private double reportCheck;
+    private double bankDeposit;
 
     public double getReportCheck() {
         return reportCheck;
@@ -179,9 +180,11 @@ public class ClosingDetailsDto {
     }
 
 
+    public double getBankDeposit() {
+        return bankDeposit;
+    }
 
-
-
-
-
+    public void setBankDeposit(double bankDeposit) {
+        this.bankDeposit = bankDeposit;
+    }
 }
