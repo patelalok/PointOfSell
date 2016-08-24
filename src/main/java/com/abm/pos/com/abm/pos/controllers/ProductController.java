@@ -103,5 +103,12 @@ public class ProductController {
         return productManager.getLowStockProductDetails();
     }
 
+
+    @RequestMapping(value = "/addIMEINo", method = RequestMethod.POST, consumes = "application/json")
+    public void addIMEINo(@RequestParam String productNo, @RequestParam String imeiNo) {
+
+        productManager.addIMEINo(productNo,imeiNo);
+    }
+
 }
 

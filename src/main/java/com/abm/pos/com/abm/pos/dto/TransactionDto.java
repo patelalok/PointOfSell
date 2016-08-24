@@ -28,6 +28,7 @@ public class TransactionDto {
     private String transCreditId;
     private int last4Digits;
     private double prevBalance;
+    private double balance;
 
     public double getPaidAmountCheck() {
         return paidAmountCheck;
@@ -212,5 +213,13 @@ public class TransactionDto {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

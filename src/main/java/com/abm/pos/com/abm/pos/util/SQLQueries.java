@@ -107,7 +107,8 @@ public class SQLQueries {
                     "TOTAL_AMOUNT_CHECK," +
                     "TRANS_CREDIT_ID," +
                     "LAST_4_DIGITS, " +
-                    "PREVIOUS_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "PREVIOUS_BALANCE, " +
+                    "BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -211,7 +212,7 @@ public class SQLQueries {
                     "MIN_PRODUCT = ?, " +
                     "RETURN_RULE = ?, " +
                     "IMAGE = ?, " +
-                    "IMEI_NUMBER = ?, " +
+                    //"IMEI_NUMBER = ?, " +
                     "TAX = ?, " +
                     "IS_RELATED_PRODUCT = ? " +
                     "WHERE PRODUCT_ID = ? AND PRODUCT_NO = ?";
@@ -630,7 +631,7 @@ public class SQLQueries {
             "FROM TRANSACTION_LINE_ITEM " +
             "WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' GROUP BY hour";
 
-    public String getRelatedProducts = "SELECT * FROM RELATED_PRODUCTS WHERE PRODUCT_NO = ?";
+    public String getRelatedProducts = "SELECT * FROM PRODUCT a, RELATED_PRODUCTS b WHERE a.PRODUCT_NO = b.PRODUCT_NO AND b.PRODUCT_NO = ?";
 
     public String getProductDetailsWithProductNo = "SELECT * FROM PRODUCT WHERE PRODUCT_NO = ?";
 
@@ -645,4 +646,5 @@ public class SQLQueries {
     public String getLowStockProductDetails = "SELECT * FROM PRODUCT WHERE QUANTITY <= MIN_PRODUCT or QUANTITY<=0 ";
     public String getLicenceKey = "SELECT * FROM PRODUCT_LICENCE";
     public String deleteLicenseKey = "DELETE FROM PRODUCT_LICENCE WHERE LICENCE_ID = ?";
+    public String addImeiNo = "";
 }

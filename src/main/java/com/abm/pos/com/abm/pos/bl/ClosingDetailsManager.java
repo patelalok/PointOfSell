@@ -5,6 +5,10 @@ import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -33,7 +37,13 @@ public class ClosingDetailsManager {
     @Autowired
     SQLQueries sqlQueries;
 
-
+    public static final String FONT = "resources/fonts/OpenSans-Regular.ttf";
+    public static final String FONTB = "resources/fonts/OpenSans-Bold.ttf";
+    protected Font font10;
+    protected Font font10b;
+    protected Font font12;
+    protected Font font12b;
+    protected Font font14;
     public void addClosingDetailsToDB(ClosingDetailsDto closingDetailsDto) {
 
         //Checking if register_id is 0 that means closing details is inserting first time and if not then i need to edit it.
@@ -727,7 +737,32 @@ public class ClosingDetailsManager {
 
     public void printClosingDetails(String startDate, String endDate) {
 
+       /* SalesManager salesManager = new SalesManager();
+        List<ReceiptDto> receiptDtos = new ArrayList<>();
 
+        receiptDtos = salesManager.getReceiptDetails(1);
+
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+
+
+
+        PdfPCell seller = getPartyAddress("From:",*/
+
+
+    }
+
+    public PdfPCell getPartyAddress(String who, String name,
+                                    String line1, String line2, String countryID, String postcode, String city) {
+        PdfPCell cell = new PdfPCell();
+        cell.setBorder(PdfPCell.NO_BORDER);
+        cell.addElement(new Paragraph(who, font12b));
+        cell.addElement(new Paragraph(name, font12));
+        cell.addElement(new Paragraph(line1, font12));
+        cell.addElement(new Paragraph(line2, font12));
+        cell.addElement(new Paragraph(
+                String.format("%s-%s %s", countryID, postcode, city), font12));
+        return cell;
     }
 
     public String getLineItemDiscount(String startDate, String endDate)

@@ -79,7 +79,7 @@ public class ProductManager
                     productDto.getMinProductQuantity(),
                     productDto.getReturnRule(),
                     productDto.getImage(),
-                    productDto.getImeiNo(),
+                    //productDto.getImeiNo(),
                     productDto.isAddTax(),
                     productDto.isRelatedProduct(),
                     productDto.getProductId(),
@@ -114,29 +114,35 @@ public class ProductManager
 
         List<ProductDto> productDtoList = new ArrayList<>();
 
-        List<RelatedProductDto> relatedProductDtosList = new ArrayList<>();
+        productDtoList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new ProductMapper (), productNo);
 
-        ProductMapper mapper = new ProductMapper();
+        return productDtoList;
+
+       // List<RelatedProductDto> relatedProductDtosList = new ArrayList<>();
+
+        //ProductMapper mapper = new ProductMapper();
 
 
         //Here getting the product no to get the related product no to particular product from Related Product table
-        relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
+        //relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
 
-        if(null != relatedProductDtosList) {
+//        if(null != relatedProductDtosList) {
+//
+//            for(int i = 0; i<relatedProductDtosList.size(); i++) {
+//
+//                System.out.println(relatedProductDtosList.size());
+//
+//                //getting all related product no and then adding into list and sending to UI
+//                productDtoList = jdbcTemplate.query(sqlQuery.getProductDetailsWithProductNo, new ProductMapper(), relatedProductDtosList.get(i).getRelatedProductNo());
+//            }
+//
+//        }
+//        else
+//        {
+//            System.out.println("relatedProductDtosList is Null thats why going in else!!!");
+//        }
 
-            for(int i = 0; i<relatedProductDtosList.size(); i++) {
 
-                //getting all related product no and then adding into list and sending to UI
-                productDtoList = jdbcTemplate.query(sqlQuery.getProductDetailsWithProductNo, mapper, relatedProductDtosList.get(i).getRelatedProductNo());
-            }
-
-        }
-        else
-        {
-            System.out.println("relatedProductDtosList is Null thats why going in else!!!");
-        }
-
-        return productDtoList;
 
     }
 
@@ -146,12 +152,10 @@ public class ProductManager
 
         relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
 
-
         return relatedProductDtosList;
 
-
-
     }
+
 
 
     private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
@@ -161,7 +165,6 @@ public class ProductManager
         public RelatedProductDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
             RelatedProductDto relatedProductDto = new RelatedProductDto();
-
 
             relatedProductDto.setRelatedProductId(rs.getInt("RELATED_PRODUCT_ID"));
             relatedProductDto.setRelatedProductNo(rs.getString("RELATED_PRODUCT_NO"));
@@ -175,8 +178,6 @@ public class ProductManager
             return relatedProductDto;
         }
     }
-
-
 
     private final class ProductMapper implements RowMapper<ProductDto>
         {
@@ -205,7 +206,7 @@ public class ProductManager
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
                 product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
-                product.setImeiNo(rs.getString("IMEI_NUMBER"));
+               // product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 product.setAddTax(rs.getBoolean("TAX"));
                 product.setRelatedProduct(rs.getBoolean("IS_RELATED_PRODUCT"));
                 //System.out.println(rs.getBoolean("TAX"));
@@ -370,6 +371,17 @@ public class ProductManager
         return productList;
     }
 
+    public void addIMEINo(String productNo, String imeiNo) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.addImeiNo,productNo,imeiNo);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+    }
 
 
 }
