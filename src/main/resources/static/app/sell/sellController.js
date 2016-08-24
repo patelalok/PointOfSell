@@ -139,7 +139,7 @@
 						}
 					}
 
-				} else if (searchTxt.length > 4) {
+				} else if (searchTxt.length > 6) {
 					console.log("" + $scope.searchValue);
 					$scope.discount = 0;
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
@@ -563,7 +563,7 @@
 				}
 
 			}
-			$scope.loadCheckOutData();
+			//$scope.loadCheckOutData();
 
 		};
 		function onBalanceSuccess(response) {
@@ -580,6 +580,7 @@
 				GlobalVariable.balanceRemaining = parseFloat(response);
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
 			}
+			$scope.loadCheckOutData();
 
 		}
 		function onBalanceError(response) {
@@ -622,7 +623,7 @@
 				 */
 
 			}
-			$scope.loadCheckOutData();
+
 		}
 		function render() {
 			$scope.currentPageIndexArr = 0;

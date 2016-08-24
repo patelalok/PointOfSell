@@ -102,7 +102,7 @@
 				GlobalVariable.custBalance = 0;
 			}
 
-            if(parseFloat($scope.balanceAmount == parseFloat($scope.checkPayment)))
+            if(parseFloat($scope.balanceAmount) == parseFloat($scope.checkPayment))
             {
                 var paidAmtCash = 0;
                 var paidAmtCredit =0;
