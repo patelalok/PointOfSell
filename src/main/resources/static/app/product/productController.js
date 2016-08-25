@@ -325,7 +325,7 @@
 				$scope.prodRetail = GlobalVariable.editProductDetails.retailPrice;
 				$scope.prodQuantity = GlobalVariable.editProductDetails.quantity;
 				$scope.prodMinquantity = GlobalVariable.editProductDetails.minProductQuantity;
-				$scope.productYesyNO = GlobalVariable.editProductDetails.tax;
+				$scope.productYesyNO = GlobalVariable.editProductDetails.addTax;
 				$scope.selectedReturnType = GlobalVariable.editProductDetails.returnRule;
 			}
 
