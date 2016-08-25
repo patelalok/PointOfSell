@@ -6,7 +6,13 @@ package com.abm.pos.com.abm.pos.dto;
 public class PhoneDto {
 
     private int id;
+    private String productNo;
     private String imeiNo;
+    private double costPrice;
+    private double retailPrice;
+    private double markup;
+
+
     private String lastUpdatedTimeStamp;
 
 
