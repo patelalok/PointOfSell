@@ -631,7 +631,7 @@ public class SQLQueries {
             "FROM TRANSACTION_LINE_ITEM " +
             "WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' GROUP BY hour";
 
-    public String getRelatedProducts = "SELECT * FROM PRODUCT a, RELATED_PRODUCTS b WHERE a.PRODUCT_NO = b.PRODUCT_NO AND b.PRODUCT_NO = ?";
+    public String getRelatedProducts = "SELECT  * from PRODUCT a, RELATED_PRODUCTS b where a.PRODUCT_NO = b.RELATED_PRODUCT_NO and b.PRODUCT_NO = ? ";
 
     public String getProductDetailsWithProductNo = "SELECT * FROM PRODUCT WHERE PRODUCT_NO = ?";
 

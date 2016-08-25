@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/getRelatedProductForProductPage", method = RequestMethod.GET, produces = "application/json")
-    public List<RelatedProductDto> getRelatedProductForProductPage(@RequestParam String productNo) {
+    public List<ProductDto> getRelatedProductForProductPage(@RequestParam String productNo) {
 
         return productManager.getRelatedProductForProductPage(productNo);
     }

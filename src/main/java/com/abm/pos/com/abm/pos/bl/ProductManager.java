@@ -146,13 +146,15 @@ public class ProductManager
 
     }
 
-    public List<RelatedProductDto> getRelatedProductForProductPage(String productNo) {
+    public List<ProductDto> getRelatedProductForProductPage(String productNo) {
 
         List<RelatedProductDto> relatedProductDtosList = new ArrayList<>();
 
-        relatedProductDtosList = jdbcTemplate.query(sqlQuery.getRelatedProducts, new RelatedProductMapper (), productNo);
+        List<ProductDto> productDtos = new ArrayList<>();
 
-        return relatedProductDtosList;
+        productDtos = jdbcTemplate.query(sqlQuery.getRelatedProducts, new ProductMapper (), productNo);
+
+        return productDtos;
 
     }
 
@@ -166,6 +168,7 @@ public class ProductManager
 
             RelatedProductDto relatedProductDto = new RelatedProductDto();
 
+            relatedProductDto.setProductNo(rs.getString("PRODUCT_NO"));
             relatedProductDto.setRelatedProductId(rs.getInt("RELATED_PRODUCT_ID"));
             relatedProductDto.setRelatedProductNo(rs.getString("RELATED_PRODUCT_NO"));
 
