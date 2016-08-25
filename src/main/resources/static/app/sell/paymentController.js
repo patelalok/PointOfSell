@@ -107,14 +107,23 @@
             {
                 var paidAmtCash = 0;
                 var paidAmtCredit =0;
-                var chnAmount =0;
+
             }
             else
             {
                 var paidAmtCash = parseFloat(parseFloat($scope.paidAmountCash).toFixed(2));
                 var paidAmtCredit =parseFloat(parseFloat($scope.paidAmountCredit).toFixed(2));
-                var chnAmount =parseFloat(parseFloat($scope.changeAmount).toFixed(2));
+
             }
+
+            if(parseFloat($scope.balanceAmount) < 0)
+			{
+				var chnAmount =Math.abs(parseFloat(parseFloat($scope.balanceAmount).toFixed(2)));
+			}
+			else
+			{
+				var chnAmount =0;
+			}
             if(Math.abs(parseFloat($scope.balanceAmount)) == parseFloat($scope.balanceAmount))
             {
                 $scope.balanceAmount = parseFloat(parseFloat($scope.balanceAmount).toFixed(2));
