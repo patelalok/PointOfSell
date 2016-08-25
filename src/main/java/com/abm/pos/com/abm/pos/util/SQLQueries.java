@@ -655,4 +655,5 @@ public class SQLQueries {
     public String addImeiNo = "";
     public String editPhoneDetailsAsProduct = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?,MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
     public String getPhoneDetails = "SELECT * FROM PHONE WHERE PRODUCT_NO = ?" ;
+    public String getSumOfPaidOut = "SELECT SUM(PAIDOUT1 + PAIDOUT2 + PAIDOUT3) PAIDOUT FROM PAIDOUT WHERE DATE BETWEEN ? AND ? ";
 }

@@ -125,6 +125,9 @@ public class ClosingDetailsManager {
 
             double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
 
+            //Here getting the sum of all paid for particular day and then adding into daily total so i can match paidout and total amount.
+            //double totalPaidout = jdbcTemplate.queryForObject(sqlQueries.getSumOfPaidOut, new Object[] {startDate,endDate}, Double.class);
+
             //this is first call from UI to get close register data cause i dont have any data into cash register table
             if(null != closingDetails && !closingDetails.isEmpty()) {
 
@@ -133,7 +136,8 @@ public class ClosingDetailsManager {
                 closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
-                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
+              //  + totalPaidout
+                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal() );
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
                     //System.out.println(lineItemDiscount);
@@ -157,7 +161,8 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportCredit(dashboardDto.getCredit());
                 closingDetailsDto.setReportCheck(dashboardDto.getCheck());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
-                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
+                //+ totalPaidout
+                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal() );
 
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);

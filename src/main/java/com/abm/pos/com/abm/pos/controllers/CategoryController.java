@@ -13,6 +13,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "")
+@CrossOrigin(origins = {"*"})
 public class CategoryController {
 
     @Autowired

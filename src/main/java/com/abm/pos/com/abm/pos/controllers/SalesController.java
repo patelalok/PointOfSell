@@ -23,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("")
+@CrossOrigin(origins = {"*"})
 public class SalesController {
 
     @Autowired

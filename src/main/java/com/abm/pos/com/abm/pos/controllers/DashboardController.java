@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("")
+@CrossOrigin(origins = {"*"})
 public class DashboardController
 {
     @Autowired
