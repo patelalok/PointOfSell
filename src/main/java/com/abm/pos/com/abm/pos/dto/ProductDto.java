@@ -29,6 +29,7 @@ public class ProductDto {
     private int stock;
     private int quantityForSell;
     private boolean isRelatedProduct;
+    private int phoneId;
 
     public String getAltNo() {
         return altNo;
@@ -220,5 +221,13 @@ public class ProductDto {
 
     public void setOldProductNo(String oldProductNo) {
         this.oldProductNo = oldProductNo;
+    }
+
+    public int getPhoneId() {
+        return phoneId;
+    }
+
+    public void setPhoneId(int phoneId) {
+        this.phoneId = phoneId;
     }
 }

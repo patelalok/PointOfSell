@@ -195,6 +195,12 @@ public class SQLQueries {
                     "REASON3," +
                     "DATE) VALUES (?,?,?,?,?,?,?)";
 
+    public String addPhoneDetailsAsProduct =
+            "INSERT INTO PHONE " +
+                    "(PRODUCT_NO,IMEI_NO,COST,RETAIL,MARKUP,LAST_UPDATED_TIME) " +
+                    "VALUES (?,?,?,?,?,?)";
+
+
     //SQL QUERY FOR EDIT  INTO DATABASE
 
     public String editProductQuery =
@@ -647,4 +653,6 @@ public class SQLQueries {
     public String getLicenceKey = "SELECT * FROM PRODUCT_LICENCE";
     public String deleteLicenseKey = "DELETE FROM PRODUCT_LICENCE WHERE LICENCE_ID = ?";
     public String addImeiNo = "";
+    public String editPhoneDetailsAsProduct = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?,MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
+    public String getPhoneDetails = "SELECT * FROM PHONE WHERE PRODUCT_NO = ?" ;
 }

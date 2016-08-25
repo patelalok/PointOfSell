@@ -1,9 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
-import com.abm.pos.com.abm.pos.dto.ProductDto;
-import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
-import com.abm.pos.com.abm.pos.dto.RelatedProductDto;
-import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -32,27 +29,57 @@ public class ProductManager
     public void addProductToDB(ProductDto productDto) {
         try
         {
-            jdbcTemplate.update(sqlQuery.addProductQuery,
-                    productDto.getProductNo(),
-                    productDto.getCategoryId(),
-                    productDto.getVendorId(),
-                    productDto.getBrandId(),
-                    productDto.getAltNo(),
-                    productDto.getDescription(),
-                    productDto.getCostPrice(),
-                    productDto.getMarkup(),
-                    productDto.getRetailPrice(),
-                    productDto.getQuantity(),
-                    productDto.getMinProductQuantity(),
-                    productDto.getReturnRule(),
-                    productDto.getImage(),
-                    productDto.getCreatedDate(),
-                   // productDto.getImeiNo(),
-                    productDto.isAddTax(),
-                    productDto.isRelatedProduct());
 
-            System.out.println(productDto.isAddTax());
-            System.out.println("Product Added Successfully");
+            if(productDto.getCategoryId() == 10)
+            {
+                System.out.println("This product in phone category");
+
+                jdbcTemplate.update(sqlQuery.addProductQuery,
+                        productDto.getProductNo(),
+                        productDto.getCategoryId(),
+                        productDto.getVendorId(),
+                        productDto.getBrandId(),
+                        productDto.getAltNo(),
+                        productDto.getDescription(),
+                        productDto.isAddTax(),
+                        productDto.isRelatedProduct());
+
+                System.out.println("Products basic information added successfully for phone category");
+
+                jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
+                        productDto.getProductNo(),
+                        productDto.getImeiNo(),
+                        productDto.getCostPrice(),
+                        productDto.getRetailPrice(),
+                        productDto.getMarkup(),
+                        productDto.getCreatedDate());
+
+                System.out.println("Phone's IMEI information added successfully");
+
+            }
+            else {
+                jdbcTemplate.update(sqlQuery.addProductQuery,
+                        productDto.getProductNo(),
+                        productDto.getCategoryId(),
+                        productDto.getVendorId(),
+                        productDto.getBrandId(),
+                        productDto.getAltNo(),
+                        productDto.getDescription(),
+                        productDto.getCostPrice(),
+                        productDto.getMarkup(),
+                        productDto.getRetailPrice(),
+                        productDto.getQuantity(),
+                        productDto.getMinProductQuantity(),
+                        productDto.getReturnRule(),
+                        productDto.getImage(),
+                        productDto.getCreatedDate(),
+                        // productDto.getImeiNo(),
+                        productDto.isAddTax(),
+                        productDto.isRelatedProduct());
+
+                System.out.println(productDto.isAddTax());
+                System.out.println("Product Added Successfully");
+            }
         }
         catch (Exception e)
         {
@@ -63,30 +90,57 @@ public class ProductManager
 
     public void editProductToDB(ProductDto productDto) {
 
-        try
-        {
-            jdbcTemplate.update(sqlQuery.editProductQuery,
-                    productDto.getProductNo(),
-                    productDto.getCategoryId(),
-                    productDto.getVendorId(),
-                    productDto.getBrandId(),
-                    productDto.getAltNo(),
-                    productDto.getDescription(),
-                    productDto.getCostPrice(),
-                    productDto.getMarkup(),
-                    productDto.getRetailPrice(),
-                    productDto.getQuantity(),
-                    productDto.getMinProductQuantity(),
-                    productDto.getReturnRule(),
-                    productDto.getImage(),
-                    //productDto.getImeiNo(),
-                    productDto.isAddTax(),
-                    productDto.isRelatedProduct(),
-                    productDto.getProductId(),
-                    productDto.getOldProductNo());
+        try {
 
-            System.out.println("Product Edited Successfully");
-            System.out.println(productDto.isAddTax());
+            if (productDto.getCategoryId() == 10) {
+
+                jdbcTemplate.update(sqlQuery.editProductQuery,
+                        productDto.getProductNo(),
+                        productDto.getCategoryId(),
+                        productDto.getVendorId(),
+                        productDto.getBrandId(),
+                        productDto.getAltNo(),
+                        productDto.getDescription(),
+                        productDto.isAddTax(),
+                        productDto.isRelatedProduct(),
+                        productDto.getProductId(),
+                        productDto.getOldProductNo());
+
+                System.out.println("Products basic information Edited successfully for phone category");
+
+                jdbcTemplate.update(sqlQuery.editPhoneDetailsAsProduct,
+                        productDto.getProductNo(),
+                        productDto.getImeiNo(),
+                        productDto.getCostPrice(),
+                        productDto.getRetailPrice(),
+                        productDto.getMarkup(),
+                        productDto.getCreatedDate(),
+                        productDto.getPhoneId());
+            }
+            else {
+                jdbcTemplate.update(sqlQuery.editProductQuery,
+                        productDto.getProductNo(),
+                        productDto.getCategoryId(),
+                        productDto.getVendorId(),
+                        productDto.getBrandId(),
+                        productDto.getAltNo(),
+                        productDto.getDescription(),
+                        productDto.getCostPrice(),
+                        productDto.getMarkup(),
+                        productDto.getRetailPrice(),
+                        productDto.getQuantity(),
+                        productDto.getMinProductQuantity(),
+                        productDto.getReturnRule(),
+                        productDto.getImage(),
+                        //productDto.getImeiNo(),
+                        productDto.isAddTax(),
+                        productDto.isRelatedProduct(),
+                        productDto.getProductId(),
+                        productDto.getOldProductNo());
+
+                System.out.println("Product Edited Successfully");
+                System.out.println(productDto.isAddTax());
+            }
         }
         catch (Exception e)
         {
@@ -383,6 +437,47 @@ public class ProductManager
         catch (Exception e)
         {
             System.out.println(e);
+        }
+
+
+    }
+
+
+        public List<PhoneDto> getPhoneDetails(String productNo) {
+
+            List<PhoneDto> phoneDtoList = new ArrayList<>();
+
+        try
+        {
+
+            phoneDtoList = jdbcTemplate.query(sqlQuery.getPhoneDetails, new PhoneMapper(), productNo);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return phoneDtoList;
+    }
+
+    private final class PhoneMapper implements RowMapper<PhoneDto>
+    {
+
+        @Override
+        public PhoneDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            PhoneDto phoneDto = new PhoneDto();
+
+            phoneDto.setPhoneId(rs.getInt("ID"));
+            phoneDto.setProductNo(rs.getString("PRODUCT_NO"));
+            phoneDto.setImeiNo(rs.getString("IMEI_NO"));
+            phoneDto.setCostPrice(rs.getDouble("COST"));
+            phoneDto.setRetailPrice(rs.getDouble("RETAIL"));
+            phoneDto.setMarkup(rs.getDouble("MARKUP"));
+            phoneDto.setLastUpdatedTimeStamp("LAST_UPDATED_TIME");
+
+            return phoneDto;
+
         }
     }
 

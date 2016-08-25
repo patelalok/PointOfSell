@@ -1,10 +1,7 @@
 package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.ProductManager;
-import com.abm.pos.com.abm.pos.dto.ProductDto;
-import com.abm.pos.com.abm.pos.dto.ProductNoAndAltNoDTO;
-import com.abm.pos.com.abm.pos.dto.RelatedProductDto;
-import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
+import com.abm.pos.com.abm.pos.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -108,6 +105,12 @@ public class ProductController {
     public void addIMEINo(@RequestParam String productNo, @RequestParam String imeiNo) {
 
         productManager.addIMEINo(productNo,imeiNo);
+    }
+
+    @RequestMapping(value = "/getPhoneDetails", method = RequestMethod.GET)
+    public List<PhoneDto> getPhoneDetails(@RequestParam String productNo) {
+
+        return productManager.getPhoneDetails(productNo);
     }
 
 }
