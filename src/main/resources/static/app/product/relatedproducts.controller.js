@@ -91,7 +91,7 @@
         }
         function getRelatedProducts()
         {
-            var url=" http://localhost:8080/getRelatedProduct?productNo="+GlobalVariable.mainProductNo;
+            var url="http://localhost:8080/getRelatedProductForProductPage?productNo="+GlobalVariable.mainProductNo;
             dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
         }
         function onGetRelatedSuccess(response)

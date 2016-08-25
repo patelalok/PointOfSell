@@ -117,7 +117,10 @@
 							width="10%"></column>
 					<column name="Receipt No" key="transactionCompId" datatype="string" width="10%"></column>
 					<column name="Status" key="status" datatype="string" width="10%">
+						<cell ng-non-bindable>
 						<span ng-if="row.status == 'r'">return</span>
+							<span ng-if="row.status == 'c'">completed</span>
+						</cell>
 					</column>
 					<column name="" key="" datatype="" width="20%">
 						<cell ng-non-bindable>

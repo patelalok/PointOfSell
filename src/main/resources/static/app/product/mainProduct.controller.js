@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -127,6 +127,26 @@
 			DialogFactory.show(_tmPath, _ctrlPath, callbackRelatedProducts,undefined, undefined, 'lg');
 		};
 		function callbackRelatedProducts()
+		{
+
+		}
+		$scope.displayLowStockProducts = function()
+		{
+			$scope.getProductDtls = [];
+		  if($scope.lowStock == true) {
+			  var url = "http://localhost:8080/LowStockProductDetails";
+			  dataService.Get(url, onGetStockSuccess, onGetStockError, 'application/json', 'application/json');
+		  }
+		  else
+			{
+				$scope.getProductDtls = GlobalVariable.getProducts;
+			}
+		};
+		function onGetStockSuccess(response)
+		{
+			$scope.getProductDtls = response;
+		}
+		function onGetStockError(response)
 		{
 
 		}

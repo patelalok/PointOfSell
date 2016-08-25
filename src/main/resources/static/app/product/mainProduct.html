@@ -8,6 +8,15 @@
 		</div>
 	</div>
 	<div class="col-md-1" style="width:16%;">
+		<div class="padding-bottom-5" style="visibility:hidden;"><label>Name/SKU/Handle</label></div>
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="lowStock" ng-change="displayLowStockProducts()">
+					Show Low Stock Products
+				</label>
+			</div>
+		</div>
+	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Product Type</label></div>
 		<div>
 			<select id="prType" data-ng-model="productType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;">

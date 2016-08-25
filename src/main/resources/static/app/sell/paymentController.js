@@ -92,10 +92,11 @@
 				$scope.paidAmountCredit = '';
 			if(GlobalVariable.customerFound == true)
 			{
-				if($scope.balanceAmount > 0)
+				/*if($scope.balanceAmount > 0)
 					GlobalVariable.custBalance = $scope.balanceAmount;
 				else
-					GlobalVariable.custBalance = 0;
+					GlobalVariable.custBalance = 0;*/
+				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
 			}
 			else
 			{
@@ -114,7 +115,14 @@
                 var paidAmtCredit =parseFloat(parseFloat($scope.paidAmountCredit).toFixed(2));
                 var chnAmount =parseFloat(parseFloat($scope.changeAmount).toFixed(2));
             }
-
+            if(Math.abs(parseFloat($scope.balanceAmount)) == parseFloat($scope.balanceAmount))
+            {
+                $scope.balanceAmount = parseFloat(parseFloat($scope.balanceAmount).toFixed(2));
+            }
+            else
+            {
+                $scope.balanceAmount = 0;
+            }
 			var url ="http://localhost:8080/addTransaction";
 			var request = new Object();
 			request = {
@@ -134,7 +142,8 @@
 			"totalQuantity":parseInt(GlobalVariable.quantityTotal),
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
-				"prevBalance":parseFloat(parseFloat(GlobalVariable.custBalance).toFixed(2))
+				"prevBalance":parseFloat(parseFloat(GlobalVariable.custBalance).toFixed(2)),
+                "balance":$scope.balanceAmount
 
 			};
 			request = JSON.stringify(request);
@@ -248,24 +257,24 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
-			$rootScope.itemTotal =Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal)+parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].discount)).toFixed(2);
+			if(response.length!== 0) {
+				$rootScope.itemTotal = Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].discount)).toFixed(2);
 
 
-			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
-			{
-				$rootScope.modifiedTransData.push(
-					{
-						"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productNumber,
-						"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
-						"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
-						"discountPercentage":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
-						"retwdisc":(parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice)/parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
-						"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
-						"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
-					}
-				);
+				for (var i = 0; i < GlobalVariable.receiptData[0].transactionLineItemDtoList.length; i++) {
+					$rootScope.modifiedTransData.push(
+						{
+							"productNumber": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productNumber,
+							"productDescription": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
+							"retail": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
+							"discountPercentage": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
+							"retwdisc": (parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice) / parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
+							"quantity": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
+							"totalProductPrice": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
+						}
+					);
+				}
 			}
-
 			GlobalVariable.isPrintPage = true;
 			if(response.length !==0)
 			{

@@ -42,15 +42,21 @@
 		};
 		$scope.callBackProductKey = function()
 		{
-			var url='http://localhost:8080/getUserLoginDetails?username='+GlobalVariable.productKey;
+			var url='localhost:8080/getLicenceKey?licenceKey='+GlobalVariable.productKey;
 			dataService.Get(url,onProductKeySuccess,onProductKeyError,'application/json','application/json');
 		};
 		function onProductKeySuccess(response)
 		{
-			$scope.productKeyAdded = true;
-			sessionStorage.userName = $scope.loginemail;
-			var url='http://localhost:8080/getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
-			dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
+			if(response == true) {
+				$scope.productKeyAdded = true;
+				sessionStorage.userName = $scope.loginemail;
+				var url = 'http://localhost:8080/getUserLoginDetails?username=' + $scope.loginemail + '&password=' + $scope.loginpassword;
+				dataService.Get(url, onLoginSuccess, onLoginError, 'application/json', 'application/json');
+			}
+			else
+			{
+				$scope.productKeyAdded = false;
+			}
 		}
 		function onProductKeyError(response)
 		{
@@ -73,6 +79,7 @@
 				$scope.errorMessage = '';
 				sessionStorage.clockTime = js_yyyy_mm_dd_hh_mm_ss();
 				sessionStorage.userId =response.userId;
+				sessionStorage.userRole = response.userRole;
 
 				$state.go('home');
 			}

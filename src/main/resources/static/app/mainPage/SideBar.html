@@ -1,7 +1,7 @@
 	<aside id="admin-sidebar" class="admin-sidebar" ng-show="((device.isDesktop && !device.isTablet) || displaySideBar) && !hideSideBar" ng-controller="SidebarController">
 						<nav class="list-group nav-primary menu" id="sideBar_menu">
 							<ul class="nav nav-list">
-								<li class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 1}"} ng-click="navigate(1,'home')">
+								<li ng-hide="sessionStorage.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 1}"} ng-click="navigate(1,'home')">
 									<a >
 										<img alt="" src="./assets/images/home.png" height="25" />
 										<div class="alignCenter"><span style="color:#000000;">Home</span></div>
@@ -39,7 +39,7 @@
 									</a>
 								
 								</li>
-								<li class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 4}"} ng-click="navigate(4,'report')">
+								<li ng-hide="sessionStorage.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 4}"} ng-click="navigate(4,'report')">
 									<a >
 										<img alt="" src="./assets/images/report.png" height="25" />
 										<div class="alignCenter"><span style="color:#000000;">Report</span></div>
@@ -85,7 +85,7 @@
 								</li>
 								
 								
-								<li class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 7}"} ng-click="navigate(7,'setup')">
+								<li ng-hide="sessionStorage.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" ng-class="{'menuActive':selectedMenuCd == 7}"} ng-click="navigate(7,'setup')">
 									<a >
 										<img alt="" src="./assets/images/setup.png" height="25" />
 										<div class="alignCenter"><span style="color:#000000;">setup</span></div>
