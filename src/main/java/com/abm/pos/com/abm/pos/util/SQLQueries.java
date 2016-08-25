@@ -29,10 +29,10 @@ public class SQLQueries {
                    "RETURN_RULE," +
                    "IMAGE," +
                    "CREATED_DATE," +
-                   "IMEI_NUMBER," +
+                   //"IMEI_NUMBER," +
                    "TAX, " +
                    "IS_RELATED_PRODUCT)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 

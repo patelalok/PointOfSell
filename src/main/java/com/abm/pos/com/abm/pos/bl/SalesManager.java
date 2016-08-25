@@ -57,7 +57,7 @@ public class SalesManager {
                     transactionDto.getBalance());
 
             jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
-                    transactionDto.getPrevBalance(),
+                    transactionDto.getBalance(),
                     transactionDto.getCustomerPhoneNo());
             System.out.println("Customer Balance Added Successfully");
             System.out.println("Transaction Added Successfully");
@@ -294,7 +294,14 @@ public class SalesManager {
             transaction.setUserId(rs.getInt("USER_ID"));
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
             transaction.setUsername(username);
-            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
+
+            if(rs.getDouble("BALANCE") == 0) {
+                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
+            }
+            else
+            {
+                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+            }
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
             transaction.setStatus(rs.getString("STATUS"));
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));

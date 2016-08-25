@@ -47,7 +47,7 @@ public class ProductManager
                     productDto.getReturnRule(),
                     productDto.getImage(),
                     productDto.getCreatedDate(),
-                    productDto.getImeiNo(),
+                   // productDto.getImeiNo(),
                     productDto.isAddTax(),
                     productDto.isRelatedProduct());
 
