@@ -30,6 +30,7 @@ public class ProductDto {
     private int quantityForSell;
     private boolean isRelatedProduct;
     private int phoneId;
+    private int relatedProductId;
 
     public String getAltNo() {
         return altNo;
@@ -229,5 +230,13 @@ public class ProductDto {
 
     public void setPhoneId(int phoneId) {
         this.phoneId = phoneId;
+    }
+
+    public int getRelatedProductId() {
+        return relatedProductId;
+    }
+
+    public void setRelatedProductId(int relatedProductId) {
+        this.relatedProductId = relatedProductId;
     }
 }

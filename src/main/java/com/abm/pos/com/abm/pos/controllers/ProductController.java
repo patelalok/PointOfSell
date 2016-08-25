@@ -86,7 +86,7 @@ public class ProductController {
         return productManager.getLastProductNo();
     }
 
-    @RequestMapping(value = "/deleteRelatedProduct", method = RequestMethod.DELETE, consumes = "application/json")
+    @RequestMapping(value = "/deleteRelatedProduct", method = RequestMethod.POST, consumes = "application/json")
     public void deleteRelatedProduct(@RequestParam String relatedProductId) {
 
         productManager.deleteRelatedProduct(relatedProductId);
@@ -99,7 +99,6 @@ public class ProductController {
 
         return productManager.getLowStockProductDetails();
     }
-
 
     @RequestMapping(value = "/addIMEINo", method = RequestMethod.POST, consumes = "application/json")
     public void addIMEINo(@RequestParam String productNo, @RequestParam String imeiNo) {
