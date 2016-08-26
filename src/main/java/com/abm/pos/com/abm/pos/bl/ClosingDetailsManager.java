@@ -125,6 +125,7 @@ public class ClosingDetailsManager {
 
             double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
 
+
             //Here getting the sum of all paid for particular day and then adding into daily total so i can match paidout and total amount.
             //String totalPaidout = jdbcTemplate.queryForObject(sqlQueries.getSumOfPaidOut, new Object[] {startDate,endDate}, String.class);
 
@@ -162,7 +163,7 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportCredit(dashboardDto.getCredit());
                 closingDetailsDto.setReportCheck(dashboardDto.getCheck());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
-                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal() );
+                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal() - dashboardDto.getBalance());
 
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
@@ -199,7 +200,7 @@ public class ClosingDetailsManager {
             closingDto.setCash(rs.getDouble("CASH"));
             closingDto.setCredit(rs.getDouble("CREDIT"));
             closingDto.setCheck(rs.getDouble("CHECKAMOUNT"));
-            closingDto.setTotal(rs.getDouble("TOTAL"));
+            closingDto.setTotal(rs.getDouble("TOTAL") - rs.getDouble("BALANCE"));
             closingDto.setTax(rs.getDouble("TAX"));
             closingDto.setDiscount(rs.getDouble("DISCOUNT"));
 

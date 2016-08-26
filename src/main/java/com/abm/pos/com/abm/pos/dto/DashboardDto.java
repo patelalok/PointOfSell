@@ -15,6 +15,7 @@ public class DashboardDto {
     private double discount;
     private double noOfTrans;
     private double avgBasketSize;
+    private double balance;
 
     public String getNameOfMonth() {
         return nameOfMonth;
@@ -98,5 +99,11 @@ public class DashboardDto {
         this.total = total;
     }
 
+    public double getBalance() {
+        return balance;
+    }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }
