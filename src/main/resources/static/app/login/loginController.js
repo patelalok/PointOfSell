@@ -81,8 +81,15 @@
 				sessionStorage.userId =response.userId;
 				sessionStorage.userRole = response.userRole;
 				GlobalVariable.userRole= response.userRole;
+				if(GlobalVariable.userRole == 'Manager')
+				{
+					$state.go('sell');
+				}
+				else
+				{
+					$state.go('home');
+				}
 
-				$state.go('home');
 			}
 			else
 			{

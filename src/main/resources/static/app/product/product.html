@@ -19,7 +19,7 @@
 				<div class="content display-table" >
 					<div class="form-group display-row">
 						<label for="productId" class="display-cell">Product ID:</label>
-						<input data-proxtra-message="REGAUTH18"   type="text" class="form-control display-cell" data-ng-model="productId" id="productId" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
+						<input data-proxtra-message="REGAUTH18"   type="text" data-ng-change="getNewProductValue(productId)" class="form-control display-cell" data-ng-model="productId" id="productId" data-restrict-characters="restrictCharacter.OnlyDigits.regExp"/>
 						<div class="display-cell"><button ng-disabled="GlobalVariable.editProduct" class="btn btn-primary margin-top-1 wrap-text" style="font-size:14px;" ng-click="generateRandomId()">Generate</button></div>
 						</div>
 					<div class="form-group display-row">
