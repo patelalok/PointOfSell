@@ -110,7 +110,7 @@
 		{
 			GlobalVariable.editUser = true;
 			GlobalVariable.edituserName = row.username;
-			GlobalVariable.editPassword = row.passowrd;
+			GlobalVariable.editPassword = row.password;
 			GlobalVariable.editUserRole = row.userRole;
 			GlobalVariable.editCreatedDate = row.createdDate;
 			GlobalVariable.editUserId = row.userId;

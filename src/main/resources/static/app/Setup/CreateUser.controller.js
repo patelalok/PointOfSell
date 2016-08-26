@@ -3,11 +3,12 @@
 
 	angular.module('sampleApp').controller('CreateUserController', CreateUserController);
 
-	CreateUserController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
+	CreateUserController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util'];
 
-	function CreateUserController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService)
+	function CreateUserController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util)
 	{
 		$scope.GlobalVariable = GlobalVariable;
+		var authElemArray = new Array();
 		//GlobalVariable.editUser = false;
 		$scope.closeCreateUser = function()
 		{
@@ -28,16 +29,32 @@
 		}
 		$scope.editUser = function()
 		{
-			var request = {};
-			request =   {
-				"username": $scope.userName,
-				"password": $scope.newPassword,
-				"userRole": $scope.userRole,
-				"userId":GlobalVariable.editUserId
-			};
-			request = JSON.stringify(request);
-			var url="http://localhost:8080/editUser";
-			dataService.Post(url,request,onEditUserSuccess,onEditUserError,'application/json','application/json');
+			util.customError.hide(['newRePassword']);
+			authElemArray = new Array();
+			if($scope.newPassword !=  $scope.newRePassword)
+			{
+				authElemArray.push({
+					'id' : 'newRePassword',
+					'msg' : 'Password and Confirm Passwors donot match'
+				});
+			}
+			if (authElemArray.length >= 1) {
+				util.customError.show(authElemArray, "");
+
+				return false;
+			} else {
+				var request = {};
+				request =   {
+					"username": $scope.userName,
+					"password": $scope.newPassword,
+					"userRole": $scope.userRole,
+					"userId":GlobalVariable.editUserId
+				};
+				request = JSON.stringify(request);
+				var url="http://localhost:8080/editUser";
+				dataService.Post(url,request,onEditUserSuccess,onEditUserError,'application/json','application/json');
+			}
+
 		};
 		function onEditUserSuccess(response)
 		{

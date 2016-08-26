@@ -80,6 +80,7 @@
 				sessionStorage.clockTime = js_yyyy_mm_dd_hh_mm_ss();
 				sessionStorage.userId =response.userId;
 				sessionStorage.userRole = response.userRole;
+				GlobalVariable.userRole= response.userRole;
 
 				$state.go('home');
 			}

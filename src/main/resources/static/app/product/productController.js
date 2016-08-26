@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('productController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util','$timeout'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util','$timeout','DialogFactory'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util,$timeout) {
+	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util,$timeout,DialogFactory) {
 		
 		$scope.device = device;
 		$scope.restrictCharacter=restrictCharacter;
@@ -75,6 +75,37 @@
 			$scope.selectedCategoryType = categoryName;
 			$scope.categoryId = categoryId;
 			$scope.categoryDescription = categoryDescription;
+			if($scope.selectedCategoryType == 'Phone')
+			{
+				$scope.getAllIMEINumbers();
+			}
+		};
+		$scope.getAllIMEINumbers = function()
+		{
+			var url='http://localhost:8080/getPhoneDetails?productNo='+$scope.productId;
+			dataService.Get(url,onGetIMEISuccess,onGETIMEIError,'application/json','application/json');
+		};
+		function onGetIMEISuccess(response)
+		{
+			$scope.IMEINUMBERS = response;
+		}
+		function onGETIMEIError(response)
+		{
+
+		}
+		$scope.editIMEI = function(row)
+		{
+			GlobalVariable.editIMEI = true;
+			GlobalVariable.editIMEIDtls = row;
+			var _tmPath = 'app/product/addIMEI.html';
+			var _ctrlPath = 'IMEIController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackEditIMEI);
+
+		};
+
+		$scope.callBackEditIMEI = function()
+		{
+
 		};
 		$scope.generateRandomId = function()
 		{
@@ -84,6 +115,7 @@
 		function onLastProdNoSuccess(response)
 		{
 			$scope.productId = 10000000+parseInt(response);
+			GlobalVariable.IMEIProductID = $scope.productId;
 		}
 		function onLastProdNoError(response)
 		{
@@ -301,6 +333,17 @@
 		{
 
 		}
+		$scope.addIMEI = function ()
+		{
+			GlobalVariable.editIMEI = false;
+			var _tmPath = 'app/product/addIMEI.html';
+			var _ctrlPath = 'IMEIController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackAddIMEI);
+		};
+		$scope.callBackAddIMEI = function()
+		{
+			$scope.getAllIMEINumbers();
+		};
 		function render()
 		{
 			console.log("params = "+$state.params);

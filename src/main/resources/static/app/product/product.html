@@ -59,8 +59,7 @@
 				            </div>
 					</div>
 					<div class="form-group display-row" ng-if="selectedCategoryType == 'Phone'">
-						<label for="altNo" class="display-cell">IMEI</label>
-						<input  type="text" class="form-control display-cell" data-ng-model="IMEI" id="IMEI" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
+						<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addIMEI()">Add IMEI</button>
 					</div>
 					<div class="form-group display-row">
 						<label for="depart" class="display-cell">Brand:</label>
@@ -79,11 +78,11 @@
 				            </div>
 					</div>
 					
-					<div class="form-group display-row">
+					<div class="form-group display-row" ng-if="selectedCategoryType != 'Phone'">
 						<label for="altNo" class="display-cell">Alt No:</label>
 						<input ng-disabled="GlobalVariable.editProduct" data-proxtra-message="REGAUTH22"  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
 					</div>
-					<div class="checkbox">
+					<div class="checkbox" ng-if="selectedCategoryType != 'Phone'">
 						<label>
 							<input type="checkbox" ng-model="productYesyNO">
 							Add Tax
@@ -92,7 +91,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="col-md-6 col-xs-12 rightProductInfo">
+		<section class="col-md-6 col-xs-12 rightProductInfo" ng-show="selectedCategoryType != 'Phone'">
 			<div class="panel-body">
 				<div class="headerPage">
 					<h2 class="page-header" style="font-size:16px;">Retail</h2>
@@ -180,7 +179,36 @@
 		</section>
 	</div>
 	<div class="row">
-		<div class="bottomButtons" style="text-align:center;">
+
+		<div ng-if="selectedCategoryType == 'Phone'">
+			<div class="col-md-12">
+				<div data-responsive-table data-ng-model="IMEINUMBERS"
+					 data-current-page="currentPageIndexArr" class="full-width">
+					<columns>
+						<column name="IMEI Number" key="imeiNo"
+								datatype="string" width="10%" sortable="true"></column>
+						<column name="Description" key="description" datatype="string" width="10%" sortable="true"></column>
+						<column name="Category Name" key="categoryName"  datatype="string" width="15%"></column>
+						<column name="Retail" key="retailPrice"  datatype="string" width="10%"></column>
+
+						<column name="Stock" key="stock" datatype="string" width="5%"></column>
+
+						<column name="" key="" datatype="" width="20%">
+							<cell ng-non-bindable>
+							<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editIMEI(row)"></span>
+							</span>
+								<span class="inline-vertical padding-left-10">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="scope.deleteIMEI(row)"></span>
+							</span>
+							</cell>
+						</column>
+					</columns>
+				</div>
+			</div>
+
+		</div>
+		<div class="bottomButtons col-md-12" style="text-align:center;">
 			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;">Next</button>
 			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;" ng-click="addProduct()"><span ng-if="GlobalVariable.editProduct !== true">OK</span><span ng-if="GlobalVariable.editProduct == true">Edit</span></button>
 			<button class="btn btn-primary margin-top-1 wrap-text" style="width:10%;font-size:18px;" data-ng-click="cancelProduct()">Cancel</button>
