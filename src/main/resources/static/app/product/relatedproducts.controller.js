@@ -105,7 +105,7 @@
                 alert("Something gone wrong");
             }
             $scope.addRelatedProductsGrid.splice(index, 1);
-            var url="localhost:8080/deleteRelatedProduct?relatedProductId="+prodNo;
+            var url="http://localhost:8080/deleteRelatedProduct?relatedProductId="+prodNo;
             dataService.Post(url,'',OnDeleteSuccess,onDeleteError,'application/json','application/json');
         };
         function OnDeleteSuccess(response)
