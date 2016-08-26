@@ -522,7 +522,7 @@ public class ProductManager
             phoneDto.setCostPrice(rs.getDouble("COST"));
             phoneDto.setRetailPrice(rs.getDouble("RETAIL"));
             phoneDto.setMarkup(rs.getDouble("MARKUP"));
-            phoneDto.setLastUpdatedTimeStamp("LAST_UPDATED_TIME");
+            phoneDto.setLastUpdatedTimeStamp(rs.getString("LAST_UPDATED_TIME"));
 
             return phoneDto;
 
