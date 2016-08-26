@@ -102,9 +102,9 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/addIMEINo", method = RequestMethod.POST, consumes = "application/json")
-    public void addIMEINo(@RequestParam String productNo, @RequestParam String imeiNo) {
+    public void addIMEINo(@RequestBody PhoneDto phoneDto) {
 
-        productManager.addIMEINo(productNo,imeiNo);
+        productManager.addIMEINo(phoneDto);
     }
 
     @RequestMapping(value = "/getPhoneDetails", method = RequestMethod.GET)

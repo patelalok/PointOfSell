@@ -470,11 +470,17 @@ public class ProductManager
         return productList;
     }
 
-    public void addIMEINo(String productNo, String imeiNo) {
+    public void addIMEINo(PhoneDto phoneDto) {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.addImeiNo,productNo,imeiNo);
+            jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
+                    phoneDto.getProductNo(),
+                    phoneDto.getImeiNo(),
+                    phoneDto.getCostPrice(),
+                    phoneDto.getRetailPrice(),
+                    phoneDto.getMarkup(),
+                    phoneDto.getLastUpdatedTimeStamp());
         }
         catch (Exception e)
         {
