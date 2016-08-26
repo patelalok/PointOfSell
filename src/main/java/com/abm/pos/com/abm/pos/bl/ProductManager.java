@@ -34,7 +34,7 @@ public class ProductManager
             {
                 System.out.println("This product in phone category");
 
-                jdbcTemplate.update(sqlQuery.addProductQuery,
+                jdbcTemplate.update(sqlQuery.addProductQueryForPhone,
                         productDto.getProductNo(),
                         productDto.getCategoryId(),
                         productDto.getVendorId(),

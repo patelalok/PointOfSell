@@ -34,6 +34,18 @@ public class SQLQueries {
                    "IS_RELATED_PRODUCT)" +
            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+    public String addProductQueryForPhone = "INSERT INTO PRODUCT" +
+            " (" +
+            "PRODUCT_NO," +
+            "CATEGORY_ID," +
+            "VENDOR_ID," +
+            "BRAND_ID," +
+            "ATL_NO," +
+            "DESCRIPTION," +
+            "TAX, " +
+            "IS_RELATED_PRODUCT)" +
+            " VALUES(?,?,?,?,?,?,?,?)";
+
     public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 
 
@@ -656,4 +668,5 @@ public class SQLQueries {
     public String editPhoneDetailsAsProduct = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?,MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
     public String getPhoneDetails = "SELECT * FROM PHONE WHERE PRODUCT_NO = ?" ;
     public String getSumOfPaidOut = "SELECT SUM(PAIDOUT1 + PAIDOUT2 + PAIDOUT3) PAIDOUT FROM PAIDOUT WHERE DATE BETWEEN ? AND ? ";
+
 }
