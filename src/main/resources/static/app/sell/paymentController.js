@@ -183,6 +183,14 @@
 				{
 					var totalProductPriceWithTax = $rootScope.testData[i].total;
 				}
+				if((GlobalVariable.sellIMEINumber == undefined || GlobalVariable.sellIMEINumber == '') && ($rootScope.testData[i].categoryName == 'Phone'))
+				{
+					var imeiNo = '';
+				}
+				else
+				{
+					var imeiNo = GlobalVariable.sellIMEINumber;
+				}
 				request.push({
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
@@ -196,7 +204,8 @@
 					 "transactionDate":GlobalVariable.transDate,
 					"discountPercentage":discPer,
 					"transactionStatus":"c",
-					"totalProductPriceWithTax":parseFloat(parseFloat(totalProductPriceWithTax).toFixed(2))
+					"totalProductPriceWithTax":parseFloat(parseFloat(totalProductPriceWithTax).toFixed(2)),
+					"imeiNo":imeiNo
 					 
 			});
 			}

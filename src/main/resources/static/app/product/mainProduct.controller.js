@@ -82,6 +82,7 @@
 			
 			var request = new Object();
 			GlobalVariable.editProductDetails = row;
+			GlobalVariable.IMEIProductID = row.productNo;
 			GlobalVariable.editProduct = true;
 			$state.go('product');
 			
