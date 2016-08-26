@@ -175,7 +175,9 @@ public class SQLQueries {
                     "TOTAL_TAX , " +
                     "TOTAL_DISCOUNT , " +
                     "TOTAL_PROFIT , " +
-                    "TOTAL_MARKUP) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "TOTAL_MARKUP," +
+                    "BANKDEPOSIT," +
+                    "CUSTOMER_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
  public String addTransactionPaymentDetail =
@@ -666,7 +668,9 @@ public class SQLQueries {
     public String deleteLicenseKey = "DELETE FROM PRODUCT_LICENCE WHERE LICENCE_ID = ?";
    // public String addImeiNo = "INSERT INTO PHONE (PRODUCT_NO,IMEI_NO,COST,RETAIL,MARKUP,LAST_UPDATED_TIME) VALUES (?,?,?,?,?,?)";
     public String editPhoneDetailsAsProduct = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?,MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
-    public String getPhoneDetails = "SELECT * FROM PHONE WHERE PRODUCT_NO = ?" ;
+    public String getPhoneDetails = "SELECT  a.PRODUCT_ID, a.PRODUCT_NO, a.CATEGORY_ID, a.VENDOR_ID, a.BRAND_ID, a.ATL_NO, a.DESCRIPTION,a.TAX,a.IS_RELATED_PRODUCT, a.QUANTITY, a.MIN_PRODUCT, a.RETURN_RULE, a.IMAGE, a.CREATED_DATE,  b.COST, b.RETAIL, b.MARKUP,b.ID, b.IMEI_NO, b.LAST_UPDATED_TIME from PRODUCT a, PHONE b where a.PRODUCT_NO = b.PRODUCT_NO and a.PRODUCT_NO = ?";
     public String getSumOfPaidOut = "SELECT SUM(PAIDOUT1 + PAIDOUT2 + PAIDOUT3) PAIDOUT FROM PAIDOUT WHERE DATE BETWEEN ? AND ? ";
 
+    public String getCustomerBalanceByDate = "SELECT sum(BALANCE) CUSTOMERBALANCE FROM CUSTOMER WHERE BALANCE_LAST_UPDATE_DATE BETWEEN ? AND ? ";
+    public String EditPhoneDetailsFromPhoneTable = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?, MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
 }

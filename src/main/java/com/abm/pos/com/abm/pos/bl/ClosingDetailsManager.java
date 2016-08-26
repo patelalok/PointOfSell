@@ -69,7 +69,9 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalTax(),
                         closingDetailsDto.getTotalDiscount(),
                         closingDetailsDto.getTotalProfit(),
-                        closingDetailsDto.getTotalMarkup());
+                        closingDetailsDto.getTotalMarkup(),
+                        closingDetailsDto.getBankDeposit(),
+                        closingDetailsDto.getCustomerBalance());
 
                 System.out.println("Closing Details Added Successfully");
             }
@@ -125,6 +127,9 @@ public class ClosingDetailsManager {
 
             double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
 
+            //Here Getting customer balance to handle short or over issue in money for close register reports.
+            String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[] {startDate,endDate},String.class);
+
 
             //Here getting the sum of all paid for particular day and then adding into daily total so i can match paidout and total amount.
             //String totalPaidout = jdbcTemplate.queryForObject(sqlQueries.getSumOfPaidOut, new Object[] {startDate,endDate}, String.class);
@@ -140,14 +145,23 @@ public class ClosingDetailsManager {
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
                 closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal() );
+
                 if (null != lineItemDiscount) {
+
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
                     //System.out.println(lineItemDiscount);
                     closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount() + lineItemDiscountDouble);
-                } else {
+                }
+                else {
                     closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
                 }
 
+                if(null != customerBalance)
+                {
+                    double customerBalanceDouble = Double.parseDouble(customerBalance);
+
+                    closingDetails.get(0).setCustomerBalance(customerBalanceDouble);
+                }
                 closingDetails.get(0).setTotalProfit(profit);
             }
 
@@ -172,7 +186,15 @@ public class ClosingDetailsManager {
                 } else {
                     closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
                 }
+                if(null != customerBalance)
+                {
+                    double customerBalanceDouble = Double.parseDouble(customerBalance);
+
+                    closingDetails.get(0).setCustomerBalance(customerBalanceDouble);
+                }
+
                 closingDetailsDto.setTotalProfit(profit);
+
                 closingDetails.add(closingDetailsDto);
 
                 return closingDetails;

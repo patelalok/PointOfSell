@@ -212,8 +212,6 @@ public class ProductManager
 
     }
 
-
-
     private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
     {
 
@@ -321,6 +319,15 @@ public class ProductManager
     public void addRelatedProduct(final List<RelatedProductDto> relatedProductDtoList) {
 
         try {
+
+            //Here First deleting all related products and the adding back again to resolve issue with adding product again and again.
+
+            if(null != relatedProductDtoList) {
+
+                for (int i = 0; i < relatedProductDtoList.size(); i++) {
+                    jdbcTemplate.update(sqlQuery.deleteRelatedProduct, relatedProductDtoList.get(i).getRelatedProductId());
+                }
+            }
 
             jdbcTemplate.batchUpdate(sqlQuery.addRelatedProduct, new BatchPreparedStatementSetter() {
 
@@ -491,23 +498,65 @@ public class ProductManager
     }
 
 
-        public List<PhoneDto> getPhoneDetails(String productNo) {
+        public List<ProductDto> getPhoneDetails(String productNo) {
 
-            List<PhoneDto> phoneDtoList = new ArrayList<>();
+            List<ProductDto> productDtoList = new ArrayList<>();
 
         try
         {
 
-            phoneDtoList = jdbcTemplate.query(sqlQuery.getPhoneDetails, new PhoneMapper(), productNo);
+            productDtoList = jdbcTemplate.query(sqlQuery.getPhoneDetails, new ProductMapperForPhone(), productNo);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
 
-        return phoneDtoList;
+        return productDtoList;
     }
 
+    private final class ProductMapperForPhone implements RowMapper<ProductDto>
+    {
+
+        @Override
+        public ProductDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            ProductDto product = new ProductDto();
+
+            product.setProductId(rs.getInt("PRODUCT_ID"));
+            product.setProductNo(rs.getString("PRODUCT_NO"));
+            product.setCategoryId(rs.getInt("CATEGORY_ID"));
+            product.setCategoryName(jdbcTemplate.queryForObject(sqlQuery.getCategoryName, new Object[] {product.getCategoryId()},String.class));
+            product.setVendorId(rs.getInt("VENDOR_ID"));
+            product.setVendorName(jdbcTemplate.queryForObject(sqlQuery.getVendorName, new Object[] {product.getVendorId()},String.class));
+            product.setAltNo(rs.getString("ATL_NO"));
+            product.setDescription(rs.getString("DESCRIPTION"));
+            product.setCostPrice(rs.getDouble("COST"));
+            product.setMarkup(rs.getDouble("MARKUP"));
+            product.setRetailPrice(rs.getDouble("RETAIL"));
+            product.setStock(rs.getInt("QUANTITY"));
+            product.setQuantity(1);
+            product.setMinProductQuantity(rs.getInt("MIN_PRODUCT"));
+            product.setReturnRule(rs.getString("RETURN_RULE"));
+            product.setImage(rs.getString("IMAGE"));
+            product.setCreatedDate(rs.getString("CREATED_DATE"));
+            product.setBrandId(rs.getInt("BRAND_ID"));
+            product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
+            // product.setImeiNo(rs.getString("IMEI_NUMBER"));
+            product.setAddTax(rs.getBoolean("TAX"));
+            product.setRelatedProduct(rs.getBoolean("IS_RELATED_PRODUCT"));
+            product.setImeiNo(rs.getString("IMEI_NO"));
+            product.setPhoneId(rs.getInt("ID"));
+            product.setCreatedDate(rs.getString("LAST_UPDATED_TIME"));
+            //System.out.println(rs.getBoolean("TAX"));
+
+
+            //product.setQuantityForSell(1);
+
+
+            return product;
+        }
+    }
     private final class PhoneMapper implements RowMapper<PhoneDto>
     {
 
@@ -526,6 +575,26 @@ public class ProductManager
 
             return phoneDto;
 
+        }
+
+    }
+
+    public void editIMEINo(PhoneDto phoneDto) {
+
+        try
+        {
+            jdbcTemplate.update(sqlQuery.EditPhoneDetailsFromPhoneTable,
+                    phoneDto.getProductNo(),
+                    phoneDto.getImeiNo(),
+                    phoneDto.getCostPrice(),
+                    phoneDto.getRetailPrice(),
+                    phoneDto.getMarkup(),
+                    phoneDto.getLastUpdatedTimeStamp(),
+                    phoneDto.getPhoneId());
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
         }
     }
 

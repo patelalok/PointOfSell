@@ -26,6 +26,7 @@ public class ClosingDetailsDto {
     private String registerStatus;
     private double reportCheck;
     private double bankDeposit;
+    private double customerBalance;
 
     public double getReportCheck() {
         return reportCheck;
@@ -186,5 +187,13 @@ public class ClosingDetailsDto {
 
     public void setBankDeposit(double bankDeposit) {
         this.bankDeposit = bankDeposit;
+    }
+
+    public double getCustomerBalance() {
+        return customerBalance;
+    }
+
+    public void setCustomerBalance(double customerBalance) {
+        this.customerBalance = customerBalance;
     }
 }

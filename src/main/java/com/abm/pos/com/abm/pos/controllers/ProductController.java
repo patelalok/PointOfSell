@@ -107,8 +107,15 @@ public class ProductController {
         productManager.addIMEINo(phoneDto);
     }
 
+    @RequestMapping(value = "/editIMEINo", method = RequestMethod.POST, consumes = "application/json")
+    public void editIMEINo(@RequestBody PhoneDto phoneDto) {
+
+        productManager.editIMEINo(phoneDto);
+    }
+
+
     @RequestMapping(value = "/getPhoneDetails", method = RequestMethod.GET)
-    public List<PhoneDto> getPhoneDetails(@RequestParam String productNo) {
+    public List<ProductDto> getPhoneDetails(@RequestParam String productNo) {
 
         return productManager.getPhoneDetails(productNo);
     }
