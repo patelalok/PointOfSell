@@ -3,18 +3,21 @@
 
     angular.module('sampleApp').controller('RelatedProductsController', RelatedProductsController);
 
-    RelatedProductsController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
+    RelatedProductsController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','util'];
 
-    function RelatedProductsController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
+    function RelatedProductsController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,util)
     {
         $scope.prodRel =[];
         $scope.addRelatedProductsGrid = [];
+        var authElemArray = new Array();
+        $scope.realtedAdded = false;
         $scope.closePopup = function()
         {
             DialogFactory.close(true);
         };
         $scope.addRelatedProducts = function()
         {
+            $scope.realtedAdded = true;
             for(var i=0;i<$scope.prodRel.length;i++)
             {
                 if($scope.realtedProd == $scope.prodRel[i].description) {
@@ -42,7 +45,8 @@
                         "addTax": $scope.prodRel[i].addTax,
                         "stock": $scope.prodRel[i].stock,
                         "quantityForSell": $scope.prodRel[i].quantityForSell,
-                        "relatedProduct": $scope.prodRel[i].relatedProduct
+                        "relatedProduct": $scope.prodRel[i].relatedProduct,
+                        "relatedProductId":$scope.prodRel[i].relatedProductId
                     });
 
                 }
@@ -78,11 +82,39 @@
                         "addTax": GlobalVariable.getProducts[i].addTax,
                         "stock": GlobalVariable.getProducts[i].stock,
                         "quantityForSell": GlobalVariable.getProducts[i].quantityForSell,
-                        "relatedProduct": GlobalVariable.getProducts[i].relatedProduct
+                        "relatedProduct": GlobalVariable.getProducts[i].relatedProduct,
+                        "relatedProductId":GlobalVariable.getProducts[i].relatedProductId
                     });
                 }
             }
             getRelatedProducts();
+        }
+        $scope.deleteRelatedProd = function(prodNo)
+        {
+            var index = -1;
+            var comArr = eval($scope.addRelatedProductsGrid);
+            for (var i = 0; i < comArr.length; i++) {
+                if (comArr[i].relatedProductId === prodNo) {
+
+                    //comArr[i].quantity = 20;
+                    index = i;
+                    break;
+                }
+            }
+            if (index === -1) {
+                alert("Something gone wrong");
+            }
+            $scope.addRelatedProductsGrid.splice(index, 1);
+            var url="localhost:8080/deleteRelatedProduct?relatedProductId="+prodNo;
+            dataService.Post(url,'',OnDeleteSuccess,onDeleteError,'application/json','application/json');
+        };
+        function OnDeleteSuccess(response)
+        {
+            getRelatedProducts();
+        }
+        function onDeleteError(response)
+        {
+
         }
         function render()
         {
@@ -105,19 +137,31 @@
         }
         $scope.updateRelatedProducts = function()
         {
-            var request = [];
-          var url=" http://localhost:8080/addRelatedProduct";
-            for(var i=0;i<$scope.addRelatedProductsGrid.length;i++)
-            {
-                request.push({
-                    "productNo":GlobalVariable.mainProductNo,
-                    "relatedProductNo":$scope.addRelatedProductsGrid[i].productNo
-                });
+            authElemArray = new Array();
+            util.customError.hide(['vendName','categoryName','brandName','productId','altNo']);
+            if( $scope.realtedAdded == true) {
+                var request = [];
+                var url = " http://localhost:8080/addRelatedProduct";
+                for (var i = 0; i < $scope.addRelatedProductsGrid.length; i++) {
+                    request.push({
+                        "productNo": GlobalVariable.mainProductNo,
+                        "relatedProductNo": $scope.addRelatedProductsGrid[i].productNo
+                    });
+                }
+                dataService.Post(url, request, onAddRelatedSuccess, onAddRelatedError, 'application/json', 'application/json');
             }
-            dataService.Post(url,request,onAddRelatedSuccess,onAddRelatedError,'application/json','application/json');
+            else
+            {
+                authElemArray.push({
+                    'id' : 'realtedProd',
+                    'msg' : 'Please Add the related product'
+                });
+                util.customError.show(authElemArray, "");
+            }
         };
         function onAddRelatedSuccess(response)
         {
+            $scope.realtedAdded = false;
                 DialogFactory.close(true);
         }
         function onAddRelatedError(response)

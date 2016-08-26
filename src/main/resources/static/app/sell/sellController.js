@@ -640,6 +640,10 @@
 					'application/json', 'application/json');
 				//$scope.prevBalance = GlobalVariable.balanceRemaining;
 			}
+			else
+			{
+				GlobalVariable.customerFound = false;
+			}
 			if(GlobalVariable.addProductClicked)
 			{
 				$rootScope.testData = GlobalVariable.onAddProduct;
