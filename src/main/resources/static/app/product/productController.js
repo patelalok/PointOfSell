@@ -117,6 +117,11 @@
 			$scope.productId = 10000000+parseInt(response);
 			GlobalVariable.IMEIProductID = $scope.productId;
 		}
+		$scope.getNewProductValue = function(value)
+		{
+			console.log("productId= "+value);
+			GlobalVariable.IMEIProductID = $scope.productId;
+		};
 		function onLastProdNoError(response)
 		{
 
