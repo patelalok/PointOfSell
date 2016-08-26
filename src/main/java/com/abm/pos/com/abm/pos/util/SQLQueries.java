@@ -32,7 +32,7 @@ public class SQLQueries {
                    //"IMEI_NUMBER," +
                    "TAX, " +
                    "IS_RELATED_PRODUCT)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 
@@ -598,7 +598,7 @@ public class SQLQueries {
 
     public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
 
-    public String updateBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ? WHERE PHONE_NO = ? ";
+    public String updateBlanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ?, BALANCE_LAST_UPDATE_DATE = ? WHERE PHONE_NO = ? ";
 
     public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
 

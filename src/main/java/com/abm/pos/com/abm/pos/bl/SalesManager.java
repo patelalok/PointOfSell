@@ -58,6 +58,7 @@ public class SalesManager {
 
             jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
                     transactionDto.getBalance(),
+
                     transactionDto.getCustomerPhoneNo());
             System.out.println("Customer Balance Added Successfully");
             System.out.println("Transaction Added Successfully");
