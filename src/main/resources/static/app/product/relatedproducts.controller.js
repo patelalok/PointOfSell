@@ -145,7 +145,8 @@
                 for (var i = 0; i < $scope.addRelatedProductsGrid.length; i++) {
                     request.push({
                         "productNo": GlobalVariable.mainProductNo,
-                        "relatedProductNo": $scope.addRelatedProductsGrid[i].productNo
+                        "relatedProductNo": $scope.addRelatedProductsGrid[i].productNo,
+                        "relatedProductId":$scope.addRelatedProductsGrid[i].relatedProductId
                     });
                 }
                 dataService.Post(url, request, onAddRelatedSuccess, onAddRelatedError, 'application/json', 'application/json');
