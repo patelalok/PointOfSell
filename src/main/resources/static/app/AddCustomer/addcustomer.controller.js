@@ -45,6 +45,7 @@
 			}
 			else
 			{
+				if(((GlobalVariable.editedPhone !== $scope.phoneNumber)&&(GlobalVariable.editCustomer == true)) || GlobalVariable.editCustomer == false)
 				for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
 				{
 					if($scope.phoneNumber == GlobalVariable.getCustomerDtls[i].phoneNo)
