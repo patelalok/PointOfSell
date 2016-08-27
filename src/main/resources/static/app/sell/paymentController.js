@@ -246,6 +246,7 @@
 			GlobalVariable.balanceRemaining = 0;
 			GlobalVariable.transId = '';
 			GlobalVariable.last4='';
+			GlobalVariable.sellIMEINumber = '';
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				getStoreAddress();
