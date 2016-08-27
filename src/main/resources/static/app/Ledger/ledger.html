@@ -62,7 +62,7 @@
 					   ng-change="checkfilterValue(customerPhone)"
 					   ng-enter="filterSalesHistory(customerPhone)" />-->
 				<input type="text" class="form-control" data-ng-model="custName"
-					   data-restrict-characters="restrictCharacter.Alphabet.regExp"
+					   data-restrict-characters="restrictCharacter.Special.regExp"
 					   id="custName" style="height: 52px; width: 100%;"
 					   ng-change="checkfilterValue(custName)"
 					   ng-enter="filterSalesHistory(custName)" />
@@ -216,7 +216,7 @@
 				<column name="Description" key="productDescription" datatype="string" width="50%" padding="3px" border="0px">
 					<cell ng-non-bindable>
 						<span style="display:block;">{{::row.productDescription}}</span>
-						<span style="display:block;" ng-show="row.imeiNo != null">{{::row.imeiNo}}</span>
+						<span style="display:block;" ng-show="row.imeiNo != null">IMEI:{{::row.imeiNo}}</span>
 					</cell>
 				</column>
 				<column name="Retail" key="retail" datatype="string" width="8%" padding="1px" border="0px"></column>

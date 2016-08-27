@@ -289,7 +289,8 @@
 							"discountPercentage": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discountPercentage,
 							"retwdisc": (parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice) / parseFloat(GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
 							"quantity": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
-							"totalProductPrice": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice
+							"totalProductPrice": GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice,
+							"imeiNo":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].imeiNo
 						}
 					);
 				}
