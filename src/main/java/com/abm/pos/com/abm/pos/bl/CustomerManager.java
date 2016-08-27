@@ -141,6 +141,7 @@ public class CustomerManager {
             customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
             customer.setBalance(rs.getDouble("BALANCE"));
             customer.setTaxId(rs.getString("TAX_ID"));
+            customer.setCompanyName(rs.getString("COMPANY_NAME"));
 
 
             String totalSpending = jdbcTemplate.queryForObject(sqlQuery.getCustomersLast12MonthSpend, new Object[] {rs.getString("PHONE_NO")}, String.class);

@@ -70,7 +70,7 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalDiscount(),
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup(),
-                        closingDetailsDto.getBankDesposit(),
+                        closingDetailsDto.getBankDeposit(),
                         closingDetailsDto.getCustomerBalance());
 
                 System.out.println("Closing Details Added Successfully");
@@ -96,7 +96,7 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalDiscount(),
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup(),
-                        closingDetailsDto.getBankDesposit(),
+                        closingDetailsDto.getBankDeposit(),
                         closingDetailsDto.getCustomerBalance(),
                         closingDetailsDto.getRegisterId());
 
@@ -259,7 +259,7 @@ public class ClosingDetailsManager {
             //closingDto.setTotalDiscount(rs.getDouble("TOTAL_DISCOUNT"));
             // closingDto.setTotalProfit(rs.getDouble("TOTAL_PROFIT"));
             closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));
-            closingDto.setBankDesposit(rs.getDouble("BANKDEPOSIT"));
+            closingDto.setBankDeposit(rs.getDouble("BANKDEPOSIT"));
 
             return closingDto;
         }
