@@ -1,10 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="onaddFour()">&times;</button>
 
-</body>
-</html>
+    </div>
+
+    <div class="modal-body" style="padding:0px;">
+        <div class="row" style="padding:30px;">
+            <div class="col-md-6">
+                <label for="transId" class="padding-bottom-5 font-weight-label">Clock In Date</label>
+                <div class="input-group calendar-group fromDate">
+                    <input type="text"
+                           style="height: 52px; width: 100%; background-color: #FFFFFF;"
+                           ng-model="clockInDate" class="form-control fromDate"
+                           datepicker-popup="{{'yyyy-MM-dd'}}" required
+                           ng-model-options="{allowInvalid: true}" name="startDate"
+                           is-open="openStart" date-cleared="dateCleared" date-length="10"
+                           id="clockInDate" placeholder="YYYY-MM-DD" disabled="disabled"
+                           max-date="maxDate"> <span class="input-group-btn">
+						<button type="button" class="btn btn-default"
+                                ng-click="openclockInDateCalendar($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="last4" class="padding-bottom-5 font-weight-label">Clock Out Date</label>
+                <div class="input-group calendar-group fromDate">
+                    <input type="text"
+                           style="height: 52px; width: 100%; background-color: #FFFFFF;"
+                           ng-model="clockOutDate" class="form-control fromDate"
+                           datepicker-popup="{{'yyyy-MM-dd'}}" required
+                           ng-model-options="{allowInvalid: true}" name="startDate"
+                           is-open="openEnd" date-cleared="dateCleared" date-length="10"
+                           id="clockOutDate" placeholder="YYYY-MM-DD" disabled="disabled"
+                           max-date="maxDate"> <span class="input-group-btn">
+						<button type="button" class="btn btn-default"
+                                ng-click="openclockOutDateCalendar($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top:10px;padding-left:30px;padding-right:30px;">
+            <div class="col-md-12">
+                <label for="hrlyRate" class="padding-bottom-5 font-weight-label">Hourly Rate</label>
+                <input type="text" class="form-control" name="hrlyRate" id="hrlyRate" data-ng-model="hrlyRate"
+                       autocomplete="off"  style="width:100%;height:50px;" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row alignCenter">
+            <button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="editClockInDetails()">Edit</button>
+        </div>
+    </div>
+</div>

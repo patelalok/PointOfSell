@@ -50,7 +50,7 @@
 		};
 		$scope.callBackProductKey = function()
 		{
-			var url='localhost:8080/getLicenceKey?licenceKey='+GlobalVariable.productKey;
+			var url='http://localhost:8080/getLicenceKey?licenceKey='+GlobalVariable.productKey;
 			dataService.Get(url,onProductKeySuccess,onProductKeyError,'application/json','application/json');
 		};
 		function onProductKeySuccess(response)

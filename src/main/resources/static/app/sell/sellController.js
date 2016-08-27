@@ -147,7 +147,7 @@
 			{
 				$rootScope.testData
 					.push({
-						"itemId":GlobalVariable.sellProductID,
+						"itemId":GlobalVariable.sellProductId,
 						"itemNo" :GlobalVariable.sellProductNo,
 						"item" : GlobalVariable.sellDescription,
 						"quantity" :1,
@@ -160,11 +160,12 @@
 						"totalWithTax":0,
 						"totalTax":0,
 						"imeiNo":'',
-						"categoryId":response[i].categoryId
+						"categoryId":GlobalVariable.sellCategoryId
 					});
 			}
 
 			$scope.loadCheckOutData();
+			GlobalVariable.sellIMEINumber = '';
 		}
 		function onGETSellIMEIError(response)
 		{
@@ -610,6 +611,15 @@
 				alert("Something gone wrong");
 			}
 			$rootScope.testData.splice(index, 1);
+
+
+			if(parseFloat(GlobalVariable.editQuanDtls.discount) > parseFloat(GlobalVariable.editQuanDtls.retail))
+			{
+
+				GlobalVariable.editQuanDtls.retail =  GlobalVariable.editQuanDtls.discount;
+				GlobalVariable.editQuanDtls.discount = 0;
+			}
+
 			if (parseFloat(GlobalVariable.editQuanDtls.discount) !== 0) {
 				var editSub = (parseFloat(GlobalVariable.editQuanDtls.quantity) * parseFloat(GlobalVariable.editQuanDtls.discount))
 					.toFixed(2);
@@ -740,7 +750,8 @@
 			$scope.currentPageIndexArr = 0;
 			GlobalVariable.customerNameOnSearch= '';
 
-			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '')
+			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '' && GlobalVariable.userPhone != undefined &&
+				GlobalVariable.userFName != undefined)
 			{
 				GlobalVariable.customerFound = true;
 				GlobalVariable.customerNameOnSearch = GlobalVariable.userFName;

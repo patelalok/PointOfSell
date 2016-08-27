@@ -66,8 +66,11 @@
 		}
 		function onGetTaxSuccess(response)
 		{
+			if(response.length!==0)
+			{
 			$scope.getTaxDtls = response;
 			$scope.footerReceipt = response[0].footerReceipt;
+			}
 		}
 		function onGetTaxError(response)
 		{
@@ -114,6 +117,8 @@
 			GlobalVariable.editUserRole = row.userRole;
 			GlobalVariable.editCreatedDate = row.createdDate;
 			GlobalVariable.editUserId = row.userId;
+			GlobalVariable.editFirstName = row.firstName;
+			GlobalVariable.editLastName = row.lastName;
 			var _tmPath = 'app/Setup/createUser.html';
 			var _ctrlPath = 'CreateUserController';
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCreateUser);

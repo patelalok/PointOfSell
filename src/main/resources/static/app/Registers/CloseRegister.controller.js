@@ -218,7 +218,7 @@
 				"registerStatus" : null,
 				"registerId" : $scope.registerId,
 				"customerBalance":$scope.custBalanceReg,
-				"bankDesposit":$scope.bankDeposit
+				"bankDeposit":$scope.bankDeposit
 			};
 			var url = "http://localhost:8080/addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,
