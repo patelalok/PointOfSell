@@ -43,8 +43,9 @@ public class SQLQueries {
             "ATL_NO," +
             "DESCRIPTION," +
             "TAX, " +
+            "QUANTITY," +
             "IS_RELATED_PRODUCT)" +
-            " VALUES(?,?,?,?,?,?,?,?)";
+            " VALUES(?,?,?,?,?,?,?,?,?)";
 
     public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 
@@ -370,7 +371,7 @@ public class SQLQueries {
                     "TOTAL_TAX = ?, " +
                     "TOTAL_DISCOUNT = ?, " +
                     "TOTAL_PROFIT = ?, " +
-                    "TOTAL_MARKUP = ? " +
+                    "TOTAL_MARKUP = ?, BANKDEPOSIT = ?, CUSTOMER_BALANCE = ? " +
                     "WHERE REGISTER_ID = ? ";
 
 

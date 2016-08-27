@@ -25,7 +25,7 @@ public class ClosingDetailsDto {
     private double totalMarkup;
     private String registerStatus;
     private double reportCheck;
-    private double bankDeposit;
+    private double bankDesposit;
     private double customerBalance;
 
     public double getReportCheck() {
@@ -180,13 +180,12 @@ public class ClosingDetailsDto {
         this.totalDifference = totalDifference;
     }
 
-
-    public double getBankDeposit() {
-        return bankDeposit;
+    public double getBankDesposit() {
+        return bankDesposit;
     }
 
-    public void setBankDeposit(double bankDeposit) {
-        this.bankDeposit = bankDeposit;
+    public void setBankDesposit(double bankDesposit) {
+        this.bankDesposit = bankDesposit;
     }
 
     public double getCustomerBalance() {

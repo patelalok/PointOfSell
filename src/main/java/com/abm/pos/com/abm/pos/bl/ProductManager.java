@@ -42,11 +42,13 @@ public class ProductManager
                         productDto.getAltNo(),
                         productDto.getDescription(),
                         productDto.isAddTax(),
+                        //Sending quantity 0 to fix issue with add line item where its throwing null pointer
+                        0,
                         productDto.isRelatedProduct());
 
                 System.out.println("Products basic information added successfully for phone category");
 
-                jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
+              /*  jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
                         productDto.getProductNo(),
                         productDto.getImeiNo(),
                         productDto.getCostPrice(),
@@ -54,7 +56,7 @@ public class ProductManager
                         productDto.getMarkup(),
                         productDto.getCreatedDate());
 
-                System.out.println("Phone's IMEI information added successfully");
+                System.out.println("Phone's IMEI information added successfully");*/
 
             }
             else {
