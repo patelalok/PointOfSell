@@ -64,9 +64,17 @@
             dataService.Post(url,request,onAddIMEISuccess,onAddIMEIError,'application/json','application/json');
 
         };
+        function onAddIMEISuccess(response)
+        {
+            DialogFactory.close(true);
+        }
+        function onAddIMEIError(response)
+        {
+
+        }
         $scope.editIMEI = function()
         {
-            var url='http://localhost:8080/addIMEINo';
+            var url='http://localhost:8080/editIMEINo';
             var request={
                 "productNo":(GlobalVariable.IMEIProductID).toString(),
                 "imeiNo":$scope.imeiNumber,

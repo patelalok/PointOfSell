@@ -98,6 +98,8 @@
 					$scope.password = GlobalVariable.editPassword;
 					$scope.userRole = GlobalVariable.editUserRole;
 					$scope.createdDate = GlobalVariable.editCreatedDate;
+					$scope.firstName = GlobalVariable.editFirstName;
+					$scope.lastName = GlobalVariable.editLastName;
 			}
 		}
 		render();

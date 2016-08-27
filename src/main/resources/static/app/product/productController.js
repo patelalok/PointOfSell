@@ -93,7 +93,7 @@
 		{
 
 		}
-		$scope.editIMEI = function(row)
+		$scope.editProdIMEI = function(row)
 		{
 			GlobalVariable.editIMEI = true;
 			GlobalVariable.editIMEIDtls = row;
@@ -105,7 +105,7 @@
 
 		$scope.callBackEditIMEI = function()
 		{
-
+			$scope.getAllIMEINumbers();
 		};
 		$scope.generateRandomId = function()
 		{
@@ -338,7 +338,7 @@
 		{
 
 		}
-		$scope.addIMEI = function ()
+		$scope.addProdIMEI = function ()
 		{
 
 			GlobalVariable.editIMEI = false;

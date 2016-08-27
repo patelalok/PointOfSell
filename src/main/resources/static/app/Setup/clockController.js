@@ -53,13 +53,25 @@
 			}
 			
 		}
+		$scope.barLimit = 100;
+		$scope.increaseLimit = function () {
+			$scope.barLimit += 50;
+			console.log('Increase Bar Limit', $scope.barLimit)
+		};
 		function getClockHistroyErrorHandler(response)
 		{
 			
 		}
-		$scope.editClockIn = function()
+		$scope.editClockIn = function(row)
 		{
-
+			GlobalVariable.editClockDtls = row;
+			var _tmPath = 'app/Setup/editClockInDetails.html';
+			var _ctrlPath = 'EditClockController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackEditClockDtls);
+		};
+		$scope.callBackEditClockDtls = function()
+		{
+			loadHistoryData();
 		};
 		function render()
 		{
