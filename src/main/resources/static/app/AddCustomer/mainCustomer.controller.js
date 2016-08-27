@@ -48,7 +48,7 @@
 		};
 		$scope.editCustomerDetails = function(row)
 		{
-			GlobalVariable.editedFirstName = row.firstName;
+			GlobalVariable.editedFirstName = row.onlyFirstName;
 			GlobalVariable.editedLastName = row.lastName;
 			GlobalVariable.editedPhone = row.phoneNo;
 			GlobalVariable.editedFEmail = row.email;

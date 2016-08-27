@@ -100,6 +100,7 @@
 		};
 		$scope.editNewCustomer = function()
 		{
+			util.customError.hide(['firstName','phoneNumber']);
 			var request = {};
 			if($scope.validations()) {
 				request = {
@@ -157,6 +158,7 @@
 		function render()
 		{
 			$scope.custType = 'Retail';
+			$scope.gender = "Male";
 			$scope.dateRangeOptions = {
 				//startDate : moment(),
 				showDropdowns : true,

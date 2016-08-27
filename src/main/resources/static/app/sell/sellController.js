@@ -165,7 +165,7 @@
 			}
 
 			$scope.loadCheckOutData();
-			GlobalVariable.sellIMEINumber = '';
+
 		}
 		function onGETSellIMEIError(response)
 		{
