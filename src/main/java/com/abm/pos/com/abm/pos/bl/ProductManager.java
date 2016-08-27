@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
+import com.itextpdf.text.pdf.PRAcroForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -103,6 +104,13 @@ public class ProductManager
                         productDto.getBrandId(),
                         productDto.getAltNo(),
                         productDto.getDescription(),
+                        productDto.getCostPrice(),
+                        productDto.getMarkup(),
+                        productDto.getRetailPrice(),
+                        0,
+                        productDto.getMinProductQuantity(),
+                        productDto.getReturnRule(),
+                        productDto.getImage(),
                         productDto.isAddTax(),
                         productDto.isRelatedProduct(),
                         productDto.getProductId(),
@@ -110,14 +118,14 @@ public class ProductManager
 
                 System.out.println("Products basic information Edited successfully for phone category");
 
-                jdbcTemplate.update(sqlQuery.editPhoneDetailsAsProduct,
+              /*  jdbcTemplate.update(sqlQuery.editPhoneDetailsAsProduct,
                         productDto.getProductNo(),
                         productDto.getImeiNo(),
                         productDto.getCostPrice(),
                         productDto.getRetailPrice(),
                         productDto.getMarkup(),
                         productDto.getCreatedDate(),
-                        productDto.getPhoneId());
+                        productDto.getPhoneId());*/
             }
             else {
                 jdbcTemplate.update(sqlQuery.editProductQuery,

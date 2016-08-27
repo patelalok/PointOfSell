@@ -19,7 +19,8 @@ public class SQLQueries {
                    "PRODUCT_NO," +
                    "CATEGORY_ID," +
                    "VENDOR_ID," +
-                   "BRAND_ID,ATL_NO," +
+                   "BRAND_ID," +
+                   "ATL_NO," +
                    "DESCRIPTION," +
                    "COST_PRICE," +
                    "MARKUP," +
@@ -32,7 +33,7 @@ public class SQLQueries {
                    //"IMEI_NUMBER," +
                    "TAX, " +
                    "IS_RELATED_PRODUCT)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addProductQueryForPhone = "INSERT INTO PRODUCT" +
             " (" +
