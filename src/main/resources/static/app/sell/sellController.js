@@ -418,14 +418,14 @@
 			  for(var k=0;k<response.length;k++) {
 				  if(response[i].addTax == true)
 				  {
-					  var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[i].quantity))
+					  var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
 						  .toFixed(2);
 					  totalWithOutTax = parseFloat(totalWithOutTax);
 					  var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
 				  }
 				  else
 				  {
-					  var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[i].quantity))
+					  var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
 						  .toFixed(2);
 					  totalWithOutTax = parseFloat(totalWithOutTax);
 					  var totalWithTax = totalWithOutTax;
