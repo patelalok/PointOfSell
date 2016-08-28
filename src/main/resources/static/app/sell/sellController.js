@@ -42,8 +42,9 @@
 			GlobalVariable.editProduct = false;
 			$state.go('product');
 		};
-		$scope.removeRow = function(row) {
+		$scope.removeRow = function($index,row) {
 
+			$scope.deleteIndex = $index;
 			GlobalVariable.editValues = row;
 			GlobalVariable.itemNoToDelete = row.itemId;
 			modalService.showModal('', {
@@ -59,7 +60,7 @@
 		$scope.callBackAction = function(isOKClicked) {
 
 			if (isOKClicked) {
-				var index = -1;
+				/*var index = -1;
 				var comArr = eval($rootScope.testData);
 				for (var i = 0; i < comArr.length; i++) {
 					if (comArr[i].itemId === GlobalVariable.itemNoToDelete) {
@@ -71,8 +72,8 @@
 				}
 				if (index === -1) {
 					alert("Something gone wrong");
-				}
-				$rootScope.testData.splice(index, 1);
+				}*/
+				$rootScope.testData.splice($scope.deleteIndex, 1);
 				/*
 				 * $rootScope.testData.splice(index,0,{"itemNo":GlobalVariable.editValues.itemNo,
 				 * "item":GlobalVariable.editValues.item, "quantity":12,
@@ -368,8 +369,12 @@
 							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*8)/100);
 						}
 					}
-
-					$rootScope.testData
+					$rootScope.testData[$rootScope.testData.length - 1].quantity = $scope.quantity;
+					$rootScope.testData[$rootScope.testData.length - 1].discount = $scope.discount;
+					$rootScope.testData[$rootScope.testData.length - 1].total = parseFloat($scope.total);
+					$rootScope.testData[$rootScope.testData.length - 1].totalWithTax = parseFloat($scope.tWTax);
+					$rootScope.testData[$rootScope.testData.length - 1].totalTax = parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax);
+					/*$rootScope.testData
 						.push({
 							"itemId":$rootScope.testData[$rootScope.testData.length - 1].productId,
 							"itemNo" : $rootScope.testData[$rootScope.testData.length - 1].itemNo,
@@ -384,11 +389,11 @@
 							"totalWithTax":parseFloat($scope.tWTax),
 							"totalTax":parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax),
 							"categoryId":$rootScope.testData[$rootScope.testData.length - 1].categoryId
-						});
+						});*/
 					// for(var i=0;i<$rootScope.testData.length-1;i++)
 					// {
-					$scope
-						.removeRowOnSearch($rootScope.testData[$rootScope.testData.length - 2].itemNo);
+					/*$scope
+						.removeRowOnSearch($rootScope.testData[$rootScope.testData.length - 2].itemNo);*/
 					// }
 				}
 
@@ -596,14 +601,15 @@
 				.toFixed(2);
 			GlobalVariable.onAddProduct = $rootScope.testData;
 		}
-		$scope.editRow = function(row) {
+		$scope.editRow = function($index,row) {
+			$scope.editIndex = $index;
 			GlobalVariable.editQuanDtls = row;
 			var _tmPath = 'app/sell/editQuant.html';
 			var _ctrlPath = 'EditQuantityController';
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackEditQuan);
 		};
 		$scope.callBackEditQuan = function() {
-			var index = -1;
+			/*var index = -1;
 			var comArr = eval($rootScope.testData);
 			for (var i = 0; i < comArr.length; i++) {
 				if (comArr[i].itemNo === GlobalVariable.editQuanDtls.itemNo) {
@@ -614,8 +620,8 @@
 			}
 			if (index === -1) {
 				alert("Something gone wrong");
-			}
-			$rootScope.testData.splice(index, 1);
+			}*/
+			$rootScope.testData.splice($scope.editIndex , 1);
 
 
 			if(parseFloat(GlobalVariable.editQuanDtls.discount) > parseFloat(GlobalVariable.editQuanDtls.retail))
@@ -641,7 +647,7 @@
 			{
 				var editSubTax = parseFloat(editSub) + (($scope.totalDefaultTax /100) * parseFloat(editSub));
 			}
-			$rootScope.testData.splice(index, 0, {
+			$rootScope.testData.splice($scope.editIndex , 0, {
 				"itemId":GlobalVariable.editQuanDtls.itemId,
 				"itemNo" : GlobalVariable.editQuanDtls.itemNo,
 				"item" : GlobalVariable.editQuanDtls.item,

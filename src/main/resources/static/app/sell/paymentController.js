@@ -296,6 +296,14 @@
 				}
 			}
 			GlobalVariable.isPrintPage = true;
+			$rootScope.printTransFirstName='';
+			$rootScope.printTransLastName ='';
+			$rootScope.printTransStreet='';
+			$rootScope.printTransCity='';
+			$rootScope.printTransState='';
+			$rootScope.printTransCountry='';
+			$rootScope.printTranszipCode='';
+			$rootScope.printTransPhone='';
 			if(response.length !==0)
 			{
 				if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
