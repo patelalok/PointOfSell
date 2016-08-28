@@ -192,7 +192,7 @@ public class ClosingDetailsManager {
                 {
                     double customerBalanceDouble = Double.parseDouble(customerBalance);
 
-                    closingDetails.get(0).setCustomerBalance(customerBalanceDouble);
+                    closingDetailsDto.setCustomerBalance(customerBalanceDouble);
                 }
 
                 closingDetailsDto.setTotalProfit(profit);
