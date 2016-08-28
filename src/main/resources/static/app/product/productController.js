@@ -156,19 +156,36 @@
 						'msg': 'Product Number cannot be empty'
 					});
 				}
-			if((($scope.productId !== GlobalVariable.editProductDetails.productNo)&&(GlobalVariable.editProduct == true))||(GlobalVariable.editProduct == false)) {
-				for (var i = 0; i < $scope.prodAltNo.length; i++) {
-					if ($scope.productId == $scope.prodAltNo[i].productNo) {
-						authElemArray.push({
-							'id': 'productId',
-							'msg': 'Product Number already exists'
-						});
+				if(GlobalVariable.editProduct == false)
+				{
+					for (var i = 0; i < $scope.prodAltNo.length; i++) {
+						if ($scope.productId == $scope.prodAltNo[i].productNo) {
+							authElemArray.push({
+								'id': 'productId',
+								'msg': 'Product Number already exists'
+							});
 
+						}
 					}
 				}
-			}
-			if((($scope.altNO !== GlobalVariable.editProductDetails.altNo)&&(GlobalVariable.editProduct == true))||(GlobalVariable.editProduct == false)) {
+				else
+				{
+					if(($scope.productId !== GlobalVariable.editProductDetails.productNo)&&(GlobalVariable.editProduct == true))
+					{
+						for (var i = 0; i < $scope.prodAltNo.length; i++) {
+							if ($scope.productId == $scope.prodAltNo[i].productNo) {
+								authElemArray.push({
+									'id': 'productId',
+									'msg': 'Product Number already exists'
+								});
 
+							}
+						}
+					}
+				}
+
+			if(GlobalVariable.editProduct == false)
+			{
 				if($scope.altNo !==''  && $scope.altNo != undefined)
 				{
 					for(var i=0;i<$scope.prodAltNo.length;i++)
@@ -184,6 +201,24 @@
 					}
 				}
 			}
+			else
+			{
+				if(($scope.altNO !== GlobalVariable.editProductDetails.altNo)&&(GlobalVariable.editProduct == true)) {
+					if ($scope.altNo !== '' && $scope.altNo != undefined) {
+						for (var i = 0; i < $scope.prodAltNo.length; i++) {
+							if ($scope.altNo == $scope.prodAltNo[i].atlNo) {
+								authElemArray.push({
+									'id': 'altNo',
+									'msg': 'Alt Number already exists'
+								});
+
+							}
+						}
+					}
+				}
+			}
+
+
 
 
 

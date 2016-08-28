@@ -43,9 +43,9 @@
 					'msg' : 'Phone Number cannot be empty'
 				});
 			}
-			else
+
+			if(GlobalVariable.editCustomer == false)
 			{
-				if(((GlobalVariable.editedPhone !== $scope.phoneNumber)&&(GlobalVariable.editCustomer == true)) || GlobalVariable.editCustomer == false)
 				for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
 				{
 					if($scope.phoneNumber == GlobalVariable.getCustomerDtls[i].phoneNo)
@@ -57,7 +57,18 @@
 					}
 				}
 			}
-
+			{
+				if((GlobalVariable.editedPhone !== $scope.phoneNumber)&&(GlobalVariable.editCustomer == true)) {
+					for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
+						if ($scope.phoneNumber == GlobalVariable.getCustomerDtls[i].phoneNo) {
+							authElemArray.push({
+								'id': 'phoneNumber',
+								'msg': 'Phone Number already exists'
+							});
+						}
+					}
+				}
+			}
 
 
 			if (authElemArray.length >= 1) {

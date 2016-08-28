@@ -221,7 +221,8 @@
 										"costPrice" : GlobalVariable.getProducts[i].costPrice,
 										"categoryName":GlobalVariable.getProducts[i].categoryName,
 										"totalWithTax":totalWithTax,
-										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
+										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
+										"categoryId":GlobalVariable.getProducts[i].categoryId
 									});
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
@@ -284,7 +285,8 @@
 										"costPrice" : GlobalVariable.getProducts[i].costPrice,
 										"categoryName":GlobalVariable.getProducts[i].categoryName,
 										"totalWithTax":totalWithTax,
-										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax)
+										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
+										"categoryId":GlobalVariable.getProducts[i].categoryId
 									});
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
@@ -380,7 +382,8 @@
 							"costPrice" : $rootScope.testData[$rootScope.testData.length - 1].costPrice,
 							"categoryName":$rootScope.testData[$rootScope.testData.length - 1].categoryName,
 							"totalWithTax":parseFloat($scope.tWTax),
-							"totalTax":parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax)
+							"totalTax":parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax),
+							"categoryId":$rootScope.testData[$rootScope.testData.length - 1].categoryId
 						});
 					// for(var i=0;i<$rootScope.testData.length-1;i++)
 					// {
@@ -446,7 +449,8 @@
 						  "costPrice": response[k].costPrice,
 						  "categoryName": response[k].categoryName,
 						  "totalWithTax": totalWithTax,
-						  "totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax)
+						  "totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax),
+						  "catgeoryId":response[k].categoryId
 					  });
 			  }
 			}
@@ -649,7 +653,8 @@
 				"costPrice" : GlobalVariable.editQuanDtls.costPrice,
 				"categoryName" : GlobalVariable.editQuanDtls.categoryName,
 				"totalWithTax":editSubTax,
-				"totalTax":parseFloat(editSubTax)-parseFloat(editSub)
+				"totalTax":parseFloat(editSubTax)-parseFloat(editSub),
+				"categoryId":GlobalVariable.editQuanDtls.categoryId
 			});
 			$scope.loadCheckOutData();
 		};
