@@ -183,7 +183,7 @@
 				{
 					var totalProductPriceWithTax = $rootScope.testData[i].total;
 				}
-				if((GlobalVariable.sellIMEINumber == undefined || GlobalVariable.sellIMEINumber == '') && ($rootScope.testData[i].categoryName == 'Phone'))
+				if((GlobalVariable.sellIMEINumber !== undefined || GlobalVariable.sellIMEINumber !== '') && (($rootScope.testData[i].categoryName !== 'Phone')&&(parseInt($rootScope.testData[i].categoryId) !== 10)))
 				{
 					var imeiNo = '';
 				}
