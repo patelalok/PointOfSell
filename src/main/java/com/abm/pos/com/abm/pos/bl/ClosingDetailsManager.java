@@ -127,7 +127,7 @@ public class ClosingDetailsManager {
             //Getting the discount from the lineitem table to get product level discount.
             String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
 
-            double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
+            String profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, String.class);
 
             //Here Getting customer balance to handle short or over issue in money for close register reports.
             String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[] {startDate,endDate},String.class);
@@ -164,7 +164,13 @@ public class ClosingDetailsManager {
 
                     closingDetails.get(0).setCustomerBalance(customerBalanceDouble);
                 }
-                closingDetails.get(0).setTotalProfit(profit);
+
+                if(null != profit)
+                {
+                    double profitDouble = Double.parseDouble(customerBalance);
+                    closingDetails.get(0).setTotalProfit(profitDouble);
+                }
+
             }
 
 
@@ -195,7 +201,12 @@ public class ClosingDetailsManager {
                     closingDetailsDto.setCustomerBalance(customerBalanceDouble);
                 }
 
-                closingDetailsDto.setTotalProfit(profit);
+                if(null != profit)
+                {
+                    double profitDouble = Double.parseDouble(profit);
+                    closingDetailsDto.setTotalProfit(profitDouble);
+                }
+
 
                 closingDetails.add(closingDetailsDto);
 
@@ -227,6 +238,7 @@ public class ClosingDetailsManager {
             closingDto.setTotal(rs.getDouble("TOTAL") - rs.getDouble("BALANCE"));
             closingDto.setTax(rs.getDouble("TAX"));
             closingDto.setDiscount(rs.getDouble("DISCOUNT"));
+            closingDto.setBalance(rs.getDouble("BALANCE"));
 
 
             //closingDto.setProfit(rs.getDouble("PROFIT"));

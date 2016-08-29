@@ -80,7 +80,7 @@ public class PageSetUpManager {
                     PageSetUpDto setUpDto = new PageSetUpDto();
 
                     setUpDto.setId(rs.getInt("GET_PAGE_SETUP_DETAILS_ID"));
-                    setUpDto.setTax(rs.getInt("TAX"));
+                    setUpDto.setTax(rs.getDouble("TAX"));
                     setUpDto.setStoreAddress(rs.getString("STORE_ADDRESS"));
                     setUpDto.setStoreLogo(rs.getString("STORE_LOGO"));
                     setUpDto.setFooterReceipt(rs.getString("FOOTER_RECEIPT"));

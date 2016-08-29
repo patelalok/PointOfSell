@@ -6,7 +6,7 @@ package com.abm.pos.com.abm.pos.dto;
 public class PageSetUpDto {
 
     private int id;
-    private int tax;
+    private double tax;
     private String storeAddress;
     private String storeLogo;
     private String footerReceipt;
@@ -36,11 +36,11 @@ public class PageSetUpDto {
         this.storeLogo = storeLogo;
     }
 
-    public int getTax() {
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(int tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 
