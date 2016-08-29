@@ -41,41 +41,116 @@
 	</div>
 	<div class="">
 	<div class="col-md-9" style="background-color:#FFFFFF;padding-top:53px;">
-		<div data-responsive-table data-ng-model="testData"  id="dataTable" data-current-page="currentPageIndexArr"
-				 class="full-width" style="height:500px;overflow:auto;">
-				<columns style="bakcground:red;" >
-					<column name="ItemNo" key="itemNo" datatype="string" width="3%" sortable="true">
+		<div class="fullwidth" style="height:500px;overflow:auto;" id="dataTable">
+			<div data-ng-if="!device.isMobile">
+			<table  class="table table-striped table-middle table-bordered table-head-bordered" id="table">
+				<thead>
+				<tr>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>ItemNo</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Item Description</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Quantity</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Retail</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Ret W/Disc</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Total</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span>Stock</span>
+					</th>
+					<th style="font-weight:bold;" class="wrapword">
+						<span style="visibility:hidden">Total</span>
+					</th>
 
-					</column>
-					<column name="Item Description" key="item" datatype="string" width="47%">
-					<cell ng-non-bindable>
-						{{::row.item}}
-					</cell>
-					</column>
-					<column name="Quantity" key="quantity" datatype="string" width="2%">
-					
-					</column>
-					<column name="Retail" key="retail" datatype="string" width="6%"></column>
-					<column name="Ret W/Disc" key="discount" datatype="string" width="19%"></column>
-					<column name="Total" key="total" datatype="string" width="8%">
-					<cell ng-non-bindable>
-							{{::row.total}}
-						</cell>
-					</column>
-					<column name="Stock" key="stock" datatype="string" width="5%"></column>
-					<column name="Delete" key="" datatype="string" width="10%">
-						<cell ng-non-bindable>
-							<!-- <span>
-								<a  style="cursor:pointer;"><img src="./assets/images/delete.png" alt="delete" height="15" /></a>
-							</span> -->
-							<a ng-click="scope.removeRow(row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
-							<span class="inline-vertical">
-								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editRow(row)"></span>
+				</tr>
+				</thead>
+				<tfoot ng-show="testData.length === 0">
+				<tr class="center-align">
+					<td colspan="5" class="padding-2">
+						<span ng-show="emptyMessage" class="empty-message">{{emptyMessage}}</span>
+						<span ng-hide="emptyMessage" class="empty-message">No data available.</span>
+					</td>
+				</tr>
+				</tfoot>
+				<tbody >
+				<tr data-ng-repeat="row in testData track by $index">
+					<td class="wrapword" style="width:3%;"><span>{{row.itemNo}}</span></td>
+					<td class="wrapword" style="width:47%;"><span>{{row.item}}</span></td>
+					<td class="wrapword" style="width:2%;"><span>{{row.quantity}}</span></td>
+					<td class="wrapword" style="width:6%;"><span>{{row.retail}}</span></td>
+					<td class="wrapword" style="width:19%;"><span>{{row.discount}}</span></td>
+					<td class="wrapword" style="width:8%;"><span>{{row.total}}</span></td>
+					<td class="wrapword" style="width:5%;"><span>{{row.stock}}</span></td>
+					<td class="wrapword" style="width:10%;">
+						<a ng-click="removeRow($index,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+						<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editRow($index,row)"></span>
 							</span>
-						</cell>
-					</column>
-				</columns>		
+
+					</td>
+				</tr>
+				</tbody>
+			</table>
 			</div>
+			<div data-ng-if="device.isMobile" class="mobile-table">
+				<table data-ng-repeat="row in testData" class="table table-striped table-condensed border-bottom-1" id="table">
+					<tbody>
+					<tr>
+						<td><span>Item No</span></td>
+						<td>{{row.itemNo}}</td>
+					</tr>
+					<tr>
+						<td><span>Item Description</span></td>
+						<td>{{row.item}}</td>
+					</tr>
+					<tr>
+						<td><span>Quantity</span></td>
+						<td>{{row.quantity}}</td>
+					</tr>
+					<tr>
+						<td><span>Retail</span></td>
+						<td>{{row.retail}}</td>
+					</tr>
+					<tr>
+						<td><span>Retail W/Disc</span></td>
+						<td>{{row.discount}}</td>
+					</tr>
+					<tr>
+						<td><span>Total</span></td>
+						<td>{{row.total}}</td>
+					</tr>
+					<tr>
+						<td><span>Stock</span></td>
+						<td>{{row.stock}}</td>
+					</tr>
+					<tr>
+						<td><span style="visibility:hidden;">Item No</span></td>
+						<td><a ng-click="removeRow($index,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
+							<span class="inline-vertical">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editRow($index,row)"></span>
+							</span></td>
+					</tr>
+					</tbody>
+				</table>
+				<div ng-show="sortedData.length === 0" class="panel panel-default margin-bottom-0">
+					<div class="panel-body">
+						<div class="center-align">
+							<span ng-show="emptyMessage" class="empty-message">{{emptyMessage}}</span>
+							<span ng-hide="emptyMessage" class="empty-message">No data available.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 			
 	</div>	
 	<div class="col-md-3" style="background-color:#FFFFFF;padding:10px;padding-top:20px;height:553px;">
@@ -202,7 +277,7 @@
 				<column name="Description" key="productDescription" datatype="string" width="50%" padding="3px" border="0px">
 					<cell ng-non-bindable>
 						<span style="display:block;">{{::row.productDescription}}</span>
-						<span style="display:block;" ng-show="row.imeiNo != null && row.imeiNo != ''">IMEI:{{::row.imeiNo}}</span>
+						<span style="display:block;" ng-show="row.imeiNo != null && row.imeiN">IMEI:{{::row.imeiNo}}</span>
 					</cell>
 				</column>
 				<column name="Retail" key="retail" datatype="string" width="8%" padding="1px" border="0px"></column>

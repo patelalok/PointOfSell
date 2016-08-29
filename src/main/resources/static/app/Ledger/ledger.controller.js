@@ -74,6 +74,14 @@
 			GlobalVariable.receiptData =response;
 			$scope.itemTotal =Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal)+parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].discount)).toFixed(2);
 			$scope.modifiedData=[];
+			$scope.printFirstName='';
+			$scope.printLastName ='';
+			$scope.printStreet='';
+			$scope.printCity='';
+			$scope.printState='';
+			$scope.printCountry='';
+			$scope.printzipCode='';
+			$scope.printPhone='';
 			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
 			{
 				$scope.modifiedData.push(
@@ -93,6 +101,7 @@
 			GlobalVariable.isPrintPage = true;
 			if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
 			{
+
 				$scope.printFirstName=GlobalVariable.receiptData[0].customerDtosList[0].firstName;
 					$scope.printLastName =GlobalVariable.receiptData[0].customerDtosList[0].lastName;
 						$scope.printStreet=GlobalVariable.receiptData[0].customerDtosList[0].street;
