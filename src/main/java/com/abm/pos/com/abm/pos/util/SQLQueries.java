@@ -179,8 +179,8 @@ public class SQLQueries {
                     "TOTAL_DISCOUNT , " +
                     "TOTAL_PROFIT , " +
                     "TOTAL_MARKUP," +
-                    "BANKDEPOSIT," +
-                    "CUSTOMER_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "BANKDEPOSIT, COMISSION" +
+                    "CUSTOMER_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
  public String addTransactionPaymentDetail =
@@ -372,23 +372,23 @@ public class SQLQueries {
                     "TOTAL_TAX = ?, " +
                     "TOTAL_DISCOUNT = ?, " +
                     "TOTAL_PROFIT = ?, " +
-                    "TOTAL_MARKUP = ?, BANKDEPOSIT = ?, CUSTOMER_BALANCE = ? " +
+                    "TOTAL_MARKUP = ?, BANKDEPOSIT = ?, CUSTOMER_BALANCE = ?, COMISSION = ? " +
                     "WHERE REGISTER_ID = ? ";
 
 
     //SQL QUERY TO GET  DETAILS FROM DATABASE
 
-    public String getProductDetails = "SELECT * FROM PRODUCT";
+    public String getProductDetails = "SELECT * FROM PRODUCT ORDER BY DESCRIPTION";
 
-    public String getCustomerDetails = "SELECT * FROM CUSTOMER";
+    public String getCustomerDetails = "SELECT * FROM CUSTOMER ORDER BY FIRST_NAME";
 
-    public String getVendorDetails = "SELECT * FROM VENDOR";
+    public String getVendorDetails = "SELECT * FROM VENDOR ORDER BY VENDOR_NAME";
 
-    public String getCategoryDetails = "SELECT * FROM CATEGORY";
+    public String getCategoryDetails = "SELECT * FROM CATEGORY ORDER BY CATEGORY_NAME";
 
-    public String getBrandDetails = "SELECT * FROM BRAND";
+    public String getBrandDetails = "SELECT * FROM BRAND ORDER BY BRAND_NAME";
 
-    public String getUserDetails = "SELECT * FROM USER";
+    public String getUserDetails = "SELECT * FROM USER ORDER BY USERNAME";
 
     public String getTransactionDetails =
             "SELECT * FROM TRANSACTION " +

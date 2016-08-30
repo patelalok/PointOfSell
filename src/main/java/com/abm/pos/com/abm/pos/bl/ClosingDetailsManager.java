@@ -71,7 +71,8 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup(),
                         closingDetailsDto.getBankDeposit(),
-                        closingDetailsDto.getCustomerBalance());
+                        closingDetailsDto.getCustomerBalance(),
+                        closingDetailsDto.getCommision());
 
                 System.out.println("Closing Details Added Successfully");
             }
@@ -98,6 +99,7 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalMarkup(),
                         closingDetailsDto.getBankDeposit(),
                         closingDetailsDto.getCustomerBalance(),
+                        closingDetailsDto.getCommision(),
                         closingDetailsDto.getRegisterId());
 
                 System.out.println("Closing Details Edited Successfully");
@@ -133,8 +135,6 @@ public class ClosingDetailsManager {
             String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[] {startDate,endDate},String.class);
 
 
-            //Here getting the sum of all paid for particular day and then adding into daily total so i can match paidout and total amount.
-            //String totalPaidout = jdbcTemplate.queryForObject(sqlQueries.getSumOfPaidOut, new Object[] {startDate,endDate}, String.class);
 
 
 
@@ -442,12 +442,14 @@ public class ClosingDetailsManager {
             yearlyDto.setCheck(rs.getDouble("CHEC"));
             yearlyDto.setTax(rs.getDouble("TAX"));
             yearlyDto.setDiscount(rs.getDouble("DISCOUNT"));
-            yearlyDto.setTotal(rs.getDouble("TOTAL"));
+
+            //if ()
+            yearlyDto.setTotal(rs.getDouble("TOTAL") - rs.getDouble("BALANCE"));
             //yearlyDto.setCost(rs.getDouble("COST"));
             //yearlyDto.setRetail(rs.getDouble("RETAIL"));
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
             yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
-            yearlyDto.setBalance(rs.getDouble("BALANCE"));
+
 
             yearlyDtos.add(yearlyDto);
 
