@@ -92,7 +92,8 @@
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck);
+				+ parseFloat($scope.userCheck)
+				+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difDebit = parseFloat($scope.userDebit)
 				- parseFloat($scope.systemDebit);
@@ -122,7 +123,7 @@
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck);
+				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCash = parseFloat($scope.userCash)
 				- parseFloat($scope.systemCash);
@@ -152,7 +153,7 @@
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck);
+				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCheck = parseFloat($scope.userCheck)
 				- parseFloat($scope.sysCheck);
@@ -218,7 +219,8 @@
 				"registerStatus" : null,
 				"registerId" : $scope.registerId,
 				"customerBalance":$scope.custBalanceReg,
-				"bankDeposit":$scope.bankDeposit
+				"bankDeposit":$scope.bankDeposit,
+				"comission":$scope.commision
 			};
 			var url = "http://localhost:8080/addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,

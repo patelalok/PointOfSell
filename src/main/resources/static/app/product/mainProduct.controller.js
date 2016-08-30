@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService','getProductDetails'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService,getProductDetails) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -17,7 +17,7 @@
 		$scope.isAsc = false;
 		$scope.enabled = true;
 		//util.Wait(true);
-		loadCDetails();
+		//loadCDetails();
 		/*GlobalVariable.productSuccessAlert = false;
 		GlobalVariable.addedSucces= false;
 		GlobalVariable.editedSuccess= false;*/
@@ -58,13 +58,24 @@
 		};*/
 		$scope.checkValue = function()
 		{
-			if($scope.bType == undefined)
+			if($scope.bType == null)
 				{
 				$scope.bType = '';
 				}
-			if($scope.productType == "select")
-				$scope.bType.filterValue = '';
+			if($scope.cType == null)
+				$scope.cType= '';
+			if($scope.bType == null)
+				$scope.bType= '';
 				
+		};
+		$scope.checkValueProduct = function()
+		{
+			if($scope.productType == 'select')
+			{
+				$scope.bType = '';
+				$scope.cType = '';
+				$scope.bType = '';
+			}
 		};
 		$scope.navigateToSales = function(productId)
 		{
@@ -93,8 +104,15 @@
 			$scope.curPageOnTotalLen = 0;
 			$scope.totalLength = 0;
 			$scope.productType = "select";
-
-			//$scope.loadCDetails();
+			if(GlobalVariable.getProducts == undefined)
+			getProductDetails.getProductDetail($scope.getCDetails);
+			if(GlobalVariable.getVendors == undefined)
+			getProductDetails.getVendorDetails($scope.getVDetails);
+			if(GlobalVariable.getBrands == undefined)
+			getProductDetails.getBrandDetails($scope.getBDetails);
+			if(GlobalVariable.getCategory== undefined)
+			getProductDetails.getCategoryDetails($scope.getCtDetails);
+			loadCDetails();
 			/*$timeout(function() {
 				$scope.closeBootstrapAlert();
 			}, 9000);*/
@@ -103,6 +121,26 @@
 			
 				
 		}
+		$scope.getVDetails = function(response)
+		{
+			$scope.vendorOptions = response;
+			GlobalVariable.getVendors = response;
+		};
+		$scope.getBDetails = function(response)
+		{
+			$scope.brandOptions = response;
+			GlobalVariable.getBrands = response;
+		};
+		$scope.getCtDetails = function(response)
+		{
+			$scope.categoryOptions = response;
+			GlobalVariable.getProducts = getCategory;
+		};
+		$scope.getCDetails = function(response)
+		{
+			$scope.getProductDtls = response;
+			GlobalVariable.getProducts = response;
+		};
 		function loadCDetails()
 		{
 			/*util.Wait(true);*/

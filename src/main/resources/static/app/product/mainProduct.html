@@ -4,7 +4,7 @@
 	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Name/SKU/Handle</label></div>
 		<div>
-			<input  type="text" class="form-control" data-ng-model="bType.filterValue" id="name" style="height:52px;width:100%;" data-restrict-characters="restrictCharacter.Special.regExp" />
+			<input  type="text" class="form-control" data-ng-model="prodName" id="name" style="height:52px;width:100%;" data-restrict-characters="restrictCharacter.Special.regExp" />
 		</div>
 	</div>
 	<div class="col-md-1" style="width:16%;">
@@ -19,7 +19,7 @@
 	<div class="col-md-1" style="width:16%;">
 		<div class="padding-bottom-5"><label>Product Type</label></div>
 		<div>
-			<select id="prType" data-ng-model="productType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;">
+			<select id="prType" data-ng-model="productType" class="form-control" ng-change="checkValueProduct()" style="height:52px;width:100%;">
 							<option value="select">Select All</option>
 							<option value="Brand">Brand</option>
 							<option value="Vendor">Vendor</option>
@@ -30,7 +30,7 @@
 	<div class="col-md-1" style="width:16%;" ng-show="productType == 'Vendor'">
 		<div class="padding-bottom-5"><label>Vendor</label></div>
 		<div>
-			<select id="prType" data-ng-model="bType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="vendorOpt as vendorOpt.vendorName for vendorOpt in vendorOptions">
+			<select id="prType" data-ng-model="vType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="vendorOpt as vendorOpt.vendorName for vendorOpt in vendorOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
@@ -46,7 +46,7 @@
 	<div class="col-md-1" style="width:16%;" ng-show="productType == 'Category'">
 		<div class="padding-bottom-5"><label>Category</label></div>
 		<div>
-			<select id="prType" data-ng-model="bType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="categoryOpt as categoryOpt.categoryName for categoryOpt in categoryOptions">
+			<select id="prType" data-ng-model="cType" class="form-control" ng-change="checkValue()" style="height:52px;width:100%;" data-ng-options="categoryOpt as categoryOpt.categoryName for categoryOpt in categoryOptions">
 							<option value="">Select All</option>
 						</select>
 		</div>
@@ -102,7 +102,7 @@
 				</tfoot>
 				<tbody >
 				<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
-				<tr data-ng-repeat="row in getProductDtls   | filter : bType.filterValue | limitTo:barLimit">
+				<tr data-ng-repeat="row in getProductDtls | filter:prodName|filter:{vendorName:vType.vendorName}|filter:{brandName:bType.brandName}|filter:{categoryName:cType.categoryName}| limitTo:barLimit">
 					<td class="wrapword" style="width:8%;"><span>{{row.productNo}}</span></td>
 					<td class="wrapword" style="width:47%;"><span>{{row.description}}</span></td>
 					<td class="wrapword" style="width:10%;"><span>{{row.categoryName}}</span></td>

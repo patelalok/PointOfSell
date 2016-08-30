@@ -54,6 +54,10 @@
 		DateField : {
 			regExp : /[^0-9/]/g,
 			label : "Non-alphabetic and non-numeric characters disallowed"
+		},
+		AlphaNumeric : {
+			regExp : /[^a-zA-Z0-9.]/g,
+			label : "Non-alphabetic and non-numeric characters disallowed"
 		}
 
 	});

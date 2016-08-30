@@ -434,7 +434,6 @@ div.list-group-item.menuActive,div.list-group-item.menuActive:hover,div.list-gro
 .wrapper {
 	width: 100%;
 	position: relative;
-	overflow: hidden;
 	min-height: 100%;
 	margin: 0 auto -99px;
 	bottom:0;

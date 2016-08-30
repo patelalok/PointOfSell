@@ -72,7 +72,7 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
-			$scope.itemTotal =Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal)+parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].discount)).toFixed(2);
+			$scope.itemTotal =Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal)+parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
 			$scope.modifiedData=[];
 			$scope.printFirstName='';
 			$scope.printLastName ='';
