@@ -146,7 +146,7 @@ public class ClosingDetailsManager {
                 closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
-                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal() );
+                closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
 
                 if (null != lineItemDiscount) {
 
@@ -185,7 +185,7 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportCredit(dashboardDto.getCredit());
                 closingDetailsDto.setReportCheck(dashboardDto.getCheck());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
-                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal() - dashboardDto.getBalance());
+                closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
 
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
@@ -420,6 +420,7 @@ public class ClosingDetailsManager {
         double grandTotal;
         double totalProfit;
         int noOfTrans;
+        double balance;
 
         YearlyListDto yearlyListDto = new YearlyListDto();
 
@@ -446,6 +447,7 @@ public class ClosingDetailsManager {
             //yearlyDto.setRetail(rs.getDouble("RETAIL"));
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
             yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
+            yearlyDto.setBalance(rs.getDouble("BALANCE"));
 
             yearlyDtos.add(yearlyDto);
 
@@ -460,6 +462,7 @@ public class ClosingDetailsManager {
             grandTotal = grandTotal + yearlyDto.getTotal();
             totalProfit = totalProfit + yearlyDto.getProfit();
             noOfTrans = noOfTrans + yearlyDto.getNoOfTrans();
+            balance = balance + yearlyDto.getBalance();
 
 
 
@@ -468,7 +471,7 @@ public class ClosingDetailsManager {
             forReportsDto.setTotalCheck(totalCheck);
             forReportsDto.setTotalTax(totalTax);
             forReportsDto.setTotalDiscount(totalDiscount);
-            forReportsDto.setGrandTotal(grandTotal);
+            forReportsDto.setGrandTotal(grandTotal - balance);
             forReportsDto.setTotalProfit(totalProfit);
             forReportsDto.setNoOfTrans(noOfTrans);
             forReportsDto.setAvgBasketSize(12.99);

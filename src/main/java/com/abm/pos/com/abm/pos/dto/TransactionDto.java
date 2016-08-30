@@ -29,6 +29,7 @@ public class TransactionDto {
     private int last4Digits;
     private double prevBalance;
     private double balance;
+    private double lineItemDiscount;
 
     public double getPaidAmountCheck() {
         return paidAmountCheck;
@@ -221,5 +222,13 @@ public class TransactionDto {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public double getLineItemDiscount() {
+        return lineItemDiscount;
+    }
+
+    public void setLineItemDiscount(double lineItemDiscount) {
+        this.lineItemDiscount = lineItemDiscount;
     }
 }

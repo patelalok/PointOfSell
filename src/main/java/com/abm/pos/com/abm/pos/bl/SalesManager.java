@@ -264,6 +264,7 @@ public class SalesManager {
                 double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
                 //System.out.println(lineItemDiscount);
                 transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT") + lineItemDiscountDouble);
+                transaction.setLineItemDiscount(lineItemDiscountDouble);
             } else {
 
                 transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
@@ -368,7 +369,9 @@ public class SalesManager {
                     //reducing quantity into Stock for transaction
                     productQuantity = productQuantity - transQuantity;
 
-                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, transactionLineItemDto1.getProductNumber());
+                    int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] { transactionLineItemDto1.getProductNumber()}, Integer.class);
+
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, productId);
 
                     ps.setDouble(6, transactionLineItemDto1.getRetail());
                     ps.setDouble(7, transactionLineItemDto1.getCost());

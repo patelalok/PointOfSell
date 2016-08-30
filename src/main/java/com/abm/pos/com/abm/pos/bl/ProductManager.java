@@ -498,6 +498,28 @@ public class ProductManager
                     phoneDto.getRetailPrice(),
                     phoneDto.getMarkup(),
                     phoneDto.getLastUpdatedTimeStamp());
+
+            //Handling phone update here first geting the current quantity for that phone from product table
+          String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {phoneDto.getProductNo()}, String.class);
+
+            //Getting product id bacuse i a doing safe operation so i need product id that why getting product id
+            int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] { phoneDto.getProductNo()}, Integer.class);
+
+            if(null != quantity)
+            {
+                System.out.println("This phone has Already some quantity");
+                int phoneQuantity = Integer.parseInt(quantity);
+                //Updating the stock of the phone in product table.
+                jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, phoneQuantity + 1, productId);
+            }
+            else
+            {
+                System.out.println("Adding stock first time for this phone");
+                jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, 1 , productId);
+            }
+
+
+
         }
         catch (Exception e)
         {

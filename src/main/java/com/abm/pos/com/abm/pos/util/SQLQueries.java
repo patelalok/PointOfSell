@@ -340,7 +340,7 @@ public class SQLQueries {
     public String updateProductQuantity =
             "UPDATE PRODUCT SET " +
                     "QUANTITY = ? " +
-                    "WHERE PRODUCT_NO = ?";
+                    "WHERE PRODUCT_ID = ?";
 
     public String editTransactionLineItem =
             "UPDATE TRANSACTION_LINE_ITEM SET " +
@@ -493,6 +493,7 @@ public class SQLQueries {
             "SUM(TAX_AMOUNT) TAX , " +
             "SUM(DISCOUNT_AMOUNT) DISCOUNT , " +
             "SUM(TOTAL_AMOUNT) TOTAL, " +
+            "SUM(BALANCE) BALANCE," +
             "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
             "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c') as PROFIT " +
             "FROM TRANSACTION " +
@@ -676,4 +677,7 @@ public class SQLQueries {
 
     public String getCustomerBalanceByDate = "SELECT sum(BALANCE) CUSTOMERBALANCE FROM CUSTOMER WHERE BALANCE_LAST_UPDATE_DATE BETWEEN ? AND ? ";
     public String EditPhoneDetailsFromPhoneTable = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?, MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
+    public String getPhoneStockFromProductTable = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_NO = ?";
+    public String addPhoneStockToProductTable = "UPDATE PRODUCT SET QUANTITY = ? WHERE PRODUCT_ID = ?";
+    public String getProductId = "SELECT PRODUCT_ID FROM PRODUCT WHERE PRODUCT_NO = ?";
 }

@@ -21,6 +21,7 @@ public class YearlyDto {
     //private double retail;
     private int noOfTrans;
     private double avgBasketSize;
+    private double balance;
 
     public double getAvgBasketSize() {
         return avgBasketSize;
@@ -126,4 +127,11 @@ public class YearlyDto {
         this.total = total;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }
