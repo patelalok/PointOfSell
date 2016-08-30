@@ -55,6 +55,14 @@
 					</div>
 				
 				</div>
+			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Bank</span><span style="display:block;">Deposit: <span style="visibility: hidden;">cas</span></span> </div>
+					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="bankDeposit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserCash(userCash)" /></div>
+
+				</div>
+
+			</div>
 				<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Check :</span><span style="display:block;visibility:hidden;">Debit Card:</span> </div>
@@ -96,7 +104,7 @@
 
 				<div class="display-row">
 					<div class=" inline-vertical display-cell align-left"><span style="display:block;visibility:hidden;">Total Profit</span><span style="display:block;visibility:hidden;">Total Tax:</span><span style="display:block;visibility:hidden;">Total Disc:</span> </div>
-					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="totalProfit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" /></div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="totalProfit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
 					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalTax" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;" /></div>
 					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="totalDisc" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;"  /></div>
 
@@ -116,9 +124,18 @@
 				</div>
 			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 				<div class="display-row">
-					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Bank Deposit:</span><span style="display:block;">Customer Balance:</span></div>
-					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="bankDeposit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="custBalanceReg" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left" style="visibility:hidden;"><span style="display:block;">Credit/</span><span style="display:block;">Debit Crad:</span> </div>
+					<div class=" inline-vertical display-cell align-left " >Customer Balance</div>
+					<div class=" inline-vertical display-cell align-left ">Commision</div>
+					<div class=" inline-vertical display-cell align-left " style="visibility: hidden;">Total Discount</div>
+
+				</div>
+
+				<div class="display-row">
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;visibility:hidden;">Total Profit</span><span style="display:block;visibility:hidden;">Total Tax:</span><span style="display:block;visibility:hidden;">Total Disc:</span> </div>
+					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="custBalance" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="commision" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"   style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="dummy" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;"  /></div>
 
 				</div>
 

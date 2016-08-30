@@ -62,7 +62,7 @@
 			$rootScope.displaySideBar = !$rootScope.displaySideBar;
 		};
 
-		$window.onbeforeunload = function (event) {
+		/*$window.onbeforeunload = function (event) {
 			$scope.logOut();
 			var msg= 'Are you sure want to close broswer?';
 
@@ -75,7 +75,7 @@
 
 			}
 			return msg;
-		};
+		};*/
 
 
 		$scope.navigate = function(code,page)

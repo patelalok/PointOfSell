@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$timeout','$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
+	paymentPopupController.$inject = [ '$timeout','$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','getProductDetails'];
 
-	function paymentPopupController($timeout,$scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
+	function paymentPopupController($timeout,$scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,getProductDetails)
 	{
 		$scope.color= false;
 		$scope.paidAmountCash =0;
@@ -247,6 +247,7 @@
 			GlobalVariable.transId = '';
 			GlobalVariable.last4='';
 			GlobalVariable.sellIMEINumber = '';
+			getProductDetails.getProductDetail();
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				getStoreAddress();
@@ -277,7 +278,7 @@
 		{
 			GlobalVariable.receiptData =response;
 			if(response.length!== 0) {
-				$rootScope.itemTotal = Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].discount)).toFixed(2);
+				$rootScope.itemTotal = Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
 
 
 				for (var i = 0; i < GlobalVariable.receiptData[0].transactionLineItemDtoList.length; i++) {

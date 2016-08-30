@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="padding-bottom-5"><label style="font-weight:bold;">IMEI Number</label></div>
                 <div>
-                    <input  type="text" class="form-control" data-ng-model="imeiNumber" id="imeiNumber" style="height:52px;width:100%;"/>
+                    <input  type="text" class="form-control" maxlength="16" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" data-ng-model="imeiNumber" id="imeiNumber" style="height:52px;width:100%;"/>
                 </div>
             </div>
             <div class="middlecontent display-table col-md-12">

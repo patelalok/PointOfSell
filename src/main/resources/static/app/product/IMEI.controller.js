@@ -3,12 +3,13 @@
 
     angular.module('sampleApp').controller('IMEIController', IMEIController);
 
-    IMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails'];
+    IMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails','RestrictedCharacter.Types'];
 
-    function IMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails)
+    function IMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails,restrictCharacter)
     {
         $scope.device= device;
         $scope.GlobalVariable = GlobalVariable;
+        $scope.restrictCharacter=restrictCharacter;
         $scope.successAlert = false;
         $scope.closePopup = function()
         {

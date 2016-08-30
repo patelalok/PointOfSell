@@ -20,6 +20,8 @@
 				getCustomerDetails:getCustomerDetails
 				
 		};
+		return getProductDetails;
+		var refCallback = null;
 		function getProductValues()
 		{
 			getVendorDetails();
@@ -41,8 +43,9 @@
 			dataService.Get(" http://localhost:8080/getCustomerDetail",getCustomerDetailSuccessHandler,getCustomerDetailErrorHandler,"application/json","application/json");
 
 		}
-		function getProductDetail()
+		function getProductDetail(callBack)
 		{
+			refCallback = callBack;
 			dataService.Get("http://localhost:8080/getProduct",getProductSuccessHandler,getProductErrorHandler,"application/json","application/json");
 
 		}
@@ -62,6 +65,8 @@
 		function getVendorSuccessHandler(response)
 		{
 			GlobalVariable.getVendors = response;
+			if(refCallback !=null && refCallback!= undefined)
+				refCallback(response);
 		}
 		function getVendorErrorHandler(errorResponse)
 		{
@@ -70,6 +75,8 @@
 		function getBrandSuccessHandler(response)
 		{
 			GlobalVariable.getBrands =  response;
+			if(refCallback !=null && refCallback!= undefined)
+				refCallback(response);
 		}
 		function getBrandErrorHandler(errorResponse)
 		{
@@ -78,6 +85,9 @@
 		function getCategorySuccessHandler(response)
 		{
 			GlobalVariable.getCategory = response;
+			if(refCallback !=null && refCallback!= undefined)
+				refCallback(response);
+
 		}
 		function getCategoryErrorHandler(errorResponse)
 		{
@@ -86,6 +96,8 @@
 		function getProductSuccessHandler(response)
 		{
 			GlobalVariable.getProducts =response;
+			if(refCallback !=null && refCallback!= undefined)
+			refCallback(response);
 		}
 		function getProductErrorHandler(errorResponse)
 		{
@@ -104,7 +116,7 @@
 		{
 			//GlobalVariable.getCustomerDtls =response;
 		}
-		return getProductDetails;
+
 	};
 })();/**
  * 

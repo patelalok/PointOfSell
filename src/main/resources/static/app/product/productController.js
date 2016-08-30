@@ -114,7 +114,7 @@
 		};
 		function onLastProdNoSuccess(response)
 		{
-			$scope.productId = 10000000+parseInt(response);
+			$scope.productId = 1+parseInt(response);
 			GlobalVariable.IMEIProductID = $scope.productId;
 		}
 		$scope.getNewProductValue = function(value)
@@ -388,9 +388,9 @@
 		{
 			console.log("params = "+$state.params);
 			getProAlt();
-			$scope.prodCP = 0;
+			/*$scope.prodCP = 0;
 			$scope.prodMarkup = 0;
-			$scope.prodRetail = 0;
+			$scope.prodRetail = 0;*/
 			$scope.productYesyNO= true;
 			if(GlobalVariable.editProduct == true)
 			{
@@ -406,7 +406,7 @@
 				$scope.prodCP = GlobalVariable.editProductDetails.costPrice;
 				$scope.prodMarkup = GlobalVariable.editProductDetails.markup;
 				$scope.prodRetail = GlobalVariable.editProductDetails.retailPrice;
-				$scope.prodQuantity = GlobalVariable.editProductDetails.quantity;
+				$scope.prodQuantity = GlobalVariable.editProductDetails.stock;
 				$scope.prodMinquantity = GlobalVariable.editProductDetails.minProductQuantity;
 				$scope.productYesyNO = GlobalVariable.editProductDetails.addTax;
 				$scope.selectedReturnType = GlobalVariable.editProductDetails.returnRule;
