@@ -108,9 +108,7 @@
         }
         function render()
         {
-            $scope.prodIMEICP = 0;
-            $scope.prodIMEIMarkup = 0;
-            $scope.prodIMEIRetail = 0;
+
                 if(GlobalVariable.editIMEI == true)
                 {
                         $scope.imeiNumber = GlobalVariable.editIMEIDtls.imeiNo;

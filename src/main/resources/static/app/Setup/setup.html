@@ -107,10 +107,15 @@
 		</div>
 	</div>
 
-	<div class="row productBtns" style="padding:30px;"ng-if="showRcptDtls">
-		<div class="col-md-6">
+	<div class="row productBtns" style="padding:30px;"ng-show="showRcptDtls">
+		<div class="col-md-12">
 
 			<textarea cols="100" rows="10" ng-model="footerReceipt"></textarea>
+		</div>
+		<div class="col-md-12" style="text-align: center;padding-top:10px;">
+
+			<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" data-ng-click="editReceipt()">Edit</button>
+
 		</div>
 
 	</div>

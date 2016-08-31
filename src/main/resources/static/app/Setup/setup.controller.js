@@ -70,6 +70,9 @@
 			{
 			$scope.getTaxDtls = response;
 			$scope.footerReceipt = response[0].footerReceipt;
+			$scope.footerId = response[0].id;
+				$scope.footerTaxId= response[0].tax;
+				$scope.footerStore= response[0].storeAddress;
 			}
 		}
 		function onGetTaxError(response)
@@ -143,6 +146,31 @@
 			DialogFactory.show(_tmPath, _ctrlPath, callbackClockHistory,undefined, undefined, 'lg');*/
 		};
 		function callbackClockHistory()
+		{
+
+		}
+		$scope.editReceipt = function()
+		{
+			var request={};
+
+			request=
+			{
+				"id": $scope.footerId,
+				"tax": $scope.footerTaxId,
+				"storeAddress": $scope.footerStore,
+				"storeLogo": null,
+				"footerReceipt":$scope.footerReceipt
+			};
+
+			request = JSON.stringify(request);
+			var url="http://localhost:8080/editPageSetUpDetails";
+			dataService.Post(url,request,onEditReceiptSuccess,onEditReceiptError,'application/json','application/json');
+		};
+		function onEditReceiptSuccess(response)
+		{
+			$scope.getTaxDetails();
+		}
+		function onEditReceiptError(response)
 		{
 
 		}
