@@ -443,17 +443,18 @@ public class SQLQueries {
 
     public String getTransactionDetailsForReceipt = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 
-    public static String getProductHistory = "SELECT t.DATE,\n" +
-            "p.PRODUCT_NO,\n" +
-            "p.DESCRIPTION,\n" +
-            "t.QUANTITY,\n" +
-            "t.RETAIL,\n" +
-            "t.COST,\n" +
-            "t.DISCOUNT\n" +
-            "FROM TRANSACTION_LINE_ITEM t,PRODUCT p \n" +
-            "WHERE t.PRODUCT_NO=p.PRODUCT_NO \n" +
-            "AND t.PRODUCT_NO = ?";
-    public static String getProductHistoryCount = "SELECT SUM(QUANTITY) FROM TRANSACTION_LINE_ITEM where PRODUCT_NO = ?";
+    public static String getProductHistory = "SELECT t.DATE, " +
+            "            p.PRODUCT_NO," +
+            "            p.DESCRIPTION," +
+            "            t.QUANTITY," +
+            "            (select sum(QUANTITY) from TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ? AND PRODUCT_NO = ?) as TOTALQUANTITY," +
+            "            t.RETAIL," +
+            "            t.COST," +
+            "            t.DISCOUNT" +
+            "            FROM TRANSACTION_LINE_ITEM t , PRODUCT p " +
+            "            WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
+            "            AND t.PRODUCT_NO = ?" +
+            "            AND t.DATE BETWEEN ? AND ?";
 
     public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 

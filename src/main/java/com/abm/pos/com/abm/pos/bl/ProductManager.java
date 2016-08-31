@@ -375,13 +375,13 @@ public class ProductManager
         }
     }
 
-    public List<TransactionLineItemDto> getProductHistoryFromDB(String productNo) {
+    public List<TransactionLineItemDto> getProductHistoryFromDB(String productNo, String startDate, String endDate) {
 
         List<TransactionLineItemDto> productHistory = new ArrayList<>();
 
         try
         {
-            productHistory = jdbcTemplate.query(SQLQueries.getProductHistory,new ProductHistoryMapper(), productNo);
+            productHistory = jdbcTemplate.query(SQLQueries.getProductHistory,new ProductHistoryMapper(), startDate,endDate,productNo,productNo,startDate,endDate);
         }
         catch (Exception e)
         {
@@ -407,9 +407,9 @@ public class ProductManager
             productHistory.setRetail(rs.getDouble("RETAIL"));
             productHistory.setCost(rs.getDouble("COST"));
             productHistory.setDiscount(rs.getDouble("DISCOUNT"));
+            productHistory.setProductCount(rs.getString("TOTALQUANTITY"));
 
             // NEED TO FIND THE LOGIC TO TAKE THIS DB CALL OUT FROM SUM OF QUANTITY
-            productHistory.setProductCount(jdbcTemplate.queryForObject(SQLQueries.getProductHistoryCount,new Object[] {productHistory.getProductNumber()}, String.class));
 
             return productHistory;
         }

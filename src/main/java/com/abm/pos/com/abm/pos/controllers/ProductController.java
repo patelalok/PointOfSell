@@ -63,7 +63,7 @@ public class ProductController {
     @RequestMapping(value = "/getProductHistory", method = RequestMethod.GET)
     public List<TransactionLineItemDto> getProductHistory(@RequestParam String productNo, @RequestParam String startDate, @RequestParam String endDate) {
 
-        return productManager.getProductHistoryFromDB(productNo);
+        return productManager.getProductHistoryFromDB(productNo,startDate,endDate);
     }
 
     @RequestMapping(value = "/getProductNoAndAltNo", method = RequestMethod.GET)
