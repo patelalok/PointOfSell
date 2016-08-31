@@ -14,6 +14,7 @@ public class CommonComparisonDto {
     private double markup;
     private double discount;
     private double perOfTotalProfit;
+    private String date;
 
 
     public String getCommanName() {
@@ -86,5 +87,13 @@ public class CommonComparisonDto {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

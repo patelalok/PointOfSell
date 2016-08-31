@@ -179,7 +179,8 @@ public class SQLQueries {
                     "TOTAL_DISCOUNT , " +
                     "TOTAL_PROFIT , " +
                     "TOTAL_MARKUP," +
-                    "BANKDEPOSIT, COMISSION" +
+                    "BANKDEPOSIT, " +
+                    "COMISSION," +
                     "CUSTOMER_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
@@ -442,15 +443,23 @@ public class SQLQueries {
 
     public String getTransactionDetailsForReceipt = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 
-    public static String getProductHistory = "SELECT t.DATE,p.PRODUCT_NO,p.DESCRIPTION,t.QUANTITY,t.RETAIL," +
-                                            "t.COST,t.DISCOUNT FROM TRANSACTION_LINE_ITEM t, PRODUCT p WHERE t.PRODUCT_NO=p.PRODUCT_NO AND t.PRODUCT_NO = ?";
+    public static String getProductHistory = "SELECT t.DATE,\n" +
+            "p.PRODUCT_NO,\n" +
+            "p.DESCRIPTION,\n" +
+            "t.QUANTITY,\n" +
+            "t.RETAIL,\n" +
+            "t.COST,\n" +
+            "t.DISCOUNT\n" +
+            "FROM TRANSACTION_LINE_ITEM t,PRODUCT p \n" +
+            "WHERE t.PRODUCT_NO=p.PRODUCT_NO \n" +
+            "AND t.PRODUCT_NO = ?";
     public static String getProductHistoryCount = "SELECT SUM(QUANTITY) FROM TRANSACTION_LINE_ITEM where PRODUCT_NO = ?";
 
     public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 
     public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
 
-    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL ,sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND STATUS = 'c' ";
+    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL, SUM(BALANCE) BALANCE, sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND STATUS = 'c' ";
 
     public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ";
 
@@ -459,7 +468,9 @@ public class SQLQueries {
     public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, " +
             "SUM(PAID_AMOUNT_CASH) SUM_CASH, " +
             "sum(TOTAL_AMOUNT_CREDIT) SUM_CREDIT, " +
+            "SUM(TOTAL_AMOUNT_CHECK) CHEC, " +
             "sum(TOTAL_AMOUNT) TOTAL, " +
+            "SUM(BALANCE) BALANCE, " +
             "sum(TAX_AMOUNT)  SUM_TAX, " +
             "sum(DISCOUNT_AMOUNT) DISCOUNT, " +
             "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
@@ -534,6 +545,7 @@ public class SQLQueries {
             "SUM( TAX_AMOUNT) TAX , " +
             "SUM( DISCOUNT_AMOUNT) DISCOUNT , " +
             "SUM( TOTAL_AMOUNT) TOTAL, " +
+            "SUM(BALANCE) BALANCE, " +
             "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
             "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ) as PROFIT " +
             "FROM TRANSACTION " +

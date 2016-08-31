@@ -16,6 +16,7 @@ public class FinalTotalForReportsDto {
     private double avgMargin;
     private int noOfTrans;
     private double avgBasketSize;
+    private double balance;
 
     public double getAvgBasketSize() {
         return avgBasketSize;
@@ -105,5 +106,11 @@ public class FinalTotalForReportsDto {
         this.totalTax = totalTax;
     }
 
+    public double getBalance() {
+        return balance;
+    }
 
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

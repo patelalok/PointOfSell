@@ -375,13 +375,13 @@ public class ProductManager
         }
     }
 
-    public List<TransactionLineItemDto> getProductHistoryFromDB(int productId) {
+    public List<TransactionLineItemDto> getProductHistoryFromDB(String productNo) {
 
         List<TransactionLineItemDto> productHistory = new ArrayList<>();
 
         try
         {
-            productHistory = jdbcTemplate.query(SQLQueries.getProductHistory,new ProductHistoryMapper(), productId);
+            productHistory = jdbcTemplate.query(SQLQueries.getProductHistory,new ProductHistoryMapper(), productNo);
         }
         catch (Exception e)
         {

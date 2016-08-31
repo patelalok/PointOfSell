@@ -21,6 +21,7 @@ public class MonthDto {
     private double cost;
     private double retail;
     private int noOfTrans;
+    private double balance;
 
     public int getNoOfTrans() {
         return noOfTrans;
@@ -132,5 +133,13 @@ public class MonthDto {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }

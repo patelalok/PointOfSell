@@ -19,6 +19,7 @@ public class HourlyDto {
    // private double cost;
    // private double retail;
     private int noOfTrans;
+    private double balance;
 
     public double getCash() {
         return cash;
@@ -117,8 +118,11 @@ public class HourlyDto {
     }
 
 
+    public double getBalance() {
+        return balance;
+    }
 
-
-
-
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

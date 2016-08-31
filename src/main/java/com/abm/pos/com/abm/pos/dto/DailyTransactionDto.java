@@ -17,6 +17,7 @@ public class DailyTransactionDto {
     private double avgTotal;
     private double profitAmount;
     private double check;
+    private double balance;
 
     public double getAvgTotal() {
         return avgTotal;
@@ -112,5 +113,13 @@ public class DailyTransactionDto {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
