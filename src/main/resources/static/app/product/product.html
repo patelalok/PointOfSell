@@ -78,9 +78,9 @@
 				            </div>
 					</div>
 					
-					<div class="form-group display-row" ng-if="selectedCategoryType != 'Phone'">
+					<div class="form-group display-row" ng-show="selectedCategoryType != 'Phone'">
 						<label for="altNo" class="display-cell">Alt No:</label>
-						<input ng-disabled="GlobalVariable.editProduct" data-proxtra-message="REGAUTH22"  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo" data-restrict-characters="restrictCharacter.AlphaNumeric.regExp" />
+						<input type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo"data-proxtra-message="REGAUTH22"    data-restrict-characters="restrictCharacter.AlphaNumeric.regExp" />
 					</div>
 					<div class="checkbox">
 						<label>
@@ -186,13 +186,10 @@
 					 data-current-page="currentPageIndexArr" class="full-width">
 					<columns>
 						<column name="IMEI Number" key="imeiNo"
-								datatype="string" width="10%" sortable="true"></column>
+								datatype="string" width="15%" sortable="true"></column>
 						<column name="Description" key="description" datatype="string" width="10%" sortable="true"></column>
 						<column name="Category Name" key="categoryName"  datatype="string" width="15%"></column>
 						<column name="Retail" key="retailPrice"  datatype="string" width="10%"></column>
-
-						<column name="Stock" key="stock" datatype="string" width="5%"></column>
-
 						<column name="" key="" datatype="" width="20%">
 							<cell ng-non-bindable>
 							<span class="inline-vertical padding-left-10">

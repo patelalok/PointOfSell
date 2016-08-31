@@ -58,7 +58,7 @@
 					- parseFloat($scope.totalTax);
 				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
 				$scope.bankDeposit=$scope.getClosingDtls[0].bankDeposit;
-				$scope.custBalanceReg =$scope.getClosingDtls[0].customerBalance;;
+				$scope.custBalance =$scope.getClosingDtls[0].customerBalance;;
 			} else {
 				$scope.systemDebit = 0;
 				$scope.systemCash = 0;
@@ -89,6 +89,8 @@
 				$scope.userCash = 0;
 			if ($scope.userCheck == '')
 				$scope.userCheck = 0;
+			if($scope.bankDeposit == '')
+				$scope.bankDeposit = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 				+ parseFloat($scope.userCash)
@@ -120,12 +122,14 @@
 				$scope.userCash = 0;
 			if ($scope.userCheck == '')
 				$scope.userCheck = 0;
+			if($scope.bankDeposit == '')
+				$scope.bankDeposit = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
-			$scope.difCash = parseFloat($scope.userCash)
+			$scope.difCash = parseFloat($scope.userCash)+parseFloat($scope.bankDeposit)
 				- parseFloat($scope.systemCash);
 			$scope.totalDiff = parseFloat($scope.totalUser)
 				- parseFloat($scope.totalSys)
@@ -150,6 +154,8 @@
 				$scope.userCash = 0;
 			if ($scope.userCheck == '')
 				$scope.userCheck = 0;
+			if($scope.bankDeposit == '')
+				$scope.bankDeposit = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 				+ parseFloat($scope.userCash)
@@ -218,9 +224,9 @@
 				"totalMarkup" : $scope.totalMarkup,
 				"registerStatus" : null,
 				"registerId" : $scope.registerId,
-				"customerBalance":$scope.custBalanceReg,
+				"customerBalance":$scope.custBalance,
 				"bankDeposit":$scope.bankDeposit,
-				"comission":$scope.commision
+				"commission":$scope.commision
 			};
 			var url = "http://localhost:8080/addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,

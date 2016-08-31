@@ -17,6 +17,7 @@
 								<option value="salesCustomer">Sales By Customer</option>
 								<option value="salesUser">Sales By User</option>
 								<option value="inventorySummary">Inventory Summary</option>
+								<option value="top50Selling">Top 50 Selling Items</option>
 			  </select>
 			</div>
 		</div>
@@ -97,7 +98,7 @@
 
 			</select>
 		</div>
-		 <div  ng-show="reportType == 'salesCategory' || reportType == 'salesVendor' || reportType == 'salesBrand' || reportType == 'salesCustomer' || reportType == 'salesProduct' || reportType == 'salesUser'">
+		 <div  ng-show="reportType=='top50Selling' || reportType == 'salesCategory' || reportType == 'salesVendor' || reportType == 'salesBrand' || reportType == 'salesCustomer' || reportType == 'salesProduct' || reportType == 'salesUser'">
 			 <select id="slCatType" data-ng-model="slCatType" class="form-control"  style="height:52px;width:100%;" data-ng-change="loadSalesCatData(slCatType,reportType)">
 
 				 <option value="todaySales">Today</option>
@@ -114,7 +115,7 @@
 			 </select>
 		 </div>
 	 </div>
-		<div ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' )||(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
+		<div ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' )||(reportType == 'top50Selling' && slCatType == 'slCustomSales' )||(reportType == 'salesSummary' && measureType=='monthlySummary' && mntTransType == 'mCustom')  || (reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom')">
 			<div class="col-md-1 productBtn" style="width:16%;">
 
 				<div class="form-group">
@@ -176,7 +177,7 @@
 				<button ng-show="reportType == 'salesSummary' && measureType=='dailySummary' && dlyTransType == 'dCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyDailyMonthly()">Apply Filter</button>
 				<button ng-show="reportType == 'salesSummary' && measureType=='hourlySummary' && hlyTransType == 'hCustom'" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applyHourlyMonthly()">Apply Filter</button>
 
-				<button ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' )" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesByType(reportType)">Apply Filter</button>
+				<button ng-show="(reportType == 'salesCustomer' && slCatType == 'slCustomSales' )||(reportType == 'salesProduct' && slCatType == 'slCustomSales' )||(reportType == 'salesUser' && slCatType == 'slCustomSales' )||(reportType == 'salesVendor' && slCatType == 'slCustomSales' )||(reportType == 'salesBrand' && slCatType == 'slCustomSales' )||(reportType == 'salesCategory' && slCatType == 'slCustomSales' ) || (reportType == 'top50Selling' && slCatType == 'slCustomSales' )" class="btn btn-primary margin-top-1 wrap-text" style="font-size:25px;" ng-click="applySalesByType(reportType)">Apply Filter</button>
 
 			</div>
 		</div>
@@ -213,7 +214,33 @@
 	
 	</div>
 	<!-- End Sales By category -->
-	
+
+	<!-- Top 50 Selling Items --->
+
+	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'top50Selling'">
+		<div class="col-md-12 pageHeader">
+			<span style="font-weight:bold;font-size:20px">Top 50 Selling Items</span>
+		</div>
+		<div data-responsive-table data-ng-model="salesByTop50" data-current-page="currentPageIndexArr"
+			 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
+			 on-sort="sortColumnData(index)">
+			<columns>
+				<column name="CategoryName" key="commanName" datatype="string" width="18%" sortable="true"></column>
+				<column name="Qty" key="quantity" datatype="string" width="12%"></column>
+				<column name="Discount" key="discount" datatype="string" width="12%"></column>
+
+				<column name="Total Sales" key="salesTotal" datatype="string" width="12%"></column>
+				<column name="Profit" key="profitAmount" datatype="string" width="12%"></column>
+				<column name="MarkUp" key="markup" datatype="string" width="12%"></column>
+				<column name="% Of Total" key="perOfTotalProfit" datatype="string" width="12%"></column>
+
+			</columns>
+		</div>
+
+	</div>
+	<!-- End Top 50 Selling Items -->
+
+
 	<!-- Sales By Vendor -->
 	<div class="row" style="padding-left:30px;padding-top:30px;" ng-if="reportType == 'salesVendor'">
 		<div class="col-md-12 pageHeader">

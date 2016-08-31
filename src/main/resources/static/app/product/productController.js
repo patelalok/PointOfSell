@@ -106,6 +106,7 @@
 		$scope.callBackEditIMEI = function()
 		{
 			$scope.getAllIMEINumbers();
+			getProductDetails.getProductDetail($scope.getCDetails);
 		};
 		$scope.generateRandomId = function()
 		{
@@ -203,7 +204,7 @@
 			}
 			else
 			{
-				if(($scope.altNO !== GlobalVariable.editProductDetails.altNo)&&(GlobalVariable.editProduct == true)) {
+				if(($scope.altNo !== GlobalVariable.editProductDetails.altNo)&&(GlobalVariable.editProduct == true)) {
 					if ($scope.altNo !== '' && $scope.altNo != undefined) {
 						for (var i = 0; i < $scope.prodAltNo.length; i++) {
 							if ($scope.altNo == $scope.prodAltNo[i].atlNo) {
@@ -383,6 +384,7 @@
 		$scope.callBackAddIMEI = function()
 		{
 			$scope.getAllIMEINumbers();
+			getProductDetails.getProductDetail();
 		};
 		function render()
 		{

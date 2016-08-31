@@ -11,6 +11,7 @@
 		$scope.yearlySummary = [];
 		$scope.salesByUser = [];
 		$scope.salesByCategory = [];
+		$scope.salesByTop50 = [];
 		$scope.salesByBrand = [];
 		$scope.salesByVendor = [];
 		$scope.salesByProduct =[];
@@ -70,6 +71,10 @@
 			if($scope.reportType == 'salesCategory')
 			{
 				$scope.loadSalesCatData('todaySales','salesCategory');
+			}
+			else if($scope.reportType == 'top50Selling')
+			{
+				$scope.loadSalesCatData('todaySales','top50Selling');
 			}
 			else if($scope.reportType == 'salesBrand')
 			{
@@ -223,6 +228,10 @@
 			if(type == 'salesCategory')
 			{
 				var url='http://localhost:8080/getSalesByCategory?startDate='+start+'&endDate='+end;
+			}
+			else if(type == 'top50Selling')
+			{
+				var url='http://localhost:8080/getTop50Items?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'salesBrand')
 			{
@@ -470,6 +479,42 @@
 				else
 				{
 					$scope.salesByCategory= [];
+				}
+			}
+			else if($scope.reportType == 'top50Selling')
+			{
+				$scope.salesByTop50 = [];
+				if(response.commonComparisonDtos !== null && response.commonComparisonDtos != '')
+				{
+					for(var i=0;i<response.commonComparisonDtos.length;i++)
+					{
+						$scope.salesByTop50.push({
+							"commanName": response.commonComparisonDtos[i].commanName,
+							"quantity": Number(parseFloat(response.commonComparisonDtos[i].quantity)).toFixed(2),
+							"tax":Number(parseFloat(response.commonComparisonDtos[i].tax)).toFixed(2),
+							"salesTotal": Number(parseFloat(response.commonComparisonDtos[i].salesTotal)).toFixed(2),
+							"avgSalesTotal": Number(parseFloat(response.commonComparisonDtos[i].avgSalesTotal)).toFixed(2),
+							"profitAmount": Number(parseFloat(response.commonComparisonDtos[i].profitAmount)).toFixed(2),
+							"markup": Number(parseFloat(response.commonComparisonDtos[i].markup)).toFixed(2),
+							"discount": Number(parseFloat(response.commonComparisonDtos[i].discount)).toFixed(2),
+							"perOfTotalProfit": Number(parseFloat(response.commonComparisonDtos[i].perOfTotalProfit)).toFixed(2)
+						});
+					}
+					$scope.salesByTop50.push({
+						"commanName":"Total",
+						"quantity": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalQuantity)).toFixed(2),
+						"tax": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalTax)).toFixed(2),
+						"salesTotal":Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalSales)).toFixed(2),
+						"avgSalesTotal":"",
+						"profitAmount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalProfit)).toFixed(2),
+						"markup": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalMarkUp)).toFixed(2),
+						"discount": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalDiscount)).toFixed(2),
+						"perOfTotalProfit": Number(parseFloat(response.finalTotalForCommonComparisonDtos[0].totalPer)).toFixed(2)
+					});
+				}
+				else
+				{
+					$scope.salesByTop50= [];
 				}
 			}
 		};
