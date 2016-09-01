@@ -183,14 +183,14 @@
 				{
 					var totalProductPriceWithTax = $rootScope.testData[i].total;
 				}
-				if((GlobalVariable.sellIMEINumber !== undefined || GlobalVariable.sellIMEINumber !== '') && (($rootScope.testData[i].categoryName !== 'Phone')&&(parseInt($rootScope.testData[i].categoryId) !== 10)))
+				/*if((GlobalVariable.sellIMEINumber !== undefined || GlobalVariable.sellIMEINumber !== '') && (($rootScope.testData[i].categoryName !== 'Phone')&&(parseInt($rootScope.testData[i].categoryId) !== 10)))
 				{
 					var imeiNo = '';
 				}
 				else
 				{
 					var imeiNo = GlobalVariable.sellIMEINumber;
-				}
+				}*/
 				request.push({
 					
 					"transactionCompId":GlobalVariable.transactionCompletedId,
@@ -205,7 +205,8 @@
 					"discountPercentage":discPer,
 					"transactionStatus":"c",
 					"totalProductPriceWithTax":parseFloat(parseFloat(totalProductPriceWithTax).toFixed(2)),
-					"imeiNo":imeiNo
+					"imeiNo":$rootScope.testData[i].imeiNo,
+					"phoneId":$rootScope.testData[i].phoneId
 					 
 			});
 			}
