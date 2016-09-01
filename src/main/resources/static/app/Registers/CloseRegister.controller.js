@@ -58,7 +58,8 @@
 					- parseFloat($scope.totalTax);
 				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
 				$scope.bankDeposit=$scope.getClosingDtls[0].bankDeposit;
-				$scope.custBalance =$scope.getClosingDtls[0].customerBalance;;
+				$scope.custBalance =$scope.getClosingDtls[0].customerBalance;
+				$scope.commission = $scope.getClosingDtls[0].commission;
 			} else {
 				$scope.systemDebit = 0;
 				$scope.systemCash = 0;
@@ -75,6 +76,9 @@
 				$scope.totalProfit = 0;
 				$scope.totalDisc = 0;
 				$scope.totalTax = 0;
+				$scope.bankDeposit=0;
+				$scope.custBalance =0;
+				$scope.commission = 0;
 
 			}
 
@@ -132,7 +136,8 @@
 			$scope.difCash = parseFloat($scope.userCash)+parseFloat($scope.bankDeposit)
 				- parseFloat($scope.systemCash);
 			$scope.totalDiff = parseFloat($scope.totalUser)
-				- parseFloat($scope.totalSys)
+				- parseFloat($scope.totalSys);
+			$scope.cashHand= parseFloat($scope.userCash) - parseFloat($scope.bankDeposit);
 			if ($scope.difCash > 0)
 				$scope.cashColor = 'green';
 			else if ($scope.difCash < 0)
@@ -226,7 +231,7 @@
 				"registerId" : $scope.registerId,
 				"customerBalance":$scope.custBalance,
 				"bankDeposit":$scope.bankDeposit,
-				"commission":$scope.commision
+				"commission":$scope.commission
 			};
 			var url = "http://localhost:8080/addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,

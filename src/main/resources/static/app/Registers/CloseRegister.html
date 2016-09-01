@@ -127,15 +127,15 @@
 					<div class=" inline-vertical display-cell align-left" style="visibility:hidden;"><span style="display:block;">Credit/</span><span style="display:block;">Debit Crad:</span> </div>
 					<div class=" inline-vertical display-cell align-left " >Customer Balance</div>
 					<div class=" inline-vertical display-cell align-left ">Commission</div>
-					<div class=" inline-vertical display-cell align-left " style="visibility: hidden;">Total Discount</div>
+					<div class=" inline-vertical display-cell align-left " >Cash In Hand</div>
 
 				</div>
 
 				<div class="display-row">
 					<div class=" inline-vertical display-cell align-left"><span style="display:block;visibility:hidden;">Total Profit</span><span style="display:block;visibility:hidden;">Total Tax:</span><span style="display:block;visibility:hidden;">Total Disc:</span> </div>
 					<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="custBalance" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="commision" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"   style="background-color: #FFFFFF;" /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="dummy" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;"  /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="commission" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"   style="background-color: #FFFFFF;" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="cashHand" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled"  style="background-color: #FFFFFF;"  /></div>
 
 				</div>
 
@@ -261,6 +261,11 @@
 						<div class=" inline-vertical display-cell align-left ">{{totalDiff}}</div>
 					</div>
 					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Bank Deposit :</span> </div>
+						<div class=" inline-vertical display-cell align-left " >{{bankDeposit}}</div>
+
+					</div>
+					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Net Sales :</span> </div>
 						<div class=" inline-vertical display-cell align-left " >{{netSales}}</div>
 
@@ -310,6 +315,21 @@
 					<div class="display-row">
 						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Profit:</span></div>
 						<div class=" inline-vertical display-cell align-left " >{{totalProfit}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Customer Balance:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{custBalance}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Commission:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{commission}}</div>
+
+					</div>
+					<div class="display-row">
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Cash In Hand:</span></div>
+						<div class=" inline-vertical display-cell align-left " >{{cashHand}}</div>
 
 					</div>
 

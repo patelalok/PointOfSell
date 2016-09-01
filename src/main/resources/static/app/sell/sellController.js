@@ -139,7 +139,8 @@
 								"totalWithTax":totalWithTax,
 								"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
 								"imeiNo":response[i].imeiNo,
-								"categoryId":response[i].categoryId
+								"categoryId":response[i].categoryId,
+								"phoneId":response[i].phoneId
 							});
 					}
 				}
@@ -161,7 +162,8 @@
 						"totalWithTax":0,
 						"totalTax":0,
 						"imeiNo":'',
-						"categoryId":GlobalVariable.sellCategoryId
+						"categoryId":GlobalVariable.sellCategoryId,
+						"phoneId":''
 					});
 			}
 
@@ -223,7 +225,9 @@
 										"categoryName":GlobalVariable.getProducts[i].categoryName,
 										"totalWithTax":totalWithTax,
 										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
-										"categoryId":GlobalVariable.getProducts[i].categoryId
+										"categoryId":GlobalVariable.getProducts[i].categoryId,
+										"imeiNo":GlobalVariable.getProducts[i].imeiNo,
+										"phoneId":GlobalVariable.getProducts[i].phoneId
 									});
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
@@ -287,7 +291,9 @@
 										"categoryName":GlobalVariable.getProducts[i].categoryName,
 										"totalWithTax":totalWithTax,
 										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
-										"categoryId":GlobalVariable.getProducts[i].categoryId
+										"categoryId":GlobalVariable.getProducts[i].categoryId,
+										"imeiNo":GlobalVariable.getProducts[i].imeiNo,
+										"phoneId":GlobalVariable.getProducts[i].phoneId
 									});
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
@@ -455,7 +461,10 @@
 						  "categoryName": response[k].categoryName,
 						  "totalWithTax": totalWithTax,
 						  "totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax),
-						  "catgeoryId":response[k].categoryId
+						  "catgeoryId":response[k].categoryId,
+						  "imeiNo":response[k].imeiNo,
+						  "phoneId":response[k].phoneId
+
 					  });
 			  }
 			}
@@ -660,7 +669,9 @@
 				"categoryName" : GlobalVariable.editQuanDtls.categoryName,
 				"totalWithTax":editSubTax,
 				"totalTax":parseFloat(editSubTax)-parseFloat(editSub),
-				"categoryId":GlobalVariable.editQuanDtls.categoryId
+				"categoryId":GlobalVariable.editQuanDtls.categoryId,
+				"imeiNo":GlobalVariable.editQuanDtls.imeiNo,
+				"phoneId":GlobalVariable.editQuanDtls.phoneId
 			});
 			$scope.loadCheckOutData();
 		};
@@ -765,6 +776,14 @@
 			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '' && GlobalVariable.userPhone != undefined &&
 				GlobalVariable.userFName != undefined)
 			{
+				if (GlobalVariable.custTypeCd == 'Business') {
+					$scope.selectTax = 'noTax';
+					GlobalVariable.selectedTaxDrp = 'noTax';
+				}
+				else if (GlobalVariable.custTypeCd == 'Retail') {
+					$scope.selectTax = 'default';
+					GlobalVariable.selectedTaxDrp = 'default';
+				}
 				GlobalVariable.customerFound = true;
 				GlobalVariable.customerNameOnSearch = GlobalVariable.userFName;
 				GlobalVariable.regPhone1 = GlobalVariable.userPhone;
@@ -787,6 +806,7 @@
 				$scope.productNames
 					.push(GlobalVariable.getProducts[i].description);
 			}
+			$scope.firstNames = [];
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
 				$scope.firstNames
 					.push(GlobalVariable.getCustomerDtls[i].firstName);
@@ -795,6 +815,7 @@
 		}
 		$scope.$watch('GlobalVariable.getCustomerDtls',function(newValue)
 		{
+			$scope.firstNames = [];
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
 				$scope.firstNames
 					.push(GlobalVariable.getCustomerDtls[i].firstName);
