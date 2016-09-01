@@ -693,4 +693,5 @@ public class SQLQueries {
     public String getPhoneStockFromProductTable = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_NO = ?";
     public String addPhoneStockToProductTable = "UPDATE PRODUCT SET QUANTITY = ? WHERE PRODUCT_ID = ?";
     public String getProductId = "SELECT PRODUCT_ID FROM PRODUCT WHERE PRODUCT_NO = ?";
+    public String deleteImeiDetailsFromPhone = "DELETE FROM PHONE WHERE ID = ? ";
 }
