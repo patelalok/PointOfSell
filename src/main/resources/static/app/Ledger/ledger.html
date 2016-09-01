@@ -234,13 +234,17 @@
 			<div class="display-row" style="border-bottom: 1px solid #000000;">
 				<div class="inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Item Total</div>
-				<div class="inline-vertical display-cell align-left padding-left-40">{{itemTotal}}</div>
+				<div class="inline-vertical display-cell align-left padding-left-40" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'c'">{{itemTotal}}</div>
+				<div class="inline-vertical display-cell align-left padding-left-40" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'r'">-{{itemTotal}}</div>
 			</div>
 			<div class="display-row">
 				<div class="inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Discount:</div>
 				<div class="inline-vertical display-cell align-left padding-left-40"
-					 ng-model="subTotal">({{GlobalVariable.receiptData[0].transactionDtoList[0].discount}})</div>
+					 ng-model="subTotal" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'c'">({{GlobalVariable.receiptData[0].transactionDtoList[0].discount}})</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="subTotal" ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].status == 'r'">-({{GlobalVariable.receiptData[0].transactionDtoList[0].discount}})</div>
+
 			</div>
 			<div class="display-row">
 				<div class=" inline-vertical display-cell align-left"

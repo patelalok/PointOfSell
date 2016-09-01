@@ -57,6 +57,8 @@
 					+ parseFloat($scope.userCheck)
 					- parseFloat($scope.totalTax);
 				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
+				$scope.bankDeposit=$scope.getClosingDtls[0].bankDeposit;
+				$scope.custBalanceReg =$scope.getClosingDtls[0].customerBalance;;
 			} else {
 				$scope.systemDebit = 0;
 				$scope.systemCash = 0;
@@ -214,7 +216,9 @@
 				"totalProfit" : parseFloat($scope.totalProfit).toFixed(2),
 				"totalMarkup" : $scope.totalMarkup,
 				"registerStatus" : null,
-				"registerId" : $scope.registerId
+				"registerId" : $scope.registerId,
+				"customerBalance":$scope.custBalanceReg,
+				"bankDesposit":$scope.bankDeposit
 			};
 			var url = "http://localhost:8080/addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,
@@ -305,6 +309,7 @@
 			$scope.totalPaid = parseFloat($scope.userPaid)
 				+ parseFloat($scope.systemPaid)
 				+ parseFloat($scope.difPaid);
+			$scope.totalUser = parseFloat($scope.totalUser)+parseFloat($scope.totalPaid);
 			$scope.netSales = parseFloat($scope.netSales)
 				+ $scope.totalPaid;
 			$scope.grossSales = (parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)).toFixed(2);

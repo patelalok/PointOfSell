@@ -58,7 +58,7 @@
 				                </ul>
 				            </div>
 					</div>
-					<div class="form-group display-row" ng-if="selectedCategoryType == 'Phone'">
+					<div class="form-group display-row" ng-if="(selectedCategoryType == 'Phone') && (GlobalVariable.editProduct == true)">
 						<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addIMEI()">Add IMEI</button>
 					</div>
 					<div class="form-group display-row">
@@ -82,7 +82,7 @@
 						<label for="altNo" class="display-cell">Alt No:</label>
 						<input ng-disabled="GlobalVariable.editProduct" data-proxtra-message="REGAUTH22"  type="text" class="form-control display-cell" data-ng-model="altNo" id="altNo" data-restrict-characters="restrictCharacter.OnlyDigits.regExp" />
 					</div>
-					<div class="checkbox" ng-if="selectedCategoryType != 'Phone'">
+					<div class="checkbox">
 						<label>
 							<input type="checkbox" ng-model="productYesyNO">
 							Add Tax
@@ -180,7 +180,7 @@
 	</div>
 	<div class="row">
 
-		<div ng-if="selectedCategoryType == 'Phone'">
+		<div ng-if="(selectedCategoryType == 'Phone')&&(GlobalVariable.editProduct == true)">
 			<div class="col-md-12">
 				<div data-responsive-table data-ng-model="IMEINUMBERS"
 					 data-current-page="currentPageIndexArr" class="full-width">
