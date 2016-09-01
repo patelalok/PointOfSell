@@ -96,6 +96,8 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalDiscount(),
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup(),
+                        closingDetailsDto.getBankDeposit(),
+                        closingDetailsDto.getCustomerBalance(),
                         closingDetailsDto.getRegisterId());
 
                 System.out.println("Closing Details Edited Successfully");

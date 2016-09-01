@@ -135,8 +135,9 @@ public class SQLQueries {
                     "DISCOUNT_PERCENTAGE," +
                     "RETAILWITHDISCOUNT," +
                     "TOTALPRODUCTPRICE," +
-                    "TOTAL_PRODUCT_PRICE_WITH_TAX)" +
-            " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "TOTAL_PRODUCT_PRICE_WITH_TAX, " +
+                    "IMEI_NO)" +
+            " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
  public String addUserQuery =
           "INSERT INTO USER" +

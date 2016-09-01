@@ -20,6 +20,7 @@ public class TransactionLineItemDto {
     private double totalProductPriceWithTax;
     private double discountPercentage;
     private String transactionStatus;
+    private String imeiNo;
 
     public double getRetailWithDis() {
         return retailWithDis;
@@ -147,5 +148,13 @@ public class TransactionLineItemDto {
 
     public void setTransactionStatus(String transactionStatus) {
         this.transactionStatus = transactionStatus;
+    }
+
+    public String getImeiNo() {
+        return imeiNo;
+    }
+
+    public void setImeiNo(String imeiNo) {
+        this.imeiNo = imeiNo;
     }
 }

@@ -377,6 +377,7 @@ public class SalesManager {
                     ps.setDouble(10, transactionLineItemDto1.getRetailWithDis());
                     ps.setDouble(11, transactionLineItemDto1.getTotalProductPrice());
                     ps.setDouble(12,transactionLineItemDto1.getTotalProductPriceWithTax());
+                    ps.setString(13,transactionLineItemDto1.getImeiNo());
 
                     System.out.println("Transaction Line Item Added Successfully");
                 }
@@ -513,6 +514,7 @@ public class SalesManager {
             lineItem.setRetailWithDis(rs.getDouble("RETAILWITHDISCOUNT"));
             lineItem.setTotalProductPrice(rs.getDouble("TOTALPRODUCTPRICE"));
             lineItem.setTotalProductPriceWithTax(rs.getDouble("TOTAL_PRODUCT_PRICE_WITH_TAX"));
+            lineItem.setImeiNo(rs.getString("IMEI_NO"));
 
             return lineItem;
         }
