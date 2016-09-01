@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('paymentPopupController', paymentPopupController);
 
-	paymentPopupController.$inject = [ '$timeout','$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','getProductDetails'];
+	paymentPopupController.$inject = [ '$timeout','$scope', '$sce','$window','$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','getProductDetails','GlobalConstants'];
 
-	function paymentPopupController($timeout,$scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,getProductDetails)
+	function paymentPopupController($timeout,$scope,$sce,$window ,$rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,getProductDetails,GlobalConstants)
 	{
 		$scope.color= false;
 		$scope.paidAmountCash =0;
@@ -46,7 +46,7 @@
 			}
 		$scope.getLastTransId = function()
 		{
-			var url='http://localhost:8080/getLastTransactionId';
+			var url=GlobalConstants.URLCONSTANTS+'getLastTransactionId';
 			dataService.Get(url,lastTransSuccess,lastTransError,'application/json','application/json');
 		}
 		function lastTransSuccess(response)
@@ -132,7 +132,7 @@
             {
                 $scope.balanceAmount = 0;
             }
-			var url ="http://localhost:8080/addTransaction";
+			var url =GlobalConstants.URLCONSTANTS+"addTransaction";
 			var request = new Object();
 			request = {
 				"transactionDate":trasnactionDate,  
@@ -211,7 +211,7 @@
 			});
 			}
 
-			var url ="http://localhost:8080/addTransactionLineItem";
+			var url =GlobalConstants.URLCONSTANTS+"addTransactionLineItem";
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
 			
@@ -252,7 +252,7 @@
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				getStoreAddress();
-				var url="http://localhost:8080/getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
+				var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
 				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
 
 			}
@@ -263,7 +263,7 @@
 		};
 		function getStoreAddress()
 		{
-			var url='http://localhost:8080/getPageSetUpDetails';
+			var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
 			dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
 		}
 		function onStoreSuccess(response)

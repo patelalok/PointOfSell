@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('ReportController', ReportController);
 
-	ReportController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types'];
+	ReportController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','GlobalConstants'];
 
-	function ReportController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter) 
+	function ReportController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,GlobalConstants)
 	{
 		GlobalVariable.isLoginPage = false;
 		$scope.yearlySummary = [];
@@ -115,15 +115,15 @@
 			var url;
 			if(type == 'cat')
 			{
-				url =' http://localhost:8080/getInventoryByCategory';
+				url =GlobalConstants.URLCONSTANTS+'getInventoryByCategory';
 			}
 			else if(type == 'ven')
 			{
-				url =' http://localhost:8080/getInventoryByVendor';
+				url =GlobalConstants.URLCONSTANTS+'getInventoryByVendor';
 			}
 			else if(type == 'bran')
 			{
-				url =' http://localhost:8080/getInventoryByBrand';
+				url =GlobalConstants.URLCONSTANTS+'getInventoryByBrand';
 			}
 			else if(type == 'tin')
 			{
@@ -227,31 +227,31 @@
 
 			if(type == 'salesCategory')
 			{
-				var url='http://localhost:8080/getSalesByCategory?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getSalesByCategory?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'top50Selling')
 			{
-				var url='http://localhost:8080/getTop50Items?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getTop50Items?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'salesBrand')
 			{
-				var url='http://localhost:8080/getSalesByBrand?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getSalesByBrand?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'salesVendor')
 			{
-				var url='http://localhost:8080/getSalesByVendor?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getSalesByVendor?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'salesUser')
 			{
-				var url='http://localhost:8080/getSalesByUser?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getSalesByUser?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'salesProduct')
 			{
-				var url='http://localhost:8080/getSalesByProduct?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getSalesByProduct?startDate='+start+'&endDate='+end;
 			}
 			else if(type == 'salesCustomer')
 			{
-				var url='http://localhost:8080/getSalesByCustomer?startDate='+start+'&endDate='+end;
+				var url=GlobalConstants.URLCONSTANTS+'getSalesByCustomer?startDate='+start+'&endDate='+end;
 			}
 
 
@@ -578,7 +578,7 @@
 				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
 				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
-			var url='http://localhost:8080/getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
+			var url=GlobalConstants.URLCONSTANTS+'getHourlyTransactionDetails?startDate='+start+'&endDate='+end;
 			dataService.Get(url,onHourlySucces,onHourlyError,'application/json','application/json');
 
 
@@ -635,7 +635,7 @@
 				start = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd")+" 00:00:00";
 				end = $filter('date')($scope.startTransDailyDate, "yyyy-MM-dd")+" 23:59:59";
 			}
-			var url="http://localhost:8080/getDailyTransactionDetails?startDate="+start+"&endDate="+end;
+			var url=GlobalConstants.URLCONSTANTS+"getDailyTransactionDetails?startDate="+start+"&endDate="+end;
 				dataService.Get(url,onDailySucces,onDailyError,'application/json','application/json');
 		};
 		function onDailySucces(response)
@@ -670,7 +670,7 @@
 		}
 		function loadSalesYearlyData(start,end)
 		{
-			var url='http://localhost:8080/getYearlyTransactionDetails?startDate='+start+'&endDate='+end;
+			var url=GlobalConstants.URLCONSTANTS+'getYearlyTransactionDetails?startDate='+start+'&endDate='+end;
 			dataService.Get(url,onYearlySucces,onYearlyError,'application/json','application/json');
 
 			
@@ -797,7 +797,7 @@
 				startDate = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
 				endDate = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
-			var url='http://localhost:8080/getMonthlyTransactionDetails?startDate='+startDate+'&endDate='+endDate;
+			var url=GlobalConstants.URLCONSTANTS+'getMonthlyTransactionDetails?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,onMonthlySucces,onMonthlyError,'application/json','application/json');
 			//onMonthlySucces('');
 			

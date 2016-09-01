@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('loginController',loginFunction);
 
-	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory'];
+	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory','GlobalConstants'];
 
-	function loginFunction($scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory) {
+	function loginFunction($scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory,GlobalConstants) {
 		
 		
 		$scope.device = device;
@@ -42,7 +42,7 @@
 			else
 			{
 				sessionStorage.userName = $scope.loginemail;
-				var url='http://localhost:8080/getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
+				var url=GlobalConstants.URLCONSTANTS+'getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
 				dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
 			}
 
@@ -50,7 +50,7 @@
 		};
 		$scope.callBackProductKey = function()
 		{
-			var url='http://localhost:8080/getLicenceKey?licenceKey='+GlobalVariable.productKey;
+			var url=GlobalConstants.URLCONSTANTS+'getLicenceKey?licenceKey='+GlobalVariable.productKey;
 			dataService.Get(url,onProductKeySuccess,onProductKeyError,'application/json','application/json');
 		};
 		function onProductKeySuccess(response)
@@ -58,7 +58,7 @@
 			if(response == true) {
 				sessionStorage.productKeyAdded1 = true;
 				sessionStorage.userName = $scope.loginemail;
-				var url = 'http://localhost:8080/getUserLoginDetails?username=' + $scope.loginemail + '&password=' + $scope.loginpassword;
+				var url = GlobalConstants.URLCONSTANTS+'getUserLoginDetails?username=' + $scope.loginemail + '&password=' + $scope.loginpassword;
 				dataService.Get(url, onLoginSuccess, onLoginError, 'application/json', 'application/json');
 			}
 			else

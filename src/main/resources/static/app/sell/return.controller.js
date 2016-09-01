@@ -6,10 +6,10 @@
 
     ReturnController.$inject = [ '$scope', '$rootScope', 'device.utility',
         'GlobalVariable', 'DialogFactory', 'modalService',
-        'RestrictedCharacter.Types', 'dataService', '$state' ];
+        'RestrictedCharacter.Types', 'dataService', '$state','GlobalConstants'];
 
     function ReturnController($scope, $rootScope, device, GlobalVariable,
-                              DialogFactory, modalService, restrictCharacter, dataService, $state) {
+                              DialogFactory, modalService, restrictCharacter, dataService, $state,GlobalConstants) {
 
         $scope.device = device;
         $scope.GlobalVariable = GlobalVariable;
@@ -250,7 +250,7 @@
         };
         $scope.getLastTransId = function()
         {
-            var url='http://localhost:8080/getLastTransactionId';
+            var url=GlobalConstants.URLCONSTANTS+'getLastTransactionId';
             dataService.Get(url,lastTransSuccess,lastTransError,'application/json','application/json');
         }
         function lastTransSuccess(response)
@@ -265,7 +265,7 @@
         }
         $scope.callBackReturnCheckout = function() {
             console.log("callback");
-            var url = "http://localhost:8080/editTransaction?previousTransId="
+            var url = GlobalConstants.URLCONSTANTS+"editTransaction?previousTransId="
                 + $scope.previousId;
             var request = new Object();
             if($scope.itemDeleted == true)
@@ -327,7 +327,7 @@
              * $scope.subTotal = 0; $scope.productTotal = 0;
              * $rootScope.totalPayment = 0;
              */
-            var url = "http://localhost:8080/editTransactionLineItem?previousTransId="
+            var url = GlobalConstants.URLCONSTANTS+"editTransactionLineItem?previousTransId="
                 + $scope.previousId;
             var request = [];
             if($scope.itemDeleted == true)
@@ -386,7 +386,7 @@
             $state.go('sell');
         };
         function getTaxDetails() {
-            var url = 'http://localhost:8080/getPageSetUpDetails';
+            var url = GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
             dataService.Get(url, onGetTaxSuccess, onGetTaxError,
                 'application/json', 'application/json');
         }

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('MonthlyAnalysisController', MonthlyAnalysisController);
 
-	MonthlyAnalysisController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','$filter','dataService','$window'];
+	MonthlyAnalysisController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','$filter','dataService','$window','GlobalConstants'];
 
-	function MonthlyAnalysisController($scope, $rootScope, device,GlobalVariable,$state,$filter,dataService,$window) {
+	function MonthlyAnalysisController($scope, $rootScope, device,GlobalVariable,$state,$filter,dataService,$window,GlobalConstants) {
 		
 		
 		$scope.openStartCalendar = function($event) {

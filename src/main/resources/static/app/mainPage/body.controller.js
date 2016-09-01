@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BodyController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService','GlobalConstants'];
 
-	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService) {
+	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService,GlobalConstants) {
 		
 		var vm = this;
 		vm.device = device;
@@ -104,7 +104,7 @@
 		$scope.logOut = function()
 		{
 			//alert("logout");
-			var url="http://localhost:8080/addUserClockIn";
+			var url=GlobalConstants.URLCONSTANTS+"addUserClockIn";
 			var request={
 
 				"username": sessionStorage.userName,

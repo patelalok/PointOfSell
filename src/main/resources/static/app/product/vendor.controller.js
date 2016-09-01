@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('VendorController', VendorController);
 
-	VendorController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService'];
+	VendorController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService','GlobalConstants'];
 
-	function VendorController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService) {
+	function VendorController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService,GlobalConstants) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('HomeController', HomeController);
 
-	HomeController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types'];
+	HomeController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','GlobalConstants'];
 
-	function HomeController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter) 
+	function HomeController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,GlobalConstants)
 	{
 		GlobalVariable.isLoginPage = false;
 		$scope.restrictCharacter=restrictCharacter;
@@ -56,7 +56,7 @@
 			if($scope.dashboardDrop == 'monthWiseDash')
 			{
 
-				url = "http://localhost:8080/getYearlyTransactionDetails?startDate="+currentStartDate+"&endDate="+currentEndDate;
+				url = GlobalConstants.URLCONSTANTS+"getYearlyTransactionDetails?startDate="+currentStartDate+"&endDate="+currentEndDate;
 				
 				dataService.Get(url,getReportsMonthlySuccessHandler,getReportsMonthlyErrorHandler,'application/json','application/json');
 				
@@ -193,7 +193,7 @@
 			}
 
 
-			var urlPreviuos = "http://localhost:8080/getYearlyTransactionDetails?startDate="+$scope.previousStartDate+"&endDate="+$scope.previousEndDate;
+			var urlPreviuos = GlobalConstants.URLCONSTANTS+"getYearlyTransactionDetails?startDate="+$scope.previousStartDate+"&endDate="+$scope.previousEndDate;
 			dataService.Get(urlPreviuos,getReportsMonthlyPrevSuccessHandler,getReportsMonthlyPrevErrorHandler,'application/json','application/json');
 			
 			

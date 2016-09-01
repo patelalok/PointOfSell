@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('clockPopupController', clockPopupController);
 
-	clockPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types'];
+	clockPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','GlobalConstants'];
 
-	function clockPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter)
+	function clockPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,GlobalConstants)
 	{
 
 		$scope.clockdata = [];
@@ -13,7 +13,7 @@
 		$scope.minDate = new Date();;
 		function loadHistoryData()
 		{
-			var url =' http://localhost:8080/getUserClockIn?username='+GlobalVariable.usernameCust;
+			var url =GlobalConstants.URLCONSTANTS+'getUserClockIn?username='+GlobalVariable.usernameCust;
 			dataService.Get(url,geClockHistorySuccessHandler,getClockHistroyErrorHandler,"application/json","application/json");
 			
 		}

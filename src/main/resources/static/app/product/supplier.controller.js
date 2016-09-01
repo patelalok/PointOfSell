@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('SupplierController', SupplierController);
 
-	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService'];
+	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService','GlobalConstants'];
 
-	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService) {
+	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService,GlobalConstants) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;

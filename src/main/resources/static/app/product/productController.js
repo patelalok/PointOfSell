@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('productController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util','$timeout','DialogFactory'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','RestrictedCharacter.Types','dataService','$state','$stateParams','getProductDetails','util','$timeout','DialogFactory','GlobalConstants'];
 
-	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util,$timeout,DialogFactory) {
+	function Body($scope, $rootScope, device ,GlobalVariable,restrictCharacter,dataService,$state,$stateParams,getProductDetails,util,$timeout,DialogFactory,GlobalConstants) {
 		
 		$scope.device = device;
 		$scope.restrictCharacter=restrictCharacter;
@@ -82,7 +82,7 @@
 		};
 		$scope.getAllIMEINumbers = function()
 		{
-			var url='http://localhost:8080/getPhoneDetails?productNo='+$scope.productId;
+			var url=GlobalConstants.URLCONSTANTS+'getPhoneDetails?productNo='+$scope.productId;
 			dataService.Get(url,onGetIMEISuccess,onGETIMEIError,'application/json','application/json');
 		};
 		function onGetIMEISuccess(response)
@@ -110,7 +110,7 @@
 		};
 		$scope.generateRandomId = function()
 		{
-			var url="http://localhost:8080/getLastProductNo";
+			var url=GlobalConstants.URLCONSTANTS+"getLastProductNo";
 			dataService.Get(url,onLastProdNoSuccess,onLastProdNoError,'application/json','application/json');
 		};
 		function onLastProdNoSuccess(response)
@@ -269,7 +269,7 @@
 						"createdDate": "1000-01-01 00:00:00",
 						"addTax":$scope.productYesyNO
 					};
-					var url ="http://localhost:8080/editProduct";
+					var url =GlobalConstants.URLCONSTANTS+"editProduct";
 				}
 				else
 				{
@@ -303,7 +303,7 @@
 						"createdDate": "1000-01-01 00:00:00",
 						"addTax":$scope.productYesyNO
 					};
-					var url ="http://localhost:8080/addProduct";
+					var url =GlobalConstants.URLCONSTANTS+"addProduct";
 				}
 
 
@@ -362,7 +362,7 @@
 		};
 		function getProAlt()
 		{
-			var url='http://localhost:8080/getProductNoAndAltNo';
+			var url=GlobalConstants.URLCONSTANTS+'getProductNoAndAltNo';
 			dataService.Get(url,getProAltSuccess,getProAltError,"application/json","application/json");
 		}
 		function getProAltSuccess(response)

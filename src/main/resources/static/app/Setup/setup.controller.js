@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('SetupController', SetupController);
 
-	SetupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state'];
+	SetupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','GlobalConstants'];
 
-	function SetupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state)
+	function SetupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,GlobalConstants)
 	{
 		$scope.showAddUser = false;
 		$scope.showUserDtls = false;
@@ -61,7 +61,7 @@
 			$scope.showTaxDtls = true;
 			$scope.showUserDtls = false;
 			$scope.showRcptDtls = false;
-			var url='http://localhost:8080/getPageSetUpDetails';
+			var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
 			dataService.Get(url,onGetTaxSuccess,onGetTaxError,'application/json','application/json');
 		}
 		function onGetTaxSuccess(response)
@@ -95,7 +95,7 @@
 			$scope.showTaxDtls = false;
 			$scope.showUserDtls = true;
 			$scope.showRcptDtls = false;
-			var url='http://localhost:8080/getUserDetails';
+			var url=GlobalConstants.URLCONSTANTS+'getUserDetails';
 			dataService.Get(url,onGetUserDtlsSuccess,onGetUserDtlsError,'application/json','application/json');
 		};
 		function onGetUserDtlsSuccess(response)
@@ -163,7 +163,7 @@
 			};
 
 			request = JSON.stringify(request);
-			var url="http://localhost:8080/editPageSetUpDetails";
+			var url=GlobalConstants.URLCONSTANTS+"editPageSetUpDetails";
 			dataService.Post(url,request,onEditReceiptSuccess,onEditReceiptError,'application/json','application/json');
 		};
 		function onEditReceiptSuccess(response)

@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('IMEIController', IMEIController);
 
-    IMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails','RestrictedCharacter.Types'];
+    IMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails','RestrictedCharacter.Types','GlobalConstants'];
 
-    function IMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails,restrictCharacter)
+    function IMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails,restrictCharacter,GlobalConstants)
     {
         $scope.device= device;
         $scope.GlobalVariable = GlobalVariable;
@@ -52,7 +52,7 @@
         };
         $scope.addIMEI = function()
         {
-          var url='http://localhost:8080/addIMEINo';
+          var url=GlobalConstants.URLCONSTANTS+'addIMEINo';
             var request={
                 "productNo":(GlobalVariable.IMEIProductID).toString(),
                 "imeiNo":$scope.imeiNumber,
@@ -75,7 +75,7 @@
         }
         $scope.editIMEI = function()
         {
-            var url='http://localhost:8080/editIMEINo';
+            var url=GlobalConstants.URLCONSTANTS+'editIMEINo';
             var request={
                 "productNo":(GlobalVariable.IMEIProductID).toString(),
                 "imeiNo":$scope.imeiNumber,

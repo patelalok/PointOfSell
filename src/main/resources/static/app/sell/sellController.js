@@ -5,11 +5,11 @@
 
 	sellController.$inject = [ '$scope', '$rootScope', 'device.utility',
 		'GlobalVariable', 'DialogFactory', 'modalService',
-		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce'];
+		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce','GlobalConstants'];
 
 	function sellController($scope, $rootScope, device, GlobalVariable,
 							DialogFactory, modalService, restrictCharacter, dataService,
-							$state, $timeout,$sce) {
+							$state, $timeout,$sce,GlobalConstants) {
 
 		$scope.device = device;
 		$scope.productFound = false;
@@ -96,7 +96,7 @@
 		};
 		$scope.getAllSellIMEINumbers = function()
 		{
-			var url='http://localhost:8080/getPhoneDetails?productNo='+GlobalVariable.sellProductNo;
+			var url=GlobalConstants.URLCONSTANTS+'getPhoneDetails?productNo='+GlobalVariable.sellProductNo;
 			dataService.Get(url,onGetSellIMEISuccess,onGETSellIMEIError,'application/json','application/json');
 		};
 		function onGetSellIMEISuccess(response)
@@ -232,7 +232,7 @@
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
 
-									var url=" http://localhost:8080/getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+									var url=GlobalConstants.URLCONSTANTS+"getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
 									dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
 									break;
 								}
@@ -298,7 +298,7 @@
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
 
-									var url=" http://localhost:8080/getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+									var url=GlobalConstants.URLCONSTANTS+"getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
 									dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
 									break;
 								}
@@ -683,7 +683,7 @@
 					$rootScope.customerPhone = GlobalVariable.regPhone1;
 					GlobalVariable.userPhone = $rootScope.customerPhone;
 					GlobalVariable.userFName = GlobalVariable.customerNameOnSearch;
-					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
+					var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
 						+ GlobalVariable.regPhone1;
 					dataService.Get(url, onBalanceSuccess, onBalanceError,
 						'application/json', 'application/json');
@@ -740,7 +740,7 @@
 					GlobalVariable.userPhone = $rootScope.customerPhone;
 					GlobalVariable.userFName = GlobalVariable.customerNameOnSearch;
 					GlobalVariable.customerFound = true;
-					var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
+					var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
 						+ GlobalVariable.regPhone1;
 					dataService.Get(url, onBalanceSuccess, onBalanceError,
 						'application/json', 'application/json');
@@ -787,7 +787,7 @@
 				GlobalVariable.customerFound = true;
 				GlobalVariable.customerNameOnSearch = GlobalVariable.userFName;
 				GlobalVariable.regPhone1 = GlobalVariable.userPhone;
-				var url = ' http://localhost:8080/getCustomerBalance?phoneNo='
+				var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
 					+ GlobalVariable.regPhone1;
 				dataService.Get(url, onBalanceSuccess, onBalanceError,
 					'application/json', 'application/json');
@@ -822,7 +822,7 @@
 			}
 		});
 		function getTaxDetails() {
-			var url = 'http://localhost:8080/getPageSetUpDetails';
+			var url = GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
 			dataService.Get(url, onGetTaxSuccess, onGetTaxError,
 				'application/json', 'application/json');
 		}

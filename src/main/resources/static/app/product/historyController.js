@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('historyPopupController', historyPopupController);
 
-	historyPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','$filter'];
+	historyPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','$filter','GlobalConstants'];
 
-	function historyPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,$filter)
+	function historyPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,$filter,GlobalConstants)
 	{
 		$scope.closePopup = function()
 		{
@@ -99,7 +99,7 @@
 		function loadHistoryData(start,end)
 		{
 
-			var url ='http://localhost:8080/getProductHistory?productNo='+GlobalVariable.productIdHistory+'&startDate='+start+'&endDate='+end;
+			var url =GlobalConstants.URLCONSTANTS+'getProductHistory?productNo='+GlobalVariable.productIdHistory+'&startDate='+start+'&endDate='+end;
 			dataService.Get(url,getProductHistorySuccessHandler,getProductHistroyErrorHandler,"application/json","application/json");
 			
 		}

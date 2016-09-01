@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('RelatedProductsController', RelatedProductsController);
 
-    RelatedProductsController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','util'];
+    RelatedProductsController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','modalService','dataService','$state','RestrictedCharacter.Types','util','GlobalConstants'];
 
-    function RelatedProductsController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,util)
+    function RelatedProductsController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,util,GlobalConstants)
     {
         $scope.prodRel =[];
         $scope.addRelatedProductsGrid = [];
@@ -105,7 +105,7 @@
                 alert("Something gone wrong");
             }
             $scope.addRelatedProductsGrid.splice(index, 1);
-            var url="http://localhost:8080/deleteRelatedProduct?relatedProductId="+prodNo;
+            var url=GlobalConstants.URLCONSTANTS+"deleteRelatedProduct?relatedProductId="+prodNo;
             dataService.Post(url,'',OnDeleteSuccess,onDeleteError,'application/json','application/json');
         };
         function OnDeleteSuccess(response)
@@ -123,7 +123,7 @@
         }
         function getRelatedProducts()
         {
-            var url="http://localhost:8080/getRelatedProductForProductPage?productNo="+GlobalVariable.mainProductNo;
+            var url=GlobalConstants.URLCONSTANTS+"getRelatedProductForProductPage?productNo="+GlobalVariable.mainProductNo;
             dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
         }
         function onGetRelatedSuccess(response)
@@ -141,7 +141,7 @@
             util.customError.hide(['vendName','categoryName','brandName','productId','altNo']);
             if( $scope.realtedAdded == true) {
                 var request = [];
-                var url = " http://localhost:8080/addRelatedProduct";
+                var url = GlobalConstants.URLCONSTANTS+"addRelatedProduct";
                 for (var i = 0; i < $scope.addRelatedProductsGrid.length; i++) {
                     request.push({
                         "productNo": GlobalVariable.mainProductNo,
