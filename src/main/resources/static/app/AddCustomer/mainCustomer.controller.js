@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainCustomerController', mainCustomerController);
 
-	mainCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','dataService','RestrictedCharacter.Types'];
+	mainCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','dataService','RestrictedCharacter.Types','GlobalConstants'];
 
-	function mainCustomerController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,dataService,restrictCharacter) {
+	function mainCustomerController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,dataService,restrictCharacter,GlobalConstants) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -14,7 +14,7 @@
 
 		function getCustomerDetails()
 		{
-			var url='http://localhost:8080/getCustomerDetail';
+			var url=GlobalConstants.URLCONSTANTS+'getCustomerDetail';
 			dataService.Get(url,onGetCustDtlsSuccess,onGetCustDtlsError,'application/json','application/json');
 		}
 		function onGetCustDtlsSuccess(response)

@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('addPopupController', addPopupController);
 
-	addPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails'];
+	addPopupController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails','GlobalConstants'];
 
-	function addPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails) 
+	function addPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails,GlobalConstants)
 	{
 		$scope.device= device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -23,22 +23,22 @@
 				
 				if(GlobalVariable.enableEdit == true)
 				{	
-					var url = "http://localhost:8080/editBrand";
+					var url = GlobalConstants.URLCONSTANTS+"editBrand";
 					request.brandId = GlobalVariable.editBrandId; 
 				}
 				else
-				var url = "http://localhost:8080/addBrand";
+				var url = GlobalConstants.URLCONSTANTS+"addBrand";
 				request.brandName = $scope.brandName;
 				request.brandDescription = $scope.brandDescription;
 			}
 			else if(name == 'Vendor') {
 				if(GlobalVariable.enableEdit == true)
 				{	
-					var url = "http://localhost:8080/editVendor";
+					var url = GlobalConstants.URLCONSTANTS+"editVendor";
 					request.vendorId = GlobalVariable.editBrandId;
 				}
 				else
-				var url = "http://localhost:8080/addVendor";
+				var url = GlobalConstants.URLCONSTANTS+"addVendor";
 				request.vendorName = $scope.brandName;
 				request.description = $scope.brandDescription;
 				request.commision = $scope.commision;
@@ -49,11 +49,11 @@
 			else if(name == 'Category') {
 				if(GlobalVariable.enableEdit == true)
 				{	
-					var url = "http://localhost:8080/editCategory";
+					var url = GlobalConstants.URLCONSTANTS+"editCategory";
 					request.categoryId = GlobalVariable.editBrandId;
 				}
 				else
-				var url = "http://localhost:8080/addCategory";
+				var url = +"GlobalConstants.URLCONSTANTSaddCategory";
 				request.categoryName = $scope.brandName;
 				request.description = $scope.brandDescription;
 

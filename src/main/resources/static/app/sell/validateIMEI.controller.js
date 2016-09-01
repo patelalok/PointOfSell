@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('ValidateIMEIController', ValidateIMEIController);
 
-    ValidateIMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','RestrictedCharacter.Types','dataService'];
+    ValidateIMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','RestrictedCharacter.Types','dataService','GlobalConstants'];
 
-    function ValidateIMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,restrictCharacter,dataService)
+    function ValidateIMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,restrictCharacter,dataService,GlobalConstants)
     {
         $scope.GlobalVariable = GlobalVariable;
         $scope.restrictCharacter=restrictCharacter;
@@ -21,7 +21,7 @@
         };
         $scope.getAllValidateIMEINumbers = function()
         {
-            var url='http://localhost:8080/getPhoneDetails?productNo='+GlobalVariable.sellProductNo;
+            var url=GlobalConstants.URLCONSTANTS+'getPhoneDetails?productNo='+GlobalVariable.sellProductNo;
             dataService.Get(url,onGetSellIMEISuccess,onGETSellIMEIError,'application/json','application/json');
         };
         function onGetSellIMEISuccess(response)

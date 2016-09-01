@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('TaxController', TaxController);
 
-    TaxController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService'];
+    TaxController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','GlobalConstants'];
 
-    function TaxController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService)
+    function TaxController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,GlobalConstants)
     {
         $scope.GlobalVariable = GlobalVariable;
         $scope.closeTaxAdd = function()
@@ -22,7 +22,7 @@
                 'storeAddress':$scope.stireAdd
             };
             request = JSON.stringify(request);
-            var url="http://localhost:8080/addTax";
+            var url=GlobalConstants.URLCONSTANTS+"addTax";
             dataService.Get(url,request,onAddTaxSuccess,onAddTaxError,'application/json','application/json');
         };
         $scope.editTax = function()
@@ -39,7 +39,7 @@
                 };
 
             request = JSON.stringify(request);
-            var url="http://localhost:8080/editPageSetUpDetails";
+            var url=GlobalConstants.URLCONSTANTS+"editPageSetUpDetails";
             dataService.Post(url,request,onEditTaxSuccess,onEditTaxError,'application/json','application/json');
         };
         function onEditTaxSuccess(response)

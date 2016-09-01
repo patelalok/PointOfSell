@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BrandController', BrandController);
 
-	BrandController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','modalService','dataService'];
+	BrandController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','modalService','dataService','GlobalConstants'];
 
-	function BrandController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,modalService,dataService) {
+	function BrandController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,modalService,dataService,GlobalConstants) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;

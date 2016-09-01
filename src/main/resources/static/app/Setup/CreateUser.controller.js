@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('CreateUserController', CreateUserController);
 
-	CreateUserController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util'];
+	CreateUserController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','GlobalConstants'];
 
-	function CreateUserController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util)
+	function CreateUserController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,GlobalConstants)
 	{
 		$scope.GlobalVariable = GlobalVariable;
 		var authElemArray = new Array();
@@ -24,7 +24,7 @@
 				"createdDate": js_yyyy_mm_dd_hh_mm_ss ()
 			}
 			request = JSON.stringify(request);
-			var url="http://localhost:8080/addUser";
+			var url=GlobalConstants.URLCONSTANTS+"addUser";
 			dataService.Post(url,request,onAddUserSuccess,onAddUserError,'application/json','application/json');
 		}
 		$scope.editUser = function()
@@ -51,7 +51,7 @@
 					"userId":GlobalVariable.editUserId
 				};
 				request = JSON.stringify(request);
-				var url="http://localhost:8080/editUser";
+				var url=GlobalConstants.URLCONSTANTS+"editUser";
 				dataService.Post(url,request,onEditUserSuccess,onEditUserError,'application/json','application/json');
 			}
 

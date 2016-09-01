@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService','getProductDetails'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService','getProductDetails','GlobalConstants'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService,getProductDetails) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService,getProductDetails,GlobalConstants) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -173,7 +173,7 @@
 		{
 			$scope.getProductDtls = [];
 		  if($scope.lowStock == true) {
-			  var url = "http://localhost:8080/LowStockProductDetails";
+			  var url = GlobalConstants.URLCONSTANTS+"LowStockProductDetails";
 			  dataService.Get(url, onGetStockSuccess, onGetStockError, 'application/json', 'application/json');
 		  }
 		  else

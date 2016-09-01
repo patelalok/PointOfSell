@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('EditClockController', EditClockController);
 
-    EditClockController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','RestrictedCharacter.Types'];
+    EditClockController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','RestrictedCharacter.Types','GlobalConstants'];
 
-    function EditClockController($scope, $rootScope, device ,GlobalVariable,DialogFactory,restrictCharacter)
+    function EditClockController($scope, $rootScope, device ,GlobalVariable,DialogFactory,restrictCharacter,GlobalConstants)
     {
         $scope.GlobalVariable = GlobalVariable;
         $scope.restrictCharacter=restrictCharacter;
@@ -31,7 +31,7 @@
         };
         $scope.editClockInDetails = function()
         {
-            var url=' http://localhost:8080/editUserClockIn';
+            var url=GlobalConstants.URLCONSTANTS+'editUserClockIn';
             var request= {
                 "clockInId": GlobalVariable.editClockDtls.clockInId,
                 "username": GlobalVariable.editClockDtls.username,

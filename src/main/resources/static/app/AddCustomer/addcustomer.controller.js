@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('addCustomerController', addCustomerController);
 
-	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails','StateResponse','$filter'];
+	addCustomerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','RestrictedCharacter.Types','getProductDetails','StateResponse','$filter','GlobalConstants'];
 
-	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails,StateResponse,$filter)
+	function addCustomerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,restrictCharacter,getProductDetails,StateResponse,$filter,GlobalConstants)
 	{
 		GlobalVariable.addedCustSuccessfull = false;
 		GlobalVariable.successCustAlert = false;
@@ -105,7 +105,7 @@
 					"companyName":$scope.companyName
 				};
 				request = JSON.stringify(request);
-				var url = 'http://localhost:8080/addCustomer';
+				var url = GlobalConstants.URLCONSTANTS+'addCustomer';
 				dataService.Post(url, request, onAddCustDtlsSuccess, onAddCustDtlsError, 'application/json', 'application/json');
 			}
 
@@ -138,7 +138,7 @@
 				};
 
 				request = JSON.stringify(request);
-				var url = 'http://localhost:8080/editCustomer';
+				var url = GlobalConstants.URLCONSTANTS+'editCustomer';
 				dataService.Post(url, request, onEditCustDtlsSuccess, onEditCustDtlsError, 'application/json', 'application/json');
 			}
 		};

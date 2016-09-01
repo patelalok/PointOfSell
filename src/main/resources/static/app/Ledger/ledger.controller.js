@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','$state'];
+	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','$state','GlobalConstants'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state) 
+	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state,GlobalConstants)
 	{
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.maxDate = new Date();
@@ -27,7 +27,7 @@
 		};
 		function loadSalesHistoryData(startDate,endDate)
 		{
-			var url ='http://localhost:8080/getSalesHistory?startDate='+startDate+'&endDate='+endDate;
+			var url =GlobalConstants.URLCONSTANTS+'getSalesHistory?startDate='+startDate+'&endDate='+endDate;
 			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
 			
 			
@@ -64,7 +64,7 @@
 		$scope.print = function(id)
 		{
 			$scope.testPrint = "hi";
-			var url="http://localhost:8080/getReceiptDetails?receiptId="+id;
+			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+id;
 			dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
 			
 			
@@ -129,7 +129,7 @@
 			request.transactionDate = transactionDate;
 			request.transactionCompId = transactionCompId;
 			request = JSON.stringify(request);*/
-			var url="http://localhost:8080/getReceiptDetails?receiptId="+transactionCompId;
+			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
 			dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
 			
 
@@ -165,7 +165,7 @@
 		}
 		function getStoreAddress()
 		{
-			var url='http://localhost:8080/getPageSetUpDetails';
+			var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
 			dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
 		}
 		function onStoreSuccess(response)

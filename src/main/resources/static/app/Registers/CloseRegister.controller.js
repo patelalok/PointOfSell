@@ -6,11 +6,11 @@
 
 	CloseRegisterController.$inject = [ '$scope', '$rootScope',
 		'device.utility', 'GlobalVariable', '$state', 'dataService',
-		'RestrictedCharacter.Types', '$filter', '$timeout', '$window' ];
+		'RestrictedCharacter.Types', '$filter', '$timeout', '$window' ,'GlobalConstants'];
 
 	function CloseRegisterController($scope, $rootScope, device,
 									 GlobalVariable, $state, dataService, restrictCharacter, $filter,
-									 $timeout, $window) {
+									 $timeout, $window,GlobalConstants) {
 		$scope.totalUser = 0;
 		$scope.totalInValue = 0;
 		$scope.userCash = 0;
@@ -24,7 +24,7 @@
 		$scope.showCloseRegister = true;
 		$scope.restrictCharacter = restrictCharacter;
 		function getClosingDetails(startDate, endDate) {
-			var url = "http://localhost:8080/getClosingDetails?startDate="
+			var url = GlobalConstants.URLCONSTANTS+"getClosingDetails?startDate="
 				+ startDate + "&endDate=" + endDate;
 			dataService.Get(url, getClosingDetailsSuccessHandler,
 				getClosingDtlsErrorHandler, 'application/json',
@@ -233,7 +233,7 @@
 				"bankDeposit":$scope.bankDeposit,
 				"commission":$scope.commission
 			};
-			var url = "http://localhost:8080/addClosingDetails";
+			var url = GlobalConstants.URLCONSTANTS+"addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,
 				getErrorAddHandler, 'application/json', 'application/json');
 
@@ -263,7 +263,7 @@
 			getPaidOutDetails(startDate, endDate);
 		}
 		function getPaidOutDetails(startDate, endDate) {
-			var url = "http://localhost:8080/getPaidOut?startDate=" + startDate
+			var url = GlobalConstants.URLCONSTANTS+"getPaidOut?startDate=" + startDate
 				+ "&endDate=" + endDate;
 			dataService.Get(url, getaddPaidSuccessHandler,
 				getaddpaidErrorHandler, 'application/json',
@@ -354,7 +354,7 @@
 				+ parseFloat($scope.difPaid)
 			};
 			request = JSON.stringify(request);
-			var url = "http://localhost:8080/addPaidOut";
+			var url = GlobalConstants.URLCONSTANTS+"addPaidOut";
 			dataService
 				.Post(url, request, addPaidSuccessHandler,
 					addPaidErrorHandler, 'application/json',
