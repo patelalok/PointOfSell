@@ -383,9 +383,9 @@ public class SalesManager {
                     ps.setString(13,transactionLineItemDto1.getImeiNo());
 
                     //Checking is this product is this product has phone id or not if yes then that meand this is phone sale so i need to remove IMEI No form Phone Table.
-                    if(transactionLineItemDto1.getId() != 0)
+                    if(transactionLineItemDto1.getPhoneId() != 0)
                     {
-                        jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getId());
+                        jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getPhoneId());
                         System.out.println("This is phone sale: Delete IMEI Successfully!!" + transactionLineItemDto1.getImeiNo());
                     }
 

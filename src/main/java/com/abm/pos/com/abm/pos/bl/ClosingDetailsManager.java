@@ -5,18 +5,19 @@ import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
 import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ import java.util.List;
 @Component
 public class ClosingDetailsManager {
 
+    private BaseFont bfBold;
+    private BaseFont bf;
+    private int pageNumber = 0;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -44,13 +48,13 @@ public class ClosingDetailsManager {
     protected Font font12;
     protected Font font12b;
     protected Font font14;
+
     public void addClosingDetailsToDB(ClosingDetailsDto closingDetailsDto) {
 
         //Checking if register_id is 0 that means closing details is inserting first time and if not then i need to edit it.
         try {
 
-            if (closingDetailsDto.getRegisterId() == 0)
-            {
+            if (closingDetailsDto.getRegisterId() == 0) {
 
                 jdbcTemplate.update(sqlQueries.addClosingDetails,
                         closingDetailsDto.getUserIdClose(),
@@ -75,10 +79,7 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getCommission());
 
                 System.out.println("Closing Details Added Successfully");
-            }
-
-            else
-            {
+            } else {
                 jdbcTemplate.update(sqlQueries.editClosingDetails,
                         closingDetailsDto.getUserIdClose(),
                         closingDetailsDto.getReportCash(),
@@ -122,24 +123,21 @@ public class ClosingDetailsManager {
 
             //GETTING CURRENT DATE
 
-            dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate,endDate);
+            dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate, endDate);
             //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOSE NOT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
 
             //Getting the discount from the lineitem table to get product level discount.
-            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
+            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate, endDate}, String.class);
 
-            String profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, String.class);
+            String profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[]{startDate, endDate}, String.class);
 
             //Here Getting customer balance to handle short or over issue in money for close register reports.
-            String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[] {startDate,endDate},String.class);
-
-
-
+            String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[]{startDate, endDate}, String.class);
 
 
             //this is first call from UI to get close register data cause i dont have any data into cash register table
-            if(null != closingDetails && !closingDetails.isEmpty()) {
+            if (null != closingDetails && !closingDetails.isEmpty()) {
 
                 //THIS CALL WILL SEND THE SYSTEM DATA TO UI WHICH IS USING TRANSACTION TABLE
                 closingDetails.get(0).setReportCash(dashboardDto.getCash());
@@ -153,20 +151,17 @@ public class ClosingDetailsManager {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
                     //System.out.println(lineItemDiscount);
                     closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount() + lineItemDiscountDouble);
-                }
-                else {
+                } else {
                     closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
                 }
 
-                if(null != customerBalance)
-                {
+                if (null != customerBalance) {
                     double customerBalanceDouble = Double.parseDouble(customerBalance);
 
                     closingDetails.get(0).setCustomerBalance(customerBalanceDouble);
                 }
 
-                if(null != profit)
-                {
+                if (null != profit) {
                     double profitDouble = Double.parseDouble(profit);
                     closingDetails.get(0).setTotalProfit(profitDouble);
                 }
@@ -174,12 +169,11 @@ public class ClosingDetailsManager {
             }
 
 
-
             //This mean user is closing the register 2nd time so call comes here.
 
-        else{
+            else {
                 closingDetails = new ArrayList<>();
-                ClosingDetailsDto closingDetailsDto= new ClosingDetailsDto();
+                ClosingDetailsDto closingDetailsDto = new ClosingDetailsDto();
 
                 closingDetailsDto.setReportCash(dashboardDto.getCash());
                 closingDetailsDto.setReportCredit(dashboardDto.getCredit());
@@ -194,15 +188,13 @@ public class ClosingDetailsManager {
                 } else {
                     closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
                 }
-                if(null != customerBalance)
-                {
+                if (null != customerBalance) {
                     double customerBalanceDouble = Double.parseDouble(customerBalance);
 
                     closingDetailsDto.setCustomerBalance(customerBalanceDouble);
                 }
 
-                if(null != profit)
-                {
+                if (null != profit) {
                     double profitDouble = Double.parseDouble(profit);
                     closingDetailsDto.setTotalProfit(profitDouble);
                 }
@@ -212,16 +204,13 @@ public class ClosingDetailsManager {
 
                 return closingDetails;
             }
-                System.out.println("Send Closing details Successfully");
-        }
-            catch (Exception e) {
-                System.out.println(e);
+            System.out.println("Send Closing details Successfully");
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
         return closingDetails;
     }
-
-
 
 
     //I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
@@ -289,10 +278,7 @@ public class ClosingDetailsManager {
             hourlyList = jdbcTemplate.query(sqlQueries.getHourlyTransactions, mapper, startDate, endDate, startDate, endDate);
 
 
-
             //jdbcTemplate.query(sqlQueries.getHorlyProfit);
-
-
 
 
         } catch (Exception e) {
@@ -334,10 +320,10 @@ public class ClosingDetailsManager {
             hourlyDto.setCheck(rs.getDouble("CHEC"));
             hourlyDto.setTax(rs.getDouble("TAX"));
             hourlyDto.setDiscount(rs.getDouble("DISCOUNT"));
-            hourlyDto.setTotal(rs.getDouble("CREDIT") + rs.getDouble("CASH")+ rs.getDouble("CHEC"));
+            hourlyDto.setTotal(rs.getDouble("CREDIT") + rs.getDouble("CASH") + rs.getDouble("CHEC"));
             hourlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
             //hourlyDto.setCost(rs.getDouble("COST"));
-           // hourlyDto.setRetail(rs.getDouble("RETAIL"));
+            // hourlyDto.setRetail(rs.getDouble("RETAIL"));
             hourlyDto.setProfit(rs.getDouble("PROFIT"));
             hourlyDto.setBalance(rs.getDouble("BALANCE"));
 
@@ -355,7 +341,6 @@ public class ClosingDetailsManager {
             totalProfit = totalProfit + hourlyDto.getProfit();
             noOfTrans = noOfTrans + hourlyDto.getNoOfTrans();
             balance = balance + hourlyDto.getBalance();
-
 
 
             forReportsDto.setTotalCredit(totalCredit);
@@ -394,7 +379,6 @@ public class ClosingDetailsManager {
     }
 
 
-
     public YearlyListDto getYearlyTransactionDetails(String startDate, String endDate) {
 
         List<YearlyListDto> yearOfMonth = new ArrayList<>();
@@ -402,14 +386,11 @@ public class ClosingDetailsManager {
         YearlyMapper yearlyMapper = new YearlyMapper();
 
 
-        try
-        {
-            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper,startDate,endDate, startDate, endDate);
+        try {
+            yearOfMonth = jdbcTemplate.query(sqlQueries.getYearlyTransaction, yearlyMapper, startDate, endDate, startDate, endDate);
 
             //Need Think of Adding Discount and Profit here
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -472,7 +453,6 @@ public class ClosingDetailsManager {
             totalProfit = totalProfit + yearlyDto.getProfit();
             noOfTrans = noOfTrans + yearlyDto.getNoOfTrans();
             balance = balance + yearlyDto.getBalance();
-
 
 
             forReportsDto.setTotalCredit(totalCredit);
@@ -644,10 +624,9 @@ public class ClosingDetailsManager {
     public void addPaidOut(PaidOutDto paidOutDto) {
 
 
-
         try {
 
-            if(paidOutDto.getPaidOutId() == 0) {
+            if (paidOutDto.getPaidOutId() == 0) {
                 jdbcTemplate.update(sqlQueries.addPaidOutDetails,
                         paidOutDto.getPaidOutAmount1(),
                         paidOutDto.getPaidOutAmount2(),
@@ -659,10 +638,7 @@ public class ClosingDetailsManager {
 
 
                 System.out.println("Paid Amount added successfully");
-            }
-
-            else
-            {
+            } else {
                 editPaidOut(paidOutDto);
             }
         } catch (Exception e) {
@@ -737,31 +713,24 @@ public class ClosingDetailsManager {
         List<DailyTransactionDto> trans = new ArrayList<>();
         //DailyTransactionDto d = new DailyTransactionDto();
 
-        try
-        {
+        try {
             trans = jdbcTemplate.query(sqlQueries.getDailyTransaction, new DailyTransactionMapper(), startDate, endDate);
 
             //Getting profit = (RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY and PROFIT - TRANSACTION DISCOUNT(trans.get(0).getDiscount()) then subtracting total Transaction level discount from total profit form the Line item table and then subtracting the profit amount from the Total Transaction level discount.
-            double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[] {startDate,endDate}, double.class);
+            double profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[]{startDate, endDate}, double.class);
             trans.get(0).setProfitAmount(profit - trans.get(0).getDiscount());
             //System.out.println(profit);
-           // System.out.println(profit-trans.get(0).getDiscount());
+            // System.out.println(profit-trans.get(0).getDiscount());
 
             //Getting discount from lineItem table and adding with transaction table discount cause they 2 separate discounts
-            double lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, double.class);
-           // System.out.println(lineItemDiscount + trans.get(0).getDiscount());
+            double lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate, endDate}, double.class);
+            // System.out.println(lineItemDiscount + trans.get(0).getDiscount());
             trans.get(0).setDiscount(trans.get(0).getDiscount() + lineItemDiscount);
-          //  System.out.println(trans.get(0).getDiscount());
-          //  System.out.println(lineItemDiscount);
+            //  System.out.println(trans.get(0).getDiscount());
+            //  System.out.println(lineItemDiscount);
 
 
-
-
-
-
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
@@ -798,6 +767,232 @@ public class ClosingDetailsManager {
 
     public void printClosingDetails(String startDate, String endDate) {
 
+
+       /* String pdfFilename = "test.pdf";
+        ClosingDetailsManager generateInvoice = new ClosingDetailsManager();
+
+
+
+        generateInvoice.createPDF(pdfFilename);
+
+    }
+
+    private void createPDF (String pdfFilename){
+
+        Document doc = new Document();
+        PdfWriter docWriter = null;
+        initializeFonts();
+
+        try {
+            String path = "docs/" + pdfFilename;
+            docWriter = PdfWriter.getInstance(doc , new FileOutputStream(path));
+            doc.addAuthor("betterThanZero");
+            doc.addCreationDate();
+            doc.addProducer();
+            doc.addCreator("MySampleCode.com");
+            doc.addTitle("Invoice");
+            doc.setPageSize(PageSize.LETTER);
+
+            doc.open();
+            PdfContentByte cb = docWriter.getDirectContent();
+
+            boolean beginPage = true;
+            int y = 0;
+
+            for(int i=0; i < 100; i++ ){
+                if(beginPage){
+                    beginPage = false;
+                    generateLayout(doc, cb);
+                    generateHeader(doc, cb);
+                    y = 615;
+                }
+                generateDetail(doc, cb, i, y);
+                y = y - 15;
+                if(y < 50){
+                    printPageNumber(cb);
+                    doc.newPage();
+                    beginPage = true;
+                }
+            }
+            printPageNumber(cb);
+
+        }
+        catch (DocumentException dex)
+        {
+            dex.printStackTrace();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            if (doc != null)
+            {
+                doc.close();
+            }
+            if (docWriter != null)
+            {
+                docWriter.close();
+            }
+        }
+    }
+
+    private void generateLayout(Document doc, PdfContentByte cb)  {
+
+        try {
+
+            cb.setLineWidth(1f);
+
+            // Invoice Header box layout
+            cb.rectangle(420,700,150,60);
+            cb.moveTo(420,720);
+            cb.lineTo(570,720);
+            cb.moveTo(420,740);
+            cb.lineTo(570,740);
+            cb.moveTo(480,700);
+            cb.lineTo(480,760);
+            cb.stroke();
+
+            // Invoice Header box Text Headings
+            createHeadings(cb,422,743,"Account No.");
+            createHeadings(cb,422,723,"Invoice No.");
+            createHeadings(cb,422,703,"Invoice Date");
+
+            // Invoice Detail box layout
+            cb.rectangle(20,50,550,600);
+            cb.moveTo(20,630);
+            cb.lineTo(570,630);
+            cb.moveTo(50,50);
+            cb.lineTo(50,650);
+            cb.moveTo(150,50);
+            cb.lineTo(150,650);
+            cb.moveTo(430,50);
+            cb.lineTo(430,650);
+            cb.moveTo(500,50);
+            cb.lineTo(500,650);
+            cb.stroke();
+
+            // Invoice Detail box Text Headings
+            createHeadings(cb,22,633,"Qty");
+            createHeadings(cb,52,633,"Item Number");
+            createHeadings(cb,152,633,"Item Description");
+            createHeadings(cb,432,633,"Price");
+            createHeadings(cb,502,633,"Ext Price");
+
+            //add the images
+            Image companyLogo = Image.getInstance("images/olympics_logo.gif");
+            companyLogo.setAbsolutePosition(25,700);
+            companyLogo.scalePercent(25);
+            doc.add(companyLogo);
+
+        }
+
+        catch (DocumentException dex){
+            dex.printStackTrace();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateHeader(Document doc, PdfContentByte cb)  {
+
+        try {
+
+            createHeadings(cb,200,750,"Company Name");
+            createHeadings(cb,200,735,"Address Line 1");
+            createHeadings(cb,200,720,"Address Line 2");
+            createHeadings(cb,200,705,"City, State - ZipCode");
+            createHeadings(cb,200,690,"Country");
+
+            createHeadings(cb,482,743,"ABC0001");
+            createHeadings(cb,482,723,"123456");
+            createHeadings(cb,482,703,"09/26/2012");
+
+        }
+
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateDetail(Document doc, PdfContentByte cb, int index, int y)  {
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            createContent(cb,48,y,String.valueOf(index+1),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,52,y, "ITEM" + String.valueOf(index+1),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,152,y, "Product Description - SIZE " + String.valueOf(index+1),PdfContentByte.ALIGN_LEFT);
+
+            double price = Double.valueOf(df.format(Math.random() * 10));
+            double extPrice = price * (index+1) ;
+            createContent(cb,498,y, df.format(price),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,568,y, df.format(extPrice),PdfContentByte.ALIGN_RIGHT);
+
+        }
+
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void createHeadings(PdfContentByte cb, float x, float y, String text){
+
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 8);
+        cb.setTextMatrix(x,y);
+        cb.showText(text.trim());
+        cb.endText();
+
+    }
+
+    private void printPageNumber(PdfContentByte cb){
+
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 8);
+        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber+1), 570 , 25, 0);
+        cb.endText();
+
+        pageNumber++;
+
+    }
+
+    private void createContent(PdfContentByte cb, float x, float y, String text, int align){
+
+
+        cb.beginText();
+        cb.setFontAndSize(bf, 8);
+        cb.showTextAligned(align, text.trim(), x , y, 0);
+        cb.endText();
+
+    }
+
+    private void initializeFonts(){
+
+
+        try {
+            bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
+
        /* SalesManager salesManager = new SalesManager();
         List<ReceiptDto> receiptDtos = new ArrayList<>();
 
@@ -811,26 +1006,26 @@ public class ClosingDetailsManager {
         PdfPCell seller = getPartyAddress("From:",*/
 
 
+//    public PdfPCell getPartyAddress(String who, String name,
+//                                    String line1, String line2, String countryID, String postcode, String city) {
+//        PdfPCell cell = new PdfPCell();
+//        cell.setBorder(PdfPCell.NO_BORDER);
+//        cell.addElement(new Paragraph(who, font12b));
+//        cell.addElement(new Paragraph(name, font12));
+//        cell.addElement(new Paragraph(line1, font12));
+//        cell.addElement(new Paragraph(line2, font12));
+//        cell.addElement(new Paragraph(
+//                String.format("%s-%s %s", countryID, postcode, city), font12));
+//        return cell;
+//    }
+//
+//    public String getLineItemDiscount(String startDate, String endDate)
+//    {
+//        String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
+//
+//        return lineItemDiscount;
+//    }
+
     }
-
-    public PdfPCell getPartyAddress(String who, String name,
-                                    String line1, String line2, String countryID, String postcode, String city) {
-        PdfPCell cell = new PdfPCell();
-        cell.setBorder(PdfPCell.NO_BORDER);
-        cell.addElement(new Paragraph(who, font12b));
-        cell.addElement(new Paragraph(name, font12));
-        cell.addElement(new Paragraph(line1, font12));
-        cell.addElement(new Paragraph(line2, font12));
-        cell.addElement(new Paragraph(
-                String.format("%s-%s %s", countryID, postcode, city), font12));
-        return cell;
-    }
-
-    public String getLineItemDiscount(String startDate, String endDate)
-    {
-        String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate,endDate}, String.class);
-
-        return lineItemDiscount;
-    }
-
 }
+

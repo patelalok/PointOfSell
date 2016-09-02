@@ -120,5 +120,13 @@ public class ProductController {
         return productManager.getPhoneDetails(productNo);
     }
 
+    @RequestMapping(value = "/deleteImei", method = RequestMethod.POST)
+    public void deleteImei(@RequestParam String phoneId) {
+
+        productManager.deleteImei(phoneId);
+    }
+
+
+
 }
 

@@ -222,6 +222,8 @@ public class ProductManager
 
     }
 
+
+
     private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
     {
 
@@ -628,8 +630,23 @@ public class ProductManager
         {
             System.out.println(e);
         }
+
+
     }
 
 
+    public void deleteImei(String phoneId) {
+
+    try
+    {
+        jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, phoneId);
+
+        System.out.println("Imei No delete successfully" + phoneId);
+    }
+    catch (Exception e)
+    {
+        System.out.println(e);
+    }
+    }
 }
 

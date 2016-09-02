@@ -522,9 +522,9 @@ public class SQLQueries {
             "SUM(DISCOUNT_AMOUNT) DISCOUNT , " +
             "SUM(TOTAL_AMOUNT) TOTAL, " +
             "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
-            "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c') as PROFIT " +
+            "(SELECT monthname(TRANSACTION_DATE) AS NameOfMonth, SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ) as PROFIT " +
             "FROM TRANSACTION " +
-            "WHERE TRANSACTION_DATE BETWEEN ? AND ? " +
+            "WHERE TRANSACTION_DATE BETWEEN ? AND ?  AND STATUS = 'c' " +
             "GROUP BY NameOfMonth " +
             "ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December') ";
 
