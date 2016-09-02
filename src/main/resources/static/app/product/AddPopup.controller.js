@@ -53,7 +53,7 @@
 					request.categoryId = GlobalVariable.editBrandId;
 				}
 				else
-				var url = +"GlobalConstants.URLCONSTANTSaddCategory";
+				var url = GlobalConstants.URLCONSTANTS+"addCategory";
 				request.categoryName = $scope.brandName;
 				request.description = $scope.brandDescription;
 
