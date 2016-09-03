@@ -28,6 +28,7 @@ public class ClosingDetailsDto {
     private double bankDeposit;
     private double customerBalance;
     private double commission;
+    private double previousBalance;
 
     public double getReportCheck() {
         return reportCheck;
@@ -203,5 +204,13 @@ public class ClosingDetailsDto {
 
     public void setCommission(double commission) {
         this.commission = commission;
+    }
+
+    public double getPreviousBalance() {
+        return previousBalance;
+    }
+
+    public void setPreviousBalance(double previousBalance) {
+        this.previousBalance = previousBalance;
     }
 }

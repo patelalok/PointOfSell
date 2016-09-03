@@ -647,7 +647,7 @@ public class SQLQueries {
 
     public String getProductNumber = "SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_NO = ?";
 
-    public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(PAID_AMOUNT_CASH) CASH, SUM(TOTAL_AMOUNT_CREDIT) CREDIT, SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(TOTAL_AMOUNT) TOTAL,SUM(BALANCE) BALANCE,SUM(TAX_AMOUNT) TAX,SUM(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c' ";
+    public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(PAID_AMOUNT_CASH) CASH, SUM(TOTAL_AMOUNT_CREDIT) CREDIT, SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(PAID_AMOUNT_CASH + TOTAL_AMOUNT_CREDIT + TOTAL_AMOUNT_CHECK) TOTAL,SUM(BALANCE - PREVIOUS_BALANCE) BALANCE ,SUM(TAX_AMOUNT) TAX,SUM(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c' ";
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";
@@ -694,4 +694,7 @@ public class SQLQueries {
     public String addPhoneStockToProductTable = "UPDATE PRODUCT SET QUANTITY = ? WHERE PRODUCT_ID = ?";
     public String getProductId = "SELECT PRODUCT_ID FROM PRODUCT WHERE PRODUCT_NO = ?";
     public String deleteImeiDetailsFromPhone = "DELETE FROM PHONE WHERE ID = ? ";
+    public String getPreviousBalance = "SELECT PREVIOUS_BALANCE FROM transaction WHERE TRANSACTION_COMP_ID = ?";
+    public String getCustomerPhoneNo = "SELECT CUSTOMER_PHONENO FROM transaction WHERE TRANSACTION_COMP_ID = ?";
+    public String updateBlanceToCustomerProfileWithoutDate = "UPDATE customer SET BALANCE = ? WHERE PHONE_NO = ?";
 }

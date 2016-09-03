@@ -145,6 +145,7 @@ public class ClosingDetailsManager {
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
                 closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
+                closingDetails.get(0).setCustomerBalance(dashboardDto.getBalance());
 
                 if (null != lineItemDiscount) {
 
@@ -155,11 +156,11 @@ public class ClosingDetailsManager {
                     closingDetails.get(0).setTotalDiscount(dashboardDto.getDiscount());
                 }
 
-                if (null != customerBalance) {
+                /*if (null != customerBalance) {
                     double customerBalanceDouble = Double.parseDouble(customerBalance);
 
-                    closingDetails.get(0).setCustomerBalance(customerBalanceDouble);
-                }
+                    closingDetails.get(0).setCustomerBalance(customerBalanceDouble - closingDetails.get(0));
+                }*/
 
                 if (null != profit) {
                     double profitDouble = Double.parseDouble(profit);
@@ -180,6 +181,7 @@ public class ClosingDetailsManager {
                 closingDetailsDto.setReportCheck(dashboardDto.getCheck());
                 closingDetailsDto.setTotalTax(dashboardDto.getTax());
                 closingDetailsDto.setReportTotalAmount(dashboardDto.getTotal());
+                closingDetailsDto.setCustomerBalance(dashboardDto.getBalance());
 
                 if (null != lineItemDiscount) {
                     double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
@@ -188,11 +190,11 @@ public class ClosingDetailsManager {
                 } else {
                     closingDetailsDto.setTotalDiscount(dashboardDto.getDiscount());
                 }
-                if (null != customerBalance) {
+                /*if (null != customerBalance) {
                     double customerBalanceDouble = Double.parseDouble(customerBalance);
 
                     closingDetailsDto.setCustomerBalance(customerBalanceDouble);
-                }
+                }*/
 
                 if (null != profit) {
                     double profitDouble = Double.parseDouble(profit);
@@ -224,11 +226,10 @@ public class ClosingDetailsManager {
             closingDto.setCash(rs.getDouble("CASH"));
             closingDto.setCredit(rs.getDouble("CREDIT"));
             closingDto.setCheck(rs.getDouble("CHECKAMOUNT"));
-            closingDto.setTotal(rs.getDouble("TOTAL") - rs.getDouble("BALANCE"));
+            closingDto.setTotal(rs.getDouble("TOTAL"));
             closingDto.setTax(rs.getDouble("TAX"));
             closingDto.setDiscount(rs.getDouble("DISCOUNT"));
             closingDto.setBalance(rs.getDouble("BALANCE"));
-
 
             //closingDto.setProfit(rs.getDouble("PROFIT"));
 

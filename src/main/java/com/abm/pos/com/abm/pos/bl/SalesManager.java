@@ -88,6 +88,16 @@ public class SalesManager {
                 //jdbcTemplate.update(sqlQuery.addReturnEntryToTransactionMapper, previousTransId, transactionDto.getTransactionCompId());
             }
             else {
+                String previosBalance = jdbcTemplate.queryForObject(sqlQuery.getPreviousBalance,new Object[] {previousTransId}, String.class);
+
+                String customerPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhoneNo,new Object[] {previousTransId}, String.class);
+
+                if(null != customerPhoneNo && null != previosBalance)
+                {
+                    jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, previosBalance,customerPhoneNo);
+                    System.out.println("Customer balance updated successfully with with complete return");
+                }
+
                 System.out.println("that was complete return");
             }
 
