@@ -4,9 +4,9 @@
 	angular.module('sampleApp').factory('getProductDetails',getProductDetails);
 	
 
-	getProductDetails.$inject = ['dataService','GlobalVariable','$rootScope','GlobalConstants'];
+	getProductDetails.$inject = ['dataService','GlobalVariable','$rootScope','GlobalConstants','util'];
 
-	function getProductDetails(dataService,GlobalVariable,$rootScope,GlobalConstants) {
+	function getProductDetails(dataService,GlobalVariable,$rootScope,GlobalConstants,util) {
 		
 		var getProductDetails = {
 
@@ -24,6 +24,7 @@
 		var refCallback = null;
 		function getProductValues()
 		{
+			util.Wait(true);
 			getVendorDetails();
 			getBrandDetails();
 			getCategoryDetails();
@@ -105,6 +106,7 @@
 		}
 		function getCustomerDetailSuccessHandler(response)
 		{
+			util.Wait(false);
 			GlobalVariable.getCustomerDtls =response;
 			$rootScope.firstNames = [];
 			for(var i=0;i<GlobalVariable.getCustomerDtls.length;i++)
