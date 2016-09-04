@@ -3,14 +3,15 @@
 
     angular.module('sampleApp').controller('IMEIController', IMEIController);
 
-    IMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails','RestrictedCharacter.Types','GlobalConstants'];
+    IMEIController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$timeout','$state','getProductDetails','RestrictedCharacter.Types','GlobalConstants','util'];
 
-    function IMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails,restrictCharacter,GlobalConstants)
+    function IMEIController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$timeout,$state,getProductDetails,restrictCharacter,GlobalConstants,util)
     {
         $scope.device= device;
         $scope.GlobalVariable = GlobalVariable;
         $scope.restrictCharacter=restrictCharacter;
         $scope.successAlert = false;
+        var authElemArray = new Array();
         $scope.closePopup = function()
         {
             DialogFactory.close(true);
@@ -50,19 +51,40 @@
                 $scope.prodIMEIMarkup =0;
             }
         };
+        function validated()
+        {
+            authElemArray = new Array();
+            if($scope.imeiNumber == '' || $scope.imeiNumber== undefined)
+            {
+                authElemArray.push({
+                    'id' : 'imeiNumber',
+                    'msg' : 'imeiNumber Number cannot be empty'
+                });
+            }
+            if (authElemArray.length >= 1) {
+                util.customError.show(authElemArray, "");
+
+                return false;
+            } else {
+                return true;
+            }
+        }
         $scope.addIMEI = function()
         {
-          var url=GlobalConstants.URLCONSTANTS+'addIMEINo';
-            var request={
-                "productNo":(GlobalVariable.IMEIProductID).toString(),
-                "imeiNo":$scope.imeiNumber,
-                "costPrice":$scope.prodIMEICP,
-                "retailPrice":$scope.prodIMEIRetail,
-                "markup":$scope.prodIMEIMarkup,
-                "lastUpdatedTimeStamp":js_yyyy_mm_dd_hh_mm_ss()
-            };
-            request=JSON.stringify(request);
-            dataService.Post(url,request,onAddIMEISuccess,onAddIMEIError,'application/json','application/json');
+            util.customError.hide(['imeiNumber']);
+            if(validated()) {
+                var url = GlobalConstants.URLCONSTANTS + 'addIMEINo';
+                var request = {
+                    "productNo": (GlobalVariable.IMEIProductID).toString(),
+                    "imeiNo": $scope.imeiNumber,
+                    "costPrice": $scope.prodIMEICP,
+                    "retailPrice": $scope.prodIMEIRetail,
+                    "markup": $scope.prodIMEIMarkup,
+                    "lastUpdatedTimeStamp": js_yyyy_mm_dd_hh_mm_ss()
+                };
+                request = JSON.stringify(request);
+                dataService.Post(url, request, onAddIMEISuccess, onAddIMEIError, 'application/json', 'application/json');
+            }
 
         };
         function onAddIMEISuccess(response)

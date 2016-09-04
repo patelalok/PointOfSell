@@ -77,9 +77,10 @@
 				$scope.bType = '';
 			}
 		};
-		$scope.navigateToSales = function(productId)
+		$scope.navigateToSales = function(productId,id)
 		{
 			GlobalVariable.productIdHistory = productId;
+			GlobalVariable.categoryIdHistory = id;
 			var _tmPath = 'app/product/historyPopup.html';
 			var _ctrlPath = 'historyPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, callbackPaymentHistory,undefined, undefined, 'lg');

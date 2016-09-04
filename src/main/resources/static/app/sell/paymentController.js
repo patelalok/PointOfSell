@@ -22,7 +22,7 @@
 		{
 			$scope.paidAmountCash =parseFloat($scope.paidAmountCash)+parseFloat(amount);
 			$scope.cashId = 1;
-			$scope.balanceAmount =Number(parseFloat($scope.balanceAmount)-amount).toFixed(2);
+			$scope.balanceAmount =parseFloat((parseFloat($scope.balanceAmount)-parseFloat(amount)).toFixed(2));
 			if($scope.balanecAmount <= 0 && $scope.paidAmountCredit ==0)
 			{
 				$scope.paidAmountCash = GlobalVariable.checkOuttotal;
