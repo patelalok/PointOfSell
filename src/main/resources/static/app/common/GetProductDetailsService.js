@@ -4,9 +4,9 @@
 	angular.module('sampleApp').factory('getProductDetails',getProductDetails);
 	
 
-	getProductDetails.$inject = ['dataService','GlobalVariable','$rootScope'];
+	getProductDetails.$inject = ['dataService','GlobalVariable','$rootScope','GlobalConstants'];
 
-	function getProductDetails(dataService,GlobalVariable,$rootScope) {
+	function getProductDetails(dataService,GlobalVariable,$rootScope,GlobalConstants) {
 		
 		var getProductDetails = {
 
@@ -40,27 +40,27 @@
 		}
 		function getCustomerDetails()
 		{
-			dataService.Get(" http://localhost:8080/getCustomerDetail",getCustomerDetailSuccessHandler,getCustomerDetailErrorHandler,"application/json","application/json");
+			dataService.Get(GlobalConstants.URLCONSTANTS+"getCustomerDetail",getCustomerDetailSuccessHandler,getCustomerDetailErrorHandler,"application/json","application/json");
 
 		}
 		function getProductDetail(callBack)
 		{
 			refCallback = callBack;
-			dataService.Get("http://localhost:8080/getProduct",getProductSuccessHandler,getProductErrorHandler,"application/json","application/json");
+			dataService.Get(GlobalConstants.URLCONSTANTS+"getProduct",getProductSuccessHandler,getProductErrorHandler,"application/json","application/json");
 
 		}
 		function getCategoryDetails()
 		{
-			dataService.Get("http://localhost:8080/getCategory",getCategorySuccessHandler,getCategoryErrorHandler,"application/json","application/json");
+			dataService.Get(GlobalConstants.URLCONSTANTS+"getCategory",getCategorySuccessHandler,getCategoryErrorHandler,"application/json","application/json");
 
 		}
 		function getBrandDetails()
 		{
-			dataService.Get("http://localhost:8080/getBrand",getBrandSuccessHandler,getBrandErrorHandler,"application/json","application/json");
+			dataService.Get(GlobalConstants.URLCONSTANTS+"getBrand",getBrandSuccessHandler,getBrandErrorHandler,"application/json","application/json");
 		}
 		function getVendorDetails()
 		{
-			dataService.Get("http://localhost:8080/getVendor",getVendorSuccessHandler,getVendorErrorHandler,"application/json","application/json");
+			dataService.Get(GlobalConstants.URLCONSTANTS+"getVendor",getVendorSuccessHandler,getVendorErrorHandler,"application/json","application/json");
 		}
 		function getVendorSuccessHandler(response)
 		{
