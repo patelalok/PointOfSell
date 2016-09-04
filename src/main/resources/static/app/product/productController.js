@@ -386,6 +386,21 @@
 			$scope.getAllIMEINumbers();
 			getProductDetails.getProductDetail();
 		};
+
+		$scope.deleteIMEI = function(phoneId)
+		{
+			var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+phoneId;
+			dataService.Post(url,'',onDeleteIMEISucess,onDelteIMEIError,'application/json','application/json');
+		};
+		function onDeleteIMEISucess(response)
+		{
+			$scope.getAllIMEINumbers();
+			getProductDetails.getProductDetail($scope.getCDetails);
+		}
+		function onDelteIMEIError(error)
+		{
+
+		}
 		function render()
 		{
 			console.log("params = "+$state.params);

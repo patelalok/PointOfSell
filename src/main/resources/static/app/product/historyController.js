@@ -7,6 +7,7 @@
 
 	function historyPopupController($scope, $rootScope, device ,GlobalVariable,DialogFactory,modalService,dataService,$state,restrictCharacter,$filter,GlobalConstants)
 	{
+		$scope.GlobalVariable = GlobalVariable;
 		$scope.closePopup = function()
 		{
 			DialogFactory.close(true);

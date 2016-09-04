@@ -194,7 +194,7 @@
 			else if(saleDate == 'lastMonthSales')
 			{
 				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
-				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+				end = getcurrentYear()+"-"+getlastMonth()+"-31 23:59:59";
 			}
 			else if(saleDate == 'last3MonthsSales')
 			{
@@ -549,7 +549,7 @@
 			else if(hr == 'lastMonth')
 			{
 					start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
-					end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+					end = getcurrentYear()+"-"+getlastMonth()+"-31 23:59:59";
 			}
 			else if(hr == 'last3Months')
 			{

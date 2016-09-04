@@ -65,10 +65,21 @@
 
 			</div>
 		</div>
+		<div class="col-md-2 productBtn" ng-show="GlobalVariable.categoryIdHistory == 10">
+			<div class="padding-bottom-5">
+				<label>Search By IMEI</label>
+			</div>
+			<div>
+
+				<input type="text" class="form-control" data-ng-model="srchIMEI"
+					   data-restrict-characters="restrictCharacter.OnlyDigits.regExp"
+					   id="srchIMEI" style="height: 52px; width: 100%;"/>
+			</div>
+		</div>
 		<div class="col-md-12" style="display:block;">
 		<div data-responsive-table data-ng-model="getProductHistory"  data-current-page="currentPageIndexArr"
 				 class="full-width" data-page-size="pageSize" data-sort-column="selectedIndex" data-sort-ascending="isAsc"
-				on-sort="sortColumnData(index)" >
+				on-sort="sortColumnData(index)" data-filter-value="srchIMEI">
 				<columns>
 					<column name="Date" key="transactionDate" datatype="string" width="20%" sortable="true"></column>
 					<column name="Product No" key="productNumber" datatype="string" width="14%"></column>
@@ -77,7 +88,9 @@
 					<column name="Retail" key="retail" datatype="string" width="8%"></column>
 					<column name="Cost" key="cost" datatype="string" width="8%"></column>
 					<column name="Discount" key="discount" datatype="string" width="7%"></column>
-					<column name="Product Count" key="discount" datatype="string" width="16%"></column>
+					<column name="IMEI" key="imeiNo" datatype="string" width="16%">
+
+					</column>
 				</columns>		
 			</div>
 	</div>

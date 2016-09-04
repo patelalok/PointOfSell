@@ -5,11 +5,11 @@
 
 	sellController.$inject = [ '$scope', '$rootScope', 'device.utility',
 		'GlobalVariable', 'DialogFactory', 'modalService',
-		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce','GlobalConstants'];
+		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce','GlobalConstants','getProductDetails'];
 
 	function sellController($scope, $rootScope, device, GlobalVariable,
 							DialogFactory, modalService, restrictCharacter, dataService,
-							$state, $timeout,$sce,GlobalConstants) {
+							$state, $timeout,$sce,GlobalConstants,getProductDetails) {
 
 		$scope.device = device;
 		$scope.productFound = false;
@@ -174,6 +174,71 @@
 		{
 
 		}
+		$scope.loadDtlsByAltNo = function()
+		{
+			var searchValueAlt = $scope.searchValueAlt.toString();
+			$scope.discount = 0;
+			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+				if (searchValueAlt === GlobalVariable.getProducts[i].altNo) {
+					if(GlobalVariable.getProducts[i].categoryName == 'Phone' && GlobalVariable.getProducts[i].categoryId == 10)
+					{
+						GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
+						GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
+						GlobalVariable.sellDescription = GlobalVariable.getProducts[i].description;
+						GlobalVariable.sellCategoryId = GlobalVariable.getProducts[i].categoryId;
+
+						var _tmPath = 'app/sell/validateIMEI.html';
+						var _ctrlPath = 'ValidateIMEIController';
+						DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackValidateIMEI);
+					}
+					else
+					{
+						if(GlobalVariable.getProducts[i].addTax == true)
+						{
+							var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+								.toFixed(2);
+							totalWithOutTax = parseFloat(totalWithOutTax);
+							var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+						}
+						else
+						{
+							var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+								.toFixed(2);
+							totalWithOutTax = parseFloat(totalWithOutTax);
+							var totalWithTax = totalWithOutTax;
+						}
+						$rootScope.testData
+							.push({
+								"itemId":GlobalVariable.getProducts[i].productId,
+								"itemNo" : GlobalVariable.getProducts[i].productNo,
+								"item" : GlobalVariable.getProducts[i].description,
+								"quantity" : GlobalVariable.getProducts[i].quantity,
+								"retail" : GlobalVariable.getProducts[i].retailPrice,
+								"discount" : (parseFloat($scope.discount))
+									.toFixed(2),
+								"total" : totalWithOutTax,
+								"stock" : GlobalVariable.getProducts[i].stock,
+								"costPrice" : GlobalVariable.getProducts[i].costPrice,
+								"categoryName":GlobalVariable.getProducts[i].categoryName,
+								"totalWithTax":totalWithTax,
+								"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
+								"categoryId":GlobalVariable.getProducts[i].categoryId,
+								"imeiNo":GlobalVariable.getProducts[i].imeiNo,
+								"phoneId":GlobalVariable.getProducts[i].phoneId
+							});
+						if(GlobalVariable.getProducts[i].relatedProduct = true)
+						{
+
+							var url=GlobalConstants.URLCONSTANTS+"getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+							dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
+							break;
+						}
+
+						break;
+					}
+				}
+			}
+		};
 		$scope.changeQuantity = function() {
 			var searchTxt = $scope.searchValue.toString();
 			if (searchTxt !== '' && searchTxt !== undefined
@@ -347,7 +412,7 @@
 						}
 						else
 						{
-							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*8)/100);
+							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*parseFloat($scope.totalDefaultTax))/100);
 						}
 					} else {
 						$scope.quantity = $scope.searchValue;
@@ -372,7 +437,7 @@
 						}
 						else
 						{
-							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*8)/100);
+							$scope.tWTax = parseFloat($scope.total)+((parseFloat($scope.total)*parseFloat($scope.totalDefaultTax))/100);
 						}
 					}
 					$rootScope.testData[$rootScope.testData.length - 1].quantity = $scope.quantity;
@@ -604,10 +669,10 @@
 				$rootScope.productTotal = parseFloat($rootScope.productTotal)
 					+ parseFloat(GlobalVariable.balanceRemaining);
 			}
-			$rootScope.totalPayment = parseFloat($rootScope.productTotal)
-				.toFixed(2);
-			GlobalVariable.checkOuttotal = parseFloat($rootScope.totalPayment)
-				.toFixed(2);
+			$rootScope.totalPayment = parseFloat(parseFloat($rootScope.productTotal)
+				.toFixed(2));
+			GlobalVariable.checkOuttotal = parseFloat(parseFloat($rootScope.totalPayment)
+				.toFixed(2));
 			GlobalVariable.onAddProduct = $rootScope.testData;
 		}
 		$scope.editRow = function($index,row) {
@@ -802,6 +867,7 @@
 				$rootScope.testData = GlobalVariable.onAddProduct;
 			}	
 			getTaxDetails();
+			getProductDetails.getCustomerDetails()
 			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 				$scope.productNames
 					.push(GlobalVariable.getProducts[i].description);
@@ -844,6 +910,9 @@
 				GlobalVariable.selectedTaxDrp = "default";
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
+				GlobalVariable.balanceRemaining = 0;
+				$scope.productTotal =0;
+				$scope.totalPayment = 0;
 			}
 		};
 		$scope.clearValuePhone = function()
@@ -858,6 +927,9 @@
 				GlobalVariable.selectedTaxDrp = "default";
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
+				GlobalVariable.balanceRemaining = 0;
+				$scope.productTotal =0;
+				$scope.totalPayment = 0;
 			}
 		}
 		function onGetTaxError(response) {
