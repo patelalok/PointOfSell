@@ -4,4 +4,4 @@ applications:
   instances: 1
   path: ./build/libs/PointOfSale-0.0.1-SNAPSHOT.jar
   diego: true
-  host: pointofsell
+  host: pointofsellalok
