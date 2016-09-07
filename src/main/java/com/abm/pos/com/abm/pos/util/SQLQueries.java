@@ -443,18 +443,19 @@ public class SQLQueries {
 
     public String getTransactionDetailsForReceipt = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 
-    public static String getProductHistory = "SELECT t.DATE, " +
-            "            p.PRODUCT_NO," +
-            "            p.DESCRIPTION," +
-            "            t.QUANTITY," +
-            "            (select sum(QUANTITY) from TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ? AND PRODUCT_NO = ?) as TOTALQUANTITY," +
-            "            t.RETAIL," +
-            "            t.COST," +
-            "            t.DISCOUNT" +
-            "            FROM TRANSACTION_LINE_ITEM t , PRODUCT p " +
-            "            WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
-            "            AND t.PRODUCT_NO = ?" +
-            "            AND t.DATE BETWEEN ? AND ?";
+    public static String getProductHistory = "SELECT t.DATE," +
+            "                      p.PRODUCT_NO," +
+            "                        p.DESCRIPTION," +
+            "                        t.QUANTITY," +
+            "                        (select sum(QUANTITY) from TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND  ? AND PRODUCT_NO = ?) as TOTALQUANTITY," +
+            "                        t.RETAIL," +
+            "                        t.COST," +
+            "                        t.DISCOUNT," +
+            "                        p.CATEGORY_ID" +
+            "                        FROM TRANSACTION_LINE_ITEM t , PRODUCT p " +
+            "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
+            "                        AND t.PRODUCT_NO = ?" +
+            "                        AND t.DATE BETWEEN ? AND  ? ";
 
     public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 
@@ -498,35 +499,53 @@ public class SQLQueries {
             "            group by p.DESCRIPTION " +
             "            order by SALESTOTAL desc limit 50";
 
-    public String getYearlyTransaction = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth, " +
-            "sum(TOTAL_AMOUNT_CREDIT) CREDIT, " +
-            "sum(PAID_AMOUNT_CASH) CASH, " +
-            "SUM(TOTAL_AMOUNT_CHECK) CHEC, " +
-            "SUM(TAX_AMOUNT) TAX , " +
-            "SUM(DISCOUNT_AMOUNT) DISCOUNT , " +
-            "SUM(TOTAL_AMOUNT) TOTAL, " +
-            "SUM(BALANCE) BALANCE," +
-            "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
-            "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c') as PROFIT " +
-            "FROM TRANSACTION " +
-            "WHERE TRANSACTION_DATE BETWEEN ? AND ? " +
-            "AND STATUS = 'c' " +
-            "GROUP BY NameOfMonth " +
-            "ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')";
+    public String getYearlyTransaction = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth,\n" +
+            "            sum(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
+            "\t\tsum(PAID_AMOUNT_CASH) CASH, \n" +
+            "            SUM(TOTAL_AMOUNT_CHECK) CHEC, \n" +
+            "            SUM(TAX_AMOUNT) TAX , \n" +
+            "            SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
+            "            SUM(TOTAL_AMOUNT) TOTAL, \n" +
+            "            count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
+            "            SUM(PROFIT) PROFIT\n" +
+            "            FROM TRANSACTION A,\n" +
+            "             (SELECT TRANSACTION_COMP_ID, \n" +
+            "             SUM(CASE WHEN Y.CATEGORY_ID <> 1 THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY ELSE 0.0 END) AS PROFIT,\n" +
+            "             SUM(DISCOUNT) AS DISCOUNT\n" +
+            "            FROM TRANSACTION_LINE_ITEM X, product Y\n" +
+            "            WHERE X.PRODUCT_NO = Y.PRODUCT_NO \n" +
+            "            AND DATE BETWEEN ? AND ? \n" +
+            "            AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B\n" +
+            "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID \n" +
+            "            AND TRANSACTION_DATE BETWEEN ? AND ?  \n" +
+            "            AND STATUS = 'c' \n" +
+            "            GROUP BY NameOfMonth \n" +
+            "            ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')\n" +
+            "            ";
 
-    public String getDashboardDetailsForMonths = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth, " +
-            "sum(TOTAL_AMOUNT_CREDIT) CREDIT, " +
-            "sum(PAID_AMOUNT_CASH) CASH, " +
-            "SUM(TOTAL_AMOUNT_CHECK) CHEC, " +
-            "SUM(TAX_AMOUNT) TAX , " +
-            "SUM(DISCOUNT_AMOUNT) DISCOUNT , " +
-            "SUM(TOTAL_AMOUNT) TOTAL, " +
-            "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
-            "(SELECT monthname(TRANSACTION_DATE) AS NameOfMonth, SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ) as PROFIT " +
-            "FROM TRANSACTION " +
-            "WHERE TRANSACTION_DATE BETWEEN ? AND ?  AND STATUS = 'c' " +
-            "GROUP BY NameOfMonth " +
-            "ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December') ";
+    public String getDashboardDetailsForMonths = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth,\n" +
+            "            sum(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
+            "\t\tsum(PAID_AMOUNT_CASH) CASH, \n" +
+            "            SUM(TOTAL_AMOUNT_CHECK) CHEC, \n" +
+            "            SUM(TAX_AMOUNT) TAX , \n" +
+            "            SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
+            "            SUM(TOTAL_AMOUNT) TOTAL, \n" +
+            "            count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
+            "            SUM(PROFIT) PROFIT\n" +
+            "            FROM TRANSACTION A,\n" +
+            "             (SELECT TRANSACTION_COMP_ID, \n" +
+            "             SUM(CASE WHEN Y.CATEGORY_ID <> 6 THEN ((X.RETAIL-X.COST-X.DISCOUNT)/X.QUANTITY) * X.QUANTITY ELSE 0.0 END) AS PROFIT,\n" +
+            "             SUM(DISCOUNT) AS DISCOUNT\n" +
+            "            FROM TRANSACTION_LINE_ITEM X, product Y\n" +
+            "            WHERE X.PRODUCT_NO = Y.PRODUCT_NO \n" +
+            "            AND DATE BETWEEN ? AND ? \n" +
+            "            AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B\n" +
+            "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID \n" +
+            "            AND TRANSACTION_DATE BETWEEN ? AND ?  \n" +
+            "            AND STATUS = 'c' \n" +
+            "            GROUP BY NameOfMonth \n" +
+            "            ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')\n" +
+            "            ";
 
     public String getSalesCategoryDetails = "SELECT  c.CATEGORY_NAME as COMMON_NAME , " +
             "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +

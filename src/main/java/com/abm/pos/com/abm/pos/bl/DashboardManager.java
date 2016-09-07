@@ -30,7 +30,7 @@ public class DashboardManager {
         List<DashboardDto> dashboardDtos = new ArrayList<>();
         try
         {
-            dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDateCurrent,endDateCurrent);
+            dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDateCurrent,endDateCurrent,startDateCurrent,endDateCurrent);
 
 
             //HERE I NEED TO ADD THE LINE ITEM DISCOUNT CAUSE RIGHT NOW ITS SHOWING ONLY TRANSACTION DISCOUNT
@@ -59,8 +59,9 @@ public class DashboardManager {
             dashboardDto.setTax(rs.getDouble("TAX"));
             dashboardDto.setDiscount(rs.getDouble("DISCOUNT"));
             dashboardDto.setTotal(rs.getDouble("TOTAL"));
-            dashboardDto.setProfit(rs.getDouble("PROFIT"));
             dashboardDto.setNoOfTrans(rs.getDouble("NOOFTRANS"));
+            dashboardDto.setProfit(rs.getDouble("PROFIT"));
+
 
             //double a = yearlyDto.getRetail() - yearlyDto.getCost() - yearlyDto.getDiscount();
             //yearlyDto.setProfit(a);

@@ -73,7 +73,7 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/deleteProduct", method = RequestMethod.DELETE, consumes = "application/json")
+    @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")
     public void deleteProduct(@RequestParam String productId) {
 
         productManager.deleteProductToDB(productId);

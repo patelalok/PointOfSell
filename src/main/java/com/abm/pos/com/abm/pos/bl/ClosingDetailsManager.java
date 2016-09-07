@@ -408,7 +408,7 @@ public class ClosingDetailsManager {
         double grandTotal;
         double totalProfit;
         int noOfTrans;
-        double balance;
+        //double balance;
 
         YearlyListDto yearlyListDto = new YearlyListDto();
 
@@ -431,13 +431,14 @@ public class ClosingDetailsManager {
             yearlyDto.setTax(rs.getDouble("TAX"));
             yearlyDto.setDiscount(rs.getDouble("DISCOUNT"));
 
+
             //if ()
             yearlyDto.setTotal(rs.getDouble("CASH") + rs.getDouble("CREDIT") + rs.getDouble("CHEC"));
             //yearlyDto.setCost(rs.getDouble("COST"));
             //yearlyDto.setRetail(rs.getDouble("RETAIL"));
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
             yearlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
-            yearlyDto.setBalance(rs.getDouble("BALANCE"));
+            //yearlyDto.setBalance(rs.getDouble("BALANCE"));
 
 
             yearlyDtos.add(yearlyDto);
@@ -453,7 +454,7 @@ public class ClosingDetailsManager {
             grandTotal = grandTotal + yearlyDto.getTotal();
             totalProfit = totalProfit + yearlyDto.getProfit();
             noOfTrans = noOfTrans + yearlyDto.getNoOfTrans();
-            balance = balance + yearlyDto.getBalance();
+            //balance = balance + yearlyDto.getBalance();
 
 
             forReportsDto.setTotalCredit(totalCredit);
@@ -530,6 +531,7 @@ public class ClosingDetailsManager {
             monthDto.setTax(rs.getDouble("SUM_TAX"));
             monthDto.setDiscount(rs.getDouble("DISCOUNT"));
             monthDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
+            monthDto.setProfit(rs.getDouble("PROFIT"));
             monthDto.setBalance(rs.getDouble("BALANCE"));
 
             monthDtoList.add(monthDto);
