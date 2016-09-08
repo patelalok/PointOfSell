@@ -28,31 +28,25 @@ public class BrandManager {
     SQLQueries sqlQuery;
 
     public void addBrandToDB(BrandDto brandDto) {
-        try
-        {
+        try {
             jdbcTemplate.update(sqlQuery.addBrandQuery,
                     brandDto.getBrandName(),
                     brandDto.getBrandDescription());
             System.out.println("Brand Added Successfully");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     public void editBrandToDB(BrandDto brandDto) {
 
-        try
-        {
+        try {
             jdbcTemplate.update(sqlQuery.editBrandQuery,
                     brandDto.getBrandName(),
                     brandDto.getBrandDescription(),
                     brandDto.getBrandId());
             System.out.println("Brand Edited Successfully");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -61,21 +55,17 @@ public class BrandManager {
 
         List<BrandDto> brandList = new ArrayList<>();
 
-        try
-        {
+        try {
             brandList = jdbcTemplate.query(sqlQuery.getBrandDetails, new BrandMapper());
 
             System.out.println("Send All Brand Details Successfully");
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return brandList;
     }
 
-    private final class BrandMapper implements RowMapper<BrandDto>
-    {
+    private final class BrandMapper implements RowMapper<BrandDto> {
 
         @Override
         public BrandDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -84,7 +74,7 @@ public class BrandManager {
 
             brand.setBrandId(rs.getInt("BRAND_ID"));
 
-            int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForBrand, new Object[] {brand.getBrandId()},Integer.class);
+            int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForBrand, new Object[]{brand.getBrandId()}, Integer.class);
 
             brand.setBrandName(rs.getString("BRAND_NAME"));
             brand.setBrandDescription(rs.getString("DESCRIPTION"));
@@ -101,30 +91,19 @@ public class BrandManager {
     }
 
 
-    public void deleteBrandFromDB(int  brandId) {
+    public int deleteBrandFromDB(int brandId) {
+
+        int result = 0;
 
         try {
-            int a =  jdbcTemplate.queryForObject(sqlQuery.getBrandFromProductTable, new Object[]{brandId}, Integer.class);
-            System.out.println(a);
 
-            if(a == 0)
-            {
-                jdbcTemplate.update(sqlQuery.deleteBrand, brandId);
-                System.out.println("Brand deleted successfully");
-
-            }
-            else
-            {
-                System.out.println("This Brand is associate with product so can not delete it.");
-
-            }
-        }
-
-        catch (Exception e)
-        {
+            //int a =  jdbcTemplate.queryForObject(sqlQuery.getBrandFromProductTable, new Object[]{brandId}, Integer.class);
+            // System.out.println(a);
+            result = jdbcTemplate.update(sqlQuery.deleteBrand, brandId);
+        } catch (Exception e) {
             System.out.println(e);
         }
+
+        return result;
     }
-
-
 }

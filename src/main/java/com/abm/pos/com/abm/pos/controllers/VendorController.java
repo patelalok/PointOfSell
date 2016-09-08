@@ -42,9 +42,18 @@ public class VendorController {
     }
 
     @RequestMapping(value = "/deleteVendor", method = RequestMethod.POST, consumes = "application/json")
-    public void deleteVendor(@RequestBody int  vendorId) {
+    public ResponseEntity deleteVendor(@RequestBody int  vendorId) {
 
-        vendorManager.deleteVendorToDB(vendorId);
+        int result = 0;
+       result =  vendorManager.deleteVendorToDB(vendorId);
+
+        if(result ==1)
+        {
+            return ResponseEntity.ok("Vendor Delete Successfully");
+        }
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Can not delete vendor please delete all products in this vendor first");
+
     }
 }
 

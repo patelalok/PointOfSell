@@ -193,7 +193,19 @@ public class CustomerManager {
         return balance;
     }
 
-    public void deleteCustomerToDB(String phoneNo) {
+    public int deleteCustomerToDB(int custId) {
+
+        int result = 0;
+
+        try {
+            result = jdbcTemplate.update(sqlQuery.deleteCustomer,custId);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return result;
 
     }
 }

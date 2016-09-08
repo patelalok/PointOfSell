@@ -84,29 +84,25 @@ public class CategoryManager {
         }
     }
 
-    public void deleteCategoryToDB(int categoryId) {
+    public int deleteCategoryToDB(int categoryId) {
 
+        int result = 0;
         try {
-            int a =  jdbcTemplate.queryForObject(sqlQuery.getCategoryFromProductTable, new Object[]{categoryId}, Integer.class);
-            System.out.println(a);
 
-            if(a == 0)
-            {
-                jdbcTemplate.update(sqlQuery.deleteCategory, categoryId);
-                System.out.println("Category deleted successfully");
 
-            }
-            else
-            {
-                System.out.println("This Category is associate with product so can not delete it.");
+           // int a =  jdbcTemplate.queryForObject(sqlQuery.getCategoryFromProductTable, new Object[]{categoryId}, Integer.class);
+            //System.out.println(a);
 
-            }
+            result = jdbcTemplate.update(sqlQuery.deleteCategory, categoryId);
+
         }
 
         catch (Exception e)
         {
             System.out.println(e);
         }
+
+        return result;
     }
 
 

@@ -3,6 +3,8 @@ package com.abm.pos.com.abm.pos.controllers;
 import com.abm.pos.com.abm.pos.bl.ProductManager;
 import com.abm.pos.com.abm.pos.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,11 +76,19 @@ public class ProductController {
 
 
     @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")
-    public void deleteProduct(@RequestParam String productId) {
+    public ResponseEntity deleteProduct(@RequestParam String productId) {
 
-        productManager.deleteProductToDB(productId);
+       int result =  productManager.deleteProductToDB(productId);
 
-        System.out.println("Product Deleted Successfully !!!");
+        if(result == 1)
+        {
+
+            System.out.println("Product Deleted Successfully !!!");
+
+            return ResponseEntity.ok("Product Deleted Successfully");
+        }
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Can not Delete This Product, It may has transaction history");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getLastProductNo", produces = "application/json")

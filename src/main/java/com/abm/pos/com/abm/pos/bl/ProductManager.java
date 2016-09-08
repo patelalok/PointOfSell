@@ -4,6 +4,8 @@ import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import com.itextpdf.text.pdf.PRAcroForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -444,9 +446,20 @@ public class ProductManager
             return productNoAndAltNoDTO;
         }
     }
-    public void deleteProductToDB(String productId) {
+    public int deleteProductToDB(String productId) {
 
-        jdbcTemplate.update(sqlQuery.deleteProduct, productId);
+        int result = 0;
+        try {
+
+             result = jdbcTemplate.update(sqlQuery.deleteProduct, productId);
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return result;
 
     }
 

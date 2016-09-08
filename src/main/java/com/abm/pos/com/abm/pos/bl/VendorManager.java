@@ -3,6 +3,7 @@ package com.abm.pos.com.abm.pos.bl;
 import com.abm.pos.com.abm.pos.dto.VendorDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -49,8 +50,7 @@ public class VendorManager {
 
     public void editVendorToDB(VendorDto vendorDto) {
 
-        try
-        {
+        try {
             jdbcTemplate.update(sqlQuery.editVendorQuery,
 
                     vendorDto.getVendorName(),
@@ -62,9 +62,7 @@ public class VendorManager {
 
             System.out.println("Vendor Edited Successfully");
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -73,65 +71,53 @@ public class VendorManager {
 
         List<VendorDto> vendorList = new ArrayList<>();
 
-        try
-        {
+        try {
             vendorList = jdbcTemplate.query(sqlQuery.getVendorDetails, new VendorMapper());
             System.out.println("Send All Vendor Details Successfully.");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
         return vendorList;
 
     }
-        private final class VendorMapper implements RowMapper<VendorDto>
-        {
 
-            @Override
-            public VendorDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    private final class VendorMapper implements RowMapper<VendorDto> {
 
-                VendorDto vendor = new VendorDto();
+        @Override
+        public VendorDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-                vendor.setVendorId(rs.getInt("VENDOR_ID"));
+            VendorDto vendor = new VendorDto();
 
-                int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForVendor, new Object[] {vendor.getVendorId()},Integer.class);
-                vendor.setVendorName(rs.getString("VENDOR_NAME"));
-                vendor.setCommision(rs.getString("COMMISION"));
-                vendor.setPhoneNo(rs.getInt("PHONENO"));
-                vendor.setCompanyName(rs.getString("COMPANY_NAME"));
-                vendor.setAddress(rs.getString("ADDRESS"));
-                vendor.setNoOfProducts(noOfProducts);
-                vendor.setFilterValue(rs.getString("VENDOR_NAME"));
+            vendor.setVendorId(rs.getInt("VENDOR_ID"));
 
-                return vendor;
-            }
+            int noOfProducts = jdbcTemplate.queryForObject(sqlQuery.getNoOfProductsForVendor, new Object[]{vendor.getVendorId()}, Integer.class);
+            vendor.setVendorName(rs.getString("VENDOR_NAME"));
+            vendor.setCommision(rs.getString("COMMISION"));
+            vendor.setPhoneNo(rs.getInt("PHONENO"));
+            vendor.setCompanyName(rs.getString("COMPANY_NAME"));
+            vendor.setAddress(rs.getString("ADDRESS"));
+            vendor.setNoOfProducts(noOfProducts);
+            vendor.setFilterValue(rs.getString("VENDOR_NAME"));
+
+            return vendor;
+        }
+    }
+
+    public int deleteVendorToDB(int vendorId) {
+
+        int result = 0;
+
+        try {
+            //int a =  jdbcTemplate.queryForObject(sqlQuery.getVendorFromProductTable, new Object[]{vendorId}, Integer.class);
+            //System.out.println(a);
+            result = jdbcTemplate.update(sqlQuery.deleteVendor, vendorId);
+        }
+        catch (Exception e) {
+            System.out.println(e);
         }
 
-        public void deleteVendorToDB(int vendorId) {
+        return result;
 
-            try {
-                    int a =  jdbcTemplate.queryForObject(sqlQuery.getVendorFromProductTable, new Object[]{vendorId}, Integer.class);
-                    System.out.println(a);
-
-            if(a == 0)
-            {
-                jdbcTemplate.update(sqlQuery.deleteVendor, vendorId);
-                System.out.println("Vendor deleted successfully");
-
-            }
-            else
-            {
-               System.out.println("This vendor is associate with product so can not delete it.");
-
-            }
-}
-
-catch (Exception e)
-{
-    System.out.println(e);
-}
-        }
-
+    }
 }
