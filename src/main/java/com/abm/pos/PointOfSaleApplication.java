@@ -26,25 +26,25 @@ public class PointOfSaleApplication {
         String pdfFilename = "test.pdf";
         PointOfSaleApplication generateInvoice = new PointOfSaleApplication();
 
-       // generateInvoice.createPDF(pdfFilename);
+        generateInvoice.createPDF(pdfFilename);
 
     }
 
-   /* private void createPDF (String pdfFilename){
+    private void createPDF (String pdfFilename){
 
         Document doc = new Document();
         PdfWriter docWriter = null;
         initializeFonts();
 
         try {
-
+            String path = "docs/" + pdfFilename;
             docWriter = PdfWriter.getInstance(doc , new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/AddImageExample.pdf"));
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
             doc.addCreator("MySampleCode.com");
             doc.addTitle("Invoice");
-            doc.setPageSize(PageSize.A2);
+            doc.setPageSize(PageSize.A4);
 
             doc.open();
             PdfContentByte cb = docWriter.getDirectContent();
@@ -57,7 +57,7 @@ public class PointOfSaleApplication {
                     beginPage = false;
                     generateLayout(doc, cb);
                     generateHeader(doc, cb);
-                    y = 651;
+                    y = 615;
                 }
                 generateDetail(doc, cb, i, y);
                 y = y - 15;
@@ -127,16 +127,19 @@ public class PointOfSaleApplication {
             cb.stroke();
 
             // Invoice Detail box Text Headings
-            createHeadings(cb,22,633,"Qty");
-            createHeadings(cb,52,633,"Item Number");
-            createHeadings(cb,152,633,"Item Description");
-            createHeadings(cb,432,633,"Price");
-            createHeadings(cb,502,633,"Ext Price");
+            createHeadings(cb,50,633,"Item Number");
+            createHeadings(cb,130,633,"Item Description");
+            createHeadings(cb,470,633,"Retail");
+            createHeadings(cb,500,633,"Disc");
+            createHeadings(cb,530,633,"Ret w/dis");
+            createHeadings(cb,560,633,"Qty");
+            createHeadings(cb,590,633,"Total");
+
 
             //add the images
-            Image companyLogo = Image.getInstance("images/olympics_logo.gif");
-            companyLogo.setAbsolutePosition(25,700);
-            companyLogo.scalePercent(25);
+            Image companyLogo = Image.getInstance("/Users/asp5045/Documents/PointOfSell/src/main/resources/static/assets/images/newLogo.jpg");
+            companyLogo.setAbsolutePosition(200,30);
+            companyLogo.scalePercent(30);
             doc.add(companyLogo);
 
         }
@@ -239,7 +242,7 @@ public class PointOfSaleApplication {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    }
 
 
        /* Document doc = new Document();
