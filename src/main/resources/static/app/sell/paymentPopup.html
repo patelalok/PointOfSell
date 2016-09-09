@@ -27,13 +27,13 @@
 		</div>
 		<div class="row alignCenter cashbuttons padding-top-10">
 			<div class="inline-vertical"><span class="displayBlock">DEBIT</span><span>CARD</span></div>
-			<div class="inline-vertical" style="padding-left:12px;"><input type="text" class="form-control" placeholder="$O.00" ng-model="debitCardPayout" disabled="disabled"/></div>
-			<div class="inline-vertical"><button type="button" class="btn btn-primary"style="width:75px;font-size:28px;" ng-click="payOutMax()" disabled="disabled">Max</button></div>
+			<div class="inline-vertical" style="padding-left:12px;"><input type="text" class="form-control" placeholder="$O.00" ng-model="debitCardPayout" ng-blur="calculateAmount(debitCardPayout,'debit')" /></div>
+			<div class="inline-vertical"><button type="button" class="btn btn-primary"style="width:75px;font-size:28px;" ng-click="payOutMax('debit')">Max</button></div>
 		</div>
 		<div class="row checkbuttons alignCenter padding-top-10">
 			<div class="inline-vertical">CHECK</div>
-			<div class="inline-vertical" style="padding-left:8px;"><input type="text" class="form-control" placeholder="$O.00" disabled="disabled"/></div>
-			<div class="inline-vertical"><button type="button" class="btn btn-primary" disabled="disabled" style="width:75px;font-size:28px;" ng-model="checkPayout" ng-click="payOutMax()">Max</button></div>
+			<div class="inline-vertical" style="padding-left:8px;"><input type="text" class="form-control" placeholder="$O.00" ng-model="checkPayout" ng-blur="calculateAmount(checkPayout,'check')" /></div>
+			<div class="inline-vertical"><button type="button" class="btn btn-primary"  style="width:75px;font-size:28px;"  ng-click="payOutMax('check')">Max</button></div>
 		</div>
 				
 	</div>

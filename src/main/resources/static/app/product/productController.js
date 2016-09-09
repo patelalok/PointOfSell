@@ -389,8 +389,18 @@
 
 		$scope.deleteIMEI = function(phoneId)
 		{
-			var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+phoneId;
-			dataService.Post(url,'',onDeleteIMEISucess,onDelteIMEIError,'application/json','application/json');
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Delete ? ", $scope.callBackDelete);
+
+		};
+		$scope.callBackDelete = function(isOKClicked)
+		{
+			if(isOKClicked)
+			{
+				var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+phoneId;
+				dataService.Post(url,'',onDeleteIMEISucess,onDelteIMEIError,'application/json','application/json');
+			}
 		};
 		function onDeleteIMEISucess(response)
 		{
