@@ -60,7 +60,9 @@
 				$scope.bankDeposit=$scope.getClosingDtls[0].bankDeposit;
 				$scope.custBalance =$scope.getClosingDtls[0].customerBalance;
 				$scope.commission = $scope.getClosingDtls[0].commission;
+				$scope.cashHand = $scope.getClosingDtls[0].cashInHand;
 			} else {
+				$scope.cashHand = 0;
 				$scope.systemDebit = 0;
 				$scope.systemCash = 0;
 				$scope.sysCheck = 0;
@@ -231,7 +233,8 @@
 				"registerId" : $scope.registerId,
 				"customerBalance":$scope.custBalance,
 				"bankDeposit":$scope.bankDeposit,
-				"commission":$scope.commission
+				"commission":$scope.commission,
+				"cashInHand":$scope.cashHand
 			};
 			var url = GlobalConstants.URLCONSTANTS+"addClosingDetails";
 			dataService.Post(url, request, getSuccessAddhandler,
