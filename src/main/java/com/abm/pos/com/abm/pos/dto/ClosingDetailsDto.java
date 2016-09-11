@@ -8,42 +8,43 @@ public class ClosingDetailsDto {
 
     private int registerId;
     private int userIdClose;
+
     private double reportCash;
     private double reportCredit;
+    private double reportCheck;
+    private double reportDebit;
     private double reportTotalAmount;
+
     private double closeCash;
     private double closeCredit;
+    private double closeCheck;
+    private double closeDebit;
     private String closeDate;
     private double closeTotalAmount;
+
     private double differenceCash;
     private double differenceCredit;
+    private double differenceCheck;
+    private double differenceDebit;
+
     private double totalDifference;
     private double totalBusinessAmount;
     private double totalTax;
     private double totalDiscount;
     private double totalProfit;
     private double totalMarkup;
-    private String registerStatus;
-    private double reportCheck;
+
     private double bankDeposit;
     private double customerBalance;
     private double commission;
     private double previousBalance;
 
-    public double getReportCheck() {
-        return reportCheck;
+    public int getRegisterId() {
+        return registerId;
     }
 
-    public void setReportCheck(double reportCheck) {
-        this.reportCheck = reportCheck;
-    }
-
-    public String getRegisterStatus() {
-        return registerStatus;
-    }
-
-    public void setRegisterStatus(String registerStatus) {
-        this.registerStatus = registerStatus;
+    public void setRegisterId(int registerId) {
+        this.registerId = registerId;
     }
 
     public int getUserIdClose() {
@@ -54,36 +55,44 @@ public class ClosingDetailsDto {
         this.userIdClose = userIdClose;
     }
 
-    public double getTotalDiscount() {
-        return totalDiscount;
+    public double getReportCash() {
+        return reportCash;
     }
 
-    public void setTotalDiscount(double totalDiscount) {
-        this.totalDiscount = totalDiscount;
+    public void setReportCash(double reportCash) {
+        this.reportCash = reportCash;
     }
 
-    public double getTotalMarkup() {
-        return totalMarkup;
+    public double getReportCredit() {
+        return reportCredit;
     }
 
-    public void setTotalMarkup(double totalMarkup) {
-        this.totalMarkup = totalMarkup;
+    public void setReportCredit(double reportCredit) {
+        this.reportCredit = reportCredit;
     }
 
-    public double getTotalProfit() {
-        return totalProfit;
+    public double getReportCheck() {
+        return reportCheck;
     }
 
-    public void setTotalProfit(double totalProfit) {
-        this.totalProfit = totalProfit;
+    public void setReportCheck(double reportCheck) {
+        this.reportCheck = reportCheck;
     }
 
-    public double getTotalTax() {
-        return totalTax;
+    public double getReportDebit() {
+        return reportDebit;
     }
 
-    public void setTotalTax(double totalTax) {
-        this.totalTax = totalTax;
+    public void setReportDebit(double reportDebit) {
+        this.reportDebit = reportDebit;
+    }
+
+    public double getReportTotalAmount() {
+        return reportTotalAmount;
+    }
+
+    public void setReportTotalAmount(double reportTotalAmount) {
+        this.reportTotalAmount = reportTotalAmount;
     }
 
     public double getCloseCash() {
@@ -100,6 +109,22 @@ public class ClosingDetailsDto {
 
     public void setCloseCredit(double closeCredit) {
         this.closeCredit = closeCredit;
+    }
+
+    public double getCloseCheck() {
+        return closeCheck;
+    }
+
+    public void setCloseCheck(double closeCheck) {
+        this.closeCheck = closeCheck;
+    }
+
+    public double getCloseDebit() {
+        return closeDebit;
+    }
+
+    public void setCloseDebit(double closeDebit) {
+        this.closeDebit = closeDebit;
     }
 
     public String getCloseDate() {
@@ -134,36 +159,28 @@ public class ClosingDetailsDto {
         this.differenceCredit = differenceCredit;
     }
 
-    public int getRegisterId() {
-        return registerId;
+    public double getDifferenceCheck() {
+        return differenceCheck;
     }
 
-    public void setRegisterId(int registerId) {
-        this.registerId = registerId;
+    public void setDifferenceCheck(double differenceCheck) {
+        this.differenceCheck = differenceCheck;
     }
 
-    public double getReportCash() {
-        return reportCash;
+    public double getDifferenceDebit() {
+        return differenceDebit;
     }
 
-    public void setReportCash(double reportCash) {
-        this.reportCash = reportCash;
+    public void setDifferenceDebit(double differenceDebit) {
+        this.differenceDebit = differenceDebit;
     }
 
-    public double getReportCredit() {
-        return reportCredit;
+    public double getTotalDifference() {
+        return totalDifference;
     }
 
-    public void setReportCredit(double reportCredit) {
-        this.reportCredit = reportCredit;
-    }
-
-    public double getReportTotalAmount() {
-        return reportTotalAmount;
-    }
-
-    public void setReportTotalAmount(double reportTotalAmount) {
-        this.reportTotalAmount = reportTotalAmount;
+    public void setTotalDifference(double totalDifference) {
+        this.totalDifference = totalDifference;
     }
 
     public double getTotalBusinessAmount() {
@@ -174,12 +191,36 @@ public class ClosingDetailsDto {
         this.totalBusinessAmount = totalBusinessAmount;
     }
 
-    public double getTotalDifference() {
-        return totalDifference;
+    public double getTotalTax() {
+        return totalTax;
     }
 
-    public void setTotalDifference(double totalDifference) {
-        this.totalDifference = totalDifference;
+    public void setTotalTax(double totalTax) {
+        this.totalTax = totalTax;
+    }
+
+    public double getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(double totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public double getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(double totalProfit) {
+        this.totalProfit = totalProfit;
+    }
+
+    public double getTotalMarkup() {
+        return totalMarkup;
+    }
+
+    public void setTotalMarkup(double totalMarkup) {
+        this.totalMarkup = totalMarkup;
     }
 
     public double getBankDeposit() {

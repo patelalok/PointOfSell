@@ -9,6 +9,7 @@ public class HourlyDto {
     private double credit;
     private double cash;
     private double check;
+    private double debit;
     private double tax;
     private double discount;
     private  double returnAmount;
@@ -16,10 +17,24 @@ public class HourlyDto {
     private double marginPercentage;
     private double total;
     private double monthAvg;
-   // private double cost;
-   // private double retail;
     private int noOfTrans;
     private double balance;
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public void setCredit(double credit) {
+        this.credit = credit;
+    }
 
     public double getCash() {
         return cash;
@@ -37,12 +52,20 @@ public class HourlyDto {
         this.check = check;
     }
 
-    public double getCredit() {
-        return credit;
+    public double getDebit() {
+        return debit;
     }
 
-    public void setCredit(double credit) {
-        this.credit = credit;
+    public void setDebit(double debit) {
+        this.debit = debit;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public double getDiscount() {
@@ -53,12 +76,20 @@ public class HourlyDto {
         this.discount = discount;
     }
 
-    public int getHour() {
-        return hour;
+    public double getReturnAmount() {
+        return returnAmount;
     }
 
-    public void setHour(int hour) {
-        this.hour = hour;
+    public void setReturnAmount(double returnAmount) {
+        this.returnAmount = returnAmount;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
     }
 
     public double getMarginPercentage() {
@@ -67,6 +98,14 @@ public class HourlyDto {
 
     public void setMarginPercentage(double marginPercentage) {
         this.marginPercentage = marginPercentage;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public double getMonthAvg() {
@@ -84,39 +123,6 @@ public class HourlyDto {
     public void setNoOfTrans(int noOfTrans) {
         this.noOfTrans = noOfTrans;
     }
-
-    public double getProfit() {
-        return profit;
-    }
-
-    public void setProfit(double profit) {
-        this.profit = profit;
-    }
-
-    public double getReturnAmount() {
-        return returnAmount;
-    }
-
-    public void setReturnAmount(double returnAmount) {
-        this.returnAmount = returnAmount;
-    }
-
-    public double getTax() {
-        return tax;
-    }
-
-    public void setTax(double tax) {
-        this.tax = tax;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-
 
     public double getBalance() {
         return balance;

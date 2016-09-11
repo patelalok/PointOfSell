@@ -10,6 +10,7 @@ public class DashboardDto {
     private double cash;
     private double credit;
     private double check;
+    private double debit;
     private double profit;
     private double tax;
     private double discount;
@@ -25,14 +26,12 @@ public class DashboardDto {
         this.nameOfMonth = nameOfMonth;
     }
 
-
-
-    public double getAvgBasketSize() {
-        return avgBasketSize;
+    public double getTotal() {
+        return total;
     }
 
-    public void setAvgBasketSize(double avgBasketSize) {
-        this.avgBasketSize = avgBasketSize;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public double getCash() {
@@ -47,6 +46,10 @@ public class DashboardDto {
         return credit;
     }
 
+    public void setCredit(double credit) {
+        this.credit = credit;
+    }
+
     public double getCheck() {
         return check;
     }
@@ -55,24 +58,12 @@ public class DashboardDto {
         this.check = check;
     }
 
-    public void setCredit(double credit) {
-        this.credit = credit;
+    public double getDebit() {
+        return debit;
     }
 
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public double getNoOfTrans() {
-        return noOfTrans;
-    }
-
-    public void setNoOfTrans(double noOfTrans) {
-        this.noOfTrans = noOfTrans;
+    public void setDebit(double debit) {
+        this.debit = debit;
     }
 
     public double getProfit() {
@@ -91,12 +82,28 @@ public class DashboardDto {
         this.tax = tax;
     }
 
-    public double getTotal() {
-        return total;
+    public double getDiscount() {
+        return discount;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getNoOfTrans() {
+        return noOfTrans;
+    }
+
+    public void setNoOfTrans(double noOfTrans) {
+        this.noOfTrans = noOfTrans;
+    }
+
+    public double getAvgBasketSize() {
+        return avgBasketSize;
+    }
+
+    public void setAvgBasketSize(double avgBasketSize) {
+        this.avgBasketSize = avgBasketSize;
     }
 
     public double getBalance() {

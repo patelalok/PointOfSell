@@ -61,13 +61,18 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getReportCash(),
                         closingDetailsDto.getReportCredit(),
                         closingDetailsDto.getReportCheck(),
+                        closingDetailsDto.getReportDebit(),
                         closingDetailsDto.getReportTotalAmount(),
                         closingDetailsDto.getCloseCash(),
                         closingDetailsDto.getCloseCredit(),
+                        closingDetailsDto.getCloseCheck(),
+                        closingDetailsDto.getCloseDebit(),
                         closingDetailsDto.getCloseDate(),
                         closingDetailsDto.getCloseTotalAmount(),
                         closingDetailsDto.getDifferenceCredit(),
                         closingDetailsDto.getDifferenceCash(),
+                        closingDetailsDto.getDifferenceCheck(),
+                        closingDetailsDto.getDifferenceDebit(),
                         closingDetailsDto.getTotalDifference(),
                         closingDetailsDto.getTotalBusinessAmount(),
                         closingDetailsDto.getTotalTax(),
@@ -75,8 +80,8 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup(),
                         closingDetailsDto.getBankDeposit(),
-                        closingDetailsDto.getCustomerBalance(),
-                        closingDetailsDto.getCommission());
+                        closingDetailsDto.getCommission(),
+                        closingDetailsDto.getCustomerBalance());
 
                 System.out.println("Closing Details Added Successfully");
             } else {
@@ -85,13 +90,18 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getReportCash(),
                         closingDetailsDto.getReportCredit(),
                         closingDetailsDto.getReportCheck(),
+                        closingDetailsDto.getReportDebit(),
                         closingDetailsDto.getReportTotalAmount(),
                         closingDetailsDto.getCloseCash(),
                         closingDetailsDto.getCloseCredit(),
+                        closingDetailsDto.getCloseCheck(),
+                        closingDetailsDto.getCloseDebit(),
                         closingDetailsDto.getCloseDate(),
                         closingDetailsDto.getCloseTotalAmount(),
                         closingDetailsDto.getDifferenceCredit(),
                         closingDetailsDto.getDifferenceCash(),
+                        closingDetailsDto.getDifferenceCheck(),
+                        closingDetailsDto.getDifferenceDebit(),
                         closingDetailsDto.getTotalDifference(),
                         closingDetailsDto.getTotalBusinessAmount(),
                         closingDetailsDto.getTotalTax(),
@@ -99,8 +109,8 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalProfit(),
                         closingDetailsDto.getTotalMarkup(),
                         closingDetailsDto.getBankDeposit(),
-                        closingDetailsDto.getCustomerBalance(),
                         closingDetailsDto.getCommission(),
+                        closingDetailsDto.getCustomerBalance(),
                         closingDetailsDto.getRegisterId());
 
                 System.out.println("Closing Details Edited Successfully");
@@ -143,6 +153,7 @@ public class ClosingDetailsManager {
                 closingDetails.get(0).setReportCash(dashboardDto.getCash());
                 closingDetails.get(0).setReportCredit(dashboardDto.getCredit());
                 closingDetails.get(0).setReportCheck(dashboardDto.getCheck());
+                closingDetails.get(0).setReportDebit(dashboardDto.getDebit());
                 closingDetails.get(0).setTotalTax(dashboardDto.getTax());
                 closingDetails.get(0).setReportTotalAmount(dashboardDto.getTotal());
                 closingDetails.get(0).setCustomerBalance(dashboardDto.getBalance());
@@ -226,6 +237,7 @@ public class ClosingDetailsManager {
             closingDto.setCash(rs.getDouble("CASH"));
             closingDto.setCredit(rs.getDouble("CREDIT"));
             closingDto.setCheck(rs.getDouble("CHECKAMOUNT"));
+            closingDto.setDebit(rs.getDouble("DEBIT"));
             closingDto.setTotal(rs.getDouble("TOTAL"));
             closingDto.setTax(rs.getDouble("TAX"));
             closingDto.setDiscount(rs.getDouble("DISCOUNT"));
@@ -248,13 +260,18 @@ public class ClosingDetailsManager {
             closingDto.setReportCash(rs.getDouble("REPORT_CASH"));
             closingDto.setReportCredit(rs.getDouble("REPORT_CREDIT"));
             closingDto.setReportCheck(rs.getDouble("REPORT_CHECK"));
+            closingDto.setReportDebit(rs.getDouble("REPORT_DEBIT"));
             closingDto.setReportTotalAmount(rs.getDouble("REPORT_TOTAL_AMOUNT"));
             closingDto.setCloseCash(rs.getDouble("CLOSE_CASH"));
             closingDto.setCloseCredit(rs.getDouble("CLOSE_CREDIT"));
+            closingDto.setCloseCheck(rs.getDouble("CLOSE_CHECK"));
+            closingDto.setCloseDebit(rs.getDouble("CLOSE_DEBIT"));
             closingDto.setCloseDate(rs.getString("CLOSE_DATE"));
             closingDto.setCloseTotalAmount(rs.getDouble("CLOSE_TOTAL_AMOUNT"));
             closingDto.setDifferenceCredit(rs.getDouble("CREDIT_DIFFERENCE"));
             closingDto.setDifferenceCash(rs.getDouble("CASH_DIFFERENCE"));
+            closingDto.setDifferenceDebit(rs.getDouble("DEBIT_DIFFERENCE"));
+            closingDto.setDifferenceCheck(rs.getDouble("CHECK_DIFFERENCE"));
             closingDto.setTotalDifference(rs.getDouble("TOTAL_DIFFERENCE"));
             closingDto.setTotalBusinessAmount(rs.getDouble("TOTAL_BUSINESS_AMOUNT"));
             // closingDto.setTotalTax(rs.getDouble("TOTAL_TAX"));
@@ -294,6 +311,7 @@ public class ClosingDetailsManager {
         double totalCredit;
         double totalCash;
         double totalCheck;
+        double totalDebit;
         double totalTax;
         double totalDiscount;
         double grandTotal;
@@ -319,9 +337,10 @@ public class ClosingDetailsManager {
             hourlyDto.setCredit(rs.getDouble("CREDIT"));
             hourlyDto.setCash(rs.getDouble("CASH"));
             hourlyDto.setCheck(rs.getDouble("CHEC"));
+            hourlyDto.setDebit(rs.getDouble("DEBIT"));
             hourlyDto.setTax(rs.getDouble("TAX"));
             hourlyDto.setDiscount(rs.getDouble("DISCOUNT"));
-            hourlyDto.setTotal(rs.getDouble("CREDIT") + rs.getDouble("CASH") + rs.getDouble("CHEC"));
+            hourlyDto.setTotal(rs.getDouble("CREDIT") + rs.getDouble("CASH") + rs.getDouble("CHEC") + rs.getDouble("DEBIT"));
             hourlyDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
             //hourlyDto.setCost(rs.getDouble("COST"));
             // hourlyDto.setRetail(rs.getDouble("RETAIL"));
@@ -336,6 +355,7 @@ public class ClosingDetailsManager {
             totalCredit = totalCredit + hourlyDto.getCredit();
             totalCash = totalCash + hourlyDto.getCash();
             totalCheck = totalCheck + hourlyDto.getCheck();
+            totalDebit = totalDebit + hourlyDto.getDebit();
             totalTax = totalTax + hourlyDto.getTax();
             totalDiscount = totalDiscount + hourlyDto.getDiscount();
             grandTotal = grandTotal + hourlyDto.getTotal();
@@ -347,9 +367,10 @@ public class ClosingDetailsManager {
             forReportsDto.setTotalCredit(totalCredit);
             forReportsDto.setTotalCash(totalCash);
             forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalDebit(totalDebit);
             forReportsDto.setTotalTax(totalTax);
             forReportsDto.setTotalDiscount(totalDiscount);
-            forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit);
+            forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit + totalDebit);
             forReportsDto.setTotalProfit(totalProfit);
             forReportsDto.setNoOfTrans(noOfTrans);
             forReportsDto.setBalance(balance);
@@ -403,6 +424,7 @@ public class ClosingDetailsManager {
         double totalCredit;
         double totalCash;
         double totalCheck;
+        double totalDebit;
         double totalTax;
         double totalDiscount;
         double grandTotal;
@@ -428,12 +450,13 @@ public class ClosingDetailsManager {
             yearlyDto.setCredit(rs.getDouble("CREDIT"));
             yearlyDto.setCash(rs.getDouble("CASH"));
             yearlyDto.setCheck(rs.getDouble("CHEC"));
+            yearlyDto.setDebit(rs.getDouble("DEBIT"));
             yearlyDto.setTax(rs.getDouble("TAX"));
             yearlyDto.setDiscount(rs.getDouble("DISCOUNT"));
 
 
             //if ()
-            yearlyDto.setTotal(rs.getDouble("CASH") + rs.getDouble("CREDIT") + rs.getDouble("CHEC"));
+            yearlyDto.setTotal(rs.getDouble("CASH") + rs.getDouble("CREDIT") + rs.getDouble("CHEC") + rs.getDouble("DEBIT"));
             //yearlyDto.setCost(rs.getDouble("COST"));
             //yearlyDto.setRetail(rs.getDouble("RETAIL"));
             yearlyDto.setProfit(rs.getDouble("PROFIT"));
@@ -449,6 +472,7 @@ public class ClosingDetailsManager {
             totalCredit = totalCredit + yearlyDto.getCredit();
             totalCash = totalCash + yearlyDto.getCash();
             totalCheck = totalCheck + yearlyDto.getCheck();
+            totalDebit = totalDebit + yearlyDto.getDebit();
             totalTax = totalTax + yearlyDto.getTax();
             totalDiscount = totalDiscount + yearlyDto.getDiscount();
             grandTotal = grandTotal + yearlyDto.getTotal();
@@ -462,7 +486,7 @@ public class ClosingDetailsManager {
             forReportsDto.setTotalCheck(totalCheck);
             forReportsDto.setTotalTax(totalTax);
             forReportsDto.setTotalDiscount(totalDiscount);
-            forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit);
+            forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit + totalDebit);
             forReportsDto.setTotalProfit(totalProfit);
             forReportsDto.setNoOfTrans(noOfTrans);
             forReportsDto.setAvgBasketSize(12.99);
@@ -497,6 +521,7 @@ public class ClosingDetailsManager {
         double totalCredit;
         double totalCash;
         double totalCheck;
+        double totalDebit;
         double totalTax;
         double totalDiscount;
         double grandTotal;
@@ -527,7 +552,8 @@ public class ClosingDetailsManager {
             monthDto.setCash(rs.getDouble("SUM_CASH"));
             monthDto.setCredit(rs.getDouble("SUM_CREDIT"));
             monthDto.setCheck(rs.getDouble("CHEC"));
-            monthDto.setTotal(rs.getDouble("SUM_CASH") + rs.getDouble("SUM_CREDIT") + rs.getDouble("CHEC"));
+            monthDto.setDebit(rs.getDouble("DEBIT"));
+            monthDto.setTotal(rs.getDouble("SUM_CASH") + rs.getDouble("SUM_CREDIT") + rs.getDouble("CHEC") + rs.getDouble("DEBIT"));
             monthDto.setTax(rs.getDouble("SUM_TAX"));
             monthDto.setDiscount(rs.getDouble("DISCOUNT"));
             monthDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
@@ -541,6 +567,7 @@ public class ClosingDetailsManager {
             totalCredit = totalCredit + monthDto.getCredit();
             totalCash = totalCash + monthDto.getCash();
             totalCheck = totalCheck + monthDto.getCheck();
+            totalDebit = totalDebit + monthDto.getDebit();
             totalTax = totalTax + monthDto.getTax();
             totalDiscount = totalDiscount + monthDto.getDiscount();
             grandTotal = grandTotal + monthDto.getTotal();
@@ -552,9 +579,10 @@ public class ClosingDetailsManager {
             forReportsDto.setTotalCredit(totalCredit);
             forReportsDto.setTotalCash(totalCash);
             forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalDebit(totalDebit);
             forReportsDto.setTotalTax(totalTax);
             forReportsDto.setTotalDiscount(totalDiscount);
-            forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit);
+            forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit + totalDebit);
             forReportsDto.setTotalProfit(totalProfit);
             forReportsDto.setNoOfTrans(noOfTrans);
             forReportsDto.setBalance(balance);
@@ -755,9 +783,10 @@ public class ClosingDetailsManager {
             System.out.println(dateFormat.format(date));
             trans.setNoOfTransactions(rs.getInt("NOOFTRANS"));
             trans.setAvgTotal(rs.getDouble("AVGTOTAL"));
-            trans.setTotal(rs.getDouble("CASH") + rs.getDouble("CREDIT") + rs.getDouble("SUMCHECK"));
+            trans.setTotal(rs.getDouble("CASH") + rs.getDouble("CREDIT") + rs.getDouble("SUMCHECK") + rs.getDouble("DEBIT"));
             trans.setCash(rs.getDouble("CASH"));
             trans.setCredit(rs.getDouble("CREDIT"));
+            trans.setDebit(rs.getDouble("DEBIT"));
             trans.setCheck(rs.getDouble("SUMCHECK"));
             trans.setTax(rs.getDouble("TAX"));
             trans.setDiscount(rs.getDouble("DISCOUNT"));

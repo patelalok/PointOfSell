@@ -122,7 +122,8 @@ public class SQLQueries {
                     "TRANS_CREDIT_ID," +
                     "LAST_4_DIGITS, " +
                     "PREVIOUS_BALANCE, " +
-                    "BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "BALANCE, " +
+                    "PAID_AMOUNT_DEBIT) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +
@@ -165,14 +166,19 @@ public class SQLQueries {
                     "USER_ID_CLOSE , " +
                     "REPORT_CASH , " +
                     "REPORT_CREDIT ," +
-                    "REPORT_CHECK, " +
+                    "REPORT_CHECK," +
+                    "REPORT_DEBIT " +
                     "REPORT_TOTAL_AMOUNT , " +
                     "CLOSE_CASH , " +
-                    "CLOSE_CREDIT , " +
+                    "CLOSE_CREDIT," +
+                    "CLOSE_CHECK," +
+                    "CLOSE_DEBIT " +
                     "CLOSE_DATE , " +
                     "CLOSE_TOTAL_AMOUNT , " +
                     "CREDIT_DIFFERENCE , " +
-                    "CASH_DIFFERENCE , " +
+                    "CASH_DIFFERENCE ," +
+                    "CHECK_DIFFERENCE," +
+                    "DEBIT_DIFFERENCE " +
                     "TOTAL_DIFFERENCE , " +
                     "TOTAL_BUSINESS_AMOUNT , " +
                     "TOTAL_TAX , " +
@@ -181,7 +187,7 @@ public class SQLQueries {
                     "TOTAL_MARKUP," +
                     "BANKDEPOSIT, " +
                     "COMISSION," +
-                    "CUSTOMER_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "CUSTOMER_BALANCE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
  public String addTransactionPaymentDetail =
@@ -360,20 +366,28 @@ public class SQLQueries {
                     "USER_ID_CLOSE = ? ," +
                     " REPORT_CASH = ? , " +
                     "REPORT_CREDIT = ? ," +
-                    " REPORT_CHECK = ?, " +
-                    "REPORT_TOTAL_AMOUNT = ? , " +
+                    " REPORT_CHECK = ?," +
+                    "REPORT_DEBIT = ?," +
+                    "REPORT_TOTAL_AMOUNT = ?, " +
                     "CLOSE_CASH = ? , " +
-                    "CLOSE_CREDIT = ?, " +
+                    "CLOSE_CREDIT = ?," +
+                    "CLOSE_CHECK = ?," +
+                    "CLOSE_DEBIT = ?, " +
                     "CLOSE_DATE = ?, " +
                     "CLOSE_TOTAL_AMOUNT = ?, " +
-                    "CREDIT_DIFFERENCE = ?, " +
+                    "CREDIT_DIFFERENCE = ?," +
                     "CASH_DIFFERENCE = ?, " +
+                    "CHECK_DIFFERENCE = ?, " +
+                    "DEBIT_DIFFERENCE = ?, " +
                     "TOTAL_DIFFERENCE = ? , " +
                     "TOTAL_BUSINESS_AMOUNT = ?, " +
                     "TOTAL_TAX = ?, " +
                     "TOTAL_DISCOUNT = ?, " +
                     "TOTAL_PROFIT = ?, " +
-                    "TOTAL_MARKUP = ?, BANKDEPOSIT = ?, CUSTOMER_BALANCE = ?, COMISSION = ? " +
+                    "TOTAL_MARKUP = ?, " +
+                    "BANKDEPOSIT = ?, " +
+                    "COMISSION = ?," +
+                    "CUSTOMER_BALANCE = ? " +
                     "WHERE REGISTER_ID = ? ";
 
 
@@ -461,7 +475,18 @@ public class SQLQueries {
 
     public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
 
-    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,AVG(TOTAL_AMOUNT) AVGTOTAL, sum(TOTAL_AMOUNT) TOTAL, SUM(BALANCE) BALANCE, sum(PAID_AMOUNT_CASH) CASH ,sum(TOTAL_AMOUNT_CREDIT) CREDIT ,sum(TOTAL_AMOUNT_CHECK) SUMCHECK, sum(TAX_AMOUNT) TAX, sum(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND STATUS = 'c' ";
+    public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,\n" +
+            "AVG(TOTAL_AMOUNT) AVGTOTAL, \n" +
+            "sum(TOTAL_AMOUNT) TOTAL, \n" +
+            "SUM(BALANCE) BALANCE, \n" +
+            "sum(PAID_AMOUNT_CASH) CASH ,\n" +
+            "sum(TOTAL_AMOUNT_CREDIT) CREDIT ,\n" +
+            "sum(TOTAL_AMOUNT_CHECK) SUMCHECK,\n" +
+            "sum(PAID_AMOUNT_DEBIT) DEBIT,\n" +
+            "sum(TAX_AMOUNT) TAX, \n" +
+            "sum(DISCOUNT_AMOUNT) DISCOUNT \n" +
+            "FROM TRANSACTION \n" +
+            "WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND STATUS = 'c' ";
 
     public String getDailyProfit = "SELECT sum(RETAIL)-sum(COST)-SUM(DISCOUNT) FROM TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ";
 
@@ -471,6 +496,7 @@ public class SQLQueries {
             "SUM(PAID_AMOUNT_CASH) SUM_CASH, " +
             "sum(TOTAL_AMOUNT_CREDIT) SUM_CREDIT, " +
             "SUM(TOTAL_AMOUNT_CHECK) CHEC, " +
+            "SUM(PAID_AMOUNT_DEBIT) DEBIT, " +
             "sum(TOTAL_AMOUNT) TOTAL, " +
             "SUM(BALANCE) BALANCE, " +
             "sum(TAX_AMOUNT)  SUM_TAX, " +
@@ -502,7 +528,8 @@ public class SQLQueries {
     public String getYearlyTransaction = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth,\n" +
             "            sum(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
             "\t\tsum(PAID_AMOUNT_CASH) CASH, \n" +
-            "            SUM(TOTAL_AMOUNT_CHECK) CHEC, \n" +
+            "            SUM(TOTAL_AMOUNT_CHECK) CHEC, " +
+            "            SUM(PAID_AMOUNT_DEBIT) DEBIT," +
             "            SUM(TAX_AMOUNT) TAX , \n" +
             "            SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
             "            SUM(TOTAL_AMOUNT) TOTAL, \n" +
@@ -562,6 +589,7 @@ public class SQLQueries {
             "sum( TOTAL_AMOUNT_CREDIT) CREDIT, " +
             "sum( PAID_AMOUNT_CASH) CASH, " +
             "SUM( TOTAL_AMOUNT_CHECK) CHEC, " +
+            "SUM( PAID_AMOUNT_DEBIT) DEBIT," +
             "SUM( TAX_AMOUNT) TAX , " +
             "SUM( DISCOUNT_AMOUNT) DISCOUNT , " +
             "SUM( TOTAL_AMOUNT) TOTAL, " +
@@ -666,7 +694,17 @@ public class SQLQueries {
 
     public String getProductNumber = "SELECT PRODUCT_NO FROM PRODUCT WHERE PRODUCT_NO = ?";
 
-    public String getClosingDetailsFromSystemFromTransaction = "SELECT SUM(PAID_AMOUNT_CASH) CASH, SUM(TOTAL_AMOUNT_CREDIT) CREDIT, SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, SUM(PAID_AMOUNT_CASH + TOTAL_AMOUNT_CREDIT + TOTAL_AMOUNT_CHECK) TOTAL,SUM(BALANCE - PREVIOUS_BALANCE) BALANCE ,SUM(TAX_AMOUNT) TAX,SUM(DISCOUNT_AMOUNT) DISCOUNT FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c' ";
+    public String getClosingDetailsFromSystemFromTransaction =
+            "SELECT SUM(PAID_AMOUNT_CASH) CASH," +
+            "SUM(TOTAL_AMOUNT_CREDIT) CREDIT," +
+            "SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT," +
+            "SUM(PAID_AMOUNT_DEBIT) DEBIT," +
+            "SUM(PAID_AMOUNT_CASH + TOTAL_AMOUNT_CREDIT + TOTAL_AMOUNT_CHECK + PAID_AMOUNT_DEBIT) TOTAL," +
+            "SUM(BALANCE - PREVIOUS_BALANCE) BALANCE ," +
+            "SUM(TAX_AMOUNT) TAX," +
+            "SUM(DISCOUNT_AMOUNT) DISCOUNT " +
+            "FROM TRANSACTION " +
+            "WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c'";
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";

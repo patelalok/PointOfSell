@@ -11,6 +11,7 @@ public class MonthDto {
     private double credit;
     private double cash;
     private double check;
+    private double debit;
     private double tax;
     private double discount;
     private  double returnAmount;
@@ -23,12 +24,20 @@ public class MonthDto {
     private int noOfTrans;
     private double balance;
 
-    public int getNoOfTrans() {
-        return noOfTrans;
+    public String getDate() {
+        return date;
     }
 
-    public void setNoOfTrans(int noOfTrans) {
-        this.noOfTrans = noOfTrans;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public void setCredit(double credit) {
+        this.credit = credit;
     }
 
     public double getCash() {
@@ -47,76 +56,12 @@ public class MonthDto {
         this.check = check;
     }
 
-    public double getCost() {
-        return cost;
+    public double getDebit() {
+        return debit;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    public double getCredit() {
-        return credit;
-    }
-
-    public void setCredit(double credit) {
-        this.credit = credit;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public double getMarginPercentage() {
-        return marginPercentage;
-    }
-
-    public void setMarginPercentage(double marginPercentage) {
-        this.marginPercentage = marginPercentage;
-    }
-
-    public double getMonthAvg() {
-        return monthAvg;
-    }
-
-    public void setMonthAvg(double monthAvg) {
-        this.monthAvg = monthAvg;
-    }
-
-    public double getProfit() {
-        return profit;
-    }
-
-    public void setProfit(double profit) {
-        this.profit = profit;
-    }
-
-    public double getRetail() {
-        return retail;
-    }
-
-    public void setRetail(double retail) {
-        this.retail = retail;
-    }
-
-    public double getReturnAmount() {
-        return returnAmount;
-    }
-
-    public void setReturnAmount(double returnAmount) {
-        this.returnAmount = returnAmount;
+    public void setDebit(double debit) {
+        this.debit = debit;
     }
 
     public double getTax() {
@@ -127,12 +72,76 @@ public class MonthDto {
         this.tax = tax;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getReturnAmount() {
+        return returnAmount;
+    }
+
+    public void setReturnAmount(double returnAmount) {
+        this.returnAmount = returnAmount;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public double getMarginPercentage() {
+        return marginPercentage;
+    }
+
+    public void setMarginPercentage(double marginPercentage) {
+        this.marginPercentage = marginPercentage;
+    }
+
     public double getTotal() {
         return total;
     }
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public double getMonthAvg() {
+        return monthAvg;
+    }
+
+    public void setMonthAvg(double monthAvg) {
+        this.monthAvg = monthAvg;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public double getRetail() {
+        return retail;
+    }
+
+    public void setRetail(double retail) {
+        this.retail = retail;
+    }
+
+    public int getNoOfTrans() {
+        return noOfTrans;
+    }
+
+    public void setNoOfTrans(int noOfTrans) {
+        this.noOfTrans = noOfTrans;
     }
 
     public double getBalance() {

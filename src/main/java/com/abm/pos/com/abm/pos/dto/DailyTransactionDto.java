@@ -8,6 +8,8 @@ public class DailyTransactionDto {
     private String date;
     private double Cash;
     private double credit;
+    private double check;
+    private double debit;
     private double tax;
     private double discount;
     private double total;
@@ -16,15 +18,14 @@ public class DailyTransactionDto {
     private int noOfTransactions;
     private double avgTotal;
     private double profitAmount;
-    private double check;
     private double balance;
 
-    public double getAvgTotal() {
-        return avgTotal;
+    public String getDate() {
+        return date;
     }
 
-    public void setAvgTotal(double avgTotal) {
-        this.avgTotal = avgTotal;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public double getCash() {
@@ -35,14 +36,6 @@ public class DailyTransactionDto {
         Cash = cash;
     }
 
-    public double getCheck() {
-        return check;
-    }
-
-    public void setCheck(double check) {
-        this.check = check;
-    }
-
     public double getCredit() {
         return credit;
     }
@@ -51,12 +44,28 @@ public class DailyTransactionDto {
         this.credit = credit;
     }
 
-    public String getDate() {
-        return date;
+    public double getCheck() {
+        return check;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCheck(double check) {
+        this.check = check;
+    }
+
+    public double getDebit() {
+        return debit;
+    }
+
+    public void setDebit(double debit) {
+        this.debit = debit;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public double getDiscount() {
@@ -65,6 +74,14 @@ public class DailyTransactionDto {
 
     public void setDiscount(double discount) {
         this.discount = discount;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public double getGrossSale() {
@@ -91,28 +108,20 @@ public class DailyTransactionDto {
         this.noOfTransactions = noOfTransactions;
     }
 
+    public double getAvgTotal() {
+        return avgTotal;
+    }
+
+    public void setAvgTotal(double avgTotal) {
+        this.avgTotal = avgTotal;
+    }
+
     public double getProfitAmount() {
         return profitAmount;
     }
 
     public void setProfitAmount(double profitAmount) {
         this.profitAmount = profitAmount;
-    }
-
-    public double getTax() {
-        return tax;
-    }
-
-    public void setTax(double tax) {
-        this.tax = tax;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     public double getBalance() {

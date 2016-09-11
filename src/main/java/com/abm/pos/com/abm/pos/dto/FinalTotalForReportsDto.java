@@ -8,6 +8,7 @@ public class FinalTotalForReportsDto {
     private double totalCredit;
     private double totalCash;
     private double totalCheck;
+    private double totalDebit;
     private double totalTax;
     private double totalDiscount;
     private double grandTotal;
@@ -18,36 +19,12 @@ public class FinalTotalForReportsDto {
     private double avgBasketSize;
     private double balance;
 
-    public double getAvgBasketSize() {
-        return avgBasketSize;
+    public double getTotalCredit() {
+        return totalCredit;
     }
 
-    public void setAvgBasketSize(double avgBasketSize) {
-        this.avgBasketSize = avgBasketSize;
-    }
-
-    public int getNoOfTrans() {
-        return noOfTrans;
-    }
-
-    public void setNoOfTrans(int noOfTrans) {
-        this.noOfTrans = noOfTrans;
-    }
-
-    public double getAvgMargin() {
-        return avgMargin;
-    }
-
-    public void setAvgMargin(double avgMargin) {
-        this.avgMargin = avgMargin;
-    }
-
-    public double getGrandTotal() {
-        return grandTotal;
-    }
-
-    public void setGrandTotal(double grandTotal) {
-        this.grandTotal = grandTotal;
+    public void setTotalCredit(double totalCredit) {
+        this.totalCredit = totalCredit;
     }
 
     public double getTotalCash() {
@@ -66,12 +43,20 @@ public class FinalTotalForReportsDto {
         this.totalCheck = totalCheck;
     }
 
-    public double getTotalCredit() {
-        return totalCredit;
+    public double getTotalDebit() {
+        return totalDebit;
     }
 
-    public void setTotalCredit(double totalCredit) {
-        this.totalCredit = totalCredit;
+    public void setTotalDebit(double totalDebit) {
+        this.totalDebit = totalDebit;
+    }
+
+    public double getTotalTax() {
+        return totalTax;
+    }
+
+    public void setTotalTax(double totalTax) {
+        this.totalTax = totalTax;
     }
 
     public double getTotalDiscount() {
@@ -80,6 +65,14 @@ public class FinalTotalForReportsDto {
 
     public void setTotalDiscount(double totalDiscount) {
         this.totalDiscount = totalDiscount;
+    }
+
+    public double getGrandTotal() {
+        return grandTotal;
+    }
+
+    public void setGrandTotal(double grandTotal) {
+        this.grandTotal = grandTotal;
     }
 
     public double getTotalProfit() {
@@ -98,12 +91,28 @@ public class FinalTotalForReportsDto {
         this.totalReturn = totalReturn;
     }
 
-    public double getTotalTax() {
-        return totalTax;
+    public double getAvgMargin() {
+        return avgMargin;
     }
 
-    public void setTotalTax(double totalTax) {
-        this.totalTax = totalTax;
+    public void setAvgMargin(double avgMargin) {
+        this.avgMargin = avgMargin;
+    }
+
+    public int getNoOfTrans() {
+        return noOfTrans;
+    }
+
+    public void setNoOfTrans(int noOfTrans) {
+        this.noOfTrans = noOfTrans;
+    }
+
+    public double getAvgBasketSize() {
+        return avgBasketSize;
+    }
+
+    public void setAvgBasketSize(double avgBasketSize) {
+        this.avgBasketSize = avgBasketSize;
     }
 
     public double getBalance() {
