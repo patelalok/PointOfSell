@@ -36,6 +36,7 @@ public class ClosingDetailsDto {
 
     private double bankDeposit;
     private double customerBalance;
+    private double cashInHand;
     private double commission;
     private double previousBalance;
 
@@ -253,5 +254,13 @@ public class ClosingDetailsDto {
 
     public void setPreviousBalance(double previousBalance) {
         this.previousBalance = previousBalance;
+    }
+
+    public double getCashInHand() {
+        return cashInHand;
+    }
+
+    public void setCashInHand(double cashInHand) {
+        this.cashInHand = cashInHand;
     }
 }
