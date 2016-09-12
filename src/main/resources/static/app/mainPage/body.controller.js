@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BodyController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService','GlobalConstants'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService','GlobalConstants','DialogFactory'];
 
-	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService,GlobalConstants) {
+	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService,GlobalConstants,DialogFactory) {
 		
 		var vm = this;
 		vm.device = device;
@@ -123,6 +123,12 @@
 		{
 
 		}
+		$scope.addClockIn = function()
+		{
+			var _tmPath = 'app/mainPage/clockIn.html';
+			var _ctrlPath = 'ClockInController';
+			DialogFactory.show(_tmPath, _ctrlPath,$scope.getLastTransId);
+		};
 		render();
 	}
 })();

@@ -89,6 +89,7 @@
 				sessionStorage.userId =response.userId;
 				sessionStorage.userRole = response.userRole;
 				GlobalVariable.userRole= response.userRole;
+				sessionStorage.userLoggedName = $scope.loginemail;
 				if(GlobalVariable.userRole == 'Manager')
 				{
 					$state.go('sell');
@@ -109,5 +110,24 @@
 		{
 			$scope.errorMessage="Your login is incorrect. Please re-enter your User Name and Password. "
 		}
+		function render()
+		{
+			getUserDtls();
+
+		}
+		function getUserDtls()
+		{
+			var url=GlobalConstants.URLCONSTANTS+'getUserDetails';
+			dataService.Get(url,onGetUserDtlsSuccess,onGetUserDtlsError,'application/json','application/json');
+		}
+		function onGetUserDtlsSuccess(response)
+		{
+			GlobalVariable.getUserDtls = response;
+		}
+		function onGetUserDtlsError(response)
+		{
+
+		}
+		render();
 	}
 })();

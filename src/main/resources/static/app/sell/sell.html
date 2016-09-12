@@ -18,7 +18,7 @@
 			 <input type="text" class="form-control" data-restrict-characters="restrictCharacter.Special.regExp" typeahead="productName for productName in productNames | filter:$viewValue " typeahead-min-length ="3" placeholder="Sell or Scan Product" ng-model="searchValue" ng-enter="changeQuantity()" style="width:100%;height:52px;" >
 			
 			 </div>
-				<div class="col-md-4 searchBox">
+				<div class="col-md-3 searchBox">
 
 					<input type="text" class="form-control" data-restrict-characters="restrictCharacter.Special.regExp"  placeholder="Sell product by ALTNO" ng-model="searchValueAlt" ng-enter="loadDtlsByAltNo()" style="width:100%;height:52px;" >
 
@@ -351,6 +351,20 @@
 					 style="padding-left: 500px;">Credit</div>
 				<div class="inline-vertical display-cell align-left padding-left-40"
 					 ng-model="productTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit !== 0">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Debit</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit}}</div>
+			</div>
+			<div class="display-row"
+				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck !== 0">
+				<div class="inline-vertical display-cell align-left"
+					 style="padding-left: 500px;">Check</div>
+				<div class="inline-vertical display-cell align-left padding-left-40"
+					 ng-model="productTotal">{{GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck}}</div>
 			</div>
 			<div class="display-row"
 				 ng-if="GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount !==0">
