@@ -139,32 +139,46 @@ public class UserManager {
         }
 
     //ADDING CLOCK IN AND CLOCK OUT TIME OF THE USER GETTING AT THE ONLY LOGOUT TIME.
-    public void addUserClockIn(UserClockInDto userClockIn) {
+    public boolean addUserClockIn(UserClockInDto userClockIn) {
 
+        boolean response = false;
         try
         {
-            jdbcTemplate.update(sqlQuery.addUserClockIn,
-                    userClockIn.getUsername(),
-                    userClockIn.getClockInTime(),
-                    userClockIn.getClockOutTime(),
-                    userClockIn.getNoOfhours());
 
-            System.out.println("User Clocked in and Clocked out in Successfully");
+            UserLogin userLogin = new UserLogin();
+
+            userLogin = getUserLoginDetails(userClockIn.getUsername(), userClockIn.getPassword());
+
+            if(userLogin.isValidUser()) {
+
+
+                jdbcTemplate.update(sqlQuery.addUserClockIn,
+                        userClockIn.getUsername(),
+                        userClockIn.getClockInTime(),
+                        userClockIn.getClockOutTime(),
+                        userClockIn.getNoOfhours());
+
+                response = true;
+                System.out.println("User Clocked in Successfully");
+            }
 
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
+
+        return response;
+
     }
 //TO GET CLOCK IN AND CLOCK OUT DETAILS OF USER.
-    public List<UserClockInDto> getUserClockIn(String username) {
+    public List<UserClockInDto> getUserClockIn(String username, String date) {
 
         List<UserClockInDto> userClockInDtoList = new ArrayList<>();
 
         try
         {
-            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserClockInMapper(), username );
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserClockInMapper(), username,date );
         }
         catch (Exception e)
         {
@@ -193,21 +207,37 @@ public class UserManager {
             return user;
         }
     }
-    public void editUserClockIn(UserClockInDto userDto) {
+    public boolean editUserClockIn(UserClockInDto userDto) {
+
+        boolean response = false;
+
 
         try
         {
-            jdbcTemplate.update(sqlQuery.updateUserClockInDetails,
-                    userDto.getClockInTime(),
-                    userDto.getClockOutTime(),
-                    userDto.getNoOfhours(),
-                    userDto.getClockInId());
 
+            UserLogin userLogin = new UserLogin();
+
+            userLogin = getUserLoginDetails(userDto.getUsername(), userDto.getPassword());
+
+            if(userLogin.isValidUser()) {
+
+
+                jdbcTemplate.update(sqlQuery.updateUserClockInDetails,
+                        userDto.getClockInTime(),
+                        userDto.getClockOutTime(),
+                        userDto.getNoOfhours(),
+                        userDto.getClockInId());
+                response = true;
+
+                System.out.println("User Clocked in Successfully");
+            }
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
+
+        return response;
 
     }
     public void deleteVendorToDB(String vendorId) {

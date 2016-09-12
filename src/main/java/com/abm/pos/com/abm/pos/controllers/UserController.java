@@ -48,21 +48,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/addUserClockIn", method = RequestMethod.POST, consumes = "application/json")
-    public void addUserClockIn(@RequestBody UserClockInDto userDto) {
+    public boolean addUserClockIn(@RequestBody UserClockInDto userDto) {
 
-        userManager.addUserClockIn(userDto);
+       return userManager.addUserClockIn(userDto);
     }
 
     @RequestMapping(value = "/getUserClockIn", method = RequestMethod.GET, produces = "application/json")
-    public List<UserClockInDto> getUserClockIn(@RequestParam String username) {
+    public List<UserClockInDto> getUserClockIn(@RequestParam String username,@RequestParam String date) {
 
-        return userManager.getUserClockIn(username);
+        return userManager.getUserClockIn(username,date);
 
     }
     @RequestMapping(value = "/editUserClockIn", method = RequestMethod.POST, consumes = "application/json")
-    public void editUserClockIn(@RequestBody UserClockInDto userDto) {
+    public boolean editUserClockIn(@RequestBody UserClockInDto userDto) {
 
-        userManager.editUserClockIn(userDto);
+       return userManager.editUserClockIn(userDto);
 
     }
 

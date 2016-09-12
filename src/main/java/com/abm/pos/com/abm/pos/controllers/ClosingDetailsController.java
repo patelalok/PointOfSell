@@ -96,14 +96,14 @@ public class ClosingDetailsController {
 
         closingDetailsManager.printClosingDetails(startDate,endDate);
 
-        ClassPathResource pdfFile = new ClassPathResource("downloads/ClosingDetails.pdf");
+        ClassPathResource pdfFile = new ClassPathResource("/Users/asp5045/Documents/PointOfSell/src/main/resources/AddImageExample.pdf");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.add("Access-Control-Allow-Origin", "*");
         headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
         headers.add("Access-Control-Allow-Headers", "Content-Type");
-        headers.add("Content-Disposition", "filename=" + "AddTableExample1.pdf");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
