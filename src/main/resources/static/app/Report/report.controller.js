@@ -589,6 +589,7 @@
 				$scope.hourlySummary = response.hourlyDtoList;
 				$scope.hourlySummary.push({
 					"hour": "Total",
+					"debit": parseFloat(response.finalTotalForReportsDtosList[0].totalDebit).toFixed(2),
 					"credit": parseFloat(response.finalTotalForReportsDtoList[0].totalCredit).toFixed(2),
 					"cash": parseFloat(response.finalTotalForReportsDtoList[0].totalCash).toFixed(2),
 					"check": parseFloat(response.finalTotalForReportsDtoList[0].totalCheck).toFixed(2),
@@ -596,7 +597,6 @@
 					"discount": parseFloat(response.finalTotalForReportsDtoList[0].totalDiscount).toFixed(2),
 					"returnAmount": parseFloat(response.finalTotalForReportsDtoList[0].totalReturn).toFixed(2),
 					"profit": parseFloat(response.finalTotalForReportsDtoList[0].totalProfit).toFixed(2),
-					"marginPercentage": parseFloat(response.finalTotalForReportsDtoList[0].avgMargin).toFixed(2),
 					"total": parseFloat(response.finalTotalForReportsDtoList[0].grandTotal).toFixed(2),
 					"monthAvg": 0.0,
 					"cost": 0.0,
@@ -685,6 +685,7 @@
 				{
 					$scope.yearlySummary.push({
 						"monthName": response.yearlyListDtos[i].monthName,
+						"debit": parseFloat(response.yearlyListDtos[0].debit).toFixed(2),
 						"credit": parseFloat(response.yearlyListDtos[i].credit).toFixed(2),
 						"cash": parseFloat(response.yearlyListDtos[i].cash).toFixed(2),
 						"check": parseFloat(response.yearlyListDtos[i].check).toFixed(2),
@@ -692,7 +693,6 @@
 						"discount": parseFloat(response.yearlyListDtos[i].discount).toFixed(2),
 						"returnAmount": parseFloat(response.yearlyListDtos[i].returnAmount).toFixed(2),
 						"profit": parseFloat(response.yearlyListDtos[i].profit).toFixed(2),
-						"marginPercentage": parseFloat(response.yearlyListDtos[i].marginPercentage).toFixed(2),
 						"total": parseFloat(response.yearlyListDtos[i].total).toFixed(2),
 						"monthAvg": parseFloat(response.yearlyListDtos[i].monthAvg).toFixed(2),
 						"cost": parseFloat(response.yearlyListDtos[i].cost).toFixed(2),
@@ -705,6 +705,7 @@
 				}
 				$scope.yearlySummary.push({
 				"monthName": "Total",
+					"debit": parseFloat(response.finalTotalForReportsDtos[0].totalDebit).toFixed(2),
 				"credit": parseFloat(response.finalTotalForReportsDtos[0].totalCredit).toFixed(2),
 				"cash": parseFloat(response.finalTotalForReportsDtos[0].totalCash).toFixed(2),
 				"check": parseFloat(response.finalTotalForReportsDtos[0].totalCheck).toFixed(2),
@@ -712,7 +713,6 @@
 				"discount": parseFloat(response.finalTotalForReportsDtos[0].totalDiscount).toFixed(2),
 				"returnAmount": parseFloat(response.finalTotalForReportsDtos[0].totalReturn).toFixed(2),
 				"profit": parseFloat(response.finalTotalForReportsDtos[0].totalProfit).toFixed(2),
-				"marginPercentage": parseFloat(response.finalTotalForReportsDtos[0].avgMargin).toFixed(2),
 				"total": parseFloat(response.finalTotalForReportsDtos[0].grandTotal).toFixed(2),
 				"monthAvg": 0.0,
 				"cost": 0.0,
@@ -813,6 +813,7 @@
 				$scope.monthlySummary = response.monthDtos;
 				$scope.monthlySummary.push({
 					"date": "Total",
+					"debit": parseFloat(response.finalTotalForReportsDtos[0].totalDebit).toFixed(2),
 					"credit": parseFloat(response.finalTotalForReportsDtos[0].totalCredit).toFixed(2),
 					"cash": parseFloat(response.finalTotalForReportsDtos[0].totalCash).toFixed(2),
 					"check": parseFloat(response.finalTotalForReportsDtos[0].totalCheck).toFixed(2),
@@ -820,7 +821,6 @@
 					"discount": parseFloat(response.finalTotalForReportsDtos[0].totalDiscount).toFixed(2),
 					"returnAmount": parseFloat(response.finalTotalForReportsDtos[0].totalReturn).toFixed(2),
 					"profit": parseFloat(response.finalTotalForReportsDtos[0].totalProfit).toFixed(2),
-					"marginPercentage": parseFloat(response.finalTotalForReportsDtos[0].avgMargin).toFixed(2),
 					"total": parseFloat(response.finalTotalForReportsDtos[0].grandTotal).toFixed(2),
 					"monthAvg": 0.0,
 					"cost": 0.0,

@@ -38,6 +38,7 @@
        
        
        <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/mainPage/clockIn.js"></script>
     <script type="text/javascript" src="app/common/proxtraMessage.directive.js"></script>
        <script type="text/javascript" src="app/common/utils.js"></script>
         <script type="text/javascript" src="app/common/GlobalConstants.js"></script>
@@ -106,11 +107,17 @@
             </div>
 			<div class="headerRightItems col-md-6" style="text-align:right;">
                 <div class="row">
-                <div class="headerName inline-vertical col-md-10" style="text-align:right;">
+                <div class="headerName inline-vertical col-md-7" style="text-align:right;">
 
 					<div><span style="display:inline-block;">Excell</span><span style="display:inline-block;font-size:10px;padding-left:7px;">Wireless</span></div>
 
 				</div>
+                 <div class="col-md-3">
+                     <div class="filterBtn">
+                         <button  class="btn btn-primary margin-top-1 wrap-text" style="font-size:15px;" ng-click="addClockIn()">ClockIn</button>
+
+                     </div>
+                 </div>
                 <div class="headerImage inline-vertical col-md-2" style="text-align:right;" ng-click="logOut()">
                    <a style="cursor: pointer;text-decoration: none;color:#CCC;" class="logout"><span><i class="fa fa-sign-out" aria-hidden="true"></i> LogOut</span></a>
                 </div>

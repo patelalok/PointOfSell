@@ -11,6 +11,11 @@
 		$scope.maxDate = new Date();
 		$scope.Math = window.Math;
 		$scope.modifiedData = [];
+		$scope.barLimit = 100;
+		$scope.increaseLimit = function () {
+			$scope.barLimit += 50;
+			console.log('Increase Bar Limit', $scope.barLimit)
+		};
 		$scope.closePopup = function()
 		{ 
 			DialogFactory.close(true);

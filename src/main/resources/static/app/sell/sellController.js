@@ -57,7 +57,7 @@
 			 * "Something gone wrong" ); } $rootScope.testData.splice( index, 1 );
 			 */
 		};
-		$scope.callBackAction = function(isOKClicked) {
+			$scope.callBackAction = function(isOKClicked) {
 
 			if (isOKClicked) {
 				/*var index = -1;
@@ -911,8 +911,13 @@
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
 				GlobalVariable.balanceRemaining = 0;
-				$scope.productTotal =0;
-				$scope.totalPayment = 0;
+				$rootScope.productTotal =0;
+				//if($rootScope.testData.length == 0)
+				//{
+					$scope.totalDisc = 0;
+					$rootScope.totalPayment = 0;
+				//}
+				$scope.loadCheckOutData();
 			}
 		};
 		$scope.clearValuePhone = function()
@@ -928,8 +933,14 @@
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
 				GlobalVariable.balanceRemaining = 0;
-				$scope.productTotal =0;
-				$scope.totalPayment = 0;
+				$rootScope.productTotal =0;
+				//if($rootScope.testData.length == 0)
+				//{
+					$scope.totalDisc = 0;
+					$rootScope.totalPayment = 0;
+				//}
+				$scope.loadCheckOutData();
+
 			}
 		}
 		function onGetTaxError(response) {

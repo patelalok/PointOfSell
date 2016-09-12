@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('mainProductController', mainProductController);
 
-	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService','getProductDetails','GlobalConstants'];
+	mainProductController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','$timeout','RestrictedCharacter.Types','$filter','util','dataService','getProductDetails','GlobalConstants','modalService'];
 
-	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService,getProductDetails,GlobalConstants) {
+	function mainProductController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,$timeout,restrictCharacter,$filter,util,dataService,getProductDetails,GlobalConstants,modalService) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -135,12 +135,13 @@
 		$scope.getCtDetails = function(response)
 		{
 			$scope.categoryOptions = response;
-			GlobalVariable.getProducts = getCategory;
+			GlobalVariable.getCategory= getCategory;
 		};
 		$scope.getCDetails = function(response)
 		{
 			$scope.getProductDtls = response;
 			GlobalVariable.getProducts = response;
+			util.Wait(false);
 		};
 		function loadCDetails()
 		{
@@ -187,6 +188,33 @@
 			$scope.getProductDtls = response;
 		}
 		function onGetStockError(response)
+		{
+
+		}
+		$scope.deleteProduct = function(id)
+		{
+			$scope.deleteProdId = id;
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Delete ? ", $scope.callBackDeleteProd);
+		};
+		$scope.callBackDeleteProd = function(isOKClicked)
+		{
+			if(isOKClicked)
+			{
+				util.Wait(true);
+				var url='http://localhost:8080/deleteProduct?productId='+$scope.deleteProdId;
+				var request = {};
+				request=JSON.stringify(request);
+				dataService.Post(url,request,onDeleteProductSucess,onDelteProductError,'application/json','application/json');
+				//getProductDetails.getProductDetail($scope.getCDetails);
+			}
+		};
+		function onDeleteProductSucess(response)
+		{
+			getProductDetails.getProductDetail($scope.getCDetails);
+		}
+		function onDelteProductError(response)
 		{
 
 		}

@@ -1018,18 +1018,20 @@ table th
 .glyphicon-pencil:hover
 {
 	color:#478FCA;
+	font-size:22px;
 }
 .glyphicon-pencil
 {
-	color:#DDD;
+	color:#478FCA;
 }
 .glyphicon-trash:hover
 {
 	color:#DD5A43;
+	font-size:22px;
 }
 .glyphicon-trash
 {
-	color:#DDD;
+	color:#DD5A43;
 }
 /*.color-black
 {

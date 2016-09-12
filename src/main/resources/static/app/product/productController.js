@@ -389,6 +389,7 @@
 
 		$scope.deleteIMEI = function(phoneId)
 		{
+			$scope.deletePhoneId = phoneId;
 			modalService.showModal('', {
 				isCancel : true
 			}, "Are you Sure Want to Delete ? ", $scope.callBackDelete);
@@ -398,7 +399,7 @@
 		{
 			if(isOKClicked)
 			{
-				var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+phoneId;
+				var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+$scope.deletePhoneId;
 				dataService.Post(url,'',onDeleteIMEISucess,onDelteIMEIError,'application/json','application/json');
 			}
 		};

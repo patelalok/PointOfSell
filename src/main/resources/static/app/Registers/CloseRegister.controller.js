@@ -20,9 +20,82 @@
 		$scope.difCash = 0;
 		$scope.difCheck = 0;
 		$scope.totalDiff = 0;
+		$scope.userDebitCard = 0;
+		$scope.systemDebitCard = 0;
+		$scope.diffDebitCard = 0;
 		$scope.maxDate = new Date();
 		$scope.showCloseRegister = true;
 		$scope.restrictCharacter = restrictCharacter;
+		$scope.loadcloseRegister=function(saleDate)
+		{
+			var url;
+			var start,end;
+
+			if(saleDate=='todaySales')
+			{
+				$scope.showCloseRegister = true;
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'yestSales')
+			{
+				$scope.showCloseRegister = false;
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'lastWeekSales')
+			{
+				$scope.showCloseRegister = false;
+				start = getLast7Day()+' 00:00:00';
+				end = getCurrentDay()+' 23:59:59';
+			}
+			else if(saleDate == 'thisMonthSales')
+			{
+				$scope.showCloseRegister = false;
+				start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'lastMonthSales')
+			{
+				$scope.showCloseRegister = false;
+				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'last3MonthsSales')
+			{
+				$scope.showCloseRegister = false;
+				start = getlast3Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'last6MonthsSales')
+			{
+				$scope.showCloseRegister = false;
+				start = getlast6Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'thisYearSales')
+			{
+				$scope.showCloseRegister = false;
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[0]+"-01-01 00:00:00";
+				end =years[0]+"-12-31 23:59:59";
+			}
+			else if(saleDate == 'lastYearSales')
+			{
+				$scope.showCloseRegister = false;
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[1]+"-01-01 00:00:00";
+				end =years[1]+"-12-31 23:59:59";
+			}
+			else
+			{
+				$scope.showCloseRegister = false;
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
+			}
+			getClosingDetails(start,end)
+			getPaidOutDetails(start,end);
+		};
 		function getClosingDetails(startDate, endDate) {
 			var url = GlobalConstants.URLCONSTANTS+"getClosingDetails?startDate="
 				+ startDate + "&endDate=" + endDate;
@@ -36,16 +109,19 @@
 
 			if (response.length !== 0) {
 				$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
+				$scope.systemDebitCard = $scope.getClosingDtls[0].reportDebit;
 				$scope.systemCash = $scope.getClosingDtls[0].reportCash;
 				$scope.sysCheck = $scope.getClosingDtls[0].reportCheck;
 				$scope.userCash = $scope.getClosingDtls[0].closeCash;
 				$scope.userDebit = $scope.getClosingDtls[0].closeCredit;
+				$scope.userDebitCard = $scope.getClosingDtls[0].closeDebit;
 				$scope.totalSys = parseFloat($scope.getClosingDtls[0].reportTotalAmount).toFixed(2);
 				$scope.registerId = $scope.getClosingDtls[0].registerId;
 				$scope.totalUser = $scope.getClosingDtls[0].closeTotalAmount;
 				$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 				$scope.difCash = $scope.getClosingDtls[0].differenceCash;
 				$scope.difDebit = $scope.getClosingDtls[0].differenceCredit;
+				$scope.difDebitCard = $scope.getClosingDtls[0].differenceDebit;
 				$scope.totalDiff = $scope.getClosingDtls[0].totalDifference;
 				$scope.totalProfit = $scope.getClosingDtls[0].totalProfit;
 				$scope.totalDisc = $scope.getClosingDtls[0].totalDiscount;
@@ -54,6 +130,7 @@
 				$scope.totalBusinessAmount = $scope.getClosingDtls[0].totalBusinessAmount;
 				$scope.netSales = parseFloat($scope.userCash)
 					+ parseFloat($scope.userDebit)
+					+ parseFloat($scope.userDebitCard)
 					+ parseFloat($scope.userCheck)
 					- parseFloat($scope.totalTax);
 				$scope.dateTime = js_yyyy_mm_dd_hh_mm_ss1();
@@ -63,6 +140,9 @@
 				$scope.cashHand = $scope.getClosingDtls[0].cashInHand;
 			} else {
 				$scope.cashHand = 0;
+				$scope.userDebitCard = 0;
+				$scope.systemDebitCard =0;
+				$scope.diffDebitCard = 0;
 				$scope.systemDebit = 0;
 				$scope.systemCash = 0;
 				$scope.sysCheck = 0;
@@ -97,8 +177,11 @@
 				$scope.userCheck = 0;
 			if($scope.bankDeposit == '')
 				$scope.bankDeposit = 0;
+			if($scope.userDebitCard == '')
+				$scope.userDebitCard = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
+					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)
 				+parseFloat($scope.bankDeposit);
@@ -121,6 +204,42 @@
 			else
 				$scope.totalColor = 'black';
 		};
+		$scope.getUserDebitCard = function(value) {
+			if ($scope.userDebit == '')
+				$scope.userDebit = 0;
+			if ($scope.userCash == '')
+				$scope.userCash = 0;
+			if ($scope.userCheck == '')
+				$scope.userCheck = 0;
+			if($scope.bankDeposit == '')
+				$scope.bankDeposit = 0;
+			if ($scope.userDebitCard == '')
+				$scope.userDebitCard = 0;
+
+			$scope.totalUser = parseFloat($scope.userDebit)
+					+parseFloat($scope.userDebitCard)
+				+ parseFloat($scope.userCash)
+				+ parseFloat($scope.userCheck)
+				+parseFloat($scope.bankDeposit);
+			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
+			$scope.difDebitCard = parseFloat($scope.userDebitCard)
+				- parseFloat($scope.systemDebitCard);
+			$scope.totalDiff = parseFloat($scope.totalUser)
+				- parseFloat($scope.totalSys)
+			if ($scope.difDebitCard > 0)
+				$scope.debitColor = 'green';
+			else if ($scope.difDebitCard < 0)
+				$scope.debitColor = 'red';
+			else
+				$scope.debitColor = 'black';
+
+			if ($scope.totalDiff > 0)
+				$scope.totalColor = 'green';
+			else if ($scope.totalDiff < 0)
+				$scope.totalColor = 'red';
+			else
+				$scope.totalColor = 'black';
+		};
 		$scope.getUserCash = function(value) {
 			if ($scope.userDebit == '')
 				$scope.userDebit = 0;
@@ -130,8 +249,11 @@
 				$scope.userCheck = 0;
 			if($scope.bankDeposit == '')
 				$scope.bankDeposit = 0;
+			if ($scope.userDebitCard == '')
+				$scope.userDebitCard = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
+					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
@@ -163,8 +285,11 @@
 				$scope.userCheck = 0;
 			if($scope.bankDeposit == '')
 				$scope.bankDeposit = 0;
+			if ($scope.userDebitCard == '')
+				$scope.userDebitCard = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
+					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
@@ -189,40 +314,60 @@
 		};
 		$scope.getTotal = function(value, entText) {
 
-			if (entText == 'hun')
+			$scope.totalInValue = 0;
+
+
+			if($scope.hundred !== undefined && $scope.hundred !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 100);
-			else if (entText == 'fif')
+					+ (parseFloat($scope.hundred) * 100);
+			}
+			if($scope.fifty !== undefined && $scope.fifty !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 50);
-			else if (entText == 'twn')
+					+ (parseFloat($scope.fifty) * 50);
+			}
+			if($scope.twenty !== undefined && $scope.twenty !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 20);
-			else if (entText == 'ten')
+					+ (parseFloat($scope.twenty) * 20);
+			}
+			if($scope.ten !== undefined && $scope.ten !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 10);
-			else if (entText == 'fiv')
+					+ (parseFloat($scope.ten) * 10);
+			}
+			if($scope.five !== undefined && $scope.five !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 5);
-			else if (entText == 'two')
+					+ (parseFloat($scope.five) * 5);
+			}
+			if($scope.two !== undefined && $scope.two !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 2);
-			else if (entText == 'one')
+					+ (parseFloat($scope.two) * 2);
+			}
+			if($scope.one !== undefined && $scope.one !== '')
+			{
 				$scope.totalInValue = parseFloat($scope.totalInValue)
-					+ (parseFloat(value) * 1);
+					+ (parseFloat($scope.one) * 1);
+			}
 		};
 		$scope.closeRegister = function() {
 			var request = {
 				"userIdClose" : $scope.registerId,
 				"reportCash" : parseFloat($scope.systemCash).toFixed(2),
 				"reportCredit" : parseFloat($scope.systemDebit).toFixed(2),
+				"reportDebit" : parseFloat($scope.systemDebitCard).toFixed(2),
 				"reportTotalAmount" : parseFloat($scope.totalSys).toFixed(2),
 				"closeCash" : parseFloat($scope.userCash).toFixed(2),
 				"closeCredit" : parseFloat($scope.userDebit).toFixed(2),
+				"closeDebit" : parseFloat($scope.userDebitCard).toFixed(2),
 				"closeDate" : js_yyyy_mm_dd_hh_mm_ss1(),
 				"closeTotalAmount" : parseFloat($scope.totalUser).toFixed(2),
 				"differenceCash" : parseFloat($scope.difCash).toFixed(2),
 				"differenceCredit" : parseFloat($scope.difDebit).toFixed(2),
+				"differenceDebit" : parseFloat($scope.difDebitCard).toFixed(2),
 				"totalDifference" : parseFloat($scope.totalDiff).toFixed(2),
 				"totalBusinessAmount" : $scope.totalBusinessAmount,
 				"totalTax" : parseFloat($scope.totalTax).toFixed(2),
@@ -259,11 +404,13 @@
 				format : 'yyyy-MM-dd',
 				singleDatePicker : true
 			};
-			var startDate = js_yyyy_mm_dd_hh_mm_ss() + '' + ' 00:00:00';
-			var endDate = js_yyyy_mm_dd_hh_mm_ss() + '' + ' 23:59:59';
-			$scope.startDate = $filter('date')(new Date(), "yyyy-MM-dd");
-			getClosingDetails(startDate, endDate);
-			getPaidOutDetails(startDate, endDate);
+			//var startDate = js_yyyy_mm_dd_hh_mm_ss() + '' + ' 00:00:00';
+			//var endDate = js_yyyy_mm_dd_hh_mm_ss() + '' + ' 23:59:59';
+			//$scope.startDate = $filter('date')(new Date(), "yyyy-MM-dd");
+			//getClosingDetails(startDate, endDate);
+			//getPaidOutDetails(startDate, endDate);
+			$scope.clsRegister='todaySales';
+			$scope.loadcloseRegister($scope.clsRegister);
 		}
 		function getPaidOutDetails(startDate, endDate) {
 			var url = GlobalConstants.URLCONSTANTS+"getPaidOut?startDate=" + startDate
@@ -273,17 +420,33 @@
 				'application/json');
 			// getaddPaidSuccessHandler('');
 		}
+		$scope.maxDate = new Date();
+		$scope.minDate = moment().subtract(1, "days").toDate();
 		$scope.openStartCalendar = function($event) {
 			$event.preventDefault();
 			$event.stopPropagation();
 			$scope.openStart = true;
 		};
+		$scope.openStartCalendarDaily = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openStartDaily = true;
+		};
+		$scope.openEndCalendar = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.openEnd = true;
+		};
 		$scope.onDateSelected = function(startDate, endDate, label, element) {
 			var receiptIndex = element.attr('data-receipt-index');
 			element.find('span').eq(0).html(endDate.format('yyyy-MM-dd'));
-
 		};
-		$scope.changeDtls = function() {
+		$scope.applySalesByTypeCls = function(type)
+		{
+
+			$scope.loadcloseRegister(type);
+		};
+		/*$scope.changeDtls = function() {
 			var chnDt = $filter('date')($scope.startDate, "yyyy-MM-dd");
 			var start = $filter('date')($scope.startDate, "yyyy-MM-dd") + ''
 				+ ' 00:00:00';
@@ -296,7 +459,7 @@
 			}
 			getPaidOutDetails(start, end);
 			getClosingDetails(start, end);
-		};
+		};*/
 		function getaddPaidSuccessHandler(response) {
 			// $scope.getPaidOutDtls = response;
 			/*
@@ -431,6 +594,102 @@
 			}
 			return year + "-" + month + "-" + day + " " + hour + ":" + minute
 				+ ":" + second;
+		}
+		function getCurrentDay () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day;
+		}
+		function getPreviousDay () {
+			var now = new Date();
+			now.setDate(now.getDate() - 1);
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getLast7Day () {
+			var now = new Date();
+			now.setDate(now.getDate() - 7);
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getlast6Months () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() - 5); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getlast3Months () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() - 2); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day ;
+
+		}
+		function getlastMonth()
+		{
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth()); if (month.length == 1) { month = "0" + month; }
+
+			return month ;
+		}
+		function getcurrentMonth()
+		{
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth()+1); if (month.length == 1) { month = "0" + month; }
+
+			return month ;
+		}
+		function getcurrentYear () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+
+			return year;
+		}
+		function getCurrentandPreviousYear () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var prevoiusYear = now.getFullYear()-1;
+
+			return year + "-" + prevoiusYear;
+		}
+		function getCurrentMonth()
+		{
+			var now = new Date();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+
+			return month;
 		}
 		$scope.printCloseRegister = function() {
 			GlobalVariable.isPrintPage = true;
