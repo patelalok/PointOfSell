@@ -85,14 +85,14 @@ public class ProductController {
 
             System.out.println("Product Deleted Successfully !!!");
 
-            String json = "Product Deleted Successfully".
+
 
 
             return ResponseEntity.ok("Product Deleted Successfully");
         }
 
         return ResponseEntity.status(HttpStatus.CONFLICT).
-                body("Can not Delete This Product, It may has transaction history").;
+                body("Can not Delete This Product, It may has transaction history");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getLastProductNo", produces = "application/json")
