@@ -204,8 +204,7 @@ public class SQLQueries {
             "INSERT INTO USER_CLOCK_IN " +
                     "(USERNAME," +
                     "CLOCK_IN," +
-                    "CLOCK_OUT, " +
-                    "NOOFHOURS ) VALUES (?,?,?,?)";
+                    "DATE ) VALUES (?,?,?)";
 
 
 
@@ -334,7 +333,6 @@ public class SQLQueries {
 
     public String updateUserClockInDetails =
             "UPDATE USER_CLOCK_IN SET " +
-                    "CLOCK_IN = ?, " +
                     "CLOCK_OUT = ?, " +
                     "NOOFHOURS = ? " +
                     "WHERE USER_CLOCK_IN_ID = ?";

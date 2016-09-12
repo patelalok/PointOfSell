@@ -155,13 +155,45 @@ public class UserManager {
                 jdbcTemplate.update(sqlQuery.addUserClockIn,
                         userClockIn.getUsername(),
                         userClockIn.getClockInTime(),
-                        userClockIn.getClockOutTime(),
-                        userClockIn.getNoOfhours());
+                        userClockIn.getDate());
 
                 response = true;
                 System.out.println("User Clocked in Successfully");
             }
 
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return response;
+
+    }
+
+    public boolean addClockOut(UserClockInDto userDto) {
+
+        boolean response = false;
+
+
+        try
+        {
+
+            UserLogin userLogin = new UserLogin();
+
+            userLogin = getUserLoginDetails(userDto.getUsername(), userDto.getPassword());
+
+            if(userLogin.isValidUser()) {
+
+
+                jdbcTemplate.update(sqlQuery.updateUserClockInDetails,
+                        userDto.getClockOutTime(),
+                        userDto.getNoOfhours(),
+                        userDto.getClockInId());
+                response = true;
+
+                System.out.println("User Clocked Out in Successfully");
+            }
         }
         catch (Exception e)
         {
@@ -207,39 +239,7 @@ public class UserManager {
             return user;
         }
     }
-    public boolean editUserClockIn(UserClockInDto userDto) {
 
-        boolean response = false;
-
-
-        try
-        {
-
-            UserLogin userLogin = new UserLogin();
-
-            userLogin = getUserLoginDetails(userDto.getUsername(), userDto.getPassword());
-
-            if(userLogin.isValidUser()) {
-
-
-                jdbcTemplate.update(sqlQuery.updateUserClockInDetails,
-                        userDto.getClockInTime(),
-                        userDto.getClockOutTime(),
-                        userDto.getNoOfhours(),
-                        userDto.getClockInId());
-                response = true;
-
-                System.out.println("User Clocked in Successfully");
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-
-        return response;
-
-    }
     public void deleteVendorToDB(String vendorId) {
     }
 

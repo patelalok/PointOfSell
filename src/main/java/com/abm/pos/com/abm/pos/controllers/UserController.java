@@ -59,10 +59,10 @@ public class UserController {
         return userManager.getUserClockIn(username,date);
 
     }
-    @RequestMapping(value = "/editUserClockIn", method = RequestMethod.POST, consumes = "application/json")
-    public boolean editUserClockIn(@RequestBody UserClockInDto userDto) {
+    @RequestMapping(value = "/addUserClockOut", method = RequestMethod.POST, consumes = "application/json")
+    public boolean addClockOut(@RequestBody UserClockInDto userDto) {
 
-       return userManager.editUserClockIn(userDto);
+       return userManager.addClockOut(userDto);
 
     }
 
