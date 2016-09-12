@@ -163,27 +163,27 @@ public class SQLQueries {
     public String addClosingDetails =
             "INSERT INTO CASH_REGISTER " +
             "(" +
-                    "USER_ID_CLOSE , " +
-                    "REPORT_CASH , " +
+                    "USER_ID_CLOSE, " +
+                    "REPORT_CASH, " +
                     "REPORT_CREDIT ," +
                     "REPORT_CHECK," +
-                    "REPORT_DEBIT " +
-                    "REPORT_TOTAL_AMOUNT , " +
-                    "CLOSE_CASH , " +
+                    "REPORT_DEBIT, " +
+                    "REPORT_TOTAL_AMOUNT, " +
+                    "CLOSE_CASH, " +
                     "CLOSE_CREDIT," +
                     "CLOSE_CHECK," +
-                    "CLOSE_DEBIT " +
-                    "CLOSE_DATE , " +
-                    "CLOSE_TOTAL_AMOUNT , " +
-                    "CREDIT_DIFFERENCE , " +
-                    "CASH_DIFFERENCE ," +
+                    "CLOSE_DEBIT, " +
+                    "CLOSE_DATE, " +
+                    "CLOSE_TOTAL_AMOUNT, " +
+                    "CREDIT_DIFFERENCE, " +
+                    "CASH_DIFFERENCE," +
                     "CHECK_DIFFERENCE," +
-                    "DEBIT_DIFFERENCE " +
-                    "TOTAL_DIFFERENCE , " +
-                    "TOTAL_BUSINESS_AMOUNT , " +
-                    "TOTAL_TAX , " +
-                    "TOTAL_DISCOUNT , " +
-                    "TOTAL_PROFIT , " +
+                    "DEBIT_DIFFERENCE," +
+                    "TOTAL_DIFFERENCE, " +
+                    "TOTAL_BUSINESS_AMOUNT, " +
+                    "TOTAL_TAX, " +
+                    "TOTAL_DISCOUNT, " +
+                    "TOTAL_PROFIT, " +
                     "TOTAL_MARKUP," +
                     "BANKDEPOSIT, " +
                     "COMISSION," +
