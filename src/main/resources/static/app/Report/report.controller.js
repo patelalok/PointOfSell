@@ -589,7 +589,7 @@
 				$scope.hourlySummary = response.hourlyDtoList;
 				$scope.hourlySummary.push({
 					"hour": "Total",
-					"debit": parseFloat(response.finalTotalForReportsDtosList[0].totalDebit).toFixed(2),
+					"debit": parseFloat(response.finalTotalForReportsDtoList[0].totalDebit).toFixed(2),
 					"credit": parseFloat(response.finalTotalForReportsDtoList[0].totalCredit).toFixed(2),
 					"cash": parseFloat(response.finalTotalForReportsDtoList[0].totalCash).toFixed(2),
 					"check": parseFloat(response.finalTotalForReportsDtoList[0].totalCheck).toFixed(2),
@@ -685,7 +685,7 @@
 				{
 					$scope.yearlySummary.push({
 						"monthName": response.yearlyListDtos[i].monthName,
-						"debit": parseFloat(response.yearlyListDtos[0].debit).toFixed(2),
+						"debit": parseFloat(response.yearlyListDtos[i].debit).toFixed(2),
 						"credit": parseFloat(response.yearlyListDtos[i].credit).toFixed(2),
 						"cash": parseFloat(response.yearlyListDtos[i].cash).toFixed(2),
 						"check": parseFloat(response.yearlyListDtos[i].check).toFixed(2),

@@ -490,20 +490,29 @@ public class SQLQueries {
 
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
 
-    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) as DATE, " +
-            "SUM(PAID_AMOUNT_CASH) SUM_CASH, " +
-            "sum(TOTAL_AMOUNT_CREDIT) SUM_CREDIT, " +
-            "SUM(TOTAL_AMOUNT_CHECK) CHEC, " +
-            "SUM(PAID_AMOUNT_DEBIT) DEBIT, " +
-            "sum(TOTAL_AMOUNT) TOTAL, " +
+    public String getMonthlyTransDetails = "SELECT date(TRANSACTION_DATE) AS DATE,\n" +
+            "sum(TOTAL_AMOUNT_CREDIT) CREDIT,\n" +
+            "sum(PAID_AMOUNT_CASH) CASH,\n" +
+            "SUM(TOTAL_AMOUNT_CHECK) CHEC, \n" +
+            "SUM(PAID_AMOUNT_DEBIT) DEBIT,\n" +
+            "SUM(TAX_AMOUNT) TAX ,\n" +
+            "SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
+            "SUM(TOTAL_AMOUNT) TOTAL, \n" +
             "SUM(BALANCE) BALANCE, " +
-            "sum(TAX_AMOUNT)  SUM_TAX, " +
-            "sum(DISCOUNT_AMOUNT) DISCOUNT, " +
-            "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
-            "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c') as PROFIT " +
-            "FROM TRANSACTION " +
-            "WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'c' " +
-            "GROUP BY date(TRANSACTION_DATE)";
+            "count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
+            "SUM(PROFIT) PROFIT\n" +
+            "FROM TRANSACTION A,\n" +
+            "(SELECT TRANSACTION_COMP_ID, \n" +
+            "SUM(CASE WHEN Y.CATEGORY_ID <> 1 THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY ELSE 0.0 END) AS PROFIT,\n" +
+            "SUM(DISCOUNT) AS DISCOUNT\n" +
+            "FROM TRANSACTION_LINE_ITEM X, product Y\n" +
+            "WHERE X.PRODUCT_NO = Y.PRODUCT_NO\n" +
+            "AND DATE BETWEEN ? AND ? "+
+            "AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B\n" +
+            "WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID\n" +
+            "AND TRANSACTION_DATE BETWEEN ? AND ?" +
+            "AND STATUS = 'c' \n" +
+            "GROUP BY DATE";
 
     public String getWeeklyTransDetails = "";
 
@@ -531,6 +540,7 @@ public class SQLQueries {
             "            SUM(TAX_AMOUNT) TAX , \n" +
             "            SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
             "            SUM(TOTAL_AMOUNT) TOTAL, \n" +
+            "SUM(BALANCE) BALANCE, " +
             "            count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
             "            SUM(PROFIT) PROFIT\n" +
             "            FROM TRANSACTION A,\n" +
@@ -555,6 +565,7 @@ public class SQLQueries {
             "            SUM(TAX_AMOUNT) TAX , \n" +
             "            SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
             "            SUM(TOTAL_AMOUNT) TOTAL, \n" +
+            "SUM(BALANCE) BALANCE, " +
             "            count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
             "            SUM(PROFIT) PROFIT\n" +
             "            FROM TRANSACTION A,\n" +
@@ -583,20 +594,29 @@ public class SQLQueries {
             "WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE " +
             "BETWEEN ? AND ? AND t.TRANSACTION_STATUS = 'c' group by c.CATEGORY_NAME ";
 
-    public String getHourlyTransactions = "SELECT Hour(TRANSACTION_DATE) AS HOUR, " +
-            "sum( TOTAL_AMOUNT_CREDIT) CREDIT, " +
-            "sum( PAID_AMOUNT_CASH) CASH, " +
-            "SUM( TOTAL_AMOUNT_CHECK) CHEC, " +
-            "SUM( PAID_AMOUNT_DEBIT) DEBIT," +
-            "SUM( TAX_AMOUNT) TAX , " +
-            "SUM( DISCOUNT_AMOUNT) DISCOUNT , " +
-            "SUM( TOTAL_AMOUNT) TOTAL, " +
+    public String getHourlyTransactions = "SELECT Hour(TRANSACTION_DATE) AS HOUR,\n" +
+            "sum(TOTAL_AMOUNT_CREDIT) CREDIT,\n" +
+            "sum(PAID_AMOUNT_CASH) CASH,\n" +
+            "SUM(TOTAL_AMOUNT_CHECK) CHEC, \n" +
+            "SUM(PAID_AMOUNT_DEBIT) DEBIT,\n" +
+            "SUM(TAX_AMOUNT) TAX ,\n" +
+            "SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
+            "SUM(TOTAL_AMOUNT) TOTAL, \n" +
             "SUM(BALANCE) BALANCE, " +
-            "count(TRANSACTION_COMP_ID) NOOFTRANS, " +
-            "(SELECT SUM((RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ) as PROFIT " +
-            "FROM TRANSACTION " +
-            "WHERE STATUS = 'c' " +
-            "AND TRANSACTION_DATE BETWEEN ? AND ? GROUP BY hour";
+            "count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
+            "SUM(PROFIT) PROFIT\n" +
+            "FROM TRANSACTION A,\n" +
+            "(SELECT TRANSACTION_COMP_ID, \n" +
+            "SUM(CASE WHEN Y.CATEGORY_ID <> 1 THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY ELSE 0.0 END) AS PROFIT,\n" +
+            "SUM(DISCOUNT) AS DISCOUNT\n" +
+            "FROM TRANSACTION_LINE_ITEM X, product Y\n" +
+            "WHERE X.PRODUCT_NO = Y.PRODUCT_NO\n" +
+            "AND DATE BETWEEN ? AND ?" +
+            "AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B\n" +
+            "WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID\n" +
+            "AND TRANSACTION_DATE BETWEEN ? AND ?" +
+            "AND STATUS = 'c' \n" +
+            "GROUP BY hour;";
 
     public String getSalesVendorDetails = "SELECT v.VENDOR_NAME as COMMON_NAME, " +
             "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +

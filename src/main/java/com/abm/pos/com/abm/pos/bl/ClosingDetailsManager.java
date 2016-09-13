@@ -484,6 +484,7 @@ public class ClosingDetailsManager {
             forReportsDto.setTotalCredit(totalCredit);
             forReportsDto.setTotalCash(totalCash);
             forReportsDto.setTotalCheck(totalCheck);
+            forReportsDto.setTotalDebit(totalDebit);
             forReportsDto.setTotalTax(totalTax);
             forReportsDto.setTotalDiscount(totalDiscount);
             forReportsDto.setGrandTotal(totalCash + totalCheck + totalCredit + totalDebit);
@@ -549,12 +550,12 @@ public class ClosingDetailsManager {
             List<FinalTotalForReportsDto> finalTotalForReportsDtos = new ArrayList<>();
 
             monthDto.setDate(rs.getString("DATE"));
-            monthDto.setCash(rs.getDouble("SUM_CASH"));
-            monthDto.setCredit(rs.getDouble("SUM_CREDIT"));
+            monthDto.setCash(rs.getDouble("CASH"));
+            monthDto.setCredit(rs.getDouble("CREDIT"));
             monthDto.setCheck(rs.getDouble("CHEC"));
             monthDto.setDebit(rs.getDouble("DEBIT"));
-            monthDto.setTotal(rs.getDouble("SUM_CASH") + rs.getDouble("SUM_CREDIT") + rs.getDouble("CHEC") + rs.getDouble("DEBIT"));
-            monthDto.setTax(rs.getDouble("SUM_TAX"));
+            monthDto.setTotal(rs.getDouble("CASH") + rs.getDouble("CREDIT") + rs.getDouble("CHEC") + rs.getDouble("DEBIT"));
+            monthDto.setTax(rs.getDouble("TAX"));
             monthDto.setDiscount(rs.getDouble("DISCOUNT"));
             monthDto.setNoOfTrans(rs.getInt("NOOFTRANS"));
             monthDto.setProfit(rs.getDouble("PROFIT"));
@@ -872,13 +873,26 @@ public class ClosingDetailsManager {
 
             cb.moveTo(20,690);
             cb.lineTo(580,690);
-            cb.moveTo(150,150);
+            cb.moveTo(60,60);
+            cb.lineTo(50,710);
+            cb.moveTo(150,60);
             cb.lineTo(150,710);
-            cb.moveTo(290,150);
-            cb.lineTo(290,710);
-            cb.moveTo(430,150);
+            cb.moveTo(430,60);
             cb.lineTo(430,710);
             cb.stroke();
+
+//            cb.rectangle(20,50,550,600);
+//            cb.moveTo(20,630);
+//            cb.lineTo(570,630);
+//            cb.moveTo(50,50);
+//            cb.lineTo(50,650);
+//            cb.moveTo(150,50);
+//            cb.lineTo(150,650);
+//            cb.moveTo(430,50);
+//            cb.lineTo(430,650);
+//            cb.moveTo(500,50);
+//            cb.lineTo(500,650);
+//            cb.stroke();
 
             // Invoice Detail box Text Headings
             createHeadings(cb,50,693,"Payment Types");

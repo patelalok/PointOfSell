@@ -10,6 +10,7 @@
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.alreadtClockedIn = false;
+		$scope.clockedInTime = '';
 		var authElemArray = new Array();
 		$scope.showError = false;
 		$scope.closeClock = function()
@@ -18,16 +19,23 @@
 		};
 		function render()
 		{
-			getClockInDetails();
+			//getClockInDetails();
 		}
-		function getClockInDetails()
+		$scope.getClockInDetails =function()
 		{
-				var url='http://localhost:8080/getUserClockIn?username='+sessionStorage.userLoggedName+'&date='+getCurrentDay();
+				var url='http://localhost:8080/getUserClockIn?username='+GlobalVariable.userNameClock+'&date='+getCurrentDay();
 				dataService.Get(url,onGetClockSuccess,onGetClockError,'application/json','application/json');
 		}
 		function onGetClockSuccess(response)
 		{
-			if(response.length !== 0)
+			if(response.length == 0)
+			{
+				$scope.alreadtClockedIn = false;
+				$scope.userClockedIn = false;
+				$scope.clockedInTime = '';
+				//GlobalVariable.userNameClock = '';
+			}
+			else
 			{
 				if(response[0].clockInTime !== null && response[0].clockOutTime == null)
 				{
@@ -46,9 +54,11 @@
 					$scope.alreadtClockedIn = false;
 					$scope.userClockedIn = false;
 					$scope.clockedInTime = '';
-					GlobalVariable.userNameClock = '';
+					GlobalVariable.userNameClock = null;
 				}
 			}
+
+
 		}
 		function onGetClockError(response)
 		{
@@ -98,6 +108,11 @@
 		{
 			if(response ==  true)
 			{
+				$scope.alreadtClockedIn = false;
+				$scope.userClockedIn = false;
+				$scope.clockedInTime = '';
+				GlobalVariable.userNameClock = null;
+				GlobalVariable.pwdClock = '';
 				$scope.showError = false;
 				DialogFactory.close(true);
 				modalService.showModal('', '', "User Clocked Out Successfully", $scope.callBackSuccess);
@@ -152,6 +167,7 @@
 		{
 				if(response ==  true)
 				{
+
 					$scope.showError = false;
 					DialogFactory.close(true);
 					modalService.showModal('', '', "User Clocked In Successfully", $scope.callBackSuccess);
