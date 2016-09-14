@@ -103,32 +103,54 @@
 	</div>
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
-			<span class="box-heading">PROFIT</span>
+			<span class="box-heading">DEBIT REVENUE</span>
 		</div>
 		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalProfit.toFixed(0)}}</span>
-			
+			<span style="font-size:46px;">{{monthlyResponse.finalTotalForReportsDtos[0].totalDebit.toFixed(0)}}</span>
+
 		</div>
 		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
+			<span class="upStatus">Up</span>
+			<span style="font-size: 13px;">Previous Day</span>
+
 		</div>
 		<div class="padding-10">
 			<span>Main Outlet</span>
 		</div>
 		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="profitData" chart-labels="labels"
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
+			<canvas id="line" class="chart chart-line" chart-data="debitData" chart-labels="labels"
+					chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
 		</div>
-	
+
 	</div>
+
 
 
 </div>
 
 <div class="row" style="padding:30px;" print-remove>
+	<div class="dash-board col-md-3 box-size">
+		<div class="padding-10">
+			<span class="box-heading">PROFIT</span>
+		</div>
+		<div class="inline-vertical padding-10">
+			<span style="font-size:46px;">${{monthlyResponse.finalTotalForReportsDtos[0].totalProfit.toFixed(0)}}</span>
 
+		</div>
+		<div class="up positive inline-vertical prodStatus padding-10">
+			<span class="upStatus">Up</span>
+			<span style="font-size: 13px;">Previous Day</span>
+
+		</div>
+		<div class="padding-10">
+			<span>Main Outlet</span>
+		</div>
+		<div class="chart padding-10">
+			<canvas id="line" class="chart chart-line" chart-data="profitData" chart-labels="labels"
+					chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas>
+		</div>
+
+	</div>
 	<div class="dash-board col-md-3 box-size">
 		<div class="padding-10">
 			<span class="box-heading">TAX</span>
@@ -195,28 +217,7 @@
 		</div>
 	
 	</div>
-	<div class="dash-board col-md-3 box-size">
-		<div class="padding-10">
-			<span class="box-heading">AVG BASKET VALUE</span>
-		</div>
-		<div class="inline-vertical padding-10">
-			<span style="font-size:46px;">{{monthlyResponse.finalTotalForReportsDtos[0].avgMargin.toFixed(0)}}</span>
-			
-		</div>
-		<div class="up positive inline-vertical prodStatus padding-10">
-				<span class="upStatus">Up</span>
-				<span style="font-size: 13px;">Previous Day</span>
-			
-		</div>
-		<div class="padding-10">
-			<span>Main Outlet</span>
-		</div>
-		<div class="chart padding-10">
-			 <canvas id="line" class="chart chart-line" chart-data="basketData" chart-labels="labels" 
-                      chart-click="onClick" chart-hover="onHover" chart-series="series"></canvas> 
-		</div>
-	
-	</div>
+
 
 
 </div>

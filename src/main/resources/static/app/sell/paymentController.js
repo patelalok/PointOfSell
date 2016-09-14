@@ -318,6 +318,7 @@
 			$rootScope.printTransCountry='';
 			$rootScope.printTranszipCode='';
 			$rootScope.printTransPhone='';
+			$rootScope.printTransCompany = '';
 			if(response.length !==0)
 			{
 				if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
@@ -330,6 +331,7 @@
 					$rootScope.printTransCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
 					$rootScope.printTranszipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
 					$rootScope.printTransPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+					$scope.printTransCompany =GlobalVariable.receiptData[0].customerDtosList[0].companyName;
 
 				}
 			}

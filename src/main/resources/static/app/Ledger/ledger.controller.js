@@ -87,6 +87,7 @@
 			$scope.printCountry='';
 			$scope.printzipCode='';
 			$scope.printPhone='';
+			$scope.printCompany='';
 			for(var i=0;i<GlobalVariable.receiptData[0].transactionLineItemDtoList.length;i++)
 			{
 				$scope.modifiedData.push(
@@ -115,6 +116,7 @@
 									$scope.printCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
 										$scope.printzipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
 						$scope.printPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+				$scope.printCompany =GlobalVariable.receiptData[0].customerDtosList[0].companyName;
 
 			}
 			
