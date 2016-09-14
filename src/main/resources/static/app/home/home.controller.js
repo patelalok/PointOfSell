@@ -25,7 +25,7 @@
 		$scope.discData=[];$scope.discDataPrev=[];
 		$scope.transData=[];
 		$scope.nData=[];$scope.nDataPrev=[];
-		$scope.basketData=[];
+		$scope.debitData=[];
 		$scope.nvgData=[];$scope.nvgDataPrev=[];
 	    $scope.series = ['2016', '2015'];
 	    $scope.onClick = function (points, evt) {
@@ -116,7 +116,7 @@
 					$scope.taxDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].tax);
 					$scope.discDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].discount);
 					$scope.nDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].noOfTrans);
-					$scope.nvgDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].avgBasketSize);
+					$scope.nvgDataPrev.push($scope.monthlyPrevResponse.yearlyListDtos[i].totalDebit);
 				}
 				$scope.totalRevenueData.push($scope.prevRevData);
 				$scope.cashData.push($scope.cDataPrev);
@@ -125,7 +125,7 @@
 				$scope.taxData.push($scope.taxDataPrev);
 				$scope.discData.push($scope.discDataPrev);
 				$scope.transData.push($scope.nDataPrev);
-				$scope.basketData.push($scope.nvgDataPrev);
+				$scope.debitData.push($scope.nvgDataPrev);
 		}
 		function getReportsMonthlyPrevErrorHandler()
 		{
@@ -177,7 +177,7 @@
 					$scope.taxData1.push($scope.monthlyResponse.yearlyListDtos[i].tax);
 					$scope.discData1.push($scope.monthlyResponse.yearlyListDtos[i].discount);
 					$scope.nData.push($scope.monthlyResponse.yearlyListDtos[i].noOfTrans);
-					$scope.nvgData.push($scope.monthlyResponse.yearlyListDtos[i].avgBasketSize);
+					$scope.nvgData.push($scope.monthlyResponse.yearlyListDtos[i].debit);
 				}
 				$scope.totalRevenueData.push($scope.revData);
 				$scope.cashData.push($scope.cData);
@@ -186,7 +186,7 @@
 				$scope.taxData.push($scope.taxData1);
 				$scope.discData.push($scope.discData1);
 				$scope.transData.push($scope.nData);
-				$scope.basketData.push($scope.nvgData);
+				$scope.debitData.push($scope.nvgData);
 			for(var i=0;i<$scope.monthlyResponse.yearlyListDtos.length;i++)
 			{
 				$scope.labels.push($scope.monthlyResponse.yearlyListDtos[i].monthName);

@@ -237,6 +237,10 @@
 						break;
 					}
 				}
+				else
+				{
+					$scope.searchValueAlt = '';
+				}
 			}
 		};
 		$scope.changeQuantity = function() {
@@ -406,7 +410,7 @@
 							$scope.total = (($scope.discount) * parseFloat($scope.quantity))
 								.toFixed(2);
 						}
-						if($rootScope.testData[$rootScope.testData.length - 1].total == $rootScope.testData[$rootScope.testData.length - 1].totalWithTax)
+						if(($rootScope.testData[$rootScope.testData.length - 1].total == $rootScope.testData[$rootScope.testData.length - 1].totalWithTax)&&($rootScope.testData[$rootScope.testData.length - 1].total !=0))
 						{
 							$scope.tWTax = parseFloat($scope.total);
 						}

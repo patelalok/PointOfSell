@@ -16,7 +16,7 @@
 		</div>
 		<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
 			<label for="userName" class="padding-bottom-5 font-weight-label">UserName</label>
-			<select style="height:44px;" class="form-control" name="userName" id="userName" ng-model="GlobalVariable.userNameClock"
+			<select style="height:44px;width:100%;" class="form-control" name="userName" id="userName" ng-model="GlobalVariable.userNameClock"
 			data-ng-options="user.username as user.username for user in GlobalVariable.getUserDtls" data-ng-change="getClockInDetails()">
 				<!--<option ng-repeat="state in GlobalVariable.getUserDtls" value="{{state.stateCode}}">{{state.stateDecsription}}</option>-->
 				<option value="">Select</option>
