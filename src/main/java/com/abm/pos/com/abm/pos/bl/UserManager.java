@@ -103,7 +103,6 @@ public class UserManager {
 
 
 
-
     private static final class AddUserMapper implements RowMapper<UserDto>
     {
 
@@ -211,6 +210,23 @@ public class UserManager {
         try
         {
             userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInDetails, new UserClockInMapper(), username,date );
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return userClockInDtoList;
+    }
+
+
+    public List<UserClockInDto> getUserClockInForSetup(String username, String startDate, String endDate) {
+
+        List<UserClockInDto> userClockInDtoList = new ArrayList<>();
+
+        try
+        {
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(), username,startDate,endDate);
         }
         catch (Exception e)
         {

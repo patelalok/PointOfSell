@@ -59,6 +59,13 @@ public class UserController {
         return userManager.getUserClockIn(username,date);
 
     }
+
+    @RequestMapping(value = "/getUserClockInForSetup", method = RequestMethod.GET, produces = "application/json")
+    public List<UserClockInDto> getUserClockIn(@RequestParam String username,@RequestParam String startDate,@RequestParam String endDate) {
+
+        return userManager.getUserClockInForSetup(username,startDate,endDate);
+
+    }
     @RequestMapping(value = "/addUserClockOut", method = RequestMethod.POST, consumes = "application/json")
     public boolean addClockOut(@RequestBody UserClockInDto userDto) {
 

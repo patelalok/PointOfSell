@@ -772,4 +772,5 @@ public class SQLQueries {
     public String getPreviousBalance = "SELECT PREVIOUS_BALANCE FROM transaction WHERE TRANSACTION_COMP_ID = ?";
     public String getCustomerPhoneNo = "SELECT CUSTOMER_PHONENO FROM transaction WHERE TRANSACTION_COMP_ID = ?";
     public String updateBlanceToCustomerProfileWithoutDate = "UPDATE customer SET BALANCE = ? WHERE PHONE_NO = ?";
+    public String getUserClockInForSetup = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? AND DATE BETWEEN ? AND ?";
 }

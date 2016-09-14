@@ -869,7 +869,10 @@ public class ClosingDetailsManager {
 
             cb.setLineWidth(1f);
 
+           // cb.rectangle(20,60,560,660);
+
             cb.rectangle(20,60,560,660);
+
 
             cb.moveTo(20,690);
             cb.lineTo(580,690);
