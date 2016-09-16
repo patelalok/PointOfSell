@@ -109,10 +109,10 @@
 					<td class="wrapword" style="width:5%;"><span>{{row.stock}}</span></td>
 					<td class="wrapword" style="width:10%;"><span>{{row.retailPrice}}</span></td>
 					<td class="wrapword" style="width:20%;">
-					<span class="inline-vertical" ng-hide="GlobalVariable.userRole == 'Manager'">
+					<span class="inline-vertical" ng-show="GlobalVariable.userRole != 'Manager'">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editProduct(row)"></span>
 							</span>
-						<span class="inline-vertical padding-left-5" ng-hide="GlobalVariable.userRole == 'Manager'">
+						<span class="inline-vertical padding-left-5" ng-show="GlobalVariable.userRole != 'Manager'">
 								<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;" ng-click="deleteProduct(row.productId)"></span>
 							</span>
 						<span class="inline-vertical padding-left-5" >
