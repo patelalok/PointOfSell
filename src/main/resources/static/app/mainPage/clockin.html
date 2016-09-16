@@ -28,14 +28,15 @@
 			autocomplete="off"  style="width:100%;height:50px;"  />
 		</div>
 		<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;">
-			<div>Clocked In : {{clockedInTime}}</div>
+			<div class="col-md-6">Clocked In : <span style="color:green;">{{clockedInTime}}</span></div>
+			<div class="col-md-6">Hours:<span style="color:red;">{{hrWorked}}</span></div>
 		</div>
 	</div>
 
 </div>
 	<div class="modal-body" style="padding:0px;" ng-show="alreadtClockedIn">
 		<div class="row">
-			<div class="col-md-12" style="font-size: 25px;text-align: center;color:green;">
+			<div class="col-md-12" style="font-size: 25px;text-align: center;color:green;padding:30px;">
 				User Already ClockedIn adn ClckedOut.
 			</div>
 		</div>

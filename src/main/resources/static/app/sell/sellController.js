@@ -236,6 +236,7 @@
 
 						break;
 					}
+					$scope.searchValueAlt = '';
 				}
 				else
 				{

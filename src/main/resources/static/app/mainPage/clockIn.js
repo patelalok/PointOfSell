@@ -20,6 +20,9 @@
 		function render()
 		{
 			//getClockInDetails();
+			$scope.clockedInTime= '';
+			GlobalVariable.userNameClock = null;
+			GlobalVariable.pwdClock='';
 		}
 		$scope.getClockInDetails =function()
 		{
@@ -44,6 +47,10 @@
 					$scope.clockedInTime = response[0].clockInTime;
 					GlobalVariable.userNameClock = response[0].username;
 					$scope.clockInId = response[0].clockInId;
+					var date1 = new Date($scope.clockedInTime);
+					var date2 = new Date(js_yyyy_mm_dd_hh_mm_ss());
+					var hours = Number(Math.abs(date1 - date2) / 36e5).toFixed(2);
+					$scope.hrWorked = hours;
 				}
 				else if(response[0].clockInTime !== null && response[0].clockOutTime !== null)
 				{
