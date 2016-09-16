@@ -96,7 +96,7 @@ public class ClosingDetailsController {
 
         closingDetailsManager.printClosingDetails(startDate,endDate);
 
-        ClassPathResource pdfFile = new ClassPathResource("/Users/asp5045/Documents/PointOfSell/src/main/resources/AddImageExample.pdf");
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));

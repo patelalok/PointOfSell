@@ -353,6 +353,7 @@ public class SalesManager {
             customer.setCountry(rs.getString("COUNTRY"));
             customer.setZipcode(rs.getString("ZIPCODE"));
             customer.setFax(rs.getString("FAX"));
+            customer.setCompanyName(rs.getString("COMPANY_NAME"));
             customer.setBalance(rs.getDouble("BALANCE"));
 
             return customer;

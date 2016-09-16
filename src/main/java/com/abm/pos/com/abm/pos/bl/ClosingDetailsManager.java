@@ -1,9 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.*;
-import com.abm.pos.com.abm.pos.dto.reports.HourlyListDto;
-import com.abm.pos.com.abm.pos.dto.reports.YearlyDto;
-import com.abm.pos.com.abm.pos.dto.reports.YearlyListDto;
+import com.abm.pos.com.abm.pos.dto.reports.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -40,6 +38,9 @@ public class ClosingDetailsManager {
 
     @Autowired
     SQLQueries sqlQueries;
+
+    @Autowired
+    ReportManager reportManager;
 
     public static final String FONT = "resources/fonts/OpenSans-Regular.ttf";
     public static final String FONTB = "resources/fonts/OpenSans-Bold.ttf";
@@ -805,25 +806,34 @@ public class ClosingDetailsManager {
         initializeFonts();
 
 
+       // CommonComparisonTotalDto commonComparisonTotalDto = new CommonComparisonTotalDto();
+
+       //ReportManager r = new ReportManager();
+        CommonComparisonTotalDto commonComparisonDtos = new CommonComparisonTotalDto();
+
+        commonComparisonDtos = reportManager.getSalesByCategory(startDate,endDate);
+
+
         try {
 
-            List<ClosingDetailsDto> closingDetailsDtoList = new ArrayList<>();
+           // List<ClosingDetailsDto> closingDetailsDtoList = new ArrayList<>();
 
-            List<PaidOutDto> paidOutDtoList = new ArrayList<>();
+            //List<PaidOutDto> paidOutDtoList = new ArrayList<>();
 
 
-            closingDetailsDtoList = getClosingDetailsToDB(startDate,endDate);
+           // closingDetailsDtoList = getClosingDetailsToDB(startDate, endDate);
 
             //Calling getPaid out details to get paid out details
 
-            paidOutDtoList = getPaidOutDetails(startDate,endDate);
+           // paidOutDtoList = getPaidOutDetails(startDate, endDate);
 
 
-            docWriter = PdfWriter.getInstance(doc , new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/AddImageExample.pdf"));
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/downloads/AddTableExample2.pdf"));
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
-            doc.addTitle("Close Register Report");
+            doc.addCreator("MySampleCode.com");
+            doc.addTitle("Invoice");
             doc.setPageSize(PageSize.A4);
 
             doc.open();
@@ -832,152 +842,84 @@ public class ClosingDetailsManager {
             boolean beginPage = true;
             int y = 0;
 
-            for(int i=0; i < 100; i++ ){
-                if(beginPage){
+
+
+            for (int i = 0; i < commonComparisonDtos.getCommonComparisonDtos().size(); i++) {
+                if (beginPage) {
                     beginPage = false;
                     generateLayout(doc, cb);
-                    generateHeader(doc, cb,closingDetailsDtoList, startDate,endDate);
-                    y = 615;
+                    generateHeader(doc, cb, startDate,endDate);
+                    y = 570;
                 }
-                generateClosingDetails(doc, cb, i, y,closingDetailsDtoList,paidOutDtoList);
+                generateDetail(doc, cb, i, y, commonComparisonDtos);
+                y = y - 40;
+                if (y < 50) {
+                    printPageNumber(cb);
+                    doc.newPage();
+                    beginPage = true;
+                }
+                if(commonComparisonDtos.getCommonComparisonDtos().size() == i)
+                {
 
                 }
 
-        }
+            }
+            generateTotalDetail(doc, cb, 0, y, commonComparisonDtos);
+            printPageNumber(cb);
 
-
-        catch (Exception ex)
-        {
+        } catch (DocumentException dex) {
+            dex.printStackTrace();
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally
-        {
-            if (doc != null)
-            {
+        } finally {
+            if (doc != null) {
                 doc.close();
             }
-            if (docWriter != null)
-            {
+            if (docWriter != null) {
                 docWriter.close();
             }
         }
     }
 
-    private void generateLayout(Document doc, PdfContentByte cb)  {
+    private void generateLayout(Document doc, PdfContentByte cb) {
 
         try {
 
             cb.setLineWidth(1f);
 
-           // cb.rectangle(20,60,560,660);
 
-            cb.rectangle(20,60,560,660);
-
-
-            cb.moveTo(20,690);
-            cb.lineTo(580,690);
-            cb.moveTo(60,60);
-            cb.lineTo(50,710);
-            cb.moveTo(150,60);
-            cb.lineTo(150,710);
-            cb.moveTo(430,60);
-            cb.lineTo(430,710);
+            // Invoice Detail box layout
+            cb.rectangle(20, 50, 550, 580);
+            cb.moveTo(20, 590);
+            cb.lineTo(570, 590);
+//            cb.moveTo(50, 50);
+//            cb.lineTo(50, 650);
+//            cb.moveTo(150, 50);
+//            cb.lineTo(150, 650);
+//            cb.moveTo(430, 50);
+//            cb.lineTo(430, 650);
+//            cb.moveTo(500, 50);
+//            cb.lineTo(500, 650);
             cb.stroke();
-
-//            cb.rectangle(20,50,550,600);
-//            cb.moveTo(20,630);
-//            cb.lineTo(570,630);
-//            cb.moveTo(50,50);
-//            cb.lineTo(50,650);
-//            cb.moveTo(150,50);
-//            cb.lineTo(150,650);
-//            cb.moveTo(430,50);
-//            cb.lineTo(430,650);
-//            cb.moveTo(500,50);
-//            cb.lineTo(500,650);
-//            cb.stroke();
 
             // Invoice Detail box Text Headings
-            createHeadings(cb,50,693,"Payment Types");
-            createHeadings(cb,200,693,"From User");
-            createHeadings(cb,340,693,"From System");
-            createHeadings(cb,480,693,"Difference");
-
-            cb.moveTo(20,660);
-            cb.lineTo(580,660);
-
-            cb.moveTo(20,630);
-            cb.lineTo(580,630);
-
-            cb.moveTo(20,600);
-            cb.lineTo(580,600);
-
-            cb.moveTo(20,570);
-            cb.lineTo(580,570);
-
-            cb.moveTo(20,540);
-            cb.lineTo(580,540);
-
-            cb.moveTo(20,510);
-            cb.lineTo(580,510);
-
-            cb.moveTo(20,480);
-            cb.lineTo(580,480);
-
-            cb.moveTo(20,450);
-            cb.lineTo(580,450);
-
-            cb.moveTo(20,420);
-            cb.lineTo(580,420);
-
-            cb.moveTo(20,390);
-            cb.lineTo(580,390);
-
-            cb.moveTo(20,360);
-            cb.lineTo(580,360);
-
-            cb.moveTo(20,330);
-            cb.lineTo(580,330);
-
-            cb.moveTo(20,300);
-            cb.lineTo(580,300);
-
-            cb.moveTo(20,270);
-            cb.lineTo(580,270);
-
-            cb.moveTo(20,240);
-            cb.lineTo(580,240);
-
-            cb.moveTo(20,210);
-            cb.lineTo(580,210);
-
-            cb.moveTo(20,180);
-            cb.lineTo(580,180);
-
-            cb.moveTo(20,150);
-            cb.lineTo(580,150);
+            createHeadings(cb, 23, 605, "Category Name");
+            createHeadings(cb, 205, 605, "Quantity");
+            createHeadings(cb, 284, 605, "Discount");
+            createHeadings(cb, 369, 605, "Total Sales");
+            createHeadings(cb, 462, 605, "Tax");
+            createHeadings(cb, 519, 605, "Profit");
 
 
-            cb.stroke();
-
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void generateHeader(Document doc, PdfContentByte cb, List<ClosingDetailsDto> closingDetailsDtos, String startDate, String endDate)  {
+    private void generateHeader(Document doc, PdfContentByte cb,String startDate, String endDate) {
 
         try {
-
-            createHeadingsAlokTest(cb,235,780,"EXCELL WIRELESS");
-
-            createHeadingsAlokTest(cb,235,750,"Close Register Report");
-
-
-            createHeadings(cb,20,725,"Date From:");
-            createHeadings(cb,450,725,"Today's Profit:");
 
             DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date sd = null;
@@ -992,147 +934,107 @@ public class ClosingDetailsManager {
             }
             DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
 
-            createHeadings(cb, 65, 725, date.format(sd) + " "+ "To" + " " +date.format(ed));
+            String a = date.format(sd);
+            String b =  date.format(ed);
 
-
-            if((null != closingDetailsDtos && null != Double.toString(closingDetailsDtos.get(0).getTotalProfit()))) {
-
-                createHeadings(cb, 508, 725, "$" + Double.toString(closingDetailsDtos.get(0).getTotalProfit()));
+            if(a.equals(b))
+            {
+                createHeadings(cb, 20, 660, "Date:" + date.format(sd));
+            }
+            else {
+                createHeadings(cb, 20, 660, "Date:" + a + " " + "To" + " " + b);
             }
 
-        }
 
-        catch (Exception ex){
+            createHeadings(cb, 265, 770, "Excell Wireless");
+            createHeadings(cb, 240, 730, "Sales By Category Report");
+
+
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void generateClosingDetails(Document doc, PdfContentByte cb, int index, int y, List<ClosingDetailsDto> closingDetailsDtos, List<PaidOutDto> paidOutDtos)  {
+    private void generateDetail(Document doc, PdfContentByte cb, int index, int y, CommonComparisonTotalDto commonComparisonTotalDto) {
         DecimalFormat df = new DecimalFormat("0.00");
 
         try {
 
-            createContent(cb,21,675,"Credit",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,645,"Debit",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,615,"Cash",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,585,"Check",PdfContentByte.ALIGN_LEFT);
+            if(null != commonComparisonTotalDto && commonComparisonTotalDto.getCommonComparisonDtos().size()>=1) {
 
-            //For Credit
-            createContent(cb,152,675,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCredit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,675,"$" +Double.toString(closingDetailsDtos.get(0).getReportCredit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,675,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCredit()),PdfContentByte.ALIGN_LEFT);
+                createContent(cb, 23, y, commonComparisonTotalDto.getCommonComparisonDtos().get(index).getCommanName(), 0);
+                createContent(cb, 205, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getQuantity()), 0);
+                createContent(cb, 284, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getDiscount()), 0);
 
-            //For Debit
+                createContent(cb, 369, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getSalesTotal()), 0);
+                createContent(cb, 462, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getTax()), 0);
+                createContent(cb, 519, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getProfitAmount()), 0);
+            }
 
-            createContent(cb,152,645,"$" +Double.toString(closingDetailsDtos.get(0).getCloseDebit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,645,"$" +Double.toString(closingDetailsDtos.get(0).getReportDebit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,645,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceDebit()),PdfContentByte.ALIGN_LEFT);
-
-            //For Cash
-
-            createContent(cb,152,615,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCash()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,615,"$" +Double.toString(closingDetailsDtos.get(0).getReportCash()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,615,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCash()),PdfContentByte.ALIGN_LEFT);
-
-            //For Check
-
-            createContent(cb,152,585,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCheck()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,585,"$" +Double.toString(closingDetailsDtos.get(0).getReportCheck()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,585,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCheck()),PdfContentByte.ALIGN_LEFT);
-
-
-            createContent(cb,21,555,"Paid Out (Sum)",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,555,"Paid Out-1",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,555,"Paid Out-2",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,555,"Paid Out-3",PdfContentByte.ALIGN_LEFT);
-
-
-            //Adding paid out details from get paid out end point
-            createContent(cb,21,520, "$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount1()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount2()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-
-
-
-            createContent(cb,21,490,"Actual Daily Total",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,490,"Total From User",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,490,"Total From System",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,490,"Total Difference",PdfContentByte.ALIGN_LEFT);
-
-            //This just for now need to replace with the real values from service call.
-            createContent(cb,21,460,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,460,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,460,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,460,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDifference()),PdfContentByte.ALIGN_LEFT);
-
-            createContent(cb,21,430,"Net Sales",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,430,"Tax",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,430,"Discount",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,430,"Gross Sales",PdfContentByte.ALIGN_LEFT);
-
-
-            //This just for now need to replace with the real values from service call.
-
-            //Net Sales = Total From System - Tax + Sum of all Paid outs because that is part of the sale
-            createContent(cb,21,400,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount() - closingDetailsDtos.get(0).getTotalTax() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,400,"$" +Double.toString(closingDetailsDtos.get(0).getTotalTax()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,400,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDiscount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,400,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-
-
-            createContent(cb,21,370,"Customer Balance",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,370,"Commission",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,370,"Bank Deposit",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,370,"Cash In Hand",PdfContentByte.ALIGN_LEFT);
-
-            //This just for now need to replace with the real values from service call.
-            createContent(cb,21,340,"$" +Double.toString(closingDetailsDtos.get(0).getCustomerBalance()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,340,"$" +Double.toString(closingDetailsDtos.get(0).getCommission()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,340,"$" +Double.toString(closingDetailsDtos.get(0).getBankDeposit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,340,"$" +Double.toString(closingDetailsDtos.get(0).getCashInHand()),PdfContentByte.ALIGN_LEFT);
-        }
-
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void createHeadings(PdfContentByte cb, float x, float y, String text){
+    //Here I am printing Total values
+    private void generateTotalDetail(Document doc, PdfContentByte cb, int index, int y, CommonComparisonTotalDto commonComparisonTotalDto) {
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if(null != commonComparisonTotalDto && commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().size() == 1) {
+                createContent(cb, 23, y, "TOTAL", 0);
+                createContent(cb, 205, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalQuantity()), 0);
+                createContent(cb, 284, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalDiscount()), 0);
+                createContent(cb, 369, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalSales()), 0);
+                createContent(cb, 462, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalTax()), 0);
+                createContent(cb, 519, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalProfit()), 0);
+            }
 
 
-        cb.beginText();
-        cb.setFontAndSize(bfBold, 8);
-        cb.setTextMatrix(x,y);
-        cb.showText(text.trim());
-        cb.endText();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
     }
 
-    private void createHeadingsAlokTest(PdfContentByte cb, float x, float y, String text){
+    private void createHeadings(PdfContentByte cb, float x, float y, String text) {
 
 
         cb.beginText();
         cb.setFontAndSize(bfBold, 12);
-        cb.setTextMatrix(x,y);
+        cb.setTextMatrix(x, y);
         cb.showText(text.trim());
         cb.endText();
 
     }
 
-    private void createContent(PdfContentByte cb, float x, float y, String text, int align){
+    private void printPageNumber(PdfContentByte cb) {
 
 
         cb.beginText();
-        cb.setFontAndSize(bf, 8);
-        cb.showTextAligned(align, text.trim(), x , y, 0);
+        cb.setFontAndSize(bfBold, 8);
+        cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "Page No. " + (pageNumber + 1), 570, 25, 0);
+        cb.endText();
+
+        pageNumber++;
+
+    }
+
+    private void createContent(PdfContentByte cb, float x, float y, String text, int align) {
+
+
+        cb.beginText();
+        cb.setFontAndSize(bf, 12);
+        cb.showTextAligned(align, text.trim(), x, y, 0);
         cb.endText();
 
     }
 
-    private void initializeFonts(){
+    private void initializeFonts() {
 
 
         try {
@@ -1144,7 +1046,336 @@ public class ClosingDetailsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
-    }
+
+}
+//            doc.addAuthor("betterThanZero");
+//            doc.addCreationDate();
+//            doc.addProducer();
+//            doc.addTitle("Close Register Report");
+//            doc.setPageSize(PageSize.A4);
+//
+//            doc.open();
+//            PdfContentByte cb = docWriter.getDirectContent();
+//
+//            boolean beginPage = true;
+//            int y = 0;
+//
+//            for(int i=0; i < 100; i++ ){
+//                if(beginPage){
+//                    beginPage = false;
+//                    generateLayout(doc, cb);
+//                    generateHeader(doc, cb,closingDetailsDtoList, startDate,endDate);
+//                    y = 615;
+//                }
+//                generateClosingDetails(doc, cb, i, y,closingDetailsDtoList,paidOutDtoList);
+//
+//                }
+//
+//        }
+//
+//
+//        catch (Exception ex)
+//        {
+//            ex.printStackTrace();
+//        }
+//        finally
+//        {
+//            if (doc != null)
+//            {
+//                doc.close();
+//            }
+//            if (docWriter != null)
+//            {
+//                docWriter.close();
+//            }
+//        }
+//    }
+//
+//    private void generateLayout(Document doc, PdfContentByte cb)  {
+//
+//        try {
+//
+//            cb.setLineWidth(1f);
+//
+//           // cb.rectangle(20,60,560,660);
+//
+//            cb.rectangle(20,60,560,660);
+//
+//
+//            cb.moveTo(20,690);
+//            cb.lineTo(580,690);
+//            cb.moveTo(60,60);
+//            cb.lineTo(50,710);
+//            cb.moveTo(150,60);
+//            cb.lineTo(150,710);
+//            cb.moveTo(430,60);
+//            cb.lineTo(430,710);
+//            cb.stroke();
+//
+////            cb.rectangle(20,50,550,600);
+////            cb.moveTo(20,630);
+////            cb.lineTo(570,630);
+////            cb.moveTo(50,50);
+////            cb.lineTo(50,650);
+////            cb.moveTo(150,50);
+////            cb.lineTo(150,650);
+////            cb.moveTo(430,50);
+////            cb.lineTo(430,650);
+////            cb.moveTo(500,50);
+////            cb.lineTo(500,650);
+////            cb.stroke();
+//
+//            // Invoice Detail box Text Headings
+//            createHeadings(cb,50,693,"Payment Types");
+//            createHeadings(cb,200,693,"From User");
+//            createHeadings(cb,340,693,"From System");
+//            createHeadings(cb,480,693,"Difference");
+//
+//            cb.moveTo(20,660);
+//            cb.lineTo(580,660);
+//
+//            cb.moveTo(20,630);
+//            cb.lineTo(580,630);
+//
+//            cb.moveTo(20,600);
+//            cb.lineTo(580,600);
+//
+//            cb.moveTo(20,570);
+//            cb.lineTo(580,570);
+//
+//            cb.moveTo(20,540);
+//            cb.lineTo(580,540);
+//
+//            cb.moveTo(20,510);
+//            cb.lineTo(580,510);
+//
+//            cb.moveTo(20,480);
+//            cb.lineTo(580,480);
+//
+//            cb.moveTo(20,450);
+//            cb.lineTo(580,450);
+//
+//            cb.moveTo(20,420);
+//            cb.lineTo(580,420);
+//
+//            cb.moveTo(20,390);
+//            cb.lineTo(580,390);
+//
+//            cb.moveTo(20,360);
+//            cb.lineTo(580,360);
+//
+//            cb.moveTo(20,330);
+//            cb.lineTo(580,330);
+//
+//            cb.moveTo(20,300);
+//            cb.lineTo(580,300);
+//
+//            cb.moveTo(20,270);
+//            cb.lineTo(580,270);
+//
+//            cb.moveTo(20,240);
+//            cb.lineTo(580,240);
+//
+//            cb.moveTo(20,210);
+//            cb.lineTo(580,210);
+//
+//            cb.moveTo(20,180);
+//            cb.lineTo(580,180);
+//
+//            cb.moveTo(20,150);
+//            cb.lineTo(580,150);
+//
+//
+//            cb.stroke();
+//
+//        }
+//        catch (Exception ex){
+//            ex.printStackTrace();
+//        }
+//
+//    }
+//
+//    private void generateHeader(Document doc, PdfContentByte cb, List<ClosingDetailsDto> closingDetailsDtos, String startDate, String endDate)  {
+//
+//        try {
+//
+//            createHeadingsAlokTest(cb,235,780,"EXCELL WIRELESS");
+//
+//            createHeadingsAlokTest(cb,235,750,"Close Register Report");
+//
+//
+//            createHeadings(cb,20,725,"Date From:");
+//            createHeadings(cb,450,725,"Today's Profit:");
+//
+//            DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//            Date sd = null;
+//            Date ed = null;
+//
+//            try {
+//                sd = f.parse(startDate);
+//                ed = f.parse(endDate);
+//
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
+//
+//            createHeadings(cb, 65, 725, date.format(sd) + " "+ "To" + " " +date.format(ed));
+//
+//
+//            if((null != closingDetailsDtos && null != Double.toString(closingDetailsDtos.get(0).getTotalProfit()))) {
+//
+//                createHeadings(cb, 508, 725, "$" + Double.toString(closingDetailsDtos.get(0).getTotalProfit()));
+//            }
+//
+//        }
+//
+//        catch (Exception ex){
+//            ex.printStackTrace();
+//        }
+//
+//    }
+//
+//    private void generateClosingDetails(Document doc, PdfContentByte cb, int index, int y, List<ClosingDetailsDto> closingDetailsDtos, List<PaidOutDto> paidOutDtos)  {
+//        DecimalFormat df = new DecimalFormat("0.00");
+//
+//        try {
+//
+//            createContent(cb,21,675,"Credit",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,21,645,"Debit",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,21,615,"Cash",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,21,585,"Check",PdfContentByte.ALIGN_LEFT);
+//
+//            //For Credit
+//            createContent(cb,152,675,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCredit()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,675,"$" +Double.toString(closingDetailsDtos.get(0).getReportCredit()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,675,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCredit()),PdfContentByte.ALIGN_LEFT);
+//
+//            //For Debit
+//
+//            createContent(cb,152,645,"$" +Double.toString(closingDetailsDtos.get(0).getCloseDebit()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,645,"$" +Double.toString(closingDetailsDtos.get(0).getReportDebit()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,645,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceDebit()),PdfContentByte.ALIGN_LEFT);
+//
+//            //For Cash
+//
+//            createContent(cb,152,615,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCash()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,615,"$" +Double.toString(closingDetailsDtos.get(0).getReportCash()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,615,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCash()),PdfContentByte.ALIGN_LEFT);
+//
+//            //For Check
+//
+//            createContent(cb,152,585,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCheck()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,585,"$" +Double.toString(closingDetailsDtos.get(0).getReportCheck()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,585,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCheck()),PdfContentByte.ALIGN_LEFT);
+//
+//
+//            createContent(cb,21,555,"Paid Out (Sum)",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,555,"Paid Out-1",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,555,"Paid Out-2",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,555,"Paid Out-3",PdfContentByte.ALIGN_LEFT);
+//
+//
+//            //Adding paid out details from get paid out end point
+//            createContent(cb,21,520, "$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount1()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount2()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
+//
+//
+//
+//            createContent(cb,21,490,"Actual Daily Total",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,490,"Total From User",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,490,"Total From System",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,490,"Total Difference",PdfContentByte.ALIGN_LEFT);
+//
+//            //This just for now need to replace with the real values from service call.
+//            createContent(cb,21,460,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,460,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,460,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,460,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDifference()),PdfContentByte.ALIGN_LEFT);
+//
+//            createContent(cb,21,430,"Net Sales",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,430,"Tax",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,430,"Discount",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,430,"Gross Sales",PdfContentByte.ALIGN_LEFT);
+//
+//
+//            //This just for now need to replace with the real values from service call.
+//
+//            //Net Sales = Total From System - Tax + Sum of all Paid outs because that is part of the sale
+//            createContent(cb,21,400,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount() - closingDetailsDtos.get(0).getTotalTax() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,400,"$" +Double.toString(closingDetailsDtos.get(0).getTotalTax()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,400,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDiscount()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,400,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
+//
+//
+//            createContent(cb,21,370,"Customer Balance",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,370,"Commission",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,370,"Bank Deposit",PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,370,"Cash In Hand",PdfContentByte.ALIGN_LEFT);
+//
+//            //This just for now need to replace with the real values from service call.
+//            createContent(cb,21,340,"$" +Double.toString(closingDetailsDtos.get(0).getCustomerBalance()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,152,340,"$" +Double.toString(closingDetailsDtos.get(0).getCommission()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,292,340,"$" +Double.toString(closingDetailsDtos.get(0).getBankDeposit()),PdfContentByte.ALIGN_LEFT);
+//            createContent(cb,432,340,"$" +Double.toString(closingDetailsDtos.get(0).getCashInHand()),PdfContentByte.ALIGN_LEFT);
+//        }
+//
+//        catch (Exception ex){
+//            ex.printStackTrace();
+//        }
+//
+//    }
+//
+//    private void createHeadings(PdfContentByte cb, float x, float y, String text){
+//
+//
+//        cb.beginText();
+//        cb.setFontAndSize(bfBold, 8);
+//        cb.setTextMatrix(x,y);
+//        cb.showText(text.trim());
+//        cb.endText();
+//
+//    }
+//
+//    private void createHeadingsAlokTest(PdfContentByte cb, float x, float y, String text){
+//
+//
+//        cb.beginText();
+//        cb.setFontAndSize(bfBold, 12);
+//        cb.setTextMatrix(x,y);
+//        cb.showText(text.trim());
+//        cb.endText();
+//
+//    }
+//
+//    private void createContent(PdfContentByte cb, float x, float y, String text, int align){
+//
+//
+//        cb.beginText();
+//        cb.setFontAndSize(bf, 8);
+//        cb.showTextAligned(align, text.trim(), x , y, 0);
+//        cb.endText();
+//
+//    }
+//
+//    private void initializeFonts(){
+//
+//
+//        try {
+//            bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+//            bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+//
+//        } catch (DocumentException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
 
 

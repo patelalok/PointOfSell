@@ -25,6 +25,9 @@ public class ReportManager {
     @Autowired
     SQLQueries sqlQueries;
 
+//    JdbcTemplate jdbcTemplate = new JdbcTemplate();
+//    SQLQueries sqlQueries = new SQLQueries();
+
 
     public CommonComparisonTotalDto getTop50Items(String startDate, String endDate) {
 
