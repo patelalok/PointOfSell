@@ -11,6 +11,7 @@ public class UserDto {
     private String userRole;
     private String createdDate;
     private double horlyRate;
+    private double userCommissionPercentage;
 
 
     public String getCreatedDate() {
@@ -61,4 +62,11 @@ public class UserDto {
         this.userRole = userRole;
     }
 
+    public double getUserCommissionPercentage() {
+        return userCommissionPercentage;
+    }
+
+    public void setUserCommissionPercentage(double userCommissionPercentage) {
+        this.userCommissionPercentage = userCommissionPercentage;
+    }
 }

@@ -150,8 +150,10 @@ public class SQLQueries {
                   "USERNAME," +
                   "PASSWORD," +
                   "USER_ROLE," +
-                  "USER_CREATED_DATE) " +
-         "VALUES (?,?,?,?)";
+                  "USER_CREATED_DATE," +
+                  "HORLYRATE," +
+                  "USER_COMMISSION_PERCENTAGE) " +
+         "VALUES (?,?,?,?,?,?)";
 
     //ADD CLOSING DETAILS INTO DATABASE
 
@@ -290,7 +292,9 @@ public class SQLQueries {
     public String editUserQuery =
             "UPDATE USER SET " +
                     "PASSWORD = ?, " +
-                    "USER_ROLE = ? " +
+                    "USER_ROLE = ?, " +
+                    "HORLYRATE = ?, " +
+                    "USER_COMMISSION_PERCENTAGE = ? " +
                     "WHERE USERNAME = ?";
 
     public String editPageSetUpDetails =
@@ -457,19 +461,13 @@ public class SQLQueries {
 
     public String getTransactionDetailsForReceipt = "SELECT t.*, c.BALANCE FROM TRANSACTION t, CUSTOMER c WHERE t.CUSTOMER_PHONENO = c.PHONE_NO AND TRANSACTION_COMP_ID = ?";
 
-    public static String getProductHistory = "SELECT t.DATE," +
-            "                      p.PRODUCT_NO," +
-            "                        p.DESCRIPTION," +
-            "                        t.QUANTITY," +
-            "                        (select sum(QUANTITY) from TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND  ? AND PRODUCT_NO = ?) as TOTALQUANTITY," +
-            "                        t.RETAIL," +
-            "                        t.COST," +
-            "                        t.DISCOUNT," +
-            "                        p.CATEGORY_ID" +
-            "                        FROM TRANSACTION_LINE_ITEM t , PRODUCT p " +
-            "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO " +
-            "                        AND t.PRODUCT_NO = ?" +
-            "                        AND t.DATE BETWEEN ? AND  ? ";
+    public static String getProductHistory = "SELECT t.DATE, p.PRODUCT_NO, p.DESCRIPTION, t.QUANTITY,t.IMEI_NO, \n" +
+            "(select sum(QUANTITY) from TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND  ? AND PRODUCT_NO = ?) as TOTALQUANTITY,\n" +
+            "t.RETAIL, t.COST, t.DISCOUNT,p.CATEGORY_ID\n" +
+            "FROM TRANSACTION_LINE_ITEM t , PRODUCT p \n" +
+            "WHERE t.PRODUCT_NO = p.PRODUCT_NO \n" +
+            "AND t.PRODUCT_NO = ?" +
+            "AND t.DATE BETWEEN ? AND ? ";
 
     public String getProductDescription = "SELECT DESCRIPTION FROM PRODUCT WHERE PRODUCT_NO = ?";
 

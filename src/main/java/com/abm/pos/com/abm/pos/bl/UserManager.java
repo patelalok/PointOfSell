@@ -36,7 +36,9 @@ public class UserManager {
                     userDto.getUsername(),
                     userDto.getPassword(),
                     userDto.getUserRole(),
-                    userDto.getCreatedDate());
+                    userDto.getCreatedDate(),
+                    userDto.getHorlyRate(),
+                    userDto.getUserCommissionPercentage());
             System.out.println("User Added Successfully");
 
         }
@@ -54,6 +56,8 @@ public class UserManager {
 
                     userDto.getPassword(),
                     userDto.getUserRole(),
+                    userDto.getHorlyRate(),
+                    userDto.getUserCommissionPercentage(),
                     userDto.getUsername());
 
             System.out.println("User Edited Successfully");
@@ -251,6 +255,9 @@ public class UserManager {
             user.setClockOutTime(rs.getString("CLOCK_OUT"));
             user.setNoOfhours(rs.getString("NOOFHOURS"));
             user.setDate(rs.getString("DATE"));
+
+            //This User commission when they sale products they can they will get defined percentage of profit amount set by the admin.
+            user.setUserCommission(rs.getDouble("USER_COMMISSION"));
 
             return user;
         }

@@ -13,6 +13,7 @@ public class UserClockInDto {
     private String noOfhours;
     private double horlyRate;
     private String date;
+    private double userCommission;
 
     public int getClockInId() {
         return clockInId;
@@ -76,5 +77,13 @@ public class UserClockInDto {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public double getUserCommission() {
+        return userCommission;
+    }
+
+    public void setUserCommission(double userCommission) {
+        this.userCommission = userCommission;
     }
 }
