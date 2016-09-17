@@ -55,7 +55,9 @@ public class SalesManager {
                     transactionDto.getLast4Digits(),
                     transactionDto.getPrevBalance(),
                     transactionDto.getBalance(),
-                    transactionDto.getPaidAmountDebit());
+                    transactionDto.getPaidAmountDebit(),
+                    transactionDto.getReceiptNote(),
+                    transactionDto.getTransactionNote());
 
             jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
                     transactionDto.getBalance(),
@@ -186,6 +188,8 @@ public class SalesManager {
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
             transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
             transaction.setBalance(rs.getDouble("BALANCE"));
+            transaction.setReceiptNote(rs.getString("RECEIPT_NOTE"));
+            transaction.setTransactionNote(rs.getString("TRANSACTION_NOTE"));
 
             //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
 
@@ -325,6 +329,8 @@ public class SalesManager {
             transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
             transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
             transaction.setBalance(rs.getDouble("BALANCE"));
+            transaction.setReceiptNote(rs.getString("RECEIPT_NOTE"));
+            transaction.setTransactionNote(rs.getString("TRANSACTION_NOTE"));
 
 
             //  transaction.setPrevBalance(rs.getDouble("BALANCE"));

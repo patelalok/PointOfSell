@@ -123,7 +123,9 @@ public class SQLQueries {
                     "LAST_4_DIGITS, " +
                     "PREVIOUS_BALANCE, " +
                     "BALANCE, " +
-                    "PAID_AMOUNT_DEBIT) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "PAID_AMOUNT_DEBIT," +
+                    "RECEIPT_NOTE," +
+                    "TRANSACTION_NOTE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO TRANSACTION_LINE_ITEM " +

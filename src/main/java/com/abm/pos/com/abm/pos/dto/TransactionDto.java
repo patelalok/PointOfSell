@@ -33,6 +33,9 @@ public class TransactionDto {
     private double balance;
     private double lineItemDiscount;
 
+    private String receiptNote;
+    private String transactionNote;
+
 
     public int getTransactionCompId() {
         return transactionCompId;
@@ -224,5 +227,21 @@ public class TransactionDto {
 
     public void setLineItemDiscount(double lineItemDiscount) {
         this.lineItemDiscount = lineItemDiscount;
+    }
+
+    public String getReceiptNote() {
+        return receiptNote;
+    }
+
+    public void setReceiptNote(String receiptNote) {
+        this.receiptNote = receiptNote;
+    }
+
+    public String getTransactionNote() {
+        return transactionNote;
+    }
+
+    public void setTransactionNote(String transactionNote) {
+        this.transactionNote = transactionNote;
     }
 }
