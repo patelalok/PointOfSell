@@ -5,6 +5,7 @@ import com.abm.pos.com.abm.pos.dto.ReceiptDto;
 import com.abm.pos.com.abm.pos.dto.TransactionDto;
 import com.abm.pos.com.abm.pos.dto.TransactionLineItemDto;
 import com.abm.pos.com.abm.pos.dto.TransactionPaymentDto;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.io.ClassPathResource;
@@ -80,10 +81,12 @@ public class SalesController {
     }
 
 
-    @RequestMapping(value = "/getReceiptDetailsAlok", method = RequestMethod.GET, produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> getReceiptDetailsAlok(@RequestParam int receiptId) throws IOException {
+    @RequestMapping(value= "/getReceiptDetailsAlok", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> getPrintClosingDetails(@RequestParam int receiptId) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
 
         salesManager.getReceiptDetailsAlok(receiptId);
+
         ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
 
         HttpHeaders headers = new HttpHeaders();
@@ -91,7 +94,7 @@ public class SalesController {
         headers.add("Access-Control-Allow-Origin", "*");
         headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
         headers.add("Access-Control-Allow-Headers", "Content-Type");
-        headers.add("Content-Disposition", "filename=" + "AddTableExample1.pdf");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
@@ -101,6 +104,8 @@ public class SalesController {
                 new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
 
         return response;
+
+    }
     }
 
 
@@ -115,4 +120,4 @@ public class SalesController {
     {
         salesManager.getTransactionPaymentDetails(transactionPaymentDto);
     }*/
-}
+
