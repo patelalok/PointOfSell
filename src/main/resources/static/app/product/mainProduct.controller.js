@@ -16,6 +16,7 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		$scope.enabled = true;
+		$scope.showEditStock = true;
 		//util.Wait(true);
 		//loadCDetails();
 		/*GlobalVariable.productSuccessAlert = false;
@@ -105,6 +106,7 @@
 			$scope.curPageOnTotalLen = 0;
 			$scope.totalLength = 0;
 			$scope.productType = "select";
+			$scope.editStock =false;
 			if(GlobalVariable.getProducts == undefined)
 			getProductDetails.getProductDetail($scope.getCDetails);
 			if(GlobalVariable.getVendors == undefined)
@@ -189,6 +191,54 @@
 		}
 		function onGetStockError(response)
 		{
+
+		}
+		$scope.editStockDtls = function()
+		{
+			if($scope.editStock ==true)
+				$scope.showEditStock = false;
+			else
+				$scope.showEditStock = true;
+		};
+
+		$scope.updateStock = function(row)
+		{var request={
+			"productId": row.productId,
+			"productNo":row.productNo,
+			"oldProductNo":row.productNo,
+			"categoryId": row.categoryId,
+			"vendorId": row.vendorId,
+			"brandId": row.brandId,
+			"altNo": row.altNo,
+			"description":row.description,
+			"costPrice":row.prodCP,
+			"markup": row.prodMarkup,
+			"retailPrice": row.prodRetail,
+			"quantity": row.prodQuantity,
+			"minProductQuantity": row.prodMinquantity,
+			"returnRule":row.retType,
+			"imeiNo":row.phoneIMEI,
+			"image": "image",
+			"createdDate": "1000-01-01 00:00:00",
+			"addTax":row.productYesyNO,
+			"stock":row.stock
+		};
+			var url =GlobalConstants.URLCONSTANTS+"editProduct";
+			request= JSON.stringify(request);
+
+			dataService.Post(url,request,addStockSuccessHandler,addStockErrorHandler,"application/json","application/json");
+
+
+		};
+		function addStockSuccessHandler(response)
+		{
+			util.Wait(true);
+			$scope.editStock =false;
+			$scope.showEditStock = true;
+			getProductDetails.getProductDetail($scope.getCDetails);
+		}
+		function addStockErrorHandler(response) {
+
 
 		}
 		$scope.deleteProduct = function(id)

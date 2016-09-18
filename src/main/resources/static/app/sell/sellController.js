@@ -161,7 +161,7 @@
 						"categoryName":'',
 						"totalWithTax":0,
 						"totalTax":0,
-						"imeiNo":'',
+						"imeiNo":GlobalVariable.sellIMEINumber,
 						"categoryId":GlobalVariable.sellCategoryId,
 						"phoneId":''
 					});
