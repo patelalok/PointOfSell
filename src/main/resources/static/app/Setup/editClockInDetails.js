@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('EditClockController', EditClockController);
 
-    EditClockController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','RestrictedCharacter.Types','GlobalConstants'];
+    EditClockController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','RestrictedCharacter.Types','GlobalConstants','dataService'];
 
-    function EditClockController($scope, $rootScope, device ,GlobalVariable,DialogFactory,restrictCharacter,GlobalConstants)
+    function EditClockController($scope, $rootScope, device ,GlobalVariable,DialogFactory,restrictCharacter,GlobalConstants,dataService)
     {
         $scope.GlobalVariable = GlobalVariable;
         $scope.restrictCharacter=restrictCharacter;
@@ -31,18 +31,30 @@
         };
         $scope.editClockInDetails = function()
         {
+            var date1 = new Date($scope.clockInDate);
+            var date2 = new Date($scope.clockOutDate);
+            var hours = Number(Math.abs(date1 - date2) / 36e5).toFixed(2);
             var url=GlobalConstants.URLCONSTANTS+'editUserClockIn';
             var request= {
                 "clockInId": GlobalVariable.editClockDtls.clockInId,
                 "username": GlobalVariable.editClockDtls.username,
-                "clockInTime": "2016-08-08 09:08:28.0",
-                "clockOutTime": "2016-08-08 09:15:03.0",
-                "noOfhours": null,
-                "horlyRate": $scope.hrlyRate,
+                "clockInTime": $filter('date')($scope.clockInDate, "yyyy-MM-dd hh:mm:ss"),
+                "clockOutTime": $filter('date')($scope.clockOutDate, "yyyy-MM-dd hh:mm:ss"),
+                "noOfhours": hours,
+                "horlyRate": $scope.hrlyRate.replace('$','').replace(/,/g,''),
                 "date": null
 
             }
+            dataService.Post(url,request,onEditClckSuccess,onEditClckError,'application/json','application/json');
         };
+        function onEditClckSuccess(response)
+        {
+
+        }
+        function onEditClckError(response)
+        {
+
+        }
         function render()
         {
             /** Options for the date picker directive * */
