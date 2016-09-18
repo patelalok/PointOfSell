@@ -14,6 +14,7 @@ public class UserClockInDto {
     private double horlyRate;
     private String date;
     private double userCommission;
+    private double totalAmount;
 
     public int getClockInId() {
         return clockInId;
@@ -85,5 +86,13 @@ public class UserClockInDto {
 
     public void setUserCommission(double userCommission) {
         this.userCommission = userCommission;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }

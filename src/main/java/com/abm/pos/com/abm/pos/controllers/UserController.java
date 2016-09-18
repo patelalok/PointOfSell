@@ -53,6 +53,12 @@ public class UserController {
        return userManager.addUserClockIn(userDto);
     }
 
+    @RequestMapping(value = "/editClockInDetails", method = RequestMethod.POST, consumes = "application/json")
+    public void editClockInDetails(@RequestBody UserClockInDto userDto) {
+
+        userManager.editClockInDetails(userDto);
+    }
+
     @RequestMapping(value = "/getUserClockIn", method = RequestMethod.GET, produces = "application/json")
     public List<UserClockInDto> getUserClockIn(@RequestParam String username,@RequestParam String date) {
 

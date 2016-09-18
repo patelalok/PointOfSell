@@ -105,6 +105,28 @@ public class UserManager {
         return userLogin;
     }
 
+    public void editClockInDetails(UserClockInDto userDto) {
+
+            try
+            {
+                jdbcTemplate.update(sqlQuery.editClockInDetails,
+                        userDto.getClockInTime(),
+                        userDto.getClockOutTime(),
+                        userDto.getNoOfhours(),
+                        userDto.getHorlyRate(),
+                        userDto.getUserCommission(),
+                        userDto.getTotalAmount(),
+                        userDto.getClockInId());
+
+
+                System.out.println("User Clock In Details Edited Successfully");
+
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+            }
+    }
 
 
     private static final class AddUserMapper implements RowMapper<UserDto>
