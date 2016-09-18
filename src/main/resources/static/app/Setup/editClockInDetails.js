@@ -44,7 +44,8 @@
                 "horlyRate": $scope.hrlyRate.replace('$','').replace(/,/g,''),
                 "date": null
 
-            }
+            };
+            request = JSON.stringify(request);
             dataService.Post(url,request,onEditClckSuccess,onEditClckError,'application/json','application/json');
         };
         function onEditClckSuccess(response)
