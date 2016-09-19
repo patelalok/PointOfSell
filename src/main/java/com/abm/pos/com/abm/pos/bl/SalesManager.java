@@ -87,30 +87,25 @@ public class SalesManager {
     }
 
 
-
     public void editTransaction(TransactionDto transactionDto, String previousTransId) {
         try {
-
 
 
             jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
 
             System.out.println("Update the status successfully");
 
-            if (null != transactionDto)
-            {
+            if (null != transactionDto) {
                 addTransaction(transactionDto);
 
                 //jdbcTemplate.update(sqlQuery.addReturnEntryToTransactionMapper, previousTransId, transactionDto.getTransactionCompId());
-            }
-            else {
-                String previosBalance = jdbcTemplate.queryForObject(sqlQuery.getPreviousBalance,new Object[] {previousTransId}, String.class);
+            } else {
+                String previosBalance = jdbcTemplate.queryForObject(sqlQuery.getPreviousBalance, new Object[]{previousTransId}, String.class);
 
-                String customerPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhoneNo,new Object[] {previousTransId}, String.class);
+                String customerPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhoneNo, new Object[]{previousTransId}, String.class);
 
-                if(null != customerPhoneNo && null != previosBalance)
-                {
-                    jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, previosBalance,customerPhoneNo);
+                if (null != customerPhoneNo && null != previosBalance) {
+                    jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, previosBalance, customerPhoneNo);
                     System.out.println("Customer balance updated successfully with with complete return");
                 }
 
@@ -158,8 +153,6 @@ public class SalesManager {
             System.out.println(e);
         }
     }
-
-
 
 
     private final class TransactionMapperForReturn implements RowMapper<TransactionDto> {
@@ -307,14 +300,12 @@ public class SalesManager {
             transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
 
-            if(null == rs.getString("CUSTOMER_PHONENO") || rs.getString("CUSTOMER_PHONENO").isEmpty()) {
+            if (null == rs.getString("CUSTOMER_PHONENO") || rs.getString("CUSTOMER_PHONENO").isEmpty()) {
 
                 transaction.setCustomerName("");
 
 
-            }
-            else
-            {
+            } else {
                 //getting first and last name of customer to show on the sales history
                 String firstName = jdbcTemplate.queryForObject(sqlQuery.getFirstName, new Object[]{rs.getString("CUSTOMER_PHONENO")}, String.class);
                 String lastName = jdbcTemplate.queryForObject(sqlQuery.getLastName, new Object[]{rs.getString("CUSTOMER_PHONENO")}, String.class);
@@ -328,11 +319,9 @@ public class SalesManager {
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
             transaction.setUsername(username);
 
-            if(rs.getDouble("BALANCE") == 0) {
+            if (rs.getDouble("BALANCE") == 0) {
                 transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
-            }
-            else
-            {
+            } else {
                 transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
             }
             transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
@@ -397,7 +386,7 @@ public class SalesManager {
                     ps.setString(3, transactionLineItemDto1.getTransactionStatus());
                     ps.setString(4, transactionLineItemDto1.getProductNumber());
 
-                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[] {transactionLineItemDto1.getProductNumber()}, Integer.class);
+                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]{transactionLineItemDto1.getProductNumber()}, Integer.class);
 
                     ps.setInt(5, transactionLineItemDto1.getQuantity());
 
@@ -406,7 +395,7 @@ public class SalesManager {
                     //reducing quantity into Stock for transaction
                     productQuantity = productQuantity - transQuantity;
 
-                    int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] { transactionLineItemDto1.getProductNumber()}, Integer.class);
+                    int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[]{transactionLineItemDto1.getProductNumber()}, Integer.class);
 
                     jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, productId);
 
@@ -416,12 +405,11 @@ public class SalesManager {
                     ps.setDouble(9, transactionLineItemDto1.getDiscountPercentage());
                     ps.setDouble(10, transactionLineItemDto1.getRetailWithDis());
                     ps.setDouble(11, transactionLineItemDto1.getTotalProductPrice());
-                    ps.setDouble(12,transactionLineItemDto1.getTotalProductPriceWithTax());
-                    ps.setString(13,transactionLineItemDto1.getImeiNo());
+                    ps.setDouble(12, transactionLineItemDto1.getTotalProductPriceWithTax());
+                    ps.setString(13, transactionLineItemDto1.getImeiNo());
 
                     //Checking is this product is this product has phone id or not if yes then that meand this is phone sale so i need to remove IMEI No form Phone Table.
-                    if(transactionLineItemDto1.getPhoneId() != 0)
-                    {
+                    if (transactionLineItemDto1.getPhoneId() != 0) {
                         jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getPhoneId());
                         System.out.println("This is phone sale: Delete IMEI Successfully!!" + transactionLineItemDto1.getImeiNo());
                     }
@@ -445,7 +433,7 @@ public class SalesManager {
         try {
 
             //Checking if transaction return is complete or partial
-           // boolean isCompleteReturn = checkReturn(transactionLineItemDto);
+            // boolean isCompleteReturn = checkReturn(transactionLineItemDto);
 
             //if there previousTransId = null means this is new transaction no return invovled in this.
             /*if (null == previousTransId) {
@@ -459,52 +447,47 @@ public class SalesManager {
             }*/
             //If the previousTransId != null then this is return.
 
-                List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
+            List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
 
 
-                //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity in product.
-                lineItemDtoList1 = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), previousTransId);
+            //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity in product.
+            lineItemDtoList1 = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), previousTransId);
 
 
-                for (int j = 0; j < lineItemDtoList1.size(); j++) {
-                    System.out.println(lineItemDtoList1.get(j).getProductNumber());
-                    System.out.println(lineItemDtoList1.get(j).getQuantity());
+            for (int j = 0; j < lineItemDtoList1.size(); j++) {
+                System.out.println(lineItemDtoList1.get(j).getProductNumber());
+                System.out.println(lineItemDtoList1.get(j).getQuantity());
 
-                    int productQuantity = 0;
+                int productQuantity = 0;
 
-                    int productQuantity1 = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
-                            {lineItemDtoList1.get(j).getProductNumber()}, Integer.class);
+                int productQuantity1 = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
+                        {lineItemDtoList1.get(j).getProductNumber()}, Integer.class);
 
-                    productQuantity = productQuantity1 + lineItemDtoList1.get(j).getQuantity();
+                productQuantity = productQuantity1 + lineItemDtoList1.get(j).getQuantity();
 
-                    System.out.println(productQuantity);
+                System.out.println(productQuantity);
 
-                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductNumber());
+                jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductNumber());
 
-                    System.out.println("Porduct Quantity updated successfully");
-                }
-
-
-                for (int i = 0; i < lineItemDtoList1.size(); i++) {
-                    System.out.println(lineItemDtoList1.get(i).getTransactionLineItemId());
-                    jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, lineItemDtoList1.get(i).getTransactionLineItemId());
-                }
-
-                //This means this is partial return so i am adding partial return to the line item table
-                if (null != transactionLineItemDto) {
-                    addTransactionLineItemToDB(transactionLineItemDto);
-                    System.out.println("Added partially Transaction Line itemreturned items successfully");
-                }
-            else
-                {
-                    System.out.println("This was complete line item return");
-                }
-
-
+                System.out.println("Porduct Quantity updated successfully");
             }
 
 
-         catch (Exception e)
+            for (int i = 0; i < lineItemDtoList1.size(); i++) {
+                System.out.println(lineItemDtoList1.get(i).getTransactionLineItemId());
+                jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, lineItemDtoList1.get(i).getTransactionLineItemId());
+            }
+
+            //This means this is partial return so i am adding partial return to the line item table
+            if (null != transactionLineItemDto) {
+                addTransactionLineItemToDB(transactionLineItemDto);
+                System.out.println("Added partially Transaction Line itemreturned items successfully");
+            } else {
+                System.out.println("This was complete line item return");
+            }
+
+
+        } catch (Exception e)
 
         {
             System.out.println(e);
@@ -571,7 +554,7 @@ public class SalesManager {
     //THIS WILL GIVE LAST TRANSACTION COMP ID WHICH HELP UI TO GENERATE NEXT ID
     public int getLastTransactionId() {
 
-       int lastTransactionID = jdbcTemplate.queryForObject(sqlQuery.getLastTransactionId, new Object[] {},Integer.class);
+        int lastTransactionID = jdbcTemplate.queryForObject(sqlQuery.getLastTransactionId, new Object[]{}, Integer.class);
 
         return lastTransactionID;
     }
@@ -660,20 +643,19 @@ public class SalesManager {
 
     public void getReceiptDetailsAlok(int receiptId) {
 
-       // List<ReceiptDto> receiptDtosList =  new ArrayList<>();
+        // List<ReceiptDto> receiptDtosList =  new ArrayList<>();
 
-       // receiptDtosList = getReceiptDetails(receiptId);
-
+        // receiptDtosList = getReceiptDetails(receiptId);
         Document doc = new Document();
         PdfWriter docWriter = null;
         initializeFonts();
-
-
-
         try {
 
+            java.util.List<ReceiptDto> receiptDtos = new ArrayList<>();
 
-            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/downloads/AddTableExample2.pdf"));
+            receiptDtos = getReceiptDetails(receiptId);
+
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/downloads/alok.pdf"));
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
@@ -687,16 +669,16 @@ public class SalesManager {
             boolean beginPage = true;
             int y = 0;
 
-            for(int i=0; i < 10; i++ ){
-                if(beginPage){
+            for (int i = 0; i <= receiptDtos.size(); i++) {
+                if (beginPage) {
                     beginPage = false;
                     generateLayout(doc, cb);
                     generateHeader(doc, cb);
-                    y = 400;
+                    y = 665;
                 }
                 generateDetail(doc, cb, i, y);
                 y = y - 15;
-                if(y < 50){
+                if (y < 50) {
                     printPageNumber(cb);
                     doc.newPage();
                     beginPage = true;
@@ -704,36 +686,30 @@ public class SalesManager {
             }
             printPageNumber(cb);
 
-        }
-        catch (DocumentException dex)
-        {
+        } catch (DocumentException dex) {
             dex.printStackTrace();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally
-        {
-            if (doc != null)
-            {
+        } finally {
+            if (doc != null) {
                 doc.close();
             }
-            if (docWriter != null)
-            {
+            if (docWriter != null) {
                 docWriter.close();
             }
         }
     }
 
-    private void generateLayout(Document doc, PdfContentByte cb)  {
+    private void generateLayout(Document doc, PdfContentByte cb) {
 
         try {
 
             cb.setLineWidth(1f);
 
             // Invoice Header box layout
-            cb.rectangle(150,400,250,680);
+           // cb.rectangle(150,50,250,650);
+
+
 
             cb.stroke();
 
@@ -741,9 +717,9 @@ public class SalesManager {
 
 
             // Invoice Detail box layout
-            //cb.rectangle(20,50,550,600);
-//            cb.moveTo(20,630);
-//            cb.lineTo(570,630);
+            cb.rectangle(150,50,250,650);
+            cb.moveTo(150,675);
+            cb.lineTo(400,675);
 //            cb.moveTo(50,50);
 //            cb.lineTo(50,650);
 //            cb.moveTo(150,50);
@@ -755,100 +731,92 @@ public class SalesManager {
             cb.stroke();
 
             // Invoice Detail box Text Headings
-//            createHeadings(cb,22,633,"Qty");
-//            createHeadings(cb,52,633,"Item Number");
-//            createHeadings(cb,152,633,"Item Description");
-//            createHeadings(cb,432,633,"Price");
-//            createHeadings(cb,502,633,"Ext Price");
+
+            createHeadings(cb,153,685,"Item Number");
+            createHeadings(cb,225,685,"Item Description");
+            createHeadings(cb,370,685,"Price");
 
 
-        }
 
-
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void generateHeader(Document doc, PdfContentByte cb)  {
+    private void generateHeader(Document doc, PdfContentByte cb) {
 
         try {
 
-//            createHeadings(cb,200,750,"Company Name");
-//            createHeadings(cb,200,735,"Address Line 1");
-//            createHeadings(cb,200,720,"Address Line 2");
-//            createHeadings(cb,200,705,"City, State - ZipCode");
-//            createHeadings(cb,200,690,"Country");
-//
-//            createHeadings(cb,482,743,"ABC0001");
-//            createHeadings(cb,482,723,"123456");
-//            createHeadings(cb,482,703,"09/26/2012");
 
-        }
 
-        catch (Exception ex){
+//            createHeadings(cb,200,743,"Map Wireless World Inc");
+//            createHeadings(cb,200,723,"926 Montreal Road, Ste-16");
+//            createHeadings(cb,200,703,"Clarkston, GA 30021");
+//            createHeadings(cb,200,500,"470-428-4284");
+
+
+
+            createHeadings(cb,250,740,"Map Wireless World Inc");
+            createHeadings(cb,250,730,"926 Montreal Road, Ste-16");
+            createHeadings(cb,250,720,"Clarkston, GA 30021");
+            createHeadings(cb,250,710,"470-428-4284");
+
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void generateDetail(Document doc, PdfContentByte cb, int index, int y)  {
+    private void generateDetail(Document doc, PdfContentByte cb, int index, int y) {
         DecimalFormat df = new DecimalFormat("0.00");
 
         try {
 
-//            createContent(cb,48,y,String.valueOf(index+1),PdfContentByte.ALIGN_RIGHT);
-//            createContent(cb,52,y, "ITEM" + String.valueOf(index+1),PdfContentByte.ALIGN_LEFT);
-//            createContent(cb,152,y, "Product Description - SIZE " + String.valueOf(index+1),PdfContentByte.ALIGN_LEFT);
-//
-//            double price = Double.valueOf(df.format(Math.random() * 10));
-//            double extPrice = price * (index+1) ;
-//            createContent(cb,498,y, df.format(price),PdfContentByte.ALIGN_RIGHT);
-//            createContent(cb,568,y, df.format(extPrice),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,153,y,"009923454534",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,225,y,"1 Leather Back Aluminum Bumper",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,390,y,"12.99",PdfContentByte.ALIGN_RIGHT);
 
-        }
-
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void createHeadings(PdfContentByte cb, float x, float y, String text){
+    private void createHeadings(PdfContentByte cb, float x, float y, String text) {
 
 
         cb.beginText();
         cb.setFontAndSize(bfBold, 8);
-        cb.setTextMatrix(x,y);
+        cb.setTextMatrix(x, y);
         cb.showText(text.trim());
         cb.endText();
 
     }
 
-    private void printPageNumber(PdfContentByte cb){
+    private void printPageNumber(PdfContentByte cb) {
 
 
         cb.beginText();
         cb.setFontAndSize(bfBold, 8);
-        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber+1), 570 , 25, 0);
+        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber + 1), 570, 25, 0);
         cb.endText();
 
         pageNumber++;
 
     }
 
-    private void createContent(PdfContentByte cb, float x, float y, String text, int align){
+    private void createContent(PdfContentByte cb, float x, float y, String text, int align) {
 
 
         cb.beginText();
         cb.setFontAndSize(bf, 8);
-        cb.showTextAligned(align, text.trim(), x , y, 0);
+        cb.showTextAligned(align, text.trim(), x, y, 0);
         cb.endText();
 
     }
 
-    private void initializeFonts(){
+    private void initializeFonts() {
 
 
         try {
@@ -863,10 +831,7 @@ public class SalesManager {
 
 
     }
-
-
 }
-
 
 
 

@@ -215,9 +215,6 @@ public class PageSetUpManager {
                             if (cell.getColumnIndex() == 1) {
                                 product.setDescription(cell.getStringCellValue());
 
-
-
-
                             }
                             else if (cell.getColumnIndex() == 0) {
                                 product.setProductNo(cell.getStringCellValue());

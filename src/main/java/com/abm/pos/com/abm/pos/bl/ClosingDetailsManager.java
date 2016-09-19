@@ -858,11 +858,6 @@ public class ClosingDetailsManager {
                     doc.newPage();
                     beginPage = true;
                 }
-                if(commonComparisonDtos.getCommonComparisonDtos().size() == i)
-                {
-
-                }
-
             }
             generateTotalDetail(doc, cb, 0, y, commonComparisonDtos);
             printPageNumber(cb);
