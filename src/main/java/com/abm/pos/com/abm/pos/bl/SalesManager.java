@@ -669,14 +669,14 @@ public class SalesManager {
             boolean beginPage = true;
             int y = 0;
 
-            for (int i = 0; i <= receiptDtos.size(); i++) {
+            for (int i = 0; i <= receiptDtos.get(0).getTransactionLineItemDtoList().size(); i++) {
                 if (beginPage) {
                     beginPage = false;
                     generateLayout(doc, cb);
                     generateHeader(doc, cb);
                     y = 665;
                 }
-                generateDetail(doc, cb, i, y);
+                generateDetail(doc, cb, i, y, receiptDtos);
                 y = y - 15;
                 if (y < 50) {
                     printPageNumber(cb);
@@ -685,6 +685,7 @@ public class SalesManager {
                 }
             }
             printPageNumber(cb);
+            generatTransactionDetails(doc, cb, 0, y, receiptDtos);
 
         } catch (DocumentException dex) {
             dex.printStackTrace();
@@ -768,14 +769,29 @@ public class SalesManager {
 
     }
 
-    private void generateDetail(Document doc, PdfContentByte cb, int index, int y) {
+    private void generateDetail(Document doc, PdfContentByte cb, int index, int y, List<ReceiptDto> receiptDtos) {
         DecimalFormat df = new DecimalFormat("0.00");
 
         try {
 
-            createContent(cb,153,y,"009923454534",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,225,y,"1 Leather Back Aluminum Bumper",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,390,y,"12.99",PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,153,y,receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,225,y,receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,390,y,df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()),PdfContentByte.ALIGN_RIGHT);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generatTransactionDetails(Document doc, PdfContentByte cb, int index, int y, List<ReceiptDto> receiptDtos) {
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            createContent(cb,300,y,"Sub Total"+ "                  "+ receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal() ,PdfContentByte.ALIGN_LEFT);
+           // createContent(cb,225,y,"Tax" +" " + "7%"+ "      "+ "       "+ receiptDtos.get(0).getTransactionDtoList().get(0).getTax(),PdfContentByte.ALIGN_LEFT);
+            //createContent(cb,225,y,"Total" +"  "+ "       "+ receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(),PdfContentByte.ALIGN_RIGHT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
