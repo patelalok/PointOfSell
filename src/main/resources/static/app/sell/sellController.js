@@ -57,22 +57,22 @@
 			 * "Something gone wrong" ); } $rootScope.testData.splice( index, 1 );
 			 */
 		};
-			$scope.callBackAction = function(isOKClicked) {
+		$scope.callBackAction = function(isOKClicked) {
 
 			if (isOKClicked) {
 				/*var index = -1;
-				var comArr = eval($rootScope.testData);
-				for (var i = 0; i < comArr.length; i++) {
-					if (comArr[i].itemId === GlobalVariable.itemNoToDelete) {
+				 var comArr = eval($rootScope.testData);
+				 for (var i = 0; i < comArr.length; i++) {
+				 if (comArr[i].itemId === GlobalVariable.itemNoToDelete) {
 
-						comArr[i].quantity = 20;
-						index = i;
-						break;
-					}
-				}
-				if (index === -1) {
-					alert("Something gone wrong");
-				}*/
+				 comArr[i].quantity = 20;
+				 index = i;
+				 break;
+				 }
+				 }
+				 if (index === -1) {
+				 alert("Something gone wrong");
+				 }*/
 				$rootScope.testData.splice($scope.deleteIndex, 1);
 				/*
 				 * $rootScope.testData.splice(index,0,{"itemNo":GlobalVariable.editValues.itemNo,
@@ -226,6 +226,7 @@
 								"imeiNo":GlobalVariable.getProducts[i].imeiNo,
 								"phoneId":GlobalVariable.getProducts[i].phoneId
 							});
+						$scope.searchValueAlt = '';
 						if(GlobalVariable.getProducts[i].relatedProduct = true)
 						{
 
@@ -236,7 +237,7 @@
 
 						break;
 					}
-					$scope.searchValueAlt = '';
+
 				}
 				else
 				{
@@ -385,13 +386,13 @@
 					if($scope.productFound == false)
 					{
 						var msg= 'Item is not in this system,do you want to add this product?';
-						 msg=$sce.trustAsHtml(msg);
-						 modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Add'}, msg, $scope.callBackAddProduct);
+						msg=$sce.trustAsHtml(msg);
+						modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Add'}, msg, $scope.callBackAddProduct);
 					}
 					/*else
-					{
-						$scope.productFound = false;
-					}*/
+					 {
+					 $scope.productFound = false;
+					 }*/
 				} else {
 					if (searchTxt.indexOf(".") > 0) {
 						$scope.quantity = $rootScope.testData[$rootScope.testData.length - 1].quantity;
@@ -451,25 +452,25 @@
 					$rootScope.testData[$rootScope.testData.length - 1].totalWithTax = parseFloat($scope.tWTax);
 					$rootScope.testData[$rootScope.testData.length - 1].totalTax = parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax);
 					/*$rootScope.testData
-						.push({
-							"itemId":$rootScope.testData[$rootScope.testData.length - 1].productId,
-							"itemNo" : $rootScope.testData[$rootScope.testData.length - 1].itemNo,
-							"item" : $rootScope.testData[$rootScope.testData.length - 1].item,
-							"quantity" : $scope.quantity,
-							"retail" : $rootScope.testData[$rootScope.testData.length - 1].retail,
-							"discount" : $scope.discount,
-							"total" : parseFloat($scope.total),
-							"stock" : $rootScope.testData[$rootScope.testData.length - 1].stock,
-							"costPrice" : $rootScope.testData[$rootScope.testData.length - 1].costPrice,
-							"categoryName":$rootScope.testData[$rootScope.testData.length - 1].categoryName,
-							"totalWithTax":parseFloat($scope.tWTax),
-							"totalTax":parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax),
-							"categoryId":$rootScope.testData[$rootScope.testData.length - 1].categoryId
-						});*/
+					 .push({
+					 "itemId":$rootScope.testData[$rootScope.testData.length - 1].productId,
+					 "itemNo" : $rootScope.testData[$rootScope.testData.length - 1].itemNo,
+					 "item" : $rootScope.testData[$rootScope.testData.length - 1].item,
+					 "quantity" : $scope.quantity,
+					 "retail" : $rootScope.testData[$rootScope.testData.length - 1].retail,
+					 "discount" : $scope.discount,
+					 "total" : parseFloat($scope.total),
+					 "stock" : $rootScope.testData[$rootScope.testData.length - 1].stock,
+					 "costPrice" : $rootScope.testData[$rootScope.testData.length - 1].costPrice,
+					 "categoryName":$rootScope.testData[$rootScope.testData.length - 1].categoryName,
+					 "totalWithTax":parseFloat($scope.tWTax),
+					 "totalTax":parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax),
+					 "categoryId":$rootScope.testData[$rootScope.testData.length - 1].categoryId
+					 });*/
 					// for(var i=0;i<$rootScope.testData.length-1;i++)
 					// {
 					/*$scope
-						.removeRowOnSearch($rootScope.testData[$rootScope.testData.length - 2].itemNo);*/
+					 .removeRowOnSearch($rootScope.testData[$rootScope.testData.length - 2].itemNo);*/
 					// }
 				}
 
@@ -500,43 +501,43 @@
 		{
 			if(response.length !== 0)
 			{
-			  for(var k=0;k<response.length;k++) {
-				  if(response[i].addTax == true)
-				  {
-					  var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
-						  .toFixed(2);
-					  totalWithOutTax = parseFloat(totalWithOutTax);
-					  var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
-				  }
-				  else
-				  {
-					  var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
-						  .toFixed(2);
-					  totalWithOutTax = parseFloat(totalWithOutTax);
-					  var totalWithTax = totalWithOutTax;
-				  }
+				for(var k=0;k<response.length;k++) {
+					if(response[i].addTax == true)
+					{
+						var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
+							.toFixed(2);
+						totalWithOutTax = parseFloat(totalWithOutTax);
+						var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+					}
+					else
+					{
+						var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
+							.toFixed(2);
+						totalWithOutTax = parseFloat(totalWithOutTax);
+						var totalWithTax = totalWithOutTax;
+					}
 
-				  $rootScope.testData
-					  .push({
-						  "itemId": response[k].productId,
-						  "itemNo": response[k].productNo,
-						  "item": response[k].description,
-						  "quantity": response[k].quantity,
-						  "retail": response[k].retailPrice,
-						  "discount": (parseFloat($scope.discount))
-							  .toFixed(2),
-						  "total": totalWithOutTax,
-						  "stock": response[k].stock,
-						  "costPrice": response[k].costPrice,
-						  "categoryName": response[k].categoryName,
-						  "totalWithTax": totalWithTax,
-						  "totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax),
-						  "catgeoryId":response[k].categoryId,
-						  "imeiNo":response[k].imeiNo,
-						  "phoneId":response[k].phoneId
+					$rootScope.testData
+						.push({
+							"itemId": response[k].productId,
+							"itemNo": response[k].productNo,
+							"item": response[k].description,
+							"quantity": response[k].quantity,
+							"retail": response[k].retailPrice,
+							"discount": (parseFloat($scope.discount))
+								.toFixed(2),
+							"total": totalWithOutTax,
+							"stock": response[k].stock,
+							"costPrice": response[k].costPrice,
+							"categoryName": response[k].categoryName,
+							"totalWithTax": totalWithTax,
+							"totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax),
+							"catgeoryId":response[k].categoryId,
+							"imeiNo":response[k].imeiNo,
+							"phoneId":response[k].phoneId
 
-					  });
-			  }
+						});
+				}
 			}
 			$scope.loadCheckOutData();
 
@@ -616,7 +617,7 @@
 					+ parseFloat($rootScope.testData[i].quantity);
 				$rootScope.subTotal = parseFloat($rootScope.subTotal)
 					+ parseFloat($rootScope.testData[i].total);
-				if($scope.selectTax=='default')
+				if($rootScope.selectTax=='default')
 				{
 					$rootScope.totalProductPriceAfterTax = parseFloat($rootScope.totalProductPriceAfterTax)+
 						parseFloat($rootScope.testData[i].totalWithTax);
@@ -641,7 +642,7 @@
 				$scope.totalDisc = 0;
 
 			GlobalVariable.discountTotal = $scope.totalDisc;
-			
+
 			if ($scope.totalDisc == "")
 				$rootScope.totalProductPriceAfterTax = Number(
 					parseFloat($rootScope.totalProductPriceAfterTax)).toFixed(2);
@@ -653,22 +654,22 @@
 			// if ($scope.productTotalWithoutTax == 'NaN') {
 			// 	$scope.productTotalWithoutTax = 0;
 			// }
-			GlobalVariable.selectedTaxDrp = $scope.selectTax;
+			GlobalVariable.selectedTaxDrp = $rootScope.selectTax;
 
-			// if ($scope.selectTax == undefined)
+			// if ($rootScope.selectTax == undefined)
 			// 	$scope.totalTax = 0;
-			// else if ($scope.selectTax == 'default')
+			// else if ($rootScope.selectTax == 'default')
 			// 	$scope.totalTax = parseFloat($scope.totalDefaultTax);
-			// else if ($scope.selectTax == 'noTax')
+			// else if ($rootScope.selectTax == 'noTax')
 			// 	$scope.totalTax = 0;
 
 			// GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax)
 			// 	* (parseFloat($scope.totalTax) / 100);
 			$rootScope.productTotal = Number(parseFloat($rootScope.totalProductPriceAfterTax)).toFixed(2);
-				// Number(
-				// parseFloat($scope.productTotalWithoutTax)
-				// + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
-				// .toFixed(2);
+			// Number(
+			// parseFloat($scope.productTotalWithoutTax)
+			// + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
+			// .toFixed(2);
 
 			if (GlobalVariable.balanceRemaining> 0) {
 				$rootScope.productTotal = parseFloat($rootScope.productTotal)
@@ -689,17 +690,17 @@
 		};
 		$scope.callBackEditQuan = function() {
 			/*var index = -1;
-			var comArr = eval($rootScope.testData);
-			for (var i = 0; i < comArr.length; i++) {
-				if (comArr[i].itemNo === GlobalVariable.editQuanDtls.itemNo) {
+			 var comArr = eval($rootScope.testData);
+			 for (var i = 0; i < comArr.length; i++) {
+			 if (comArr[i].itemNo === GlobalVariable.editQuanDtls.itemNo) {
 
-					index = i;
-					break;
-				}
-			}
-			if (index === -1) {
-				alert("Something gone wrong");
-			}*/
+			 index = i;
+			 break;
+			 }
+			 }
+			 if (index === -1) {
+			 alert("Something gone wrong");
+			 }*/
 			$rootScope.testData.splice($scope.editIndex , 1);
 
 
@@ -760,11 +761,11 @@
 					GlobalVariable.customerFound = true;
 					GlobalVariable.custTypeCd = GlobalVariable.getCustomerDtls[i].customerType;
 					if (GlobalVariable.custTypeCd == 'Business') {
-						$scope.selectTax = 'noTax';
+						$rootScope.selectTax = 'noTax';
 						GlobalVariable.selectedTaxDrp = 'noTax';
 					}
 					else if (GlobalVariable.custTypeCd == 'Retail') {
-						$scope.selectTax = 'default';
+						$rootScope.selectTax = 'default';
 						GlobalVariable.selectedTaxDrp = 'default';
 					}
 
@@ -816,11 +817,11 @@
 						'application/json', 'application/json');
 					GlobalVariable.custTypeCd = GlobalVariable.getCustomerDtls[i].customerType;
 					if (GlobalVariable.custTypeCd == 'Business') {
-						$scope.selectTax = 'noTax';
+						$rootScope.selectTax = 'noTax';
 						GlobalVariable.selectedTaxDrp = 'noTax';
 					}
 					else if (GlobalVariable.custTypeCd == 'Retail') {
-						$scope.selectTax = 'default';
+						$rootScope.selectTax = 'default';
 						GlobalVariable.selectedTaxDrp = 'default';
 					}
 					break;
@@ -847,11 +848,11 @@
 				GlobalVariable.userFName != undefined)
 			{
 				if (GlobalVariable.custTypeCd == 'Business') {
-					$scope.selectTax = 'noTax';
+					$rootScope.selectTax = 'noTax';
 					GlobalVariable.selectedTaxDrp = 'noTax';
 				}
 				else if (GlobalVariable.custTypeCd == 'Retail') {
-					$scope.selectTax = 'default';
+					$rootScope.selectTax = 'default';
 					GlobalVariable.selectedTaxDrp = 'default';
 				}
 				GlobalVariable.customerFound = true;
@@ -870,7 +871,7 @@
 			if(GlobalVariable.addProductClicked)
 			{
 				$rootScope.testData = GlobalVariable.onAddProduct;
-			}	
+			}
 			getTaxDetails();
 			getProductDetails.getCustomerDetails()
 			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
@@ -900,7 +901,7 @@
 		function onGetTaxSuccess(response) {
 			$scope.totalDefaultTax = response[0].tax;
 
-			$scope.selectTax = "default";
+			$rootScope.selectTax = "default";
 			$scope.loadCheckOutData();
 		}
 		$scope.clearValue = function(value)
@@ -911,7 +912,7 @@
 				GlobalVariable.customerNameOnSearch = '';
 				$rootScope.customerPhone = '';
 				GlobalVariable.customerFound=false;
-				$scope.selectTax = "default";
+				$rootScope.selectTax = "default";
 				GlobalVariable.selectedTaxDrp = "default";
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
@@ -919,8 +920,8 @@
 				$rootScope.productTotal =0;
 				//if($rootScope.testData.length == 0)
 				//{
-					$scope.totalDisc = 0;
-					$rootScope.totalPayment = 0;
+				$scope.totalDisc = 0;
+				$rootScope.totalPayment = 0;
 				//}
 				$scope.loadCheckOutData();
 			}
@@ -933,7 +934,7 @@
 				GlobalVariable.customerNameOnSearch = '';
 				$rootScope.customerPhone = '';
 				GlobalVariable.customerFound=false;
-				$scope.selectTax = "default";
+				$rootScope.selectTax = "default";
 				GlobalVariable.selectedTaxDrp = "default";
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
@@ -941,8 +942,8 @@
 				$rootScope.productTotal =0;
 				//if($rootScope.testData.length == 0)
 				//{
-					$scope.totalDisc = 0;
-					$rootScope.totalPayment = 0;
+				$scope.totalDisc = 0;
+				$rootScope.totalPayment = 0;
 				//}
 				$scope.loadCheckOutData();
 
