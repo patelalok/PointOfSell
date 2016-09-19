@@ -84,13 +84,13 @@
 						<span>Product Name</span>
 					</th>
 					<th style="font-weight:bold;" class="wrapword">
-						<span>Category Name</span>
+						<span>Category</span>
 					</th>
 					<th style="font-weight:bold;" class="wrapword">
 						<span>Stock</span>
 					</th>
 					<th style="font-weight:bold;" class="wrapword">
-						<span>Retail Price</span>
+						<span>Price</span>
 					</th>
 					<th style="font-weight:bold;" class="wrapword">
 						<span>Cost</span>
@@ -113,16 +113,26 @@
 				<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
 				<tr data-ng-repeat="row in getProductDtls | filter:prodName|filter:{vendorName:vType.vendorName}|filter:{brandName:bType.brandName}|filter:{categoryName:cType.categoryName}| limitTo:barLimit">
 					<td class="wrapword" style="width:8%;"><span>{{row.productNo}}</span></td>
-					<td class="wrapword" style="width:40%;"><span>{{row.description}}</span></td>
+					<td class="wrapword" style="width:42%;"><span>{{row.description}}</span></td>
 					<td class="wrapword" style="width:7%;"><span>{{row.categoryName}}</span></td>
-					<td class="wrapword" style="width:15%;" ng-show="showEditStock" ><span>{{row.stock}}</span></td>
-					<td class="wrapword" style="width:15%;" ng-hide="showEditStock"><span><input style="width:50px;" type="text" ng-model="row.stock" value="row.stock" /></span>
-					<span><button class="btn btn-primary margin-top-1 wrap-text" ng-click="updateStock(row)">update</button></span>
-					</td>
-					<td class="wrapword" style="width:5%;"><span>{{row.retailPrice}}</span></td>
-					<td class="wrapword" style="width:5%;"><span>{{row.costPrice}}</span></td>
+					<td class="wrapword" style="width:6%;" ng-show="showEditStock" ><span>{{row.stock}}</span></td>
+					<td class="wrapword" style="width:6%;" ng-hide="showEditStock">
+						<span><input style="width:50px;" type="text" ng-model="row.stock" value="row.stock" /></span>
 
-					<td class="wrapword" style="width:20%;">
+					</td>
+					<td class="wrapword" style="width:6%;" ng-show="showEditStock"><span>{{row.retailPrice}}</span></td>
+					<td class="wrapword" style="width:6%;" ng-hide="showEditStock">
+						<span><input style="width:50px;" type="text" ng-model="row.retailPrice" value="row.retailPrice" /></span>
+
+					</td>
+					<td class="wrapword" style="width:6%;" ng-show="showEditStock"><span>{{row.costPrice}}</span></td>
+					<td class="wrapword" style="width:6%;" ng-hide="showEditStock">
+						<span><input style="width:50px;" type="text" ng-model="row.costPrice" value="row.costPrice" /></span>
+
+					</td>
+
+					<td class="wrapword" style="width:25%;">
+						<span class="inline-vertical" ng-hide="showEditStock"><button class="btn btn-primary margin-top-1 wrap-text" ng-click="updateStock(row)">update</button></span>
 					<span class="inline-vertical" ng-show="GlobalVariable.userRole != 'Manager'">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editProduct(row)"></span>
 							</span>

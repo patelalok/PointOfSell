@@ -260,6 +260,7 @@
 			GlobalVariable.transId = '';
 			GlobalVariable.last4='';
 			GlobalVariable.sellIMEINumber = '';
+			$rootScope.selectTax = 'default';
 			getProductDetails.getProductDetail();
 			if(GlobalVariable.printReceiptTrans == true)
 			{
