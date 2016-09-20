@@ -96,14 +96,14 @@ public class ClosingDetailsController {
 
         closingDetailsManager.printClosingDetails(startDate,endDate);
 
-        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample3.pdf");
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.add("Access-Control-Allow-Origin", "*");
         headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
         headers.add("Access-Control-Allow-Headers", "Content-Type");
-        headers.add("Content-Disposition", "filename=" + "AddImageExample3");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");

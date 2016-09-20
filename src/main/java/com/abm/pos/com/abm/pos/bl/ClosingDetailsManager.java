@@ -827,8 +827,10 @@ public class ClosingDetailsManager {
 
            // paidOutDtoList = getPaidOutDetails(startDate, endDate);
 
+            String path = "AddTableExample3.pdf";
 
-            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("*/downloads/AddTableExample3.pdf"));
+
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("resources/downloads/AddTableExample3.pdf"));
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
