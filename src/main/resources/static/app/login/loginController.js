@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('loginController',loginFunction);
 
-	loginFunction.$inject = [ '$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory','GlobalConstants'];
+	loginFunction.$inject = [ '$window','$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory','GlobalConstants'];
 
-	function loginFunction($scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory,GlobalConstants) {
+	function loginFunction($window,$scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory,GlobalConstants) {
 		
 		
 		$scope.device = device;
@@ -21,6 +21,7 @@
 		
 		$scope.onLoginClicked = function($event)
 		{
+			//$window.open('http://localhost:8080/getPrintClosingDetails?startDate=2016-01-01%2000:00:00&endDate=2016-12-31%2023:59:59', '_blank');
 			if(sessionStorage.productKeyAdded1 == undefined)
 			{
 				$scope.productKeyAdded = false;

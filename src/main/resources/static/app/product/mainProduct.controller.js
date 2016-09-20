@@ -16,7 +16,7 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		$scope.enabled = true;
-		$scope.showEditStock = true;
+		$scope.showEditStock = [];
 		//util.Wait(true);
 		//loadCDetails();
 		/*GlobalVariable.productSuccessAlert = false;
@@ -142,6 +142,7 @@
 		$scope.getCDetails = function(response)
 		{
 			$scope.getProductDtls = response;
+
 			GlobalVariable.getProducts = response;
 			util.Wait(false);
 		};
@@ -152,6 +153,10 @@
 			$scope.categoryOptions = GlobalVariable.getCategory;
 			$scope.vendorOptions = GlobalVariable.getVendors;
 			$scope.getProductDtls = GlobalVariable.getProducts;
+			for(var i=0;i<$scope.getProductDtls.length;i++)
+			{
+				$scope.showEditStock[i]=true;
+			}
 			/*$timeout(function() {
 				util.Wait(false);
 			}, 9000);*/
@@ -193,16 +198,17 @@
 		{
 
 		}
-		$scope.editStockDtls = function()
+		$scope.editStockDtls = function($index)
 		{
-			if($scope.editStock ==true)
-				$scope.showEditStock = false;
-			else
-				$scope.showEditStock = true;
+
+			$scope.showEditStock[$index] = false;
+
 		};
 
-		$scope.updateStock = function(row)
-		{var request={
+		$scope.updateStock = function(row,$index)
+		{
+			$scope.editIndexVal = $index;
+			var request={
 			"productId": row.productId,
 			"productNo":row.productNo,
 			"oldProductNo":row.productNo,
@@ -233,8 +239,8 @@
 		function addStockSuccessHandler(response)
 		{
 			util.Wait(true);
-			$scope.editStock =false;
-			$scope.showEditStock = true;
+			//$scope.editStock =false;
+			$scope.showEditStock[$scope.editIndexVal] = true;
 			getProductDetails.getProductDetail($scope.getCDetails);
 		}
 		function addStockErrorHandler(response) {

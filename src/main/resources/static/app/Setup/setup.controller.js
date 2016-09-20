@@ -120,8 +120,8 @@
 			GlobalVariable.editUserRole = row.userRole;
 			GlobalVariable.editCreatedDate = row.createdDate;
 			GlobalVariable.editUserId = row.userId;
-			GlobalVariable.editFirstName = row.firstName;
-			GlobalVariable.editLastName = row.lastName;
+			GlobalVariable.editHrlyRate = row.horlyRate;
+			GlobalVariable.editComPer = row.userCommissionPercentage;
 			var _tmPath = 'app/Setup/createUser.html';
 			var _ctrlPath = 'CreateUserController';
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackCreateUser);

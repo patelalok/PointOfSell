@@ -9,6 +9,16 @@
             <div ng-if="GlobalVariable.returnProduct == true"><span>Your total balance is </span>{{totalReturnPayment}}</span></div>
             <div ng-if="!GlobalVariable.returnProduct == true"><span>Your total balance is </span>{{amountBalance}}</span></div>
         </div>
+        <div class="row" style="padding-left:30px;padding-right:30px;padding-bottom:15px;padding-top:15px;">
+            <div class="col-md-6">
+                <label for="transId" class="padding-bottom-5 font-weight-label" style="display:block;">Receipt Notes</label>
+                <textarea cols="25" rows="10" ng-model="GlobalVariable.receiptNotes"></textarea>
+            </div>
+            <div class="col-md-6`">
+                <label for="transId" class="padding-bottom-5 font-weight-label"  style="display:block;">Transaction Notes</label>
+                <textarea cols="25" rows="10" ng-model="GlobalVariable.transNotes"></textarea>
+            </div>
+        </div>
 
     </div>
     <div class="modal-footer">

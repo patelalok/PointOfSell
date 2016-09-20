@@ -21,7 +21,9 @@
 				"username": $scope.userName,
 				"password": $scope.newPassword,
 				"userRole": $scope.userRole,
-				"createdDate": js_yyyy_mm_dd_hh_mm_ss ()
+				"createdDate": js_yyyy_mm_dd_hh_mm_ss (),
+				"horlyRate":$scope.hrlyRate,
+				"userCommissionPercentage":$scope.comPer
 			}
 			request = JSON.stringify(request);
 			var url=GlobalConstants.URLCONSTANTS+"addUser";
@@ -48,7 +50,9 @@
 					"username": $scope.userName,
 					"password": $scope.newPassword,
 					"userRole": $scope.userRole,
-					"userId":GlobalVariable.editUserId
+					"userId":GlobalVariable.editUserId,
+					"horlyRate":$scope.hrlyRate,
+					"userCommissionPercentage":$scope.comPer
 				};
 				request = JSON.stringify(request);
 				var url=GlobalConstants.URLCONSTANTS+"editUser";
@@ -98,8 +102,8 @@
 					$scope.password = GlobalVariable.editPassword;
 					$scope.userRole = GlobalVariable.editUserRole;
 					$scope.createdDate = GlobalVariable.editCreatedDate;
-					$scope.firstName = GlobalVariable.editFirstName;
-					$scope.lastName = GlobalVariable.editLastName;
+					$scope.hrlyRate = GlobalVariable.editHrlyRate;
+					$scope.lastName = GlobalVariable.editComPer;
 			}
 		}
 		render();
