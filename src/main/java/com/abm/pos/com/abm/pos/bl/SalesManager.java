@@ -789,7 +789,7 @@ public class SalesManager {
 
         try {
 
-            createContent(cb,300,y,"Sub Total"+ "                  "+ receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal() ,PdfContentByte.ALIGN_LEFT);
+            createContent(cb,295,y,"Sub Total"+ "                  "+ receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal() ,PdfContentByte.ALIGN_LEFT);
            // createContent(cb,225,y,"Tax" +" " + "7%"+ "      "+ "       "+ receiptDtos.get(0).getTransactionDtoList().get(0).getTax(),PdfContentByte.ALIGN_LEFT);
             //createContent(cb,225,y,"Total" +"  "+ "       "+ receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(),PdfContentByte.ALIGN_RIGHT);
 

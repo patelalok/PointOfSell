@@ -252,7 +252,8 @@ public class UserManager {
 
         try
         {
-            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(), username,startDate,endDate);
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate,username);
+
         }
         catch (Exception e)
         {
@@ -262,7 +263,7 @@ public class UserManager {
         return userClockInDtoList;
     }
 
-    private static final class UserClockInMapper implements RowMapper<UserClockInDto>
+    private final class UserClockInMapper implements RowMapper<UserClockInDto>
     {
 
         @Override
@@ -278,7 +279,20 @@ public class UserManager {
             user.setNoOfhours(rs.getString("NOOFHOURS"));
             user.setDate(rs.getString("DATE"));
 
-            //This User commission when they sale products they can they will get defined percentage of profit amount set by the admin.
+
+            //This User commission when user sale products user  will get defined percentage of profit amount set by the admin.
+
+            //getting user commission percentage from user table.
+
+            String userPercentage = jdbcTemplate.queryForObject(sqlQuery.getUserCommissionPercentage, new Object[] {rs.getString("USERNAME")}, String.class);
+
+            if(null != userPercentage && !userPercentage.isEmpty())
+            {
+                double userPer = Double.parseDouble(userPercentage);
+
+                //user.setUserCommission(rs.getDouble("PR"));
+            }
+
             user.setUserCommission(rs.getDouble("USER_COMMISSION"));
 
             return user;

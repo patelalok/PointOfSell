@@ -828,7 +828,7 @@ public class ClosingDetailsManager {
            // paidOutDtoList = getPaidOutDetails(startDate, endDate);
 
 
-            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/downloads/AddTableExample2.pdf"));
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("*/downloads/AddTableExample3.pdf"));
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
