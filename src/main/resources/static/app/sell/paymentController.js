@@ -164,7 +164,9 @@
 			"transCreditId":GlobalVariable.transId,
 			"last4Digits":GlobalVariable.last4,
 				"prevBalance":parseFloat(parseFloat(GlobalVariable.custBalance).toFixed(2)),
-                "balance":$scope.balanceAmount
+                "balance":$scope.balanceAmount,
+				"receiptNote":GlobalVariable.receiptNotes,
+				"transactionNote":GlobalVariable.transNotes
 
 			};
 			request = JSON.stringify(request);

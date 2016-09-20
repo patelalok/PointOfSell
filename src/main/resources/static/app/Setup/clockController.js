@@ -128,7 +128,8 @@
 				//var hours = new Date(time3);
 				/*var noOfHrs = hours.getHours()-1;*/
 				var rate = "$8";
-				var total = "$"+Number(8*hours).toFixed(2);
+				var total = parseFloat(8*hours)+parseFloat(response[i].userCommission);
+				var totalWCom= "$"+parseFloat(Number(total).toFixed(2));
 				$scope.clockdata.push({
 					"clockInId": response[i].clockInId,
 					"username": response[i].username,
@@ -136,7 +137,9 @@
 					"clockOutTime": response[i].clockOutTime,
 					"noOfhours": hours,
 					"hrlyRate": rate,
-					"total":total
+					"total":totalWCom,
+					"date":response[i].date,
+					"userCommission":response[i].userCommission
 				});
 			}
 			
@@ -171,7 +174,7 @@
 			};
 			$scope.clckType='todaySales';
 
-			$scope.loadclockinDtls('thisMonthSales');
+			$scope.loadclockinDtls('todaySales');
 		}
 		function getPreviousDay () {
 			var now = new Date();
