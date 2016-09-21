@@ -278,23 +278,20 @@ public class ClosingDetailsController {
 
         closingDetailsManager.printClosingDetails(startDate,endDate);
 
-        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+        ClassPathResource pdfFile = new ClassPathResource("AddTableExample2.pdf");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        headers.add("Access-Control-Allow-Origin", "*");
-        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
-        headers.add("Access-Control-Allow-Headers", "Content-Type");
-        headers.add("Content-Disposition", "filename=" + "AddImageExample");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
-        headers.setContentLength(pdfFile.contentLength());
-        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
-                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
 
-        return response;
+        return ResponseEntity
+                .ok()
+                .contentLength(pdfFile.contentLength())
+                .contentType(
+                        MediaType.parseMediaType("application/octet-stream"))
+                .body(new InputStreamResource(pdfFile.getInputStream()));
 
     }
 

@@ -44,9 +44,9 @@ public class SalesController {
     }
 
     @RequestMapping(value = "/editReceiptNote", method = RequestMethod.POST, consumes = "application/json")
-    public void editReceiptNote(@RequestParam int transactionId, @RequestParam String receiptNote)
+    public void editReceiptNote(@RequestParam int transactionId, @RequestParam String receiptNote, @RequestParam String transactionNote)
     {
-        salesManager.editReceiptNote(transactionId,receiptNote);
+        salesManager.editReceiptNote(transactionId,receiptNote, transactionNote);
     }
 
     @RequestMapping(value = "/getSalesHistory", method = RequestMethod.GET, produces = "application/json")

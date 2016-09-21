@@ -869,10 +869,10 @@ public class SalesManager {
 
     //This method helps to update the receipt notes.
 
-    public void editReceiptNote(int transactionId, String receiptNote) {
+    public void editReceiptNote(int transactionId, String receiptNote, String transactionNote) {
 
         try {
-            jdbcTemplate.update(sqlQuery.editTransactionNote, receiptNote, transactionId);
+            jdbcTemplate.update(sqlQuery.editTransactionNote, receiptNote,transactionNote, transactionId);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -810,6 +810,6 @@ public class SQLQueries {
             " WHERE USER_CLOCK_IN_ID = ?";
 
     public String getUserCommissionPercentage = "SELECT USER_COMMISSION_PERCENTAGE FROM USER WHERE USERNAME = ?";
-    public String editTransactionNote = "UPDATE TRANSACTION SET RECEIPT_NOTE = ? WHERE TRANSACTION_COMP_ID = ?";
+    public String editTransactionNote = "UPDATE TRANSACTION SET RECEIPT_NOTE = ?, TRANSACTION_NOTE = ? WHERE TRANSACTION_COMP_ID = ?";
     public String getCommissionFromCashRegister = "SELECT COMISSION FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? ";
 }

@@ -1185,15 +1185,15 @@ public class ClosingDetailsManager {
 
             cb.rectangle(20,60,560,660);
 
-
-            cb.moveTo(20,690);
-            cb.lineTo(580,690);
-            cb.moveTo(60,60);
-            cb.lineTo(50,710);
-            cb.moveTo(150,60);
-            cb.lineTo(150,710);
-            cb.moveTo(430,60);
-            cb.lineTo(430,710);
+//
+//            cb.moveTo(20,690);
+//            cb.lineTo(580,690);
+//            cb.moveTo(60,60);
+//            cb.lineTo(50,710);
+//            cb.moveTo(150,60);
+//            cb.lineTo(150,710);
+//            cb.moveTo(430,60);
+//            cb.lineTo(430,710);
             cb.stroke();
 
 //            cb.rectangle(20,50,550,600);
@@ -1210,64 +1210,64 @@ public class ClosingDetailsManager {
 //            cb.stroke();
 
             // Invoice Detail box Text Headings
-            createHeadings(cb,50,693,"Payment Types");
-            createHeadings(cb,200,693,"From User");
-            createHeadings(cb,340,693,"From System");
-            createHeadings(cb,480,693,"Difference");
+//            createHeadings(cb,50,693,"Payment Types");
+//            createHeadings(cb,200,693,"From User");
+//            createHeadings(cb,340,693,"From System");
+//            createHeadings(cb,480,693,"Difference");
 
-            cb.moveTo(20,660);
-            cb.lineTo(580,660);
-
-            cb.moveTo(20,630);
-            cb.lineTo(580,630);
-
-            cb.moveTo(20,600);
-            cb.lineTo(580,600);
-
-            cb.moveTo(20,570);
-            cb.lineTo(580,570);
-
-            cb.moveTo(20,540);
-            cb.lineTo(580,540);
-
-            cb.moveTo(20,510);
-            cb.lineTo(580,510);
-
-            cb.moveTo(20,480);
-            cb.lineTo(580,480);
-
-            cb.moveTo(20,450);
-            cb.lineTo(580,450);
-
-            cb.moveTo(20,420);
-            cb.lineTo(580,420);
-
-            cb.moveTo(20,390);
-            cb.lineTo(580,390);
-
-            cb.moveTo(20,360);
-            cb.lineTo(580,360);
-
-            cb.moveTo(20,330);
-            cb.lineTo(580,330);
-
-            cb.moveTo(20,300);
-            cb.lineTo(580,300);
-
-            cb.moveTo(20,270);
-            cb.lineTo(580,270);
-
-            cb.moveTo(20,240);
-            cb.lineTo(580,240);
-
-            cb.moveTo(20,210);
-            cb.lineTo(580,210);
-
-            cb.moveTo(20,180);
-            cb.lineTo(580,180);
-
-            cb.moveTo(20,150);
-            cb.lineTo(580,150);
+//            cb.moveTo(20,660);
+//            cb.lineTo(580,660);
+//
+//            cb.moveTo(20,630);
+//            cb.lineTo(580,630);
+//
+//            cb.moveTo(20,600);
+//            cb.lineTo(580,600);
+//
+//            cb.moveTo(20,570);
+//            cb.lineTo(580,570);
+//
+//            cb.moveTo(20,540);
+//            cb.lineTo(580,540);
+//
+//            cb.moveTo(20,510);
+//            cb.lineTo(580,510);
+//
+//            cb.moveTo(20,480);
+//            cb.lineTo(580,480);
+//
+//            cb.moveTo(20,450);
+//            cb.lineTo(580,450);
+//
+//            cb.moveTo(20,420);
+//            cb.lineTo(580,420);
+//
+//            cb.moveTo(20,390);
+//            cb.lineTo(580,390);
+//
+//            cb.moveTo(20,360);
+//            cb.lineTo(580,360);
+//
+//            cb.moveTo(20,330);
+//            cb.lineTo(580,330);
+//
+//            cb.moveTo(20,300);
+//            cb.lineTo(580,300);
+//
+//            cb.moveTo(20,270);
+//            cb.lineTo(580,270);
+//
+//            cb.moveTo(20,240);
+//            cb.lineTo(580,240);
+//
+//            cb.moveTo(20,210);
+//            cb.lineTo(580,210);
+//
+//            cb.moveTo(20,180);
+//            cb.lineTo(580,180);
+//
+//            cb.moveTo(20,150);
+//            cb.lineTo(580,150);
 
 
             cb.stroke();
@@ -1335,7 +1335,7 @@ public class ClosingDetailsManager {
             createContent(cb,292,675,"$" +Double.toString(closingDetailsDtos.get(0).getReportCredit()),PdfContentByte.ALIGN_LEFT);
             createContent(cb,432,675,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCredit()),PdfContentByte.ALIGN_LEFT);
 
-            //For Debit
+           // For Debit
 
             createContent(cb,152,645,"$" +Double.toString(closingDetailsDtos.get(0).getCloseDebit()),PdfContentByte.ALIGN_LEFT);
             createContent(cb,292,645,"$" +Double.toString(closingDetailsDtos.get(0).getReportDebit()),PdfContentByte.ALIGN_LEFT);
