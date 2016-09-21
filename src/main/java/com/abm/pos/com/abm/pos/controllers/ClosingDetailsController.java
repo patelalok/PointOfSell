@@ -90,8 +90,190 @@ public class ClosingDetailsController {
         return closingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
     }
 
-    @RequestMapping(value= "/getPrintClosingDetails", method = RequestMethod.GET, produces = "application/pdf")
+    @RequestMapping(value= "/printSaleByCategory", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<InputStreamResource> getPrintClosingDetails(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,1);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printSaleByVendor", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printSaleByVendor(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,2);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printSaleByBrand", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printSaleByBrand(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,3);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printSaleByProduct", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printSaleByProduct(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,4);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printSaleByUser", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printSaleByUser(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,5);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printSaleByCustomer", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printSaleByCustomer(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,6);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printTop50SellingProducts", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printTop50SellingProducts(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+        //System.out.println(productName + price + noOfBarcode);
+
+        closingDetailsManager.printSaleByCommonName(startDate,endDate,7);
+
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddTableExample2.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Content-Disposition", "filename=" + "AddImageExample");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setContentLength(pdfFile.contentLength());
+        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
+                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
+
+        return response;
+
+    }
+
+    @RequestMapping(value= "/printClosingDetails", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<InputStreamResource> printClosingDetails(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
         //System.out.println(productName + price + noOfBarcode);
 
         closingDetailsManager.printClosingDetails(startDate,endDate);

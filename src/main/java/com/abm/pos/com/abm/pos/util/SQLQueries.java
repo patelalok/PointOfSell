@@ -772,18 +772,33 @@ public class SQLQueries {
     public String getPreviousBalance = "SELECT PREVIOUS_BALANCE FROM transaction WHERE TRANSACTION_COMP_ID = ?";
     public String getCustomerPhoneNo = "SELECT CUSTOMER_PHONENO FROM transaction WHERE TRANSACTION_COMP_ID = ?";
     public String updateBlanceToCustomerProfileWithoutDate = "UPDATE customer SET BALANCE = ? WHERE PHONE_NO = ?";
-    public String getUserClockInForSetup = "SELECT  " +
-            "c.DATE,c.USERNAME," +
-            "c.CLOCK_IN,c.CLOCK_OUT, " +
-            "c.NOOFHOURS, c.HORLYRATE," +
-            "c.USER_COMMISSION,c.TOTAL, " +
-            "c.USER_CLOCK_IN_ID,sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) USERPROFIT " +
-            "FROM TRANSACTION_LINE_ITEM t,TRANSACTION l , user_clock_in c " +
-            "WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  " +
-            "AND t.DATE " +
-            "BETWEEN ? AND  ? " +
-            "AND c.USERNAME = ? " +
-            "group by c.DATE,c.USERNAME,c.CLOCK_IN,c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE,c.USER_COMMISSION,c.TOTAL, c.USER_CLOCK_IN_ID";
+    public String getUserClockInForSetup = "SELECT " +
+            "c.DATE," +
+            "c.USERNAME," +
+            "c.CLOCK_IN," +
+            "c.CLOCK_OUT, " +
+            "c.NOOFHOURS, " +
+            "c.HORLYRATE," +
+            "c.USER_COMMISSION, " +
+            "c.TOTAL, " +
+            "c.USER_CLOCK_IN_ID, " +
+            "sum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) USERPROFIT " +
+            "FROM transaction_line_item t, transaction l , " +
+            "user_clock_in C " +
+            "WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID " +
+            "AND C.USER_ID = L.USER_ID " +
+            "AND l.TRANSACTION_DATE between ? AND ? " +
+            "AND C.DATE = CAST(L.TRANSACTION_DATE AS DATE) " +
+            "AND L.USER_ID = 2 " +
+            "GROUP BY c.DATE, " +
+            "c.USERNAME, " +
+            "c.CLOCK_IN, " +
+            "c.CLOCK_OUT, " +
+            "c.NOOFHOURS, " +
+            "c.HORLYRATE, " +
+            "c.USER_COMMISSION, " +
+            "c.TOTAL, " +
+            "c.USER_CLOCK_IN_ID ";
 
     public String editClockInDetails = "UPDATE USER_CLOCK_IN SET" +
             " CLOCK_IN = ?, " +
@@ -795,4 +810,6 @@ public class SQLQueries {
             " WHERE USER_CLOCK_IN_ID = ?";
 
     public String getUserCommissionPercentage = "SELECT USER_COMMISSION_PERCENTAGE FROM USER WHERE USERNAME = ?";
+    public String editTransactionNote = "UPDATE TRANSACTION SET RECEIPT_NOTE = ? WHERE TRANSACTION_COMP_ID = ?";
+    public String getCommissionFromCashRegister = "SELECT COMISSION FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? ";
 }

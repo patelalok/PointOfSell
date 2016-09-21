@@ -3,18 +3,15 @@ package com.abm.pos.com.abm.pos.bl;
 import com.abm.pos.com.abm.pos.dto.*;
 import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonTotalDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -25,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by asp5045 on 6/12/16.
@@ -641,11 +639,12 @@ public class SalesManager {
         }
     }*/
 
-    public void getReceiptDetailsAlok(int receiptId) {
+    public void getReceiptDetailsAlok(int receiptId) throws DocumentException {
 
-        // List<ReceiptDto> receiptDtosList =  new ArrayList<>();
 
-        // receiptDtosList = getReceiptDetails(receiptId);
+        List<ReceiptDto> receiptDtosList = new ArrayList<>();
+
+        receiptDtosList = getReceiptDetails(receiptId);
         Document doc = new Document();
         PdfWriter docWriter = null;
         initializeFonts();
@@ -655,7 +654,7 @@ public class SalesManager {
 
             receiptDtos = getReceiptDetails(receiptId);
 
-            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("/Users/asp5045/Documents/PointOfSell/src/main/resources/downloads/alok.pdf"));
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("AddImageExample5.pdf"));
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
@@ -674,7 +673,7 @@ public class SalesManager {
                     beginPage = false;
                     generateLayout(doc, cb);
                     generateHeader(doc, cb);
-                    y = 665;
+                    y = 645;
                 }
                 generateDetail(doc, cb, i, y, receiptDtos);
                 y = y - 15;
@@ -705,11 +704,10 @@ public class SalesManager {
 
         try {
 
-            cb.setLineWidth(1f);
+            cb.setLineWidth(0f);
 
             // Invoice Header box layout
-           // cb.rectangle(150,50,250,650);
-
+            // cb.rectangle(150,50,250,650);
 
 
             cb.stroke();
@@ -718,9 +716,12 @@ public class SalesManager {
 
 
             // Invoice Detail box layout
-            cb.rectangle(150,50,250,650);
-            cb.moveTo(150,675);
-            cb.lineTo(400,675);
+
+            cb.rectangle(150, 50, 250, 650);
+            cb.rectangle(150, 50, 250, 630);
+            cb.moveTo(150, 655);
+            cb.lineTo(400, 655);
+
 //            cb.moveTo(50,50);
 //            cb.lineTo(50,650);
 //            cb.moveTo(150,50);
@@ -733,10 +734,16 @@ public class SalesManager {
 
             // Invoice Detail box Text Headings
 
-            createHeadings(cb,153,685,"Item Number");
-            createHeadings(cb,225,685,"Item Description");
-            createHeadings(cb,370,685,"Price");
 
+            createHeadings(cb, 153, 685, "Date:" + " " + "2016-12-12");
+            createHeadings(cb, 225, 685, "Time:" + " " + "23:59:59");
+            createHeadings(cb, 295, 685, "CSR:" + " " + "Alok");
+            createHeadings(cb, 345, 685, "Sale Id:" + " " + 100);
+
+
+            createHeadings(cb, 153, 665, "Item Number");
+            createHeadings(cb, 225, 665, "Item Description");
+            createHeadings(cb, 370, 665, "Price");
 
 
         } catch (Exception ex) {
@@ -750,18 +757,17 @@ public class SalesManager {
         try {
 
 
-
 //            createHeadings(cb,200,743,"Map Wireless World Inc");
 //            createHeadings(cb,200,723,"926 Montreal Road, Ste-16");
 //            createHeadings(cb,200,703,"Clarkston, GA 30021");
 //            createHeadings(cb,200,500,"470-428-4284");
 
 
-
-            createHeadings(cb,250,740,"Map Wireless World Inc");
-            createHeadings(cb,250,730,"926 Montreal Road, Ste-16");
-            createHeadings(cb,250,720,"Clarkston, GA 30021");
-            createHeadings(cb,250,710,"470-428-4284");
+            createStoreNameHeadings(cb, 197, 750, "Map Wireless World Inc");
+            createHeadings(cb, 238, 740, "926 Montreal Road");
+            createHeadings(cb, 255, 730, "Suite-16");
+            createHeadings(cb, 238, 720, "Clarkston, GA 30021");
+            createHeadings(cb, 250, 710, "470-428-4284");
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -774,9 +780,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb,153,y,receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,225,y,receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,390,y,df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb, 153, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 225, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 390, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -789,9 +795,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb,295,y,"Sub Total"+ "                  "+ receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal() ,PdfContentByte.ALIGN_LEFT);
-           // createContent(cb,225,y,"Tax" +" " + "7%"+ "      "+ "       "+ receiptDtos.get(0).getTransactionDtoList().get(0).getTax(),PdfContentByte.ALIGN_LEFT);
-            //createContent(cb,225,y,"Total" +"  "+ "       "+ receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb, 297, y - 30, "Sub Total" + "                  " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 297, y - 45, "Tax" + " " + "7%" + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 297, y - 60, "Total" + "   " + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -804,6 +810,17 @@ public class SalesManager {
 
         cb.beginText();
         cb.setFontAndSize(bfBold, 8);
+        cb.setTextMatrix(x, y);
+        cb.showText(text.trim());
+        cb.endText();
+
+    }
+
+    private void createStoreNameHeadings(PdfContentByte cb, float x, float y, String text) {
+
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 14);
         cb.setTextMatrix(x, y);
         cb.showText(text.trim());
         cb.endText();
@@ -832,12 +849,14 @@ public class SalesManager {
 
     }
 
+
+
     private void initializeFonts() {
 
 
         try {
-            bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-            bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            bfBold = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -847,7 +866,19 @@ public class SalesManager {
 
 
     }
+
+    //This method helps to update the receipt notes.
+
+    public void editReceiptNote(int transactionId, String receiptNote) {
+
+        try {
+            jdbcTemplate.update(sqlQuery.editTransactionNote, receiptNote, transactionId);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }
+
 
 
 

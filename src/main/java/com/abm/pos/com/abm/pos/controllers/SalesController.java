@@ -43,6 +43,12 @@ public class SalesController {
         salesManager.editTransaction(transactionDto,previousTransId);
     }
 
+    @RequestMapping(value = "/editReceiptNote", method = RequestMethod.POST, consumes = "application/json")
+    public void editReceiptNote(@RequestParam int transactionId, @RequestParam String receiptNote)
+    {
+        salesManager.editReceiptNote(transactionId,receiptNote);
+    }
+
     @RequestMapping(value = "/getSalesHistory", method = RequestMethod.GET, produces = "application/json")
     public List<TransactionDto> getTransactionFromDB(@RequestParam String startDate, @RequestParam String endDate)
     {
@@ -87,7 +93,7 @@ public class SalesController {
 
         salesManager.getReceiptDetailsAlok(receiptId);
 
-        ClassPathResource pdfFile = new ClassPathResource("downloads/alok.pdf");
+        ClassPathResource pdfFile = new ClassPathResource("downloads/AddImageExample1.pdf");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));

@@ -251,8 +251,8 @@ public class UserManager {
         List<UserClockInDto> userClockInDtoList = new ArrayList<>();
 
         try
-        {
-            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate,username);
+        {                                                               //NEED TO CHANGE THIS HARD CODED VALUES.----------------->>
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),"2016-09-01 20:24:14","2016-09-31 20:24:14");
 
         }
         catch (Exception e)
@@ -290,10 +290,16 @@ public class UserManager {
             {
                 double userPer = Double.parseDouble(userPercentage);
 
-                //user.setUserCommission(rs.getDouble("PR"));
+                userPer = rs.getDouble("USERPROFIT") * userPer/100;
+
+                user.setUserCommission(userPer);
+            }
+            else
+            {
+                user.setUserCommission(0.0);
             }
 
-            user.setUserCommission(rs.getDouble("USER_COMMISSION"));
+
 
             return user;
         }
