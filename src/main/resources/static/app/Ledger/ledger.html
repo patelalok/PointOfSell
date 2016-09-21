@@ -154,7 +154,7 @@
 					</tfoot>
 					<tbody >
 					<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
-					<tr data-ng-repeat="row in salesHistory | filter:filterHistory| limitTo:barLimit">
+					<tr data-ng-repeat="row in salesHistory | filter:filterHistory| limitTo:barLimit" ng-click="showTransNotes(row)">
 						<td class="wrapword" style="width:10%;"><span>{{row.transactionDate}}</span></td>
 						<td class="wrapword" style="width:10%;"><span>{{row.transactionTime}}</span></td>
 						<td class="wrapword" style="width:10%;"><span>{{row.customerPhoneNo}}</span></td>
