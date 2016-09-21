@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -88,29 +90,26 @@ public class SalesController {
 
 
     @RequestMapping(value= "/getReceiptDetailsAlok", method = RequestMethod.GET, produces = "application/pdf")
-    public ResponseEntity<InputStreamResource> getPrintClosingDetails(@RequestParam int receiptId) throws IOException, DocumentException {
+    public ResponseEntity<byte[]> getPrintClosingDetails(@RequestParam int receiptId, HttpServletResponse httpServletResponse) throws IOException, DocumentException {
         //System.out.println(productName + price + noOfBarcode);
 
-        salesManager.getReceiptDetailsAlok(receiptId);
+        byte[] pdfDataBytes = salesManager.getReceiptDetailsAlok(receiptId);
 
-        ClassPathResource pdfFile = new ClassPathResource("downloads/AddImageExample1.pdf");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.add("Access-Control-Allow-Origin", "*");
         headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
         headers.add("Access-Control-Allow-Headers", "Content-Type");
-        headers.add("Content-Disposition", "filename=" + "alok");
         headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
-        headers.setContentLength(pdfFile.contentLength());
-        ResponseEntity<InputStreamResource> response = new ResponseEntity<InputStreamResource>(
-                new InputStreamResource(pdfFile.getInputStream()), headers, HttpStatus.OK);
-
+        String filename = "output.pdf";
+        headers.setContentDispositionFormData(filename, filename);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfDataBytes, headers, HttpStatus.OK);
         return response;
-
     }
     }
 

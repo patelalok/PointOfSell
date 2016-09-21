@@ -1,7 +1,6 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.*;
-import com.abm.pos.com.abm.pos.dto.reports.CommonComparisonTotalDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -11,8 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -639,7 +637,7 @@ public class SalesManager {
         }
     }*/
 
-    public void getReceiptDetailsAlok(int receiptId) throws DocumentException {
+    public byte[] getReceiptDetailsAlok(int receiptId) throws DocumentException {
 
 
         List<ReceiptDto> receiptDtosList = new ArrayList<>();
@@ -654,7 +652,9 @@ public class SalesManager {
 
             receiptDtos = getReceiptDetails(receiptId);
 
-            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("AddImageExample5.pdf"));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            docWriter = PdfWriter.getInstance(doc, baos);
             doc.addAuthor("betterThanZero");
             doc.addCreationDate();
             doc.addProducer();
@@ -686,6 +686,13 @@ public class SalesManager {
             printPageNumber(cb);
             generatTransactionDetails(doc, cb, 0, y, receiptDtos);
 
+
+
+            byte[] pdfDataBytes = baos.toByteArray();
+
+            return pdfDataBytes;
+
+
         } catch (DocumentException dex) {
             dex.printStackTrace();
         } catch (Exception ex) {
@@ -698,6 +705,7 @@ public class SalesManager {
                 docWriter.close();
             }
         }
+        return null;
     }
 
     private void generateLayout(Document doc, PdfContentByte cb) {
