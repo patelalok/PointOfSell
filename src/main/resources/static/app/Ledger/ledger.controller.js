@@ -228,7 +228,42 @@
 			
 		}
 /*		salesDate : moment($scope.salesDates[receiptIndex]).format("MM/DD/YYYY")
-*/		function render()
+*/
+		$scope.showTransNotes = function(row)
+		{
+			$scope.editNotesId = row.transactionCompId;
+			if(row.receiptNote == null)
+			{
+				GlobalVariable.rcptNote= '';
+				GlobalVariable.transNote='';
+			}
+			else
+			{
+				GlobalVariable.rcptNote= row.receiptNote;
+				GlobalVariable.transNote=row.transactionNote;
+			}
+
+			var _tmPath = 'app/Ledger/ShowNotes.html';
+			var _ctrlPath = 'showNotesController';
+			DialogFactory.show(_tmPath, _ctrlPath, $scope.editRcptNotes);
+		};
+		$scope.editRcptNotes = function()
+		{
+				var url = GlobalConstants.URLCONSTANTS+'editReceiptNote?transactionId='+$scope.editNotesId+
+						'&receiptNote='+GlobalVariable.rcptNote+'&transactionNote='+GlobalVariable.transNote;
+				var request={};
+				dataService.Post(url,request,onEditNoteSuccess,onEditNoteError,'application/json','application/json');
+		};
+		function onEditNoteSuccess(response)
+		{
+			$scope.slsHisType = 'todaySales';
+			$scope.loadslshisType('todaySales');
+		}
+		function onEditNoteError(response)
+		{
+
+		}
+		function render()
 		{
 			//$scope.startDate = moment();
 			$scope.slsHisType = 'todaySales';
