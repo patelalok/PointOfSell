@@ -105,8 +105,6 @@ public class SalesController {
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
 
-        String filename = "output.pdf";
-        headers.setContentDispositionFormData(filename, filename);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfDataBytes, headers, HttpStatus.OK);
         return response;

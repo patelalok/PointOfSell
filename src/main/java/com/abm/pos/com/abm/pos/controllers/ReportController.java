@@ -71,25 +71,25 @@ public class ReportController {
         return reportManager.getSalesByCustomer(startDate, endDate);
     }
 
-    @RequestMapping(value = "/getInventoryByCategory",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonInventoryDto> getInventoryByCategory()
-    {
-        return reportManager.getInventoryByCategory();
-    }
-
-   @RequestMapping(value = "/getInventoryByVendor",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonInventoryDto> getInventoryByVendor()
-    {
-        return reportManager.getInventoryByVendor();
-    }
-
-
-
-    @RequestMapping(value = "/getInventoryByBrand",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CommonInventoryDto> getInventoryByBrand()
-    {
-        return reportManager.getInventoryByBrand();
-    }
+//    @RequestMapping(value = "/getInventoryByCategory",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<CommonInventoryDto> getInventoryByCategory()
+//    {
+//        return reportManager.getInventoryByCategory();
+//    }
+//
+//   @RequestMapping(value = "/getInventoryByVendor",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<CommonInventoryDto> getInventoryByVendor()
+//    {
+//        return reportManager.getInventoryByVendor();
+//    }
+//
+//
+//
+//    @RequestMapping(value = "/getInventoryByBrand",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<CommonInventoryDto> getInventoryByBrand()
+//    {
+//        return reportManager.getInventoryByBrand();
+//    }
 
 
 

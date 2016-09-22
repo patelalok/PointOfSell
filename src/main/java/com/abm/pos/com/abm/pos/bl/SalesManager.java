@@ -640,15 +640,15 @@ public class SalesManager {
     public byte[] getReceiptDetailsAlok(int receiptId) throws DocumentException {
 
 
-        List<ReceiptDto> receiptDtosList = new ArrayList<>();
+        /*List<ReceiptDto> receiptDtosList = new ArrayList<>();
 
         receiptDtosList = getReceiptDetails(receiptId);
-        Document doc = new Document();
+        Document doc = new Document(PageSize.LETTER.rotate(), 10, 10, 10, 60);
         PdfWriter docWriter = null;
-        initializeFonts();
+        initializeFonts();*/
         try {
 
-            java.util.List<ReceiptDto> receiptDtos = new ArrayList<>();
+            /*ava.util.List<ReceiptDto> receiptDtos = new ArrayList<>();
 
             receiptDtos = getReceiptDetails(receiptId);
 
@@ -663,9 +663,11 @@ public class SalesManager {
             doc.setPageSize(PageSize.LETTER);
 
             doc.open();
+            doc.add(new Paragraph("Source : "
+                            + "   Search Criteria :  Date Range : \n ", new Font(Font.FontFamily.HELVETICA, 20, Font.BOLD, BaseColor.BLACK)));
             PdfContentByte cb = docWriter.getDirectContent();
-
-            boolean beginPage = true;
+*/
+            /*boolean beginPage = true;
             int y = 0;
 
             for (int i = 0; i <= receiptDtos.get(0).getTransactionLineItemDtoList().size(); i++) {
@@ -685,12 +687,48 @@ public class SalesManager {
             }
             printPageNumber(cb);
             generatTransactionDetails(doc, cb, 0, y, receiptDtos);
+*/
+
+
+            /*byte[] pdfDataBytes = baos.toByteArray();
+
+            return pdfDataBytes;*/
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+            PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
+            document.open();
+
+            PdfContentByte cb = writer.getDirectContent();
+
+
+            cb.rectangle(150, 50, 250, 650);
+            cb.rectangle(150, 50, 250, 630);
+            cb.moveTo(150, 655);
+            cb.lineTo(400, 655);
+            cb.stroke();
+
+            createHeadings(cb, 153, 685, "Date:" + " " + "2016-12-12");
+            createHeadings(cb, 225, 685, "Time:" + " " + "23:59:59");
+            createHeadings(cb, 295, 685, "CSR:" + " " + "Alok");
+            createHeadings(cb, 345, 685, "Sale Id:" + " " + 100);
+
+
+            createHeadings(cb, 153, 665, "Item Number");
+            createHeadings(cb, 225, 665, "Item Description");
+            createHeadings(cb, 370, 665, "Price");
 
 
 
-            byte[] pdfDataBytes = baos.toByteArray();
+            //document.add(new Paragraph("Test page"));
+            document.close();
+
+            byte[] pdfDataBytes = byteArrayOutputStream.toByteArray();
 
             return pdfDataBytes;
+
+
 
 
         } catch (DocumentException dex) {
@@ -698,12 +736,12 @@ public class SalesManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            if (doc != null) {
+            /*if (doc != null) {
                 doc.close();
             }
             if (docWriter != null) {
                 docWriter.close();
-            }
+            }*/
         }
         return null;
     }
@@ -788,9 +826,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb, 153, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 225, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 390, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
+//            createContent(cb, 153, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(), PdfContentByte.ALIGN_LEFT);
+//            createContent(cb, 225, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
+//            createContent(cb, 390, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -803,9 +841,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb, 297, y - 30, "Sub Total" + "                  " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 297, y - 45, "Tax" + " " + "7%" + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 297, y - 60, "Total" + "   " + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
+//            createContent(cb, 297, y - 30, "Sub Total" + "                  " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
+//            createContent(cb, 297, y - 45, "Tax" + " " + "7%" + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
+//            createContent(cb, 297, y - 60, "Total" + "   " + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -813,16 +851,7 @@ public class SalesManager {
 
     }
 
-    private void createHeadings(PdfContentByte cb, float x, float y, String text) {
 
-
-        cb.beginText();
-        cb.setFontAndSize(bfBold, 8);
-        cb.setTextMatrix(x, y);
-        cb.showText(text.trim());
-        cb.endText();
-
-    }
 
     private void createStoreNameHeadings(PdfContentByte cb, float x, float y, String text) {
 

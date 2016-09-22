@@ -1,4 +1,4 @@
-package com.abm.pos.com.abm.pos.dto;
+package com.abm.pos.com.abm.pos.dto.reports;
 
 import com.abm.pos.com.abm.pos.dto.reports.CommonInventoryDto;
 import com.abm.pos.com.abm.pos.dto.reports.FinalTotalForInventoryDto;

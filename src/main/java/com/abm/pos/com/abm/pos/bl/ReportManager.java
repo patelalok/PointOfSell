@@ -252,28 +252,44 @@ public class ReportManager {
         }
     }
 
-    public List<CommonInventoryDto> getInventoryByCategory() {
+    public CommonInvetoryTotalDto getInventoryByCategory() {
 
-        List<CommonInventoryDto> commonInventoryDtos = new ArrayList<>();
+        List<CommonInvetoryTotalDto> commonInvetoryTotalDtos = new ArrayList<>();
+
+        InventoryMapper mapper = new InventoryMapper();
 
         try
         {
-            commonInventoryDtos = jdbcTemplate.query(sqlQueries.getInventoryByCategory, new InventoryMapper());
+            commonInvetoryTotalDtos = jdbcTemplate.query(sqlQueries.getInventoryByCategory, mapper);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        return commonInventoryDtos;
+        return mapper.commonInvetoryTotalDto;
 
     }
 
-    private final class InventoryMapper implements RowMapper<CommonInventoryDto>
+    private final class InventoryMapper implements RowMapper<CommonInvetoryTotalDto>
     {
+        int totalQuantity;
+        double totalCost;
+        double totalRetail;
+        double totalAvg;
+
+        CommonInvetoryTotalDto commonInvetoryTotalDto = new CommonInvetoryTotalDto();
+
+        List<CommonInventoryDto> commonComparisonDtosList = new ArrayList<>();
+
         @Override
-        public CommonInventoryDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public CommonInvetoryTotalDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            FinalTotalForInventoryDto finalTotalForInventoryDto = new FinalTotalForInventoryDto();
 
             CommonInventoryDto inventoryDto = new CommonInventoryDto();
+
+            List<FinalTotalForInventoryDto> finalTotalForInventoryDtoList = new ArrayList<>();
+
 
             inventoryDto.setCommonName(rs.getString("COMMON_NAME"));
             inventoryDto.setNoOfProducts(rs.getInt("NOOFPRODUCTS"));
@@ -281,38 +297,63 @@ public class ReportManager {
             inventoryDto.setRetail(rs.getDouble("RETAIL"));
             inventoryDto.setMargin(rs.getDouble("MARGIN"));
 
-            return inventoryDto;
+
+            commonComparisonDtosList.add(inventoryDto);
+
+            commonInvetoryTotalDto.setCommonInventoryDtos(commonComparisonDtosList);
+
+
+            totalQuantity = totalQuantity + inventoryDto.getNoOfProducts();
+            totalCost = totalCost + inventoryDto.getCost();
+            totalRetail = totalRetail + inventoryDto.getRetail();
+
+            finalTotalForInventoryDto.setTotalQuantity(totalQuantity);
+            finalTotalForInventoryDto.setTotalCost(totalCost);
+            finalTotalForInventoryDto.setTotalRetail(totalRetail);
+
+            //I NEED TO FIX THIS SOME HOW
+            finalTotalForInventoryDto.setAvgMargin(0.0);
+
+            finalTotalForInventoryDtoList.add(finalTotalForInventoryDto);
+
+            commonInvetoryTotalDto.setFinalTotalForInventoryDtos(finalTotalForInventoryDtoList);
+
+            return commonInvetoryTotalDto;
         }
     }
 
-    public List<CommonInventoryDto> getInventoryByVendor() {
+    public CommonInvetoryTotalDto getInventoryByVendor() {
 
-        List<CommonInventoryDto> commonInventoryDtos = new ArrayList<>();
+        List<CommonInvetoryTotalDto> commonInvetoryTotalDtos = new ArrayList<>();
+
+        InventoryMapper mapper = new InventoryMapper();
 
         try
         {
-            commonInventoryDtos = jdbcTemplate.query(sqlQueries.getInventoryByVendor, new InventoryMapper());
+            commonInvetoryTotalDtos = jdbcTemplate.query(sqlQueries.getInventoryByVendor, mapper);
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        return commonInventoryDtos;
+        return mapper.commonInvetoryTotalDto;
+
 
     }
 
-    public List<CommonInventoryDto> getInventoryByBrand() {
-        List<CommonInventoryDto> commonInventoryDtos = new ArrayList<>();
+    public CommonInvetoryTotalDto getInventoryByBrand() {
 
-        try
-        {
-            commonInventoryDtos = jdbcTemplate.query(sqlQueries.getInventoryByBrand, new InventoryMapper());
-        }
-        catch (Exception e)
-        {
+        List<CommonInvetoryTotalDto> commonInvetoryTotalDtos = new ArrayList<>();
+
+        InventoryMapper mapper = new InventoryMapper();
+
+        try {
+            commonInvetoryTotalDtos = jdbcTemplate.query(sqlQueries.getInventoryByBrand, mapper);
+        } catch (Exception e) {
             System.out.println(e);
         }
-        return commonInventoryDtos;
+
+        return mapper.commonInvetoryTotalDto;
     }
 
 }
