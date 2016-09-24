@@ -816,7 +816,9 @@ public class ClosingDetailsManager {
 
              List<ClosingDetailsDto> closingDetailsDtoList = new ArrayList<>();
             List<PaidOutDto> paidOutDtoList = new ArrayList<>();
+
              closingDetailsDtoList = getClosingDetailsToDB(startDate, endDate);
+
             //Calling getPaid out details to get paid out details
              paidOutDtoList = getPaidOutDetails(startDate, endDate);
 
@@ -851,16 +853,62 @@ public class ClosingDetailsManager {
         try {
             cb.setLineWidth(1f);
            // cb.rectangle(20,60,560,660);
-            cb.rectangle(20,60,560,660);
+            cb.rectangle(20,60,560,600);
 
-            cb.moveTo(20,690);
-            cb.lineTo(580,690);
-            cb.moveTo(60,60);
-            cb.lineTo(50,710);
-            cb.moveTo(150,60);
-            cb.lineTo(150,710);
-            cb.moveTo(430,60);
-            cb.lineTo(430,710);
+            cb.moveTo(20,620);
+            cb.lineTo(580,620);
+
+            //Credit
+            cb.moveTo(20,590);
+            cb.lineTo(580,590);
+
+            //Debit
+            cb.moveTo(20,560);
+            cb.lineTo(580,560);
+
+            //Cash
+            cb.moveTo(20,530);
+            cb.lineTo(580,530);
+
+            //Check
+            cb.moveTo(20,500);
+            cb.lineTo(580,500);
+
+            //Paid out
+            cb.moveTo(20,460);
+            cb.lineTo(580,460);
+
+            cb.moveTo(20,430);
+            cb.lineTo(580,430);
+
+            //Actual total
+            cb.moveTo(20,390);
+            cb.lineTo(580,390);
+
+            cb.moveTo(20,360);
+            cb.lineTo(580,360);
+
+            //Net Sales
+            cb.moveTo(20,320);
+            cb.lineTo(580,320);
+
+            cb.moveTo(20,290);
+            cb.lineTo(580,290);
+
+            //Customer Balance
+            cb.moveTo(20,250);
+            cb.lineTo(580,250);
+
+            cb.moveTo(20,220);
+            cb.lineTo(580,220);
+
+
+
+
+//            cb.moveTo(150,60);
+//            cb.lineTo(150,710);
+//            cb.moveTo(430,60);
+//            cb.lineTo(430,710);
             cb.stroke();
 //            cb.rectangle(20,50,550,600);
 //            cb.moveTo(20,630);
@@ -875,12 +923,12 @@ public class ClosingDetailsManager {
 //            cb.lineTo(500,650);
 //            cb.stroke();
             // Invoice Detail box Text Headings
-            createHeadings(cb,50,693,"Payment Types");
-            createHeadings(cb,200,693,"From User");
-            createHeadings(cb,340,693,"From System");
-            createHeadings(cb,480,693,"Difference");
-            cb.moveTo(20,660);
-            cb.lineTo(580,660);
+            createHeadings(cb,30,635,"Payment Types");
+            createHeadings(cb,200,635,"From User");
+            createHeadings(cb,340,635,"From System");
+            createHeadings(cb,480,635,"Difference");
+//            cb.moveTo(20,660);
+//            cb.lineTo(580,660);
 //
 //            cb.moveTo(20,630);
 //            cb.lineTo(580,630);
@@ -944,16 +992,16 @@ public class ClosingDetailsManager {
 
            //S /Users/asp5045/Documents/PointOfSell/src/main/
 
-            Image companyLogo = Image.getInstance("newLogo23.png");
-            companyLogo.setAbsolutePosition(235,780);
-            companyLogo.scalePercent(25);
+            Image companyLogo = Image.getInstance("logo.png");
+            companyLogo.setAbsolutePosition(235,760);
+            companyLogo.scalePercent(15);
             doc.add(companyLogo);
 
 
             //createHeadingsAlokTest(cb,235,780,"EXCELL WIRELESS");
-            createHeadingsAlokTest(cb,235,750,"Close Register Report");
-            createHeadings(cb,20,725,"Date From:");
-            createHeadings(cb,450,725,"Today's Profit:");
+            createHeadingsAlokTest(cb,205,730,"Close Register Report");
+            createHeadings(cb,20,685,"Date:");
+            createHeadings(cb,470,685,"Profit:");
             DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date sd = null;
             Date ed = null;
@@ -963,10 +1011,20 @@ public class ClosingDetailsManager {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
-            createHeadings(cb, 65, 725, date.format(sd) + " "+ "To" + " " +date.format(ed));
+            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+
+            String a = date.format(sd);
+            String b = date.format(ed);
+
+            if (a.equals(b)) {
+                createHeadings(cb, 60, 685, date.format(sd));
+            }
+            else {
+                createHeadings(cb, 60, 685,a + " " + "To" + " " + b);
+            }
+
             if((null != closingDetailsDtos && null != Double.toString(closingDetailsDtos.get(0).getTotalProfit()))) {
-                createHeadings(cb, 508, 725, "$" + Double.toString(closingDetailsDtos.get(0).getTotalProfit()));
+                createHeadings(cb, 518, 685, "$" + Double.toString(closingDetailsDtos.get(0).getTotalProfit()));
             }
         }
         catch (Exception ex){
@@ -976,63 +1034,81 @@ public class ClosingDetailsManager {
     private void generateClosingDetails(Document doc, PdfContentByte cb, int index, int y, List<ClosingDetailsDto> closingDetailsDtos, List<PaidOutDto> paidOutDtos)  {
         DecimalFormat df = new DecimalFormat("0.00");
         try {
-            createContent(cb,21,675,"Credit",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,645,"Debit",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,615,"Cash",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,585,"Check",PdfContentByte.ALIGN_LEFT);
-            //For Credit
-            createContent(cb,152,675,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCredit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,675,"$" +Double.toString(closingDetailsDtos.get(0).getReportCredit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,675,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCredit()),PdfContentByte.ALIGN_LEFT);
-           // For Debit
-            createContent(cb,152,645,"$" +Double.toString(closingDetailsDtos.get(0).getCloseDebit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,645,"$" +Double.toString(closingDetailsDtos.get(0).getReportDebit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,645,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceDebit()),PdfContentByte.ALIGN_LEFT);
-            //For Cash
-            createContent(cb,152,615,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCash()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,615,"$" +Double.toString(closingDetailsDtos.get(0).getReportCash()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,615,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCash()),PdfContentByte.ALIGN_LEFT);
-            //For Check
-            createContent(cb,152,585,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCheck()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,585,"$" +Double.toString(closingDetailsDtos.get(0).getReportCheck()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,585,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCheck()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,555,"Paid Out (Sum)",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,555,"Paid Out-1",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,555,"Paid Out-2",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,555,"Paid Out-3",PdfContentByte.ALIGN_LEFT);
-            //Adding paid out details from get paid out end point
-            createContent(cb,21,520, "$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount1()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount2()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,520,"$" +Double.toString(paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,490,"Actual Daily Total",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,490,"Total From User",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,490,"Total From System",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,490,"Total Difference",PdfContentByte.ALIGN_LEFT);
-            //This just for now need to replace with the real values from service call.
-            createContent(cb,21,460,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,460,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,460,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,460,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDifference()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,430,"Net Sales",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,430,"Tax",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,430,"Discount",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,430,"Gross Sales",PdfContentByte.ALIGN_LEFT);
-            //This just for now need to replace with the real values from service call.
-            //Net Sales = Total From System - Tax + Sum of all Paid outs because that is part of the sale
-            createContent(cb,21,400,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount() - closingDetailsDtos.get(0).getTotalTax() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,400,"$" +Double.toString(closingDetailsDtos.get(0).getTotalTax()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,400,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDiscount()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,400,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,21,370,"Customer Balance",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,370,"Commission",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,370,"Bank Deposit",PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,370,"Cash In Hand",PdfContentByte.ALIGN_LEFT);
-            //This just for now need to replace with the real values from service call.
-            createContent(cb,21,340,"$" +Double.toString(closingDetailsDtos.get(0).getCustomerBalance()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,152,340,"$" +Double.toString(closingDetailsDtos.get(0).getCommission()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,292,340,"$" +Double.toString(closingDetailsDtos.get(0).getBankDeposit()),PdfContentByte.ALIGN_LEFT);
-            createContent(cb,432,340,"$" +Double.toString(closingDetailsDtos.get(0).getCashInHand()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,30,600,"Credit",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,30,570,"Debit",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,30,540,"Cash",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,30,510,"Check",PdfContentByte.ALIGN_LEFT);
+//            //For Credit
+            createContent(cb,200,600,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCredit()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,600,"$" +Double.toString(closingDetailsDtos.get(0).getReportCredit()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,600,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCredit()),PdfContentByte.ALIGN_LEFT);
+//           // For Debit
+            createContent(cb,200,570,"$" +Double.toString(closingDetailsDtos.get(0).getCloseDebit()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,570,"$" +Double.toString(closingDetailsDtos.get(0).getReportDebit()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,570,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceDebit()),PdfContentByte.ALIGN_LEFT);
+//            //For Cash
+            createContent(cb,200,540,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCash()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,540,"$" +Double.toString(closingDetailsDtos.get(0).getReportCash()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,540,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCash()),PdfContentByte.ALIGN_LEFT);
+//            //For Check
+            createContent(cb,200,510,"$" +Double.toString(closingDetailsDtos.get(0).getCloseCheck()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,510,"$" +Double.toString(closingDetailsDtos.get(0).getReportCheck()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,510,"$" +Double.toString(closingDetailsDtos.get(0).getDifferenceCheck()),PdfContentByte.ALIGN_LEFT);
+
+
+            createContent(cb,30,470,"Paid Out (Sum)",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,200,470,"Paid Out-1",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,470,"Paid Out-2",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,470,"Paid Out-3",PdfContentByte.ALIGN_LEFT);
+
+
+//            //Adding paid out details from get paid out end point
+
+            if(null != paidOutDtos && !paidOutDtos.isEmpty()) {
+                createContent(cb, 30, 440, "$" + Double.toString(paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()), PdfContentByte.ALIGN_LEFT);
+                createContent(cb, 200, 440, "$" + Double.toString(paidOutDtos.get(0).getPaidOutAmount1()), PdfContentByte.ALIGN_LEFT);
+                createContent(cb, 340, 440, "$" + Double.toString(paidOutDtos.get(0).getPaidOutAmount2()), PdfContentByte.ALIGN_LEFT);
+                createContent(cb, 480, 440, "$" + Double.toString(paidOutDtos.get(0).getPaidOutAmount3()), PdfContentByte.ALIGN_LEFT);
+            }
+
+
+            createHeadings(cb,30,400,"Actual Daily Total");
+            createHeadings(cb,200,400,"Total From User");
+            createHeadings(cb,340,400,"Total From System");
+            createHeadings(cb,480,400,"Total Difference");
+
+//            //This just for now need to replace with the real values from service call.
+            createContent(cb,30,370,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,200,370,"$" +Double.toString(closingDetailsDtos.get(0).getCloseTotalAmount()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,370,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,370,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDifference()),PdfContentByte.ALIGN_LEFT);
+
+            createHeadings(cb,30,330,"Net Sales");
+            createHeadings(cb,200,330,"Tax");
+            createHeadings(cb,340,330,"Discount");
+            createHeadings(cb,480,330,"Gross Sales");
+//
+//            //Net Sales = Total From System - Tax + Sum of all Paid outs because that is part of the sale
+
+            // - closingDetailsDtos.get(0).getTotalTax() + paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3())
+//
+            createContent(cb,30,300,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,200,300,"$" +Double.toString(closingDetailsDtos.get(0).getTotalTax()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,300,"$" +Double.toString(closingDetailsDtos.get(0).getTotalDiscount()),PdfContentByte.ALIGN_LEFT);
+
+            //paidOutDtos.get(0).getPaidOutAmount1() + paidOutDtos.get(0).getPaidOutAmount2() + paidOutDtos.get(0).getPaidOutAmount3()
+            createContent(cb,480,300,"$" +Double.toString(closingDetailsDtos.get(0).getReportTotalAmount()),PdfContentByte.ALIGN_LEFT);
+
+            createContent(cb,30,260,"Customer Balance",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,200,260,"Commission",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,260,"Bank Deposit",PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,260,"Cash In Hand",PdfContentByte.ALIGN_LEFT);
+
+//            //This just for now need to replace with the real values from service call.
+            createContent(cb,30,230,"$" +Double.toString(closingDetailsDtos.get(0).getCustomerBalance()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,200,230,"$" +Double.toString(closingDetailsDtos.get(0).getCommission()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,340,230,"$" +Double.toString(closingDetailsDtos.get(0).getBankDeposit()),PdfContentByte.ALIGN_LEFT);
+            createContent(cb,480,230,"$" +Double.toString(closingDetailsDtos.get(0).getCashInHand()),PdfContentByte.ALIGN_LEFT);
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -1040,14 +1116,14 @@ public class ClosingDetailsManager {
     }
     private void createHeadings(PdfContentByte cb, float x, float y, String text){
         cb.beginText();
-        cb.setFontAndSize(bfBold, 15);
+        cb.setFontAndSize(bfBold, 14);
         cb.setTextMatrix(x,y);
         cb.showText(text.trim());
         cb.endText();
     }
     private void createHeadingsAlokTest(PdfContentByte cb, float x, float y, String text){
         cb.beginText();
-        cb.setFontAndSize(bfBold, 15);
+        cb.setFontAndSize(bfBold, 20);
         cb.setTextMatrix(x,y);
         cb.showText(text.trim());
         cb.endText();
@@ -1060,8 +1136,8 @@ public class ClosingDetailsManager {
     }
     private void initializeFonts() {
         try {
-            bfBold = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
-            bf = BaseFont.createFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            bfBold = BaseFont.createFont(BaseFont.TIMES_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+            bf = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (IOException e) {

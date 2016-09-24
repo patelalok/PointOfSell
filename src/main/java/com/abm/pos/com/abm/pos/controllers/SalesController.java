@@ -111,16 +111,3 @@ public class SalesController {
     }
     }
 
-
-   /* @RequestMapping(method = RequestMethod.POST, value = "/addTransactionPaymentDetails", produces = "application/json")
-    public void addTransactionPayment(TransactionPaymentDto transactionPaymentDto)
-    {
-        salesManager.addTransactionPaymentToDB(transactionPaymentDto);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/getTransactionPaymentDetails", produces = "application/json")
-    public void getTransactionPayment(TransactionPaymentDto transactionPaymentDto)
-    {
-        salesManager.getTransactionPaymentDetails(transactionPaymentDto);
-    }*/
-
