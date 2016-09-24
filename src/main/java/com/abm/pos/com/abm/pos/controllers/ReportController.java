@@ -94,7 +94,7 @@ public class ReportController {
     }
 
 
-    @RequestMapping(value= "/printSaleByCategory", method = RequestMethod.GET, produces = "application/pdf")
+    @RequestMapping(value= "/printSaleByCommonNames", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<byte[]> getPrintClosingDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int reportNo) throws IOException, DocumentException {
         //System.out.println(productName + price + noOfBarcode);
 
@@ -113,4 +113,7 @@ public class ReportController {
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfDataBytes, headers, HttpStatus.OK);
         return response;
     }
+
+
+
 }

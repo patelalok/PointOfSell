@@ -141,6 +141,8 @@ public class UserManager {
             user.setUsername(rs.getString("USERNAME"));
             user.setPassword(rs.getString("PASSWORD"));
             user.setUserRole(rs.getString("USER_ROLE"));
+            user.setHorlyRate(rs.getDouble("HORLYRATE"));
+            user.setUserCommissionPercentage(rs.getDouble("USER_COMMISSION_PERCENTAGE"));
             user.setCreatedDate(rs.getString("USER_CREATED_DATE"));
 
             return user;
@@ -251,8 +253,8 @@ public class UserManager {
         List<UserClockInDto> userClockInDtoList = new ArrayList<>();
 
         try
-        {                                                               //NEED TO CHANGE THIS HARD CODED VALUES.----------------->>
-            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),"2016-09-01 20:24:14","2016-09-31 20:24:14");
+        {                                                              //Ui need to send as time stams other wise wont work.
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate);
 
         }
         catch (Exception e)

@@ -89,7 +89,7 @@ public class SalesController {
     }
 
 
-    @RequestMapping(value= "/getReceiptDetailsAlok", method = RequestMethod.GET, produces = "application/pdf")
+    @RequestMapping(value= "/getReceiptDetailsForThermalPrint", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<byte[]> getPrintClosingDetails(@RequestParam int receiptId, HttpServletResponse httpServletResponse) throws IOException, DocumentException {
         //System.out.println(productName + price + noOfBarcode);
 

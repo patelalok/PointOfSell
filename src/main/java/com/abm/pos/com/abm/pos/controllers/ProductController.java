@@ -20,6 +20,8 @@ public class ProductController {
     @Autowired
     ProductManager productManager;
 
+
+
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST, consumes = "application/json")
     public void addProduct(@RequestBody ProductDto productDto) {
 
@@ -75,8 +77,10 @@ public class ProductController {
     }
 
 
-    @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity deleteProduct(@RequestParam String productId) {
+    @RequestMapping(value = "/deleteProduct", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Response> deleteProduct(@RequestParam String productId) {
+
+        Response  response = new Response();
 
        int result =  productManager.deleteProductToDB(productId);
 
@@ -87,12 +91,15 @@ public class ProductController {
 
 
 
+            response.setStatusMessege("Product Deleted Successfully");
 
-            return ResponseEntity.ok("Product Deleted Successfully");
+            return ResponseEntity.ok(response);
         }
 
+
+
         return ResponseEntity.status(HttpStatus.CONFLICT).
-                body("Can not Delete This Product, It may has transaction history");
+                body(response);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getLastProductNo", produces = "application/json")
