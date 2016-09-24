@@ -4,6 +4,7 @@ import com.abm.pos.com.abm.pos.dto.reports.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
@@ -476,25 +477,25 @@ public class ReportManager {
             //Checking which kind of report is this.
             if (noOfReportType == 1) {
                 createHeadingsForCommonReports(cb, 23, 605, "Category Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Sales By Category Report");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Sales By Category Report");
             } else if (noOfReportType == 2) {
                 createHeadingsForCommonReports(cb, 23, 605, "Vendor Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Sales By Vendor Report");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Sales By Vendor Report");
             } else if (noOfReportType == 3) {
                 createHeadingsForCommonReports(cb, 23, 605, "Brand Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Sales By Brand Report");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Sales By Brand Report");
             } else if (noOfReportType == 4) {
                 createHeadingsForCommonReports(cb, 23, 605, "Product Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Sales By Product Report");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Sales By Product Report");
             } else if (noOfReportType == 5) {
                 createHeadingsForCommonReports(cb, 23, 605, "Employee Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Sales By Employee Report");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Sales By Employee Report");
             } else if (noOfReportType == 6) {
                 createHeadingsForCommonReports(cb, 23, 605, "Customer Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Sales By Customer Report");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Sales By Customer Report");
             } else if (noOfReportType == 7) {
                 createHeadingsForCommonReports(cb, 23, 605, "Product Name");
-                createHeadingsForCommonReports(cb, 240, 730, "Top 50 Products Sale Report");
+                createHeadingsForCommonReportsName(cb, 180, 730, "Top 50 Products Sale Report");
             }
 
             createHeadingsForCommonReports(cb, 205, 605, "Quantity");
@@ -547,7 +548,11 @@ public class ReportManager {
             }
 
 
-            createHeadingsForCompanyName(cb, 265, 770, "Excell Wireless");
+            Image companyLogo = Image.getInstance("logo.png");
+            companyLogo.setAbsolutePosition(235,760);
+            companyLogo.scalePercent(15);
+            doc.add(companyLogo);
+           // createHeadingsForCompanyName(cb, 265, 770, "Excell Wireless");
 
 
             //createHeadings(cb, 240, 730, "Sales By Category Report");
@@ -608,6 +613,16 @@ public class ReportManager {
 
         cb.beginText();
         cb.setFontAndSize(bfBold, 12);
+        cb.setTextMatrix(x, y);
+        cb.showText(text.trim());
+        cb.endText();
+
+    }
+    private void createHeadingsForCommonReportsName(PdfContentByte cb, float x, float y, String text) {
+
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 20);
         cb.setTextMatrix(x, y);
         cb.showText(text.trim());
         cb.endText();
