@@ -3,12 +3,13 @@
 
 	angular.module('sampleApp').controller('CreateUserController', CreateUserController);
 
-	CreateUserController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','GlobalConstants'];
+	CreateUserController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','GlobalConstants','RestrictedCharacter.Types'];
 
-	function CreateUserController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,GlobalConstants)
+	function CreateUserController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,GlobalConstants,restrictCharacter)
 	{
 		$scope.GlobalVariable = GlobalVariable;
 		var authElemArray = new Array();
+		$scope.restrictCharacter=restrictCharacter;
 		//GlobalVariable.editUser = false;
 		$scope.closeCreateUser = function()
 		{
@@ -22,7 +23,7 @@
 				"password": $scope.newPassword,
 				"userRole": $scope.userRole,
 				"createdDate": js_yyyy_mm_dd_hh_mm_ss (),
-				"horlyRate":$scope.hrlyRate,
+				"horlyRate":$scope.hrlyRate.replace('$','').replace(/,/g,''),
 				"userCommissionPercentage":$scope.comPer
 			}
 			request = JSON.stringify(request);
@@ -51,7 +52,7 @@
 					"password": $scope.newPassword,
 					"userRole": $scope.userRole,
 					"userId":GlobalVariable.editUserId,
-					"horlyRate":$scope.hrlyRate,
+					"horlyRate":$scope.hrlyRate.replace('$','').replace(/,/g,''),
 					"userCommissionPercentage":$scope.comPer
 				};
 				request = JSON.stringify(request);
@@ -102,7 +103,7 @@
 					$scope.password = GlobalVariable.editPassword;
 					$scope.userRole = GlobalVariable.editUserRole;
 					$scope.createdDate = GlobalVariable.editCreatedDate;
-					$scope.hrlyRate = GlobalVariable.editHrlyRate;
+					$scope.hrlyRate = "$"+GlobalVariable.editHrlyRate;
 					$scope.lastName = GlobalVariable.editComPer;
 			}
 		}

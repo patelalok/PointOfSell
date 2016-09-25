@@ -1,5 +1,5 @@
 <div print-section>
-	<div class="row pageHeader" style="padding-left:30px;padding-top:10px;" print-remove>
+	<div class="row pageHeader" style="padding-left:30px;padding-top:30px;" print-remove>
 		<div class="col-md-12 pageHeader">
 			<span style="font-weight:bold;font-size:30px">Sales Reports</span>
 		</div>
@@ -40,7 +40,6 @@
 								<option value="cat">Category</option>
 								<option value="ven">Vendor</option>
 								<option value="bran">Brand</option>
-								<option value="tin">Total Inventory</option>
 			  </select>
 			</div>
 		</div>
@@ -181,9 +180,9 @@
 
 			</div>
 		</div>
-		<div class="col-md-1 productBtn" style="width:16%;">
+		<div class="col-md-1 productBtn" style="width:16%;" ng-show="reportType != 'salesSummary'">
 			<div class="padding-bottom-5"><label></label></div>
-			<div>
+			<div ng-click="printReports(reportType,slCatType)">
 				<span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
 			</div>
 		</div>

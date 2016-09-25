@@ -69,6 +69,7 @@
 			if(response.length!==0)
 			{
 			$scope.getTaxDtls = response;
+				$scope.rcptType=response[0].receiptType;
 			$scope.footerReceipt = response[0].footerReceipt;
 			$scope.footerId = response[0].id;
 				$scope.footerTaxId= response[0].tax;

@@ -691,12 +691,65 @@
 
 			return month;
 		}
-		$scope.printCloseRegister = function() {
-			GlobalVariable.isPrintPage = true;
-			$timeout(function() {
-				$window.print();
-				GlobalVariable.isPrintPage = false;
-			}, 2000);
+		$scope.printCloseRegister = function(saleDate) {
+			var url;
+			var start,end;
+
+			if(saleDate=='todaySales')
+			{
+
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'yestSales')
+			{
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'lastWeekSales')
+			{
+				start = getLast7Day()+' 00:00:00';
+				end = getCurrentDay()+' 23:59:59';
+			}
+			else if(saleDate == 'thisMonthSales')
+			{
+				start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'lastMonthSales')
+			{
+				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getlastMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'last3MonthsSales')
+			{
+				start = getlast3Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'last6MonthsSales')
+			{
+				start = getlast6Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'thisYearSales')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[0]+"-01-01 00:00:00";
+				end =years[0]+"-12-31 23:59:59";
+			}
+			else if(saleDate == 'lastYearSales')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[1]+"-01-01 00:00:00";
+				end =years[1]+"-12-31 23:59:59";
+			}
+			else
+			{
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
+			}
+			url=GlobalConstants.URLCONSTANTS+'printClosingDetails?startDate='+start+'&endDate='+end;
+			$window.open(url,'_blank');
 		};
 	}
 })();

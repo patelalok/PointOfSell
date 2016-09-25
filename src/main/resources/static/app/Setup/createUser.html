@@ -1,7 +1,7 @@
 <div>
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" data-ng-click="closeCreateUser()">&times;</button>
-		<h4 class="modal-title" style="font-size:30px;">New User</h4>
+		<h4 class="modal-title" style="font-size:30px;"><span ng-show="!GlobalVariable.editUser">New User</span><span ng-show="GlobalVariable.editUser">Edit User</span></h4>
 	</div>
 
 <div class="modal-body" style="padding:0px;">
@@ -33,12 +33,12 @@
 				<div class="col-md-6">
                         <label for="hrlyRate" class="padding-bottom-5 font-weight-label">Hourly Rate</label>
                         <input type="text" class="form-control" name="hrlyRate" id="hrlyRate" data-ng-model="hrlyRate"
-                        autocomplete="off"  style="width:100%;height:50px;" />
+                        autocomplete="off"  style="width:100%;height:50px;" data-restrict-characters="restrictCharacter.NumericWithPeriod.Decimal"/>
 				</div>
 				<div class="col-md-6">
                         <label for="comPer" class="padding-bottom-5 font-weight-label">Commission Per</label>
                         <input type="text" class="form-control" name="comPer" id="comPer" data-ng-model="comPer"
-                        autocomplete="off"  style="width:100%;height:50px;" />
+                        autocomplete="off"  style="width:100%;height:50px;" data-restrict-characters="restrictCharacter.NumericWithPeriod.Decimal" />
 				</div>
 			</div>
 			<div class="row padding-top-15">

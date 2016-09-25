@@ -83,7 +83,11 @@
 
 				<column name="User Name" key="username" datatype="string" width="16%"></column>
 				<column name="User Role" key="userRole" datatype="string" width="16%"></column>
-				<column name="Hrly Rate" key="horlyRate" datatype="string" width="16%"></column>
+				<column name="Hrly Rate" key="horlyRate" datatype="string" width="16%">
+					<cell ng-non-bindable>
+						<span>${{row.horlyRate}}</span>
+					</cell>
+				</column>
 				<column name="Commission %" key="userCommissionPercentage" datatype="string" width="16%"></column>
 				<column name="Created Date" key="createdDate" datatype="string" width="16%"></column>
 				<column name="" key="" datatype="" width="20%">
@@ -110,6 +114,17 @@
 	</div>
 
 	<div class="row productBtns" style="padding:30px;"ng-show="showRcptDtls">
+		<div class="col-md-12" style="padding-top:15px;padding-bottom:15px;">
+			<label for="rcptType" class="padding-bottom-5 font-weight-label">Receipt Type</label>
+			<div class="genderRadio padding-top-10">
+				<label class="radio-inline">
+					<input type="radio" name="rcptType" ng-model="rcptType" value="2">Thermal Printer
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="rcptType" ng-model="rcptType" value="2">A4 Printer
+				</label>
+			</div>
+		</div>
 		<div class="col-md-12">
 
 			<textarea cols="100" rows="10" ng-model="footerReceipt"></textarea>

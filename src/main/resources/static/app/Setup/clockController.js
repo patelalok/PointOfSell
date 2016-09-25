@@ -18,64 +18,55 @@
 
 			if(saleDate=='todaySales')
 			{
-				start = getCurrentDay();
-				end = getCurrentDay();
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
 			}
 			else if(saleDate == 'yestSales')
 			{
-
-				start = getPreviousDay();
-				end = getPreviousDay();
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
 			}
 			else if(saleDate == 'lastWeekSales')
 			{
-
-				start = getLast7Day();
-				end = getCurrentDay();
+				start = getLast7Day()+' 00:00:00';
+				end = getCurrentDay()+' 23:59:59';
 			}
 			else if(saleDate == 'thisMonthSales')
 			{
-
-				start = getcurrentYear()+"-"+getcurrentMonth()+"-01";
-				end = getcurrentYear()+"-"+getcurrentMonth()+"-31";
+				start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
 			}
 			else if(saleDate == 'lastMonthSales')
 			{
-
-				start = getcurrentYear()+"-"+getlastMonth()+"-01";
-				end = getcurrentYear()+"-"+getlastMonth()+"-31";
+				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getlastMonth()+"-31 23:59:59";
 			}
 			else if(saleDate == 'last3MonthsSales')
 			{
-
-				start = getlast3Months();
-				end = getCurrentDay();
+				start = getlast3Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
 			}
 			else if(saleDate == 'last6MonthsSales')
 			{
-
-				start = getlast6Months();
-				end = getCurrentDay();
+				start = getlast6Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
 			}
 			else if(saleDate == 'thisYearSales')
 			{
-
 				var years = getCurrentandPreviousYear().split("-");
-				start =years[0]+"-01-01";
-				end =years[0]+"-12-31";
+				start =years[0]+"-01-01 00:00:00";
+				end =years[0]+"-12-31 23:59:59";
 			}
 			else if(saleDate == 'lastYearSales')
 			{
-
 				var years = getCurrentandPreviousYear().split("-");
-				start =years[1]+"-01-01";
-				end =years[1]+"-12-31";
+				start =years[1]+"-01-01 00:00:00";
+				end =years[1]+"-12-31 23:59:59";
 			}
 			else
 			{
-
-				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd");
-				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd");
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
 			}
 			loadHistoryData(start,end);
 		};

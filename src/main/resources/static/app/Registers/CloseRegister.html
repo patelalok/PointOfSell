@@ -80,7 +80,7 @@
 		</div>-->
 		<div class="col-md-2">
 			<div class="padding-bottom-5"><label></label></div>
-			<div data-ng-click="printCloseRegister()">
+			<div data-ng-click="printCloseRegister(clsRegister)">
 
 				<span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
 
@@ -98,7 +98,7 @@
 					
 					</div>
 					<div class="display-row">
-						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Credit/</span><span style="display:block;visibility: hidden;">Debit Card:</span> </div>
+						<div class=" inline-vertical display-cell align-left"><span style="display:block;">Credit</span><span style="display:block;visibility: hidden;">Debit Card:</span> </div>
 						<div class=" inline-vertical display-cell align-left " ><input type="text"  class="form-control"  ng-model="userDebit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserDebit(userDebit)"/></div>
 						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="systemDebit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
 						<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difDebit" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" style="background-color: #FFFFFF;" disabled="disabled" ng-style="{color: debitColor}" /></div>
@@ -109,7 +109,7 @@
 
 			<div class="row totalColumn display-table tableMainProp" align="left" style="margin-left:0px;margin-right:auto;border-spacing:5px;">
 				<div class="display-row">
-					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Debit Card:</span> </div>
+					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Debit Only:</span> </div>
 					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userDebitCard" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserDebitCard(userDebitCard)" /></div>
 					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemDebitCard" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;" /></div>
 					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difDebitCard" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" disabled="disabled" style="background-color: #FFFFFF;"ng-style="{color: debitColor}" /></div>

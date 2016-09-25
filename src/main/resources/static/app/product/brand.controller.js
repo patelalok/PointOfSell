@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('BrandController', BrandController);
 
-	BrandController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','modalService','dataService','GlobalConstants'];
+	BrandController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','modalService','dataService','GlobalConstants','getProductDetails'];
 
-	function BrandController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,modalService,dataService,GlobalConstants) {
+	function BrandController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,modalService,dataService,GlobalConstants,getProductDetails) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -78,9 +78,9 @@
 		{
 			if(isOKClicked)
 			{
-				var request = new Object();
-				request.brandId = $scope.deleteBrandId;
-				request = JSON.stringify(request);
+				var url=GlobalConstants.URLCONSTANTS+'deleteBrand?brandId='+$scope.deleteBrandId;
+				var request = {};
+				request=JSON.stringify(request);
 
 				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
 			}
@@ -88,7 +88,14 @@
 		function deleteSuccessHandler(response)
 		{
 			console.log(response);
+			getProductDetails.getCategoryDetails($scope.getBDetails);
+
 		}
+		$scope.getBDetails = function(response)
+		{
+
+			GlobalVariable.getBrands = response;
+		};
 		function deleteErrorHandler(response)
 		{
 			console.log(response);

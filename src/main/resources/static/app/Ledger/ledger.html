@@ -154,16 +154,16 @@
 					</tfoot>
 					<tbody >
 					<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
-					<tr data-ng-repeat="row in salesHistory | filter:filterHistory| limitTo:barLimit" ng-click="showTransNotes(row)">
-						<td class="wrapword" style="width:10%;"><span>{{row.transactionDate}}</span></td>
-						<td class="wrapword" style="width:10%;"><span>{{row.transactionTime}}</span></td>
-						<td class="wrapword" style="width:10%;"><span>{{row.customerPhoneNo}}</span></td>
-						<td class="wrapword" style="width:15%;"><span>{{row.customerName}}</span></td>
-						<td class="wrapword" style="width:10%;"><span>{{row.username}}</span></td>
-						<td class="wrapword" style="width:5%;"><span>{{row.tax}}</span></td>
-						<td class="wrapword" style="width:5%;"><span>{{row.discount}}</span></td>
-						<td class="wrapword" style="width:10%;"><span>{{row.totalAmount}}</span></td>
-						<td class="wrapword" style="width:10%;"><span>{{row.transactionCompId}}</span></td>
+					<tr data-ng-repeat="row in salesHistory | filter:filterHistory| limitTo:barLimit" >
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionDate}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionTime}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.customerPhoneNo}}</span></td>
+						<td class="wrapword" style="width:15%;" ng-click="showTransNotes(row)"><span>{{row.customerName}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.username}}</span></td>
+						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.tax}}</span></td>
+						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.discount}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.totalAmount}}</span></td>
+						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionCompId}}</span></td>
 						<td class="wrapword" style="width:10%;"><span ng-if="row.status == 'r'">return</span>
 							<span ng-if="row.status == 'c'">completed</span></td>
 						<td class="wrapword" style="width:20%;">

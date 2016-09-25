@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('SupplierController', SupplierController);
 
-	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService','GlobalConstants'];
+	SupplierController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','DialogFactory','dataService','modalService','GlobalConstants','getProductDetails'];
 
-	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService,GlobalConstants) {
+	function SupplierController($scope, $rootScope, device ,GlobalVariable,$state,DialogFactory,dataService,modalService,GlobalConstants,getProductDetails) {
 		
 		$scope.device = device;
 		$scope.GlobalVariable = GlobalVariable;
@@ -77,21 +77,26 @@ $rootScope.closeBootstrapAlert = function()
 		{
 			if(isOKClicked)
 			{
-				var request = new Object();
-				request.categoryId = $scope.deleteCategoryrId;
-				request = JSON.stringify(request);
-
+				var url=GlobalConstants.URLCONSTANTS+'deleteCategory?categoryId='+$scope.deleteCategoryrId;
+				var request = {};
+				request=JSON.stringify(request);
 				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
 			}
 		};
 		function deleteSuccessHandler(response)
 		{
 			console.log(response);
+			getProductDetails.getCategoryDetails($scope.getCtDetails);
 		}
 		function deleteErrorHandler(response)
 		{
 			console.log(response);
 		}
+		$scope.getCtDetails = function(response)
+		{
+
+			GlobalVariable.getCategory= getCategory;
+		};
 		function render()
 		{
 			$scope.currentPageIndexArr = 0;

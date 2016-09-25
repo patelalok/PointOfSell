@@ -19,6 +19,105 @@
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.maxDate = new Date();
 		$scope.minDate = moment().subtract(1, "days").toDate();
+
+		$scope.printReports = function(type,saleDate)
+		{
+			var start,end;
+			if(saleDate=='todaySales')
+			{
+				start = getCurrentDay()+''+' 00:00:00';
+				end = getCurrentDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'yestSales')
+			{
+				start = getPreviousDay()+''+' 00:00:00';
+				end = getPreviousDay()+''+' 23:59:59';
+			}
+			else if(saleDate == 'lastWeekSales')
+			{
+				start = getLast7Day()+' 00:00:00';
+				end = getCurrentDay()+' 23:59:59';
+			}
+			else if(saleDate == 'thisMonthSales')
+			{
+				start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'lastMonthSales')
+			{
+				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
+				end = getcurrentYear()+"-"+getlastMonth()+"-31 23:59:59";
+			}
+			else if(saleDate == 'last3MonthsSales')
+			{
+				start = getlast3Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'last6MonthsSales')
+			{
+				start = getlast6Months()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
+			}
+			else if(saleDate == 'thisYearSales')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[0]+"-01-01 00:00:00";
+				end =years[0]+"-12-31 23:59:59";
+			}
+			else if(saleDate == 'lastYearSales')
+			{
+				var years = getCurrentandPreviousYear().split("-");
+				start =years[1]+"-01-01 00:00:00";
+				end =years[1]+"-12-31 23:59:59";
+			}
+			else
+			{
+				start = $filter('date')($scope.startTransDate, "yyyy-MM-dd")+" 00:00:00";
+				end = $filter('date')($scope.endTransDate, "yyyy-MM-dd")+" 23:59:59";
+			}
+
+			if(type == 'salesCategory')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=1';
+			}
+			else if(type == 'top50Selling')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=7';
+			}
+			else if(type == 'salesBrand')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=3';
+			}
+			else if(type == 'salesVendor')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=2';
+			}
+			else if(type == 'salesUser')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=5';
+			}
+			else if(type == 'salesProduct')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=4';
+			}
+			else if(type == 'salesCustomer')
+			{
+				var url=GlobalConstants.URLCONSTANTS+'printSaleByCommonNames?startDate='+start+'&endDate='+end+'&reportNo=6';
+			}
+			else if(type == 'inventorySummary')
+			{
+				if($scope.cType == 'cat')
+					var url=GlobalConstants.URLCONSTANTS+'printInventorySummaryByCommonNames?reportNo=1';
+				else if($scope.cType == 'ven')
+					var url=GlobalConstants.URLCONSTANTS+'printInventorySummaryByCommonNames?reportNo=2';
+				else if($scope.cType == 'bran')
+					var url=GlobalConstants.URLCONSTANTS+'printInventorySummaryByCommonNames?reportNo=3';
+			}
+
+			$window.open(url, '_blank');
+
+		};
+
 	    $scope.openStartCalendar = function($event) {
 			$event.preventDefault();
 			$event.stopPropagation();
@@ -133,7 +232,24 @@
 		};
 		function onSalesInvSuccess(response)
 		{
-			$scope.inventorySummary = response;
+			$scope.inventorySummary = [];
+			for(var i=0;i<response.commonInventoryDtos.length;i++)
+			{
+				$scope.inventorySummary.push({
+					"commonName": response.commonInventoryDtos[i].commanName,
+					"noOfProducts": Number(parseFloat(response.commonInventoryDtos[i].noOfProducts)).toFixed(2),
+					"cost": Number(parseFloat(response.commonInventoryDtos[i].cost)).toFixed(2),
+					"retail": Number(parseFloat(response.commonInventoryDtos[i].retail)).toFixed(2),
+					"margin": Number(parseFloat(response.commonInventoryDtos[i].margin)).toFixed(2)
+				});
+			}
+			$scope.inventorySummary.push({
+				"commonName":"Total",
+				"noOfProducts": Number(parseFloat(response.finalTotalForInventoryDtos[0].totalQuantity)).toFixed(2),
+				"cost": Number(parseFloat(response.finalTotalForInventoryDtos[0].totalCost)).toFixed(2),
+				"retail": Number(parseFloat(response.finalTotalForInventoryDtos[0].totalRetail)).toFixed(2),
+				"margin": Number(parseFloat(response.finalTotalForInventoryDtos[0].avgMargin)).toFixed(2)
+			});
 		}
 		function onSalesInvError(response)
 		{
