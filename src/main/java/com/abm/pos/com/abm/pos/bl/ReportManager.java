@@ -201,6 +201,7 @@ public class ReportManager {
 
 
 
+
     private final class SalesCategoryManager implements RowMapper<CommonComparisonTotalDto>
     {
         int totalQuantity;
@@ -572,7 +573,7 @@ public class ReportManager {
             if (null != commonComparisonTotalDto && commonComparisonTotalDto.getCommonComparisonDtos().size() >= 1) {
 
                 createForCommonReportsContent(cb, 23, y, commonComparisonTotalDto.getCommonComparisonDtos().get(index).getCommanName(), 0);
-                createForCommonReportsContent(cb, 205, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getQuantity()), 0);
+                createForCommonReportsContent(cb, 205, y,       df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getQuantity()), 0);
                 createForCommonReportsContent(cb, 284, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getDiscount()), 0);
 
                 createForCommonReportsContent(cb, 369, y, "$" + df.format(commonComparisonTotalDto.getCommonComparisonDtos().get(index).getSalesTotal()), 0);
@@ -594,7 +595,7 @@ public class ReportManager {
 
             if (null != commonComparisonTotalDto && commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().size() == 1) {
                 createContentForTotal(cb, 23, y, "TOTAL", 0);
-                createContentForTotal(cb, 205, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalQuantity()), 0);
+                createContentForTotal(cb, 205, y,       df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalQuantity()), 0);
                 createContentForTotal(cb, 284, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalDiscount()), 0);
                 createContentForTotal(cb, 369, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalSales()), 0);
                 createContentForTotal(cb, 462, y, "$" + df.format(commonComparisonTotalDto.getFinalTotalForCommonComparisonDtos().get(0).getTotalTax()), 0);
@@ -673,6 +674,193 @@ public class ReportManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public byte[] printInventorySummaryByCommonNames(int reportNo) throws DocumentException {
+
+        Document doc = new Document(PageSize.A4);
+        initializeFontsForCommonReports();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PdfWriter writer = PdfWriter.getInstance(doc, byteArrayOutputStream);
+
+        CommonInvetoryTotalDto commonComparisonDtos = new CommonInvetoryTotalDto();
+
+        //Checking which kind of report is this.
+
+        //USING noOfReportType Identifying which type of report ui is asking.
+
+        //1 = byCategory
+        //2 = byVendor
+        //3 = byBrand
+        if (reportNo == 1) {
+            commonComparisonDtos = getInventoryByCategory();
+        } else if (reportNo == 2) {
+            commonComparisonDtos = getInventoryByVendor();
+        } else if (reportNo == 3) {
+            commonComparisonDtos = getInventoryByBrand();
+        }
+
+        doc.open();
+
+        PdfContentByte cb = writer.getDirectContent();
+
+        boolean beginPage = true;
+        int y = 0;
+
+        for (int i = 0; i < commonComparisonDtos.getCommonInventoryDtos().size(); i++) {
+            if (beginPage) {
+                beginPage = false;
+                generateLayoutForInventory(doc, cb, reportNo);
+                generateHeaderForInventory(doc, cb,reportNo);
+                y = 570;
+            }
+            generateDetailForInventory(doc, cb, i, y, commonComparisonDtos);
+            y = y - 40;
+            if (y < 60) {
+                printPageNumber(cb);
+                doc.newPage();
+                beginPage = true;
+            }
+        }
+        generateTotalDetailForInventorty(doc, cb, 0, y, commonComparisonDtos);
+        printPageNumber(cb);
+
+        doc.close();
+
+        byte[] pdfDataBytes = byteArrayOutputStream.toByteArray();
+
+
+
+        return pdfDataBytes;
+
+    }
+
+    private void generateLayoutForInventory(Document doc, PdfContentByte cb, int reportNo) {
+
+        try {
+
+            cb.setLineWidth(1f);
+
+
+            // Invoice Detail box layout
+            cb.rectangle(20, 50, 550, 580);
+            cb.moveTo(20, 590);
+            cb.lineTo(570, 590);
+//            cb.moveTo(50, 50);
+//            cb.lineTo(50, 650);
+//            cb.moveTo(150, 50);
+//            cb.lineTo(150, 650);
+//            cb.moveTo(430, 50);
+//            cb.lineTo(430, 650);
+//            cb.moveTo(500, 50);
+//            cb.lineTo(500, 650);
+            cb.stroke();
+
+            // Invoice Detail box Text Headings
+
+            //Checking which kind of report is this.
+            if (reportNo == 1) {
+                createHeadingsForCommonReports(cb, 23, 605, "Category Name");
+                createHeadingsForCommonReportsName(cb, 168, 730, "Inventory By Category Report");
+            } else if (reportNo == 2) {
+                createHeadingsForCommonReports(cb, 23, 605, "Vendor Name");
+                createHeadingsForCommonReportsName(cb, 175, 730, "Inventory By Vendor Report");
+            } else if (reportNo == 3) {
+                createHeadingsForCommonReports(cb, 23, 605, "Brand Name");
+                createHeadingsForCommonReportsName(cb, 175, 730, "Inventory By Brand Report");
+            }
+
+
+            createHeadingsForCommonReports(cb, 220, 605, "Quantity");
+            createHeadingsForCommonReports(cb, 330, 605, "Cost");
+            createHeadingsForCommonReports(cb, 420, 605, "Retail");
+            createHeadingsForCommonReports(cb, 510, 605, "Margin");
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateTotalDetailForInventorty(Document doc, PdfContentByte cb, int index, int y, CommonInvetoryTotalDto commonComparisonDtos) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != commonComparisonDtos && commonComparisonDtos.getFinalTotalForInventoryDtos().size() == 1) {
+                createContentForTotalInventory(cb, 23, y, "TOTAL", 0);
+                createContentForTotalInventory(cb, 220, y,       df.format(commonComparisonDtos.getFinalTotalForInventoryDtos().get(0).getTotalQuantity()), 0);
+                createContentForTotalInventory(cb, 330, y, "$" + df.format(commonComparisonDtos.getFinalTotalForInventoryDtos().get(0).getTotalCost()), 0);
+                createContentForTotalInventory(cb, 420, y, "$" + df.format(commonComparisonDtos.getFinalTotalForInventoryDtos().get(0).getTotalRetail()), 0);
+                createContentForTotalInventory(cb, 605, y, "$" + df.format(commonComparisonDtos.getFinalTotalForInventoryDtos().get(0).getAvgMargin()), 0);
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateDetailForInventory(Document doc, PdfContentByte cb, int index, int y, CommonInvetoryTotalDto commonComparisonDtos) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != commonComparisonDtos && commonComparisonDtos.getCommonInventoryDtos().size() >= 1) {
+
+                createForCommonReportsContentForInventory(cb, 23, y, commonComparisonDtos.getCommonInventoryDtos().get(index).getCommonName(), 0);
+                createForCommonReportsContentForInventory(cb, 220, y,       df.format(commonComparisonDtos.getCommonInventoryDtos().get(index).getNoOfProducts()), 0);
+                createForCommonReportsContentForInventory(cb, 330, y, "$" + df.format(commonComparisonDtos.getCommonInventoryDtos().get(index).getCost()), 0);
+                createForCommonReportsContentForInventory(cb, 420, y, "$" + df.format(commonComparisonDtos.getCommonInventoryDtos().get(index).getRetail()), 0);
+                createForCommonReportsContentForInventory(cb, 510, y,       df.format(commonComparisonDtos.getCommonInventoryDtos().get(index).getMargin()) + "%", 0);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateHeaderForInventory(Document doc, PdfContentByte cb, int reportNo) {
+
+        try {
+
+            Image companyLogo = Image.getInstance("logo.png");
+            companyLogo.setAbsolutePosition(235,760);
+            companyLogo.scalePercent(15);
+            doc.add(companyLogo);
+            // createHeadingsForCompanyName(cb, 265, 770, "Excell Wireless");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
+    private void createForCommonReportsContentForInventory(PdfContentByte cb, float x, float y, String text, int align) {
+
+
+        cb.beginText();
+        cb.setFontAndSize(bf, 12);
+        cb.showTextAligned(align, text.trim(), x, y, 0);
+        cb.endText();
+
+    }
+
+    private void createContentForTotalInventory(PdfContentByte cb, float x, float y, String text, int align) {
+
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 12);
+        cb.showTextAligned(align, text.trim(), x, y, 0);
+        cb.endText();
+
     }
 
 }

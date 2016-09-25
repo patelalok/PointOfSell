@@ -96,9 +96,29 @@ public class ReportController {
 
     @RequestMapping(value= "/printSaleByCommonNames", method = RequestMethod.GET, produces = "application/pdf")
     public ResponseEntity<byte[]> getPrintClosingDetails(@RequestParam String startDate, @RequestParam String endDate, @RequestParam int reportNo) throws IOException, DocumentException {
-        //System.out.println(productName + price + noOfBarcode);
+
 
         byte[] pdfDataBytes = reportManager.printSaleByCommonName(startDate,endDate,reportNo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfDataBytes, headers, HttpStatus.OK);
+        return response;
+    }
+
+    @RequestMapping(value= "/printInventorySummaryByCommonNames", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<byte[]> printInventorySummaryByCommonNames(@RequestParam int reportNo) throws IOException, DocumentException {
+
+
+        byte[] pdfDataBytes = reportManager.printInventorySummaryByCommonNames(reportNo);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
