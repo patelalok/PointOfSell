@@ -303,7 +303,7 @@ public class SQLQueries {
                     "STORE_ADDRESS = ?, " +
                     "STORE_LOGO = ?, " +
                     "FOOTER_RECEIPT = ?, " +
-                    "STORE_EMAIL = ? " +
+                    "STORE_EMAIL = ?, RECEIPT_TYPE = ? " +
                     "WHERE GET_PAGE_SETUP_DETAILS_ID = ?";
 
     public String editPaidOutDetails =
