@@ -831,6 +831,11 @@ public class ReportManager {
 
         try {
 
+            DateFormat df = new SimpleDateFormat("dd/MM/yy");
+            Date dateobj = new Date();
+
+            createHeadingsForCompanyName(cb, 20, 660, "Date:" + df.format(dateobj));
+
             Image companyLogo = Image.getInstance("logo.png");
             companyLogo.setAbsolutePosition(235,760);
             companyLogo.scalePercent(15);
