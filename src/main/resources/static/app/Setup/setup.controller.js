@@ -69,7 +69,11 @@
 			if(response.length!==0)
 			{
 			$scope.getTaxDtls = response;
-				$scope.rcptType=response[0].receiptType;
+				$scope.rcptType=(response[0].receiptType).toString();
+				if($scope.rcptType == "0")
+				GlobalVariable.showRcptType = 'A4';
+				else if($scope.rcptType == "1")
+					GlobalVariable.showRcptType = 'Thermal';
 			$scope.footerReceipt = response[0].footerReceipt;
 			$scope.footerId = response[0].id;
 				$scope.footerTaxId= response[0].tax;
@@ -160,7 +164,8 @@
 				"tax": $scope.footerTaxId,
 				"storeAddress": $scope.footerStore,
 				"storeLogo": null,
-				"footerReceipt":$scope.footerReceipt
+				"footerReceipt":$scope.footerReceipt,
+				"receiptType":$scope.rcptType
 			};
 
 			request = JSON.stringify(request);

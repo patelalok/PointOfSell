@@ -262,7 +262,7 @@
 			GlobalVariable.transId = '';
 			GlobalVariable.last4='';
 			GlobalVariable.sellIMEINumber = '';
-			$rootScope.selectTax = 'default';
+			GlobalVariable.selectTax = 'default';
 			getProductDetails.getProductDetail();
 			if(GlobalVariable.printReceiptTrans == true)
 			{
@@ -312,7 +312,7 @@
 					);
 				}
 			}
-			GlobalVariable.isPrintPage = true;
+
 			$rootScope.printTransFirstName='';
 			$rootScope.printTransLastName ='';
 			$rootScope.printTransStreet='';
@@ -339,11 +339,19 @@
 				}
 			}
 
-
-			$timeout(function() {
+		if(GlobalVariable.showRcptType == 'A4') {
+			GlobalVariable.isPrintPage = true;
+			$timeout(function () {
 				$window.print();
 				GlobalVariable.isPrintPage = false;
 			}, 2000);
+		}
+		else if(GlobalVariable.showRcptType == 'Thermal')
+		{
+			GlobalVariable.isPrintPage = false;
+			$window.open(GlobalConstants.URLCONSTANTS+'getReceiptDetailsForThermalPrint?receiptId=10'
+		,'_blank');
+		}
 
 		}
 		function getPrintErrorHandler(response)

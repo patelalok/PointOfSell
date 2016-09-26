@@ -108,26 +108,26 @@
 			$scope.getClosingDtls = response;
 
 			if (response.length !== 0) {
-				$scope.systemDebit = $scope.getClosingDtls[0].reportCredit;
-				$scope.systemDebitCard = $scope.getClosingDtls[0].reportDebit;
-				$scope.systemCash = $scope.getClosingDtls[0].reportCash;
-				$scope.sysCheck = $scope.getClosingDtls[0].reportCheck;
+				$scope.systemDebit = parseFloat(parseFloat($scope.getClosingDtls[0].reportCredit).toFixed(2));
+				$scope.systemDebitCard = parseFloat(parseFloat($scope.getClosingDtls[0].reportDebit).toFixed(2));
+				$scope.systemCash = parseFloat(parseFloat($scope.getClosingDtls[0].reportCash).toFixed(2));
+				$scope.sysCheck = parseFloat(parseFloat($scope.getClosingDtls[0].reportCheck).toFixed(2));
 				$scope.userCash = $scope.getClosingDtls[0].closeCash;
 				$scope.userDebit = $scope.getClosingDtls[0].closeCredit;
 				$scope.userDebitCard = $scope.getClosingDtls[0].closeDebit;
-				$scope.totalSys = parseFloat($scope.getClosingDtls[0].reportTotalAmount).toFixed(2);
+				$scope.totalSys = parseFloat(parseFloat($scope.getClosingDtls[0].reportTotalAmount).toFixed(2));
 				$scope.registerId = $scope.getClosingDtls[0].registerId;
 				$scope.totalUser = $scope.getClosingDtls[0].closeTotalAmount;
 				$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
-				$scope.difCash = $scope.getClosingDtls[0].differenceCash;
-				$scope.difDebit = $scope.getClosingDtls[0].differenceCredit;
-				$scope.difDebitCard = $scope.getClosingDtls[0].differenceDebit;
-				$scope.totalDiff = $scope.getClosingDtls[0].totalDifference;
-				$scope.totalProfit = $scope.getClosingDtls[0].totalProfit;
-				$scope.totalDisc = $scope.getClosingDtls[0].totalDiscount;
-				$scope.totalTax = $scope.getClosingDtls[0].totalTax;
-				$scope.totalMarkup = $scope.getClosingDtls[0].totalMarkup;
-				$scope.totalBusinessAmount = $scope.getClosingDtls[0].totalBusinessAmount;
+				$scope.difCash = parseFloat(parseFloat($scope.getClosingDtls[0].differenceCash).toFixed(2));
+				$scope.difDebit = parseFloat(parseFloat($scope.getClosingDtls[0].differenceCredit).toFixed(2));
+				$scope.difDebitCard = parseFloat(parseFloat($scope.getClosingDtls[0].differenceDebit).toFixed(2));
+				$scope.totalDiff = parseFloat(parseFloat($scope.getClosingDtls[0].totalDifference).toFixed(2));
+				$scope.totalProfit = parseFloat(parseFloat($scope.getClosingDtls[0].totalProfit).toFixed(2));
+				$scope.totalDisc = parseFloat(parseFloat($scope.getClosingDtls[0].totalDiscount).toFixed(2));
+				$scope.totalTax = parseFloat(parseFloat($scope.getClosingDtls[0].totalTax).toFixed(2));
+				$scope.totalMarkup = parseFloat(parseFloat($scope.getClosingDtls[0].totalMarkup).toFixed(2));
+				$scope.totalBusinessAmount = parseFloat(parseFloat($scope.getClosingDtls[0].totalBusinessAmount).toFixed(2));
 				$scope.netSales = parseFloat($scope.userCash)
 					+ parseFloat($scope.userDebit)
 					+ parseFloat($scope.userDebitCard)
@@ -185,11 +185,13 @@
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)
 				+parseFloat($scope.bankDeposit);
-			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
+			$scope.totalUser = parseFloat(parseFloat($scope.totalUser).toFixed(2));
 			$scope.difDebit = parseFloat($scope.userDebit)
 				- parseFloat($scope.systemDebit);
+			$scope.difDebit = parseFloat(parseFloat($scope.difDebit).toFixed(2));
 			$scope.totalDiff = parseFloat($scope.totalUser)
 				- parseFloat($scope.totalSys)
+			$scope.totalDiff = parseFloat(parseFloat($scope.totalDiff).toFixed(2));
 			if ($scope.difDebit > 0)
 				$scope.debitColor = 'green';
 			else if ($scope.difDebit < 0)
@@ -225,7 +227,8 @@
 			$scope.difDebitCard = parseFloat($scope.userDebitCard)
 				- parseFloat($scope.systemDebitCard);
 			$scope.totalDiff = parseFloat($scope.totalUser)
-				- parseFloat($scope.totalSys)
+				- parseFloat($scope.totalSys);
+			$scope.totalDiff = parseFloat(parseFloat($scope.totalDiff).toFixed(2));
 			if ($scope.difDebitCard > 0)
 				$scope.debitColor = 'green';
 			else if ($scope.difDebitCard < 0)
@@ -261,6 +264,7 @@
 				- parseFloat($scope.systemCash);
 			$scope.totalDiff = parseFloat($scope.totalUser)
 				- parseFloat($scope.totalSys);
+			$scope.totalDiff = parseFloat(parseFloat($scope.totalDiff).toFixed(2));
 			$scope.cashHand= parseFloat($scope.userCash) - parseFloat($scope.bankDeposit);
 			if ($scope.difCash > 0)
 				$scope.cashColor = 'green';

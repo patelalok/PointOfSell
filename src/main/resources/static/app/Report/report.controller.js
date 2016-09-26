@@ -236,7 +236,7 @@
 			for(var i=0;i<response.commonInventoryDtos.length;i++)
 			{
 				$scope.inventorySummary.push({
-					"commonName": response.commonInventoryDtos[i].commanName,
+					"commonName": response.commonInventoryDtos[i].commonName,
 					"noOfProducts": Number(parseFloat(response.commonInventoryDtos[i].noOfProducts)).toFixed(2),
 					"cost": Number(parseFloat(response.commonInventoryDtos[i].cost)).toFixed(2),
 					"retail": Number(parseFloat(response.commonInventoryDtos[i].retail)).toFixed(2),

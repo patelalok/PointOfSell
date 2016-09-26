@@ -617,7 +617,7 @@
 					+ parseFloat($rootScope.testData[i].quantity);
 				$rootScope.subTotal = parseFloat($rootScope.subTotal)
 					+ parseFloat($rootScope.testData[i].total);
-				if($rootScope.selectTax=='default')
+				if(GlobalVariable.selectTax=='default')
 				{
 					$rootScope.totalProductPriceAfterTax = parseFloat($rootScope.totalProductPriceAfterTax)+
 						parseFloat($rootScope.testData[i].totalWithTax);
@@ -654,7 +654,7 @@
 			// if ($scope.productTotalWithoutTax == 'NaN') {
 			// 	$scope.productTotalWithoutTax = 0;
 			// }
-			GlobalVariable.selectedTaxDrp = $rootScope.selectTax;
+			GlobalVariable.selectedTaxDrp = GlobalVariable.selectTax;
 
 			// if ($rootScope.selectTax == undefined)
 			// 	$scope.totalTax = 0;
@@ -761,11 +761,11 @@
 					GlobalVariable.customerFound = true;
 					GlobalVariable.custTypeCd = GlobalVariable.getCustomerDtls[i].customerType;
 					if (GlobalVariable.custTypeCd == 'Business') {
-						$rootScope.selectTax = 'noTax';
+						GlobalVariable.selectTax = 'noTax';
 						GlobalVariable.selectedTaxDrp = 'noTax';
 					}
 					else if (GlobalVariable.custTypeCd == 'Retail') {
-						$rootScope.selectTax = 'default';
+						GlobalVariable.selectTax = 'default';
 						GlobalVariable.selectedTaxDrp = 'default';
 					}
 
@@ -817,11 +817,11 @@
 						'application/json', 'application/json');
 					GlobalVariable.custTypeCd = GlobalVariable.getCustomerDtls[i].customerType;
 					if (GlobalVariable.custTypeCd == 'Business') {
-						$rootScope.selectTax = 'noTax';
+						GlobalVariable.selectTax = 'noTax';
 						GlobalVariable.selectedTaxDrp = 'noTax';
 					}
 					else if (GlobalVariable.custTypeCd == 'Retail') {
-						$rootScope.selectTax = 'default';
+						GlobalVariable.selectTax = 'default';
 						GlobalVariable.selectedTaxDrp = 'default';
 					}
 					break;
@@ -848,11 +848,11 @@
 				GlobalVariable.userFName != undefined)
 			{
 				if (GlobalVariable.custTypeCd == 'Business') {
-					$rootScope.selectTax = 'noTax';
+					GlobalVariable.selectTax = 'noTax';
 					GlobalVariable.selectedTaxDrp = 'noTax';
 				}
 				else if (GlobalVariable.custTypeCd == 'Retail') {
-					$rootScope.selectTax = 'default';
+					GlobalVariable.selectTax = 'default';
 					GlobalVariable.selectedTaxDrp = 'default';
 				}
 				GlobalVariable.customerFound = true;
@@ -901,7 +901,7 @@
 		function onGetTaxSuccess(response) {
 			$scope.totalDefaultTax = response[0].tax;
 
-			$rootScope.selectTax = "default";
+			GlobalVariable.selectTax = "default";
 			$scope.loadCheckOutData();
 		}
 		$scope.clearValue = function(value)
@@ -912,7 +912,7 @@
 				GlobalVariable.customerNameOnSearch = '';
 				$rootScope.customerPhone = '';
 				GlobalVariable.customerFound=false;
-				$rootScope.selectTax = "default";
+				GlobalVariable.selectTax = "default";
 				GlobalVariable.selectedTaxDrp = "default";
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';
@@ -934,7 +934,7 @@
 				GlobalVariable.customerNameOnSearch = '';
 				$rootScope.customerPhone = '';
 				GlobalVariable.customerFound=false;
-				$rootScope.selectTax = "default";
+				GlobalVariable.selectTax = "default";
 				GlobalVariable.selectedTaxDrp = "default";
 				GlobalVariable.userPhone = '' ;
 				GlobalVariable.userFName = '';

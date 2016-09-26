@@ -179,7 +179,7 @@
 				);
 			}
 
-			GlobalVariable.isPrintPage = true;
+			//GlobalVariable.isPrintPage = true;
 			if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
 			{
 
@@ -194,11 +194,20 @@
 				$scope.printCompany =GlobalVariable.receiptData[0].customerDtosList[0].companyName;
 
 			}
-			
-			$timeout(function() {
-				$window.print();
+
+			if(GlobalVariable.showRcptType == 'A4') {
+				GlobalVariable.isPrintPage = true;
+				$timeout(function () {
+					$window.print();
+					GlobalVariable.isPrintPage = false;
+				}, 2000);
+			}
+			else if(GlobalVariable.showRcptType == 'Thermal')
+			{
 				GlobalVariable.isPrintPage = false;
-			}, 2000);
+				$window.open(GlobalConstants.URLCONSTANTS+'getReceiptDetailsForThermalPrint?receiptId=10'
+					,'_blank');
+			}
 			
 		}
 		function getPrintErrorHandler(response)
