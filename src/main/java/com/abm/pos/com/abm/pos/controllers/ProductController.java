@@ -142,9 +142,9 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/deleteImei", method = RequestMethod.POST)
-    public void deleteImei(@RequestParam String phoneId, @RequestParam String productNo) {
+    public void deleteImei(@RequestParam String phoneId, @RequestParam String productId) {
 
-        productManager.deleteImei(phoneId,productNo);
+        productManager.deleteImei(phoneId,productId);
     }
 
 

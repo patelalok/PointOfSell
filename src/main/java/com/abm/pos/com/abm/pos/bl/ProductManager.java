@@ -649,7 +649,7 @@ public class ProductManager
     }
 
 
-    public void deleteImei(String phoneId, String productNo) {
+    public void deleteImei(String phoneId, String productId) {
 
     try
     {
@@ -657,13 +657,13 @@ public class ProductManager
 
 
 
-        String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {productNo}, String.class);
+        String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {productId}, String.class);
 
         //Getting product id because i am doing safe operation so i need product id that why getting product id
-        int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] {productNo}, Integer.class);
+       // int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] {productNo}, Integer.class);
 
         if(null != quantity)
-        {
+        {//
             int phoneQuantity = Integer.parseInt(quantity);
             //Updating the stock of the phone in product table.
             jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, phoneQuantity - 1, productId);
