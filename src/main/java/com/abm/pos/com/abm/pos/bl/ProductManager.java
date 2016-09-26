@@ -515,10 +515,10 @@ public class ProductManager
                     phoneDto.getMarkup(),
                     phoneDto.getLastUpdatedTimeStamp());
 
-            //Handling phone update here first geting the current quantity for that phone from product table
+            //Handling phone update here first getting the current quantity for that phone from product table
           String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {phoneDto.getProductNo()}, String.class);
 
-            //Getting product id bacuse i a doing safe operation so i need product id that why getting product id
+            //Getting product id because i am doing safe operation so i need product id that why getting product id
             int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] { phoneDto.getProductNo()}, Integer.class);
 
             if(null != quantity)
@@ -649,12 +649,25 @@ public class ProductManager
     }
 
 
-    public void deleteImei(String phoneId) {
+    public void deleteImei(String phoneId, String productNo) {
 
     try
     {
         jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, phoneId);
 
+
+
+        String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {productNo}, String.class);
+
+        //Getting product id because i am doing safe operation so i need product id that why getting product id
+        int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] {productNo}, Integer.class);
+
+        if(null != quantity)
+        {
+            int phoneQuantity = Integer.parseInt(quantity);
+            //Updating the stock of the phone in product table.
+            jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, phoneQuantity - 1, productId);
+        }
         System.out.println("Imei No delete successfully" + phoneId);
     }
     catch (Exception e)
