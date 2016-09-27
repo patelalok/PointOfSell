@@ -26,6 +26,10 @@ public class MultyAddProductDto {
     private String tax;
     private int stock;
 
+
+    //Delete it when you done with nur bhai.
+    private double testProductNo;
+
     private int quantityForSell;
 
     public String getAltNo() {
@@ -202,5 +206,13 @@ public class MultyAddProductDto {
 
     public void setVendorName(String vendorName) {
         this.vendorName = vendorName;
+    }
+
+    public double getTestProductNo() {
+        return testProductNo;
+    }
+
+    public void setTestProductNo(double testProductNo) {
+        this.testProductNo = testProductNo;
     }
 }

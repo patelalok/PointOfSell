@@ -766,6 +766,7 @@ public class SQLQueries {
     public String getCustomerBalanceByDate = "SELECT sum(BALANCE) CUSTOMERBALANCE FROM CUSTOMER WHERE BALANCE_LAST_UPDATE_DATE BETWEEN ? AND ? ";
     public String EditPhoneDetailsFromPhoneTable = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?, MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
     public String getPhoneStockFromProductTable = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_NO = ?";
+    public String getPhoneStockFromProductTableForDelete = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_ID = ?";
     public String addPhoneStockToProductTable = "UPDATE PRODUCT SET QUANTITY = ? WHERE PRODUCT_ID = ?";
     public String getProductId = "SELECT PRODUCT_ID FROM PRODUCT WHERE PRODUCT_NO = ?";
     public String deleteImeiDetailsFromPhone = "DELETE FROM PHONE WHERE ID = ? ";

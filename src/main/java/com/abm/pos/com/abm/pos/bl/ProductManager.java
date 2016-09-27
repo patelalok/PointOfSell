@@ -516,24 +516,24 @@ public class ProductManager
                     phoneDto.getLastUpdatedTimeStamp());
 
             //Handling phone update here first getting the current quantity for that phone from product table
-          String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {phoneDto.getProductNo()}, String.class);
+          int quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {phoneDto.getProductNo()}, Integer.class);
 
             //Getting product id because i am doing safe operation so i need product id that why getting product id
             int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] { phoneDto.getProductNo()}, Integer.class);
 
-            if(null != quantity)
-            {
+//            if(null != quantity)
+//            {
                 System.out.println("This phone has Already some quantity");
-                int phoneQuantity = Integer.parseInt(quantity);
+                //int phoneQuantity = Integer.parseInt(quantity);
                 //Updating the stock of the phone in product table.
-                jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, phoneQuantity + 1, productId);
-            }
-            else
-            {
-                System.out.println("Adding stock first time for this phone");
-                jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, 1 , productId);
-            }
-
+                jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, quantity + 1, productId);
+//            }
+//            else
+//            {
+//                System.out.println("Adding stock first time for this phone");
+//                jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, 1 , productId);
+//            }
+//
 
 
         }
@@ -657,17 +657,16 @@ public class ProductManager
 
 
 
-        String quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTable, new Object[] {productId}, String.class);
+        int quantity = jdbcTemplate.queryForObject(sqlQuery.getPhoneStockFromProductTableForDelete, new Object[] {productId}, Integer.class);
 
         //Getting product id because i am doing safe operation so i need product id that why getting product id
        // int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[] {productNo}, Integer.class);
 
-        if(null != quantity)
-        {//
-            int phoneQuantity = Integer.parseInt(quantity);
+
+           // int phoneQuantity = Integer.parseInt(quantity);
             //Updating the stock of the phone in product table.
-            jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, phoneQuantity - 1, productId);
-        }
+            jdbcTemplate.update(sqlQuery.addPhoneStockToProductTable, quantity - 1, productId);
+
         System.out.println("Imei No delete successfully" + phoneId);
     }
     catch (Exception e)
