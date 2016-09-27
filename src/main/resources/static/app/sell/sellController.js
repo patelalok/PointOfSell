@@ -109,7 +109,7 @@
 					if(GlobalVariable.sellIMEINumber == response[i].imeiNo)
 					{
 						$scope.IMEIProdctFound = true;
-						if(GlobalVariable.getProducts[i].addTax == true)
+						if(response[i].addTax == true)
 						{
 							var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
 								.toFixed(2);
