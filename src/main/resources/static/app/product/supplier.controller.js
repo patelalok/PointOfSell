@@ -80,18 +80,24 @@ $rootScope.closeBootstrapAlert = function()
 				var url=GlobalConstants.URLCONSTANTS+'deleteCategory?categoryId='+$scope.deleteCategoryrId;
 				var request = {};
 				request=JSON.stringify(request);
-				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
+				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/text");
 			}
 		};
 		function deleteSuccessHandler(response)
 		{
 			console.log(response);
-			getProductDetails.getCategoryDetails($scope.getCtDetails);
+			modalService.showModal('', '', response, $scope.callBackDeleteAction1);
 		}
 		function deleteErrorHandler(response)
 		{
 			console.log(response);
+			modalService.showModal('', '', response, $scope.callBackDeleteAction1);
 		}
+		$scope.callBackDeleteAction1 = function()
+		{
+
+			getProductDetails.getCategoryDetails($scope.getCtDetails);
+		};
 		$scope.getCtDetails = function(response)
 		{
 

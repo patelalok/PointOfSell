@@ -85,18 +85,25 @@ $rootScope.closeBootstrapAlert = function()
 				var request = {};
 				request=JSON.stringify(request);
 
-				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
+				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/text");
 			}
 		};
 		function deleteSuccessHandler(response)
 		{
 			console.log(response);
-			getProductDetails.getCategoryDetails($scope.getVDetails);
+			modalService.showModal('', '', response, $scope.callBackDeleteAction1);
+
 		}
 		function deleteErrorHandler(response)
 		{
 			console.log(response);
+			modalService.showModal('', '', response, $scope.callBackDeleteAction1);
 		}
+		$scope.callBackDeleteAction1 = function()
+		{
+
+			getProductDetails.getCategoryDetails($scope.getVDetails);
+		};
 		$scope.getVDetails = function(response)
 		{
 

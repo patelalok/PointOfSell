@@ -387,9 +387,10 @@
 			getProductDetails.getProductDetail();
 		};
 
-		$scope.deleteIMEI = function(phoneId)
+		$scope.deleteIMEI = function(phoneId,prodId)
 		{
 			$scope.deletePhoneId = phoneId;
+			$scope.deleteProductId = prodId;
 			modalService.showModal('', {
 				isCancel : true
 			}, "Are you Sure Want to Delete ? ", $scope.callBackDelete);
@@ -399,7 +400,7 @@
 		{
 			if(isOKClicked)
 			{
-				var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+$scope.deletePhoneId;
+				var url=GlobalConstants.URLCONSTANTS+'deleteImei?phoneId='+$scope.deletePhoneId+'&productId='+$scope.deleteProductId;
 				dataService.Post(url,'',onDeleteIMEISucess,onDelteIMEIError,'application/json','application/json');
 			}
 		};

@@ -82,13 +82,14 @@
 				var request = {};
 				request=JSON.stringify(request);
 
-				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/json");
+				dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/text");
 			}
 		};
 		function deleteSuccessHandler(response)
 		{
 			console.log(response);
-			getProductDetails.getCategoryDetails($scope.getBDetails);
+			modalService.showModal('', '', response, $scope.callBackDeleteAction1);
+
 
 		}
 		$scope.getBDetails = function(response)
@@ -96,9 +97,15 @@
 
 			GlobalVariable.getBrands = response;
 		};
+		$scope.callBackDeleteAction1 = function()
+		{
+
+			getProductDetails.getCategoryDetails($scope.getBDetails);
+		};
 		function deleteErrorHandler(response)
 		{
 			console.log(response);
+			modalService.showModal('', '', response, $scope.callBackDeleteAction1);
 		}
 		function render()
 		{

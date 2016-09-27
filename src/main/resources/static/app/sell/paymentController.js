@@ -267,8 +267,8 @@
 			if(GlobalVariable.printReceiptTrans == true)
 			{
 				getStoreAddress();
-				var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
-				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+
+
 
 			}
 
@@ -285,6 +285,21 @@
 		{
 			GlobalVariable.storeAddress = response[0].storeAddress;
 			GlobalVariable.footerReceipt = response[0].footerReceipt;
+			if((response[0].receiptType).toString() == "0")
+				GlobalVariable.showRcptType = 'A4';
+			else if((response[0].receiptType).toString() == "1")
+				GlobalVariable.showRcptType = 'Thermal';
+
+			if(GlobalVariable.showRcptType == 'Thermal')
+			{
+				$window.open(GlobalConstants.URLCONSTANTS+'getReceiptDetailsForThermalPrint?receiptId='+GlobalVariable.transactionCompletedId
+					,'_blank');
+			}
+			else
+			{
+				var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
+				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+			}
 		}
 		function onStoreError(error)
 		{
@@ -339,19 +354,19 @@
 				}
 			}
 
-		if(GlobalVariable.showRcptType == 'A4') {
+		//if(GlobalVariable.showRcptType == 'A4') {
 			GlobalVariable.isPrintPage = true;
 			$timeout(function () {
 				$window.print();
 				GlobalVariable.isPrintPage = false;
 			}, 2000);
-		}
-		else if(GlobalVariable.showRcptType == 'Thermal')
+		//}
+		/*else if(GlobalVariable.showRcptType == 'Thermal')
 		{
 			GlobalVariable.isPrintPage = false;
 			$window.open(GlobalConstants.URLCONSTANTS+'getReceiptDetailsForThermalPrint?receiptId=10'
 		,'_blank');
-		}
+		}*/
 
 		}
 		function getPrintErrorHandler(response)
