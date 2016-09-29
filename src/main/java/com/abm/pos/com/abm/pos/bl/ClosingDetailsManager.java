@@ -45,11 +45,6 @@ public class ClosingDetailsManager {
 
     public static final String FONT = "resources/fonts/OpenSans-Regular.ttf";
     public static final String FONTB = "resources/fonts/OpenSans-Bold.ttf";
-    protected Font font10;
-    protected Font font10b;
-    protected Font font12;
-    protected Font font12b;
-    protected Font font14;
 
     public void addClosingDetailsToDB(ClosingDetailsDto closingDetailsDto) {
 
@@ -83,7 +78,8 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getTotalMarkup(),
                         closingDetailsDto.getBankDeposit(),
                         closingDetailsDto.getCommission(),
-                        closingDetailsDto.getCustomerBalance());
+                        closingDetailsDto.getCustomerBalance(),
+                        closingDetailsDto.getCashInHand());
 
                 System.out.println("Closing Details Added Successfully");
             } else {
@@ -113,6 +109,7 @@ public class ClosingDetailsManager {
                         closingDetailsDto.getBankDeposit(),
                         closingDetailsDto.getCommission(),
                         closingDetailsDto.getCustomerBalance(),
+                        closingDetailsDto.getCashInHand(),
                         closingDetailsDto.getRegisterId());
 
                 System.out.println("Closing Details Edited Successfully");
@@ -132,9 +129,6 @@ public class ClosingDetailsManager {
         // I NEED TO CHANGE CLOSING DETAISL TO OBJECT INSTADE OF ARRY LIST CAUSE IT DOESNT MAKE ANY SENSE.
 
         try {
-
-            //GETTING CURRENT DATE
-
             dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate, endDate);
             //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOSE NOT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
@@ -283,6 +277,7 @@ public class ClosingDetailsManager {
             closingDto.setTotalMarkup(rs.getDouble("TOTAL_MARKUP"));
             closingDto.setBankDeposit(rs.getDouble("BANKDEPOSIT"));
             closingDto.setCommission(rs.getDouble("COMISSION"));
+            closingDto.setCashInHand(rs.getDouble("CASH_IN_HAND"));
 
             return closingDto;
         }

@@ -182,7 +182,8 @@ public class UserManager {
                 jdbcTemplate.update(sqlQuery.addUserClockIn,
                         userClockIn.getUsername(),
                         userClockIn.getClockInTime(),
-                        userClockIn.getDate());
+                        userClockIn.getDate(),
+                        userLogin.getUserId());
 
                 response = true;
                 System.out.println("User Clocked in Successfully");
@@ -248,13 +249,14 @@ public class UserManager {
     }
 
 
-    public List<UserClockInDto> getUserClockInForSetup(String username, String startDate, String endDate) {
+    public List<UserClockInDto> getUserClockInForSetup(String userId, String startDate, String endDate) {
 
         List<UserClockInDto> userClockInDtoList = new ArrayList<>();
 
         try
-        {                                                              //Ui need to send as time stams other wise wont work.
-            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate);
+        {
+            //Need to change the hard coded value after ui send the userid insetd of user name
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate,2);
 
         }
         catch (Exception e)
@@ -279,7 +281,7 @@ public class UserManager {
             user.setClockInTime(rs.getString("CLOCK_IN"));
             user.setClockOutTime(rs.getString("CLOCK_OUT"));
             user.setNoOfhours(rs.getString("NOOFHOURS"));
-            user.setDate(rs.getString("DATE"));
+            user.setDate(rs.getString("CLOCK_DATE"));
 
 
             //This User commission when user sale products user  will get defined percentage of profit amount set by the admin.
