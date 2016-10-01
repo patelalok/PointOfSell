@@ -74,7 +74,7 @@
 		{
 			/*var start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
 			var end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";*/
-			var url =GlobalConstants.URLCONSTANTS+'getUserClockInForSetup?username='+sessionStorage.userLoggedName+'&startDate='+start+'&endDate='+end;
+			var url =GlobalConstants.URLCONSTANTS+'getUserClockInForSetup?username='+sessionStorage.userId+'&startDate='+start+'&endDate='+end;
 			dataService.Get(url,geClockHistorySuccessHandler,getClockHistroyErrorHandler,"application/json","application/json");
 			
 		}
