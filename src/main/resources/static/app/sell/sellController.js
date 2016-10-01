@@ -30,15 +30,6 @@
 		$scope.firstNames = [];
 
 		$scope.addRow = function() {
-
-			/*
-			 * $rootScope.testData.push({"itemNo":Math.round((Math.random() *
-			 * 10) * 10), "item":"check", "quantity":89, "retail":"test",
-			 * "discount":20, "total":20.00, "stock":5, "costPrice":"12.90"});
-			 *
-			 * $scope.loadCheckOutData();
-			 */
-			//GlobalVariable.addProductClicked= true;
 			GlobalVariable.editProduct = false;
 			$state.go('product');
 		};
@@ -50,39 +41,12 @@
 			modalService.showModal('', {
 				isCancel : true
 			}, "Are you Sure Want to Delete ? ", $scope.callBackAction);
-			/*
-			 * var index = -1; var comArr = eval( $rootScope.testData ); for(
-			 * var i = 0; i < comArr.length; i++ ) { if( comArr[i].itemNo ===
-			 * itemNo ) { index = i; break; } } if( index === -1 ) { alert(
-			 * "Something gone wrong" ); } $rootScope.testData.splice( index, 1 );
-			 */
+
 		};
 		$scope.callBackAction = function(isOKClicked) {
 
 			if (isOKClicked) {
-				/*var index = -1;
-				 var comArr = eval($rootScope.testData);
-				 for (var i = 0; i < comArr.length; i++) {
-				 if (comArr[i].itemId === GlobalVariable.itemNoToDelete) {
-
-				 comArr[i].quantity = 20;
-				 index = i;
-				 break;
-				 }
-				 }
-				 if (index === -1) {
-				 alert("Something gone wrong");
-				 }*/
 				$rootScope.testData.splice($scope.deleteIndex, 1);
-				/*
-				 * $rootScope.testData.splice(index,0,{"itemNo":GlobalVariable.editValues.itemNo,
-				 * "item":GlobalVariable.editValues.item, "quantity":12,
-				 * "retail":GlobalVariable.editValues.retail,
-				 * "discount":GlobalVariable.editValues.discount, "total":
-				 * GlobalVariable.editValues.total,
-				 * "stock":GlobalVariable.editValues.stock,
-				 * "costPrice":GlobalVariable.editValues.costPrice});
-				 */
 				$scope.loadCheckOutData();
 			}
 		}
