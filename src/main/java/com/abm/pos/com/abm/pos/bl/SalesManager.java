@@ -630,7 +630,7 @@ public class SalesManager {
                 beginPage = false;
                 generateLayout(document, cb);
                 generateHeader(document, cb);
-                y = 645;
+                y = 680;
             }
             generateDetail(document, cb, i, y, receiptDtos);
             y = y - 15;
@@ -654,39 +654,31 @@ public class SalesManager {
 
 
 
-        cb.rectangle(150, 50, 250, 650);
-        cb.rectangle(150, 50, 250, 630);
-        cb.moveTo(150, 655);
-        cb.lineTo(400, 655);
-        cb.stroke();
+//        cb.rectangle(150, 50, 250, 650);
+//        cb.rectangle(150, 50, 250, 630);
+//        cb.moveTo(150, 655);
+//        cb.lineTo(400, 655);
+//        cb.stroke();
 
-            createHeadings(cb, 153, 685, "Date:" + " " + "2016-12-12");
-            createHeadings(cb, 225, 685, "Time:" + " " + "23:59:59");
-            createHeadings(cb, 295, 685, "CSR:" + " " + "Alok");
-            createHeadings(cb, 345, 685, "Sale Id:" + " " + 100);
+//            createHeadings(cb, 1, 685, "Date:" + " " + "2016-12-12");
+//            createHeadings(cb, 72, 685, "Time:" + " " + "23:59:59");
+//            createHeadings(cb, 142, 685, "CSR:" + " " + "Alok");
+//            createHeadings(cb, 192, 685, "Sale Id:" + " " + 100);
+//
+//
+//            createHeadings(cb, 1, 665, "Item Number");
+//            createHeadings(cb, 72, 665, "Item Description");
+//            createHeadings(cb,215 , 665, "Price");
 
-
-            createHeadings(cb, 153, 665, "Item Number");
-            createHeadings(cb, 225, 665, "Item Description");
-            createHeadings(cb, 370, 665, "Price");
-
-
-        cb.rectangle(150, 50, 250, 650);
-        cb.rectangle(150, 50, 250, 630);
-        cb.moveTo(150, 655);
-        cb.lineTo(400, 655);
-        cb.stroke();
+//
+//        cb.rectangle(150, 50, 250, 650);
+//        cb.rectangle(150, 50, 250, 630);
+//        cb.moveTo(150, 655);
+//        cb.lineTo(400, 655);
+//        cb.stroke();
 
             createContent(cb,48,400,String.valueOf(1),PdfContentByte.ALIGN_RIGHT);
 
-
-
-            createHeadings(cb, 153, 665, "Item Number");
-            createHeadings(cb, 225, 665, "Item Description");
-            createHeadings(cb, 370, 665, "Price");
-
-
-            //document.add(new Paragraph("Test page"));
             document.close();
 
             byte[] pdfDataBytes = byteArrayOutputStream.toByteArray();
@@ -716,10 +708,10 @@ public class SalesManager {
 
             // Invoice Detail box layout
 
-            cb.rectangle(150, 50, 250, 650);
-            cb.rectangle(150, 50, 250, 630);
-            cb.moveTo(150, 655);
-            cb.lineTo(400, 655);
+            cb.rectangle(1, 50, 250, 690);
+            cb.rectangle(1, 50, 250, 670);
+            cb.moveTo(1, 695);
+            cb.lineTo(251, 695);
 
 //            cb.moveTo(50,50);
 //            cb.lineTo(50,650);
@@ -734,15 +726,15 @@ public class SalesManager {
             // Invoice Detail box Text Headings
 
 
-            createHeadings(cb, 153, 685, "Date:" + " " + "2016-12-12");
-            createHeadings(cb, 225, 685, "Time:" + " " + "23:59:59");
-            createHeadings(cb, 295, 685, "CSR:" + " " + "Alok");
-            createHeadings(cb, 345, 685, "Sale Id:" + " " + 100);
+            createHeadings(cb, 1, 725, "Date:" + " " + "2016-12-12");
+            createHeadings(cb, 72, 725, "Time:" + " " + "23:59:59");
+            createHeadings(cb, 142, 725, "CSR:" + " " + "Alok");
+            createHeadings(cb, 192, 725, "Sale Id:" + " " + 100);
 //
 //
-            createHeadings(cb, 153, 665, "Item Number");
-            createHeadings(cb, 225, 665, "Item Description");
-            createHeadings(cb, 370, 665, "Price");
+            createHeadings(cb, 1, 703, "Item Number");
+            createHeadings(cb, 72, 703, "Item Description");
+            createHeadings(cb, 215, 703, "Price");
 
 
         } catch (Exception ex) {
@@ -766,11 +758,11 @@ public class SalesManager {
 
         try {
 
-            createStoreNameHeadings(cb, 197, 750, "Map Wireless World Inc");
-            createHeadings(cb, 238, 740, "926 Montreal Road");
-            createHeadings(cb, 255, 730, "Suite-16");
-            createHeadings(cb, 238, 720, "Clarkston, GA 30021");
-            createHeadings(cb, 250, 710, "470-428-4284");
+            createStoreNameHeadings(cb, 1, 815, "Map Wireless World Inc");//197
+            createHeadings(cb, 41, 805, "926 Montreal Road");//238
+            createHeadings(cb, 58, 795, "Suite-16");//255
+            createHeadings(cb, 41, 785, "Clarkston, GA 30021");//238
+            createHeadings(cb, 53, 775, "470-428-4284");//250
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -783,9 +775,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb, 153, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 225, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 390, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
+            createContent(cb, 1, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 73, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 238, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -798,9 +790,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb, 297, y - 30, "Sub Total" + "                  " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 297, y - 45, "Tax" + " " + "7%" + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 297, y - 60, "Total" + "   " + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 155, y - 30, "Sub Total" + "                  " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 155, y - 45, "Tax" + " " + "7%" + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 155, y - 60, "Total" + "   " + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
