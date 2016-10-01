@@ -100,7 +100,7 @@
 		$scope.callBackDeleteAction1 = function()
 		{
 
-			getProductDetails.getCategoryDetails($scope.getBDetails);
+			getProductDetails.getBrandDetails($scope.getBDetails);
 		};
 		function deleteErrorHandler(response)
 		{

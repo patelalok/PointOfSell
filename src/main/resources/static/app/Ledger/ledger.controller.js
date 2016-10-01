@@ -169,7 +169,7 @@
 					,'_blank');
 			}
 			else {
-				var url = GlobalConstants.URLCONSTANTS + "getReceiptDetails?receiptId=" + id;
+				var url = GlobalConstants.URLCONSTANTS + "getReceiptDetails?receiptId=" + $scope.printLedgId;
 				dataService.Get(url, getPrintSuccessHandler, getPrintErrorHandler, "application/json", "application/json");
 			}
 		}

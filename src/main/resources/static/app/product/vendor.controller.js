@@ -102,7 +102,7 @@ $rootScope.closeBootstrapAlert = function()
 		$scope.callBackDeleteAction1 = function()
 		{
 
-			getProductDetails.getCategoryDetails($scope.getVDetails);
+			getProductDetails.getVendorDetails($scope.getVDetails);
 		};
 		$scope.getVDetails = function(response)
 		{
