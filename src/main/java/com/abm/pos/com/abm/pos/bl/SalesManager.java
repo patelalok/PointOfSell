@@ -408,6 +408,27 @@ public class SalesManager {
 
                     jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, productId);
 
+                    //Here I am checking is this phone return or not and if yes then i need to add that phone back to inventory.
+                    if(transactionLineItemDto1.getPhoneId() != 0 && (transactionLineItemDto1.getTransactionStatus().equals("r") || transactionLineItemDto1.getTransactionStatus().equals("p")))
+                    {
+                        try
+                        {
+                            jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
+                                    transactionLineItemDto1.getProductNumber(),
+                                    transactionLineItemDto1.getImeiNo(),
+                                    transactionLineItemDto1.getCost(),
+                                    transactionLineItemDto1.getRetail(),
+                                    0,
+                                    transactionLineItemDto1.getTransactionDate());
+                        System.out.println("This is Phone Return");
+                    }
+                    catch (Exception e)
+                    {
+                        System.out.println(e);
+                    }
+
+                    }
+
                     ps.setDouble(6, transactionLineItemDto1.getRetail());
                     ps.setDouble(7, transactionLineItemDto1.getCost());
                     ps.setDouble(8, transactionLineItemDto1.getDiscount());
@@ -417,8 +438,9 @@ public class SalesManager {
                     ps.setDouble(12, transactionLineItemDto1.getTotalProductPriceWithTax());
                     ps.setString(13, transactionLineItemDto1.getImeiNo());
 
-                    //Checking is this product is phone,  product has phone id or not if yes then that means this is phone sale so i need to remove IMEI No form Phone Table.
-                    if (transactionLineItemDto1.getPhoneId() != 0) {
+                    //Checking is this product is phone,  product has phone id or not if yes then that means this is phone sale so i need to remove IMEI No form Phone Table
+                    // And also need to check that it should be complete transaction not a return thats why i am checking the status FLAG.
+                    if (transactionLineItemDto1.getPhoneId() != 0 && transactionLineItemDto1.getTransactionStatus().equals("c")) {
                         jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getPhoneId());
                         System.out.println("This is phone sale: Delete IMEI Successfully!!" + transactionLineItemDto1.getImeiNo());
                     }
@@ -440,68 +462,12 @@ public class SalesManager {
     public void ediTransactionLineItemToDB(List<TransactionLineItemDto> transactionLineItemDto, String previousTransId) {
 
         try {
-
-            //Checking if transaction return is complete or partial
-            // boolean isCompleteReturn = checkReturn(transactionLineItemDto);
-
-            //if there previousTransId = null means this is new transaction no return invovled in this.
-            /*if (null == previousTransId) {
-
-                if (null != transactionLineItemDto) {
-                    addTransactionLineItemToDB(transactionLineItemDto);
-                } else {
-                    System.out.println("transactionLineItemDto is null");
-                }
-
-            }*/
-            //If the previousTransId != null then this is return.
-
-            List<TransactionLineItemDto> lineItemDtoList1 = new ArrayList<>();
-
-
-            //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity in product.
-            lineItemDtoList1 = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), previousTransId);
-
             //Here I am just adding transaction lineitem from the regulat add lineitem call and ui gonna send me quantity negative and i am doing
             //Subtraction so it will become positive and added to the stock.
 
             if(null != transactionLineItemDto) {
                 addTransactionLineItemToDB(transactionLineItemDto);
             }
-
-//NEED TO COMMENT THIS CODE ONCE TESTED WITH UI.
-           /* for (int j = 0; j < lineItemDtoList1.size(); j++) {
-                System.out.println(lineItemDtoList1.get(j).getProductNumber());
-                System.out.println(lineItemDtoList1.get(j).getQuantity());
-
-                int productQuantity = 0;
-
-                int productQuantity1 = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]
-                        {lineItemDtoList1.get(j).getProductNumber()}, Integer.class);
-
-                productQuantity = productQuantity1 + lineItemDtoList1.get(j).getQuantity();
-
-                System.out.println(productQuantity);
-
-                jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, lineItemDtoList1.get(j).getProductNumber());
-
-                System.out.println("Porduct Quantity updated successfully");
-            }
-
-
-            for (int i = 0; i < lineItemDtoList1.size(); i++) {
-                System.out.println(lineItemDtoList1.get(i).getTransactionLineItemId());
-                jdbcTemplate.update(sqlQuery.updateLineItemDetailsStatus, lineItemDtoList1.get(i).getTransactionLineItemId());
-            }
-
-            //This means this is partial return so i am adding partial return to the line item table
-            if (null != transactionLineItemDto) {
-                addTransactionLineItemToDB(transactionLineItemDto);
-                System.out.println("Added partially Transaction Line itemreturned items successfully");
-            } else {
-                System.out.println("This was complete line item return");
-            }*/
-
 
         } catch (Exception e)
 
@@ -511,24 +477,6 @@ public class SalesManager {
 
 
     }
-
-    private boolean checkReturn(List<TransactionLineItemDto> transactionLineItemDto) {
-
-        boolean isCompleteReturn = false;
-
-        for (int i = 0; i < transactionLineItemDto.size(); i++) {
-            if (transactionLineItemDto.get(i).getTransactionStatus() == "returned") {
-                isCompleteReturn = true;
-                continue;
-            } else {
-                isCompleteReturn = false;
-                break;
-            }
-        }
-
-        return isCompleteReturn;
-    }
-
 
     public List<TransactionLineItemDto> getTransactionLineItemDetails(int transactionCompId) {
 
