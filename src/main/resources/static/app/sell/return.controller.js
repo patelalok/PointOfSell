@@ -6,67 +6,35 @@
 
     ReturnController.$inject = [ '$scope', '$rootScope', 'device.utility',
         'GlobalVariable', 'DialogFactory', 'modalService',
-        'RestrictedCharacter.Types', 'dataService', '$state','GlobalConstants'];
+        'RestrictedCharacter.Types', 'dataService', '$state','GlobalConstants','$window','$timeout'];
 
     function ReturnController($scope, $rootScope, device, GlobalVariable,
-                              DialogFactory, modalService, restrictCharacter, dataService, $state,GlobalConstants) {
+                              DialogFactory, modalService, restrictCharacter, dataService, $state,GlobalConstants,$window,$timeout) {
 
         $scope.device = device;
         $scope.GlobalVariable = GlobalVariable;
         $scope.restrictCharacter = restrictCharacter;
         GlobalVariable.isLoginPage = false;
-        $scope.itemDeleted = false;
-
-        var i = 0;
-        $scope.pageSize = 10;
-
         $rootScope.returnData = [];
         $scope.productNames = [];
         $rootScope.returnBackData = [];
+        $scope.retPrd = [];
+        $rootScope.modifiedTransReturnData =[];
+        var length =0;
 
-        $scope.removeRow = function(itemNo,details) {
+        $scope.removeRow = function($index,row) {
 
-            GlobalVariable.itemNoToDelete = itemNo;
-            $scope.itemDeleted = true;
-            $rootScope.returnBackData
-                .push({
-                    "itemNo" : details.itemNo,
-                    "item" : details.item,
-                    "quantity" : details.quantity,
-                    "retail" : details.retail,
-                    "discount" : details.discount,
-                    "total" : details.total,
-                    "stock" : details.stock,
-                    "costPrice" : details.costPrice
-                });
+            $scope.deleteIndex = $index;
+            GlobalVariable.itemNoToDelete = row.itemId;
             modalService.showModal('', {
                 isCancel : true
             }, "Are you Sure Want to Delete ? ", $scope.callBackAction);
-            /*
-             * var index = -1; var comArr = eval( $rootScope.returnData ); for(
-             * var i = 0; i < comArr.length; i++ ) { if( comArr[i].itemNo ===
-             * itemNo ) { index = i; break; } } if( index === -1 ) { alert(
-             * "Something gone wrong" ); } $rootScope.returnData.splice( index,
-             * 1 );
-             */
         };
         $scope.callBackAction = function(isOKClicked) {
 
             if (isOKClicked) {
-                var index = -1;
-                var comArr = eval($rootScope.returnData);
-                for (var i = 0; i < comArr.length; i++) {
-                    if (comArr[i].itemNo === GlobalVariable.itemNoToDelete) {
-                        index = i;
-                        break;
-                    }
-                }
-                if (index === -1) {
-                    alert("Something gone wrong");
-                }
-                $rootScope.returnData.splice(index, 1);
+                $rootScope.testData.splice($scope.deleteIndex, 1);
                 $scope.loadCheckOutData();
-                $scope.loadDeletedCheckoutData();
             }
         }
 
@@ -83,171 +51,95 @@
             $scope.subTotal = 0;
             $scope.totalDelRetail = 0;
             $scope.totalDelRetailDisc = 0;
-            $scope.totalDisc =0;
-
+            $scope.retTotalDisc =0;
+            $scope.totalRetail = 0;
+            $scope.retTotalPrice =0;
+            $scope.retTotalTax =0;
+            $scope.totalRetailDisc = 0;
+            length =0;
 
             for (var i = 0; i < $rootScope.returnData.length; i++) {
-                $scope.totalQuantity = parseFloat($scope.totalQuantity)
-                    + parseFloat($rootScope.returnData[i].quantity);
-                $scope.subTotal = parseFloat($scope.subTotal)
-                    + parseFloat($rootScope.returnData[i].total);
-                $scope.totalRetail = parseFloat($scope.totalRetail)+parseFloat($rootScope.returnData[i].retail);
-                $scope.totalRetailDisc = parseFloat($scope.totalRetailDisc)+parseFloat($rootScope.returnData[i].discount);
-
-            }
-           // $scope.totalDisc = Number(parseFloat($scope.totalRetail)-parseFloat($scope.totalRetailDisc)).toFixed(2);
-            GlobalVariable.quantityTotal = $scope.totalQuantity;
-            GlobalVariable.totalSub = $scope.subTotal;
-            if ($scope.totalDisc == undefined)
-                $scope.totalDisc = 0;
-
-            GlobalVariable.discountTotal = $scope.totalDisc;
-
-                $scope.productTotalWithoutTax = Number(
-                    parseFloat($scope.subTotal)).toFixed(2);
-
-
-            if ($scope.productTotalWithoutTax == 'NaN') {
-                $scope.productTotalWithoutTax = 0;
+                if($scope.retPrd[i] == true) {
+                    length++;
+                    $scope.totalQuantity = parseFloat($scope.totalQuantity)
+                        + parseFloat($rootScope.returnData[i].quantity);
+                    $scope.subTotal = parseFloat($scope.subTotal)
+                        + parseFloat($rootScope.returnData[i].totalWithOutTax);
+                    $scope.retTotalDisc = parseFloat($scope.retTotalTax) + parseFloat($rootScope.returnData[i].discount);
+                    $scope.totalRetail = parseFloat($scope.totalRetail) + parseFloat($rootScope.returnData[i].retail);
+                    $scope.totalRetailDisc = parseFloat($scope.totalRetailDisc) + parseFloat($rootScope.returnData[i].discount);
+                    $scope.retTotalTax = parseFloat($scope.retTotalTax) + parseFloat(parseFloat($rootScope.returnData[i].totalWithTax) - parseFloat($rootScope.returnData[i].totalWithOutTax));
+                    $scope.retTotalPrice = parseFloat($scope.retTotalPrice)
+                        + parseFloat($rootScope.returnData[i].totalWithTax);
+                }
             }
 
-            if ($scope.selectReturnTax == undefined)
-                $scope.totalTax = 0;
-            else if ($scope.selectReturnTax == 'default')
-                $scope.totalTax = parseFloat($scope.totalDefaultTax);
-            else if ($scope.selectReturnTax == 'noTax')
-                $scope.totalTax = 0;
-
-            GlobalVariable.taxTotal = parseFloat($scope.productTotalWithoutTax)
-                * (parseFloat($scope.totalTax) / 100);
-            $scope.productTotal = Number(
-                parseFloat($scope.productTotalWithoutTax)
-                + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
-                .toFixed(2);
-            $scope.undelProdTotal = Number(
-                parseFloat($scope.productTotalWithoutTax)
-                + (((parseFloat($scope.productTotalWithoutTax) * parseFloat($scope.totalTax))) / 100))
-                .toFixed(2);
-
+            $scope.subTotal = parseFloat(parseFloat($scope.subTotal).toFixed(2));
+            $scope.retTotalPrice = parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
             if ($scope.returnprevBalance > 0) {
-                $scope.productTotal = parseFloat($scope.productTotal)
-                    + parseFloat($scope.returnprevBalance);
-                $scope.undelProdTotal = parseFloat($scope.productTotal)
+                $scope.retTotalPrice = parseFloat($scope.retTotalPrice)
                     + parseFloat($scope.returnprevBalance);
             }
-            $rootScope.totalReturnPayment = $scope.productTotal;
+            $rootScope.totalReturnPayment = parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
             GlobalVariable.checkOuttotal = $rootScope.totalReturnPayment;
-            $scope.getLastTransId();
+            GlobalVariable.returnTotalAmt = $scope.retTotalPrice;
+            //$scope.getLastTransId();
         }
         function render() {
             $scope.currentPageIndexArr = 0;
             $scope.totalTax = GlobalVariable.totalTaxSetup;
             getTaxDetails();
-           // $scope.loadCheckOutData();
             if (GlobalVariable.returnProduct == true) {
                 for (var i = 0; i < GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length; i++) {
                     $rootScope.returnData
                         .push({
+                            "itemId":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
                             "itemNo" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
                             "item" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productDescription,
                             "quantity" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
                             "retail" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retail,
-                            "discount" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
+                            "discount" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].discount,
+                            "retWithDisc" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].retailWithDis,
                             "total" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
                             "stock" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].quantity,
                             "costPrice" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost,
-                            "totalWithTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax
+                            "totalWithOutTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
+                            "totalWithTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax,
+                            "imeiNo":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].imeiNo,
+                            "phoneId":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].phoneId,
+                            "discountPercentage":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].discountPercentage
                         });
-
-
+                    $scope.retPrd[i] = true;
                 }
-                $scope.totalQuantity = GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalQuantity;
-                $scope.subTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].subTotal;
-                $scope.totalDisc = GlobalVariable.getReturnDetails[0].transactionDtoList[0].discount;
-                $scope.totalTax = GlobalVariable.getReturnDetails[0].transactionDtoList[0].tax;
-                $scope.productTotal = GlobalVariable.getReturnDetails[0].transactionDtoList[0].totalAmount;
-                $rootScope.totalReturnPayment = $scope.productTotal;
-                $scope.returnAmount = $rootScope.totalReturnPayment
-                $scope.returnDate = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionDate;
-                $scope.returnId = Math.round(((Math.random() * 10) * 10)) * 13;
-                $scope.previousId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionCompId
+                $scope.returnprevBalance = GlobalVariable.getReturnDetails[0].transactionDtoList[0].prevBalance;
+                $scope.previousId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionCompId;
                 $scope.userIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].userId;
                 $scope.returnPhone = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
                 $scope.returnCreditId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].customerPhoneNo;
                 $scope.returncashId = GlobalVariable.getReturnDetails[0].transactionDtoList[0].cashId;
-                $scope.paidAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
+                $scope.paidAmountCashReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCash;
                 $scope.paidAmountCreditReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCredit;
+                $scope.paidAmountCheckReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountCheck;
+                $scope.paidAmountDebitReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].paidAmountDebit;
                 $scope.changeAmountReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].changeAmount;
-                $scope.creditIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].creditId;
-                $scope.returnprevBalance = GlobalVariable.getReturnDetails[0].transactionDtoList[0].prevBalance;
+                $scope.last4Return = GlobalVariable.getReturnDetails[0].transactionDtoList[0].last4Digits;
+                $scope.transCreditIdReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transCreditId;
+                $scope.receiptNoteReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].receiptNote;
+                $scope.transactionNoteReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].transactionNote;
+                $scope.balanceReturn = GlobalVariable.getReturnDetails[0].transactionDtoList[0].balance;
 
             }
+            $scope.loadCheckOutData();
         }
         $scope.returnProduct = function() {
-            /*
-             * var msg= "Your total balance is
-             * "+-(Number(parseFloat($scope.productTotal)).toFixed(2));
-             * modalService.showModal('', '', msg,
-             * $scope.callBackReturnCheckout);
-             */
-            var _tmPath = 'app/sell/printReceiptModal.html';
+
+            /*var _tmPath = 'app/sell/printReceiptModal.html';
             var _ctrlPath = 'PrintRecepitController';
             DialogFactory.show(_tmPath, _ctrlPath,
-                $scope.callBackReturnCheckout);
-        };
-        $scope.loadDeletedCheckoutData = function()
-        {
-            $scope.totalDelQuantity = 0;
-            $scope.subDelTotal = 0;
-            $scope.totalDelRetail = 0;
-            $scope.totalDelRetailDisc = 0;
-
-
-
-            for (var i = 0; i < $rootScope.returnBackData.length; i++) {
-                $scope.totalDelQuantity = parseFloat($scope.totaDelQuantity)
-                    + parseFloat($rootScope.returnBackData[i].quantity);
-                $scope.subDelTotal = parseFloat($scope.subDelTotal)
-                    + parseFloat($rootScope.returnBackData[i].total);
-                $scope.totalDelRetail = parseFloat($scope.totalDelRetail)+parseFloat($rootScope.returnBackData[i].retail);
-                $scope.totalDelRetailDisc = parseFloat($scope.totalDelRetailDisc)+parseFloat($rootScope.returnBackData[i].discount);
-
-            }
-
-           $scope.totalDelDisc = Number(parseFloat($scope.totalDelRetail)-parseFloat($scope.totalDelRetailDisc)).toFixed(2);
-
-            $scope.productTotalWithoutDelTax = Number(
-                parseFloat($scope.subDelTotal)).toFixed(2);
-
-
-            if ($scope.productTotalWithoutDelTax == 'NaN') {
-                $scope.productTotalWithoutDelTax = 0;
-            }
-
-            if ($scope.selectReturnTax == undefined)
-                $scope.totalTax = 0;
-            else if ($scope.selectReturnTax == 'default')
-                $scope.totalTax = parseFloat($scope.totalDefaultTax);
-            else if ($scope.selectReturnTax == 'noTax')
-                $scope.totalTax = 0;
-
-            GlobalVariable.taxDelTotal = parseFloat($scope.productTotalWithoutDelTax)
-                * (parseFloat($scope.totalTax) / 100);
-            $scope.productDelTotal = Number(
-                parseFloat($scope.productTotalWithoutDelTax)
-                + (((parseFloat($scope.productTotalWithoutDelTax) * parseFloat($scope.totalTax))) / 100))
-                .toFixed(2);
-
-            if ($scope.returnprevBalance > 0) {
-                $scope.productDelTotal = parseFloat($scope.productDelTotal)
-                    + parseFloat($scope.returnprevBalance);
-            }
-            $rootScope.totalReturnPayment = $scope.productDelTotal;
-            $scope.productTotal = $scope.productDelTotal;
-            GlobalVariable.checkOuttotal = $rootScope.totalReturnPayment;
+                $scope.callBackReturnCheckout);*/
             $scope.getLastTransId();
-
         };
+
         $scope.getLastTransId = function()
         {
             var url=GlobalConstants.URLCONSTANTS+'getLastTransactionId';
@@ -256,7 +148,8 @@
         function lastTransSuccess(response)
         {
 
-            $scope.lastTransId =  parseInt(response);
+            $scope.lastTransId =  parseInt(response)+1;
+            $scope.callBackReturnCheckout();
 
         }
         function lastTransError(response)
@@ -268,8 +161,6 @@
             var url = GlobalConstants.URLCONSTANTS+"editTransaction?previousTransId="
                 + $scope.previousId;
             var request = new Object();
-            if($scope.itemDeleted == true)
-            {
                 var paidRTCh =0;
                 var paidRTCr =0;
                 if(parseInt($scope.paidAmountReturn) == 0)
@@ -287,36 +178,43 @@
                     paidRTCh = $scope.undelProdTotal;
                     paidRTCr =0;
                 }
+                if(length == $rootScope.returnData.length)
+                {
+                    var status = "r";
+                }
+                else
+                {
+                    var status = "p";
+                }
                 request = {
-                    "transactionDate" : js_yyyy_mm_dd_hh_mm_ss(),
-                    "totalAmount" : $scope.undelProdTotal,
-                    "tax" : GlobalVariable.taxTotal,
-                    "discount" : $scope.totalDisc,
-                    "customerPhoneNo" : $scope.returnPhone,
-                    "userId" : $scope.userIdReturn,
-                    "cashId" : $scope.returncashId,
-                    "status" : "c",
-                    "paidAmountCash" : paidRTCh,
-                    "changeAmount" : 0,
-                    "creditId" : $scope.creditIdReturn,
-                    "paidAmountCredit" : paidRTCr,
-                    "transactionCompId" : parseInt($scope.lastTransId) +1,
-                    "subTotal" : ($scope.subTotal),
-                    "totalQuantity" : ($scope.totalQuantity)
+                    "transactionDate":js_yyyy_mm_dd_hh_mm_ss() ,
+                    "totalAmount":-(parseFloat(parseFloat($scope.retTotalPrice).toFixed(2))),
+                    "tax":-(Math.abs(parseFloat(parseFloat($scope.retTotalTax).toFixed(2)))),
+                    "discount":-(parseFloat(parseFloat($scope.retTotalDisc).toFixed(2))) ,
+                    "customerPhoneNo":$scope.returnPhone,
+                    "userId":sessionStorage.userId,
+                    "status":status,
+                    "paidAmountCash":-($scope.paidAmountCashReturn),
+                    "changeAmount":-($scope.changeAmountReturn),
+                    "paidAmountDebit":-($scope.paidAmountDebitReturn),
+                    "paidAmountCheck":-($scope.paidAmountCheckReturn),
+                    "paidAmountCredit":-($scope.paidAmountCreditReturn),
+                    "transactionCompId":$scope.lastTransId,
+                    "subTotal":-(parseFloat(parseFloat($scope.subTotal).toFixed(2))),
+                    "totalQuantity":-(parseInt($scope.totalQuantity)),
+                    "transCreditId":-($scope.transCreditIdReturn),
+                    "last4Digits":-($scope.last4Return),
+                    "prevBalance":-(parseFloat(parseFloat($scope.returnprevBalance).toFixed(2))),
+                    "balance":-($scope.balanceReturn),
+                    "receiptNote":$scope.receiptNoteReturn,
+                    "transactionNote":$scope.transactionNoteReturn
 
                 };
                 request = JSON.stringify(request);
                 dataService.Post(url, request, returnTransactionSuccessHandler,
                     returnTransactionErrorHandler, "application/json",
                     "application/json");
-            }
-            else
-            {
-                request='';
-                dataService.Post(url, null, returnTransactionSuccessHandler,
-                    returnTransactionErrorHandler, "application/json",
-                    "application/json");
-            }
+
 
 
 
@@ -330,42 +228,41 @@
             var url = GlobalConstants.URLCONSTANTS+"editTransactionLineItem?previousTransId="
                 + $scope.previousId;
             var request = [];
-            if($scope.itemDeleted == true)
+            if(length == $rootScope.returnData.length)
             {
-                for (var i = 0; i < $rootScope.returnData.length; i++) {
-                    request.push({
+                var status = "r";
+            }
+            else
+            {
+                var status = "p";
+            }
+            for (var i = 0; i < $rootScope.returnData.length; i++) {
+              if($scope.retPrd[i] == true) {
+                  request.push({
 
-                        "transactionCompId" : parseInt($scope.lastTransId) +1,
-                        "productNumber" : $rootScope.returnData[i].itemNo,
-                        "quantity" : $rootScope.returnData[i].quantity,
-                        "retail" : $rootScope.returnData[i].retail,
-                        "cost" : $rootScope.returnData[i].costPrice,
-                        "discount" : $rootScope.returnData[i].discount,
-                        "retailWithDis" : $rootScope.returnData[i].discount,
-                        "totalProductPrice" : $rootScope.returnData[i].total,
-                        "transactionDate" : js_yyyy_mm_dd_hh_mm_ss(),
-                        "transactionStatus" : "c"
+                      "transactionCompId": $scope.lastTransId,
+                      "productNumber": $rootScope.returnData[i].itemNo,
+                      "quantity": -(parseInt($rootScope.returnData[i].quantity)),
+                      "retail": -(parseFloat(parseFloat($rootScope.returnData[i].retail).toFixed(2))),
+                      "cost": -(parseFloat(parseFloat($rootScope.returnData[i].costPrice).toFixed(2))),
+                      "discount": -(parseFloat(parseFloat($rootScope.returnData[i].discount).toFixed(2))),
+                      "retailWithDis": -(parseFloat(parseFloat($rootScope.returnData[i].retWithDisc).toFixed(2))),
+                      "totalProductPrice": -(parseFloat(parseFloat($rootScope.returnData[i].totalWithOutTax).toFixed(2))),
+                      "transactionDate": js_yyyy_mm_dd_hh_mm_ss(),
+                      "discountPercentage": -($rootScope.returnData[i].discountPercentage),
+                      "transactionStatus": status,
+                      "totalProductPriceWithTax": -(parseFloat(parseFloat($rootScope.returnData[i].totalWithTax).toFixed(2))),
+                      "imeiNo": $rootScope.returnData[i].imeiNo,
+                      "phoneId": $rootScope.returnData[i].phoneId
 
-                    });
+                  });
+              }
                 }
                 request = JSON.stringify(request);
                 dataService.Post(url, request,
                     returnTransactionLineItemSuccessHandler,
                     returnTransactionLineItemErrorHandler, "application/json",
                     "application/json");
-            }
-            else
-            {
-                request=[];
-                dataService.Post(url, null,
-                    returnTransactionLineItemSuccessHandler,
-                    returnTransactionLineItemErrorHandler, "application/json",
-                    "application/json");
-            }
-
-
-
-
 
         }
         function returnTransactionErrorHandler(response) {
@@ -375,13 +272,129 @@
             $rootScope.returnData = [];
             $scope.totalQuantity = 0;
             $scope.subTotal = 0;
-            $scope.productTotal = 0;
-            $rootScope.totalReturnPayment = 0;
-            $state.go('ledger');
+            $scope.retTotalPrice = 0;
+            $scope.retTotalPrice = 0;
+            $scope.totalRetailDisc = 0;
+            $scope.returnprevBalance =0;
+            var _tmPath = 'app/sell/printReceiptModal.html';
+            var _ctrlPath = 'PrintRecepitController';
+            DialogFactory.show(_tmPath, _ctrlPath,
+                $scope.callBackReturnPrint);
+
         }
         function returnTransactionLineItemErrorHandler() {
 
         }
+
+        $scope.callBackReturnPrint = function()
+        {
+            if(GlobalVariable.printReceiptTrans == true)
+            {
+                getStoreAddress();
+            }
+        };
+        function getStoreAddress()
+        {
+            var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
+            dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
+        }
+        function onStoreSuccess(response)
+        {
+            GlobalVariable.storeAddress = response[0].storeAddress;
+            GlobalVariable.footerReceipt = response[0].footerReceipt;
+            if((response[0].receiptType).toString() == "0")
+                GlobalVariable.showRcptType = 'A4';
+            else if((response[0].receiptType).toString() == "1")
+                GlobalVariable.showRcptType = 'Thermal';
+
+            if(GlobalVariable.showRcptType == 'Thermal')
+            {
+                $window.open(GlobalConstants.URLCONSTANTS+'getReceiptDetailsForThermalPrint?receiptId='+$scope.lastTransId
+                    ,'_blank');
+            }
+            else
+            {
+                var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+$scope.lastTransId;
+                dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+            }
+        }
+        function onStoreError(error)
+        {
+
+        }
+        function getPrintSuccessHandler(response)
+        {
+            GlobalVariable.receiptReturnData =response;
+            if(response.length!== 0) {
+                $rootScope.itemTotalReturn = Number(parseFloat(GlobalVariable.receiptReturnData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptReturnData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
+
+
+                for (var i = 0; i < GlobalVariable.receiptReturnData[0].transactionLineItemDtoList.length; i++) {
+                    $rootScope.modifiedTransReturnData.push(
+                        {
+                            "productNumber": GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].productNumber,
+                            "productDescription": GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].productDescription,
+                            "retail": GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].retail,
+                            "discountPercentage": GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].discountPercentage,
+                            "retwdisc": (parseFloat(GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].totalProductPrice) / parseFloat(GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].quantity)).toFixed(2),
+                            "quantity": GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].quantity,
+                            "totalProductPrice": GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].totalProductPrice,
+                            "imeiNo":GlobalVariable.receiptReturnData[0].transactionLineItemDtoList[i].imeiNo
+                        }
+                    );
+                }
+            }
+
+            $rootScope.printTransFirstNameReturn='';
+            $rootScope.printTransLastNameReturn ='';
+            $rootScope.printTransStreetReturn='';
+            $rootScope.printTransCityReturn='';
+            $rootScope.printTransStateReturn='';
+            $rootScope.printTransCountryReturn='';
+            $rootScope.printTranszipCodeReturn='';
+            $rootScope.printTransPhoneReturn='';
+            $rootScope.printTransCompanyReturn = '';
+            if(response.length !==0)
+            {
+                if(GlobalVariable.receiptReturnData[0].customerDtosList .length !== 0)
+                {
+                    $rootScope.printTransFirstNameReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].firstName;
+                    $rootScope.printTransLastNameReturn =GlobalVariable.receiptReturnData[0].customerDtosList[0].lastName;
+                    $rootScope.printTransStreetReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].street;
+                    $rootScope.printTransCityReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].city;
+                    $rootScope.printTransStateReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].state;
+                    $rootScope.printTransCountryReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].country;
+                    $rootScope.printTranszipCodeReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].zipcode;
+                    $rootScope.printTransPhoneReturn=GlobalVariable.receiptReturnData[0].customerDtosList[0].phoneNo;
+                    $scope.printTransCompanyReturn =GlobalVariable.receiptReturnData[0].customerDtosList[0].companyName;
+
+                }
+            }
+
+            //if(GlobalVariable.showRcptType == 'A4') {
+            GlobalVariable.isPrintPage = true;
+            $timeout(function () {
+                $window.print();
+                GlobalVariable.isPrintPage = false;
+            }, 2000);
+            //}
+            /*else if(GlobalVariable.showRcptType == 'Thermal')
+             {
+             GlobalVariable.isPrintPage = false;
+             $window.open(GlobalConstants.URLCONSTANTS+'getReceiptDetailsForThermalPrint?receiptId=10'
+             ,'_blank');
+             }*/
+
+        }
+        function getPrintErrorHandler(response)
+        {
+
+        }
+        $scope.returnSelectedProd = function(id,row)
+        {
+                console.log($scope.retPrd[id]);
+            $scope.loadCheckOutData();
+        };
         $scope.navigateToSellPage = function() {
             $state.go('sell');
         };
