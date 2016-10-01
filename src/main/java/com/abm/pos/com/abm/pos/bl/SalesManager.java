@@ -87,25 +87,38 @@ public class SalesManager {
         try {
 
 
+            //So here I am adding the transaction with negative values because this will balance out with the previous transaction.
+
+            //This is not neccecary but just doing in case i need on future.
             jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
 
             System.out.println("Update the status successfully");
 
-            if (null != transactionDto) {
-                addTransaction(transactionDto);
-
-                //jdbcTemplate.update(sqlQuery.addReturnEntryToTransactionMapper, previousTransId, transactionDto.getTransactionCompId());
-            } else {
-                String previosBalance = jdbcTemplate.queryForObject(sqlQuery.getPreviousBalance, new Object[]{previousTransId}, String.class);
+            if(null != transactionDto && null != transactionDto.getStatus() && transactionDto.getStatus().equals("c"))
+            {
+                //Here getting the previous balance of the customer and adding back the customer cause this return  so he will get his previous balance back
+                //and this is not right that why need to add back the customer.
+                String previousBalance = jdbcTemplate.queryForObject(sqlQuery.getPreviousBalance, new Object[]{previousTransId}, String.class);
 
                 String customerPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhoneNo, new Object[]{previousTransId}, String.class);
 
-                if (null != customerPhoneNo && null != previosBalance) {
-                    jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, previosBalance, customerPhoneNo);
+                if (null != customerPhoneNo && null != previousBalance) {
+                    jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, previousBalance, customerPhoneNo);
                     System.out.println("Customer balance updated successfully with with complete return");
                 }
+                //Here I am adding the return transaction into db with negative values from ui.
+                addTransaction(transactionDto);
 
                 System.out.println("that was complete return");
+            }
+
+            else {
+                //Just adding partial transaction as new transaction in db with negative values.
+                if(null != transactionDto) {
+                    addTransaction(transactionDto);
+                }
+
+                System.out.println("that was partial return");
             }
 
 
@@ -449,8 +462,15 @@ public class SalesManager {
             //Doing db call to get Line item details for the previous transaction line item which i need to update and also add the quantity in product.
             lineItemDtoList1 = jdbcTemplate.query(sqlQuery.getTransactionLineItemDetails, new TransactionLineItemMapper(), previousTransId);
 
+            //Here I am just adding transaction lineitem from the regulat add lineitem call and ui gonna send me quantity negative and i am doing
+            //Subtraction so it will become positive and added to the stock.
 
-            for (int j = 0; j < lineItemDtoList1.size(); j++) {
+            if(null != transactionLineItemDto) {
+                addTransactionLineItemToDB(transactionLineItemDto);
+            }
+
+//NEED TO COMMENT THIS CODE ONCE TESTED WITH UI.
+           /* for (int j = 0; j < lineItemDtoList1.size(); j++) {
                 System.out.println(lineItemDtoList1.get(j).getProductNumber());
                 System.out.println(lineItemDtoList1.get(j).getQuantity());
 
@@ -480,7 +500,7 @@ public class SalesManager {
                 System.out.println("Added partially Transaction Line itemreturned items successfully");
             } else {
                 System.out.println("This was complete line item return");
-            }
+            }*/
 
 
         } catch (Exception e)

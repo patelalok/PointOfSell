@@ -136,7 +136,7 @@ public class ClosingDetailsManager {
             //Getting the discount from the lineitem table to get product level discount.
             String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDate, new Object[]{startDate, endDate}, String.class);
 
-            String profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[]{startDate, endDate}, String.class);
+            String profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegister, new Object[]{startDate, endDate, startDate, endDate}, String.class);
 
             //Here Getting customer balance to handle short or over issue in money for close register reports.
             String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[]{startDate, endDate}, String.class);

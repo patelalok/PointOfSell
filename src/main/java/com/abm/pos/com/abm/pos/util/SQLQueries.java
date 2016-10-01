@@ -559,29 +559,28 @@ public class SQLQueries {
             "            ";
 
     public String getDashboardDetailsForMonths = "SELECT monthname(TRANSACTION_DATE) AS NameOfMonth,\n" +
-            "            sum(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
-            "\t\tsum(PAID_AMOUNT_CASH) CASH, \n" +
-            "            SUM(TOTAL_AMOUNT_CHECK) CHEC, \n" +
-            "            SUM(TAX_AMOUNT) TAX , \n" +
-            "            SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT ,\n" +
-            "            SUM(TOTAL_AMOUNT) TOTAL, \n" +
-            "SUM(BALANCE) BALANCE, " +
-            "            count(A.TRANSACTION_COMP_ID) NOOFTRANS,\n" +
-            "            SUM(PROFIT) PROFIT\n" +
-            "            FROM TRANSACTION A,\n" +
-            "             (SELECT TRANSACTION_COMP_ID, \n" +
-            "             SUM(CASE WHEN Y.CATEGORY_ID <> 6 THEN ((X.RETAIL-X.COST-X.DISCOUNT)/X.QUANTITY) * X.QUANTITY ELSE 0.0 END) AS PROFIT,\n" +
-            "             SUM(DISCOUNT) AS DISCOUNT\n" +
-            "            FROM TRANSACTION_LINE_ITEM X, product Y\n" +
-            "            WHERE X.PRODUCT_NO = Y.PRODUCT_NO \n" +
-            "            AND DATE BETWEEN ? AND ? \n" +
-            "            AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B\n" +
-            "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID \n" +
-            "            AND TRANSACTION_DATE BETWEEN ? AND ?  \n" +
-            "            AND STATUS = 'c' \n" +
-            "            GROUP BY NameOfMonth \n" +
-            "            ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December')\n" +
-            "            ";
+            "sum(TOTAL_AMOUNT_CREDIT) CREDIT,  \n" +
+            "sum(PAID_AMOUNT_CASH) CASH,  \n" +
+            "SUM(TOTAL_AMOUNT_CHECK) CHEC,  \n" +
+            "SUM(TAX_AMOUNT) TAX ,  \n" +
+            "SUM(DISCOUNT_AMOUNT + DISCOUNT) DISCOUNT , \n" +
+            "SUM(TOTAL_AMOUNT) TOTAL,  \n" +
+            "SUM(BALANCE) BALANCE,  \n" +
+            "count(A.TRANSACTION_COMP_ID) NOOFTRANS, \n" +
+            "SUM(PROFIT) PROFIT \n" +
+            "FROM TRANSACTION A, \n" +
+            "(SELECT TRANSACTION_COMP_ID,  \n" +
+            "SUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 THEN ((X.RETAIL-X.COST-X.DISCOUNT)/X.QUANTITY) * X.QUANTITY ELSE 0.0 END) AS PROFIT, \n" +
+            "SUM(DISCOUNT) AS DISCOUNT \n" +
+            "FROM TRANSACTION_LINE_ITEM X, product Y \n" +
+            "WHERE X.PRODUCT_NO = Y.PRODUCT_NO  \n" +
+            "AND DATE BETWEEN ? AND ?  \n" +
+            "AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B \n" +
+            "WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID  \n" +
+            "AND TRANSACTION_DATE BETWEEN ? AND ?   \n" +
+            "AND STATUS = 'c'  \n" +
+            "GROUP BY NameOfMonth  \n" +
+            "ORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December') ";
 
     public String getSalesCategoryDetails = "SELECT  c.CATEGORY_NAME as COMMON_NAME , " +
             "sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, " +
@@ -727,7 +726,19 @@ public class SQLQueries {
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";
 
-    public String getPrpfitForCloseRegister = "SELECT SUM(( RETAIL-COST-DISCOUNT/QUANTITY) * QUANTITY) FROM TRANSACTION_LINE_ITEM WHERE DATE BETWEEN ? AND ? AND TRANSACTION_STATUS = 'c' ";
+    public String getPrpfitForCloseRegister = " SELECT\n" +
+            "SUM(PROFIT) PROFIT \n" +
+            "FROM TRANSACTION A, \n" +
+            "(SELECT TRANSACTION_COMP_ID,  \n" +
+            "SUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 THEN ((X.RETAIL-X.COST-X.DISCOUNT)/X.QUANTITY) * X.QUANTITY ELSE 0.0 END) AS PROFIT, \n" +
+            "SUM(DISCOUNT) AS DISCOUNT \n" +
+            "FROM TRANSACTION_LINE_ITEM X, product Y \n" +
+            "WHERE X.PRODUCT_NO = Y.PRODUCT_NO  \n" +
+            "AND DATE BETWEEN ? AND ?  \n" +
+            "AND TRANSACTION_STATUS = 'c' Group by TRANSACTION_COMP_ID)B \n" +
+            "WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID  \n" +
+            "AND TRANSACTION_DATE BETWEEN ? AND ?   \n" +
+            "AND STATUS = 'c'";
 
     public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? AND CLOCK_DATE = ?";
 
