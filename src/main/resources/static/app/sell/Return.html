@@ -68,8 +68,7 @@
                             <td class="wrapword" style="width:8%;"><span>{{row.total}}</span></td>
                             <td class="wrapword" style="width:5%;"><span>{{row.stock}}</span></td>
                             <td class="wrapword" style="width:10%;">
-                                <a ng-click="removeRow($index,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
-                                <span class="inline-vertical">
+                                 <span class="inline-vertical">
 
                                            <input type="checkbox" ng-model='retPrd[$index]'  ng-change="returnSelectedProd($index,row)">
 
@@ -114,7 +113,6 @@
                         </tr>
                         <tr>
                             <td><span style="visibility:hidden;">Item No</span></td>
-                            <td><a ng-click="removeRow($index,row)" style="cursor:pointer;"><span class="glyphicon glyphicon-trash" aria-hidden="true" style="cusrsor:pointer;"></span></a>
                                 <!--<span class="inline-vertical">
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true" style="cursor:pointer;" ng-click="editRow($index,row)"></span>
 							</span>-->
@@ -165,7 +163,7 @@
                 </div>
             </div>
             <div class="row paymentBtns padding-top-10 returnBtn" style="text-align:center;padding-right:3%;">
-                <button  style="width:100%;display: inline-block;" class="btn btn-primary margin-top-1 wrap-text payment-btn return-btn-color"  ng-click="returnProduct()" ng-disabled="!(returnData.length > 0)">
+                <button  style="width:100%;display: inline-block;" class="btn btn-primary margin-top-1 wrap-text payment-btn return-btn-color"  ng-click="returnProduct()" ng-disabled="!(returnData.length > 0  && returnLength > 0)">
                     <span style="float:left;">Return</span>
                     <span style="float:right;">${{retTotalPrice}}</span>
                 </button>
@@ -356,11 +354,25 @@
     <!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
         <span>Transaction Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptData[0].transactionDtoList[0].transactionNote}}</span>
     </div>-->
-    <div style="text-align: left; padding-top: 10px; font-size: 15px;">
+    <!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
         <span>Receipt Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].receiptNote}}</span>
     </div>
     <div style="text-align: left; padding-top: 10px; font-size: 10px;">
         <span>Return Policy*</span><span style="padding-left: 5px;">{{GlobalVariable.footerReceipt}}</span>
+    </div>-->
+    <div style="text-align: left; padding-top: 10px; font-size: 15px;">
+        <div style="padding-bottom:5px;">WARRANTY:</div>
+        <div style="padding-left: 5px;padding-top:5px;"> * No EXCHANGE,NO REFUND,ALL SALES ARE FINAL</div>
+    </div>
+    <div style="text-align: left; padding-top: 10px; font-size: 10px;">
+        <div>The warranty will cover Manufacturing defects of material and workmanship.<b>You must
+            have the original receipt,packing material and all components.</b>
+            If an item is defective and cannot be repaired it may only be exchanged with an equivalent product.Repais takes approixmately
+            1-2 weeks from the date of receipt</div>
+    </div>
+    <div style="text-align: left; padding-top: 10px; font-size: 10px;">
+        Warranty does not cover abuse,neglect , or improper installation of product,or acts of Nature.
+        <br/>PLEASE NOTE:Installation of any of our products are at your own risk.
     </div>
     <div style="text-align: center; padding-top: 10px; font-size: 15px;">
         <span>*** Customer Copy ***</span>

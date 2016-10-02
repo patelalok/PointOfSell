@@ -21,6 +21,7 @@
         $scope.retPrd = [];
         $rootScope.modifiedTransReturnData =[];
         var length =0;
+        $scope.returnLength =0;
 
         $scope.removeRow = function($index,row) {
 
@@ -73,9 +74,15 @@
                         + parseFloat($rootScope.returnData[i].totalWithTax);
                 }
             }
-
+            $scope.returnLength = length;
             $scope.subTotal = parseFloat(parseFloat($scope.subTotal).toFixed(2));
             $scope.retTotalPrice = parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
+            $scope.retTotalTax =parseFloat(parseFloat($scope.retTotalTax ).toFixed(2));
+            $scope.retTotalDisc =parseFloat(parseFloat($scope.retTotalDisc).toFixed(2));
+            $scope.totalRetail=parseFloat(parseFloat($scope.totalRetail).toFixed(2));
+            $scope.totalRetailDisc=parseFloat(parseFloat($scope.totalRetailDisc).toFixed(2));
+            $scope.retTotalTax=parseFloat(parseFloat($scope.retTotalTax).toFixed(2));
+            $scope.retTotalPrice=parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
             if ($scope.returnprevBalance > 0) {
                 $scope.retTotalPrice = parseFloat($scope.retTotalPrice)
                     + parseFloat($scope.returnprevBalance);
