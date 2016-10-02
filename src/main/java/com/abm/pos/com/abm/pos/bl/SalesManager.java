@@ -328,7 +328,7 @@ public class SalesManager {
             String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
             transaction.setUsername(username);
 
-            if (rs.getDouble("BALANCE") == 0) {
+            if (rs.getDouble("BALANCE") == 0 && rs.getString("STATUS").equals("c")) {
                 transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
             } else {
                 transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
@@ -337,7 +337,9 @@ public class SalesManager {
             transaction.setPaidAmountCheck(rs.getDouble("TOTAL_AMOUNT_CHECK"));
             transaction.setPaidAmountDebit(rs.getDouble("PAID_AMOUNT_DEBIT"));
             transaction.setStatus(rs.getString("STATUS"));
-            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+           if(rs.getString("STATUS").equals("c")) {
+               transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+           }
             transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
             transaction.setBalance(rs.getDouble("BALANCE"));
             transaction.setReceiptNote(rs.getString("RECEIPT_NOTE"));
@@ -697,7 +699,7 @@ public class SalesManager {
 
         try {
 
-            cb.setLineWidth(0f);
+           cb.setLineWidth(0f);
 
             // Invoice Header box layout
             // cb.rectangle(150,50,250,650);
@@ -749,7 +751,7 @@ public class SalesManager {
 
 
         cb.beginText();
-        cb.setFontAndSize(bfBold, 8);
+        cb.setFontAndSize(bfBold, 9);
         cb.setTextMatrix(x,y);
         cb.showText(text.trim());
         cb.endText();
@@ -760,11 +762,11 @@ public class SalesManager {
 
         try {
 
-            createStoreNameHeadings(cb, 1, 815, "Map Wireless World Inc");//197
-            createHeadings(cb, 41, 805, "926 Montreal Road");//238
-            createHeadings(cb, 58, 795, "Suite-16");//255
-            createHeadings(cb, 41, 785, "Clarkston, GA 30021");//238
-            createHeadings(cb, 53, 775, "470-428-4284");//250
+            createStoreNameHeadings(cb, 50, 810, "Map Wireless World Inc");//197
+            createHeadings(cb, 85, 795, "926 Montreal Road");//238
+            createHeadings(cb, 103, 785, "Suite-16");//255
+            createHeadings(cb, 85, 775, "Clarkston, GA 30021");//238
+            createHeadings(cb, 98, 765, "470-428-4284");//250
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -792,9 +794,9 @@ public class SalesManager {
 
         try {
 
-            createContent(cb, 155, y - 30, "Sub Total" + "                  " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 155, y - 45, "Tax" + " " + "7%" + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 155, y - 60, "Total" + "   " + "      " + "                " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
+            createContentForTotal(cb, 155, y - 30, "Sub Total" + "              " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
+            createContentForTotal(cb, 155, y - 45, "Tax" + " " + "7%" + "      " + "            " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
+            createContentForTotal(cb, 155, y - 60, "Total" + "   " + "      " + "            " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -832,6 +834,16 @@ public class SalesManager {
 
         cb.beginText();
         cb.setFontAndSize(bf, 8);
+        cb.showTextAligned(align, text.trim(), x, y, 0);
+        cb.endText();
+
+    }
+
+    private void createContentForTotal(PdfContentByte cb, float x, float y, String text, int align) {
+
+
+        cb.beginText();
+        cb.setFontAndSize(bf, 9);
         cb.showTextAligned(align, text.trim(), x, y, 0);
         cb.endText();
 
