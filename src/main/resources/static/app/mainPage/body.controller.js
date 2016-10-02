@@ -127,7 +127,11 @@
 		{
 			var _tmPath = 'app/mainPage/clockIn.html';
 			var _ctrlPath = 'ClockInController';
-			DialogFactory.show(_tmPath, _ctrlPath,$scope.getLastTransId);
+			DialogFactory.show(_tmPath, _ctrlPath,$scope.callbackClock);
+		};
+		$scope.callbackClock = function()
+		{
+
 		};
 		render();
 	}
