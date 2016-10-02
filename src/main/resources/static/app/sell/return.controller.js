@@ -170,20 +170,46 @@
             var request = new Object();
                 var paidRTCh =0;
                 var paidRTCr =0;
-                if(parseInt($scope.paidAmountReturn) == 0)
+                var paidRTDb =0,paidRTCs = 0;
+
+                if((parseFloat($scope.paidAmountCashReturn) != 0) && (parseFloat($scope.paidAmountCreditReturn) == 0)
+                    && (parseFloat($scope.paidAmountDebitReturn) == 0) && (parseFloat($scope.paidAmountCheckReturn) == 0) )
                 {
-                    paidRTCh = $scope.undelProdTotal;
+                    paidRTCh =0;
                     paidRTCr =0;
+                    paidRTDb = 0;
+                    paidRTCs = parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
                 }
-                else if(parseInt($scope.paidAmountCreditReturn) == 0)
+                else if((parseFloat($scope.paidAmountCashReturn) == 0) && (parseFloat($scope.paidAmountCreditReturn) != 0)
+                    && (parseFloat($scope.paidAmountDebitReturn) == 0) && (parseFloat($scope.paidAmountCheckReturn) == 0) )
                 {
-                    paidRTCh = 0;
-                    paidRTCr =$scope.undelProdTotal;
+                    paidRTCh =0;
+                    paidRTCr =parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
+                    paidRTDb = 0;
+                    paidRTCs = 0;
+                }
+                else if((parseFloat($scope.paidAmountCashReturn) == 0) && (parseFloat($scope.paidAmountCreditReturn) == 0)
+                    && (parseFloat($scope.paidAmountDebitReturn) != 0) && (parseFloat($scope.paidAmountCheckReturn) == 0) )
+                {
+                    paidRTCh =0;
+                    paidRTCr =0;
+                    paidRTDb = parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
+                    paidRTCs = 0;
+                }
+                else if((parseFloat($scope.paidAmountCashReturn) == 0) && (parseFloat($scope.paidAmountCreditReturn) == 0)
+                    && (parseFloat($scope.paidAmountDebitReturn) == 0) && (parseFloat($scope.paidAmountCheckReturn) != 0) )
+                {
+                    paidRTCh =parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
+                    paidRTCr =0;
+                    paidRTDb = 0;
+                    paidRTCs = 0;
                 }
                 else
                 {
-                    paidRTCh = $scope.undelProdTotal;
+                    paidRTCh =0;
                     paidRTCr =0;
+                    paidRTDb = 0;
+                    paidRTCs = parseFloat(parseFloat($scope.retTotalPrice).toFixed(2));
                 }
                 if(length == $rootScope.returnData.length)
                 {
@@ -201,11 +227,11 @@
                     "customerPhoneNo":$scope.returnPhone,
                     "userId":sessionStorage.userId,
                     "status":status,
-                    "paidAmountCash":-(parseFloat(parseFloat($scope.retTotalPrice).toFixed(2))),
+                    "paidAmountCash":-(paidRTCs),
                     "changeAmount":-($scope.changeAmountReturn),
-                    "paidAmountDebit":-(parseFloat(parseFloat($scope.retTotalPrice).toFixed(2))),
-                    "paidAmountCheck":-(parseFloat(parseFloat($scope.retTotalPrice).toFixed(2))),
-                    "paidAmountCredit":-(parseFloat(parseFloat($scope.retTotalPrice).toFixed(2))),
+                    "paidAmountDebit":-(paidRTDb),
+                    "paidAmountCheck":-(paidRTCh),
+                    "paidAmountCredit":-(paidRTCr),
                     "transactionCompId":$scope.lastTransId,
                     "subTotal":-(parseFloat(parseFloat($scope.subTotal).toFixed(2))),
                     "totalQuantity":-(parseInt($scope.totalQuantity)),
