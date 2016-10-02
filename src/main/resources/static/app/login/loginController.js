@@ -22,7 +22,7 @@
 		$scope.onLoginClicked = function($event)
 		{
 			//$window.open('http://localhost:8080/getPrintClosingDetails?startDate=2016-01-01%2000:00:00&endDate=2016-12-31%2023:59:59', '_blank');
-			if(sessionStorage.productKeyAdded1 == undefined)
+			/*if(sessionStorage.productKeyAdded1 == undefined)
 			{
 				$scope.productKeyAdded = false;
 			}
@@ -45,8 +45,10 @@
 				sessionStorage.userName = $scope.loginemail;
 				var url=GlobalConstants.URLCONSTANTS+'getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
 				dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
-			}
-
+			}*/
+			sessionStorage.userName = $scope.loginemail;
+			var url=GlobalConstants.URLCONSTANTS+'getUserLoginDetails?username='+$scope.loginemail+'&password='+$scope.loginpassword;
+			dataService.Get(url,onLoginSuccess,onLoginError,'application/json','application/json');
 
 		};
 		$scope.callBackProductKey = function()
