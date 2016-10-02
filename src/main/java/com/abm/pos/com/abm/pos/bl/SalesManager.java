@@ -446,7 +446,7 @@ public class SalesManager {
                     }
 
 
-                    System.out.println("Transaction Line Item Added Successfully");
+
                 }
 
                 @Override
@@ -454,6 +454,8 @@ public class SalesManager {
                     return transactionLineItemDto.size();
                 }
             });
+
+            System.out.println("Transaction Line Item Added Successfully");
         } catch (Exception e) {
             System.out.println(e);
         }

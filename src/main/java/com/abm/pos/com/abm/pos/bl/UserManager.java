@@ -256,7 +256,7 @@ public class UserManager {
         try
         {
             //Need to change the hard coded value after ui send the userid insetd of user name
-            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate,2);
+            userClockInDtoList = jdbcTemplate.query(sqlQuery.getUserClockInForSetup, new UserClockInMapper(),startDate,endDate,userId);
 
         }
         catch (Exception e)
