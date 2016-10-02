@@ -90,7 +90,7 @@ public class SalesManager {
             //So here I am adding the transaction with negative values because this will balance out with the previous transaction.
 
             //This is not neccecary but just doing in case i need on future.
-            jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
+            //jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
 
             System.out.println("Update the status successfully");
 
