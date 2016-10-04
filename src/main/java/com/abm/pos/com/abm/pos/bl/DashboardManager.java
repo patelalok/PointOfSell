@@ -24,25 +24,25 @@ public class DashboardManager {
     @Autowired
     SQLQueries sqlQueries;
 
-
-    public List<DashboardDto> getDashboardDetails(String startDateCurrent, String endDateCurrent, String startDateLast, String endDateLast) {
-
-        List<DashboardDto> dashboardDtos = new ArrayList<>();
-        try
-        {
-            dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDateCurrent,endDateCurrent,startDateCurrent,endDateCurrent);
-
-
-            //HERE I NEED TO ADD THE LINE ITEM DISCOUNT CAUSE RIGHT NOW ITS SHOWING ONLY TRANSACTION DISCOUNT
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(e);
-        }
-        
-        return dashboardDtos;
-    }
+//
+//    public List<DashboardDto> getDashboardDetails(String startDateCurrent, String endDateCurrent, String startDateLast, String endDateLast) {
+//
+//        List<DashboardDto> dashboardDtos = new ArrayList<>();
+//        try
+//        {
+//            dashboardDtos = jdbcTemplate.query(sqlQueries.getDashboardDetailsForMonths, new DashMonthMapper(), startDateCurrent,endDateCurrent,startDateCurrent,endDateCurrent);
+//
+//
+//            //HERE I NEED TO ADD THE LINE ITEM DISCOUNT CAUSE RIGHT NOW ITS SHOWING ONLY TRANSACTION DISCOUNT
+//
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e);
+//        }
+//
+//        return dashboardDtos;
+//    }
 
 
 
@@ -62,9 +62,6 @@ public class DashboardManager {
             dashboardDto.setNoOfTrans(rs.getDouble("NOOFTRANS"));
             dashboardDto.setProfit(rs.getDouble("PROFIT"));
 
-
-            //double a = yearlyDto.getRetail() - yearlyDto.getCost() - yearlyDto.getDiscount();
-            //yearlyDto.setProfit(a);
 
 
 

@@ -411,18 +411,21 @@ public class SalesManager {
                     jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, productId);
 
                     //Here I am checking is this phone return or not and if yes then i need to add that phone back to inventory.
-                    if(transactionLineItemDto1.getPhoneId() != 0 && (transactionLineItemDto1.getTransactionStatus().equals("r") || transactionLineItemDto1.getTransactionStatus().equals("p")))
+                    if(null != transactionLineItemDto1.getImeiNo() && (transactionLineItemDto1.getTransactionStatus().equals("r") || transactionLineItemDto1.getTransactionStatus().equals("p")))
                     {
                         try
                         {
                             jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
                                     transactionLineItemDto1.getProductNumber(),
                                     transactionLineItemDto1.getImeiNo(),
-                                    transactionLineItemDto1.getCost(),
-                                    transactionLineItemDto1.getRetail(),
+                                     Math.abs(transactionLineItemDto1.getCost()),
+                                    Math.abs(transactionLineItemDto1.getRetail()),
                                     0,
                                     transactionLineItemDto1.getTransactionDate());
+
+                            //jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity + transQuantity * -1, productId);
                         System.out.println("This is Phone Return");
+                            //System.out.println(Math.abs(transQuantity));
                     }
                     catch (Exception e)
                     {

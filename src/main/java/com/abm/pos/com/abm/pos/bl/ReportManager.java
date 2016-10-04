@@ -836,7 +836,7 @@ public class ReportManager {
 
             createHeadingsForCompanyName(cb, 20, 660, "Date:" + df.format(dateobj));
 
-            Image companyLogo = Image.getInstance("logo.png");
+            Image companyLogo = Image.getInstance("/assets/images/final-logo.png");
             companyLogo.setAbsolutePosition(235,760);
             companyLogo.scalePercent(15);
             doc.add(companyLogo);
