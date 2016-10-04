@@ -278,6 +278,7 @@
 		};
 		function getStoreAddress()
 		{
+			GlobalVariable.commonTransId =GlobalVariable.transactionCompletedId;
 			var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
 			dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
 		}
@@ -308,6 +309,8 @@
 		function getPrintSuccessHandler(response)
 		{
 			GlobalVariable.receiptData =response;
+			GlobalVariable.receiptCOmmonData = response;
+
 			if(response.length!== 0) {
 				$rootScope.itemTotal = Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
 

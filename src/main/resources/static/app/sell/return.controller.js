@@ -358,6 +358,7 @@
         function getPrintSuccessHandler(response)
         {
             GlobalVariable.receiptReturnData =response;
+            GlobalVariable.receiptCOmmonData=response;
             if(response.length!== 0) {
                 $rootScope.itemTotalReturn = Number(parseFloat(GlobalVariable.receiptReturnData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptReturnData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
 

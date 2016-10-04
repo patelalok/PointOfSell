@@ -144,6 +144,7 @@
 		$scope.print = function(id)
 		{
 			$scope.printLedgId = id;
+			GlobalVariable.commonTransId = $scope.printLedgId;
 			getStoreAddress();
 
 			
@@ -179,6 +180,7 @@
 		}
 		function getPrintSuccessHandler(response)
 		{
+			GlobalVariable.receiptCOmmonData = response;
 			GlobalVariable.receiptData =response;
 			$scope.itemTotal =Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal)+parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
 			$scope.modifiedData=[];
