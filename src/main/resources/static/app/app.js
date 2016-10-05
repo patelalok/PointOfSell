@@ -1,4 +1,4 @@
-﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint','chart.js','infinite-scroll']);
+﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint','chart.js','infinite-scroll','textAngular']);
   
 app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($stateProvider, $urlRouterProvider,ChartJsProvider){
 
