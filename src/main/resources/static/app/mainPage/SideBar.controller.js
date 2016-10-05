@@ -11,6 +11,7 @@
 		vm.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.device = device;
+		GlobalVariable.userRole=sessionStorage.userRole;
 		GlobalVariable.isLoginPage = false;
 		
 		$scope.menuOptions = [{
