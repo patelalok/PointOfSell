@@ -495,7 +495,7 @@ public class SQLQueries {
 
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
 
-    public String getMonthlyTransDetails = "      SELECT Hour(TRANSACTION_DATE) AS HOUR,\n" +
+    public String getMonthlyTransDetails = "      SELECT DATE(TRANSACTION_DATE) AS DATE,\n" +
             "            sum(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
             "            sum(PAID_AMOUNT_CASH) CASH, \n" +
             "            SUM(TOTAL_AMOUNT_CHECK) CHEC,  \n" +
@@ -520,7 +520,7 @@ public class SQLQueries {
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
             "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID \n" +
             "            AND TRANSACTION_DATE BETWEEN ? AND ?\n" +
-            "            GROUP BY hour";
+            "            GROUP BY DATE";
 
     public String getWeeklyTransDetails = "";
 
