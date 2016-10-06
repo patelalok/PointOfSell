@@ -40,8 +40,6 @@ public class ClosingDetailsManager {
     @Autowired
     SQLQueries sqlQueries;
 
-    @Autowired
-    ReportManager reportManager;
 
     public static final String FONT = "resources/fonts/OpenSans-Regular.ttf";
     public static final String FONTB = "resources/fonts/OpenSans-Bold.ttf";

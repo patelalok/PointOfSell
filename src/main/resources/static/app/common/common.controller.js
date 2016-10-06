@@ -8,6 +8,7 @@
     function CommonController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,GlobalConstants,restrictCharacter)
     {
         $scope.GlobalVariable = GlobalVariable;
+        console.log("loaded");
         function getStoreAddress()
         {
             var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';

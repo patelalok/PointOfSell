@@ -1,5 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
+import com.abm.pos.com.abm.pos.dto.MonthlyListDto;
+import com.abm.pos.com.abm.pos.dto.WeekDto;
 import com.abm.pos.com.abm.pos.dto.reports.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import com.itextpdf.text.Document;
@@ -39,11 +41,16 @@ public class ReportManager {
     @Autowired
     SQLQueries sqlQueries;
 
+    @Autowired
+    ClosingDetailsManager closingDetailsManager;
+
     private BaseFont bfBold;
     private BaseFont bf;
     private int pageNumber = 0;
 //    JdbcTemplate jdbcTemplate = new JdbcTemplate();
 //    SQLQueries sqlQueries = new SQLQueries();
+
+
 
 
     public CommonComparisonTotalDto getTop50Items(String startDate, String endDate) {
@@ -868,4 +875,266 @@ public class ReportManager {
 
     }
 
-}
+    public byte[] printYearlySalesReport(String startDate, String endDate, int reportNo) throws DocumentException {
+
+        Document doc = new Document(PageSize.A4);
+        initializeFontsForCommonReports();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PdfWriter writer = PdfWriter.getInstance(doc, byteArrayOutputStream);
+
+        YearlyListDto yearlyListDto = new YearlyListDto();
+
+        MonthlyListDto monthlyListDto = new MonthlyListDto();
+
+
+
+        HourlyListDto hourlyListDto = new HourlyListDto();
+
+
+
+
+        //yearlyListDto = closingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
+
+
+        doc.open();
+
+        PdfContentByte cb = writer.getDirectContent();
+
+        boolean beginPage = true;
+        int y = 0;
+
+        for (int i = 0; i < yearlyListDto.getYearlyListDtos().size(); i++) {
+            if (beginPage) {
+                beginPage = false;
+                generateLayoutForYearlySales(doc, cb);
+                generateHeaderForYearlySales(doc, cb);
+                y = 570;
+            }
+            if(reportNo==1) {
+                yearlyListDto = closingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
+                generateDetailForYearlySales(doc, cb, i, y, yearlyListDto);
+            }
+            else if(reportNo ==2)
+            {
+                monthlyListDto = closingDetailsManager.getMonthlyTransactionDetails(startDate,endDate);
+                generateDetailForMonthlySales(doc, cb, i, y, monthlyListDto);
+            }
+            else if(reportNo ==3)
+            {
+                //This is left for week
+            }
+            else if(reportNo ==4)
+            {
+                hourlyListDto = closingDetailsManager.getHourlyTransactionDetails(startDate,endDate);
+                generateDetailForHourlySales(doc, cb, i, y, hourlyListDto);
+            }
+            y = y - 40;
+            if (y < 60) {
+                printPageNumber(cb);
+                doc.newPage();
+                beginPage = true;
+            }
+        }
+//        if(reportNo==1) {
+//            generateTotalDetailForYearlySales(doc, cb, 0, y, yearlyListDto);
+//        }
+//        else if(reportNo ==2)
+//        {
+//            generateTotalDetailForMonthlySales(doc, cb, 0, y, monthlyListDto);
+//        }
+//        else if(reportNo ==3)
+//        {
+//            //This is left for week
+//        }
+//        else if(reportNo ==4)
+//        {
+//            generateTotalDetailForHourlySales(doc, cb, 0, y, hourlyListDto);
+//        }
+
+        printPageNumber(cb);
+
+        doc.close();
+
+        byte[] pdfDataBytes = byteArrayOutputStream.toByteArray();
+
+
+
+        return pdfDataBytes;
+    }
+
+    private void generateLayoutForYearlySales(Document doc, PdfContentByte cb) {
+
+        try {
+
+            cb.setLineWidth(1f);
+
+
+            // Invoice Detail box layout
+            cb.rectangle(20, 50, 550, 580);
+            cb.moveTo(20, 590);
+            cb.lineTo(570, 590);
+//            cb.moveTo(50, 50);
+//            cb.lineTo(50, 650);
+//            cb.moveTo(150, 50);
+//            cb.lineTo(150, 650);
+//            cb.moveTo(430, 50);
+//            cb.lineTo(430, 650);
+//            cb.moveTo(500, 50);
+//            cb.lineTo(500, 650);
+            cb.stroke();
+
+
+                createHeadingsForCommonReports(cb, 23, 605, "Month");
+                createHeadingsForCommonReportsName(cb, 200, 730, "Yearly Sales Report");
+
+
+
+            createHeadingsForCommonReports(cb, 110, 605, "Debit");
+            createHeadingsForCommonReports(cb, 165, 605, "Credit");
+            createHeadingsForCommonReports(cb, 230, 605, "Cash");
+            createHeadingsForCommonReports(cb, 285, 605, "Check");
+
+            createHeadingsForCommonReports(cb, 340, 605, "Tax");
+            createHeadingsForCommonReports(cb, 380, 605, "Discount");
+            createHeadingsForCommonReports(cb, 450, 605, "Profit");
+            createHeadingsForCommonReports(cb, 510, 605, "Total");
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+        private void generateHeaderForYearlySales(Document doc, PdfContentByte cb) {
+
+            try {
+
+                DateFormat df = new SimpleDateFormat("dd/MM/yy");
+                Date dateobj = new Date();
+
+                createHeadingsForCompanyName(cb, 20, 660, "Date:" + df.format(dateobj));
+
+                Image companyLogo = Image.getInstance("/assets/images/final-logo.png");
+                companyLogo.setAbsolutePosition(235,760);
+                companyLogo.scalePercent(15);
+                doc.add(companyLogo);
+                // createHeadingsForCompanyName(cb, 265, 770, "Excell Wireless");
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+    private void generateDetailForYearlySales(Document doc, PdfContentByte cb, int index, int y, YearlyListDto yearlyListDto) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != yearlyListDto && yearlyListDto.getYearlyListDtos().size() >= 1) {
+
+                createForCommonReportsContentForInventory(cb, 23, y, yearlyListDto.getYearlyListDtos().get(index).getMonthName(), 0);
+                createForCommonReportsContentForInventory(cb, 110, y, df.format(yearlyListDto.getYearlyListDtos().get(index).getDebit()), 0);
+                createForCommonReportsContentForInventory(cb, 165, y, df.format(yearlyListDto.getYearlyListDtos().get(index).getCredit()), 0);
+                createForCommonReportsContentForInventory(cb, 230, y,df.format(yearlyListDto.getYearlyListDtos().get(index).getCash()), 0);
+                createForCommonReportsContentForInventory(cb, 285, y, df.format(yearlyListDto.getYearlyListDtos().get(index).getCheck()), 0);
+                createForCommonReportsContentForInventory(cb, 340, y, df.format(yearlyListDto.getYearlyListDtos().get(index).getTax()), 0);
+                createForCommonReportsContentForInventory(cb, 380, y, df.format(yearlyListDto.getYearlyListDtos().get(index).getDiscount()), 0);
+                createForCommonReportsContentForInventory(cb, 450, y,df.format(yearlyListDto.getYearlyListDtos().get(index).getProfit()), 0);
+                createForCommonReportsContentForInventory(cb, 510, y, df.format(yearlyListDto.getYearlyListDtos().get(index).getTotal()), 0);
+
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateDetailForMonthlySales(Document doc, PdfContentByte cb, int index, int y, MonthlyListDto monthlyListDto) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != monthlyListDto && monthlyListDto.getMonthDtos().size() >= 1) {
+
+                createForCommonReportsContentForInventory(cb, 23, y, monthlyListDto.getMonthDtos().get(index).getDate(), 0);
+                createForCommonReportsContentForInventory(cb, 110, y, df.format(monthlyListDto.getMonthDtos().get(index).getDebit()), 0);
+                createForCommonReportsContentForInventory(cb, 165, y, df.format(monthlyListDto.getMonthDtos().get(index).getCredit()), 0);
+                createForCommonReportsContentForInventory(cb, 230, y,df.format(monthlyListDto.getMonthDtos().get(index).getCash()), 0);
+                createForCommonReportsContentForInventory(cb, 285, y, df.format(monthlyListDto.getMonthDtos().get(index).getCheck()), 0);
+                createForCommonReportsContentForInventory(cb, 340, y, df.format(monthlyListDto.getMonthDtos().get(index).getTax()), 0);
+                createForCommonReportsContentForInventory(cb, 380, y, df.format(monthlyListDto.getMonthDtos().get(index).getDiscount()), 0);
+                createForCommonReportsContentForInventory(cb, 450, y,df.format(monthlyListDto.getMonthDtos().get(index).getProfit()), 0);
+                createForCommonReportsContentForInventory(cb, 510, y, df.format(monthlyListDto.getMonthDtos().get(index).getTotal()), 0);
+
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private void generateDetailForHourlySales(Document doc, PdfContentByte cb, int index, int y, HourlyListDto hourlyListDto) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != hourlyListDto && hourlyListDto.getHourlyDtoList().size() >= 1) {
+
+                createForCommonReportsContentForInventory(cb, 23, y, String.valueOf(hourlyListDto.getHourlyDtoList().get(index).getHour()), 0);
+                createForCommonReportsContentForInventory(cb, 110, y, df.format(hourlyListDto.getHourlyDtoList().get(index).getDebit()), 0);
+                createForCommonReportsContentForInventory(cb, 165, y, df.format(hourlyListDto.getHourlyDtoList().get(index).getCredit()), 0);
+                createForCommonReportsContentForInventory(cb, 230, y,df.format(hourlyListDto.getHourlyDtoList().get(index).getCash()), 0);
+                createForCommonReportsContentForInventory(cb, 285, y, df.format(hourlyListDto.getHourlyDtoList().get(index).getCheck()), 0);
+                createForCommonReportsContentForInventory(cb, 340, y, df.format(hourlyListDto.getHourlyDtoList().get(index).getTax()), 0);
+                createForCommonReportsContentForInventory(cb, 380, y, df.format(hourlyListDto.getHourlyDtoList().get(index).getDiscount()), 0);
+                createForCommonReportsContentForInventory(cb, 450, y,df.format(hourlyListDto.getHourlyDtoList().get(index).getProfit()), 0);
+                createForCommonReportsContentForInventory(cb, 510, y, df.format(hourlyListDto.getHourlyDtoList().get(index).getTotal()), 0);
+
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    private void generateTotalDetailForYearlySales(Document doc, PdfContentByte cb, int index, int y, YearlyListDto yearlyListDto) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != yearlyListDto && yearlyListDto.getFinalTotalForReportsDtos().size() == 1) {
+                createContentForTotalInventory(cb, 23, y, "TOTAL", 0);
+                createContentForTotalInventory(cb, 110, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalDebit()), 0);
+                createContentForTotalInventory(cb, 165, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalCredit()), 0);
+                createContentForTotalInventory(cb, 230, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalCash()), 0);
+                createContentForTotalInventory(cb, 285, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalCheck()), 0);
+                createContentForTotalInventory(cb, 340, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalTax()), 0);
+                createContentForTotalInventory(cb, 380, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalDiscount()), 0);
+                createContentForTotalInventory(cb, 450, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getTotalProfit()), 0);
+                createContentForTotalInventory(cb, 510, y,       df.format(yearlyListDto.getFinalTotalForReportsDtos().get(0).getGrandTotal()), 0);
+
+
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+
+    }
+
