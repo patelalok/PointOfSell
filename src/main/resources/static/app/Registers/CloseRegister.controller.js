@@ -184,7 +184,6 @@
 					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)
-				+parseFloat($scope.bankDeposit);
 			$scope.totalUser = parseFloat(parseFloat($scope.totalUser).toFixed(2));
 			$scope.difDebit = parseFloat($scope.userDebit)
 				- parseFloat($scope.systemDebit);
@@ -221,8 +220,7 @@
 			$scope.totalUser = parseFloat($scope.userDebit)
 					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck)
-				+parseFloat($scope.bankDeposit);
+				+ parseFloat($scope.userCheck);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difDebitCard = parseFloat($scope.userDebitCard)
 				- parseFloat($scope.systemDebitCard);
@@ -258,7 +256,7 @@
 			$scope.totalUser = parseFloat($scope.userDebit)
 					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
+				+ parseFloat($scope.userCheck);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCash = parseFloat($scope.userCash)+parseFloat($scope.bankDeposit)
 				- parseFloat($scope.systemCash);
@@ -295,7 +293,7 @@
 			$scope.totalUser = parseFloat($scope.userDebit)
 					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck)+parseFloat($scope.bankDeposit);
+				+ parseFloat($scope.userCheck);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCheck = parseFloat($scope.userCheck)
 				- parseFloat($scope.sysCheck);

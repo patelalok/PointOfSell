@@ -107,15 +107,19 @@
 			$scope.totalLength = 0;
 			$scope.productType = "select";
 			$scope.editStock =false;
-			if(GlobalVariable.getProducts == undefined)
+			if(GlobalVariable.getProducts == undefined || GlobalVariable.getProducts == null)
 			getProductDetails.getProductDetail($scope.getCDetails);
+			else
+			{
+				loadCDetails();
+			}
 			if(GlobalVariable.getVendors == undefined)
 			getProductDetails.getVendorDetails($scope.getVDetails);
 			if(GlobalVariable.getBrands == undefined)
 			getProductDetails.getBrandDetails($scope.getBDetails);
 			if(GlobalVariable.getCategory== undefined)
 			getProductDetails.getCategoryDetails($scope.getCtDetails);
-			loadCDetails();
+
 			/*$timeout(function() {
 				$scope.closeBootstrapAlert();
 			}, 9000);*/
@@ -141,9 +145,12 @@
 		};
 		$scope.getCDetails = function(response)
 		{
+
 			$scope.getProductDtls = response;
 
+
 			GlobalVariable.getProducts = response;
+			loadCDetails();
 			util.Wait(false);
 		};
 		function loadCDetails()

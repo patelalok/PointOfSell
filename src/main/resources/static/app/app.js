@@ -1,8 +1,54 @@
-﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint','chart.js','infinite-scroll','textAngular']);
+﻿var app = angular.module('sampleApp', ['ui.bootstrap','ngSanitize','matchMedia','ui.router','uiSwitch','ui.mask','AngularPrint','chart.js','infinite-scroll','textAngular','angularSpectrumColorpicker']);
   
-app.config(['$stateProvider','$urlRouterProvider','ChartJsProvider',function($stateProvider, $urlRouterProvider,ChartJsProvider){
+app.config(['$provide','$stateProvider','$urlRouterProvider','ChartJsProvider',function($provide,$stateProvider, $urlRouterProvider,ChartJsProvider){
 
 	$urlRouterProvider.otherwise('/login');
+	$provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions){
+		// $delegate is the taOptions we are decorating
+		// register the tool with textAngular
+
+		taRegisterTool('backgroundColor', {
+			display: "<div spectrum-colorpicker ng-model='color' on-change='!!color && action(color)' format='\"hex\"' options='options'></div>",
+			action: function (color) {
+				var me = this;
+				if (!this.$editor().wrapSelection) {
+					setTimeout(function () {
+						me.action(color);
+					}, 100)
+				} else {
+					return this.$editor().wrapSelection('backColor', color);
+				}
+			},
+			options: {
+				replacerClassName: 'fa fa-paint-brush', showButtons: false
+			},
+			color: "#fff"
+		});
+		taRegisterTool('fontColor', {
+			display:"<spectrum-colorpicker trigger-id='{{trigger}}' ng-model='color' on-change='!!color && action(color)' format='\"hex\"' options='options'></spectrum-colorpicker>",
+			action: function (color) {
+				var me = this;
+				if (!this.$editor().wrapSelection) {
+					setTimeout(function () {
+						me.action(color);
+					}, 100)
+				} else {
+					return this.$editor().wrapSelection('foreColor', color);
+				}
+			},
+			options: {
+				replacerClassName: 'fa fa-font', showButtons: false
+			},
+			color: "#000"
+		});
+
+
+
+		// add the button to the default toolbar definition
+		taOptions.toolbar[1].push('backgroundColor','fontColor');
+		return taOptions;
+	}]);
+
 	//ChartJsProvider.setOptions({ colors : [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 	 ChartJsProvider.setOptions({
 	      colours: [ '#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],

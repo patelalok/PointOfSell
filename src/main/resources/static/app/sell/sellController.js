@@ -837,18 +837,43 @@
 				$rootScope.testData = GlobalVariable.onAddProduct;
 			}
 			getTaxDetails();
-			getProductDetails.getCustomerDetails()
-			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
-				$scope.productNames
-					.push(GlobalVariable.getProducts[i].description);
+
+			if(GlobalVariable.getProducts ==  undefined || GlobalVariable.getProducts == null)
+			{
+
+				getProductDetails.getProductDetail($scope.getPrdDtls);
+				getProductDetails.getCustomerDetails($scope.getCustDtls);
 			}
+			else
+			{
+				for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+					$scope.productNames
+						.push(GlobalVariable.getProducts[i].description);
+				}
+				$scope.firstNames = [];
+				for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
+					$scope.firstNames
+						.push(GlobalVariable.getCustomerDtls[i].firstName);
+				}
+			}
+
+
+		}
+		$scope.getCustDtls = function(response)
+		{
 			$scope.firstNames = [];
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
 				$scope.firstNames
 					.push(GlobalVariable.getCustomerDtls[i].firstName);
 			}
-
-		}
+		};
+		$scope.getPrdDtls = function(response)
+		{
+			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+				$scope.productNames
+					.push(GlobalVariable.getProducts[i].description);
+			}
+		};
 		$scope.$watch('GlobalVariable.getCustomerDtls',function(newValue)
 		{
 			$scope.firstNames = [];

@@ -85,6 +85,7 @@
 			$event.stopPropagation();
 			$scope.openStart = true;
 		};
+
 		$scope.openStartCalendarDaily = function($event) {
 			$event.preventDefault();
 			$event.stopPropagation();
@@ -98,6 +99,10 @@
 		$scope.onDateSelected = function(startDate, endDate, label, element) {
 			var receiptIndex = element.attr('data-receipt-index');
 			element.find('span').eq(0).html(endDate.format('yyyy-MM-dd'));
+		};
+		$scope.printClockDtls = function()
+		{
+
 		};
 		$scope.applySalesByTypeClck = function(type)
 		{

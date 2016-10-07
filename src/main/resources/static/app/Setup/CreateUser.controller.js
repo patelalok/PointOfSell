@@ -105,6 +105,7 @@
 					$scope.createdDate = GlobalVariable.editCreatedDate;
 					$scope.hrlyRate = "$"+GlobalVariable.editHrlyRate;
 					$scope.lastName = GlobalVariable.editComPer;
+				$scope.comPer = GlobalVariable.editComPer;
 			}
 		}
 		render();

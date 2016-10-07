@@ -47,7 +47,7 @@
 								
 								</li>
 
-								<li class="homeImage list-group-item alignCenter menuItemsText" style="padding-top:20px;padding-bottom:20px;padding-left:0px;padding-right:0px;" ng-class="{'menuActive':selectedMenuCd == 5}"} ng-click="navigate(5,'productmain')">
+								<li ng-hide="GlobalVariable.userRole == 'Manager'" class="homeImage list-group-item alignCenter menuItemsText" style="padding-top:20px;padding-bottom:20px;padding-left:0px;padding-right:0px;" ng-class="{'menuActive':selectedMenuCd == 5}"} ng-click="navigate(5,'productmain')">
 									<a class="dropdown-toggle" data-toggle="dropdown">
 										<div class="inline-vertical">
 										<img alt="" src="./assets/images/final-logo.png" height="25" />

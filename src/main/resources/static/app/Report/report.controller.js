@@ -20,7 +20,7 @@
 		$scope.maxDate = new Date();
 		$scope.minDate = moment().subtract(1, "days").toDate();
 
-		$scope.printReports = function(type,saleDate)
+		$scope.printReports = function(type,saleDate,slsdate)
 		{
 			var start,end;
 			if(saleDate=='todaySales')
@@ -112,6 +112,19 @@
 					var url=GlobalConstants.URLCONSTANTS+'printInventorySummaryByCommonNames?reportNo=2';
 				else if($scope.cType == 'bran')
 					var url=GlobalConstants.URLCONSTANTS+'printInventorySummaryByCommonNames?reportNo=3';
+			}
+			else if(type == 'salesSummary')
+			{
+				if(slsdate == 'yearlySummary')
+					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=1';
+				else if(slsdate == 'monthySummary')
+					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=2';
+				else if(slsdate == 'weeklySummary')
+					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=3';
+				else if(slsdate == 'dailySummary')
+					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=4';
+				else if(slsdate == 'hourlySummary')
+					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=4';
 			}
 
 			$window.open(url, '_blank');

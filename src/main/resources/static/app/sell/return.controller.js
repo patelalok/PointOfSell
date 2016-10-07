@@ -6,10 +6,10 @@
 
     ReturnController.$inject = [ '$scope', '$rootScope', 'device.utility',
         'GlobalVariable', 'DialogFactory', 'modalService',
-        'RestrictedCharacter.Types', 'dataService', '$state','GlobalConstants','$window','$timeout'];
+        'RestrictedCharacter.Types', 'dataService', '$state','GlobalConstants','$window','$timeout','getProductDetails'];
 
     function ReturnController($scope, $rootScope, device, GlobalVariable,
-                              DialogFactory, modalService, restrictCharacter, dataService, $state,GlobalConstants,$window,$timeout) {
+                              DialogFactory, modalService, restrictCharacter, dataService, $state,GlobalConstants,$window,$timeout,getProductDetails) {
 
         $scope.device = device;
         $scope.GlobalVariable = GlobalVariable;
@@ -66,7 +66,7 @@
                         + parseFloat($rootScope.returnData[i].quantity);
                     $scope.subTotal = parseFloat($scope.subTotal)
                         + parseFloat($rootScope.returnData[i].totalWithOutTax);
-                    $scope.retTotalDisc = parseFloat($scope.retTotalTax) + parseFloat($rootScope.returnData[i].discount);
+                    $scope.retTotalDisc = parseFloat($scope.retTotalDisc) + parseFloat($rootScope.returnData[i].discount);
                     $scope.totalRetail = parseFloat($scope.totalRetail) + parseFloat($rootScope.returnData[i].retail);
                     $scope.totalRetailDisc = parseFloat($scope.totalRetailDisc) + parseFloat($rootScope.returnData[i].discount);
                     $scope.retTotalTax = parseFloat($scope.retTotalTax) + parseFloat(parseFloat($rootScope.returnData[i].totalWithTax) - parseFloat($rootScope.returnData[i].totalWithOutTax));
@@ -309,6 +309,7 @@
             $scope.retTotalPrice = 0;
             $scope.totalRetailDisc = 0;
             $scope.returnprevBalance =0;
+            getProductDetails.getProductDetail();
             var _tmPath = 'app/sell/printReceiptModal.html';
             var _ctrlPath = 'PrintRecepitController';
             DialogFactory.show(_tmPath, _ctrlPath,

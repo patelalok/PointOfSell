@@ -18,6 +18,7 @@
 								<option value="salesUser">Sales By User</option>
 								<option value="inventorySummary">Inventory Summary</option>
 								<option value="top50Selling">Top 50 Selling Items</option>
+					<option value="payROll"Pay Roll</option>
 			  </select>
 			</div>
 		</div>
@@ -180,9 +181,9 @@
 
 			</div>
 		</div>
-		<div class="col-md-1 productBtn" style="width:16%;" ng-show="reportType != 'salesSummary'">
+		<div class="col-md-1 productBtn" style="width:16%;">
 			<div class="padding-bottom-5"><label></label></div>
-			<div ng-click="printReports(reportType,slCatType)">
+			<div ng-click="printReports(reportType,slCatType,measureType)">
 				<span class="glyphicon glyphicon-print" aria-hidden="true" style="color:#478FCA;cursor:pointer;font-size:35px;"></span>
 			</div>
 		</div>
