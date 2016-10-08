@@ -847,16 +847,25 @@ public class SQLQueries {
     public String updateBlanceToCustomerProfileWithoutDate = "UPDATE customer SET BALANCE = ? WHERE PHONE_NO = ?";
 
 
-    public String getUserClockInForSetup = "\tSELECT c.CLOCK_DATE,c.USERNAME,c.CLOCK_IN,c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE,c.USER_COMMISSION, c.TOTAL, c.USER_CLOCK_IN_ID, \n" +
-            "\tsum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) USERPROFIT \n" +
-            "\tFROM transaction_line_item t, transaction l , user_clock_in C \n" +
-            "\tWHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID \n" +
-            "\tAND C.USER_ID = l.USER_ID \n" +
-            "\tAND l.TRANSACTION_DATE between ? AND ? \n" +
-            "\tAND C.CLOCK_DATE = CAST(l.TRANSACTION_DATE AS DATE) \n" +
-            "\tAND l.USER_ID = ? \n" +
-            "\tGROUP BY c.CLOCK_DATE, \n" +
-            "\tc.USERNAME, c.CLOCK_IN, c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE, c.USER_COMMISSION, c.TOTAL, c.USER_CLOCK_IN_ID;";
+    public String getUserClockInForSetup ="SELECT c.CLOCK_DATE,c.USERNAME,c.CLOCK_IN,c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE,c.USER_COMMISSION, c.TOTAL, c.USER_CLOCK_IN_ID\n" +
+            "\n" +
+            "            FROM user_clock_in C  \n" +
+            "            WHERE \n" +
+            "             c.CLOCK_DATE between ? AND ? " +
+            "            AND CAST(c.CLOCK_DATE AS DATE)  \n" +
+            "            AND C.USER_ID = ?  ";
+
+          //Commenting this query casue it not working to get commitssion.
+//            "\tSELECT c.CLOCK_DATE,c.USERNAME,c.CLOCK_IN,c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE,c.USER_COMMISSION, c.TOTAL, c.USER_CLOCK_IN_ID, \n" +
+//            "\tsum((t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY) USERPROFIT \n" +
+//            "\tFROM transaction_line_item t, transaction l , user_clock_in C \n" +
+//            "\tWHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID \n" +
+//            "\tAND C.USER_ID = l.USER_ID \n" +
+//            "\tAND l.TRANSACTION_DATE between ? AND ? \n" +
+//            "\tAND C.CLOCK_DATE = CAST(l.TRANSACTION_DATE AS DATE) \n" +
+//            "\tAND l.USER_ID = ? \n" +
+//            "\tGROUP BY c.CLOCK_DATE, \n" +
+//            "\tc.USERNAME, c.CLOCK_IN, c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE, c.USER_COMMISSION, c.TOTAL, c.USER_CLOCK_IN_ID";
 
     public String editClockInDetails = "UPDATE USER_CLOCK_IN SET" +
             " CLOCK_IN = ?, " +

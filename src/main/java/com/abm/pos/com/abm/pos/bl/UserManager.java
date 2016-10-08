@@ -294,7 +294,8 @@ public class UserManager {
             {
                 double userPer = Double.parseDouble(userPercentage);
 
-                userPer = rs.getDouble("USERPROFIT") * userPer/100;
+                //Cause thse commission query is not working.
+               // userPer = rs.getDouble("USERPROFIT") * userPer/100;
 
                 user.setUserCommission(userPer);
             }
