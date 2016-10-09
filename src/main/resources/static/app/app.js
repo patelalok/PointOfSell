@@ -16,6 +16,10 @@ app.config(['$provide','$stateProvider','$urlRouterProvider','ChartJsProvider',f
 						me.action(color);
 					}, 100)
 				} else {
+					/*var selectedText = window.getSelection();
+					console.log("selectedText= "+selectedText);
+					var  glossTag = '<span style="color:'+color+'">'+ selectedText +'</span>';
+					return this.$editor().wrapSelection('insertHTML', glossTag);*/
 					return this.$editor().wrapSelection('backColor', color);
 				}
 			},
@@ -146,7 +150,10 @@ app.config(['$provide','$stateProvider','$urlRouterProvider','ChartJsProvider',f
 		.state('clock', {
 			url: '/clock',
 			templateUrl: 'app/Setup/clockPopup.html',
-			controller: 'clockPopupController'
+			controller: 'clockPopupController',
+			params:{
+				obj:null
+			}
 		});
   
 }]);

@@ -3,9 +3,9 @@
 
     angular.module('sampleApp').controller('CommonController', CommonController);
 
-    CommonController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','util','GlobalConstants','RestrictedCharacter.Types'];
+    CommonController.$inject = [ '$scope', '$rootScope','$sce', 'device.utility','GlobalVariable','DialogFactory','dataService','util','GlobalConstants','RestrictedCharacter.Types'];
 
-    function CommonController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,util,GlobalConstants,restrictCharacter)
+    function CommonController($scope, $rootScope,$sce, device ,GlobalVariable,DialogFactory,dataService,util,GlobalConstants,restrictCharacter)
     {
         $scope.GlobalVariable = GlobalVariable;
         console.log("loaded");
@@ -38,8 +38,12 @@
         {
 
         }
+        $scope.trustAsHtml = function(string) {
+            return $sce.trustAsHtml(string);
+        };
         function render()
         {
+            console.log("common controller");
             //getStoreAddress();
            // getTransDetails();
         }

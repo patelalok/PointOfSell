@@ -1,4 +1,4 @@
-<div data-ng-contoller="CommonController">
+<div data-ng-controller="CommonController">
 
     <!--<div style="text-align: left; padding-top: 10px; font-size: 15px;">
         <span>Transaction Notes:</span><span style="padding-left: 5px;">{{GlobalVariable.receiptCOmmonData[0].transactionDtoList[0].transactionNote}}</span>
@@ -9,7 +9,7 @@
 
 </div>
 <div style="text-align: left; padding-top: 10px; font-size: 10px;">
-    <span style="padding-left: 5px;" ng-bind-html="GlobalVariable.footerReceipt"></span>
+    <span style="padding-left: 5px;color:red;" data-ng-bind-html="trustAsHtml(GlobalVariable.footerReceipt)"></span>
 </div>
 
     </div>
