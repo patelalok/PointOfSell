@@ -15,6 +15,7 @@ public class UserClockInDto {
     private String date;
     private double userCommission;
     private double totalAmount;
+    private int userId;
 
     public int getClockInId() {
         return clockInId;
@@ -94,5 +95,13 @@ public class UserClockInDto {
 
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

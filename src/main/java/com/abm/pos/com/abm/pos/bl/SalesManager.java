@@ -68,11 +68,14 @@ public class SalesManager {
                     transactionDto.getReceiptNote(),
                     transactionDto.getTransactionNote());
 
-            jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
-                    transactionDto.getBalance(),
-                    transactionDto.getTransactionDate(),
-                    transactionDto.getCustomerPhoneNo());
-            System.out.println("Customer Balance Added Successfully");
+            if(null != transactionDto.getStatus() && transactionDto.getStatus().equals("c")) {
+
+                jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
+                        transactionDto.getBalance(),
+                        transactionDto.getTransactionDate(),
+                        transactionDto.getCustomerPhoneNo());
+                System.out.println("Customer Balance Added Successfully");
+            }
             System.out.println("Transaction Added Successfully");
 
 
@@ -94,7 +97,7 @@ public class SalesManager {
 
             System.out.println("Update the status successfully");
 
-            if(null != transactionDto && null != transactionDto.getStatus() && transactionDto.getStatus().equals("c"))
+            if(null != transactionDto &&  transactionDto.getPrevBalance() != 0.0)
             {
                 //Here getting the previous balance of the customer and adding back the customer cause this return  so he will get his previous balance back
                 //and this is not right that why need to add back the customer.
@@ -642,14 +645,14 @@ public class SalesManager {
             generateDetail(document, cb, i, y, receiptDtos);
             y = y - 15;
             if (y < 50) {
-                printPageNumber(cb);
+               // printPageNumber(cb);
                 document.newPage();
                 beginPage = true;
             }
 
 
         }
-        printPageNumber(cb);
+       // printPageNumber(cb);
         generatTransactionDetails(document, cb, 0, y, receiptDtos);
 
 
@@ -684,7 +687,7 @@ public class SalesManager {
 //        cb.lineTo(400, 655);
 //        cb.stroke();
 
-            createContent(cb,48,400,String.valueOf(1),PdfContentByte.ALIGN_RIGHT);
+           // createContent(cb,48,400,String.valueOf(1),PdfContentByte.ALIGN_RIGHT);
 
             document.close();
 
@@ -708,17 +711,17 @@ public class SalesManager {
             // cb.rectangle(150,50,250,650);
 
 
-            cb.stroke();
+           // cb.stroke();
 
             // Invoice Header box Text Headings
 
 
             // Invoice Detail box layout
 
-            cb.rectangle(1, 50, 250, 690);
-            cb.rectangle(1, 50, 250, 670);
+            cb.rectangle(0, 50, 200, 690);
+            cb.rectangle(0, 50, 200, 670);
             cb.moveTo(1, 695);
-            cb.lineTo(251, 695);
+            cb.lineTo(201, 695);
 
 //            cb.moveTo(50,50);
 //            cb.lineTo(50,650);
@@ -734,14 +737,14 @@ public class SalesManager {
 
 
             createHeadings(cb, 1, 725, "Date:" + " " + "2016-12-12");
-            createHeadings(cb, 72, 725, "Time:" + " " + "23:59:59");
-            createHeadings(cb, 142, 725, "CSR:" + " " + "Alok");
-            createHeadings(cb, 192, 725, "Sale Id:" + " " + 100);
+            createHeadings(cb, 55, 725, "Time:" + " " + "23:59:59");
+            createHeadings(cb, 110, 725, "CSR:" + " " + "Alok");
+            createHeadings(cb, 155, 725, "Sale Id:" + " " + 100);
 //
 //
             createHeadings(cb, 1, 703, "Item Number");
-            createHeadings(cb, 72, 703, "Item Description");
-            createHeadings(cb, 215, 703, "Price");
+            createHeadings(cb, 55, 703, "Item Description");
+            createHeadings(cb, 165, 703, "Price");
 
 
         } catch (Exception ex) {
@@ -754,7 +757,17 @@ public class SalesManager {
 
 
         cb.beginText();
-        cb.setFontAndSize(bfBold, 9);
+        cb.setFontAndSize(bfBold, 6);
+        cb.setTextMatrix(x,y);
+        cb.showText(text.trim());
+        cb.endText();
+
+    }
+    private void createHeadingsForAddress(PdfContentByte cb, float x, float y, String text){
+
+
+        cb.beginText();
+        cb.setFontAndSize(bfBold, 8);
         cb.setTextMatrix(x,y);
         cb.showText(text.trim());
         cb.endText();
@@ -765,11 +778,11 @@ public class SalesManager {
 
         try {
 
-            createStoreNameHeadings(cb, 50, 810, "Map Wireless World Inc");//197
-            createHeadings(cb, 85, 795, "926 Montreal Road");//238
-            createHeadings(cb, 103, 785, "Suite-16");//255
-            createHeadings(cb, 85, 775, "Clarkston, GA 30021");//238
-            createHeadings(cb, 98, 765, "470-428-4284");//250
+            createStoreNameHeadings(cb, 35, 810, "Map Wireless World Inc");//197
+            createHeadingsForAddress(cb, 60, 795, "926 Montreal Road");//238
+            createHeadingsForAddress(cb, 75, 785, "Suite-16");//255
+            createHeadingsForAddress(cb, 60, 775, "Clarkston, GA 30021");//238
+            createHeadingsForAddress(cb, 72, 765, "470-428-4284");//250
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -783,8 +796,8 @@ public class SalesManager {
         try {
 
             createContent(cb, 1, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductNumber(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 73, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
-            createContent(cb, 238, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
+            createContent(cb, 55, y, receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getProductDescription(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb, 180, y, df.format(receiptDtos.get(0).getTransactionLineItemDtoList().get(index).getTotalProductPrice()), PdfContentByte.ALIGN_RIGHT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -797,9 +810,9 @@ public class SalesManager {
 
         try {
 
-            createContentForTotal(cb, 155, y - 30, "Sub Total" + "              " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
-            createContentForTotal(cb, 155, y - 45, "Tax" + " " + "7%" + "      " + "            " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
-            createContentForTotal(cb, 155, y - 60, "Total" + "   " + "      " + "            " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
+            createContentForTotal(cb, 120, y - 30, "Sub Total" + "          " + receiptDtos.get(0).getTransactionDtoList().get(0).getSubTotal(), PdfContentByte.ALIGN_LEFT);
+            createContentForTotal(cb, 120, y - 45, "Tax" + " " + "7%" + "      " + "        " + receiptDtos.get(0).getTransactionDtoList().get(0).getTax(), PdfContentByte.ALIGN_LEFT);
+            createContentForTotal(cb, 120, y - 60, "Total" + "   " + "      " + "        " + receiptDtos.get(0).getTransactionDtoList().get(0).getTotalAmount(), PdfContentByte.ALIGN_LEFT);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -813,30 +826,30 @@ public class SalesManager {
 
 
         cb.beginText();
-        cb.setFontAndSize(bfBold, 14);
+        cb.setFontAndSize(bfBold, 12);
         cb.setTextMatrix(x, y);
         cb.showText(text.trim());
         cb.endText();
 
     }
-
-    private void printPageNumber(PdfContentByte cb) {
-
-
-        cb.beginText();
-        cb.setFontAndSize(bfBold, 8);
-        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber + 1), 570, 25, 0);
-        cb.endText();
-
-        pageNumber++;
-
-    }
+//
+//    private void printPageNumber(PdfContentByte cb) {
+//
+//
+//        cb.beginText();
+//        cb.setFontAndSize(bfBold, 8);
+//        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber + 1), 570, 25, 0);
+//        cb.endText();
+//
+//        pageNumber++;
+//
+//    }
 
     private void createContent(PdfContentByte cb, float x, float y, String text, int align) {
 
 
         cb.beginText();
-        cb.setFontAndSize(bf, 8);
+        cb.setFontAndSize(bf, 6);
         cb.showTextAligned(align, text.trim(), x, y, 0);
         cb.endText();
 
@@ -846,7 +859,7 @@ public class SalesManager {
 
 
         cb.beginText();
-        cb.setFontAndSize(bf, 9);
+        cb.setFontAndSize(bf, 8);
         cb.showTextAligned(align, text.trim(), x, y, 0);
         cb.endText();
 
