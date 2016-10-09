@@ -142,10 +142,12 @@
 				//$scope.getUserDetails();
 
 		}
-		$scope.navigateToClockInDtls=function(username)
+		$scope.navigateToClockInDtls=function(username,userId)
 		{
 			GlobalVariable.usernameCust = username;
-			$state.go('clock');
+			var test = new Object();
+			test.userId = userId;
+			$state.go('clock',{obj:test});
 /*			var _tmPath = 'app/Setup/clockPopup.html';
 			var _ctrlPath = 'clockPopupController';
 			DialogFactory.show(_tmPath, _ctrlPath, callbackClockHistory,undefined, undefined, 'lg');*/
