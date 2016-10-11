@@ -179,11 +179,17 @@
 				$scope.bankDeposit = 0;
 			if($scope.userDebitCard == '')
 				$scope.userDebitCard = 0;
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			if($scope.systemPaid == '')
+				$scope.systemPaid = 0;
+			if($scope.difPaid == '')
+				$scope.difPaid = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
 					+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck)
+				+ parseFloat($scope.userCheck)+parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
 			$scope.totalUser = parseFloat(parseFloat($scope.totalUser).toFixed(2));
 			$scope.difDebit = parseFloat($scope.userDebit)
 				- parseFloat($scope.systemDebit);
@@ -216,11 +222,17 @@
 				$scope.bankDeposit = 0;
 			if ($scope.userDebitCard == '')
 				$scope.userDebitCard = 0;
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			if($scope.systemPaid == '')
+				$scope.systemPaid = 0;
+			if($scope.difPaid == '')
+				$scope.difPaid = 0;
 
 			$scope.totalUser = parseFloat($scope.userDebit)
-					+parseFloat($scope.userDebitCard)
+				+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck);
+				+ parseFloat($scope.userCheck)+parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difDebitCard = parseFloat($scope.userDebitCard)
 				- parseFloat($scope.systemDebitCard);
@@ -253,10 +265,17 @@
 			if ($scope.userDebitCard == '')
 				$scope.userDebitCard = 0;
 
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			if($scope.systemPaid == '')
+				$scope.systemPaid = 0;
+			if($scope.difPaid == '')
+				$scope.difPaid = 0;
+
 			$scope.totalUser = parseFloat($scope.userDebit)
-					+parseFloat($scope.userDebitCard)
+				+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck);
+				+ parseFloat($scope.userCheck)+parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCash = parseFloat($scope.userCash)+parseFloat($scope.bankDeposit)
 				- parseFloat($scope.systemCash);
@@ -290,10 +309,17 @@
 			if ($scope.userDebitCard == '')
 				$scope.userDebitCard = 0;
 
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			if($scope.systemPaid == '')
+				$scope.systemPaid = 0;
+			if($scope.difPaid == '')
+				$scope.difPaid = 0;
+
 			$scope.totalUser = parseFloat($scope.userDebit)
-					+parseFloat($scope.userDebitCard)
+				+parseFloat($scope.userDebitCard)
 				+ parseFloat($scope.userCash)
-				+ parseFloat($scope.userCheck);
+				+ parseFloat($scope.userCheck)+parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
 			$scope.totalUser = parseFloat($scope.totalUser).toFixed(2);
 			$scope.difCheck = parseFloat($scope.userCheck)
 				- parseFloat($scope.sysCheck);
@@ -313,6 +339,31 @@
 				$scope.totalColor = 'red';
 			else
 				$scope.totalColor = 'black';
+		};
+		$scope.getUserPaid = function(paid)
+		{
+			if ($scope.userDebit == '')
+				$scope.userDebit = 0;
+			if ($scope.userCash == '')
+				$scope.userCash = 0;
+			if ($scope.userCheck == '')
+				$scope.userCheck = 0;
+			if($scope.bankDeposit == '')
+				$scope.bankDeposit = 0;
+			if ($scope.userDebitCard == '')
+				$scope.userDebitCard = 0;
+			if($scope.userPaid == '')
+				$scope.userPaid = 0;
+			if($scope.systemPaid == '')
+				$scope.systemPaid = 0;
+			if($scope.difPaid == '')
+				$scope.difPaid = 0;
+
+			$scope.totalUser = parseFloat($scope.userDebit)
+				+parseFloat($scope.userDebitCard)
+				+ parseFloat($scope.userCash)
+				+ parseFloat($scope.userCheck)+parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
+			$scope.totalUser = parseFloat(Number($scope.totalUser).toFixed(2));
 		};
 		$scope.getTotal = function(value, entText) {
 
@@ -490,7 +541,7 @@
 			$scope.totalPaid = parseFloat($scope.userPaid)
 				+ parseFloat($scope.systemPaid)
 				+ parseFloat($scope.difPaid);
-			$scope.totalUser = parseFloat($scope.totalUser)+parseFloat($scope.totalPaid);
+			//$scope.totalUser = parseFloat($scope.totalUser)+parseFloat($scope.totalPaid);
 			$scope.netSales = parseFloat($scope.netSales)
 				+ $scope.totalPaid;
 			$scope.grossSales = (parseFloat($scope.userDebit)+parseFloat($scope.userCash)+parseFloat($scope.userCheck)).toFixed(2);

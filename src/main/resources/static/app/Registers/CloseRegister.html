@@ -159,8 +159,8 @@
 				<div class="display-row">
 					<div class=" inline-vertical display-cell align-left"><span style="display:block;">Paid Out </span><span style="display:block;">Amount:</span><span style="display:block;visibility: hidden;">Reason Rea</span> </div>
 					<div class=" inline-vertical display-cell align-left" ><input type="text"  class="form-control"  ng-model="userPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp" ng-blur="getUserPaid(userPaid)" /></div>
-					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;" /></div>
-					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;"ng-style="{color: paidColor}" /></div>
+					<div class=" inline-vertical display-cell align-left"><input type="text"  class="form-control"  ng-model="systemPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;" ng-blur="getUserPaid(systemPaid)" /></div>
+					<div class=" inline-vertical display-cell align-left "><input type="text"  class="form-control"  ng-model="difPaid" data-restrict-characters="restrictCharacter.NumericWithPeriod.regExp"  style="background-color: #FFFFFF;"ng-style="{color: paidColor}"  ng-blur="getUserPaid(difPaid)" /></div>
 
 				</div>
 
