@@ -145,6 +145,7 @@
 		$scope.navigateToClockInDtls=function(username,userId)
 		{
 			GlobalVariable.usernameCust = username;
+			sessionStorage.clockUserId = userId;
 			var test = new Object();
 			test.userId = userId;
 			$state.go('clock',{obj:test});

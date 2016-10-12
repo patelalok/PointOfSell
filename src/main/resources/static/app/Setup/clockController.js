@@ -74,7 +74,14 @@
 		{
 			/*var start = getcurrentYear()+"-"+getcurrentMonth()+"-01 00:00:00";
 			var end = getcurrentYear()+"-"+getcurrentMonth()+"-31 23:59:59";*/
-			var url =GlobalConstants.URLCONSTANTS+'getUserClockInForSetup?username='+$state.params.obj.userId+'&startDate='+start+'&endDate='+end;
+			if($state.params.obj == null)
+			{
+				var clkId = sessionStorage.clockUserId;
+			}
+			else {
+				var clkId = $state.params.obj.userId;
+			}
+			var url =GlobalConstants.URLCONSTANTS+'getUserClockInForSetup?username='+clkId+'&startDate='+start+'&endDate='+end;
 			dataService.Get(url,geClockHistorySuccessHandler,getClockHistroyErrorHandler,"application/json","application/json");
 			
 		}
@@ -135,6 +142,22 @@
 						"noOfhours": hours,
 						"hrlyRate": rate,
 						"total": totalWCom,
+						"date": response[i].date,
+						"userCommission": response[i].userCommission
+					});
+				}
+				else {
+					var rate = "$8";
+					var total = parseFloat(8 * hours) + parseFloat(response[i].userCommission);
+					var totalWCom = "$" + parseFloat(Number(total).toFixed(2));
+					$scope.clockdata.push({
+						"clockInId": response[i].clockInId,
+						"username": response[i].username,
+						"clockInTime": response[i].clockInTime,
+						"clockOutTime": '',
+						"noOfhours": 0,
+						"hrlyRate": rate,
+						"total": 0,
 						"date": response[i].date,
 						"userCommission": response[i].userCommission
 					});
