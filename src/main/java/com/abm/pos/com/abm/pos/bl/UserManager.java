@@ -282,7 +282,7 @@ public class UserManager {
             user.setClockOutTime(rs.getString("CLOCK_OUT"));
             user.setNoOfhours(rs.getString("NOOFHOURS"));
             user.setDate(rs.getString("CLOCK_DATE"));
-            user.setUserId(rs.getInt("USER_ID"));
+           // user.setUserId(rs.getInt("USER_ID"));
 
 
             //This User commission when user sale products user  will get defined percentage of profit amount set by the admin.

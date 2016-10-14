@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.MonthlyListDto;
+import com.abm.pos.com.abm.pos.dto.ReceiptDto;
 import com.abm.pos.com.abm.pos.dto.WeekDto;
 import com.abm.pos.com.abm.pos.dto.reports.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
@@ -24,9 +25,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by asp5045 on 7/4/16.
@@ -43,6 +42,9 @@ public class ReportManager {
 
     @Autowired
     ClosingDetailsManager closingDetailsManager;
+
+    @Autowired
+    SalesManager salesManager;
 
     private BaseFont bfBold;
     private BaseFont bf;
@@ -205,7 +207,6 @@ public class ReportManager {
         return mapper.commonComparisonTotalDto;
 
     }
-
 
 
 
@@ -910,20 +911,20 @@ public class ReportManager {
             yearlyListDto = closingDetailsManager.getYearlyTransactionDetails(startDate,endDate);
             for (int i = 0; i < yearlyListDto.getYearlyListDtos().size(); i++) {
                 if (beginPage) {
-                    beginPage = false;
-                    generateLayoutForYearlySales(doc, cb,reportNo);
-                    generateHeaderForYearlySales(doc, cb);
-                    y = 570;
-                }
-                generateDetailForYearlySales(doc, cb, i, y, yearlyListDto);
-
-                y = y - 40;
-                if (y < 60) {
-                    printPageNumber(cb);
-                    doc.newPage();
-                    beginPage = true;
-                }
+                beginPage = false;
+                generateLayoutForYearlySales(doc, cb,reportNo);
+                generateHeaderForYearlySales(doc, cb);
+                y = 570;
             }
+            generateDetailForYearlySales(doc, cb, i, y, yearlyListDto);
+
+            y = y - 40;
+            if (y < 60) {
+                printPageNumber(cb);
+                doc.newPage();
+                beginPage = true;
+            }
+        }
 
 
         }
@@ -1250,6 +1251,161 @@ public class ReportManager {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+    }
+
+
+    public byte[] printDetailedHistorySales(String startDate, String endDate) throws DocumentException {
+
+        Document doc = new Document(PageSize.A4);
+        initializeFontsForCommonReports();
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        PdfWriter writer = PdfWriter.getInstance(doc, byteArrayOutputStream);
+
+
+
+        doc.open();
+
+        PdfContentByte cb = writer.getDirectContent();
+
+       List<Integer> transactionIds =  getTransactionId(startDate,endDate);
+
+        List<ReceiptDto> receiptDtos = new ArrayList<>();
+        int i = 0;
+        if(null != transactionIds)
+        {
+            boolean beginPage = true;
+
+            int y = 0;
+            int x = 0;
+
+            for(Integer a: transactionIds)
+            {
+                if (beginPage) {
+                    beginPage = false;
+
+                     y = 605;
+                     x = 565;
+
+                    generateHeaderForYearlySales(doc, cb);
+                }
+
+                generateLayoutForDetailedSales(doc, cb,y);
+                y = y - 80;
+
+
+                receiptDtos =  salesManager.getReceiptDetails(a);
+
+                generateDetailForDetailedSales(doc, cb, i, x, receiptDtos);
+                x = x -80;
+
+                if (y < 60) {
+                    printPageNumber(cb);
+                    doc.newPage();
+                    beginPage = true;
+                }
+                i++;
+
+                System.out.println(a);
+            }
+        }
+
+        printPageNumber(cb);
+
+        doc.close();
+
+        byte[] pdfDataBytes = byteArrayOutputStream.toByteArray();
+
+
+
+        return pdfDataBytes;
+
+
+    }
+
+    private void generateDetailForDetailedSales(Document doc, PdfContentByte cb, int i, int y, List<ReceiptDto> receiptDto) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        try {
+
+            if (null != receiptDto) {
+
+                createForCommonReportsContentForInventory(cb, 5, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 73, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 183, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 245, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 310, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 350, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 420, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 480, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 550, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+    }
+
+    private void generateLayoutForDetailedSales(Document doc, PdfContentByte cb, int y) {
+
+        try {
+
+            cb.setLineWidth(1f);
+
+            // Invoice Detail box layout
+            cb.rectangle(2, 50, 590, 580);
+            cb.moveTo(2, 590);
+            cb.lineTo(570, 590);
+
+            cb.stroke();
+
+
+            createHeadingsForCommonReportsName(cb, 200, 730, "Detailed Sales History");
+
+            createHeadingsForCommonReports(cb, 5, y, "Sales Id");
+            createHeadingsForCommonReports(cb, 73, y, "Date/Time");
+            createHeadingsForCommonReports(cb, 183, y, "Csr");
+            createHeadingsForCommonReports(cb, 245, y, "Name");
+            createHeadingsForCommonReports(cb, 310, y, "Tax");
+            createHeadingsForCommonReports(cb, 350, y, "Discount");
+            createHeadingsForCommonReports(cb, 420, y, "Quantity");
+            createHeadingsForCommonReports(cb, 480, y, "Status");
+            createHeadingsForCommonReports(cb, 550, y, "Total");
+
+
+
+
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public List<Integer> getTransactionId(String startDate, String endDate)
+    {
+
+           List<Integer> transactionIdLists = new ArrayList<>();
+
+        try
+        {
+             transactionIdLists = jdbcTemplate.queryForList(sqlQueries.getTransactionIds, new Object[] {startDate, endDate}, Integer.class);
+
+
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return transactionIdLists;
 
     }
 

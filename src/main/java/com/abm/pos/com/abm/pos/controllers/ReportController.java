@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.BarcodeManager;
 import com.abm.pos.com.abm.pos.bl.ReportManager;
+import com.abm.pos.com.abm.pos.bl.SalesManager;
 import com.abm.pos.com.abm.pos.dto.reports.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -139,6 +140,26 @@ public class ReportController {
 
 
         byte[] pdfDataBytes = reportManager.printYearlySalesReport(startDate,endDate,reportNo);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.add("Access-Control-Allow-Origin", "*");
+        headers.add("Access-Control-Allow-Methods", "GET, POST, PUT");
+        headers.add("Access-Control-Allow-Headers", "Content-Type");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(pdfDataBytes, headers, HttpStatus.OK);
+        return response;
+    }
+
+    @RequestMapping(value= "/printDetailedHistorySales", method = RequestMethod.GET, produces = "application/pdf")
+    public ResponseEntity<byte[]> printDetailedHistorySales(@RequestParam String startDate, @RequestParam String endDate) throws IOException, DocumentException {
+
+
+        byte[] pdfDataBytes = reportManager.printDetailedHistorySales(startDate,endDate);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));

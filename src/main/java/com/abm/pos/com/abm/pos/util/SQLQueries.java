@@ -879,4 +879,5 @@ public class SQLQueries {
     public String editTransactionNote = "UPDATE TRANSACTION SET RECEIPT_NOTE = ?, TRANSACTION_NOTE = ? WHERE TRANSACTION_COMP_ID = ?";
 
     public String getCommissionFromCashRegister = "SELECT COMISSION FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? ";
+    public String getTransactionIds = "SELECT TRANSACTION_COMP_ID FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
 }
