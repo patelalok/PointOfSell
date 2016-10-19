@@ -52,15 +52,28 @@ public class UserManager {
 
         try
         {
-            jdbcTemplate.update(sqlQuery.editUserQuery,
 
-                    userDto.getPassword(),
-                    userDto.getUserRole(),
-                    userDto.getHorlyRate(),
-                    userDto.getUserCommissionPercentage(),
-                    userDto.getUsername());
+            if(null != userDto && null!= userDto.getPassword()) {
+                jdbcTemplate.update(sqlQuery.editUserWithPasswordQuery,
 
-            System.out.println("User Edited Successfully");
+                        userDto.getPassword(),
+                        userDto.getUserRole(),
+                        userDto.getHorlyRate(),
+                        userDto.getUserCommissionPercentage(),
+                        userDto.getUsername());
+
+                System.out.println("User Edited with password Successfully");
+            }
+            else
+            {
+                jdbcTemplate.update(sqlQuery.editUserWithOutPasswordQuery,
+                        userDto.getUserRole(),
+                        userDto.getHorlyRate(),
+                        userDto.getUserCommissionPercentage(),
+                        userDto.getUsername());
+
+                System.out.println("User Edited with out password Successfully");
+            }
 
         }
         catch (Exception e)

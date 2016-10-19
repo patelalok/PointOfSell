@@ -1280,26 +1280,46 @@ public class ReportManager {
 
             int y = 0;
             int x = 0;
+            int z = 0;
 
-            for(Integer a: transactionIds)
+            for(int c = 0; c <= 0; c++)
             {
                 if (beginPage) {
                     beginPage = false;
 
                      y = 605;
                      x = 565;
+                     z = 525;
 
                     generateHeaderForYearlySales(doc, cb);
                 }
 
                 generateLayoutForDetailedSales(doc, cb,y);
-                y = y - 80;
 
+                receiptDtos =  salesManager.getReceiptDetails(14);
+                generateDetailForDetailedSales(doc, cb, i, y-40, receiptDtos);
 
-                receiptDtos =  salesManager.getReceiptDetails(a);
+                generateLineItemLayoutForDetailedSales(doc, cb,y-70);
 
-                generateDetailForDetailedSales(doc, cb, i, x, receiptDtos);
-                x = x -80;
+                for(int m = 0; m < receiptDtos.get(0).getTransactionLineItemDtoList().size(); m++ )
+                {
+                    generateLineItemValuesForDetailedSales(doc, cb,y-100, receiptDtos,m);
+                    y = y-25;
+                }
+                generatePaymentLayoutForDetailedSales(doc, cb,y-80);
+
+//                y = y - 120;
+//
+//
+//
+//
+//
+//
+//
+//
+//                x = x -80;
+//
+//                z = z- 120;
 
                 if (y < 60) {
                     printPageNumber(cb);
@@ -1308,7 +1328,7 @@ public class ReportManager {
                 }
                 i++;
 
-                System.out.println(a);
+                System.out.println(c);
             }
         }
 
@@ -1325,6 +1345,47 @@ public class ReportManager {
 
     }
 
+    private void generateLineItemValuesForDetailedSales(Document doc, PdfContentByte cb, int y, List<ReceiptDto> receiptDtosList, int m) {
+
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        if(null != receiptDtosList) {
+
+            createForCommonReportsContentForInventory(cb, 5, y, receiptDtosList.get(0).getTransactionLineItemDtoList().get(m).getProductDescription(), 0);
+            createForCommonReportsContentForInventory(cb, 350, y, df.format(receiptDtosList.get(0).getTransactionLineItemDtoList().get(m).getRetail()), 0);
+            createForCommonReportsContentForInventory(cb, 420, y, df.format(receiptDtosList.get(0).getTransactionLineItemDtoList().get(m).getDiscount()), 0);
+            createForCommonReportsContentForInventory(cb, 480, y, df.format(receiptDtosList.get(0).getTransactionLineItemDtoList().get(m).getQuantity()), 0);
+            createForCommonReportsContentForInventory(cb, 550, y, df.format(receiptDtosList.get(0).getTransactionLineItemDtoList().get(m).getTotalProductPrice()), 0);
+
+
+
+        }
+
+
+    }
+
+    private void generatePaymentLayoutForDetailedSales(Document doc, PdfContentByte cb, int y) {
+
+        createHeadingsForCommonReports(cb, 5, y, "Cash");
+        createHeadingsForCommonReports(cb, 172, y, "Credit");
+        createHeadingsForCommonReports(cb, 309, y, "Debit");
+        createHeadingsForCommonReports(cb, 446, y, "Check");
+
+
+    }
+
+    private void generateLineItemLayoutForDetailedSales(Document doc, PdfContentByte cb, int y) {
+
+
+        createHeadingsForCommonReports(cb, 5, y, "Description");
+        createHeadingsForCommonReports(cb, 350, y, "Retail");
+        createHeadingsForCommonReports(cb, 420, y, "Discount");
+        createHeadingsForCommonReports(cb, 480, y, "Quantity");
+        createHeadingsForCommonReports(cb, 550, y, "Total");
+
+    }
+
+
     private void generateDetailForDetailedSales(Document doc, PdfContentByte cb, int i, int y, List<ReceiptDto> receiptDto) {
 
         DecimalFormat df = new DecimalFormat("0.00");
@@ -1334,14 +1395,14 @@ public class ReportManager {
             if (null != receiptDto) {
 
                 createForCommonReportsContentForInventory(cb, 5, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 73, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 183, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 245, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 310, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 350, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 420, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 480, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
-                createForCommonReportsContentForInventory(cb, 550, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTransactionCompId()), 0);
+                createForCommonReportsContentForInventory(cb, 73, y, (receiptDto.get(0).getTransactionDtoList().get(0).getTransactionDate()), 0);
+                createForCommonReportsContentForInventory(cb, 183, y, (receiptDto.get(0).getTransactionDtoList().get(0).getUsername()), 0);
+                createForCommonReportsContentForInventory(cb, 245, y, (receiptDto.get(0).getTransactionDtoList().get(0).getCustomerName()), 0);
+                createForCommonReportsContentForInventory(cb, 310, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTax()), 0);
+                createForCommonReportsContentForInventory(cb, 350, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getDiscount()), 0);
+                createForCommonReportsContentForInventory(cb, 420, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTotalQuantity()), 0);
+                createForCommonReportsContentForInventory(cb, 480, y, (receiptDto.get(0).getTransactionDtoList().get(0).getStatus()), 0);
+                createForCommonReportsContentForInventory(cb, 550, y, df.format(receiptDto.get(0).getTransactionDtoList().get(0).getTotalAmount()), 0);
 
             }
 

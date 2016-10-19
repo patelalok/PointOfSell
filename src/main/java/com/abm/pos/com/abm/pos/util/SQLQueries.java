@@ -289,7 +289,7 @@ public class SQLQueries {
                     "DESCRIPTION = ? " +
                     "WHERE BRAND_ID = ?";
 
-    public String editUserQuery =
+    public String editUserWithPasswordQuery =
             "UPDATE USER SET " +
                     "PASSWORD = ?, " +
                     "USER_ROLE = ?, " +
@@ -880,4 +880,9 @@ public class SQLQueries {
 
     public String getCommissionFromCashRegister = "SELECT COMISSION FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? ";
     public String getTransactionIds = "SELECT TRANSACTION_COMP_ID FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
+    public String editUserWithOutPasswordQuery = "UPDATE USER SET " +
+            "USER_ROLE = ?, " +
+            "HORLYRATE = ?, " +
+            "USER_COMMISSION_PERCENTAGE = ? " +
+            "WHERE USERNAME = ? ";
 }
