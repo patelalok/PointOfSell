@@ -90,6 +90,7 @@
 		function render()
 		{
 			getProductDetails.getProductValues();
+			getProductDetails.getUserDetails();
 		}
 		function js_yyyy_mm_dd_hh_mm_ss () {
 			var now = new Date();
@@ -125,7 +126,7 @@
 		}
 		$scope.addClockIn = function()
 		{
-			var _tmPath = 'app/mainPage/clockin.html';
+			var _tmPath = 'app/mainPage/clockIn.html';
 			var _ctrlPath = 'ClockInController';
 			DialogFactory.show(_tmPath, _ctrlPath,$scope.callbackClock);
 		};

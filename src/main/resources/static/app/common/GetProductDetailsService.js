@@ -17,11 +17,25 @@
 				getBrandDetails:getBrandDetails,
 				getCategoryDetails:getCategoryDetails,
 				getProductDetail:getProductDetail,
-				getCustomerDetails:getCustomerDetails
+				getCustomerDetails:getCustomerDetails,
+				getUserDetails:getUserDetails
 				
 		};
 		return getProductDetails;
 		var refCallback = null;
+		function getUserDetails ()
+		{
+			var url=GlobalConstants.URLCONSTANTS+'getUserDetails';
+			dataService.Get(url,onGetUserDtlsSuccess,onGetUserDtlsError,'application/json','application/json');
+		}
+		function onGetUserDtlsSuccess(response)
+		{
+			GlobalVariable.getUserDtls = response;
+		}
+		function onGetUserDtlsError(response)
+		{
+
+		}
 		function getProductValues()
 		{
 			util.Wait(true);

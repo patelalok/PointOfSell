@@ -639,10 +639,10 @@
 				$rootScope.productTotal = parseFloat($rootScope.productTotal)
 					+ parseFloat(GlobalVariable.balanceRemaining);
 			}
-			$rootScope.totalPayment = parseFloat(parseFloat($rootScope.productTotal)
-				.toFixed(2));
-			GlobalVariable.checkOuttotal = parseFloat(parseFloat($rootScope.totalPayment)
-				.toFixed(2));
+			$rootScope.totalPayment = parseFloat(Number(parseFloat($rootScope.productTotal)
+				.toFixed(2)));
+			GlobalVariable.checkOuttotal = parseFloat(Number(parseFloat($rootScope.totalPayment)
+				.toFixed(2)));
 			GlobalVariable.onAddProduct = $rootScope.testData;
 		}
 		$scope.editRow = function($index,row) {
