@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('loginController',loginFunction);
 
-	loginFunction.$inject = [ '$window','$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory','GlobalConstants'];
+	loginFunction.$inject = [ '$window','$scope', '$rootScope', 'device.utility','$state','GlobalVariable','dataService','DialogFactory','GlobalConstants','getProductDetails'];
 
-	function loginFunction($window,$scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory,GlobalConstants) {
+	function loginFunction($window,$scope, $rootScope, device,$state,GlobalVariable,dataService,DialogFactory,GlobalConstants,getProductDetails) {
 		
 		
 		$scope.device = device;
@@ -115,22 +115,10 @@
 		}
 		function render()
 		{
-			getUserDtls();
+			getProductDetails.getUserDetails();
 
 		}
-		function getUserDtls()
-		{
-			var url=GlobalConstants.URLCONSTANTS+'getUserDetails';
-			dataService.Get(url,onGetUserDtlsSuccess,onGetUserDtlsError,'application/json','application/json');
-		}
-		function onGetUserDtlsSuccess(response)
-		{
-			GlobalVariable.getUserDtls = response;
-		}
-		function onGetUserDtlsError(response)
-		{
 
-		}
 		render();
 	}
 })();

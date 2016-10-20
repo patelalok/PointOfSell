@@ -177,13 +177,14 @@
 		$scope.editClockIn = function(row)
 		{
 			GlobalVariable.editClockDtls = row;
+
 			var _tmPath = 'app/Setup/editClockInDetails.html';
 			var _ctrlPath = 'EditClockController';
 			DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackEditClockDtls);
 		};
 		$scope.callBackEditClockDtls = function()
 		{
-			$scope.loadclockinDtls('thisMonthSales');
+			$scope.loadclockinDtls('todaySales');
 		};
 		function render()
 		{

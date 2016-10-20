@@ -314,6 +314,17 @@
 			if(response.length!== 0) {
 				$rootScope.itemTotal = Number(parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].subTotal) + parseFloat(GlobalVariable.receiptData[0].transactionDtoList[0].lineItemDiscount)).toFixed(2);
 
+				$rootScope.itemTotal = Number($rootScope.itemTotal).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance = Number(GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].tax=Number(GlobalVariable.receiptData[0].transactionDtoList[0].tax).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount=Number(GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash = Number(GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCash).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit = Number(GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCredit).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit = Number(GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountDebit).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck = Number(GlobalVariable.receiptData[0].transactionDtoList[0].paidAmountCheck).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount = Number(GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount).toFixed(2);
+				GlobalVariable.receiptData[0].transactionDtoList[0].balance = Number(GlobalVariable.receiptData[0].transactionDtoList[0].balance).toFixed(2);
+
 
 				for (var i = 0; i < GlobalVariable.receiptData[0].transactionLineItemDtoList.length; i++) {
 					$rootScope.modifiedTransData.push(

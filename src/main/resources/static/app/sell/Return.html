@@ -276,7 +276,7 @@
             <div class="display-row" style="border-bottom: 1px solid #000000;">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Item Total</div>
-                <div class="inline-vertical display-cell align-left padding-left-40">{{itemTotalReturn}}</div>
+                <div class="inline-vertical display-cell align-left padding-left-40">${{itemTotalReturn}}</div>
             </div>
             <div class="display-row">
                 <div class="inline-vertical display-cell align-left"
@@ -296,46 +296,46 @@
                  ng-if="GlobalVariable.receiptReturnData[0].transactionDtoList[0].prevBalance !==0">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Prev Balance:</div>
-                <div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].prevBalance}}</div>
+                <div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].prevBalance}}</div>
             </div>
             <div class="display-row">
                 <div class=" inline-vertical display-cell align-left"
-                     style="padding-left: 500px;">Tax:</div>
-                <div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].tax}}</div>
+                     style="padding-left: 500px;">Sales Tax:</div>
+                <div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].tax}}</div>
             </div>
 
             <div class="display-row" style="border-bottom: 1px solid #000000;">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Total</div>
-                <div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].totalAmount}}</div>
+                <div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].totalAmount}}</div>
             </div>
             <div class="display-row"
                  ng-if="GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCash !==0">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Cash/Check</div>
                 <div class="inline-vertical display-cell align-left padding-left-40"
-                     ng-model="productTotal">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCash}}</div>
+                     ng-model="productTotal">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCash}}</div>
             </div>
             <div class="display-row"
                  ng-if="GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCredit !== 0">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Credit</div>
                 <div class="inline-vertical display-cell align-left padding-left-40"
-                     ng-model="productTotal">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCredit}}</div>
+                     ng-model="productTotal">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCredit}}</div>
             </div>
             <div class="display-row"
                  ng-if="GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountDebit !== 0">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Debit</div>
                 <div class="inline-vertical display-cell align-left padding-left-40"
-                     ng-model="productTotal">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountDebit}}</div>
+                     ng-model="productTotal">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountDebit}}</div>
             </div>
             <div class="display-row"
                  ng-if="GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCheck !== 0">
                 <div class="inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Check</div>
                 <div class="inline-vertical display-cell align-left padding-left-40"
-                     ng-model="productTotal">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCheck}}</div>
+                     ng-model="productTotal">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].paidAmountCheck}}</div>
             </div>
             <!--<div class="display-row"
                  ng-if="GlobalVariable.receiptReturnData[0].transactionDtoList[0].changeAmount !==0">
@@ -347,7 +347,7 @@
             <div class="display-row">
                 <div class=" inline-vertical display-cell align-left"
                      style="padding-left: 500px;">Balance:</div>
-                <div class="inline-vertical display-cell align-left padding-left-40">{{GlobalVariable.receiptReturnData[0].transactionDtoList[0].balance}}</div>
+                <div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptReturnData[0].transactionDtoList[0].balance}}</div>
             </div>
         </div>
     </div>

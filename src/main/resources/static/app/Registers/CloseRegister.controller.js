@@ -253,6 +253,11 @@
 			else
 				$scope.totalColor = 'black';
 		};
+
+		$scope.getBankDeposit = function(value)
+		{
+			$scope.cashHand= parseFloat($scope.userCash) - parseFloat($scope.bankDeposit);
+		};
 		$scope.getUserCash = function(value) {
 			if ($scope.userDebit == '')
 				$scope.userDebit = 0;

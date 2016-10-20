@@ -117,7 +117,7 @@
 			{
 				if(slsdate == 'yearlySummary')
 					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=1';
-				else if(slsdate == 'monthySummary')
+				else if(slsdate == 'monthlySummary')
 					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=2';
 				else if(slsdate == 'weeklySummary')
 					var url =GlobalConstants.URLCONSTANTS+'printYearlySalesReport?startDate='+start+'&endDate='+end+'&reportNo=3';
