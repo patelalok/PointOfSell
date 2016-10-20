@@ -1306,7 +1306,7 @@ public class ReportManager {
                     generateLineItemValuesForDetailedSales(doc, cb,y-100, receiptDtos,m);
                     y = y-25;
                 }
-                generatePaymentLayoutForDetailedSales(doc, cb,y-80);
+                generatePaymentLayoutForDetailedSales(doc, cb,y-100);
 
 //                y = y - 120;
 //

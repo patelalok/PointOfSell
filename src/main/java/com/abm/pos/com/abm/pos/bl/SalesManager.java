@@ -70,12 +70,14 @@ public class SalesManager {
 
             if(null != transactionDto.getStatus() && transactionDto.getStatus().equals("c")) {
 
-                jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfile,
+                jdbcTemplate.update(sqlQuery.updateBalanceToCustomerProfile,
                         transactionDto.getBalance(),
                         transactionDto.getTransactionDate(),
                         transactionDto.getCustomerPhoneNo());
                 System.out.println("Customer Balance Added Successfully");
             }
+
+
             System.out.println("Transaction Added Successfully");
 
 
@@ -95,17 +97,19 @@ public class SalesManager {
             //This is not neccecary but just doing in case i need on future.
             //jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
 
-            System.out.println("Update the status successfully");
+          //  System.out.println("Update the status successfully");
 
             if(null != transactionDto &&  transactionDto.getPrevBalance() != 0.0)
             {
-                //Here getting the previous balance of the customer and adding back the customer cause this return  so he will get his previous balance back
+                //Here getting the previous balance of the customer and adding back the customer cause this is return  so he will get his previous balance back
                 //and this is not right that why need to add back the customer.
                 String previousBalance = jdbcTemplate.queryForObject(sqlQuery.getPreviousBalance, new Object[]{previousTransId}, String.class);
 
                 String customerPhoneNo = jdbcTemplate.queryForObject(sqlQuery.getCustomerPhoneNo, new Object[]{previousTransId}, String.class);
 
                 if (null != customerPhoneNo && null != previousBalance) {
+
+
                     jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, previousBalance, customerPhoneNo);
                     System.out.println("Customer balance updated successfully with with complete return");
                 }
@@ -117,6 +121,16 @@ public class SalesManager {
 
             else {
                 //Just adding partial transaction as new transaction in db with negative values.
+
+
+                //This the case when customer has not previous balance but intial transaction was made as partial payment
+                // and now user is returning this transaction so we need to make the balance of the transaction as 0.0 because  that has not any previous balance.
+                if(null != transactionDto && transactionDto.getBalance() != 0.0 && null != transactionDto.getCustomerPhoneNo())
+                {
+                    jdbcTemplate.update(sqlQuery.updateBlanceToCustomerProfileWithoutDate, 0.0,  transactionDto.getCustomerPhoneNo());
+                    addTransaction(transactionDto);
+                }
+
                 if(null != transactionDto) {
                     addTransaction(transactionDto);
                 }
