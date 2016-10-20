@@ -13,6 +13,7 @@ public class PageSetUpDto {
     private String storeEmail;
     private int receiptType;
     private int wholeSaleFlag;
+    private int customReceiptFlag;
 
     public String getFooterReceipt() {
         return footerReceipt;
@@ -77,5 +78,13 @@ public class PageSetUpDto {
 
     public void setWholeSaleFlag(int wholeSaleFlag) {
         this.wholeSaleFlag = wholeSaleFlag;
+    }
+
+    public int getCustomReceiptFlag() {
+        return customReceiptFlag;
+    }
+
+    public void setCustomReceiptFlag(int customReceiptFlag) {
+        this.customReceiptFlag = customReceiptFlag;
     }
 }
