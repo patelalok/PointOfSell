@@ -78,6 +78,7 @@
 			$scope.footerId = response[0].id;
 				$scope.footerTaxId= response[0].tax;
 				$scope.footerStore= response[0].storeAddress;
+				GlobalVariable.wholeSaleFlag =parseInt(response[0].wholeSaleFlag);
 			}
 		}
 		function onGetTaxError(response)
