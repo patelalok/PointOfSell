@@ -143,6 +143,14 @@
             {
                 $scope.balanceAmount = 0;
             }
+            if(GlobalVariable.wholeSaleFlag == 1)
+			{
+				var transStat = "w";
+			}
+			else
+			{
+				var transStat = "c";
+			}
 			var url =GlobalConstants.URLCONSTANTS+"addTransaction";
 			var request = new Object();
 			request = {
@@ -152,7 +160,7 @@
 				"discount":parseFloat(parseFloat(GlobalVariable.discountTotal).toFixed(2)) ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":sessionStorage.userId,
-				"status":"c",
+				"status":transStat,
 			"paidAmountCash":paidAmtCash,
 			"changeAmount":chnAmount,
 			"paidAmountDebit":paidAmtDebit,
@@ -176,6 +184,14 @@
 		function addTransactionSuccessHandler(response)
 		{	
 			var request = [];
+			if(GlobalVariable.wholeSaleFlag == 1)
+			{
+				var transStat = "w";
+			}
+			else
+			{
+				var transStat = "c";
+			}
 			for(var i=0;i< $rootScope.testData.length ; i++)
 			{
 				if(parseFloat($rootScope.testData[i].discount) !== 0)
@@ -217,7 +233,7 @@
 					 "totalProductPrice":parseFloat(parseFloat($rootScope.testData[i].total).toFixed(2)),
 					 "transactionDate":GlobalVariable.transDate,
 					"discountPercentage":discPer,
-					"transactionStatus":"c",
+					"transactionStatus":transStat,
 					"totalProductPriceWithTax":parseFloat(parseFloat(totalProductPriceWithTax).toFixed(2)),
 					"imeiNo":$rootScope.testData[i].imeiNo,
 					"phoneId":$rootScope.testData[i].phoneId

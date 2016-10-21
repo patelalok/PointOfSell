@@ -115,7 +115,7 @@
 		}
 		function render()
 		{
-			getProductDetails.getUserDetails();
+			//getProductDetails.getUserDetails();
 
 		}
 
