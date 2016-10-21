@@ -421,13 +421,19 @@ public class SQLQueries {
                 "SELECT SUM(DISCOUNT)" +
                 " FROM TRANSACTION_LINE_ITEM " +
                 "WHERE TRANSACTION_COMP_ID = ? ";
-//Done
+
+//Need to find the way when status in not equal to 'w'
     public String getDiscountFromLineItemwithDate =
             "  SELECT SUM(DISCOUNT) " +
                     "            FROM TRANSACTION_LINE_ITEM " +
                     "            WHERE DATE " +
                     "            BETWEEN ? AND ? ";
 
+    public String getDiscountFromLineItemwithDateForWholeSale =
+            "  SELECT SUM(DISCOUNT) " +
+                    "            FROM TRANSACTION_LINE_ITEM " +
+                    "            WHERE DATE " +
+                    "            BETWEEN ? AND ? AND TRANSACTION_STATUS = 'w' ";
 
     public String getTransactionLineItemDetails = "SELECT * FROM TRANSACTION_LINE_ITEM WHERE TRANSACTION_COMP_ID = ?";
 
@@ -639,7 +645,7 @@ public class SQLQueries {
             "            FROM TRANSACTION_LINE_ITEM t, CATEGORY c, PRODUCT p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE  \n" +
             "            BETWEEN ? AND ? group by c.CATEGORY_NAME ";
-//done
+
     public String getSalesVendorDetails = " SELECT v.VENDOR_NAME as COMMON_NAME,  \n" +
             "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
             "            sum(t.QUANTITY) QUANTITY,  \n" +
@@ -655,7 +661,7 @@ public class SQLQueries {
             "            AND t.DATE   \n" +
             "            BETWEEN ? AND ? " +
             "            group by v.VENDOR_NAME ";
-//done
+
     public String getSalesBrandDetails = "   SELECT  b.BRAND_NAME as COMMON_NAME,  \n" +
             "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
             "            sum(t.QUANTITY) QUANTITY,  \n" +
@@ -671,7 +677,7 @@ public class SQLQueries {
             "            AND t.DATE  \n" +
             "            BETWEEN ? AND ? " +
             "            group by b.BRAND_NAME ";
-//Done
+
     public String getSalesProductDetails = "       SELECT p.DESCRIPTION as COMMON_NAME,  \n" +
             "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
             "            sum(t.QUANTITY) QUANTITY,  \n" +
@@ -752,6 +758,20 @@ public class SQLQueries {
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
                     "            FROM TRANSACTION  \n" +
                     "            WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
+
+    public String getClosingDetailsFromSystemFromTransactionForWholeSale =
+            "SELECT SUM(PAID_AMOUNT_CASH) CASH, \n" +
+                    "            SUM(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
+                    "            SUM(TOTAL_AMOUNT_CHECK) CHECKAMOUNT, \n" +
+                    "            SUM(PAID_AMOUNT_DEBIT) DEBIT, \n" +
+                    "            SUM(PAID_AMOUNT_CASH + TOTAL_AMOUNT_CREDIT + TOTAL_AMOUNT_CHECK + PAID_AMOUNT_DEBIT) TOTAL, \n" +
+                    "            SUM(BALANCE - PREVIOUS_BALANCE) BALANCE , \n" +
+                    "            SUM(TAX_AMOUNT) TAX, \n" +
+                    "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
+                    "            FROM TRANSACTION  \n" +
+                    "            WHERE STATUS = 'w' AND TRANSACTION_DATE BETWEEN ? AND ? ";
+
+
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
     public String getCustomersLast12MonthSpend = "SELECT sum(TOTAL_AMOUNT) TOTAL FROM TRANSACTION where CUSTOMER_PHONENO = ?";

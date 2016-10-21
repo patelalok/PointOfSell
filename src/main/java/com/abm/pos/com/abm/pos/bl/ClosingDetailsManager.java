@@ -221,6 +221,8 @@ public class ClosingDetailsManager {
     }
 
 
+
+
     //I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
     private final class TransactionCloseMapper implements RowMapper<DashboardDto> {
 
