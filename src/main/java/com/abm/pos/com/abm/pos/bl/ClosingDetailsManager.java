@@ -44,43 +44,48 @@ public class ClosingDetailsManager {
     public static final String FONT = "resources/fonts/OpenSans-Regular.ttf";
     public static final String FONTB = "resources/fonts/OpenSans-Bold.ttf";
 
-    public void addClosingDetailsToDB(ClosingDetailsDto closingDetailsDto) {
+    public void addClosingDetailsToDB(ClosingDetailsDto closingDetailsDto, boolean isRetail) {
 
         //Checking if register_id is 0 that means closing details is inserting first time and if not then i need to edit it.
         try {
 
+
             if (closingDetailsDto.getRegisterId() == 0) {
 
-                jdbcTemplate.update(sqlQueries.addClosingDetails,
-                        closingDetailsDto.getUserIdClose(),
-                        closingDetailsDto.getReportCash(),
-                        closingDetailsDto.getReportCredit(),
-                        closingDetailsDto.getReportCheck(),
-                        closingDetailsDto.getReportDebit(),
-                        closingDetailsDto.getReportTotalAmount(),
-                        closingDetailsDto.getCloseCash(),
-                        closingDetailsDto.getCloseCredit(),
-                        closingDetailsDto.getCloseCheck(),
-                        closingDetailsDto.getCloseDebit(),
-                        closingDetailsDto.getCloseDate(),
-                        closingDetailsDto.getCloseTotalAmount(),
-                        closingDetailsDto.getDifferenceCredit(),
-                        closingDetailsDto.getDifferenceCash(),
-                        closingDetailsDto.getDifferenceCheck(),
-                        closingDetailsDto.getDifferenceDebit(),
-                        closingDetailsDto.getTotalDifference(),
-                        closingDetailsDto.getTotalBusinessAmount(),
-                        closingDetailsDto.getTotalTax(),
-                        closingDetailsDto.getTotalDiscount(),
-                        closingDetailsDto.getTotalProfit(),
-                        closingDetailsDto.getTotalMarkup(),
-                        closingDetailsDto.getBankDeposit(),
-                        closingDetailsDto.getCommission(),
-                        closingDetailsDto.getCustomerBalance(),
-                        closingDetailsDto.getCashInHand());
 
-                System.out.println("Closing Details Added Successfully");
-            } else {
+
+                    jdbcTemplate.update(sqlQueries.addClosingDetails,
+                            closingDetailsDto.getUserIdClose(),
+                            closingDetailsDto.getReportCash(),
+                            closingDetailsDto.getReportCredit(),
+                            closingDetailsDto.getReportCheck(),
+                            closingDetailsDto.getReportDebit(),
+                            closingDetailsDto.getReportTotalAmount(),
+                            closingDetailsDto.getCloseCash(),
+                            closingDetailsDto.getCloseCredit(),
+                            closingDetailsDto.getCloseCheck(),
+                            closingDetailsDto.getCloseDebit(),
+                            closingDetailsDto.getCloseDate(),
+                            closingDetailsDto.getCloseTotalAmount(),
+                            closingDetailsDto.getDifferenceCredit(),
+                            closingDetailsDto.getDifferenceCash(),
+                            closingDetailsDto.getDifferenceCheck(),
+                            closingDetailsDto.getDifferenceDebit(),
+                            closingDetailsDto.getTotalDifference(),
+                            closingDetailsDto.getTotalBusinessAmount(),
+                            closingDetailsDto.getTotalTax(),
+                            closingDetailsDto.getTotalDiscount(),
+                            closingDetailsDto.getTotalProfit(),
+                            closingDetailsDto.getTotalMarkup(),
+                            closingDetailsDto.getBankDeposit(),
+                            closingDetailsDto.getCommission(),
+                            closingDetailsDto.getCustomerBalance(),
+                            closingDetailsDto.getCashInHand(),
+                            isRetail);
+
+                    System.out.println("Closing Details Added Successfully");
+                }
+            else {
                 jdbcTemplate.update(sqlQueries.editClosingDetails,
                         closingDetailsDto.getUserIdClose(),
                         closingDetailsDto.getReportCash(),
@@ -126,7 +131,6 @@ public class ClosingDetailsManager {
 
         // I NEED TO CHANGE CLOSING DETAISL TO OBJECT INSTADE OF ARRY LIST CAUSE IT DOESNT MAKE ANY SENSE.
 
-        try {
             dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransaction, new TransactionCloseMapper(), startDate, endDate);
             //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOSE NOT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
             closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystem, new ClosingMapper(), startDate, endDate);
@@ -140,7 +144,39 @@ public class ClosingDetailsManager {
             String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDate, new Object[]{startDate, endDate}, String.class);
 
 
+            return validateClosingDetails(closingDetails, dashboardDto, lineItemDiscount, profit, customerBalance);
+
+    }
+
+    public List<ClosingDetailsDto> getClosingDetailsForWholesale(String startDate, String endDate) {
+
+        List<ClosingDetailsDto> closingDetails = new ArrayList<>();
+        DashboardDto dashboardDto = new DashboardDto();
+
+        // I NEED TO CHANGE CLOSING DETAISL TO OBJECT INSTADE OF ARRY LIST CAUSE IT DOESNT MAKE ANY SENSE.
+
+
+        //need to change the query here for close register.
+        dashboardDto = jdbcTemplate.queryForObject(sqlQueries.getClosingDetailsFromSystemFromTransactionForWholeSale, new TransactionCloseMapper(), startDate, endDate);
+        //THIS CALL IS GIVING DATA FROM CASH_REGISTER TABLE BUT THE PROBLEM IS IT DOSE NOT HAVE THE DATA FROM THE SYSTEM ON UI, SO ADDING NOW DB CALL
+        closingDetails = jdbcTemplate.query(sqlQueries.getClosingDetailsFromSystemForWholesale, new ClosingMapper(), startDate, endDate);
+
+        //Getting the discount from the lineitem table to get product level discount.
+        String lineItemDiscount = jdbcTemplate.queryForObject(sqlQueries.getDiscountFromLineItemwithDateForWholesale, new Object[]{startDate, endDate}, String.class);
+
+        String profit = jdbcTemplate.queryForObject(sqlQueries.getPrpfitForCloseRegisterForWholesale, new Object[]{startDate, endDate, startDate, endDate}, String.class);
+
+        //Here Getting customer balance to handle short or over issue in money for close register reports.
+        String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDateForWholesale, new Object[]{startDate, endDate}, String.class);
+
+
+        return closingDetails;
+    }
+
+    private List<ClosingDetailsDto> validateClosingDetails(List<ClosingDetailsDto> closingDetails, DashboardDto dashboardDto, String lineItemDiscount, String profit, String customerBalance) {
             //this is first call from UI to get close register data cause i dont have any data into cash register table
+
+        try {
             if (null != closingDetails && !closingDetails.isEmpty()) {
 
                 //THIS CALL WILL SEND THE SYSTEM DATA TO UI WHICH IS USING TRANSACTION TABLE
@@ -210,6 +246,7 @@ public class ClosingDetailsManager {
 
                 closingDetails.add(closingDetailsDto);
 
+                //NEED TO CHECK THIS. WHEN I AM RETURN THIS 2 TIMES
                 return closingDetails;
             }
             System.out.println("Send Closing details Successfully");
@@ -219,10 +256,6 @@ public class ClosingDetailsManager {
 
         return closingDetails;
     }
-
-
-
-
     //I AM JUST USING DASHBOARD DTO TO NOT TO CREATE DUPLICATE DTO
     private final class TransactionCloseMapper implements RowMapper<DashboardDto> {
 

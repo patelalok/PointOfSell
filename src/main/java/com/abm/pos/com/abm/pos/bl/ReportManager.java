@@ -1264,32 +1264,26 @@ public class ReportManager {
 
         PdfWriter writer = PdfWriter.getInstance(doc, byteArrayOutputStream);
 
-
-
         doc.open();
 
         PdfContentByte cb = writer.getDirectContent();
 
-       List<Integer> transactionIds =  getTransactionId(startDate,endDate);
+        List<Integer> transactionIds =  getTransactionId(startDate,endDate);
 
         List<ReceiptDto> receiptDtos = new ArrayList<>();
+
         int i = 0;
+
         if(null != transactionIds)
         {
             boolean beginPage = true;
 
-            int y = 0;
-            int x = 0;
-            int z = 0;
+            int y = 605;
 
             for(int c = 0; c <= 0; c++)
             {
                 if (beginPage) {
                     beginPage = false;
-
-                     y = 605;
-                     x = 565;
-                     z = 525;
 
                     generateHeaderForYearlySales(doc, cb);
                 }
@@ -1307,19 +1301,6 @@ public class ReportManager {
                     y = y-25;
                 }
                 generatePaymentLayoutForDetailedSales(doc, cb,y-100);
-
-//                y = y - 120;
-//
-//
-//
-//
-//
-//
-//
-//
-//                x = x -80;
-//
-//                z = z- 120;
 
                 if (y < 60) {
                     printPageNumber(cb);

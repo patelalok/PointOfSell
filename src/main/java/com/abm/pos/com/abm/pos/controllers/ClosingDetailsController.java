@@ -32,14 +32,27 @@ public class ClosingDetailsController {
     @RequestMapping(value = "/addClosingDetails", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addClosingDetails(@RequestBody ClosingDetailsDto closingDetailsDto)
     {
-        closingDetailsManager.addClosingDetailsToDB(closingDetailsDto);
+        closingDetailsManager.addClosingDetailsToDB(closingDetailsDto,true);
     }
 
+    //Can talk to ui and make it one call.
+    @RequestMapping(value = "/addClosingDetailsForWholeSale", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addClosingDetailsForWholeSale(@RequestBody ClosingDetailsDto closingDetailsDto)
+    {
+        //This true false to know if it is retail closing or wholesale closing.
+        closingDetailsManager.addClosingDetailsToDB(closingDetailsDto,false);
+    }
 
     @RequestMapping(value = "/getClosingDetails", method = RequestMethod.GET, produces = "application/json")
     public List<ClosingDetailsDto> getClosingDetails(@RequestParam String startDate, @RequestParam String endDate)
     {
         return closingDetailsManager.getClosingDetailsToDB(startDate,endDate);
+    }
+
+    @RequestMapping(value = "/getClosingDetailsForWholesale", method = RequestMethod.GET, produces = "application/json")
+    public List<ClosingDetailsDto> getClosingDetailsForWholesale(@RequestParam String startDate, @RequestParam String endDate)
+    {
+        return closingDetailsManager.getClosingDetailsForWholesale(startDate,endDate);
     }
 
     @RequestMapping(value = "/addPaidOut", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

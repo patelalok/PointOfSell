@@ -189,45 +189,47 @@ public class SalesManager {
             TransactionDto transaction = new TransactionDto();
 
 
-            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
-            transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
-            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
-            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+                transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+                transaction.setTransactionDate(rs.getString("TRANSACTION_DATE"));
+                transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+                transaction.setTax(rs.getDouble("TAX_AMOUNT"));
 
-            //Getting sum of discount on line item table and adding into transaction discount to show only total discount.
-            String lineItemDiscount = jdbcTemplate.queryForObject(sqlQuery.getDiscountFromLineItem, new Object[]{rs.getInt("TRANSACTION_COMP_ID")}, String.class);
+                //Getting sum of discount on line item table and adding into transaction discount to show only total discount.
+                String lineItemDiscount = jdbcTemplate.queryForObject(sqlQuery.getDiscountFromLineItem, new Object[]{rs.getInt("TRANSACTION_COMP_ID")}, String.class);
 
-            if (null != lineItemDiscount) {
-                double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
-                //System.out.println(lineItemDiscount);
-                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT") + lineItemDiscountDouble);
-            } else {
+                if (null != lineItemDiscount) {
+                    double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
+                    //System.out.println(lineItemDiscount);
+                    transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT") + lineItemDiscountDouble);
+                } else {
 
-                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
-                //System.out.println(lineItemDiscount);
+                    transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+                    //System.out.println(lineItemDiscount);
+                }
+                transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+                transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
+                transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+                transaction.setUserId(rs.getInt("USER_ID"));
+                String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
+                transaction.setUsername(username);
+                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+                transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+                transaction.setPaidAmountCheck(rs.getDouble("TOTAL_AMOUNT_CHECK"));
+                transaction.setPaidAmountDebit(rs.getDouble("PAID_AMOUNT_DEBIT"));
+                transaction.setStatus(rs.getString("STATUS"));
+                transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+                transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
+                transaction.setBalance(rs.getDouble("BALANCE"));
+                transaction.setReceiptNote(rs.getString("RECEIPT_NOTE"));
+                transaction.setTransactionNote(rs.getString("TRANSACTION_NOTE"));
+
+                //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
+
+                return transaction;
             }
-            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
-            transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
-            transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
-            transaction.setUserId(rs.getInt("USER_ID"));
-            String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
-            transaction.setUsername(username);
-            transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
-            transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
-            transaction.setPaidAmountCheck(rs.getDouble("TOTAL_AMOUNT_CHECK"));
-            transaction.setPaidAmountDebit(rs.getDouble("PAID_AMOUNT_DEBIT"));
-            transaction.setStatus(rs.getString("STATUS"));
-            transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
-            transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
-            transaction.setBalance(rs.getDouble("BALANCE"));
-            transaction.setReceiptNote(rs.getString("RECEIPT_NOTE"));
-            transaction.setTransactionNote(rs.getString("TRANSACTION_NOTE"));
-
-            //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
-
-            return transaction;
         }
-    }
+
+
 
     public List<TransactionDto> getsalesHistory(String startDate, String endDate) {
         List<TransactionDto> transactionDto = new ArrayList<>();

@@ -298,6 +298,7 @@ public class UserManager {
            // user.setUserId(rs.getInt("USER_ID"));
 
 
+
             //This User commission when user sale products user  will get defined percentage of profit amount set by the admin.
 
             //getting user commission percentage from user table.
