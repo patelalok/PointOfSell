@@ -87,8 +87,8 @@ public class PageSetUpManager {
                     setUpDto.setFooterReceipt(rs.getString("FOOTER_RECEIPT"));
                     setUpDto.setStoreEmail(rs.getString("STORE_EMAIL"));
                     setUpDto.setReceiptType(rs.getInt("RECEIPT_TYPE"));
-                   // setUpDto.setWholeSaleFlag(rs.getInt("WHOLESALE_FLAG"));
-                   // setUpDto.setCustomReceiptFlag(rs.getInt("CUSTOM_RECEIPT_DESIGN"));
+                    setUpDto.setWholeSaleFlag(rs.getInt("WHOLESALE_FLAG"));
+                    setUpDto.setCustomReceiptFlag(rs.getInt("CUSTOM_RECEIPT_DESIGN"));
 
                     return setUpDto;
                 }
