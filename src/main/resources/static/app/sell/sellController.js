@@ -683,7 +683,7 @@
 				var editSub = (parseFloat(GlobalVariable.editQuanDtls.quantity) * parseFloat(GlobalVariable.editQuanDtls.retail))
 					.toFixed(2)
 			}
-			if(GlobalVariable.editQuanDtls.total == GlobalVariable.editQuanDtls.totalWithTax)
+			if((GlobalVariable.editQuanDtls.total == GlobalVariable.editQuanDtls.totalWithTax) && (GlobalVariable.editQuanDtls.total != 0))
 			{
 				var editSubTax = parseFloat(editSub);
 			}

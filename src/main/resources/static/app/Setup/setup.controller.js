@@ -143,10 +143,11 @@
 				//$scope.getUserDetails();
 
 		}
-		$scope.navigateToClockInDtls=function(username,userId)
+		$scope.navigateToClockInDtls=function(username,userId,hrlyRate)
 		{
 			GlobalVariable.usernameCust = username;
 			sessionStorage.clockUserId = userId;
+			sessionStorage.hrlyRate = hrlyRate;
 			var test = new Object();
 			test.userId = userId;
 			$state.go('clock',{obj:test});

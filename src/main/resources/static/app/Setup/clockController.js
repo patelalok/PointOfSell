@@ -131,8 +131,8 @@
 					var hours = Number(Math.abs(date1 - date2) / 36e5).toFixed(2);
 					//var hours = new Date(time3);
 					/*var noOfHrs = hours.getHours()-1;*/
-					var rate = "$8";
-					var total = parseFloat(8 * hours) + parseFloat(response[i].userCommission);
+					var rate = "$"+sessionStorage.hrlyRate;
+					var total = parseFloat(parseInt(sessionStorage.hrlyRate) * hours) + parseFloat(response[i].userCommission);
 					var totalWCom = "$" + parseFloat(Number(total).toFixed(2));
 					$scope.clockdata.push({
 						"clockInId": response[i].clockInId,
@@ -147,8 +147,8 @@
 					});
 				}
 				else {
-					var rate = "$8";
-					var total = parseFloat(8 * hours) + parseFloat(response[i].userCommission);
+					var rate = "$"+sessionStorage.hrlyRate;
+					var total = parseFloat(parseInt(sessionStorage.hrlyRate)* hours) + parseFloat(response[i].userCommission);
 					var totalWCom = "$" + parseFloat(Number(total).toFixed(2));
 					$scope.clockdata.push({
 						"clockInId": response[i].clockInId,

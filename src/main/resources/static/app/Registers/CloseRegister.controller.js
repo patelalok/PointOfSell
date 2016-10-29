@@ -97,8 +97,17 @@
 			getPaidOutDetails(start,end);
 		};
 		function getClosingDetails(startDate, endDate) {
-			var url = GlobalConstants.URLCONSTANTS+"getClosingDetails?startDate="
-				+ startDate + "&endDate=" + endDate;
+			if($scope.showWholeSale == true)
+			{
+				var url = GlobalConstants.URLCONSTANTS+"getClosingDetailsForWholesale?startDate="
+					+ startDate + "&endDate=" + endDate;
+			}
+			else
+			{
+				var url = GlobalConstants.URLCONSTANTS+"getClosingDetails?startDate="
+					+ startDate + "&endDate=" + endDate;
+			}
+
 			dataService.Get(url, getClosingDetailsSuccessHandler,
 				getClosingDtlsErrorHandler, 'application/json',
 				'application/json');
@@ -439,7 +448,15 @@
 				"commission":$scope.commission,
 				"cashInHand":$scope.cashHand
 			};
-			var url = GlobalConstants.URLCONSTANTS+"addClosingDetails";
+			if($scope.showWholeSale == true)
+			{
+				var url = GlobalConstants.URLCONSTANTS+"addClosingDetailsForWholeSale";
+			}
+			else
+			{
+				var url = GlobalConstants.URLCONSTANTS+"addClosingDetails";
+			}
+
 			dataService.Post(url, request, getSuccessAddhandler,
 				getErrorAddHandler, 'application/json', 'application/json');
 

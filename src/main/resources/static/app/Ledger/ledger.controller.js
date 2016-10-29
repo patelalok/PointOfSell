@@ -12,6 +12,13 @@
 		$scope.Math = window.Math;
 		$scope.modifiedData = [];
 		$scope.barLimit = 100;
+		$scope.GlobalVariable = GlobalVariable;
+		//$scope.test = GlobalVariable.customReceiptFalg;
+		if(GlobalVariable.customReceiptFalg === 1)
+		$scope.test = true;
+		else
+			$scope.test = false;
+		console.log("$scope.testtrue= "+$scope.testtrue);
 		$scope.increaseLimit = function () {
 			$scope.barLimit += 50;
 			console.log('Increase Bar Limit', $scope.barLimit)

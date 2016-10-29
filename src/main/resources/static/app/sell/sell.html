@@ -287,15 +287,15 @@
 					</cell>
 				</column>
 				<column name="Retail" key="retail" datatype="string" width="8%" padding="1px" border="0px"></column>
-				<column name="Disc" key="discountPercentage" datatype="string" width="4%" padding="3px" border="0px">
+				<column name="Disc" key="discountPercentage" datatype="string" width="4%" padding="3px" border="0px" hidden="xyz">
 					<cell ng-non-bindable>
 						{{::row.discountPercentage}}%
 					</cell>
 				</column>
-				<column name="Ret w/disc" key="retwdisc" datatype="string" width="9" padding="1px" border="0px">
+				<column name="Ret w/disc" key="retwdisc" datatype="string" width="9" padding="1px" border="0px" hidden="xyz">
 
 				</column>
-				<column name="Qty" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
+				<column name="Items" key="quantity" datatype="string" width="5%" padding="3px" border="0px"></column>
 				<column name="Total Price" key="totalProductPrice" datatype="string" width="8%" padding="3px" border="0px"></column>
 			</columns>
 		</div>
@@ -308,7 +308,7 @@
 					 style="padding-left: 500px;">Item Total</div>
 				<div class="inline-vertical display-cell align-left padding-left-40">${{itemTotal}}</div>
 			</div>
-			<div class="display-row">
+			<div class="display-row" ng-if="GlobalVariable.customReceiptFalg == 0">
 				<div class="inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Discount:</div>
 				<div class="inline-vertical display-cell align-left padding-left-40"
@@ -374,7 +374,7 @@
 				<div class="inline-vertical display-cell align-left padding-left-40"
 					 ng-model="productTotal">${{GlobalVariable.receiptData[0].transactionDtoList[0].changeAmount}}</div>
 			</div>
-			<div class="display-row">
+			<div class="display-row" ng-if="GlobalVariable.customReceiptFalg == 0">
 				<div class=" inline-vertical display-cell align-left"
 					 style="padding-left: 500px;">Balance:</div>
 				<div class="inline-vertical display-cell align-left padding-left-40">${{GlobalVariable.receiptData[0].transactionDtoList[0].balance}}</div>

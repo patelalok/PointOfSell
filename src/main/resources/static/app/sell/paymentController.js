@@ -143,7 +143,7 @@
             {
                 $scope.balanceAmount = 0;
             }
-            if(GlobalVariable.wholeSaleFlag == 1)
+			if(GlobalVariable.custTypeCd == 'Business' && GlobalVariable.wholeSaleFlag == 1)
 			{
 				var transStat = "w";
 			}
@@ -184,7 +184,7 @@
 		function addTransactionSuccessHandler(response)
 		{	
 			var request = [];
-			if(GlobalVariable.wholeSaleFlag == 1)
+			if(GlobalVariable.custTypeCd == 'Business' && GlobalVariable.wholeSaleFlag == 1)
 			{
 				var transStat = "w";
 			}
@@ -506,8 +506,10 @@
 		};
 		$scope.calculateAmount = function(value,means)
 		{
-			if(value == "")
-				value= 0;
+			if(value == "" || value == undefined) {
+				value = 0;
+				$scope.balanceAmount = GlobalVariable.checkOuttotal;
+			}
 
 			if(means == 'debit')
 			{

@@ -3,16 +3,16 @@
 
 	angular.module('sampleApp').controller('BodyController', Body);
 
-	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService','GlobalConstants','DialogFactory'];
+	Body.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','$state','dataService','getProductDetails','$window','$sce','modalService','GlobalConstants','DialogFactory','getPageSetupDetails'];
 
-	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService,GlobalConstants,DialogFactory) {
+	function Body($scope, $rootScope, device,GlobalVariable,$state,dataService,getProductDetails,$window,$sce,modalService,GlobalConstants,DialogFactory,getPageSetupDetails) {
 		
 		var vm = this;
 		vm.device = device;
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.device = device;
 		GlobalVariable.isLoginPage = false;
-		
+		getPageSetupDetails.getPageSetUpDtls();
 		$scope.menuOptions = [{
 			
 			menuCode:1,
