@@ -97,7 +97,7 @@
 			getPaidOutDetails(start,end);
 		};
 		function getClosingDetails(startDate, endDate) {
-			if($scope.showWholeSale == true)
+			if(($scope.showWholeSale == true) && (GlobalVariable.customReceiptFalg == 1))
 			{
 				var url = GlobalConstants.URLCONSTANTS+"getClosingDetailsForWholesale?startDate="
 					+ startDate + "&endDate=" + endDate;
@@ -448,7 +448,7 @@
 				"commission":$scope.commission,
 				"cashInHand":$scope.cashHand
 			};
-			if($scope.showWholeSale == true)
+			if(($scope.showWholeSale == true) && (GlobalVariable.customReceiptFalg == 1))
 			{
 				var url = GlobalConstants.URLCONSTANTS+"addClosingDetailsForWholeSale";
 			}
