@@ -170,7 +170,7 @@ public class ClosingDetailsManager {
         String customerBalance = jdbcTemplate.queryForObject(sqlQueries.getCustomerBalanceByDateForWholesale, new Object[]{startDate, endDate}, String.class);
 
 
-        return closingDetails;
+        return validateClosingDetails(closingDetails, dashboardDto, lineItemDiscount, profit, customerBalance);
     }
 
     private List<ClosingDetailsDto> validateClosingDetails(List<ClosingDetailsDto> closingDetails, DashboardDto dashboardDto, String lineItemDiscount, String profit, String customerBalance) {
