@@ -429,13 +429,13 @@ public class SQLQueries {
             "  SELECT SUM(DISCOUNT) " +
                     "            FROM transaction_line_item " +
                     "            WHERE DATE " +
-                    "            BETWEEN ? AND ? ";
+                    "            BETWEEN ? AND ? AND TRANSACTION_STATUS <> 'w' ";
 //Need to change it according to wholesale
     public String getDiscountFromLineItemwithDateForWholesale =
             "  SELECT SUM(DISCOUNT) " +
                     "            FROM transaction_line_item " +
                     "            WHERE DATE " +
-                    "            BETWEEN ? AND ? ";
+                    "            BETWEEN ? AND ? AND TRANSACTION_STATUS = 'w' ";
 
     public String getDiscountFromLineItemwithDateForWholeSale =
             "  SELECT SUM(DISCOUNT) " +
@@ -490,10 +490,10 @@ public class SQLQueries {
 
     public String getProductDescription = "SELECT DESCRIPTION FROM product WHERE PRODUCT_NO = ?";
 
-    public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
+    public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 1 ";
 
-    //Need to change this query for wholesale
-    public String getClosingDetailsFromSystemForWholesale = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? ";
+    //Need to change this query for wholesale--> i think BUSINESS_TYPE flag = 0 condition will work
+    public String getClosingDetailsFromSystemForWholesale = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 0";
 
 
 
@@ -509,7 +509,7 @@ public class SQLQueries {
             "sum(TAX_AMOUNT) TAX, \n" +
             "sum(DISCOUNT_AMOUNT) DISCOUNT \n" +
             "FROM transaction \n" +
-            "WHERE TRANSACTION_DATE  BETWEEN ? AND ? ";
+            "WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND status <> 'w' ";
 
 
     public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
@@ -538,7 +538,7 @@ public class SQLQueries {
             "\t\t\tAND DATE BETWEEN ? AND ?\n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
             "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID \n" +
-            "            AND TRANSACTION_DATE BETWEEN ? AND ?\n" +
+            "            AND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS <> 'w' \n" + //here added condition <> to not to count for wholesale
             "            GROUP BY DATE";
 
     public String getWeeklyTransDetails = "";
@@ -586,7 +586,7 @@ public class SQLQueries {
             "\t\t\tAND DATE BETWEEN ? AND ?\n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
             "\t\t\tWHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID  \n" +
-            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? \n" +
+            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS <> 'w' \n" +//Here added condition <> to not to count the whole sale transaction
             "\t\t\tGROUP BY NameOfMonth  \n" +
             "\t\t\tORDER BY field(NameOfMonth,'January','February','March','April','May','June','July','August','September','October','November','December') ;\n" +
             "            ";
@@ -662,7 +662,7 @@ public class SQLQueries {
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE   \n" +
             "                        FROM TRANSACTION_LINE_ITEM t, CATEGORY c, PRODUCT p   \n" +
             "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE   \n" +
-            "                        BETWEEN ? AND ? group by c.CATEGORY_NAME";
+            "                        BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' group by c.CATEGORY_NAME";
 
     public String getSalesVendorDetails = " SELECT v.VENDOR_NAME as COMMON_NAME,  \n" +
             "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
@@ -677,7 +677,7 @@ public class SQLQueries {
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO   \n" +
             "            AND v.VENDOR_ID = p.VENDOR_ID  \n" +
             "            AND t.DATE   \n" +
-            "            BETWEEN ? AND ? " +
+            "            BETWEEN ? AND ?  AND t.TRANSACTION_STATUS <> 'w' " +
             "            group by v.VENDOR_NAME ";
 
     public String getSalesBrandDetails = "   SELECT  b.BRAND_NAME as COMMON_NAME,  \n" +
@@ -693,7 +693,7 @@ public class SQLQueries {
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  \n" +
             "            AND b.BRAND_ID = p.BRAND_ID  \n" +
             "            AND t.DATE  \n" +
-            "            BETWEEN ? AND ? " +
+            "            BETWEEN ? AND ?  AND t.TRANSACTION_STATUS <> 'w' " +
             "            group by b.BRAND_NAME ";
 
     public String getSalesProductDetails = "       SELECT p.DESCRIPTION as COMMON_NAME,  \n" +
@@ -708,7 +708,7 @@ public class SQLQueries {
             "            FROM TRANSACTION_LINE_ITEM t, PRODUCT p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  \n" +
             "            AND t.DATE  \n" +
-            "            BETWEEN ? AND ?  \n" +
+            "            BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' \n" +
             "            group by p.DESCRIPTION" ;
 
     //Need to fix THIS QUERY
@@ -724,7 +724,7 @@ public class SQLQueries {
             "                        FROM TRANSACTION_LINE_ITEM t, CUSTOMER c,  \n" +
             "                        TRANSACTION l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
             "                        AND c.PHONE_NO = l.CUSTOMER_PHONENO  \n" +
-            "                        AND t.DATE BETWEEN ? AND ?" +
+            "                        AND t.DATE BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' " +
             "                        group by c.FIRST_NAME";
 
     //NEED TI FIX THIS QUERY TOO..
@@ -740,7 +740,7 @@ public class SQLQueries {
             "                        FROM TRANSACTION_LINE_ITEM t, USER u, TRANSACTION l  \n" +
             "                        WHERE u.USER_ID = l.USER_ID AND t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
             "                        AND t.DATE  \n" +
-            "                        BETWEEN ? AND ? group by u.USERNAME";
+            "                        BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' group by u.USERNAME";
 
     public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
 
@@ -775,7 +775,7 @@ public class SQLQueries {
                     "            SUM(TAX_AMOUNT) TAX, \n" +
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
                     "            FROM TRANSACTION  \n" +
-                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
+                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS <> 'w' ";
 
 
     public String getClosingDetailsFromSystemFromTransactionForWholeSale =
@@ -788,7 +788,7 @@ public class SQLQueries {
                     "            SUM(TAX_AMOUNT) TAX, \n" +
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
                     "            FROM TRANSACTION  \n" +
-                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
+                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'w' ";
 
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
@@ -810,14 +810,14 @@ public class SQLQueries {
             "\t\t\tAND DATE BETWEEN ? AND ? \n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
             "\t\t\tWHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID  \n" +
-            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? ";
+            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS <> 'w' ";
 
 //Need to change it for wholesale
     public String getPrpfitForCloseRegisterForWholesale = " \tSELECT\n" +
             "            SUM(PROFIT) PROFIT \n" +
             "\t\t\tFROM TRANSACTION A, \n" +
             "\t\t\t(SELECT TRANSACTION_COMP_ID,  \n" +
-            "\t\t\tSUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'c'\n" +
+            "\t\t\tSUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'w' " +
             "\t\t\tTHEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY \n" +
             "\t\t\tWHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND (TRANSACTION_STATUS = 'r' or TRANSACTION_STATUS = 'p' )\n" +
             "\t\t\tTHEN ((X.RETAIL-X.COST-X.DISCOUNT/-X.QUANTITY)) * -X.QUANTITY\n" +
@@ -828,7 +828,7 @@ public class SQLQueries {
             "\t\t\tAND DATE BETWEEN ? AND ? \n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
             "\t\t\tWHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID  \n" +
-            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? ";
+            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS = 'w' ";
 
     public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? AND CLOCK_DATE = ?";
 
