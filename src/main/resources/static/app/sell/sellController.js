@@ -104,7 +104,8 @@
 								"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
 								"imeiNo":response[i].imeiNo,
 								"categoryId":response[i].categoryId,
-								"phoneId":response[i].phoneId
+								"phoneId":response[i].phoneId,
+								"addTax":response[i].addTax
 							});
 					}
 				}
@@ -127,7 +128,8 @@
 						"totalTax":0,
 						"imeiNo":GlobalVariable.sellIMEINumber,
 						"categoryId":GlobalVariable.sellCategoryId,
-						"phoneId":''
+						"phoneId":'',
+						"addTax":GlobalVariable.sellAddTax
 					});
 			}
 
@@ -144,12 +146,13 @@
 			$scope.discount = 0;
 			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 				if (searchValueAlt === GlobalVariable.getProducts[i].altNo) {
-					if(GlobalVariable.getProducts[i].categoryId == 10)
+					if(	GlobalVariable.getProducts[i].categoryId == 10)
 					{
 						GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
 						GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
 						GlobalVariable.sellDescription = GlobalVariable.getProducts[i].description;
 						GlobalVariable.sellCategoryId = GlobalVariable.getProducts[i].categoryId;
+						GlobalVariable.sellAddTax= GlobalVariable.getProducts[i].addTax;
 
 						var _tmPath = 'app/sell/validateIMEI.html';
 						var _ctrlPath = 'ValidateIMEIController';
@@ -188,7 +191,8 @@
 								"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
 								"categoryId":GlobalVariable.getProducts[i].categoryId,
 								"imeiNo":GlobalVariable.getProducts[i].imeiNo,
-								"phoneId":GlobalVariable.getProducts[i].phoneId
+								"phoneId":GlobalVariable.getProducts[i].phoneId,
+								"addTax":GlobalVariable.getProducts[i].addTax
 							});
 						$scope.searchValueAlt = '';
 						if(GlobalVariable.getProducts[i].relatedProduct = true)
@@ -224,6 +228,7 @@
 								GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
 								GlobalVariable.sellDescription = GlobalVariable.getProducts[i].description;
 								GlobalVariable.sellCategoryId = GlobalVariable.getProducts[i].categoryId;
+								GlobalVariable.sellAddTax= GlobalVariable.getProducts[i].addTax;
 
 								var _tmPath = 'app/sell/validateIMEI.html';
 								var _ctrlPath = 'ValidateIMEIController';
@@ -262,7 +267,8 @@
 										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
 										"categoryId":GlobalVariable.getProducts[i].categoryId,
 										"imeiNo":GlobalVariable.getProducts[i].imeiNo,
-										"phoneId":GlobalVariable.getProducts[i].phoneId
+										"phoneId":GlobalVariable.getProducts[i].phoneId,
+										"addTax":GlobalVariable.getProducts[i].addTax
 									});
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
@@ -289,6 +295,7 @@
 								GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
 								GlobalVariable.sellDescription = GlobalVariable.getProducts[i].description;
 								GlobalVariable.sellCategoryId = GlobalVariable.getProducts[i].categoryId;
+								GlobalVariable.sellAddTax= GlobalVariable.getProducts[i].addTax;
 								var _tmPath = 'app/sell/validateIMEI.html';
 								var _ctrlPath = 'ValidateIMEIController';
 								DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackValidateIMEI);
@@ -328,7 +335,8 @@
 										"totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
 										"categoryId":GlobalVariable.getProducts[i].categoryId,
 										"imeiNo":GlobalVariable.getProducts[i].imeiNo,
-										"phoneId":GlobalVariable.getProducts[i].phoneId
+										"phoneId":GlobalVariable.getProducts[i].phoneId,
+										"addTax":GlobalVariable.getProducts[i].addTax
 									});
 								if(GlobalVariable.getProducts[i].relatedProduct = true)
 								{
@@ -376,7 +384,7 @@
 							$scope.total = (($scope.discount) * parseFloat($scope.quantity))
 								.toFixed(2);
 						}
-						if(($rootScope.testData[$rootScope.testData.length - 1].total == $rootScope.testData[$rootScope.testData.length - 1].totalWithTax)&&($rootScope.testData[$rootScope.testData.length - 1].total !=0))
+						if(($rootScope.testData[$rootScope.testData.length - 1].total == $rootScope.testData[$rootScope.testData.length - 1].totalWithTax) && ($rootScope.testData[$rootScope.testData.length - 1].addTax == false))
 						{
 							$scope.tWTax = parseFloat($scope.total);
 						}
@@ -498,7 +506,8 @@
 							"totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax),
 							"catgeoryId":response[k].categoryId,
 							"imeiNo":response[k].imeiNo,
-							"phoneId":response[k].phoneId
+							"phoneId":response[k].phoneId,
+							"addTax":response[k].addTax
 
 						});
 				}
@@ -683,7 +692,7 @@
 				var editSub = (parseFloat(GlobalVariable.editQuanDtls.quantity) * parseFloat(GlobalVariable.editQuanDtls.retail))
 					.toFixed(2)
 			}
-			if((GlobalVariable.editQuanDtls.total == GlobalVariable.editQuanDtls.totalWithTax) && (GlobalVariable.editQuanDtls.total != 0))
+			if((GlobalVariable.editQuanDtls.total == GlobalVariable.editQuanDtls.totalWithTax) && GlobalVariable.editQuanDtls.addTax ==  false)
 			{
 				var editSubTax = parseFloat(editSub);
 			}
@@ -706,7 +715,8 @@
 				"totalTax":parseFloat(editSubTax)-parseFloat(editSub),
 				"categoryId":GlobalVariable.editQuanDtls.categoryId,
 				"imeiNo":GlobalVariable.editQuanDtls.imeiNo,
-				"phoneId":GlobalVariable.editQuanDtls.phoneId
+				"phoneId":GlobalVariable.editQuanDtls.phoneId,
+				"addTax":GlobalVariable.editQuanDtls.addTax,
 			});
 			$scope.loadCheckOutData();
 		};

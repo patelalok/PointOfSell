@@ -56,7 +56,7 @@
         {
             for(var i=0;i<GlobalVariable.getProducts.length;i++)
             {
-                if(GlobalVariable.getProducts[i].categoryName == 'Related Product')
+                if(GlobalVariable.getProducts[i].categoryId == 3)
                 {
                     $scope.prodRel.push( {
                         "productId": GlobalVariable.getProducts[i].productId,
