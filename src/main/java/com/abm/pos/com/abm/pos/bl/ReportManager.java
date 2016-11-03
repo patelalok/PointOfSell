@@ -1270,7 +1270,7 @@ public class ReportManager {
 
         List<Integer> transactionIds =  getTransactionId(startDate,endDate);
 
-        List<ReceiptDto> receiptDtos = new ArrayList<>();
+        List<ReceiptDto> receiptDtos;
 
         int i = 0;
 
@@ -1278,19 +1278,21 @@ public class ReportManager {
         {
             boolean beginPage = true;
 
-            int y = 605;
+            int y = 0;
 
-            for(int c = 0; c <= 0; c++)
+            for(int c = 10; c <13; c++)
             {
                 if (beginPage) {
                     beginPage = false;
 
+                    y = 605;
                     generateHeaderForYearlySales(doc, cb);
                 }
 
                 generateLayoutForDetailedSales(doc, cb,y);
 
-                receiptDtos =  salesManager.getReceiptDetails(14);
+                receiptDtos =  salesManager.getReceiptDetails(c);
+
                 generateDetailForDetailedSales(doc, cb, i, y-40, receiptDtos);
 
                 generateLineItemLayoutForDetailedSales(doc, cb,y-70);
