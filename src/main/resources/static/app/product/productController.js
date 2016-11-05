@@ -80,6 +80,12 @@
 				$scope.getAllIMEINumbers();
 			}
 		};
+		$scope.setModalType = function(modalId,ModalName,ModalDescription)
+		{
+			$scope.selectedCategoryType = ModalName;
+			$scope.categoryId = modalId;
+			$scope.categoryDescription = ModalDescription;
+		};
 		$scope.getAllIMEINumbers = function()
 		{
 			var url=GlobalConstants.URLCONSTANTS+'getPhoneDetails?productNo='+$scope.productId;

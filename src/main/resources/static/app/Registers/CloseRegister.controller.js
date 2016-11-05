@@ -97,7 +97,7 @@
 			getPaidOutDetails(start,end);
 		};
 		function getClosingDetails(startDate, endDate) {
-			if(($scope.showWholeSale == true) && (GlobalVariable.customReceiptFalg == 1))
+			if(($scope.showWholeSale == true) && (GlobalVariable.wholeSaleFlag == 1))
 			{
 				var url = GlobalConstants.URLCONSTANTS+"getClosingDetailsForWholesale?startDate="
 					+ startDate + "&endDate=" + endDate;
@@ -378,6 +378,9 @@
 				+ parseFloat($scope.userCash)
 				+ parseFloat($scope.userCheck)+parseFloat($scope.userPaid)+parseFloat($scope.systemPaid)+parseFloat($scope.difPaid);
 			$scope.totalUser = parseFloat(Number($scope.totalUser).toFixed(2));
+			$scope.totalDiff = parseFloat($scope.totalUser)
+				- parseFloat($scope.totalSys);
+			$scope.totalDiff = parseFloat(parseFloat($scope.totalDiff).toFixed(2));
 		};
 		$scope.getTotal = function(value, entText) {
 

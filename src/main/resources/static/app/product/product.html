@@ -58,6 +58,22 @@
 				                </ul>
 				            </div>
 					</div>
+					<div class="form-group display-row">
+						<label for="upc" class="display-cell">Modal:</label>
+						<div class="btn-group pull-left  prd-drop" dropdown is-open="modal.isopen" ng-class="{'full-width': device.isMobile}">
+							<button type="button" class="btn btn-default dropdown-toggle drop-width" dropdown-toggle
+									ng-class="{'full-width left-align': device.isMobile}" id="modalName">
+								<span ng-show="selectedModalType">{{selectedModalType}}</span>
+								<span ng-hide="selectedModalType">Search By</span>
+								<span class="caret margin-left-caret"></span>
+							</button>
+							<ul class="dropdown-menu drp-min-width" role="menu">
+								<li ng-repeat="modal in GlobalVariable.getModal">
+									<a ng-click="setModalType(modal.modalId,modal.modalName,modal.modal.description)">{{modal.modalName}}</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 					<div class="form-group display-row" ng-if="(selectedCategoryType == 'Phone') && (GlobalVariable.editProduct == true)">
 						<button class="btn btn-primary margin-top-1 wrap-text" style="font-size:18px;" ng-click="addProdIMEI()">Add IMEI</button>
 					</div>
