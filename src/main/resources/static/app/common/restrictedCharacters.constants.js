@@ -43,7 +43,7 @@
 			regExp : /[^0-9]/g,
 			label : "Non-numeric characters disallowed"
 		},
-		AgreementCode :{
+		ProdSpecial :{
 			regExp:/[^a-zA-Z0-9-_]/g,
 			label:"Only _,- is allowed"
 		},

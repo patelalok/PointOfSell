@@ -107,6 +107,11 @@ app.config(['$provide','$stateProvider','$urlRouterProvider','ChartJsProvider',f
 		    templateUrl: 'app/product/vendor.html',
 		    controller: 'VendorController'
 		  })
+		.state('modal', {
+			url: '/modal',
+			templateUrl: 'app/product/modal.html',
+			controller: 'ModalController'
+		})
 		  .state('setup', {
 		    url: '/setup',
 		    templateUrl: 'app/Setup/setup.html',
