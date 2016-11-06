@@ -32,8 +32,9 @@ public class SQLQueries {
                    "CREATED_DATE," +
                    //"IMEI_NUMBER," +
                    "TAX, " +
-                   "IS_RELATED_PRODUCT)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                   "IS_RELATED_PRODUCT," +
+                   "MODEL_ID)" +
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addProductQueryForPhone = "INSERT INTO product" +
             " (" +
@@ -45,8 +46,9 @@ public class SQLQueries {
             "DESCRIPTION," +
             "TAX, " +
             "QUANTITY," +
-            "IS_RELATED_PRODUCT)" +
-            " VALUES(?,?,?,?,?,?,?,?,?)";
+            "IS_RELATED_PRODUCT," +
+            "MODEL_ID)" +
+            " VALUES(?,?,?,?,?,?,?,?,?,?)";
 
     public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 
@@ -254,7 +256,7 @@ public class SQLQueries {
                     "IMAGE = ?, " +
                     //"IMEI_NUMBER = ?, " +
                     "TAX = ?, " +
-                    "IS_RELATED_PRODUCT = ? " +
+                    "IS_RELATED_PRODUCT = ?, MODEL_ID = ? " +
                     "WHERE PRODUCT_ID = ? AND PRODUCT_NO = ?";
 
     public String editCustomerQuery = "UPDATE customer" +
@@ -450,12 +452,6 @@ public class SQLQueries {
     public String getDiscountFromLineItemwithDateForWholesale =
             "  SELECT SUM(DISCOUNT) " +
                     "            FROM transaction_line_item " +
-                    "            WHERE DATE " +
-                    "            BETWEEN ? AND ? AND TRANSACTION_STATUS = 'w' ";
-
-    public String getDiscountFromLineItemwithDateForWholeSale =
-            "  SELECT SUM(DISCOUNT) " +
-                    "            FROM TRANSACTION_LINE_ITEM " +
                     "            WHERE DATE " +
                     "            BETWEEN ? AND ? AND TRANSACTION_STATUS = 'w' ";
 

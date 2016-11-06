@@ -1,8 +1,6 @@
 package com.abm.pos.com.abm.pos.controllers;
 
-import com.abm.pos.com.abm.pos.bl.CategoryManager;
 import com.abm.pos.com.abm.pos.bl.ModelManager;
-import com.abm.pos.com.abm.pos.dto.CategoryDto;
 import com.abm.pos.com.abm.pos.dto.ModelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +35,8 @@ public class ModelController {
 
     }
 
-    @RequestMapping(value = "/getCategory",method = RequestMethod.GET)
-    public List<CategoryDto> getCategoryDetails()
+    @RequestMapping(value = "/getModel",method = RequestMethod.GET)
+    public List<ModelDto> getModelDetails()
     {
         return modelManager.getModelDetails();
     }
@@ -50,17 +48,17 @@ public class ModelController {
     }*/
 
     @RequestMapping(value = "/deleteModel" ,method = RequestMethod.POST)
-    public ResponseEntity deleteModel(@RequestParam int  categoryId) {
+    public ResponseEntity deleteModel(@RequestParam int  modelId) {
 
         int result = 0;
 
-        result = modelManager.deleteModelToDB(categoryId);
+        result = modelManager.deleteModelToDB(modelId);
 
         if(result ==1)
         {
-            return ResponseEntity.ok("Category Deleted Successfully");
+            return ResponseEntity.ok("Model Deleted Successfully");
         }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("Can not delete Category please delete all products in this Category first");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Can not delete Model please delete all products in this Model first");
     }
 }
