@@ -11,6 +11,7 @@ public class ProductDto {
     private int categoryId;
     private int vendorId;
     private int brandId;
+    private int modelId;
     private String altNo;
     private String description;
     private double costPrice;
@@ -58,6 +59,14 @@ public class ProductDto {
 
     public String getBrandName() {
         return brandName;
+    }
+
+    public int getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(int modelId) {
+        this.modelId = modelId;
     }
 
     public void setBrandName(String brandName) {

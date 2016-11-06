@@ -259,9 +259,8 @@ public class ProductManager
                 product.setProductId(rs.getInt("PRODUCT_ID"));
                 product.setProductNo(rs.getString("PRODUCT_NO"));
                 product.setCategoryId(rs.getInt("CATEGORY_ID"));
-                product.setCategoryName(jdbcTemplate.queryForObject(sqlQuery.getCategoryName, new Object[] {product.getCategoryId()},String.class));
+                product.setModelId(rs.getInt("MODEL_ID"));
                 product.setVendorId(rs.getInt("VENDOR_ID"));
-                product.setVendorName(jdbcTemplate.queryForObject(sqlQuery.getVendorName, new Object[] {product.getVendorId()},String.class));
                 product.setAltNo(rs.getString("ATL_NO"));
                 product.setDescription(rs.getString("DESCRIPTION"));
                 product.setCostPrice(rs.getDouble("COST_PRICE"));
@@ -274,7 +273,6 @@ public class ProductManager
                // product.setImage(rs.getString("IMAGE"));
                 product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
-                product.setBrandName(jdbcTemplate.queryForObject(sqlQuery.getBrandName, new Object[] {product.getBrandId()},String.class));
                // product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 product.setAddTax(rs.getBoolean("TAX"));
                 product.setRelatedProduct(rs.getBoolean("IS_RELATED_PRODUCT"));

@@ -98,9 +98,16 @@ public class SQLQueries {
     public String addBrandQuery =
             "INSERT INTO brand " +
             "(" +
-                    "BRAND_NAME," +
-                    "DESCRIPTION)" +
+            "BRAND_NAME," +
+            "DESCRIPTION)" +
             "VALUES(?,?)";
+
+    public String addModelQuery =
+              "INSERT INTO PRODUCT_MODEL " +
+                      "(" +
+                      "NAME," +
+                      "DESCRIPTION)" +
+                      "VALUES(?,?)";
 
     //ADD TRANSACTION INTO DATABASE
 
@@ -289,6 +296,13 @@ public class SQLQueries {
                     "DESCRIPTION = ? " +
                     "WHERE BRAND_ID = ?";
 
+    public String editModelQuery =
+            "UPDATE PRODUCT_MODEL SET " +
+                    "NAME = ?, " +
+                    "DESCRIPTION = ? " +
+                    "WHERE ID = ? ";
+
+
     public String editUserWithPasswordQuery =
             "UPDATE USER SET " +
                     "PASSWORD = ?, " +
@@ -399,6 +413,8 @@ public class SQLQueries {
 
     public String getProductDetails = "SELECT * FROM product ";
 
+    public String getModelDetails = "SELECT * FROM PRODUCT_MODEL ";
+
    // ORDER BY DESCRIPTION
 
     public String getCustomerDetails = "SELECT * FROM customer ORDER BY FIRST_NAME";
@@ -458,6 +474,9 @@ public class SQLQueries {
 
     public String deleteBrand = "DELETE FROM brand WHERE BRAND_ID = ?";
 
+    public String deleteModel = "DELETE FROM PRODUCT_MODEL WHERE ID = ?";
+
+
 
     public String getNoOfProductsForBrand = "SELECT COUNT(*) from product where BRAND_ID = ?";
 
@@ -466,6 +485,8 @@ public class SQLQueries {
 
 
     public String getNoOfProductsForVendor = "SELECT COUNT(*) from product where VENDOR_ID = ?";
+
+    public String getNoOfProductsForModel = "SELECT COUNT(*) from product where MODEL_ID = ?";
 
 
     public String getCategoryName =  "SELECT CATEGORY_NAME FROM category WHERE CATEGORY_ID = ? ";
@@ -957,4 +978,6 @@ public class SQLQueries {
             "HORLYRATE = ?, " +
             "USER_COMMISSION_PERCENTAGE = ? " +
             "WHERE USERNAME = ? ";
+
+
 }
