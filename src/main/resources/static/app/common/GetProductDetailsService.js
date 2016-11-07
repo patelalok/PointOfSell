@@ -18,11 +18,28 @@
 				getCategoryDetails:getCategoryDetails,
 				getProductDetail:getProductDetail,
 				getCustomerDetails:getCustomerDetails,
-				getUserDetails:getUserDetails
+				getUserDetails:getUserDetails,
+				getModelDetails:getModelDetails
+
 				
 		};
 		return getProductDetails;
 		var refCallback = null;
+		function getModelDetails ()
+		{
+			var url=GlobalConstants.URLCONSTANTS+'getModel';
+			dataService.Get(url,onGetModelDtlsSuccess,onGetModelDtlsError,'application/json','application/json');
+		}
+		function onGetModelDtlsSuccess(response)
+		{
+			GlobalVariable.getModelDtls = response;
+			if(refCallback !=null && refCallback!= undefined)
+				refCallback(response);
+		}
+		function onGetModelDtlsError(response)
+		{
+
+		}
 		function getUserDetails ()
 		{
 			var url=GlobalConstants.URLCONSTANTS+'getUserDetails';
@@ -44,6 +61,7 @@
 			getCategoryDetails();
 			getProductDetail();
 			getCustomerDetails();
+			getModelDetails();
 			
 			
 			/*getVendorSuccessHandler('');

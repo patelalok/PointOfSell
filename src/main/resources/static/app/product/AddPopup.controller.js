@@ -58,6 +58,18 @@
 				request.description = $scope.brandDescription;
 
 			}
+			else if(name == 'Model') {
+				if(GlobalVariable.enableEdit == true)
+				{
+					var url = GlobalConstants.URLCONSTANTS+"editModel";
+					request.modelId = GlobalVariable.editBrandId;
+				}
+				else
+					var url = GlobalConstants.URLCONSTANTS+"addModel";
+				request.modelName = $scope.brandName;
+				request.description = $scope.brandDescription;
+
+			}
 
 
 			request = JSON.stringify(request);
@@ -77,6 +89,11 @@
 			{	
 				getProductDetails.getVendorDetails();
 				$state.go('vendor');
+			}
+			else if(GlobalVariable.textName == 'Model')
+			{
+				getProductDetails.getModelDetails();
+				$state.go('modal');
 			}
 			else
 			{

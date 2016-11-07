@@ -39,9 +39,9 @@
         $scope.openAddModalPopup = function()
         {
             GlobalVariable.enableEdit = false;
-            GlobalVariable.addHeaderName = "Add Modal";
-            GlobalVariable.textName = "Modal";
-            GlobalVariable.addButtonName = "Add Modal";
+            GlobalVariable.addHeaderName = "Add Model";
+            GlobalVariable.textName = "Model";
+            GlobalVariable.addButtonName = "Add Model";
             var _tmPath = 'app/product/AddPopup.html';
             var _ctrlPath = 'addPopupController';
             DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
@@ -49,12 +49,12 @@
         $scope.editModal = function(modalDetails)
         {
             GlobalVariable.enableEdit = true;
-            GlobalVariable.editBrandName = modalDetails.categoryName;
+            GlobalVariable.editBrandName = modalDetails.modelName;
             GlobalVariable.editBrandDescription = modalDetails.description;
-            GlobalVariable.editBrandId = modalDetails.categoryId;
-            GlobalVariable.addHeaderName = "Edit Modal";
-            GlobalVariable.textName = "Modal";
-            GlobalVariable.addButtonName = "Edit Modal";
+            GlobalVariable.editBrandId = modalDetails.modelId;
+            GlobalVariable.addHeaderName = "Edit Model";
+            GlobalVariable.textName = "Model";
+            GlobalVariable.addButtonName = "Edit Model";
             var _tmPath = 'app/product/AddPopup.html';
             var _ctrlPath = 'addPopupController';
             DialogFactory.show(_tmPath, _ctrlPath, addPopupControllerCallBack);
@@ -77,7 +77,7 @@
         {
             if(isOKClicked)
             {
-                var url=GlobalConstants.URLCONSTANTS+'deleteModal?modalId='+$scope.deleteModalId;
+                var url=GlobalConstants.URLCONSTANTS+'deleteModel?modelId='+$scope.deleteModalId;
                 var request = {};
                 request=JSON.stringify(request);
                 dataService.Post(url,request,deleteSuccessHandler,deleteErrorHandler,"application/json","application/text");
@@ -96,18 +96,22 @@
         $scope.callBackDeleteAction1 = function()
         {
 
-            //getProductDetails.getCategoryDetails($scope.getCtDetails);
+            getProductDetails.getModelDetails($scope.getMdDetails);
         };
-        $scope.getCtDetails = function(response)
+        $scope.getMdDetails = function(response)
         {
 
-            GlobalVariable.getCategory= getCategory;
+            GlobalVariable.getModelDtls = response;
         };
         function render()
         {
             $scope.currentPageIndexArr = 0;
             $scope.curPageOnTotalLen = 0;
             $scope.totalLength = 0;
+            if(GlobalVariable.getModelDtls == null || GlobalVariable.getModelDtls == undefined)
+            {
+                getProductDetails.getModelDetails();
+            }
         }
         render();
 

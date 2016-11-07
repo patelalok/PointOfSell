@@ -58,11 +58,27 @@
 		};
 		$scope.setVendorType = function(vendorId,vendorName)
 		{
+			for(var i=0;i<GlobalVariable.getVendors.length;i++)
+			{
+				if(GlobalVariable.getVendors[i].vendorId == vendorId)
+				{
+					vendorName = GlobalVariable.getVendors[i].vendorName;
+					break;
+				}
+			}
 			$scope.selectedVendorType = vendorName;
 			$scope.vendorId = vendorId;
 		};
 		$scope.setBrandType = function(brandId,brandName)
 		{
+			for(var i=0;i<GlobalVariable.getBrands.length;i++)
+			{
+				if(GlobalVariable.getBrands[i].brandId == brandId)
+				{
+					brandName = GlobalVariable.getBrands[i].brandName;
+					break;
+				}
+			}
 			$scope.selectedBrandType = brandName;
 			$scope.brandId = brandId;
 		};
@@ -72,6 +88,14 @@
 		};
 		$scope.setCategoryType = function(categoryId,categoryName,categoryDescription)
 		{
+			for(var i=0;i<GlobalVariable.getCategory.length;i++)
+			{
+				if(GlobalVariable.getCategory[i].categoryId == categoryId)
+				{
+					categoryName = GlobalVariable.getCategory[i].categoryName;
+					break;
+				}
+			}
 			$scope.selectedCategoryType = categoryName;
 			$scope.categoryId = categoryId;
 			$scope.categoryDescription = categoryDescription;
@@ -80,11 +104,19 @@
 				$scope.getAllIMEINumbers();
 			}
 		};
-		$scope.setModalType = function(modalId,ModalName,ModalDescription)
+		$scope.setModalType = function(modalId,ModalName)
 		{
-			$scope.selectedCategoryType = ModalName;
-			$scope.categoryId = modalId;
-			$scope.categoryDescription = ModalDescription;
+			for(var i=0;i<GlobalVariable.getModelDtls.length;i++)
+			{
+				if(GlobalVariable.getModelDtls[i].modelId == modalId)
+				{
+					ModalName = GlobalVariable.getModelDtls[i].modelName;
+					break;
+				}
+			}
+			$scope.selectedModalType = ModalName;
+			$scope.modelId = modalId;
+			//$scope.modelDescription = ModalDescription;
 		};
 		$scope.getAllIMEINumbers = function()
 		{
@@ -273,7 +305,8 @@
 						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
-						"addTax":$scope.productYesyNO
+						"addTax":$scope.productYesyNO,
+						"modelId":$scope.modelId
 					};
 					var url =GlobalConstants.URLCONSTANTS+"editProduct";
 				}
@@ -307,7 +340,8 @@
 						"imeiNo":$scope.phoneIMEI,
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
-						"addTax":$scope.productYesyNO
+						"addTax":$scope.productYesyNO,
+						"modelId":$scope.modelId
 					};
 					var url =GlobalConstants.URLCONSTANTS+"addProduct";
 				}
@@ -433,6 +467,7 @@
 				$scope.setVendorType(GlobalVariable.editProductDetails.vendorId,GlobalVariable.editProductDetails.vendorName);
 				$scope.setBrandType(GlobalVariable.editProductDetails.brandId,GlobalVariable.editProductDetails.brandName);
 				$scope.setCategoryType(GlobalVariable.editProductDetails.categoryId,GlobalVariable.editProductDetails.categoryName,'');
+				$scope.setModalType(GlobalVariable.editProductDetails.modelId,GlobalVariable.editProductDetails.modelName);
 				//$scope.selectedVendorType.vendorName = GlobalVariable.editProductDetails.vendorName;
 				//$scope.selectedBrandType.brandrName = GlobalVariable.editProductDetails.brandName;
 				//$scope.selectedCatgeoryType.categoryName = GlobalVariable.editProductDetails.categoryName;
