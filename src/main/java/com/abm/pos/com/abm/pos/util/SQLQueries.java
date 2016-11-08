@@ -805,7 +805,7 @@ public class SQLQueries {
                     "            SUM(TAX_AMOUNT) TAX, \n" +
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
                     "            FROM TRANSACTION  \n" +
-                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'w' ";
+                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'w' AND CUSTOMER_PHONENO = '8435764781' ";//Hard coded the value just becuase client dont want this to be calculated for whole sale
 
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
@@ -830,22 +830,23 @@ public class SQLQueries {
             "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS <> 'w' ";
 
 //Need to change it for wholesale
-    public String getPrpfitForCloseRegisterForWholesale = " \tSELECT\n" +
-            "            SUM(PROFIT) PROFIT \n" +
-            "\t\t\tFROM TRANSACTION A, \n" +
-            "\t\t\t(SELECT TRANSACTION_COMP_ID,  \n" +
-            "\t\t\tSUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'w' " +
-            "\t\t\tTHEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY \n" +
-            "\t\t\tWHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND (TRANSACTION_STATUS = 'r' or TRANSACTION_STATUS = 'p' )\n" +
-            "\t\t\tTHEN ((X.RETAIL-X.COST-X.DISCOUNT/-X.QUANTITY)) * -X.QUANTITY\n" +
-            "\t\t\tELSE 0.0 END) AS PROFIT, \n" +
-            "\t\t\tSUM(DISCOUNT) AS DISCOUNT \n" +
-            "\t\t\tFROM transaction_line_item X, product Y \n" +
-            "\t\t\tWHERE X.PRODUCT_NO = Y.PRODUCT_NO  \n" +
-            "\t\t\tAND DATE BETWEEN ? AND ? \n" +
-            "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
-            "\t\t\tWHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID  \n" +
-            "\t\t\tAND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS = 'w' ";
+    public String getPrpfitForCloseRegisterForWholesale = "       SELECT\n" +
+        " \n" +
+        "\t\t\tSUM(PROFIT) PROFIT  \n" +
+        "            FROM TRANSACTION A,  \n" +
+        "            (SELECT TRANSACTION_COMP_ID,   \n" +
+        "            SUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'w'  \n" +
+        "            THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY  \n" +
+        "            WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND (TRANSACTION_STATUS = 'r' or TRANSACTION_STATUS = 'p' ) \n" +
+        "            THEN ((X.RETAIL-X.COST-X.DISCOUNT/-X.QUANTITY)) * -X.QUANTITY \n" +
+        "            ELSE 0.0 END) AS PROFIT,  \n" +
+        "            SUM(DISCOUNT) AS DISCOUNT  \n" +
+        "            FROM transaction_line_item X, product Y  \n" +
+        "            WHERE X.PRODUCT_NO = Y.PRODUCT_NO   \n" +
+        "            AND DATE BETWEEN ? AND ?\n" +
+        "            Group by TRANSACTION_COMP_ID)B  \n" +
+        "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID   \n" +
+        "                             AND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS = 'w' AND A.CUSTOMER_PHONENO <> '8435764781' ";
 
     public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? AND CLOCK_DATE = ?";
 
