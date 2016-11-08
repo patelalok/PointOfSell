@@ -44,7 +44,7 @@
 			label : "Non-numeric characters disallowed"
 		},
 		ProdSpecial :{
-			regExp:/[^a-zA-Z0-9-_ ]/g,
+			regExp:/[^a-zA-Z0-9-_. ]/g,
 			label:"Only _,- is allowed"
 		},
 		NumericPeriod : {
