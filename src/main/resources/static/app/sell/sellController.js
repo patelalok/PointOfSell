@@ -222,7 +222,7 @@
 					$scope.discount = 0;
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 						if (searchTxt === GlobalVariable.getProducts[i].description) {
-							if(GlobalVariable.getProducts[i].categoryName == 'Phone' && GlobalVariable.getProducts[i].categoryId == 10)
+							if(GlobalVariable.getProducts[i].categoryId == 10)
 							{
 								GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
 								GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
@@ -289,7 +289,7 @@
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 						if (searchTxt === GlobalVariable.getProducts[i].productNo) {
 							$scope.productFound = true;
-							if(GlobalVariable.getProducts[i].categoryName == 'Phone' && GlobalVariable.getProducts[i].categoryId == 10)
+							if(GlobalVariable.getProducts[i].categoryId == 10)
 							{
 								GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
 								GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
