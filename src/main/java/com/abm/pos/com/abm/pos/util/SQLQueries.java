@@ -32,9 +32,8 @@ public class SQLQueries {
                    "CREATED_DATE," +
                    //"IMEI_NUMBER," +
                    "TAX, " +
-                   "IS_RELATED_PRODUCT," +
-                   "MODEL_ID)" +
-           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                   "IS_RELATED_PRODUCT)" +
+           " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//, MODEL_ID = ?
 
     public String addProductQueryForPhone = "INSERT INTO product" +
             " (" +
@@ -46,9 +45,8 @@ public class SQLQueries {
             "DESCRIPTION," +
             "TAX, " +
             "QUANTITY," +
-            "IS_RELATED_PRODUCT," +
-            "MODEL_ID)" +
-            " VALUES(?,?,?,?,?,?,?,?,?,?)";
+            "IS_RELATED_PRODUCT)" +
+            " VALUES(?,?,?,?,?,?,?,?,?)";
 
     public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 
@@ -256,7 +254,7 @@ public class SQLQueries {
                     "IMAGE = ?, " +
                     //"IMEI_NUMBER = ?, " +
                     "TAX = ?, " +
-                    "IS_RELATED_PRODUCT = ?, MODEL_ID = ? " +
+                    "IS_RELATED_PRODUCT = ? " +//, MODEL_ID =?
                     "WHERE PRODUCT_ID = ? AND PRODUCT_NO = ?";
 
     public String editCustomerQuery = "UPDATE customer" +
