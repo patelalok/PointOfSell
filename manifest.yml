@@ -1,7 +1,7 @@
 applications:
-- name: PointOfSell
+- name: PointOfSale
   memory: 512M
   instances: 1
   path: ./build/libs/PointOfSale-0.0.1-SNAPSHOT.jar
   diego: true
-  host: pointofsellalok
+  host: pos

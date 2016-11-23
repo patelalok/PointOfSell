@@ -52,6 +52,19 @@ public class ProductController {
         return productManager.getProductDetails();
     }
 
+    @RequestMapping(value = "/getEcommerceProductsByCategory", method = RequestMethod.GET)
+    public List<ProductEcomerceDto> getEcommerceProductsByCategory(@RequestParam int category_Id) {
+
+        return productManager.getEcommerceProductsByCategory(category_Id);
+    }
+
+    @RequestMapping(value = "/getEcommerceProductsByBrand", method = RequestMethod.GET)
+    public List<ProductEcomerceDto> getEcommerceProductsByBrand(@RequestParam int brand_Id, @RequestParam int model_Id) {
+
+        return productManager.getEcommerceProductsByBrand(brand_Id,model_Id);
+    }
+
+
     @RequestMapping(value = "/getRelatedProduct", method = RequestMethod.GET, produces = "application/json")
     public List<ProductDto> getRelatedProduct(@RequestParam String productNo) {
 

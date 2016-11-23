@@ -1277,41 +1277,71 @@ public class ReportManager {
         if(null != transactionIds)
         {
             boolean beginPage = true;
-
             int y = 0;
+            int counter = 0;
+            // Static header content printing logic
+            generateHeaderForYearlySales(doc, cb);
 
-            for(int c = 10; c <13; c++)
-            {
+            for(Integer transactionId: transactionIds) {
                 if (beginPage) {
                     beginPage = false;
-
                     y = 605;
+
+                    doc.newPage();
+
+                } else {
+                    y = y - 30;
+                }
+                // Static content on the pdf like sales and stuff
+                if (y-30 <= 60) {
+                    printPageNumber(cb);
+                    doc.newPage();
+                    y = 605;
+                }
+                generateLayoutForDetailedSales(doc, cb,y);
+
+                // Service call to get transaction and all the line-items for it
+                receiptDtos =  salesManager.getReceiptDetails(transactionId);
+
+                // To print detail for the transaction.
+                y = y-40;
+                if (y <= 30) {
+                    beginPage = false;
+                    y = 605;
+                    // Static header content printing logic
                     generateHeaderForYearlySales(doc, cb);
                 }
 
-                generateLayoutForDetailedSales(doc, cb,y);
+                generateDetailForDetailedSales(doc, cb, i, y, receiptDtos);
 
-                receiptDtos =  salesManager.getReceiptDetails(c);
+                // To generate header for the line item
+                y = y -30;
+                generateLineItemLayoutForDetailedSales(doc, cb,y);
 
-                generateDetailForDetailedSales(doc, cb, i, y-40, receiptDtos);
-
-                generateLineItemLayoutForDetailedSales(doc, cb,y-70);
-
+                // Iterating thru all the line items
+                y = y-30;
                 for(int m = 0; m < receiptDtos.get(0).getTransactionLineItemDtoList().size(); m++ )
                 {
-                    generateLineItemValuesForDetailedSales(doc, cb,y-100, receiptDtos,m);
-                    y = y-25;
+                    // printing in pdf one line-item detail at a time.
+                    if (y-50 <= 60) {
+                        printPageNumber(cb);
+                        doc.newPage();
+                        y = 605;
+                    }
+                    generateLineItemValuesForDetailedSales(doc, cb,y, receiptDtos,m);
+                    y = y-20;
                 }
-                generatePaymentLayoutForDetailedSales(doc, cb,y-100);
+                y = y+20;
+                //generatePaymentLayoutForDetailedSales(doc, cb,y-50);
 
-                if (y < 60) {
+                if (y-30 < 60) {
                     printPageNumber(cb);
                     doc.newPage();
-                    beginPage = true;
+                    y = 605;
                 }
                 i++;
 
-                System.out.println(c);
+                System.out.println(counter);
             }
         }
 

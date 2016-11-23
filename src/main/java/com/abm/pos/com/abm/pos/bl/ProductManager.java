@@ -228,7 +228,66 @@ public class ProductManager
 
     }
 
+    public List<ProductEcomerceDto> getEcommerceProductsByCategory(int category_Id) {
 
+        List<ProductEcomerceDto> productList = new ArrayList<>();
+
+        try
+        {
+            productList = jdbcTemplate.query(sqlQuery.getProductDetailsByCategoryId,new ProductMapperForEcomerce(),category_Id);
+
+            System.out.println("Send Product Details by Category Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return productList;
+    }
+
+
+    public List<ProductEcomerceDto> getEcommerceProductsByBrand(int brand_Id,int model_Id) {
+
+        List<ProductEcomerceDto> productList = new ArrayList<>();
+
+        try
+        {
+            productList = jdbcTemplate.query(sqlQuery.getProductDetailsByBrandAndModelId,new ProductMapperForEcomerce(),brand_Id,model_Id);
+
+            System.out.println("Send Product Details by Brand and Model Successfully");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return productList;
+    }
+
+    private final class ProductMapperForEcomerce implements RowMapper<ProductEcomerceDto>
+    {
+
+        @Override
+        public ProductEcomerceDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            ProductEcomerceDto product = new ProductEcomerceDto();
+
+            product.setProductId(rs.getInt("PRODUCT_ID"));
+            product.setProductNo(rs.getString("PRODUCT_NO"));
+            product.setDescription(rs.getString("DESCRIPTION"));
+            product.setCategoryId(rs.getInt("CATEGORY_ID"));
+            product.setModelId(rs.getInt("MODEL_ID"));
+            product.setVendorId(rs.getInt("VENDOR_ID"));
+            product.setBrandId(rs.getInt("BRAND_ID"));
+            product.setCostPrice(rs.getDouble("COST_PRICE"));
+            product.setRetailPrice(rs.getDouble("RETAIL_PRICE"));
+            product.setQuantity(rs.getInt("QUANTITY"));
+            product.setAddTax(rs.getBoolean("TAX"));
+
+
+
+            return product;
+        }
+    }
 
     private final class RelatedProductMapper implements RowMapper<RelatedProductDto>
     {

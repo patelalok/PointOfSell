@@ -413,7 +413,7 @@ public class SQLQueries {
 
     public String getProductDetails = "SELECT * FROM product ";
 
-    public String getModelDetails = "SELECT * FROM PRODUCT_MODEL ";
+    public String getModelDetails = "SELECT * FROM PRODUCT_MODEL WHERE ID = ? AND ID <> 'NULL' ";
 
    // ORDER BY DESCRIPTION
 
@@ -759,7 +759,19 @@ public class SQLQueries {
 
     public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
 
-    public String getInventoryByCategory = "SELECT c.CATEGORY_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, CATEGORY c WHERE p.CATEGORY_ID = c.CATEGORY_ID GROUP BY c.CATEGORY_NAME";
+    public String getInventoryByCategory = "SELECT c.CATEGORY_NAME as COMMON_NAME, \n" +
+            "count(p.PRODUCT_NO) NOOFPRODUCTS, \n" +
+            "sum((p.COST_PRICE)* p.QUANTITY) COST, \n" +
+            "sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, \n" +
+            "avg(p.MARKUP) MARGIN \n" +
+            "FROM PRODUCT p, CATEGORY c \n" +
+            "WHERE p.CATEGORY_ID = c.CATEGORY_ID \n" +
+            "AND c.CATEGORY_ID <> 1 \n" +
+            "AND c.CATEGORY_ID <> 2 \n" +
+            "AND c.CATEGORY_ID <> 3\n" +
+            "AND c.CATEGORY_ID <> 36 \n" +
+            "AND c.CATEGORY_ID <> 37\n" +
+            "GROUP BY c.CATEGORY_NAME";
 
     public String getInventoryByVendor = "SELECT v.VENDOR_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, VENDOR v WHERE p.VENDOR_ID = v.VENDOR_ID GROUP BY  v.VENDOR_NAME";
 
@@ -803,7 +815,7 @@ public class SQLQueries {
                     "            SUM(TAX_AMOUNT) TAX, \n" +
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
                     "            FROM TRANSACTION  \n" +
-                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'w' AND CUSTOMER_PHONENO = '8435764781' ";//Hard coded the value just becuase client dont want this to be calculated for whole sale
+                    "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'w' AND CUSTOMER_PHONENO <> '8435764781' ";//Hard coded the value just becuase client dont want this to be calculated for whole sale
 
 
     //I need to for last 12 months but here i am not putting between date condition i need to fox it.
@@ -975,4 +987,12 @@ public class SQLQueries {
             "WHERE USERNAME = ? ";
 
 
+    public String getWebBrandsWithModel = "";
+    public String getBrandIdsForWeb = "SELECT BRAND_ID FROM BRAND";
+    public String getModelDetailsForBrand = "SELECT distinct MODEL_ID FROM PRODUCT WHERE BRAND_ID = ? AND MODEL_ID <> 'NULL' ";
+    public String getModelDetailsForWeb = "SELECT * FROM MODEL WHERE MODEL_ID = ?";
+
+    public String getProductDetailsByCategoryId = "SELECT * FROM PRODUCT WHERE CATEGORY_ID = ?";
+
+    public String getProductDetailsByBrandAndModelId = "SELECT * FROM PRODUCT WHERE BRAND_ID = ? AND MODEL_ID = ?";
 }
