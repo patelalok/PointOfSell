@@ -259,7 +259,7 @@
 			msg=$sce.trustAsHtml(msg);
 			modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Print'}, msg, $scope.callBackCheckoutComplete);
 			*/
-			
+			GlobalVariable.custTypeCd = '';
 			$rootScope.totalPayment = '0.00';
 			$rootScope.customerName = '';
 			$rootScope.regPhone = '';

@@ -8,7 +8,7 @@
     function Globals() {
         var GlobalConstantObj = {};
 
-        GlobalConstantObj.URLCONSTANTS = 'http://pos.cfapps.io/';
+        GlobalConstantObj.URLCONSTANTS = 'http://localhost:8080/';
 
         return GlobalConstantObj;
     }
