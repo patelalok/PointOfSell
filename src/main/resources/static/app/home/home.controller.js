@@ -27,7 +27,8 @@
 		$scope.nData=[];$scope.nDataPrev=[];
 		$scope.debitData=[];
 		$scope.nvgData=[];$scope.nvgDataPrev=[];
-	    $scope.series = ['2016', '2015'];
+		var date = new Date();
+	    $scope.series = [date.getFullYear(), date.getFullYear()-1];
 	    $scope.onClick = function (points, evt) {
 	      console.log(points, evt);
 	    };
