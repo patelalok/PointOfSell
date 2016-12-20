@@ -949,7 +949,7 @@ public class ClosingDetailsManager {
 
 
 
-            createHeadingsAlokTest(cb,205,780,"PHONE WORLD");
+            createHeadingsAlokTest(cb,205,780,"WIRELESS WORLD");
             createHeadingsAlokTest(cb,205,730,"Close Register Report");
             createHeadings(cb,20,685,"Date:");
             createHeadings(cb,470,685,"GP:");
