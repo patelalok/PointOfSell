@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th data-ng-repeat="column in columns" data-ng-click="sortByColumn($index, column)" data-ng-if="!column.toggle"
-					colspan={{column.colSpan}} data-ng-hide="column.hidden" style="font-weight:bold;"
+					colspan={{column.colSpan}} data-ng-hide="column.hidden || column.customHidden" style="font-weight:bold;"
 					data-ng-class="{'active-sort': $index === sortColumn && column.sortable, 'wrapword': column.wordWrap, 'sortable': column.sortable}">
 					<span data-ng-if="column.header" data-compile-html="column.header" class=""> </span>
 					<span data-ng-if="!column.header && column.name != 'Delete'" class=""> {{::column.name}} </span>
@@ -30,7 +30,7 @@
 			<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
 			<tr data-ng-repeat="row in sortedData  | limitTo : pageSize | filter : valueFilter">
 				<td data-ng-repeat="column in columns" data-ng-class="{'wrapword': column.wordWrap}" data-ng-if="!column.toggle"
-					data-ng-hide="column.hidden" data-ng-style="{'width': column.width,'padding': column.padding,'border':column.border}">
+					data-ng-hide="column.hidden || column.customHidden" data-ng-style="{'width': column.width,'padding': column.padding,'border':column.border}">
 					<span data-ng-if="!column.cell">
 						<span data-ng-if="column.cellClick">
 							<a data-ng-click="cellClick(row, column)" class="hyperlink">{{::row[column.key]}}</a>
@@ -74,7 +74,7 @@
 			class="table table-striped table-condensed border-bottom-1">
 			<tbody>
 				<tr data-ng-repeat="column in columns" ng-class="{'no-background-color': column.isActions}"
-					data-ng-show="($index <= toggleIndex || row.showToggled || column.isActions) && !column.hidden">
+					data-ng-show="($index <= toggleIndex || row.showToggled || column.isActions) && !column.hidden && !column.customHidden">
 					<td data-ng-if="column.toggle"></td>
 					<td data-ng-if="column.toggle">
 						<!-- colspan={{column.colSpan}}> -->

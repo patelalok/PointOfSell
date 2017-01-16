@@ -214,21 +214,9 @@
 											column.width = getAttributeValue(columnElement, 'width' , true);
 											column.padding = getAttributeValue(columnElement, 'padding' , false,true);
 											column.border = getAttributeValue(columnElement, 'border' , false,true);
-											var hidden = getAttributeValue(columnElement, 'hidden', false, null);
-											if(hidden != null)
-											{
-												if(GlobalVariable.customReceiptFalg == 1)
-													column.hidden = true;
-												else
-													column.hidden=false;
+											column.customHidden = getAttributeValue(columnElement, 'ng-if', false, false);
 
-
-											}
-											else
-											{
-												column.hidden = false;
-											}
-											//watchHidden(scope, column, columnElement);
+											watchHidden(scope, column, columnElement);
 
 											console.log("column.hidden in ledger="+column.hidden);
 											column.cell = null;

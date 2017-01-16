@@ -13,7 +13,7 @@
 		$scope.selectedIndex = 0;
 		$scope.isAsc = false;
 		GlobalVariable.enableEdit = false;
-		
+		$scope.checkHidden = false;
 
 		$scope.sortColumnData = function(index) {
 			if ($scope.testGridData != null && $scope.testGridData.length > 0) {

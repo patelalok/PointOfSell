@@ -95,11 +95,26 @@
         function render() {
             $scope.currentPageIndexArr = 0;
             $scope.totalTax = GlobalVariable.totalTaxSetup;
+            if(GlobalVariable.getProducts ==  undefined || GlobalVariable.getProducts == null)
+            {
+
+                getProductDetails.getProductDetail($scope.getPrdDtls);
+            }
+            else
+            {
+                $scope.productNames = [];
+                for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+                    $scope.productNames
+                        .push(GlobalVariable.getProducts[i].description);
+                }
+            }
+
             getTaxDetails();
             if (GlobalVariable.returnProduct == true) {
                 for (var i = 0; i < GlobalVariable.getReturnDetails[0].transactionLineItemDtoList.length; i++) {
                     $rootScope.returnData
                         .push({
+                            "statusId":'r',
                             "itemId":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productId,
                             "itemNo" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productNumber,
                             "item" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].productDescription,
@@ -112,9 +127,12 @@
                             "costPrice" : GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].cost,
                             "totalWithOutTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice,
                             "totalWithTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax,
+                            "totalTax":parseFloat(GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax)-parseFloat(GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].totalProductPrice),
+                            "categoryId":GlobalVariable.getProducts[i].categoryId,
                             "imeiNo":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].imeiNo,
                             "phoneId":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].phoneId,
-                            "discountPercentage":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].discountPercentage
+                            "discountPercentage":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].discountPercentage,
+                            "addTax":GlobalVariable.getReturnDetails[0].transactionLineItemDtoList[i].addTax
                         });
                     $scope.retPrd[i] = true;
                 }
@@ -137,6 +155,321 @@
 
             }
             $scope.loadCheckOutData();
+        }
+        $scope.getPrdDtls = function(response)
+        {
+            for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+                $scope.productNames
+                    .push(GlobalVariable.getProducts[i].description);
+            }
+        };
+        $scope.changeReturnQuantity = function()
+        {
+            var searchTxt = $scope.searchValue.toString();
+            if (searchTxt !== '' && searchTxt !== undefined
+                && searchTxt.indexOf(".") !== 0) {
+                if (searchTxt.match(/[a-z]/i)) {
+                    console.log("contains only charcters");
+                    $scope.discount = 0;
+                    for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+                        if (searchTxt === GlobalVariable.getProducts[i].description) {
+                            if(GlobalVariable.getProducts[i].categoryName == 'Phone' && GlobalVariable.getProducts[i].categoryId == 10)
+                            {
+                                GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
+                                GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
+                                GlobalVariable.sellDescription = GlobalVariable.getProducts[i].description;
+                                GlobalVariable.sellCategoryId = GlobalVariable.getProducts[i].categoryId;
+                                GlobalVariable.sellAddTax= GlobalVariable.getProducts[i].addTax;
+
+                                var _tmPath = 'app/sell/validateIMEI.html';
+                                var _ctrlPath = 'ValidateIMEIController';
+                                DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackValidateIMEI);
+                            }
+                            else
+                            {
+                                if(GlobalVariable.getProducts[i].addTax == true)
+                                {
+                                    var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+                                        .toFixed(2);
+                                    totalWithOutTax = parseFloat(totalWithOutTax);
+                                    var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+                                }
+                                else
+                                {
+                                    var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+                                        .toFixed(2);
+                                    totalWithOutTax = parseFloat(totalWithOutTax);
+                                    var totalWithTax = totalWithOutTax;
+                                }
+                                $rootScope.returnData
+                                    .push({
+                                        "statusId":'n',
+                                        "itemId":GlobalVariable.getProducts[i].productId,
+                                        "itemNo" : GlobalVariable.getProducts[i].productNo,
+                                        "item" : GlobalVariable.getProducts[i].description,
+                                        "quantity" : GlobalVariable.getProducts[i].quantity,
+                                        "retail" : GlobalVariable.getProducts[i].retailPrice,
+                                        "discount" : (parseFloat($scope.discount))
+                                            .toFixed(2),
+                                        "retWithDisc":(parseFloat($scope.discount))
+                                            .toFixed(2),
+                                        "total" : totalWithOutTax,
+                                        "stock" : GlobalVariable.getProducts[i].stock,
+                                        "costPrice" : GlobalVariable.getProducts[i].costPrice,
+                                        "totalWithOutTax":totalWithOutTax,
+                                        "totalWithTax":totalWithTax,
+                                        "totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
+                                        "categoryId":GlobalVariable.getProducts[i].categoryId,
+                                        "imeiNo":GlobalVariable.getProducts[i].imeiNo,
+                                        "phoneId":GlobalVariable.getProducts[i].phoneId,
+                                        "discountPercentage":'',
+                                        "addTax":GlobalVariable.getProducts[i].addTax
+                                    });
+                                if(GlobalVariable.getProducts[i].relatedProduct = true)
+                                {
+
+                                    var url=GlobalConstants.URLCONSTANTS+"getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+                                    dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
+                                    break;
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+
+                }
+                else if (searchTxt.length > 6) {
+                    console.log("" + $scope.searchValue);
+                    $scope.discount = 0;
+                    for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
+                        if (searchTxt === GlobalVariable.getProducts[i].productNo) {
+                            $scope.productFound = true;
+                            if(GlobalVariable.getProducts[i].categoryName == 'Phone' && GlobalVariable.getProducts[i].categoryId == 10)
+                            {
+                                GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
+                                GlobalVariable.sellProductId =GlobalVariable.getProducts[i].productId;
+                                GlobalVariable.sellDescription = GlobalVariable.getProducts[i].description;
+                                GlobalVariable.sellCategoryId = GlobalVariable.getProducts[i].categoryId;
+                                GlobalVariable.sellAddTax= GlobalVariable.getProducts[i].addTax;
+                                var _tmPath = 'app/sell/validateIMEI.html';
+                                var _ctrlPath = 'ValidateIMEIController';
+                                DialogFactory.show(_tmPath, _ctrlPath, $scope.callBackValidateIMEI);
+                            }
+                            else
+                            {
+
+                                if(GlobalVariable.getProducts[i].addTax == true)
+                                {
+                                    var totalWithOutTax = Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+                                        .toFixed(2);
+                                    totalWithOutTax = parseFloat(totalWithOutTax);
+                                    var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+                                }
+                                else
+                                {
+                                    var totalWithOutTax =  Number((parseFloat(GlobalVariable.getProducts[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+                                        .toFixed(2);
+                                    totalWithOutTax = parseFloat(totalWithOutTax);
+                                    var totalWithTax = totalWithOutTax;
+                                }
+
+                                $rootScope.returnData
+                                    .push({
+                                        "statusId":'n',
+                                        "itemId":GlobalVariable.getProducts[i].productId,
+                                        "itemNo" : GlobalVariable.getProducts[i].productNo,
+                                        "item" : GlobalVariable.getProducts[i].description,
+                                        "quantity" : GlobalVariable.getProducts[i].quantity,
+                                        "retail" : GlobalVariable.getProducts[i].retailPrice,
+                                        "discount" : (parseFloat($scope.discount))
+                                            .toFixed(2),
+                                        "retWithDisc":(parseFloat($scope.discount))
+                                            .toFixed(2),
+                                        "total" : totalWithOutTax,
+                                        "stock" : GlobalVariable.getProducts[i].stock,
+                                        "costPrice" : GlobalVariable.getProducts[i].costPrice,
+                                        "totalWithOutTax":totalWithOutTax,
+                                        "totalWithTax":totalWithTax,
+                                        "totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
+                                        "categoryId":GlobalVariable.getProducts[i].categoryId,
+                                        "imeiNo":GlobalVariable.getProducts[i].imeiNo,
+                                        "phoneId":GlobalVariable.getProducts[i].phoneId,
+                                        "discountPercentage":'',
+                                        "addTax":GlobalVariable.getProducts[i].addTax
+                                    });
+                                if(GlobalVariable.getProducts[i].relatedProduct = true)
+                                {
+
+                                    var url=GlobalConstants.URLCONSTANTS+"getRelatedProduct?productNo="+GlobalVariable.getProducts[i].productNo;
+                                    dataService.Get(url,onGetRelatedSuccess,onGetRelatedError,'application/json','application/json');
+                                    break;
+                                }
+                                break;
+                            }
+                            break;
+
+                        }
+                        else
+                        {
+                            $scope.productFound = false;
+                        }
+                    }
+                    if($scope.productFound == false)
+                    {
+                        var msg= 'Item is not in this system,do you want to add this product?';
+                        msg=$sce.trustAsHtml(msg);
+                        modalService.showModal('', {isCancel:true,closeButtonText:'Cancel',actionButtonText:'Add'}, msg, $scope.callBackAddProduct);
+                    }
+
+                }
+            }
+        };
+        function onGetRelatedSuccess(response)
+        {
+            if(response.length !== 0)
+            {
+                for(var k=0;k<response.length;k++) {
+                    if(response[i].addTax == true)
+                    {
+                        var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
+                            .toFixed(2);
+                        totalWithOutTax = parseFloat(totalWithOutTax);
+                        var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+                    }
+                    else
+                    {
+                        var totalWithOutTax = Number((parseFloat(response[k].retailPrice) - (parseFloat($scope.discount))) * parseFloat(response[k].quantity))
+                            .toFixed(2);
+                        totalWithOutTax = parseFloat(totalWithOutTax);
+                        var totalWithTax = totalWithOutTax;
+                    }
+
+                    $rootScope.returnData
+                        .push({
+                            "statusId":'n',
+                            "itemId": response[k].productId,
+                            "itemNo": response[k].productNo,
+                            "item": response[k].description,
+                            "quantity": response[k].quantity,
+                            "retail": response[k].retailPrice,
+                            "discount": (parseFloat($scope.discount))
+                                .toFixed(2),
+                            "retWithDisc":(parseFloat($scope.discount))
+                                .toFixed(2),
+                            "total": totalWithOutTax,
+                            "stock": response[k].stock,
+                            "costPrice": response[k].costPrice,
+                            "totalWithOutTax":totalWithOutTax,
+                            "totalWithTax": totalWithTax,
+                            "totalTax": parseFloat(totalWithTax) - parseFloat(totalWithOutTax),
+                            "catgeoryId":response[k].categoryId,
+                            "imeiNo":response[k].imeiNo,
+                            "phoneId":response[k].phoneId,
+                            "discountPercentage":'',
+                            "addTax":response[k].addTax
+
+                        });
+                }
+            }
+            $scope.loadCheckOutData();
+
+        }
+        function onGetRelatedError(response)
+        {
+
+        }
+        $scope.callBackValidateIMEI = function()
+        {
+
+            $scope.getAllSellIMEINumbers();
+        };
+        $scope.getAllSellIMEINumbers = function()
+        {
+            var url=GlobalConstants.URLCONSTANTS+'getPhoneDetails?productNo='+GlobalVariable.sellProductNo;
+            dataService.Get(url,onGetSellIMEISuccess,onGETSellIMEIError,'application/json','application/json');
+        };
+        function onGetSellIMEISuccess(response)
+        {
+            $scope.IMEIProdctFound = false;
+            if(response.length !== 0)
+            {
+                for(var i =0;i< response.length;i++)
+                {
+                    if(GlobalVariable.sellIMEINumber == response[i].imeiNo)
+                    {
+                        $scope.IMEIProdctFound = true;
+                        if(response[i].addTax == true)
+                        {
+                            var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+                                .toFixed(2);
+                            totalWithOutTax = parseFloat(totalWithOutTax);
+                            var totalWithTax = totalWithOutTax + (($scope.totalDefaultTax /100) * totalWithOutTax);
+                        }
+                        else
+                        {
+                            var totalWithOutTax = Number((parseFloat(response[i].retailPrice) - (parseFloat($scope.discount))) * parseFloat(GlobalVariable.getProducts[i].quantity))
+                                .toFixed(2);
+                            totalWithOutTax = parseFloat(totalWithOutTax);
+                            var totalWithTax = totalWithOutTax;
+                        }
+                        $rootScope.returnData
+                            .push({
+                                "statusId":'n',
+                                "itemId":response[i].productId,
+                                "itemNo" : response[i].productNo,
+                                "item" : response[i].description,
+                                "quantity" : response[i].quantity,
+                                "retail" : response[i].retailPrice,
+                                "discount" : (parseFloat($scope.discount))
+                                    .toFixed(2),
+                                "retWithDisc":(parseFloat($scope.discount))
+                                    .toFixed(2),
+                                "total" : totalWithOutTax,
+                                "stock" : response[i].stock,
+                                "costPrice" : response[i].costPrice,
+                                "totalWithOutTax":totalWithOutTax,
+                                "totalWithTax":totalWithTax,
+                                "totalTax":parseFloat(totalWithTax)-parseFloat(totalWithOutTax),
+                                "imeiNo":response[i].imeiNo,
+                                "categoryId":response[i].categoryId,
+                                "phoneId":response[i].phoneId,
+                                "discountPercentage":'',
+                                "addTax":response[i].addTax
+                            });
+                    }
+                }
+            }
+            if($scope.IMEIProdctFound == false)
+            {
+                //TODO Change Object
+                $rootScope.returnData
+                    .push({
+                        "itemId":GlobalVariable.sellProductId,
+                        "itemNo" :GlobalVariable.sellProductNo,
+                        "item" : GlobalVariable.sellDescription,
+                        "quantity" :1,
+                        "retail" : 0,
+                        "discount" : 0,
+                        "total" : 0,
+                        "stock" :0,
+                        "costPrice" : 0,
+                        "categoryName":'',
+                        "totalWithTax":0,
+                        "totalTax":0,
+                        "imeiNo":GlobalVariable.sellIMEINumber,
+                        "categoryId":GlobalVariable.sellCategoryId,
+                        "phoneId":'',
+                        "addTax":GlobalVariable.sellAddTax
+                    });
+            }
+
+            $scope.loadCheckOutData();
+
+        }
+        function onGETSellIMEIError(response)
+        {
+
         }
         $scope.returnProduct = function() {
 
