@@ -263,29 +263,51 @@
 			
 		}
 		$scope.navigateToReturnPage = function(transactionDate,transactionCompId)
-		{
-			/*var request = new Object();
-			request.transactionDate = transactionDate;
-			request.transactionCompId = transactionCompId;
-			request = JSON.stringify(request);*/
-			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
-			dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
-			
+	{
+		/*var request = new Object();
+		 request.transactionDate = transactionDate;
+		 request.transactionCompId = transactionCompId;
+		 request = JSON.stringify(request);*/
+		var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
+		dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
 
-		};
+
+	};
 		function getReturnsSuccessHandler(response)
 		{
 			GlobalVariable.getReturnDetails = response;
-			
+
 			GlobalVariable.returnProduct = true;
 			$state.go('return');
 		}
 		function getReturnsErrorHandler(response)
 		{
-			
+
 		}
 /*		salesDate : moment($scope.salesDates[receiptIndex]).format("MM/DD/YYYY")
 */
+		$scope.navigateToSellPage = function(transactionDate,transactionCompId)
+		{
+			/*var request = new Object();
+			 request.transactionDate = transactionDate;
+			 request.transactionCompId = transactionCompId;
+			 request = JSON.stringify(request);*/
+			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
+			dataService.Get(url,getReturnSellSuccessHandler,getReturnSellErrorHandler,"application/json","application/json");
+
+
+		};
+		function getReturnSellSuccessHandler(response)
+		{
+			GlobalVariable.getReturnSellDetails = response;
+
+			GlobalVariable.onlineSellProduct = true;
+			$state.go('sell');
+		}
+		function getReturnSellErrorHandler(response)
+		{
+
+		}
 		$scope.showTransNotes = function(row)
 		{
 			$scope.editNotesId = row.transactionCompId;

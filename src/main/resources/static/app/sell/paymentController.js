@@ -254,6 +254,7 @@
 		function addTransactionLineItemSuccessHandler(response)
 		{
 			$rootScope.testData = [];
+			GlobalVariable.onlineSellProduct = false;
 
 			/*var msg= 'Print Receipt or Cancel';
 			msg=$sce.trustAsHtml(msg);
