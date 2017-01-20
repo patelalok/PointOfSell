@@ -759,19 +759,30 @@ public class SQLQueries {
 
     public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
 
-    public String getInventoryByCategory = "SELECT c.CATEGORY_NAME as COMMON_NAME, \n" +
-            "count(p.PRODUCT_NO) NOOFPRODUCTS, \n" +
-            "sum((p.COST_PRICE)* p.QUANTITY) COST, \n" +
-            "sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, \n" +
-            "avg(p.MARKUP) MARGIN \n" +
-            "FROM PRODUCT p, CATEGORY c \n" +
-            "WHERE p.CATEGORY_ID = c.CATEGORY_ID \n" +
-            "AND c.CATEGORY_ID <> 1 \n" +
-            "AND c.CATEGORY_ID <> 2 \n" +
-            "AND c.CATEGORY_ID <> 3\n" +
-            "AND c.CATEGORY_ID <> 36 \n" +
-            "AND c.CATEGORY_ID <> 37\n" +
-            "GROUP BY c.CATEGORY_NAME";
+    public String getInventoryByCategory = "(SELECT c.CATEGORY_NAME as COMMON_NAME, \n" +
+            "\n" +
+            "            count(p.PRODUCT_NO) NOOFPRODUCTS, \n" +
+            "            sum((p.COST_PRICE)* p.QUANTITY) COST, \n" +
+            "            sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, \n" +
+            "            avg(p.MARKUP) MARGIN \n" +
+            "            FROM PRODUCT p, CATEGORY c \n" +
+            "            WHERE p.CATEGORY_ID = c.CATEGORY_ID\n" +
+            "            AND c.CATEGORY_ID <> 1 \n" +
+            "            AND c.CATEGORY_ID <> 2 \n" +
+            "            AND c.CATEGORY_ID <> 3\n" +
+            "            AND c.CATEGORY_ID <> 36 \n" +
+            "            AND c.CATEGORY_ID <> 37\n" +
+            "            AND c.CATEGORY_ID <> 10\n" +
+            "            GROUP BY c.CATEGORY_NAME)\n" +
+            "            union\n" +
+            "            (select c.CATEGORY_NAME as COMMON_NAME,\n" +
+            "            count( distinct p.PRODUCT_NO) NOOFPRODUCTS,\n" +
+            "            sum(p.COST) COST,\n" +
+            "            sum(p.RETAIL) RETAIL,\n" +
+            "\t\t\tavg(p.MARKUP) MARGIN\n" +
+            "            FROM phone p, category c\n" +
+            "            WHERE c.CATEGORY_ID = 10\n" +
+            "            group by c.CATEGORY_NAME)";
 
     public String getInventoryByVendor = "SELECT v.VENDOR_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, VENDOR v WHERE p.VENDOR_ID = v.VENDOR_ID GROUP BY  v.VENDOR_NAME";
 

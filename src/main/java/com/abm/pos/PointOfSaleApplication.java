@@ -27,8 +27,6 @@ public class PointOfSaleApplication {
     public static void main(String[] args) throws IOException, DocumentException {
 
         SpringApplication.run(PointOfSaleApplication.class, args);
-
-        PointOfSaleApplication generateInvoice = new PointOfSaleApplication();
     }
 }
 
