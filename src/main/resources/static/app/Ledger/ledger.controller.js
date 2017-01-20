@@ -75,8 +75,8 @@
 			}
 			else if(saleDate == 'lastMonthSales')
 			{
-				start = getcurrentYear()+"-"+getlastMonth()+"-01 00:00:00";
-				end = getcurrentYear()+"-"+getlastMonth()+"-31 23:59:59";
+				start = getlastMonth()+" 00:00:00";
+				end = getCurrentDay()+" 23:59:59";
 			}
 			else if(saleDate == 'last3MonthsSales')
 			{
@@ -263,29 +263,51 @@
 			
 		}
 		$scope.navigateToReturnPage = function(transactionDate,transactionCompId)
-		{
-			/*var request = new Object();
-			request.transactionDate = transactionDate;
-			request.transactionCompId = transactionCompId;
-			request = JSON.stringify(request);*/
-			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
-			dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
-			
+	{
+		/*var request = new Object();
+		 request.transactionDate = transactionDate;
+		 request.transactionCompId = transactionCompId;
+		 request = JSON.stringify(request);*/
+		var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
+		dataService.Get(url,getReturnsSuccessHandler,getReturnsErrorHandler,"application/json","application/json");
 
-		};
+
+	};
 		function getReturnsSuccessHandler(response)
 		{
 			GlobalVariable.getReturnDetails = response;
-			
+
 			GlobalVariable.returnProduct = true;
 			$state.go('return');
 		}
 		function getReturnsErrorHandler(response)
 		{
-			
+
 		}
 /*		salesDate : moment($scope.salesDates[receiptIndex]).format("MM/DD/YYYY")
 */
+		$scope.navigateToSellPage = function(transactionDate,transactionCompId)
+		{
+			/*var request = new Object();
+			 request.transactionDate = transactionDate;
+			 request.transactionCompId = transactionCompId;
+			 request = JSON.stringify(request);*/
+			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
+			dataService.Get(url,getReturnSellSuccessHandler,getReturnSellErrorHandler,"application/json","application/json");
+
+
+		};
+		function getReturnSellSuccessHandler(response)
+		{
+			GlobalVariable.getReturnSellDetails = response;
+
+			GlobalVariable.onlineSellProduct = true;
+			$state.go('sell');
+		}
+		function getReturnSellErrorHandler(response)
+		{
+
+		}
 		$scope.showTransNotes = function(row)
 		{
 			$scope.editNotesId = row.transactionCompId;
@@ -375,8 +397,9 @@
 		}
 		function getlast6Months () {
 			var now = new Date();
+			now.setMonth(now.getMonth()-6);
 			var year = "" + now.getFullYear();
-			var month = "" + (now.getMonth() - 5); if (month.length == 1) { month = "0" + month; }
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
 			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
 			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
 			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
@@ -386,8 +409,9 @@
 		}
 		function getlast3Months () {
 			var now = new Date();
+			now.setMonth(now.getMonth()-3);
 			var year = "" + now.getFullYear();
-			var month = "" + (now.getMonth() - 2); if (month.length == 1) { month = "0" + month; }
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
 			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
 			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
 			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
@@ -398,10 +422,11 @@
 		function getlastMonth()
 		{
 			var now = new Date();
+			now.setMonth(now.getMonth()-1);
 			var year = "" + now.getFullYear();
-			var month = "" + (now.getMonth()); if (month.length == 1) { month = "0" + month; }
-
-			return month ;
+			var month = "" + (now.getMonth()+1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			return year + "-" + month + "-" + day ;
 		}
 		function getcurrentMonth()
 		{

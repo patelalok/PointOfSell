@@ -815,6 +815,39 @@
 
 		}
 		function render() {
+
+			if (GlobalVariable.onlineSellProduct == true) {
+				for (var i = 0; i < GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList.length; i++) {
+					$rootScope.testData
+						.push({
+							"statusId":'r',
+							"itemId":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].productId,
+							"itemNo" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].productNumber,
+							"item" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].productDescription,
+							"quantity" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].quantity,
+							"retail" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].retail,
+							"discount" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].discount,
+							"retWithDisc" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].retailWithDis,
+							"total" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].totalProductPrice,
+							"stock" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].quantity,
+							"costPrice" : GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].cost,
+							"totalWithOutTax":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].totalProductPrice,
+							"totalWithTax":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax,
+							"totalTax":parseFloat(GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].totalProductPriceWithTax)-parseFloat(GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].totalProductPrice),
+							"categoryId":GlobalVariable.getProducts[i].categoryId,
+							"imeiNo":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].imeiNo,
+							"phoneId":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].phoneId,
+							"discountPercentage":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].discountPercentage,
+							"addTax":GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList[i].addTax,
+							"categoryName":""
+						});
+
+				}
+
+				$scope.loadCheckOutData();
+			}
+
+
 			$scope.currentPageIndexArr = 0;
 			GlobalVariable.customerNameOnSearch= '';
 
