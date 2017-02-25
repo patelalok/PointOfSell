@@ -52,6 +52,8 @@ public class PageSetUpManager {
 
 
             System.out.println("PageSetUp Details Edited Successfully");
+
+
         } catch (Exception e) {
             System.out.println(e);
         }

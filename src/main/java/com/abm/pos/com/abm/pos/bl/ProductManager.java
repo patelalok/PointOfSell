@@ -334,9 +334,9 @@ public class ProductManager
                 product.setMinProductQuantity(rs.getInt("MIN_PRODUCT"));
                 product.setReturnRule(rs.getString("RETURN_RULE"));
                // product.setImage(rs.getString("IMAGE"));
-                product.setCreatedDate(rs.getString("CREATED_DATE"));
+               // product.setCreatedDate(rs.getString("CREATED_DATE"));
                 product.setBrandId(rs.getInt("BRAND_ID"));
-               // product.setImeiNo(rs.getString("IMEI_NUMBER"));
+                //product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 product.setAddTax(rs.getBoolean("TAX"));
                 product.setRelatedProduct(rs.getBoolean("IS_RELATED_PRODUCT"));
                 //System.out.println(rs.getBoolean("TAX"));

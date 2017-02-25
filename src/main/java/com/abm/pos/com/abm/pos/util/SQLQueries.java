@@ -48,7 +48,7 @@ public class SQLQueries {
             "IS_RELATED_PRODUCT)" +
             " VALUES(?,?,?,?,?,?,?,?,?)";
 
-    public String addRelatedProduct = "INSERT INTO RELATED_PRODUCTS (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
+    public String addRelatedProduct = "INSERT INTO related_products (PRODUCT_NO, RELATED_PRODUCT_NO) VALUES (?,?)";
 
 
     public String addCustomerQuery =
@@ -103,7 +103,7 @@ public class SQLQueries {
             "VALUES(?,?)";
 
     public String addModelQuery =
-              "INSERT INTO PRODUCT_MODEL " +
+              "INSERT INTO product_model " +
                       "(" +
                       "NAME," +
                       "DESCRIPTION)" +
@@ -165,14 +165,14 @@ public class SQLQueries {
     //ADD CLOSING DETAILS INTO DATABASE
 
     public String addOpeningDetails =
-            "INSERT INTO CASH_REGISTER " +
+            "INSERT INTO cash_register " +
             "(" +
                     "USER_ID_OPEN," +
                     "OPEN_AMOUNT," +
                     "OPEN_DATE VALUES (?,?,?)";
 
     public String addClosingDetails =
-            "INSERT INTO CASH_REGISTER " +
+            "INSERT INTO cash_register " +
             "(" +
                     "USER_ID_CLOSE, " +
                     "REPORT_CASH, " +
@@ -212,7 +212,7 @@ public class SQLQueries {
 
 
     public String addUserClockIn =
-            "INSERT INTO USER_CLOCK_IN " +
+            "INSERT INTO user_clock_in " +
                     "(USERNAME," +
                     "CLOCK_IN," +
                     "CLOCK_DATE, USER_ID ) VALUES (?,?,?,?)";
@@ -220,7 +220,7 @@ public class SQLQueries {
 
 
     public String addPaidOutDetails =
-            "INSERT INTO PAIDOUT " +
+            "INSERT INTO paidout " +
                     "(PAIDOUT1," +
                     "PAIDOUT2," +
                     "PAIDOUT3," +
@@ -285,26 +285,26 @@ public class SQLQueries {
                     "WHERE VENDOR_ID = ?";
 
     public String editCategoryQuery =
-            "UPDATE CATEGORY SET " +
+            "UPDATE category SET " +
                     "CATEGORY_NAME = ?," +
                     " DESCRIPTION = ? " +
                     "WHERE CATEGORY_ID = ?";
 
     public String editBrandQuery =
-            "UPDATE BRAND SET " +
+            "UPDATE brand SET " +
                     "BRAND_NAME = ?, " +
                     "DESCRIPTION = ? " +
                     "WHERE BRAND_ID = ?";
 
     public String editModelQuery =
-            "UPDATE PRODUCT_MODEL SET " +
+            "UPDATE product_model SET " +
                     "NAME = ?, " +
                     "DESCRIPTION = ? " +
                     "WHERE ID = ? ";
 
 
     public String editUserWithPasswordQuery =
-            "UPDATE USER SET " +
+            "UPDATE user SET " +
                     "PASSWORD = ?, " +
                     "USER_ROLE = ?, " +
                     "HORLYRATE = ?, " +
@@ -312,7 +312,7 @@ public class SQLQueries {
                     "WHERE USERNAME = ?";
 
     public String editPageSetUpDetails =
-            "UPDATE GET_PAGE_SETUP_DETAILS SET " +
+            "UPDATE get_page_setup_details SET " +
                     "TAX = ?, " +
                     "STORE_ADDRESS = ?, " +
                     "STORE_LOGO = ?, " +
@@ -321,7 +321,7 @@ public class SQLQueries {
                     "WHERE GET_PAGE_SETUP_DETAILS_ID = ?";
 
     public String editPaidOutDetails =
-            "UPDATE PAIDOUT SET " +
+            "UPDATE paidout SET " +
                     "PAIDOUT1 = ?, " +
                     "PAIDOUT2 = ? , " +
                     "PAIDOUT3 = ?, " +
@@ -332,7 +332,7 @@ public class SQLQueries {
                     "WHERE PAIDOUT_ID = ? ";
 
     //Can not update customer's phone no thats why i have removed edit customers phone number
-    public String editTransactionStatus = "UPDATE TRANSACTION" +
+    public String editTransactionStatus = "UPDATE transaction" +
             "SET TRANSACTION_DATE = ?," +
             "SET TOTAL_AMOUNT = ? ," +
             "SET TAX_AMOUNT = ?," +
@@ -352,23 +352,23 @@ public class SQLQueries {
             "WHERE TRANSACTION_COMP_ID = ?";
 
     public String updateUserClockInDetails =
-            "UPDATE USER_CLOCK_IN SET " +
+            "UPDATE user_clock_in SET " +
                     "CLOCK_OUT = ?, " +
                     "NOOFHOURS = ? " +
                     "WHERE USER_CLOCK_IN_ID = ?";
 
     public String updateLineItemDetailsStatus =
-            "UPDATE TRANSACTION_LINE_ITEM SET " +
+            "UPDATE transaction_line_item SET " +
                     "TRANSACTION_STATUS = 'r' " +
                     "WHERE TRANSACTION_LINE_ITEM_ID = ?";
 
     public String updateProductQuantity =
-            "UPDATE PRODUCT SET " +
+            "UPDATE product SET " +
                     "QUANTITY = ? " +
                     "WHERE PRODUCT_ID = ?";
 
     public String editTransactionLineItem =
-            "UPDATE TRANSACTION_LINE_ITEM SET " +
+            "UPDATE transaction_line_item SET " +
                     "DATE = ?, " +
                     "PRODUCT_NO = ?, " +
                     "QUANTITY = ?, " +
@@ -380,7 +380,7 @@ public class SQLQueries {
                     "WHERE TRANSACTION_COMP_ID = ?";
 
     public String editClosingDetails =
-            "UPDATE CASH_REGISTER SET " +
+            "UPDATE cash_register SET " +
                     "USER_ID_CLOSE = ? ," +
                     " REPORT_CASH = ? , " +
                     "REPORT_CREDIT = ? ," +
@@ -411,9 +411,24 @@ public class SQLQueries {
 
     //SQL QUERY TO GET  DETAILS FROM DATABASE
 
-    public String getProductDetails = "SELECT * FROM product ";
+    public String getProductDetails = "SELECT PRODUCT_ID," +
+            "PRODUCT_NO, " +
+            "CATEGORY_ID, " +
+            "VENDOR_ID," +
+            "BRAND_ID," +
+            "ATL_NO," +
+            "DESCRIPTION," +
+            "COST_PRICE," +
+            "MARKUP," +
+            "RETAIL_PRICE," +
+            "QUANTITY," +
+            "MIN_PRODUCT," +
+            "RETURN_RULE," +
+            "TAX," +
+            "IS_RELATED_PRODUCT," +
+            "MODEL_ID FROM product ";
 
-    public String getModelDetails = "SELECT * FROM PRODUCT_MODEL WHERE ID = ? AND ID <> 'NULL' ";
+    public String getModelDetails = "SELECT * FROM product_model WHERE ID = ? AND ID <> 'NULL' ";
 
    // ORDER BY DESCRIPTION
 
@@ -468,7 +483,7 @@ public class SQLQueries {
 
     public String deleteBrand = "DELETE FROM brand WHERE BRAND_ID = ?";
 
-    public String deleteModel = "DELETE FROM PRODUCT_MODEL WHERE ID = ?";
+    public String deleteModel = "DELETE FROM product_model WHERE ID = ?";
 
 
 
@@ -496,7 +511,7 @@ public class SQLQueries {
 
 
     public static String getProductHistory = "SELECT t.DATE, p.PRODUCT_NO, p.DESCRIPTION, t.QUANTITY,t.IMEI_NO, \n" +
-            "(select sum(QUANTITY) from TRANSACTION_LINE_ITEM where DATE BETWEEN ? AND  ? AND PRODUCT_NO = ?) as TOTALQUANTITY,\n" +
+            "(select sum(QUANTITY) from transaction_line_item where DATE BETWEEN ? AND  ? AND PRODUCT_NO = ?) as TOTALQUANTITY,\n" +
             "t.RETAIL, t.COST, t.DISCOUNT,p.CATEGORY_ID\n" +
             "FROM transaction_line_item t , product p \n" +
             "WHERE t.PRODUCT_NO = p.PRODUCT_NO \n" +
@@ -505,10 +520,10 @@ public class SQLQueries {
 
     public String getProductDescription = "SELECT DESCRIPTION FROM product WHERE PRODUCT_NO = ?";
 
-    public String getClosingDetailsFromSystem = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 1 ";
+    public String getClosingDetailsFromSystem = "SELECT * FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 1 ";
 
     //Need to change this query for wholesale--> i think BUSINESS_TYPE flag = 0 condition will work
-    public String getClosingDetailsFromSystemForWholesale = "SELECT * FROM CASH_REGISTER WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 0";
+    public String getClosingDetailsFromSystemForWholesale = "SELECT * FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 0";
 
 
 
@@ -527,7 +542,7 @@ public class SQLQueries {
             "WHERE TRANSACTION_DATE  BETWEEN ? AND ? AND status <> 'w' ";
 
 
-    public String getPaidOutDetails = "SELECT * FROM PAIDOUT WHERE DATE BETWEEN ? AND ?";
+    public String getPaidOutDetails = "SELECT * FROM paidout WHERE DATE BETWEEN ? AND ?";
 
     public String getMonthlyTransDetails = "      SELECT DATE(TRANSACTION_DATE) AS DATE,\n" +
             "            sum(TOTAL_AMOUNT_CREDIT) CREDIT, \n" +
@@ -540,7 +555,7 @@ public class SQLQueries {
             "            SUM(BALANCE) BALANCE,  \n" +
             "            count(A.TRANSACTION_COMP_ID) NOOFTRANS, \n" +
             "            SUM(PROFIT) PROFIT \n" +
-            "\t\t\tFROM TRANSACTION A, \n" +
+            "\t\t\tFROM transaction A, \n" +
             "\t\t\t\t(SELECT TRANSACTION_COMP_ID,  \n" +
             "\t\t\t\tSUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'c'\n" +
             "                THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY \n" +
@@ -548,7 +563,7 @@ public class SQLQueries {
             "                THEN ((X.RETAIL-X.COST-X.DISCOUNT/-X.QUANTITY)) * -X.QUANTITY\n" +
             "                ELSE 0.0 END) AS PROFIT, \n" +
             "\t\t\tSUM(DISCOUNT) AS DISCOUNT \n" +
-            "\t\t\tFROM TRANSACTION_LINE_ITEM X, product Y \n" +
+            "\t\t\tFROM transaction_line_item X, product Y \n" +
             "\t\t\tWHERE X.PRODUCT_NO = Y.PRODUCT_NO  \n" +
             "\t\t\tAND DATE BETWEEN ? AND ?\n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
@@ -558,7 +573,7 @@ public class SQLQueries {
 
     public String getWeeklyTransDetails = "";
 
-    public String getProductQuantity = "SELECT QUANTITY FROM PRODUCT WHERE PRODUCT_NO = ?";
+    public String getProductQuantity = "SELECT QUANTITY FROM product WHERE PRODUCT_NO = ?";
 
     public String getTop50Items = "\t\tSELECT p.DESCRIPTION as COMMON_NAME, \n" +
             "                        sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
@@ -569,7 +584,7 @@ public class SQLQueries {
             "               sum(" +
             "               CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
             "               ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT  \n" +
-            "                        FROM TRANSACTION_LINE_ITEM t, PRODUCT p  \n" +
+            "                        FROM transaction_line_item t, product p  \n" +
             "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO   \n" +
             "                        AND t.DATE  \n" +
             "                        BETWEEN ? AND ? \n" +
@@ -588,7 +603,7 @@ public class SQLQueries {
             "            SUM(BALANCE) BALANCE,  \n" +
             "\t\t\tcount(A.TRANSACTION_COMP_ID) NOOFTRANS, \n" +
             "\t\t\tSUM(PROFIT) PROFIT \n" +
-            "\t\t\tFROM TRANSACTION A, \n" +
+            "\t\t\tFROM transaction A, \n" +
             "\t\t\t\t(SELECT TRANSACTION_COMP_ID,  \n" +
             "\t\t\t\tSUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'c'\n" +
             "                THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY \n" +
@@ -596,7 +611,7 @@ public class SQLQueries {
             "                THEN ((X.RETAIL-X.COST-X.DISCOUNT/-X.QUANTITY)) * -X.QUANTITY\n" +
             "                ELSE 0.0 END) AS PROFIT, \n" +
             "\t\t\tSUM(DISCOUNT) AS DISCOUNT \n" +
-            "\t\t\tFROM TRANSACTION_LINE_ITEM X, product Y \n" +
+            "\t\t\tFROM transaction_line_item X, product Y \n" +
             "\t\t\tWHERE X.PRODUCT_NO = Y.PRODUCT_NO  \n" +
             "\t\t\tAND DATE BETWEEN ? AND ?\n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
@@ -644,7 +659,7 @@ public class SQLQueries {
             "            SUM(BALANCE) BALANCE,  \n" +
             "            count(A.TRANSACTION_COMP_ID) NOOFTRANS, \n" +
             "            SUM(PROFIT) PROFIT \n" +
-            "            FROM TRANSACTION A, \n" +
+            "            FROM transaction A, \n" +
             "            (SELECT TRANSACTION_COMP_ID,  \n" +
             "             SUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'c'\n" +
             "                THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY \n" +
@@ -652,7 +667,7 @@ public class SQLQueries {
             "                THEN ((X.RETAIL-X.COST-X.DISCOUNT/-X.QUANTITY)) * -X.QUANTITY\n" +
             "                ELSE 0.0 END) AS PROFIT, \n" +
             "\t\t\tSUM(DISCOUNT) AS DISCOUNT \n" +
-            "\t\t\tFROM TRANSACTION_LINE_ITEM X, product Y \n" +
+            "\t\t\tFROM transaction_line_item X, product Y \n" +
             "\t\t\tWHERE X.PRODUCT_NO = Y.PRODUCT_NO  \n" +
             "\t\t\tAND DATE BETWEEN ? AND ?\n" +
             "\t\t\tGroup by TRANSACTION_COMP_ID)B \n" +
@@ -675,7 +690,7 @@ public class SQLQueries {
             "                        END )PROFIT,   \n" +
             "                        sum(t.DISCOUNT) DISCOUNT,   \n" +
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE   \n" +
-            "                        FROM TRANSACTION_LINE_ITEM t, CATEGORY c, PRODUCT p   \n" +
+            "                        FROM transaction_line_item t, category c, PRODUCT p   \n" +
             "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE   \n" +
             "                        BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' group by c.CATEGORY_NAME";
 
@@ -688,7 +703,7 @@ public class SQLQueries {
             "            sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
             "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT   \n" +
-            "            FROM TRANSACTION_LINE_ITEM t, VENDOR v, PRODUCT p  \n" +
+            "            FROM transaction_line_item t, vendor v, product p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO   \n" +
             "            AND v.VENDOR_ID = p.VENDOR_ID  \n" +
             "            AND t.DATE   \n" +
@@ -704,7 +719,7 @@ public class SQLQueries {
             "            sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
             "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT  \n" +
-            "            FROM TRANSACTION_LINE_ITEM t, BRAND b, PRODUCT p  \n" +
+            "            FROM transaction_line_item t, brand b, product p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  \n" +
             "            AND b.BRAND_ID = p.BRAND_ID  \n" +
             "            AND t.DATE  \n" +
@@ -720,7 +735,7 @@ public class SQLQueries {
             "\t\t\tsum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
             "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT \n" +
-            "            FROM TRANSACTION_LINE_ITEM t, PRODUCT p  \n" +
+            "            FROM transaction_line_item t, product p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  \n" +
             "            AND t.DATE  \n" +
             "            BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' \n" +
@@ -736,8 +751,8 @@ public class SQLQueries {
             "                        sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
             "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT \n" +
-            "                        FROM TRANSACTION_LINE_ITEM t, CUSTOMER c,  \n" +
-            "                        TRANSACTION l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
+            "                        FROM transaction_line_item t, customer c,  \n" +
+            "                        transaction l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
             "                        AND c.PHONE_NO = l.CUSTOMER_PHONENO  \n" +
             "                        AND t.DATE BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' " +
             "                        group by c.FIRST_NAME";
@@ -752,12 +767,12 @@ public class SQLQueries {
             "                        ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT, \n" +
             "                        sum(t.DISCOUNT) DISCOUNT, \n" +
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE \n" +
-            "                        FROM TRANSACTION_LINE_ITEM t, USER u, TRANSACTION l  \n" +
+            "                        FROM transaction_line_item t, user u, transaction l  \n" +
             "                        WHERE u.USER_ID = l.USER_ID AND t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
             "                        AND t.DATE  \n" +
             "                        BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' group by u.USERNAME";
 
-    public String getPageSetUpDetails = "SELECT * FROM GET_PAGE_SETUP_DETAILS";
+    public String getPageSetUpDetails = "SELECT * FROM get_page_setup_details";
 
     public String getInventoryByCategory = "(SELECT c.CATEGORY_NAME as COMMON_NAME, \n" +
             "\n" +
@@ -765,7 +780,7 @@ public class SQLQueries {
             "            sum((p.COST_PRICE)* p.QUANTITY) COST, \n" +
             "            sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, \n" +
             "            avg(p.MARKUP) MARGIN \n" +
-            "            FROM PRODUCT p, CATEGORY c \n" +
+            "            FROM product p, category c \n" +
             "            WHERE p.CATEGORY_ID = c.CATEGORY_ID\n" +
             "            AND c.CATEGORY_ID <> 1 \n" +
             "            AND c.CATEGORY_ID <> 2 \n" +
@@ -784,22 +799,22 @@ public class SQLQueries {
             "            WHERE c.CATEGORY_ID = 10\n" +
             "            group by c.CATEGORY_NAME)";
 
-    public String getInventoryByVendor = "SELECT v.VENDOR_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, VENDOR v WHERE p.VENDOR_ID = v.VENDOR_ID GROUP BY  v.VENDOR_NAME";
+    public String getInventoryByVendor = "SELECT v.VENDOR_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM product p, vendor v WHERE p.VENDOR_ID = v.VENDOR_ID GROUP BY  v.VENDOR_NAME";
 
-    public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM PRODUCT p, BRAND b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
-
-
+    public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM product p, brand b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
 
 
-    public String getCustomerBalance = "SELECT BALANCE FROM CUSTOMER WHERE PHONE_NO = ?";
 
-    public String updateBalanceToCustomerProfile = "UPDATE CUSTOMER SET BALANCE = ?, BALANCE_LAST_UPDATE_DATE = ? WHERE PHONE_NO = ? ";
 
-    public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
+    public String getCustomerBalance = "SELECT BALANCE FROM customer WHERE PHONE_NO = ?";
 
-    public String getCustomerPhone = "SELECT CUSTOMER_PHONENO FROM TRANSACTION WHERE TRANSACTION_COMP_ID = ?";
+    public String updateBalanceToCustomerProfile = "UPDATE customer SET BALANCE = ?, BALANCE_LAST_UPDATE_DATE = ? WHERE PHONE_NO = ? ";
 
-    public String getCustomerDetailsForReceipt = "SELECT * FROM CUSTOMER WHERE PHONE_NO = ?";
+    public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM transaction WHERE TRANSACTION_COMP_ID = ?";
+
+    public String getCustomerPhone = "SELECT CUSTOMER_PHONENO FROM transaction WHERE TRANSACTION_COMP_ID = ?";
+
+    public String getCustomerDetailsForReceipt = "SELECT * FROM customer WHERE PHONE_NO = ?";
 
 
 //Done
@@ -812,7 +827,7 @@ public class SQLQueries {
                     "            SUM(BALANCE - PREVIOUS_BALANCE) BALANCE , \n" +
                     "            SUM(TAX_AMOUNT) TAX, \n" +
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
-                    "            FROM TRANSACTION  \n" +
+                    "            FROM transaction  \n" +
                     "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS <> 'w' ";
 
 
@@ -825,7 +840,7 @@ public class SQLQueries {
                     "            SUM(BALANCE - PREVIOUS_BALANCE) BALANCE , \n" +
                     "            SUM(TAX_AMOUNT) TAX, \n" +
                     "            SUM(DISCOUNT_AMOUNT) DISCOUNT  \n" +
-                    "            FROM TRANSACTION  \n" +
+                    "            FROM transaction  \n" +
                     "            WHERE TRANSACTION_DATE BETWEEN ? AND ? AND STATUS = 'w' AND CUSTOMER_PHONENO <> '8435764781' ";//Hard coded the value just becuase client dont want this to be calculated for whole sale
 
 
@@ -835,7 +850,7 @@ public class SQLQueries {
     //Done
     public String getPrpfitForCloseRegister = " \tSELECT\n" +
             "            SUM(PROFIT) PROFIT \n" +
-            "\t\t\tFROM TRANSACTION A, \n" +
+            "\t\t\tFROM transaction A, \n" +
             "\t\t\t(SELECT TRANSACTION_COMP_ID,  \n" +
             "\t\t\tSUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'c'\n" +
             "\t\t\tTHEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY \n" +
@@ -854,7 +869,7 @@ public class SQLQueries {
     public String getPrpfitForCloseRegisterForWholesale = "       SELECT\n" +
         " \n" +
         "\t\t\tSUM(PROFIT) PROFIT  \n" +
-        "            FROM TRANSACTION A,  \n" +
+        "            FROM transaction A,  \n" +
         "            (SELECT TRANSACTION_COMP_ID,   \n" +
         "            SUM(CASE WHEN Y.CATEGORY_ID <> 1 AND Y.CATEGORY_ID <> 2 AND TRANSACTION_STATUS = 'w'  \n" +
         "            THEN ((X.RETAIL-X.COST-X.DISCOUNT/X.QUANTITY)) * X.QUANTITY  \n" +
@@ -869,7 +884,7 @@ public class SQLQueries {
         "            WHERE A.TRANSACTION_COMP_ID = B.TRANSACTION_COMP_ID   \n" +
         "                             AND TRANSACTION_DATE BETWEEN ? AND ? AND A.STATUS = 'w' AND A.CUSTOMER_PHONENO <> '8435764781' ";
 
-    public String getUserClockInDetails = "SELECT * FROM USER_CLOCK_IN WHERE USERNAME = ? AND CLOCK_DATE = ?";
+    public String getUserClockInDetails = "SELECT * FROM user_clock_in WHERE USERNAME = ? AND CLOCK_DATE = ?";
 
 
     public String productNoAndAltNoDTOs = "SELECT PRODUCT_NO,ATL_NO FROM product";
@@ -878,7 +893,7 @@ public class SQLQueries {
     public String getLastTransactionId = "SELECT max(CAST(TRANSACTION_COMP_ID AS SIGNED)) FROM transaction";
 
 
-    public String getRelatedProducts = "SELECT  * from product a, RELATED_PRODUCTS b where a.PRODUCT_NO = b.RELATED_PRODUCT_NO and b.PRODUCT_NO = ? ";
+    public String getRelatedProducts = "SELECT  * from product a, related_products b where a.PRODUCT_NO = b.RELATED_PRODUCT_NO and b.PRODUCT_NO = ? ";
 
 
     public String getLastProductNo = "SELECT max(CAST(PRODUCT_NO AS SIGNED)) FROM product";
@@ -889,7 +904,7 @@ public class SQLQueries {
 
     public String changeRelatedProdcutStatus = "UPDATE product SET IS_RELATED_PRODUCT = ? WHERE PRODUCT_NO = ?";
 
-    public String deleteRelatedProduct = "DELETE FROM RELATED_PRODUCTS WHERE RELATED_PRODUCT_ID = ?";
+    public String deleteRelatedProduct = "DELETE FROM related_products WHERE RELATED_PRODUCT_ID = ?";
 
 
     public String getLowStockProductDetails = "SELECT * FROM product WHERE QUANTITY <= MIN_PRODUCT or QUANTITY<=0 ";
@@ -903,13 +918,13 @@ public class SQLQueries {
    // public String addImeiNo = "INSERT INTO PHONE (PRODUCT_NO,IMEI_NO,COST,RETAIL,MARKUP,LAST_UPDATED_TIME) VALUES (?,?,?,?,?,?)";
 
 
-    public String editPhoneDetailsAsProduct = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?,MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
+    public String editPhoneDetailsAsProduct = "UPDATE phone SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?,MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
 
 
-    public String getPhoneDetails = "SELECT  a.PRODUCT_ID, a.PRODUCT_NO, a.CATEGORY_ID, a.VENDOR_ID, a.BRAND_ID, a.ATL_NO, a.DESCRIPTION,a.TAX,a.IS_RELATED_PRODUCT, a.QUANTITY, a.MIN_PRODUCT, a.RETURN_RULE, a.IMAGE, a.CREATED_DATE,  b.COST, b.RETAIL, b.MARKUP,b.ID, b.IMEI_NO, b.LAST_UPDATED_TIME from product a, PHONE b where a.PRODUCT_NO = b.PRODUCT_NO and a.PRODUCT_NO = ?";
+    public String getPhoneDetails = "SELECT  a.PRODUCT_ID, a.PRODUCT_NO, a.CATEGORY_ID, a.VENDOR_ID, a.BRAND_ID, a.ATL_NO, a.DESCRIPTION,a.TAX,a.IS_RELATED_PRODUCT, a.QUANTITY, a.MIN_PRODUCT, a.RETURN_RULE, a.IMAGE, a.CREATED_DATE,  b.COST, b.RETAIL, b.MARKUP,b.ID, b.IMEI_NO, b.LAST_UPDATED_TIME from product a, phone b where a.PRODUCT_NO = b.PRODUCT_NO and a.PRODUCT_NO = ?";
 
 
-    public String getSumOfPaidOut = "SELECT SUM(PAIDOUT1 + PAIDOUT2 + PAIDOUT3) PAIDOUT FROM PAIDOUT WHERE DATE BETWEEN ? AND ? ";
+    public String getSumOfPaidOut = "SELECT SUM(PAIDOUT1 + PAIDOUT2 + PAIDOUT3) PAIDOUT FROM paidout WHERE DATE BETWEEN ? AND ? ";
 
 
     public String getCustomerBalanceByDate = "SELECT sum(BALANCE) CUSTOMERBALANCE FROM customer WHERE BALANCE_LAST_UPDATE_DATE BETWEEN ? AND ? ";
@@ -918,7 +933,7 @@ public class SQLQueries {
     public String getCustomerBalanceByDateForWholesale = "SELECT sum(BALANCE) CUSTOMERBALANCE FROM customer WHERE BALANCE_LAST_UPDATE_DATE BETWEEN ? AND ? ";
 
 
-    public String EditPhoneDetailsFromPhoneTable = "UPDATE PHONE SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?, MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
+    public String EditPhoneDetailsFromPhoneTable = "UPDATE phone SET PRODUCT_NO = ?, IMEI_NO = ?, COST = ?, RETAIL = ?, MARKUP = ?, LAST_UPDATED_TIME = ? WHERE ID = ?";
 
 
     public String getPhoneStockFromProductTable = "SELECT QUANTITY FROM product WHERE PRODUCT_NO = ?";
@@ -927,13 +942,13 @@ public class SQLQueries {
     public String getPhoneStockFromProductTableForDelete = "SELECT QUANTITY FROM product WHERE PRODUCT_ID = ?";
 
 
-    public String addPhoneStockToProductTable = "UPDATE PRODUCT SET QUANTITY = ? WHERE PRODUCT_ID = ?";
+    public String addPhoneStockToProductTable = "UPDATE product SET QUANTITY = ? WHERE PRODUCT_ID = ?";
 
 
-    public String getProductId = "SELECT PRODUCT_ID FROM PRODUCT WHERE PRODUCT_NO = ?";
+    public String getProductId = "SELECT PRODUCT_ID FROM product WHERE PRODUCT_NO = ?";
 
 
-    public String deleteImeiDetailsFromPhone = "DELETE FROM PHONE WHERE ID = ? ";
+    public String deleteImeiDetailsFromPhone = "DELETE FROM phone WHERE ID = ? ";
 
 
     public String getPreviousBalance = "SELECT PREVIOUS_BALANCE FROM transaction WHERE TRANSACTION_COMP_ID = ?";
@@ -976,7 +991,7 @@ public class SQLQueries {
 //            "\tGROUP BY c.CLOCK_DATE, \n" +
 //            "\tc.USERNAME, c.CLOCK_IN, c.CLOCK_OUT, c.NOOFHOURS, c.HORLYRATE, c.USER_COMMISSION, c.TOTAL, c.USER_CLOCK_IN_ID";
 
-    public String editClockInDetails = "UPDATE USER_CLOCK_IN SET" +
+    public String editClockInDetails = "UPDATE user_clock_in SET" +
             " CLOCK_IN = ?, " +
             " CLOCK_OUT = ?, " +
             " NOOFHOURS = ?, " +
@@ -987,11 +1002,11 @@ public class SQLQueries {
 
     public String getUserCommissionPercentage = "SELECT USER_COMMISSION_PERCENTAGE FROM user WHERE USERNAME = ?";
 
-    public String editTransactionNote = "UPDATE TRANSACTION SET RECEIPT_NOTE = ?, TRANSACTION_NOTE = ? WHERE TRANSACTION_COMP_ID = ?";
+    public String editTransactionNote = "UPDATE transaction SET RECEIPT_NOTE = ?, TRANSACTION_NOTE = ? WHERE TRANSACTION_COMP_ID = ?";
 
     public String getCommissionFromCashRegister = "SELECT COMISSION FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? ";
-    public String getTransactionIds = "SELECT TRANSACTION_COMP_ID FROM TRANSACTION WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
-    public String editUserWithOutPasswordQuery = "UPDATE USER SET " +
+    public String getTransactionIds = "SELECT TRANSACTION_COMP_ID FROM transaction WHERE TRANSACTION_DATE BETWEEN ? AND ? ";
+    public String editUserWithOutPasswordQuery = "UPDATE user SET " +
             "USER_ROLE = ?, " +
             "HORLYRATE = ?, " +
             "USER_COMMISSION_PERCENTAGE = ? " +
@@ -999,11 +1014,11 @@ public class SQLQueries {
 
 
     public String getWebBrandsWithModel = "";
-    public String getBrandIdsForWeb = "SELECT BRAND_ID FROM BRAND";
-    public String getModelDetailsForBrand = "SELECT distinct MODEL_ID FROM PRODUCT WHERE BRAND_ID = ? AND MODEL_ID <> 'NULL' ";
+    public String getBrandIdsForWeb = "SELECT BRAND_ID FROM brand";
+    public String getModelDetailsForBrand = "SELECT distinct MODEL_ID FROM product WHERE BRAND_ID = ? AND MODEL_ID <> 'NULL' ";
     public String getModelDetailsForWeb = "SELECT * FROM MODEL WHERE MODEL_ID = ?";
 
-    public String getProductDetailsByCategoryId = "SELECT * FROM PRODUCT WHERE CATEGORY_ID = ?";
+    public String getProductDetailsByCategoryId = "SELECT * FROM product WHERE CATEGORY_ID = ?";
 
-    public String getProductDetailsByBrandAndModelId = "SELECT * FROM PRODUCT WHERE BRAND_ID = ? AND MODEL_ID = ?";
+    public String getProductDetailsByBrandAndModelId = "SELECT * FROM product WHERE BRAND_ID = ? AND MODEL_ID = ?";
 }
