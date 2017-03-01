@@ -138,22 +138,22 @@ public class CustomerManager {
             customer.setCountry(rs.getString("COUNTRY"));
             customer.setZipcode(rs.getString("ZIPCODE"));
             customer.setFax(rs.getString("FAX"));
-            customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
+//            customer.setCustomerCreatedDate(rs.getString("CUSTOMER_CREATE_DATE"));
             customer.setBalance(rs.getDouble("BALANCE"));
             customer.setTaxId(rs.getString("TAX_ID"));
             customer.setCompanyName(rs.getString("COMPANY_NAME"));
 
 
-            String totalSpending = jdbcTemplate.queryForObject(sqlQuery.getCustomersLast12MonthSpend, new Object[] {rs.getString("PHONE_NO")}, String.class);
+           // String totalSpending = jdbcTemplate.queryForObject(sqlQuery.getCustomersLast12MonthSpend, new Object[] {rs.getString("PHONE_NO")}, String.class);
 
-            if(null != totalSpending)
-            {
-                customer.setLast12MonthsSpend(Double.parseDouble(totalSpending));
-            }
-            else
-            {
-                customer.setLast12MonthsSpend(0.0);
-            }
+//            if(null != totalSpending)
+//            {
+//                customer.setLast12MonthsSpend(Double.parseDouble(totalSpending));
+//            }
+//            else
+//            {
+//                customer.setLast12MonthsSpend(0.0);
+//            }
 
             //This code is to get last year date from current date.
             /*DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

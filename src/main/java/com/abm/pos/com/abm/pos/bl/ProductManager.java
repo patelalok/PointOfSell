@@ -263,6 +263,37 @@ public class ProductManager
         return productList;
     }
 
+    public List<ProductPriceByCustomerDto> getProductPriceForCustomer(String phoneNo) {
+
+        List<ProductPriceByCustomerDto> productPriceByCustomerDtoList = new ArrayList<>();
+
+        try{
+            productPriceByCustomerDtoList = jdbcTemplate.query(sqlQuery.getProductPriceDetailsByCustomer,new ProductPriceByCustomerMapper(), phoneNo);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return productPriceByCustomerDtoList;
+    }
+
+    private final class ProductPriceByCustomerMapper implements RowMapper<ProductPriceByCustomerDto>
+    {
+
+        @Override
+        public ProductPriceByCustomerDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            ProductPriceByCustomerDto product = new ProductPriceByCustomerDto();
+
+            product.setProductNo(rs.getString("PRODUCT_NO"));
+            product.setRetailPrice(rs.getDouble("RETAIL_PRICE"));
+
+            return product;
+        }
+    }
+
+
+
     private final class ProductMapperForEcomerce implements RowMapper<ProductEcomerceDto>
     {
 

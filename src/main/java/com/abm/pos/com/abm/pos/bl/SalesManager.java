@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
@@ -92,16 +93,13 @@ public class SalesManager {
        // }
 
     }
-    public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto) {
-
-
-//        while (counter <= 3) {
-//
-//            counter++;
+    public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
             try {
 
-                System.out.println("Try no of try started" + counter);
-                int result[] = jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
+                addProductPriceByCustomer(transactionLineItemDto, phoneNo);
+
+                jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
+
 
 
                     @Override
@@ -190,15 +188,7 @@ public class SalesManager {
 
     public void editTransaction(TransactionDto transactionDto, String previousTransId) {
         try {
-
-
             //So here I am adding the transaction with negative values because this will balance out with the previous transaction.
-
-            //This is not neccecary but just doing in case i need on future.
-            //jdbcTemplate.update(sqlQuery.updateTransactionStatus, previousTransId);
-
-          //  System.out.println("Update the status successfully");
-
             if(null != transactionDto &&  transactionDto.getPrevBalance() != 0.0)
             {
                 //Here getting the previous balance of the customer and adding back the customer cause this is return  so he will get his previous balance back
@@ -280,6 +270,38 @@ public class SalesManager {
         }
     }
 
+    //This method helps to set the last sale price for the particular customer.
+    @Async
+    public void addProductPriceByCustomer(List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
+
+        if(null != transactionLineItemDto && null != phoneNo)
+        {
+            try {
+                jdbcTemplate.batchUpdate(sqlQuery.addProductPriceByCustomer, new BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                        TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
+
+                        ps.setString(1,phoneNo);
+                        ps.setString(2, transactionLineItemDto1.getProductNumber());
+                        ps.setDouble(3, transactionLineItemDto1.getRetail());
+                        ps.setDouble(4, transactionLineItemDto1.getCost());
+                    }
+                    @Override
+                    public int getBatchSize() {
+                        return transactionLineItemDto.size();
+                    }
+                });
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        }
+    }
+
 
     private final class TransactionMapperForReturn implements RowMapper<TransactionDto> {
 
@@ -336,7 +358,7 @@ public class SalesManager {
 
 
         try {
-            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMapperWithOutCustomer(), startDate, endDate);
+            transactionDto = jdbcTemplate.query(sqlQuery.getTransactionDetails, new TransactionMappeOnlyForSalesHitsory(), startDate, endDate);
 
             System.out.println("Send Transaction Details Successfully");
         } catch (Exception e) {
@@ -471,6 +493,94 @@ public class SalesManager {
         }
     }
 
+    private final class TransactionMappeOnlyForSalesHitsory implements RowMapper<TransactionDto> {
+
+        @Override
+        public TransactionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            TransactionDto transaction = new TransactionDto();
+
+
+            transaction.setTransactionCompId(rs.getInt("TRANSACTION_COMP_ID"));
+            DateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date d = null;
+            try {
+                d = f.parse(rs.getString("TRANSACTION_DATE"));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
+            DateFormat time = new SimpleDateFormat("hh:mm:ss");
+            //System.out.println("Date: " + date.format(d));
+            //System.out.println("Time: " + time.format(d));
+            transaction.setTransactionDate(date.format(d));
+            transaction.setTransactionTime(time.format(d));
+            transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
+            transaction.setTax(rs.getDouble("TAX_AMOUNT"));
+
+
+            //Getting sum of discount on line item table and adding into transaction discount to show only total discount.
+           // String lineItemDiscount = jdbcTemplate.queryForObject(sqlQuery.getDiscountFromLineItem, new Object[]{rs.getInt("TRANSACTION_COMP_ID")}, String.class);
+
+           // if (null != lineItemDiscount) {
+                //double lineItemDiscountDouble = Double.parseDouble(lineItemDiscount);
+                //System.out.println(lineItemDiscount);
+               // transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT") + lineItemDiscountDouble);
+               // transaction.setLineItemDiscount(lineItemDiscountDouble);
+           // } else {
+
+                transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+                //System.out.println(lineItemDiscount);
+           // }
+
+
+            //transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
+            //transaction.setTotalQuantity(rs.getInt("TOTALQUANTITY"));
+            transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
+
+            if (null == rs.getString("CUSTOMER_PHONENO") || rs.getString("CUSTOMER_PHONENO").isEmpty()) {
+
+                transaction.setCustomerName("");
+            } else {
+                //getting first and last name of customer to show on the sales history
+                String firstName = jdbcTemplate.queryForObject(sqlQuery.getFirstName, new Object[]{rs.getString("CUSTOMER_PHONENO")}, String.class);
+                String lastName = jdbcTemplate.queryForObject(sqlQuery.getLastName, new Object[]{rs.getString("CUSTOMER_PHONENO")}, String.class);
+                //merging first and last name.
+                transaction.setCustomerName(firstName + " " + lastName);
+            }
+
+
+            //transaction.setUserId(rs.getInt("USER_ID"));
+
+            //String username = jdbcTemplate.queryForObject(sqlQuery.getUsernameFromUser, new Object[]{transaction.getUserId()}, String.class);
+            //transaction.setUsername(username);
+
+//            if (rs.getDouble("BALANCE") == 0 && rs.getString("STATUS").equals("c")) {
+//                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH") + rs.getDouble("CHANGE_AMOUNT"));
+//            } else {
+//                transaction.setPaidAmountCash(rs.getDouble("PAID_AMOUNT_CASH"));
+//            }
+           // transaction.setPaidAmountCredit(rs.getDouble("TOTAL_AMOUNT_CREDIT"));
+           // transaction.setPaidAmountCheck(rs.getDouble("TOTAL_AMOUNT_CHECK"));
+//            transaction.setPaidAmountDebit(rs.getDouble("PAID_AMOUNT_DEBIT"));
+            transaction.setStatus(rs.getString("STATUS"));
+//            if(rs.getString("STATUS").equals("c")) {
+//                transaction.setChangeAmount(rs.getDouble("CHANGE_AMOUNT"));
+//            }
+          //  transaction.setPrevBalance(rs.getDouble("PREVIOUS_BALANCE"));
+          //  transaction.setBalance(rs.getDouble("BALANCE"));
+            transaction.setReceiptNote(rs.getString("RECEIPT_NOTE"));
+            transaction.setTransactionNote(rs.getString("TRANSACTION_NOTE"));
+
+
+            //  transaction.setPrevBalance(rs.getDouble("BALANCE"));
+
+            return transaction;
+        }
+    }
+
+
+
     private static final class CustomerMapper implements RowMapper<CustomerDto> {
 
         @Override
@@ -507,7 +617,7 @@ public class SalesManager {
             //Subtraction so it will become positive and added to the stock.
 
             if(null != transactionLineItemDto) {
-                addTransactionLineItemToDB(transactionLineItemDto);
+                addTransactionLineItemToDB(transactionLineItemDto, null);
             }
 
         } catch (Exception e)

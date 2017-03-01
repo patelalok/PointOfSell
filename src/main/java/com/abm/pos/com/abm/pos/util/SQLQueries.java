@@ -428,7 +428,7 @@ public class SQLQueries {
             "IS_RELATED_PRODUCT," +
             "MODEL_ID FROM product ";
 
-    public String getModelDetails = "SELECT * FROM product_model WHERE ID = ? AND ID <> 'NULL' ";
+    public String getModelDetails = "SELECT * FROM product_model WHERE ID <> NULL";
 
    // ORDER BY DESCRIPTION
 
@@ -443,10 +443,10 @@ public class SQLQueries {
     public String getUserDetails = "SELECT * FROM user ORDER BY USERNAME";
 
     public String getTransactionDetails =
-            "SELECT * FROM transaction " +
-                    "WHERE TRANSACTION_DATE " +
-                    "BETWEEN ? ANd ? " +
-                    "order by TRANSACTION_DATE";
+            "SELECT TRANSACTION_COMP_ID, TRANSACTION_DATE, TOTAL_AMOUNT, DISCOUNT_AMOUNT, CUSTOMER_PHONENO,STATUS,TAX_AMOUNT, RECEIPT_NOTE, TRANSACTION_NOTE FROM transaction \n" +
+                    "                    WHERE TRANSACTION_DATE\n" +
+                    "                    BETWEEN ? AND ?\n" +
+                    "                    order by TRANSACTION_DATE";
 
 
 //This query to get discount from lineitem table and then i am gonna apand it with main transaction discount.
@@ -690,7 +690,7 @@ public class SQLQueries {
             "                        END )PROFIT,   \n" +
             "                        sum(t.DISCOUNT) DISCOUNT,   \n" +
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE   \n" +
-            "                        FROM transaction_line_item t, category c, PRODUCT p   \n" +
+            "                        FROM transaction_line_item t, category c, product p   \n" +
             "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE   \n" +
             "                        BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' group by c.CATEGORY_NAME";
 
@@ -962,8 +962,8 @@ public class SQLQueries {
 
     public String getUserClockInForSetup ="SELECT * " +
             "FROM user_clock_in C  " +
-            "WHERE c.CLOCK_DATE between ? AND ? \n" +
-            "AND CAST(c.CLOCK_DATE AS DATE) \n" +
+            "WHERE C.CLOCK_DATE between ? AND ? \n" +
+            "AND CAST(C.CLOCK_DATE AS DATE) \n" +
             "AND C.USER_ID = ?";
 
 //This working query just need to code change and good to go.
@@ -1021,4 +1021,11 @@ public class SQLQueries {
     public String getProductDetailsByCategoryId = "SELECT * FROM product WHERE CATEGORY_ID = ?";
 
     public String getProductDetailsByBrandAndModelId = "SELECT * FROM product WHERE BRAND_ID = ? AND MODEL_ID = ?";
+    public String addProductPriceByCustomer = "REPLACE INTO customer_product_price " +
+            "(CUSTOMER_PHONENO," +
+            "PRODUCT_NO," +
+            "RETAIL_PRICE," +
+            "COST_PRICE) " +
+            "VALUES (?, ?, ?,?)";
+    public String getProductPriceDetailsByCustomer = "SELECT PRODUCT_NO, RETAIL_PRICE FROM customer_product_price WHERE CUSTOMER_PHONENO = ?";
 }

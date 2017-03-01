@@ -36,7 +36,6 @@ public class TransactionDto {
     private String receiptNote;
     private String transactionNote;
 
-
     public int getTransactionCompId() {
         return transactionCompId;
     }

@@ -52,6 +52,12 @@ public class ProductController {
         return productManager.getProductDetails();
     }
 
+    @RequestMapping(value = "/getProductPriceByCustomer", method = RequestMethod.GET)
+    public List<ProductPriceByCustomerDto> getProductPriceForCustomer(@RequestParam String phoneNo) {
+
+        return productManager.getProductPriceForCustomer(phoneNo);
+    }
+
     @RequestMapping(value = "/getEcommerceProductsByCategory", method = RequestMethod.GET)
     public List<ProductEcomerceDto> getEcommerceProductsByCategory(@RequestParam int category_Id) {
 
