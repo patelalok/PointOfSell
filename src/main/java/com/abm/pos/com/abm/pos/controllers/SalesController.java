@@ -66,9 +66,9 @@ public class SalesController {
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", consumes = "application/json")
-    public void addTransactionLineItem(@RequestBody List<TransactionLineItemDto> transactionLineItemDto)
+    public void addTransactionLineItem(@RequestBody List<TransactionLineItemDto> transactionLineItemDto, @RequestParam String phoneNo)
     {
-        salesManager.addTransactionLineItemToDB(transactionLineItemDto, null);
+        salesManager.addTransactionLineItemToDB(transactionLineItemDto, phoneNo);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addProductPriceByCustomer", consumes = "application/json")
