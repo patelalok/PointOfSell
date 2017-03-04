@@ -146,6 +146,16 @@
 			$scope.discount = 0;
 			for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 				if (searchValueAlt === GlobalVariable.getProducts[i].altNo) {
+					if($scope.customerProductPrice)
+					{
+						for(var k = 0;k< $scope.customerProductPrice.length;k++)
+						{
+							if($scope.customerProductPrice[k].productNo == GlobalVariable.getProducts[i].productNo)
+							{
+								GlobalVariable.getProducts[i].retailPrice = $scope.customerProductPrice[k].retailPrice;
+							}
+						}
+					}
 					if(	GlobalVariable.getProducts[i].categoryId == 10)
 					{
 						GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
@@ -222,6 +232,17 @@
 					$scope.discount = 0;
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 						if (searchTxt === GlobalVariable.getProducts[i].description) {
+
+							if($scope.customerProductPrice)
+							{
+								for(var k = 0;k< $scope.customerProductPrice.length;k++)
+								{
+									if($scope.customerProductPrice[k].productNo == GlobalVariable.getProducts[i].productNo)
+									{
+										GlobalVariable.getProducts[i].retailPrice = $scope.customerProductPrice[k].retailPrice;
+									}
+								}
+							}
 							if(GlobalVariable.getProducts[i].categoryId == 10)
 							{
 								GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
@@ -289,6 +310,16 @@
 					for (var i = 0; i < GlobalVariable.getProducts.length; i++) {
 						if (searchTxt === GlobalVariable.getProducts[i].productNo) {
 							$scope.productFound = true;
+							if($scope.customerProductPrice)
+							{
+								for(var k = 0;k< $scope.customerProductPrice.length;k++)
+								{
+									if($scope.customerProductPrice[k].productNo == GlobalVariable.getProducts[i].productNo)
+									{
+										GlobalVariable.getProducts[i].retailPrice = $scope.customerProductPrice[k].retailPrice;
+									}
+								}
+							}
 							if(GlobalVariable.getProducts[i].categoryId == 10)
 							{
 								GlobalVariable.sellProductNo = GlobalVariable.getProducts[i].productNo;
@@ -720,8 +751,23 @@
 			});
 			$scope.loadCheckOutData();
 		};
+		function getCustomerProductPrice()
+		{
+			var url = GlobalConstants.URLCONSTANTS+'getProductPriceByCustomer?phoneNo='+GlobalVariable.regPhone1;
+			dataService.Get(url,onCustomerProductSuccess,onCustomerErrorSuccess,'application/json','application/json');
+		}
+		function onCustomerProductSuccess(data)
+		{
+			$scope.customerProductPrice = data;
+		}
+		function onCustomerErrorSuccess(data)
+		{
+
+		}
+
 		$scope.searchCustomer = function() {
 			// $scope.customerPhone;
+			getCustomerProductPrice();
 			for (var i = 0; i < GlobalVariable.getCustomerDtls.length; i++) {
 				if (GlobalVariable.regPhone1 == GlobalVariable.getCustomerDtls[i].phoneNo) {
 					GlobalVariable.customerNameOnSearch = GlobalVariable.getCustomerDtls[i].firstName;
