@@ -511,8 +511,6 @@ public class SalesManager {
             }
             DateFormat date = new SimpleDateFormat("MM/dd/yyyy");//NEED TO CHECK THIS
             DateFormat time = new SimpleDateFormat("hh:mm:ss");
-            //System.out.println("Date: " + date.format(d));
-            //System.out.println("Time: " + time.format(d));
             transaction.setTransactionDate(date.format(d));
             transaction.setTransactionTime(time.format(d));
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));

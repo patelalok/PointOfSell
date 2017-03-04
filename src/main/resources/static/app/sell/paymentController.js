@@ -160,6 +160,7 @@
 				"discount":parseFloat(parseFloat(GlobalVariable.discountTotal).toFixed(2)) ,
 				"customerPhoneNo":$rootScope.customerPhone,
 				"userId":sessionStorage.userId,
+				"userName":sessionStorage.userName,
 				"status":transStat,
 			"paidAmountCash":paidAmtCash,
 			"changeAmount":chnAmount,
@@ -174,7 +175,8 @@
 				"prevBalance":parseFloat(parseFloat(GlobalVariable.custBalance).toFixed(2)),
                 "balance":$scope.balanceAmount,
 				"receiptNote":GlobalVariable.receiptNotes,
-				"transactionNote":GlobalVariable.transNotes
+				"transactionNote":GlobalVariable.transNotes,
+				"customerName":GlobalVariable.customerNameOnSearch
 
 			};
 			request = JSON.stringify(request);
@@ -241,7 +243,7 @@
 			});
 			}
 
-			var url =GlobalConstants.URLCONSTANTS+"addTransactionLineItem";
+			var url =GlobalConstants.URLCONSTANTS+"addTransactionLineItem?phoneNo="+$rootScope.customerPhone;
 			request = JSON.stringify(request);
 			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
 			
