@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by asp5045 on 5/18/16.
  */
-@Component
+@Service
 public class CustomerManager {
 
     @Autowired

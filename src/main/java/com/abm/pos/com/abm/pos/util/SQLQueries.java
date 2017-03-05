@@ -132,7 +132,7 @@ public class SQLQueries {
                     "BALANCE, " +
                     "PAID_AMOUNT_DEBIT," +
                     "RECEIPT_NOTE," +
-                    "TRANSACTION_NOTE) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "TRANSACTION_NOTE,FIRST_NAME_LAST_NAME,USERNAME) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public String addTransactionLineItem =
             "INSERT INTO transaction_line_item " +
@@ -442,11 +442,21 @@ public class SQLQueries {
 
     public String getUserDetails = "SELECT * FROM user ORDER BY USERNAME";
 
-    public String getTransactionDetails =
-            "SELECT TRANSACTION_COMP_ID, TRANSACTION_DATE, TOTAL_AMOUNT, DISCOUNT_AMOUNT, CUSTOMER_PHONENO,STATUS,TAX_AMOUNT, RECEIPT_NOTE, TRANSACTION_NOTE FROM transaction \n" +
-                    "                    WHERE TRANSACTION_DATE\n" +
-                    "                    BETWEEN ? AND ?\n" +
-                    "                    order by TRANSACTION_DATE";
+    public String getTransactionDetails = "SELECT TRANSACTION_COMP_ID, \n" +
+            "TRANSACTION_DATE, \n" +
+            "TOTAL_AMOUNT,\n" +
+            "TAX_AMOUNT, \n" +
+            "DISCOUNT_AMOUNT, \n" +
+            "CUSTOMER_PHONENO,\n" +
+            "STATUS,\n" +
+            "RECEIPT_NOTE, \n" +
+            "TRANSACTION_NOTE,\n" +
+            "FIRST_NAME_LAST_NAME,\n" +
+            "USERNAME\n" +
+            "FROM transaction \n" +
+            "WHERE TRANSACTION_DATE\n" +
+            "BETWEEN ? AND ?\n" +
+            "order by TRANSACTION_DATE";
 
 
 //This query to get discount from lineitem table and then i am gonna apand it with main transaction discount.
