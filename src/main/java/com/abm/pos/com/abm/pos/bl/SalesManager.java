@@ -95,9 +95,6 @@ public class SalesManager {
     }
     public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
             try {
-
-                addProductPriceByCustomer(transactionLineItemDto, phoneNo);
-
                 jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
 
 
@@ -160,29 +157,21 @@ public class SalesManager {
                             jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getPhoneId());
                             System.out.println("This is phone sale: Delete IMEI Successfully!!" + transactionLineItemDto1.getImeiNo());
                         }
-
-
                     }
-
                     @Override
                     public int getBatchSize() {
                         return transactionLineItemDto.size();
                     }
                 });
 
+                //Adding customer's product price to give customer same price from last transaction.
+                addProductPriceByCustomer(transactionLineItemDto, phoneNo);
+
                 System.out.println("Transaction Line Item Added Successfully");
-
-//                if (result[transactionLineItemDto.size()] == 1) {
-//                    break;
-//                }
-
-//                System.out.println("Try no of try after if" + counter);
-
 
             } catch (Exception e) {
                 System.out.println(e);
             }
-        //}
     }
 
 
@@ -271,7 +260,6 @@ public class SalesManager {
     }
 
     //This method helps to set the last sale price for the particular customer.
-    @Async
     public void addProductPriceByCustomer(List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
 
         if(null != transactionLineItemDto && null != phoneNo)
@@ -285,7 +273,15 @@ public class SalesManager {
 
                         ps.setString(1,phoneNo);
                         ps.setString(2, transactionLineItemDto1.getProductNumber());
-                        ps.setDouble(3, transactionLineItemDto1.getRetail());
+
+                        if(transactionLineItemDto1.getRetailWithDis() == 0)
+                        {
+                            ps.setDouble(3, transactionLineItemDto1.getRetail());
+                        }
+                        else
+                        {
+                            ps.setDouble(3,transactionLineItemDto1.getRetailWithDis());
+                        }
                         ps.setDouble(4, transactionLineItemDto1.getCost());
                     }
                     @Override
