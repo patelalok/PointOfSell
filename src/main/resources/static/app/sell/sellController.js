@@ -5,16 +5,17 @@
 
 	sellController.$inject = [ '$scope', '$rootScope', 'device.utility',
 		'GlobalVariable', 'DialogFactory', 'modalService',
-		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce','GlobalConstants','getProductDetails'];
+		'RestrictedCharacter.Types', 'dataService', '$state', '$timeout','$sce','GlobalConstants','getProductDetails','$window'];
 
 	function sellController($scope, $rootScope, device, GlobalVariable,
 							DialogFactory, modalService, restrictCharacter, dataService,
-							$state, $timeout,$sce,GlobalConstants,getProductDetails) {
+							$state, $timeout,$sce,GlobalConstants,getProductDetails,$window) {
 
 		$scope.device = device;
 		$scope.productFound = false;
 		$scope.GlobalVariable = GlobalVariable;
 		$scope.restrictCharacter = restrictCharacter;
+		GlobalVariable.printInvoice = false;
 		GlobalVariable.isLoginPage = false;
 		GlobalVariable.balanceRemaining = 0;
 		GlobalVariable.customerFound = false;
@@ -764,6 +765,16 @@
 		{
 
 		}
+		$scope.printInvoice = function()
+		{
+			GlobalVariable.printInvoice = true;
+			GlobalVariable.isPrintPage = true;
+			$timeout(function () {
+				$window.print();
+				GlobalVariable.isPrintPage = false;
+				GlobalVariable.printInvoice = false;
+			}, 2000);
+		}
 
 		$scope.searchCustomer = function() {
 			// $scope.customerPhone;
@@ -858,6 +869,7 @@
 				 */
 
 			}
+			getCustomerProductPrice();
 
 		}
 		function render() {

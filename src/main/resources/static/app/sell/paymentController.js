@@ -285,6 +285,7 @@
 			getProductDetails.getProductDetail();
 			if(GlobalVariable.printReceiptTrans == true)
 			{
+				GlobalVariable.printInvoice = false;
 				getStoreAddress();
 
 
