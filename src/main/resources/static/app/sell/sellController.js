@@ -774,8 +774,134 @@
 				GlobalVariable.isPrintPage = false;
 				GlobalVariable.printInvoice = false;
 			}, 2000);
+			$scope.getLastTransId();
 		}
+		function js_yyyy_mm_dd_hh_mm_ss () {
+			var now = new Date();
+			var year = "" + now.getFullYear();
+			var month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+			var day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+			var  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+			var minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+			var second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+			return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+		}
+		$scope.triggerInvoice = function()
+		{
+			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
+			GlobalVariable.transDate = trasnactionDate;
+			GlobalVariable.transactionCompletedId = parseInt(GlobalVariable.lastTransId) +1;
+			var url =GlobalConstants.URLCONSTANTS+"addTransaction";
+			var request = new Object();
+			request = {
+				"transactionDate":trasnactionDate,
+				"totalAmount":$scope.productTotal,
+				"tax":Math.abs(parseFloat(parseFloat(GlobalVariable.taxTotal).toFixed(2))),
+				"discount":parseFloat(parseFloat(GlobalVariable.discountTotal).toFixed(2)) ,
+				"customerPhoneNo":$rootScope.customerPhone,
+				"userId":sessionStorage.userId,
+				"userName":sessionStorage.userName,
+				"status":'o',
+				"paidAmountCash":0,
+				"changeAmount":0,
+				"paidAmountDebit":0,
+				"paidAmountCheck":0,
+				"paidAmountCredit":0,
+				"transactionCompId":GlobalVariable.transactionCompletedId,
+				"subTotal":parseFloat(parseFloat(GlobalVariable.totalSub).toFixed(2)),
+				"totalQuantity":parseInt(GlobalVariable.quantityTotal),
+				"transCreditId":'',
+				"last4Digits":'',
+				"prevBalance":parseFloat(parseFloat(GlobalVariable.custBalance).toFixed(2)),
+				"balance":0,
+				"receiptNote":'',
+				"transactionNote":'',
+				"customerName":GlobalVariable.customerNameOnSearch
 
+			};
+			request = JSON.stringify(request);
+			dataService.Post(url,request,addTransactionSuccess1Handler,addTransactionError1Handler,"application/json","application/json");
+
+		}
+		function addTransactionSuccess1Handler(data)
+		{
+			var request = [];
+
+			for(var i=0;i< $rootScope.testData.length ; i++)
+			{
+				if(parseFloat($rootScope.testData[i].discount) !== 0)
+				{
+					var discPer = (((parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount))/parseFloat($rootScope.testData[i].retail))*100).toFixed(2);
+					var discValue = (parseFloat($rootScope.testData[i].retail)-parseFloat($rootScope.testData[i].discount)).toFixed(2);
+					discValue= (parseFloat($rootScope.testData[i].quantity) * discValue).toFixed(2);
+				}
+				else
+				{
+					var discPer = 0;
+					var discValue =0;
+				}
+				if(GlobalVariable.selectedTaxDrp == 'default')
+				{
+					var totalProductPriceWithTax = $rootScope.testData[i].totalWithTax;
+				}
+				else if(GlobalVariable.selectedTaxDrp == 'noTax')
+				{
+					var totalProductPriceWithTax = $rootScope.testData[i].total;
+				}
+
+				request.push({
+
+					"transactionCompId":GlobalVariable.transactionCompletedId,
+					"productNumber":$rootScope.testData[i].itemNo,
+					"quantity":parseInt($rootScope.testData[i].quantity),
+					"retail":parseFloat(parseFloat($rootScope.testData[i].retail).toFixed(2)),
+					"cost":parseFloat(parseFloat($rootScope.testData[i].costPrice).toFixed(2)),
+					"discount":parseFloat(parseFloat(discValue).toFixed(2)),
+					"retailWithDis":parseFloat(parseFloat($rootScope.testData[i].discount).toFixed(2)),
+					"totalProductPrice":parseFloat(parseFloat($rootScope.testData[i].total).toFixed(2)),
+					"transactionDate":GlobalVariable.transDate,
+					"discountPercentage":discPer,
+					"transactionStatus":'o',
+					"totalProductPriceWithTax":parseFloat(parseFloat(totalProductPriceWithTax).toFixed(2)),
+					"imeiNo":$rootScope.testData[i].imeiNo,
+					"phoneId":$rootScope.testData[i].phoneId
+
+				});
+			}
+
+			var url =GlobalConstants.URLCONSTANTS+"addTransactionLineItem?phoneNo="+$rootScope.customerPhone;
+			request = JSON.stringify(request);
+			dataService.Post(url,request,addTransactionLineItemSuccessHandler,addTransactionLineItemErrorHandler,"application/json","application/json");
+
+
+		}
+		function addTransactionLineItemSuccessHandler(data)
+		{
+
+		}
+		function addTransactionLineItemErrorHandler(data)
+		{
+
+		}
+		function addTransactionError1Handler(error)
+		{
+
+		}
+		$scope.getLastTransId = function()
+		{
+			var url=GlobalConstants.URLCONSTANTS+'getLastTransactionId';
+			dataService.Get(url,lastTransSuccess,lastTransError,'application/json','application/json');
+		}
+		function lastTransSuccess(response)
+		{
+			sessionStorage.lastTransId = parseInt(response);
+			GlobalVariable.lastTransId =  parseInt(response);
+			$scope.triggerInvoice();
+		}
+		function lastTransError(response)
+		{
+
+		}
 		$scope.searchCustomer = function() {
 			// $scope.customerPhone;
 			getCustomerProductPrice();

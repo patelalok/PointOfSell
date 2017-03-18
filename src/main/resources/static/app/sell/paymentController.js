@@ -62,7 +62,8 @@
 		{
 
 		}
-		$scope.callBackCheckout = function()
+
+		$rootScope.callBackCheckout = function()
 		{
 
 			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
