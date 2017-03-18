@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
@@ -41,8 +41,14 @@ public class SalesManager {
 
     private BaseFont bfBold;
     private BaseFont bf;
-    private int pageNumber = 0;
-    private int counter = 0;
+
+    @Scheduled(fixedDelay = 50000)
+    public void testThread()
+    {
+        String result = jdbcTemplate.queryForObject(sqlQuery.openConnectionQuery,String.class);
+
+        System.out.println("Connection is going on buddy!!!" + result);
+    }
 
     public void addTransaction(TransactionDto transactionDto) {
 

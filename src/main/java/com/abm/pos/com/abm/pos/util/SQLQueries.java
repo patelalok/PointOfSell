@@ -1038,4 +1038,5 @@ public class SQLQueries {
             "COST_PRICE) " +
             "VALUES (?, ?, ?,?)";
     public String getProductPriceDetailsByCustomer = "SELECT PRODUCT_NO, RETAIL_PRICE FROM customer_product_price WHERE CUSTOMER_PHONENO = ?";
+    public String openConnectionQuery = "SELECT BRAND_NAME FROM BRAND WHERE BRAND_ID = 1";
 }

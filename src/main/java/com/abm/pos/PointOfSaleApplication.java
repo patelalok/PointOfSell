@@ -21,6 +21,7 @@ import com.itextpdf.text.DocumentException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,6 +31,7 @@ import static org.glassfish.jersey.server.ServerProperties.APPLICATION_NAME;
 
 @SpringBootApplication
 @EnableAutoConfiguration
+@EnableScheduling
 public class PointOfSaleApplication {
 
 
