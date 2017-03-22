@@ -52,6 +52,24 @@ public class SalesManager {
 
     public void addTransaction(TransactionDto transactionDto) {
 
+        //This means this is online order or performa invoice order
+        //Here i am checking if this transaction no is exists in DB or not,
+        //If exists then update it with old transaction Id and if not then use the current transaction Id
+        //Which is coming from ui
+        if(null != transactionDto && transactionDto.getStatus().equalsIgnoreCase("O"))
+        {
+            Integer result = jdbcTemplate.queryForObject(sqlQuery.checkTransactionExistence, Integer.class,transactionDto.getTransactionCompId());
+
+            if(result != null && result != 0)
+            {
+                System.out.println("This is update");
+            }
+            else
+            {
+                System.out.println("this is insert");
+            }
+        }
+
             try {
                         jdbcTemplate.update(sqlQuery.addTransaction,
                         transactionDto.getTransactionCompId(),
