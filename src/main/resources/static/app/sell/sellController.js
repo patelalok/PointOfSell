@@ -790,7 +790,18 @@
 		{
 			var trasnactionDate = js_yyyy_mm_dd_hh_mm_ss();
 			GlobalVariable.transDate = trasnactionDate;
-			GlobalVariable.transactionCompletedId = parseInt(GlobalVariable.lastTransId) +1;
+			if(GlobalVariable.onlineTransactionCompId != '' && GlobalVariable.onlineTransactionCompId !=null
+				&& GlobalVariable.onlineTransactionCompId != undefined)
+			{
+				GlobalVariable.transactionCompletedId=GlobalVariable.onlineTransactionCompId;
+			}
+			else
+			{
+				GlobalVariable.transactionCompletedId = parseInt(GlobalVariable.lastTransId) +1;
+			}
+
+
+
 			var url =GlobalConstants.URLCONSTANTS+"addTransaction";
 			var request = new Object();
 			request = {
@@ -877,7 +888,7 @@
 		}
 		function addTransactionLineItemSuccessHandler(data)
 		{
-
+			GlobalVariable.onlineTransactionCompId = '';
 		}
 		function addTransactionLineItemErrorHandler(data)
 		{

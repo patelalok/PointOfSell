@@ -290,8 +290,9 @@
 		{
 			/*var request = new Object();
 			 request.transactionDate = transactionDate;
-			 request.transactionCompId = transactionCompId;
+			 request.transactionCompId = transactiorannCompId;
 			 request = JSON.stringify(request);*/
+			GlobalVariable.onlineTransactionCompId = transactionCompId;
 			var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+transactionCompId;
 			dataService.Get(url,getReturnSellSuccessHandler,getReturnSellErrorHandler,"application/json","application/json");
 
