@@ -544,17 +544,18 @@ public class ProductManager
         int result = 0;
         try {
 
-             result = jdbcTemplate.update(sqlQuery.deleteProduct, productId);
+            result = jdbcTemplate.update(sqlQuery.deleteProduct, productId);
+            System.out.println("Delete product successfully");
         }
-
         catch (Exception e)
         {
-            System.out.println(e);
+            result = jdbcTemplate.update(sqlQuery.updateProductFlagToInactive, productId);
+            System.out.println("Inactivate product successfully");
         }
-
         return result;
 
-    }
+        }
+
 
     public long getLastProductNo() {
 

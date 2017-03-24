@@ -426,7 +426,7 @@ public class SQLQueries {
             "RETURN_RULE," +
             "TAX," +
             "IS_RELATED_PRODUCT," +
-            "MODEL_ID FROM product ";
+            "MODEL_ID FROM product where ACTIVE_FLAG = 1";
 
     public String getModelDetails = "SELECT * FROM product_model WHERE ID <> NULL";
 
@@ -534,8 +534,6 @@ public class SQLQueries {
 
     //Need to change this query for wholesale--> i think BUSINESS_TYPE flag = 0 condition will work
     public String getClosingDetailsFromSystemForWholesale = "SELECT * FROM cash_register WHERE CLOSE_DATE BETWEEN ? AND ? AND BUSINESS_TYPE = 0";
-
-
 
     //Done
     public String getDailyTransaction = "SELECT count(TRANSACTION_COMP_ID) NOOFTRANS ,\n" +
@@ -1040,4 +1038,6 @@ public class SQLQueries {
     public String getProductPriceDetailsByCustomer = "SELECT PRODUCT_NO, RETAIL_PRICE FROM customer_product_price WHERE CUSTOMER_PHONENO = ?";
     public String openConnectionQuery = "SELECT BRAND_NAME FROM brand WHERE BRAND_ID = 1";
     public String checkTransactionExistence = "SELECT count(*) FROM transaction WHERE TRANSACTION_COMP_ID = ?";
+    public String getCustomerEmail = "select c.EMAIL from customer c, transaction t where t.CUSTOMER_PHONENO = c.PHONE_NO AND t.TRANSACTION_COMP_ID = ?";
+    public String updateProductFlagToInactive = "UPDATE product SET ACTIVE_FLAG = 0 where PRODUCT_ID = ?";
 }

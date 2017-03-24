@@ -324,6 +324,10 @@ public class SalesManager {
 
     public boolean sendEmail(int receiptId) {
 
+       String customerEmail =  jdbcTemplate.queryForObject(sqlQuery.getCustomerEmail, new Object[]{receiptId}, String.class);
+
+        //TODO CONVERT TO PDF AND SEND ON EMAIL ADDRESS.
+
         return false;
     }
 

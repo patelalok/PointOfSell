@@ -103,22 +103,18 @@ public class ProductController {
 
        int result =  productManager.deleteProductToDB(productId);
 
-        if(result == 1)
+        if(result ==1)
         {
-
-            System.out.println("Product Deleted Successfully !!!");
-
-
-
-            response.setStatusMessege("Product Deleted Successfully");
-
-            return ResponseEntity.ok(response);
+            response.setStatusMessege("Deleted product successfully");
+            return ResponseEntity.status(HttpStatus.OK).
+                    body(response);
         }
-
-
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).
-                body(response);
+        else
+        {
+           response.setStatusMessege("Something goes wrong");
+            return ResponseEntity.status(HttpStatus.CONFLICT).
+                    body(response);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getLastProductNo", produces = "application/json")
