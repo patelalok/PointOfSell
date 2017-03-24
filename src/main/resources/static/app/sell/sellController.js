@@ -889,6 +889,7 @@
 		function addTransactionLineItemSuccessHandler(data)
 		{
 			GlobalVariable.onlineTransactionCompId = '';
+			GlobalVariable.onlineTransactionCompId = '';
 		}
 		function addTransactionLineItemErrorHandler(data)
 		{

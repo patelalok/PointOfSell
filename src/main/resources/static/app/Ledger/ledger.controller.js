@@ -3,9 +3,9 @@
 
 	angular.module('sampleApp').controller('LedgerController', LedgerController);
 
-	LedgerController.$inject = [ '$scope', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','$state','GlobalConstants'];
+	LedgerController.$inject = [ '$scope','modalService', '$rootScope', 'device.utility','GlobalVariable','DialogFactory','dataService','$window','$filter','$timeout','RestrictedCharacter.Types','$state','GlobalConstants'];
 
-	function LedgerController($scope, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state,GlobalConstants)
+	function LedgerController($scope,modalService, $rootScope, device ,GlobalVariable,DialogFactory,dataService,$window,$filter,$timeout,restrictCharacter,$state,GlobalConstants)
 	{
 		$scope.restrictCharacter=restrictCharacter;
 		$scope.maxDate = new Date();
@@ -118,6 +118,34 @@
 			dataService.Get(url,getSalesHistorySuccessHandler,getSalesHistroyErrorHandler,"application/json","application/json");
 			
 			
+		}
+		$scope.sendMail = function(id)
+		{
+			$scope.emailId = id;
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Send Email ? ", $scope.callBackEmail);
+
+
+		}
+		$scope.callBackEmail = function(ok)
+		{
+			if(ok)
+			{
+				var url =GlobalConstants.URLCONSTANTS+'sendEmail?receiptId='+$scope.emailId;
+				dataService.Get(url,getEmailSuccess,getEmailError,"application/json","application/json");
+			}
+		}
+		function getEmailSuccess(data)
+		{
+			if(data == true)
+			{
+
+			}
+		}
+		function getEmailError(data)
+		{
+
 		}
 		$scope.onDateSelected = function(startDate, endDate, label, element) {
 			var receiptIndex = element.attr('data-receipt-index');
