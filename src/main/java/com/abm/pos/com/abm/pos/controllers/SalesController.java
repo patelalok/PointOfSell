@@ -64,6 +64,12 @@ public class SalesController {
        return salesManager.getReceiptDetails(receiptId);
     }
 
+    @RequestMapping(value = "/sendEmail", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public boolean sendEmail(@RequestParam int receiptId)
+    {
+        return salesManager.sendEmail(receiptId);
+    }
+
 
     @RequestMapping(method = RequestMethod.POST, value = "/addTransactionLineItem", consumes = "application/json")
     public void addTransactionLineItem(@RequestBody List<TransactionLineItemDto> transactionLineItemDto, @RequestParam String phoneNo)

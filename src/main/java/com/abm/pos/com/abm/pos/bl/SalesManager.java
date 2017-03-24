@@ -322,6 +322,11 @@ public class SalesManager {
         }
     }
 
+    public boolean sendEmail(int receiptId) {
+
+        return false;
+    }
+
 
     private final class TransactionMapperForReturn implements RowMapper<TransactionDto> {
 
