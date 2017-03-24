@@ -20,6 +20,7 @@
 		GlobalVarObj.editCustomer = false;
 		GlobalVarObj.onAddProduct = '';
 		GlobalVarObj.addProductClicked= false;
+		GlobalVarObj.onlineTransactionCompId = '';
 		
 		return GlobalVarObj;
 	}
