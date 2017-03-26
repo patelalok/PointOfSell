@@ -287,6 +287,8 @@
 						$scope.phoneIMEI = $scope.IMEI;
 					else
 						$scope.phoneIMEI = '';
+
+
 					var request={
 						"productId": GlobalVariable.editProductDetails.productId,
 						"productNo":$scope.productId,
@@ -306,7 +308,8 @@
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
 						"addTax":$scope.productYesyNO,
-						"modelId":$scope.modelId
+						"modelId":$scope.modelId,
+						"isEcommerce":$scope.ecommerce
 					};
 					var url =GlobalConstants.URLCONSTANTS+"editProduct";
 				}
@@ -323,6 +326,12 @@
 						$scope.phoneIMEI = $scope.IMEI
 					else
 						$scope.phoneIMEI = '';
+
+					if($scope.ecommerce == true)
+						$scope.ecommerce = 1;
+					else
+						$scope.ecommerce =0;
+
 					var request = {
 
 						"productNo":$scope.productId,
@@ -341,7 +350,8 @@
 						"image": "image",
 						"createdDate": "1000-01-01 00:00:00",
 						"addTax":$scope.productYesyNO,
-						"modelId":$scope.modelId
+						"modelId":$scope.modelId,
+						"isEcommerce":$scope.ecommerce
 					};
 					var url =GlobalConstants.URLCONSTANTS+"addProduct";
 				}
@@ -391,6 +401,7 @@
 			$scope.customReturn='';
 			$scope.prodQuantity ='';
 			$scope.prodMinquantity='';
+			$scope.ecommerce = true;
 		}
 		function addProductErrorHandler(response)
 		{
@@ -461,6 +472,7 @@
 			$scope.prodMarkup = 0;
 			$scope.prodRetail = 0;*/
 			$scope.productYesyNO= true;
+			$scope.ecommerce = true;
 			if(GlobalVariable.editProduct == true)
 			{
 				$scope.productId = GlobalVariable.editProductDetails.productNo;
@@ -480,6 +492,12 @@
 				$scope.prodMinquantity = GlobalVariable.editProductDetails.minProductQuantity;
 				$scope.productYesyNO = GlobalVariable.editProductDetails.addTax;
 				$scope.selectedReturnType = GlobalVariable.editProductDetails.returnRule;
+				$scope.ecommerce = GlobalVariable.editProductDetails.isEcommerce;
+				if($scope.ecommerce == 1)
+					$scope.ecommerce = true;
+				else
+					$scope.ecommerce = false;
+
 			}
 
 		}

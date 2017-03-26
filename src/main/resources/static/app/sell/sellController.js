@@ -598,16 +598,8 @@
 			$rootScope.totalQuantity = 0;
 			$rootScope.subTotal = 0;
 			$rootScope.productTotal = 0;
-			//$rootScope.totalProductPriceAfterTax = 0;
-			//GlobalVariable.regPhone1 = '';
-			//GlobalVariable.customerNameOnSearch = '';
-			//GlobalVariable.balanceRemaining= '';
-			// $rootScope.testData = [];
-			$scope.loadCheckOutData();
-			// GlobalVariable.customerFound = false;
-			//GlobalVariable.balanceRemaining = 0;
-			//GlobalVariable.taxTotal=0;
 
+			$scope.loadCheckOutData();
 		}
 		$scope.test = function() {
 			console.log("" + $scope.searchValue);
@@ -767,15 +759,25 @@
 		}
 		$scope.printInvoice = function()
 		{
-			GlobalVariable.printInvoice = true;
-			GlobalVariable.isPrintPage = true;
-			$timeout(function () {
-				$window.print();
-				GlobalVariable.isPrintPage = false;
-				GlobalVariable.printInvoice = false;
-			}, 2000);
-			$scope.getLastTransId();
+			modalService.showModal('', {
+				isCancel : true
+			}, "Are you Sure Want to Print Invoice ? ", $scope.callBackPrintInvoiceAction);
+
+
 		}
+		$scope.callBackPrintInvoiceAction = function(ok)
+		{
+			if(ok)
+			{
+
+				$scope.getLastTransId();
+			}
+			else
+			{
+				resetData();
+			}
+		}
+
 		function js_yyyy_mm_dd_hh_mm_ss () {
 			var now = new Date();
 			var year = "" + now.getFullYear();
@@ -889,13 +891,110 @@
 		function addTransactionLineItemSuccessHandler(data)
 		{
 			GlobalVariable.onlineTransactionCompId = '';
-			GlobalVariable.onlineTransactionCompId = '';
+
+			getStoreAddress();
 		}
 		function addTransactionLineItemErrorHandler(data)
 		{
 
 		}
 		function addTransactionError1Handler(error)
+		{
+
+		}
+		function getStoreAddress()
+		{
+
+			var url=GlobalConstants.URLCONSTANTS+'getPageSetUpDetails';
+			dataService.Get(url,onStoreSuccess,onStoreError,'application/json','application/json');
+		}
+		function onStoreSuccess(response)
+		{
+			GlobalVariable.storeAddress = response[0].storeAddress;
+			GlobalVariable.footerReceipt = response[0].footerReceipt;
+			if((response[0].receiptType).toString() == "0")
+				GlobalVariable.showRcptType = 'A4';
+			else if((response[0].receiptType).toString() == "1")
+				GlobalVariable.showRcptType = 'Thermal';
+
+
+				var url=GlobalConstants.URLCONSTANTS+"getReceiptDetails?receiptId="+GlobalVariable.transactionCompletedId;
+				dataService.Get(url,getPrintSuccessHandler,getPrintErrorHandler,"application/json","application/json");
+
+		}
+		function onStoreError(error)
+		{
+
+		}
+		function getPrintSuccessHandler(response)
+		{
+			GlobalVariable.receiptData =response;
+			GlobalVariable.receiptCOmmonData = response;
+
+			$rootScope.printTransFirstName='';
+			$rootScope.printTransLastName ='';
+			$rootScope.printTransStreet='';
+			$rootScope.printTransCity='';
+			$rootScope.printTransState='';
+			$rootScope.printTransCountry='';
+			$rootScope.printTranszipCode='';
+			$rootScope.printTransPhone='';
+			$rootScope.printTransCompany = '';
+			if(response.length !==0)
+			{
+				if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
+				{
+					$rootScope.printTransFirstName=GlobalVariable.receiptData[0].customerDtosList[0].firstName;
+					$rootScope.printTransLastName =GlobalVariable.receiptData[0].customerDtosList[0].lastName;
+					$rootScope.printTransStreet=GlobalVariable.receiptData[0].customerDtosList[0].street;
+					$rootScope.printTransCity=GlobalVariable.receiptData[0].customerDtosList[0].city;
+					$rootScope.printTransState=GlobalVariable.receiptData[0].customerDtosList[0].state;
+					$rootScope.printTransCountry=GlobalVariable.receiptData[0].customerDtosList[0].country;
+					$rootScope.printTranszipCode=GlobalVariable.receiptData[0].customerDtosList[0].zipcode;
+					$rootScope.printTransPhone=GlobalVariable.receiptData[0].customerDtosList[0].phoneNo;
+					$scope.printTransCompany =GlobalVariable.receiptData[0].customerDtosList[0].companyName;
+
+				}
+			}
+
+			GlobalVariable.printInvoice = true;
+			GlobalVariable.isPrintPage = true;
+			$timeout(function () {
+				$window.print();
+				GlobalVariable.isPrintPage = false;
+				GlobalVariable.printInvoice = false;
+				resetData();
+			}, 2000);
+
+		}
+		function resetData()
+		{
+			$rootScope.testData = [];
+			GlobalVariable.onlineSellProduct = false;
+
+
+			GlobalVariable.custTypeCd = '';
+			$rootScope.totalPayment = '0.00';
+			$rootScope.customerName = '';
+			$rootScope.regPhone = '';
+			$rootScope.customerNameOnSearch = '';
+			GlobalVariable.customerFound = false;
+			$rootScope.totalQuantity = 0;
+			$rootScope.subTotal = 0;
+			$rootScope.productTotal = 0;
+			$rootScope.customerPhone = '';
+			GlobalVariable.addProductClicked = false;
+			GlobalVariable.userPhone ='';
+			GlobalVariable.userFName = '';
+			GlobalVariable.customerNameOnSearch = '';
+			GlobalVariable.regPhone1 ='';
+			GlobalVariable.balanceRemaining = 0;
+			GlobalVariable.transId = '';
+			GlobalVariable.last4='';
+			GlobalVariable.sellIMEINumber = '';
+			GlobalVariable.selectTax = 'default';
+		}
+		function getPrintErrorHandler(response)
 		{
 
 		}
