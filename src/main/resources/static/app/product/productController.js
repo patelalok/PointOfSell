@@ -288,7 +288,10 @@
 					else
 						$scope.phoneIMEI = '';
 
-
+					if($scope.ecommerce == true)
+						$scope.ecommerce = 1;
+					else
+						$scope.ecommerce =0;
 					var request={
 						"productId": GlobalVariable.editProductDetails.productId,
 						"productNo":$scope.productId,
