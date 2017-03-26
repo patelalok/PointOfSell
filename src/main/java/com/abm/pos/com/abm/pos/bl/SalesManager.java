@@ -56,146 +56,238 @@ public class SalesManager {
         //Here i am checking if this transaction no is exists in DB or not,
         //If exists then update it with old transaction Id and if not then use the current transaction Id
         //Which is coming from ui
-        if(null != transactionDto && transactionDto.getStatus().equalsIgnoreCase("O"))
-        {
-            Integer result = jdbcTemplate.queryForObject(sqlQuery.checkTransactionExistence, Integer.class,transactionDto.getTransactionCompId());
+        if(null != transactionDto && transactionDto.getStatus().equalsIgnoreCase("O")) {
+            Integer result = jdbcTemplate.queryForObject(sqlQuery.checkTransactionExistence, Integer.class, transactionDto.getTransactionCompId());
 
-            if(result != null && result != 0)
+            if (result != null && result != 0) {
+                updateTransactionForOnline(transactionDto);
+
+                System.out.println("This is update for online transaction");
+            } else {
+
+                insertTransaction(transactionDto);
+                System.out.println("this is insert for online transaction");
+            }
+        }
+            else
             {
-                System.out.println("This is update");
+                insertTransaction(transactionDto);
+                System.out.println("this is insert");
+            }
+
+
+        }
+
+    private void updateTransactionForOnline(TransactionDto transactionDto) {
+        try {
+            jdbcTemplate.update(sqlQuery.updateOnlineTransaction,
+                    transactionDto.getTransactionDate(),
+                    transactionDto.getTotalAmount(),
+                    transactionDto.getTax(),
+                    transactionDto.getDiscount(),
+                    transactionDto.getSubTotal(),
+                    transactionDto.getTotalQuantity(),
+                    transactionDto.getCustomerPhoneNo(),
+                    transactionDto.getUserId(),
+                    transactionDto.getStatus(),
+                    transactionDto.getPrevBalance(),
+                    transactionDto.getBalance(),
+                    transactionDto.getReceiptNote(),
+                    transactionDto.getTransactionNote(),
+                    transactionDto.getCustomerName(),
+                    transactionDto.getUsername(),
+                    transactionDto.getTransactionCompId());
+        } catch (Exception e) {
+            System.out.println("Online Transaction updated successfully");
+        }
+    }
+
+    private void insertTransaction(TransactionDto transactionDto) {
+        try {
+            jdbcTemplate.update(sqlQuery.addTransaction,
+                    transactionDto.getTransactionCompId(),
+                    transactionDto.getTransactionDate(),
+                    transactionDto.getTotalAmount(),
+                    transactionDto.getTax(),
+                    transactionDto.getDiscount(),
+                    transactionDto.getSubTotal(),
+                    transactionDto.getTotalQuantity(),
+                    transactionDto.getCustomerPhoneNo(),
+                    transactionDto.getUserId(),
+                    transactionDto.getStatus(),
+                    transactionDto.getPaidAmountCash(),
+                    transactionDto.getChangeAmount(),
+                    transactionDto.getPaidAmountCredit(),
+                    transactionDto.getPaidAmountCheck(),
+                    transactionDto.getTransCreditId(),
+                    transactionDto.getLast4Digits(),
+                    transactionDto.getPrevBalance(),
+                    transactionDto.getBalance(),
+                    transactionDto.getPaidAmountDebit(),
+                    transactionDto.getReceiptNote(),
+                    transactionDto.getTransactionNote(),
+                    transactionDto.getCustomerName(),
+                    transactionDto.getUsername());
+
+            if (null != transactionDto.getStatus() && transactionDto.getStatus().equals("c")) {
+
+                jdbcTemplate.update(sqlQuery.updateBalanceToCustomerProfile,
+                        transactionDto.getBalance(),
+                        transactionDto.getTransactionDate(),
+                        transactionDto.getCustomerPhoneNo());
+                System.out.println("Customer Balance Added Successfully");
+            }
+            System.out.println("Transaction Added Successfully");
+
+        } catch (Exception e) {
+
+            System.out.println(e);
+        }
+    }
+
+    public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
+
+        //This scenario is to handle the online transaction updates and performa invoice where admin can edit the invoices..
+        if( null != transactionLineItemDto && !transactionLineItemDto.isEmpty() && transactionLineItemDto.get(0).getTransactionStatus().equalsIgnoreCase("O"))//that means this is online transaction
+        {
+            Integer result = jdbcTemplate.queryForObject(sqlQuery.checkTransactionLineItemExistence, Integer.class,transactionLineItemDto.get(0).getTransactionCompId());
+
+            if (result != null && result != 0)
+            {
+                updateTransactionLineItemForOnline(transactionLineItemDto, phoneNo);
+                System.out.println("Line item updates successfully for online order");
             }
             else
             {
-                System.out.println("this is insert");
+                insertTransactionLineItem(transactionLineItemDto, phoneNo);
+                System.out.println("Line item inserted successfully for online order");
             }
         }
-
-            try {
-                        jdbcTemplate.update(sqlQuery.addTransaction,
-                        transactionDto.getTransactionCompId(),
-                        transactionDto.getTransactionDate(),
-                        transactionDto.getTotalAmount(),
-                        transactionDto.getTax(),
-                        transactionDto.getDiscount(),
-                        transactionDto.getSubTotal(),
-                        transactionDto.getTotalQuantity(),
-                        transactionDto.getCustomerPhoneNo(),
-                        transactionDto.getUserId(),
-                        transactionDto.getStatus(),
-                        transactionDto.getPaidAmountCash(),
-                        transactionDto.getChangeAmount(),
-                        transactionDto.getPaidAmountCredit(),
-                        transactionDto.getPaidAmountCheck(),
-                        transactionDto.getTransCreditId(),
-                        transactionDto.getLast4Digits(),
-                        transactionDto.getPrevBalance(),
-                        transactionDto.getBalance(),
-                        transactionDto.getPaidAmountDebit(),
-                        transactionDto.getReceiptNote(),
-                        transactionDto.getTransactionNote(),
-                        transactionDto.getCustomerName(),
-                        transactionDto.getUsername());
-
-                if (null != transactionDto.getStatus() && transactionDto.getStatus().equals("c")) {
-
-                    jdbcTemplate.update(sqlQuery.updateBalanceToCustomerProfile,
-                            transactionDto.getBalance(),
-                            transactionDto.getTransactionDate(),
-                            transactionDto.getCustomerPhoneNo());
-                    System.out.println("Customer Balance Added Successfully");
-                }
-                System.out.println("Transaction Added Successfully");
-
-//                if(result ==1)
-//                {
-//                    break;
-//                }
-            } catch (Exception e) {
-
-                System.out.println(e);
-            }
-       // }
-
+        //This is regular lineitem insert
+        else {
+            insertTransactionLineItem(transactionLineItemDto, phoneNo);
+        }
     }
-    public void addTransactionLineItemToDB(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
-            try {
-                jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
+    private void insertTransactionLineItem(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
+        try {
+            jdbcTemplate.batchUpdate(sqlQuery.addTransactionLineItem, new BatchPreparedStatementSetter() {
 
 
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
 
-                    @Override
-                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                    TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
 
-                        TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
+                    ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
+                    ps.setString(2, transactionLineItemDto1.getTransactionDate());
+                    ps.setString(3, transactionLineItemDto1.getTransactionStatus());
+                    ps.setString(4, transactionLineItemDto1.getProductNumber());
 
-                        ps.setInt(1, transactionLineItemDto1.getTransactionCompId());
-                        ps.setString(2, transactionLineItemDto1.getTransactionDate());
-                        ps.setString(3, transactionLineItemDto1.getTransactionStatus());
-                        ps.setString(4, transactionLineItemDto1.getProductNumber());
+                    int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]{transactionLineItemDto1.getProductNumber()}, Integer.class);
 
-                        int productQuantity = jdbcTemplate.queryForObject(sqlQuery.getProductQuantity, new Object[]{transactionLineItemDto1.getProductNumber()}, Integer.class);
+                    ps.setInt(5, transactionLineItemDto1.getQuantity());
 
-                        ps.setInt(5, transactionLineItemDto1.getQuantity());
+                    int transQuantity = transactionLineItemDto1.getQuantity();
 
-                        int transQuantity = transactionLineItemDto1.getQuantity();
+                    //reducing quantity into Stock for transaction
+                    productQuantity = productQuantity - transQuantity;
 
-                        //reducing quantity into Stock for transaction
-                        productQuantity = productQuantity - transQuantity;
+                    int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[]{transactionLineItemDto1.getProductNumber()}, Integer.class);
 
-                        int productId = jdbcTemplate.queryForObject(sqlQuery.getProductId, new Object[]{transactionLineItemDto1.getProductNumber()}, Integer.class);
+                    jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, productId);
 
-                        jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity, productId);
+                    //Here I am checking is this phone return or not and if yes then i need to add that phone back to inventory.
+                    if (null != transactionLineItemDto1.getImeiNo() && (transactionLineItemDto1.getTransactionStatus().equals("r") || transactionLineItemDto1.getTransactionStatus().equals("p"))) {
+                        try {
+                            jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
+                                    transactionLineItemDto1.getProductNumber(),
+                                    transactionLineItemDto1.getImeiNo(),
+                                    Math.abs(transactionLineItemDto1.getCost()),
+                                    Math.abs(transactionLineItemDto1.getRetail()),
+                                    0,
+                                    transactionLineItemDto1.getTransactionDate());
 
-                        //Here I am checking is this phone return or not and if yes then i need to add that phone back to inventory.
-                        if (null != transactionLineItemDto1.getImeiNo() && (transactionLineItemDto1.getTransactionStatus().equals("r") || transactionLineItemDto1.getTransactionStatus().equals("p"))) {
-                            try {
-                                jdbcTemplate.update(sqlQuery.addPhoneDetailsAsProduct,
-                                        transactionLineItemDto1.getProductNumber(),
-                                        transactionLineItemDto1.getImeiNo(),
-                                        Math.abs(transactionLineItemDto1.getCost()),
-                                        Math.abs(transactionLineItemDto1.getRetail()),
-                                        0,
-                                        transactionLineItemDto1.getTransactionDate());
-
-                                //jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity + transQuantity * -1, productId);
-                                System.out.println("This is Phone Return");
-                                //System.out.println(Math.abs(transQuantity));
-                            } catch (Exception e) {
-                                System.out.println(e);
-                            }
-
+                            //jdbcTemplate.update(sqlQuery.updateProductQuantity, productQuantity + transQuantity * -1, productId);
+                            System.out.println("This is Phone Return");
+                            //System.out.println(Math.abs(transQuantity));
+                        } catch (Exception e) {
+                            System.out.println(e);
                         }
 
-                        ps.setDouble(6, transactionLineItemDto1.getRetail());
-                        ps.setDouble(7, transactionLineItemDto1.getCost());
-                        ps.setDouble(8, transactionLineItemDto1.getDiscount());
-                        ps.setDouble(9, transactionLineItemDto1.getDiscountPercentage());
-                        ps.setDouble(10, transactionLineItemDto1.getRetailWithDis());
-                        ps.setDouble(11, transactionLineItemDto1.getTotalProductPrice());
-                        ps.setDouble(12, transactionLineItemDto1.getTotalProductPriceWithTax());
-                        ps.setString(13, transactionLineItemDto1.getImeiNo());
-
-                        //Checking is this product is phone,  product has phone id or not if yes then that means this is phone sale so i need to remove IMEI No form Phone Table
-                        // And also need to check that it should be complete transaction not a return thats why i am checking the status FLAG.
-                        if (transactionLineItemDto1.getPhoneId() != 0 && transactionLineItemDto1.getTransactionStatus().equals("c")) {
-                            jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getPhoneId());
-                            System.out.println("This is phone sale: Delete IMEI Successfully!!" + transactionLineItemDto1.getImeiNo());
-                        }
                     }
-                    @Override
-                    public int getBatchSize() {
-                        return transactionLineItemDto.size();
+
+                    ps.setDouble(6, transactionLineItemDto1.getRetail());
+                    ps.setDouble(7, transactionLineItemDto1.getCost());
+                    ps.setDouble(8, transactionLineItemDto1.getDiscount());
+                    ps.setDouble(9, transactionLineItemDto1.getDiscountPercentage());
+                    ps.setDouble(10, transactionLineItemDto1.getRetailWithDis());
+                    ps.setDouble(11, transactionLineItemDto1.getTotalProductPrice());
+                    ps.setDouble(12, transactionLineItemDto1.getTotalProductPriceWithTax());
+                    ps.setString(13, transactionLineItemDto1.getImeiNo());
+
+                    //Checking is this product is phone,  product has phone id or not if yes then that means this is phone sale so i need to remove IMEI No form Phone Table
+                    // And also need to check that it should be complete transaction not a return thats why i am checking the status FLAG.
+                    if (transactionLineItemDto1.getPhoneId() != 0 && transactionLineItemDto1.getTransactionStatus().equals("c")) {
+                        jdbcTemplate.update(sqlQuery.deleteImeiDetailsFromPhone, transactionLineItemDto1.getPhoneId());
+                        System.out.println("This is phone sale: Delete IMEI Successfully!!" + transactionLineItemDto1.getImeiNo());
                     }
-                });
+                }
 
-                //Adding customer's product price to give customer same price from last transaction.
-                addProductPriceByCustomer(transactionLineItemDto, phoneNo);
+                @Override
+                public int getBatchSize() {
+                    return transactionLineItemDto.size();
+                }
+            });
 
-                System.out.println("Transaction Line Item Added Successfully");
+            //Adding customer's product price to give customer same price from last transaction.
+            addProductPriceByCustomer(transactionLineItemDto, phoneNo);
 
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            System.out.println("Transaction Line Item Added Successfully");
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private void updateTransactionLineItemForOnline(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
+        try {
+            jdbcTemplate.batchUpdate(sqlQuery.UpdateTransactionLineItem, new BatchPreparedStatementSetter() {
+
+
+
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+
+                    TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
+
+                    ps.setString(1, transactionLineItemDto1.getTransactionDate());
+                    ps.setString(2, transactionLineItemDto1.getTransactionStatus());
+                    ps.setString(3, transactionLineItemDto1.getProductNumber());
+                    ps.setInt(4, transactionLineItemDto1.getQuantity());
+                    ps.setDouble(5, transactionLineItemDto1.getRetail());
+                    ps.setDouble(6, transactionLineItemDto1.getCost());
+                    ps.setDouble(7, transactionLineItemDto1.getDiscount());
+                    ps.setDouble(8, transactionLineItemDto1.getDiscountPercentage());
+                    ps.setDouble(9, transactionLineItemDto1.getRetailWithDis());
+                    ps.setDouble(10, transactionLineItemDto1.getTotalProductPrice());
+                    ps.setDouble(11, transactionLineItemDto1.getTotalProductPriceWithTax());
+                    ps.setString(12, transactionLineItemDto1.getImeiNo());
+                    ps.setInt(13, transactionLineItemDto1.getTransactionCompId());
+                }
+                @Override
+                public int getBatchSize() {
+                    return transactionLineItemDto.size();
+                }
+            });
+
+            //Adding customer's product price to give customer same price from last transaction.
+            addProductPriceByCustomer(transactionLineItemDto, phoneNo);
+
+            System.out.println("Transaction Line Item Updated Successfully For Online orders");
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 

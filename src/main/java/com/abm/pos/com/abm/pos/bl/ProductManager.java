@@ -81,8 +81,9 @@ public class ProductManager
                         productDto.getCreatedDate(),
                         // productDto.getImeiNo(),
                         productDto.isAddTax(),
-                        productDto.isRelatedProduct());
-                        //productDto.getModelId());
+                        productDto.isRelatedProduct(),
+                        productDto.getModelId(),
+                        productDto.getIsEcommerce());
 
                 System.out.println(productDto.isAddTax());
                 System.out.println("Product Added Successfully");
@@ -117,7 +118,8 @@ public class ProductManager
                         productDto.getImage(),
                         productDto.isAddTax(),
                         productDto.isRelatedProduct(),
-                        //productDto.getModelId(),
+                        productDto.getModelId(),
+                        productDto.getIsEcommerce(),
                         productDto.getProductId(),
                         productDto.getOldProductNo());
 
@@ -150,7 +152,8 @@ public class ProductManager
                         //productDto.getImeiNo(),
                         productDto.isAddTax(),
                         productDto.isRelatedProduct(),
-                        //productDto.getModelId(),
+                        productDto.getModelId(),
+                        productDto.getIsEcommerce(),
                         productDto.getProductId(),
                         productDto.getOldProductNo());
 
@@ -353,7 +356,7 @@ public class ProductManager
                 product.setProductId(rs.getInt("PRODUCT_ID"));
                 product.setProductNo(rs.getString("PRODUCT_NO"));
                 product.setCategoryId(rs.getInt("CATEGORY_ID"));
-               // product.setModelId(rs.getInt("MODEL_ID"));
+                product.setModelId(rs.getInt("MODEL_ID"));
                 product.setVendorId(rs.getInt("VENDOR_ID"));
                 product.setAltNo(rs.getString("ATL_NO"));
                 product.setDescription(rs.getString("DESCRIPTION"));
@@ -370,6 +373,7 @@ public class ProductManager
                 //product.setImeiNo(rs.getString("IMEI_NUMBER"));
                 product.setAddTax(rs.getBoolean("TAX"));
                 product.setRelatedProduct(rs.getBoolean("IS_RELATED_PRODUCT"));
+                product.setIsEcommerce(rs.getInt("IS_ECOMMERCE"));
                 //System.out.println(rs.getBoolean("TAX"));
 
 
@@ -555,8 +559,6 @@ public class ProductManager
         return result;
 
         }
-
-
     public long getLastProductNo() {
 
         long lastProductNo = jdbcTemplate.queryForObject(sqlQuery.getLastProductNo, new Object[] {},Long.class);

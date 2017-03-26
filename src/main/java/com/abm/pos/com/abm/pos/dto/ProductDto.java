@@ -32,6 +32,7 @@ public class ProductDto {
     private boolean isRelatedProduct;
     private int phoneId;
     private int relatedProductId;
+    private int isEcommerce;
 
     public String getAltNo() {
         return altNo;
@@ -247,5 +248,13 @@ public class ProductDto {
 
     public void setRelatedProductId(int relatedProductId) {
         this.relatedProductId = relatedProductId;
+    }
+
+    public int getIsEcommerce() {
+        return isEcommerce;
+    }
+
+    public void setIsEcommerce(int isEcommerce) {
+        this.isEcommerce = isEcommerce;
     }
 }
