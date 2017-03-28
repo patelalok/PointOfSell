@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.context.Context;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,6 +39,12 @@ public class SalesManager {
 
     @Autowired
     CustomerManager customerManager;
+
+    @Autowired
+    EmailSender emailSender;
+
+    @Autowired
+    EmailHtmlSender emailHtmlSender;
 
     private BaseFont bfBold;
     private BaseFont bf;
@@ -154,8 +161,12 @@ public class SalesManager {
 
             if (result != null && result != 0)
             {
-                updateTransactionLineItemForOnline(transactionLineItemDto, phoneNo);
-                System.out.println("Line item updates successfully for online order");
+                //Here i need to delete the old transaction line item first and then i am gonna insert the new details again
+                //cause i can not directly update the line item details with jdbc batch.
+                deleteOldTransactionLineItemDetails(transactionLineItemDto, phoneNo);
+
+                //Inserting new details
+                insertTransactionLineItem(transactionLineItemDto, phoneNo);
             }
             else
             {
@@ -163,7 +174,7 @@ public class SalesManager {
                 System.out.println("Line item inserted successfully for online order");
             }
         }
-        //This is regular lineitem insert
+        //This is regular line item insert
         else {
             insertTransactionLineItem(transactionLineItemDto, phoneNo);
         }
@@ -249,41 +260,21 @@ public class SalesManager {
         }
     }
 
-    private void updateTransactionLineItemForOnline(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
+    private void deleteOldTransactionLineItemDetails(final List<TransactionLineItemDto> transactionLineItemDto, String phoneNo) {
         try {
-            jdbcTemplate.batchUpdate(sqlQuery.UpdateTransactionLineItem, new BatchPreparedStatementSetter() {
 
+            int result = jdbcTemplate.update(sqlQuery.deleteTransactionLineItem,transactionLineItemDto.get(0).getTransactionCompId());
 
-
-                @Override
-                public void setValues(PreparedStatement ps, int i) throws SQLException {
-
-                    TransactionLineItemDto transactionLineItemDto1 = transactionLineItemDto.get(i);
-
-                    ps.setString(1, transactionLineItemDto1.getTransactionDate());
-                    ps.setString(2, transactionLineItemDto1.getTransactionStatus());
-                    ps.setString(3, transactionLineItemDto1.getProductNumber());
-                    ps.setInt(4, transactionLineItemDto1.getQuantity());
-                    ps.setDouble(5, transactionLineItemDto1.getRetail());
-                    ps.setDouble(6, transactionLineItemDto1.getCost());
-                    ps.setDouble(7, transactionLineItemDto1.getDiscount());
-                    ps.setDouble(8, transactionLineItemDto1.getDiscountPercentage());
-                    ps.setDouble(9, transactionLineItemDto1.getRetailWithDis());
-                    ps.setDouble(10, transactionLineItemDto1.getTotalProductPrice());
-                    ps.setDouble(11, transactionLineItemDto1.getTotalProductPriceWithTax());
-                    ps.setString(12, transactionLineItemDto1.getImeiNo());
-                    ps.setInt(13, transactionLineItemDto1.getTransactionCompId());
-                }
-                @Override
-                public int getBatchSize() {
-                    return transactionLineItemDto.size();
-                }
-            });
-
-            //Adding customer's product price to give customer same price from last transaction.
-            addProductPriceByCustomer(transactionLineItemDto, phoneNo);
-
-            System.out.println("Transaction Line Item Updated Successfully For Online orders");
+            if(result !=0)
+            {
+                insertTransactionLineItem(transactionLineItemDto,phoneNo);
+                //Adding customer's product price to give customer same price from last transaction.
+                addProductPriceByCustomer(transactionLineItemDto, phoneNo);
+            }
+            else {
+                System.out.println("Something goes wrong while deleting old transaction line item details for online order");
+            }
+            System.out.println("Transaction Line Item Deleted and Inserted Successfully For Online orders");
 
         } catch (Exception e) {
             System.out.println(e);
@@ -416,8 +407,12 @@ public class SalesManager {
 
     public boolean sendEmail(int receiptId) {
 
-       String customerEmail =  jdbcTemplate.queryForObject(sqlQuery.getCustomerEmail, new Object[]{receiptId}, String.class);
+       //String customerEmail =  jdbcTemplate.queryForObject(sqlQuery.getCustomerEmail, new Object[]{receiptId}, String.class);
 
+        Context context = new Context();
+        context.setVariable("title", "Lorem Ipsum");
+        context.setVariable("description", "Lorem Lorem Lorem");
+        EmailStatus emailStatus = emailHtmlSender.send("alokpatel.au@gmail.com", "Title of email", "template-1", context);
         //TODO CONVERT TO PDF AND SEND ON EMAIL ADDRESS.
 
         return false;

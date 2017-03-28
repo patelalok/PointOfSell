@@ -1081,4 +1081,5 @@ public class SQLQueries {
             "IMEI_NO = ? " +
             "WHERE TRANSACTION_COMP_ID = ?";
     public String checkTransactionLineItemExistence = "SELECT count(*) FROM transaction_line_item WHERE TRANSACTION_COMP_ID = ?";
+    public String deleteTransactionLineItem = "DELETE FROM transaction_line_item WHERE TRANSACTION_COMP_ID = ?";
 }
