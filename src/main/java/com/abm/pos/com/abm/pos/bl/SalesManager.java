@@ -410,10 +410,32 @@ public class SalesManager {
        //String customerEmail =  jdbcTemplate.queryForObject(sqlQuery.getCustomerEmail, new Object[]{receiptId}, String.class);
 
         Context context = new Context();
-        context.setVariable("title", "Lorem Ipsum");
-        context.setVariable("description", "Lorem Lorem Lorem");
-        EmailStatus emailStatus = emailHtmlSender.send("alokpatel.au@gmail.com", "Title of email", "template-1", context);
-        //TODO CONVERT TO PDF AND SEND ON EMAIL ADDRESS.
+
+        List<ReceiptDto> receiptDtoList =  getReceiptDetails(receiptId);
+
+        if(null != receiptDtoList && null != receiptDtoList.get(0).getCustomerDtosList() && null != receiptDtoList.get(0).getTransactionDtoList() && null != receiptDtoList.get(0).getTransactionLineItemDtoList())
+        {
+
+            //setting shipping details
+            context.setVariable("firstName", receiptDtoList.get(0).getTransactionDtoList().get(0).getCustomerName());
+            context.setVariable("companyName", receiptDtoList.get(0).getCustomerDtosList().get(0).getCompanyName());
+            context.setVariable("addressLine", receiptDtoList.get(0).getCustomerDtosList().get(0).getStreet());
+            context.setVariable("City", receiptDtoList.get(0).getCustomerDtosList().get(0).getCity());
+            context.setVariable("State", receiptDtoList.get(0).getCustomerDtosList().get(0).getState());
+            context.setVariable("zipcode",receiptDtoList.get(0).getCustomerDtosList().get(0).getZipcode());
+            context.setVariable("phoneNo", receiptDtoList.get(0).getCustomerDtosList().get(0).getPhoneNo());
+
+            //setting line item details
+            context.setVariable("lineItem", receiptDtoList.get(0).getTransactionLineItemDtoList());
+
+            //setting transaction details
+            context.setVariable("subtotal",receiptDtoList.get(0).getTransactionDtoList().get(0).getSubTotal());
+            context.setVariable("shipping","25");//TODO need to figure out this problem
+            context.setVariable("quantity", receiptDtoList.get(0).getTransactionDtoList().get(0).getTotalQuantity());
+            context.setVariable("grandTotal",receiptDtoList.get(0).getTransactionDtoList().get(0).getTotalAmount());
+
+        }
+        EmailStatus emailStatus = emailHtmlSender.send("alokpatel.au@gmail.com", "ExcelWireless Order Conformation", "template-1", context);
 
         return false;
     }
