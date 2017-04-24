@@ -694,9 +694,9 @@ public class SQLQueries {
     //done
     public String getSalesCategoryDetails = " SELECT  c.CATEGORY_NAME as COMMON_NAME ,  \n" +
             " \n" +
-            "                        sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,   \n" +
-            "                        sum(t.QUANTITY) QUANTITY,   \n" +
-            "                        sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX,  \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,   \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY,   \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX,  \n" +
             "                        sum( \n" +
             "                        CASE \n" +
             "                        WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
@@ -704,21 +704,24 @@ public class SQLQueries {
             "                        WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
             "                        ELSE 0.0\n" +
             "                        END )PROFIT,   \n" +
-            "                        sum(t.DISCOUNT) DISCOUNT,   \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,   \n" +
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE   \n" +
             "                        FROM transaction_line_item t, category c, product p   \n" +
             "                        WHERE t.PRODUCT_NO = p.PRODUCT_NO  AND c.CATEGORY_ID = p.CATEGORY_ID AND t.DATE   \n" +
             "                        BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' group by c.CATEGORY_NAME";
 
     public String getSalesVendorDetails = " SELECT v.VENDOR_NAME as COMMON_NAME,  \n" +
-            "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
-            "            sum(t.QUANTITY) QUANTITY,  \n" +
-            "            sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX, \n" +
-            "            sum(t.DISCOUNT) DISCOUNT,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX, \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,  \n" +
             "            avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE,  \n" +
             "            sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
-            "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT   \n" +
+            "            WHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            ELSE 0.0\n" +
+            "            END )PROFIT   \n" +
             "            FROM transaction_line_item t, vendor v, product p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO   \n" +
             "            AND v.VENDOR_ID = p.VENDOR_ID  \n" +
@@ -727,14 +730,17 @@ public class SQLQueries {
             "            group by v.VENDOR_NAME ";
 
     public String getSalesBrandDetails = "   SELECT  b.BRAND_NAME as COMMON_NAME,  \n" +
-            "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
-            "            sum(t.QUANTITY) QUANTITY,  \n" +
-            "            sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX, \n" +
-            "            sum(t.DISCOUNT) DISCOUNT,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX, \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,  \n" +
             "            avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE,  \n" +
             "            sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
-            "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT  \n" +
+            "            WHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            ELSE 0.0\n" +
+            "            END )PROFIT   \n" +
             "            FROM transaction_line_item t, brand b, product p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  \n" +
             "            AND b.BRAND_ID = p.BRAND_ID  \n" +
@@ -743,14 +749,17 @@ public class SQLQueries {
             "            group by b.BRAND_NAME ";
 
     public String getSalesProductDetails = "       SELECT p.DESCRIPTION as COMMON_NAME,  \n" +
-            "            sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
-            "            sum(t.QUANTITY) QUANTITY,  \n" +
-            "            sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX, \n" +
-            "            sum(t.DISCOUNT) DISCOUNT,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY,  \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX, \n" +
+            "            sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,  \n" +
             "            avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE,  \n" +
-            "\t\t\tsum(\n" +
+            "            sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
-            "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT \n" +
+            "            WHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            ELSE 0.0\n" +
+            "            END )PROFIT   \n" +
             "            FROM transaction_line_item t, product p  \n" +
             "            WHERE t.PRODUCT_NO = p.PRODUCT_NO  \n" +
             "            AND t.DATE  \n" +
@@ -759,14 +768,17 @@ public class SQLQueries {
 
     //Need to fix THIS QUERY
     public String getSalesbyCustomer = "            SELECT  c.FIRST_NAME as COMMON_NAME , \n" +
-            "\t\t\t\t\t\tsum(TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL,  \n" +
-            "                        sum(t.QUANTITY) QUANTITY,  \n" +
-            "                        sum(TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE) TAX,  \n" +
-            "                        sum(t.DISCOUNT) DISCOUNT,  \n" +
+            "\t\t\t\t\t\tsum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,  \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY,  \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX,  \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,  \n" +
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE,  \n" +
-            "                        sum(\n" +
+            "            sum(\n" +
             "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
-            "            ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT \n" +
+            "            WHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            ELSE 0.0\n" +
+            "            END )PROFIT   \n" +
             "                        FROM transaction_line_item t, customer c,  \n" +
             "                        transaction l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
             "                        AND c.PHONE_NO = l.CUSTOMER_PHONENO  \n" +
@@ -775,13 +787,16 @@ public class SQLQueries {
 
     //NEED TI FIX THIS QUERY TOO..
     public String getSalesByUser = "      SELECT  u.USERNAME as COMMON_NAME, \n" +
-            "                        Sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX) SALESTOTAL, \n" +
-            "                        sum(t.QUANTITY) QUANTITY, \n" +
-            "                        sum(t.TOTAL_PRODUCT_PRICE_WITH_TAX - t.TOTALPRODUCTPRICE) TAX, \n" +
-            "                        sum(\n" +
-            "                        CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
-            "                        ELSE (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY END )PROFIT, \n" +
-            "                        sum(t.DISCOUNT) DISCOUNT, \n" +
+            "                        Sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL, \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY, \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX, \n" +
+            "            sum(\n" +
+            "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
+            "            WHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "            ELSE 0.0\n" +
+            "            END )PROFIT,   \n" +
+            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT, \n" +
             "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE \n" +
             "                        FROM transaction_line_item t, user u, transaction l  \n" +
             "                        WHERE u.USER_ID = l.USER_ID AND t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
