@@ -31,7 +31,7 @@
 					<column name="" key="" datatype="" width="30%">
 						<cell ng-non-bindable>
 							<span class="inline-vertical">
-								<a ng-click="scope.navigateToProduct()" style="cursor:pointer;">ViewProducts</a>
+								<a ng-click="scope.navigateToProduct(row.categoryId)" style="cursor:pointer;">ViewProducts</a>
 							</span>
 							<span ng-if="row.categoryId != 10 && row.categoryId !=1 && row.categoryId !=2 && row.categoryId !=3 " class="glyphicon glyphicon-pencil padding-left-10" aria-hidden="true" style="cursor:pointer;" ng-click="scope.editCategory(row)"></span>
 							<span ng-if="row.categoryId != 10 && row.categoryId !=1 && row.categoryId != 2 && row.categoryId !=3" class="glyphicon glyphicon-trash padding-left-10" aria-hidden="true" style="cursor:pointer;" ng-click="scope.deleteCategory(row.categoryId)"></span>

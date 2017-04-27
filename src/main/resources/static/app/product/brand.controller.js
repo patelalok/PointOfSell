@@ -28,8 +28,9 @@
 			}
 		};
 		
-		$scope.navigateToProduct = function()
+		$scope.navigateToProduct = function(id)
 		{
+			GlobalVariable.fromBrandId = id;
 			$state.go('productmain');
 		};
 

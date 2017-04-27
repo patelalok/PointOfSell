@@ -32,8 +32,9 @@
             }
         };
 
-        $scope.navigateToProduct = function()
+        $scope.navigateToProduct = function(id)
         {
+            GlobalVariable.fromModelId = id;
             $state.go('productmain');
         };
         $scope.openAddModalPopup = function()

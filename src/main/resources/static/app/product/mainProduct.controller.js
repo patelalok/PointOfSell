@@ -48,8 +48,8 @@
 				if ($scope.isAsc) {
 					$scope.isAsc = false;
 				} else {
-					$scope.isAsc = true;$scope
-				}$scope
+					$scope.isAsc = true;
+				}
 			}
 		};
 		
@@ -63,11 +63,33 @@
 				{
 				$scope.bType = '';
 				}
+			else if($scope.bType != null && $scope.bType != '')
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{brandId:$scope.bType},true);
+			}
 			if($scope.cType == null)
 				$scope.cType= '';
-			if($scope.bType == null)
-				$scope.bType= '';
-				
+
+			else if($scope.cType != null && $scope.cType != '')
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{categoryId:$scope.cType},true);
+			}
+			if($scope.vType == null)
+				$scope.vType= '';
+			else if($scope.vType != null && $scope.vType != '')
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{vendorId:$scope.vType},true);
+			}
+
+			if($scope.mType == null)
+				$scope.mType= '';
+			else if($scope.mType != null && $scope.mType != '')
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{modelId:$scope.mType},true);
+			}
+
+				if($scope.vType == '' && $scope.bType == '' && $scope.cType == '' && $scope.mType == '')
+					$scope.getProductDtls = GlobalVariable.getProducts;
 		};
 		$scope.checkValueProduct = function()
 		{
@@ -76,6 +98,9 @@
 				$scope.bType = '';
 				$scope.cType = '';
 				$scope.bType = '';
+				$scope.mType = '';
+				$scope.getProductDtls = GlobalVariable.getProducts;
+
 			}
 		};
 		$scope.navigateToSales = function(productId,id)
@@ -119,15 +144,40 @@
 			getProductDetails.getBrandDetails($scope.getBDetails);
 			if(GlobalVariable.getCategory== undefined)
 			getProductDetails.getCategoryDetails($scope.getCtDetails);
-
+			if(GlobalVariable.getModelDtls == undefined)
+				getProductDetails.getModelDetails($scope.getModelDetails);
 			/*$timeout(function() {
 				$scope.closeBootstrapAlert();
 			}, 9000);*/
 
-
+			if(GlobalVariable.fromCategoryId)
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{categoryId:GlobalVariable.fromCategoryId},true);
+				GlobalVariable.fromCategoryId = ''
+			}
+			if(GlobalVariable.fromBrandId)
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{brandId:GlobalVariable.fromBrandId},true);
+				GlobalVariable.fromCategoryId = ''
+			}
+			if(GlobalVariable.fromVendorId)
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{vendorId:GlobalVariable.fromVendorId},true);
+				GlobalVariable.fromCategoryId = ''
+			}
+			if(GlobalVariable.fromModelId)
+			{
+				$scope.getProductDtls = $filter('filter')(GlobalVariable.getProducts,{modelId:GlobalVariable.fromModelId},true);
+				GlobalVariable.fromCategoryId = ''
+			}
 			
 				
 		}
+		$scope.getModelDetails = function(response)
+		{
+			$scope.modelOptions = response;
+			GlobalVariable.getModelDtls = response;
+		};
 		$scope.getVDetails = function(response)
 		{
 			$scope.vendorOptions = response;
@@ -160,6 +210,7 @@
 			$scope.categoryOptions = GlobalVariable.getCategory;
 			$scope.vendorOptions = GlobalVariable.getVendors;
 			$scope.getProductDtls = GlobalVariable.getProducts;
+			$scope.modelOptions = GlobalVariable.getModelDtls;
 			for(var i=0;i<$scope.getProductDtls.length;i++)
 			{
 				$scope.showEditStock[i]=true;

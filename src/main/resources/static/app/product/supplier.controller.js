@@ -32,8 +32,9 @@ $rootScope.closeBootstrapAlert = function()
 			}
 		};
 		
-		$scope.navigateToProduct = function()
+		$scope.navigateToProduct = function(id)
 		{
+			GlobalVariable.fromCategoryId = id;
 			$state.go('productmain');
 		};
 		$scope.openAddPopup = function()
