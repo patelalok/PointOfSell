@@ -122,7 +122,7 @@
 				</tfoot>
 				<tbody >
 				<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
-				<tr data-ng-repeat="row in getProductDtls |  limitTo:barLimit">
+				<tr data-ng-repeat="row in getProductDtls | filter:prodName | limitTo:barLimit">
 					<td class="wrapword" style="width:8%;"><span>{{row.productNo}}</span></td>
 					<td class="wrapword" style="width:42%;"><span>{{row.description}}</span></td>
 					<td class="wrapword" style="width:7%;"><span>{{row.categoryName}}</span></td>
