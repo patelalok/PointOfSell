@@ -413,6 +413,8 @@ public class SalesManager {
 
         List<ReceiptDto> receiptDtoList =  getReceiptDetails(receiptId);
 
+        String email = "alokpatel.au@gmail.com";
+
         if(null != receiptDtoList && null != receiptDtoList.get(0).getCustomerDtosList() && null != receiptDtoList.get(0).getTransactionDtoList() && null != receiptDtoList.get(0).getTransactionLineItemDtoList())
         {
 
@@ -430,12 +432,18 @@ public class SalesManager {
 
             //setting transaction details
             context.setVariable("subtotal",receiptDtoList.get(0).getTransactionDtoList().get(0).getSubTotal());
-            context.setVariable("shipping","25");//TODO need to figure out this problem
+            context.setVariable("shipping","00");//TODO need to figure out this problem
             context.setVariable("quantity", receiptDtoList.get(0).getTransactionDtoList().get(0).getTotalQuantity());
             context.setVariable("grandTotal",receiptDtoList.get(0).getTransactionDtoList().get(0).getTotalAmount());
 
+            if( null != receiptDtoList.get(0).getCustomerDtosList().get(0).getEmail())
+            {
+                email = receiptDtoList.get(0).getCustomerDtosList().get(0).getEmail();
+            }
+
         }
-        EmailStatus emailStatus = emailHtmlSender.send("alokpatel.au@gmail.com", "ExcelWireless Order Conformation", "template-1", context);
+
+        EmailStatus emailStatus = emailHtmlSender.send(email, "ExcelWireless Order Details", "template-1", context);
 
         return false;
     }
