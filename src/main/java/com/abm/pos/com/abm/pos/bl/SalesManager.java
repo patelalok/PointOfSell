@@ -434,7 +434,13 @@ public class SalesManager {
             context.setVariable("subtotal",receiptDtoList.get(0).getTransactionDtoList().get(0).getSubTotal());
             context.setVariable("shipping","00");//TODO need to figure out this problem
             context.setVariable("quantity", receiptDtoList.get(0).getTransactionDtoList().get(0).getTotalQuantity());
+            context.setVariable("discount", receiptDtoList.get(0).getTransactionDtoList().get(0).getDiscount());
+            context.setVariable("previousBalance", receiptDtoList.get(0).getTransactionDtoList().get(0).getPrevBalance());
+            context.setVariable("salesTax", receiptDtoList.get(0).getTransactionDtoList().get(0).getTax());
             context.setVariable("grandTotal",receiptDtoList.get(0).getTransactionDtoList().get(0).getTotalAmount());
+            context.setVariable("balance",receiptDtoList.get(0).getTransactionDtoList().get(0).getBalance());
+
+
 
             if( null != receiptDtoList.get(0).getCustomerDtosList().get(0).getEmail())
             {

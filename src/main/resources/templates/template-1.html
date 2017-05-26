@@ -31,15 +31,17 @@
             <th>SKU</th>
             <th>Quantity</th>
             <th>Retail</th>
+            <th>RetailWithDis</th>
             <th>Total</th>
         </tr>
 
         <tr th:each="lineItem : ${lineItem}">
 
             <td th:text="${lineItem.ProductDescription}">ProductDescription</td>
-            <td th:text="${lineItem.productNumber}">productNumber</td>
-            <td th:text="${lineItem.quantity}">quantity</td>
-            <td th:text="${lineItem.retail}">productNumber</td>
+            <td th:text="${lineItem.productNumber}">ProductNumber</td>
+            <td th:text="${lineItem.quantity}">Quantity</td>
+            <td th:text="${lineItem.retail}">Retail</td>
+            <td th:text="${lineItem.retailWithDis}">productNumber</td>
             <td th:text="${lineItem.totalProductPrice}">quantity</td>
 
         </tr>
@@ -56,7 +58,15 @@
     <br />
     <span>Quantity:</span> <span th:text="${quantity}">quantity</span>
     <br />
+    <span>Discount:</span> <span th:text="${discount}">quantity</span>
+    <br />
+    <span>Previous Balance:$</span> <span th:text="${previousBalance}"></span>
+    <br />
+    <span>Sales Tax:$</span> <span th:text="${salesTax}"></span>
+    <br />
     <span>GrandTotal:$</span>  <span th:text="${grandTotal}">grandTotal</span>
+    <br />
+    <span>Balance:$</span>  <span th:text="${balance}">grandTotal</span>
 
 </div>
 
