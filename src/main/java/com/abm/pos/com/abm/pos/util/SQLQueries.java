@@ -252,7 +252,6 @@ public class SQLQueries {
                     "QUANTITY = ?, " +
                     "MIN_PRODUCT = ?, " +
                     "RETURN_RULE = ?, " +
-                    "IMAGE = ?, " +
                     //"IMEI_NUMBER = ?, " +
                     "TAX = ?, " +
                     "IS_RELATED_PRODUCT = ?, " +
