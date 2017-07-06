@@ -32,7 +32,6 @@ public class ModelController {
     public void editModel(@RequestBody ModelDto modelDto)
     {
         modelManager.editModelFromDB(modelDto);
-
     }
 
     @RequestMapping(value = "/getModel",method = RequestMethod.GET)

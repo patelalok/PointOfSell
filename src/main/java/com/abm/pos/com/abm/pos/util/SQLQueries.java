@@ -235,6 +235,8 @@ public class SQLQueries {
                     "(PRODUCT_NO,IMEI_NO,COST,RETAIL,MARKUP,LAST_UPDATED_TIME) " +
                     "VALUES (?,?,?,?,?,?)";
 
+    public String addOrderDetails = "INSERT INTO order_details (ORDER_ID, PRODUCT_NO,COST_PRICE, RETAIL_PRICE, QUANTITY) VALUES (?,?,?,?,?)";
+
 
     //SQL QUERY FOR EDIT  INTO DATABASE
 
@@ -1096,4 +1098,12 @@ public class SQLQueries {
             "WHERE TRANSACTION_COMP_ID = ?";
     public String checkTransactionLineItemExistence = "SELECT count(*) FROM transaction_line_item WHERE TRANSACTION_COMP_ID = ?";
     public String deleteTransactionLineItem = "DELETE FROM transaction_line_item WHERE TRANSACTION_COMP_ID = ?";
+
+    public String getOrderDetailsById = "SELECT * FROM order_details where ORDER_ID = ?";
+    public String addOrder = "INSERT INTO main_order (ORDER_ID, LASTUPDATED_ORDER_DATE, ORDER_CREATED_BY, VENDOR_NAME, VENDOR_ID) VALUES (?,?,?,?,?)" ;
+
+    public String getLastOrderId = "SELECT max(CAST(ORDER_ID AS SIGNED)) FROM main_order";
+
+    public String UpdateQuantityByOrderDetails = "UPDATE product SET QUANTITY = ?, COST_PRICE = ?, RETAIL_PRICE = ? WHERE PRODUCT_NO = ?";
+    public String getAllOrdersByDate = "SELECT * FROM main_order WHERE LASTUPDATED_ORDER_DATE BETWEEN ? AND ?";
 }

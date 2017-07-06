@@ -5,10 +5,7 @@ import com.abm.pos.com.abm.pos.dto.ReceiptDto;
 import com.abm.pos.com.abm.pos.dto.WeekDto;
 import com.abm.pos.com.abm.pos.dto.reports.*;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -26,6 +23,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by asp5045 on 7/4/16.
@@ -685,9 +683,8 @@ public class ReportManager {
     }
 
     public byte[] printInventorySummaryByCommonNames(int reportNo) throws DocumentException {
-
         Document doc = new Document(PageSize.A4);
-        initializeFontsForCommonReports();
+
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 

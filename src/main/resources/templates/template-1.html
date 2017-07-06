@@ -3,6 +3,27 @@
 <head>
     <title th:remove="all">Order Confirmation</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
 </head>
 <body>
 <div>
@@ -24,10 +45,10 @@
     <h3 th:text="${phoneNo}">phoneNo</h3>
 </div>
 <hr />
-<div>
-    <table>
+<div style="overflow-x:auto;">
+    <table class="table table-bordered table-striped">
         <tr>
-            <th>Description</th>
+            <th style="width: 00px">Description</th>
             <th>SKU</th>
             <th>Quantity</th>
             <th>Retail</th>
@@ -50,23 +71,23 @@
 </div>
 
 <hr />
-<div>
+<div style="align: right; text-align: right; ">
 
-    <span>Subtotal:$</span> <span th:text="${subtotal}"></span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px;">Subtotal: $</span> <span th:text="${subtotal}" style="display: inline-block; margin-top: 5px; font-size: 20px;"></span>
     <br />
-    <span>Shipping:$</span> <span th:text="${shipping}">Subtotal:</span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px;">Shipping: $</span> <span th:text="${shipping}" style="display: inline-block; margin-top: 5px; font-size: 20px;"></span>
     <br />
-    <span>Quantity:</span> <span th:text="${quantity}">quantity</span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px;">Quantity:  </span> <span th:text="${quantity}" style="display: inline-block; margin-top: 5px; font-size: 20px;">quantity</span>
     <br />
-    <span>Discount:</span> <span th:text="${discount}">quantity</span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px;">Discount: $</span> <span th:text="${discount}" style="display: inline-block; margin-top: 5px; font-size: 20px;">quantity</span>
     <br />
-    <span>Previous Balance:$</span> <span th:text="${previousBalance}"></span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px;">Previous Balance: $</span> <span th:text="${previousBalance}" style="display: inline-block; margin-top: 5px; font-size: 20px;"></span>
     <br />
-    <span>Sales Tax:$</span> <span th:text="${salesTax}"></span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px;">Sales Tax: $</span> <span th:text="${salesTax}" style="display: inline-block; margin-top: 5px; font-size: 20px;"></span>
     <br />
-    <span>GrandTotal:$</span>  <span th:text="${grandTotal}">grandTotal</span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px; color: #4CAF50;">GrandTotal: $</span>  <span th:text="${grandTotal}" style="display: inline-block; margin-top: 5px; font-size: 20px; color: #4CAF50;">grandTotal</span>
     <br />
-    <span>Balance:$</span>  <span th:text="${balance}">grandTotal</span>
+    <span style="display: inline-block; margin-top: 5px; font-size: 20px; color: red;">Balance: $</span>  <span th:text="${balance}" style="display: inline-block; margin-top: 5px; font-size: 20px; color: red;">grandTotal</span>
 
 </div>
 
