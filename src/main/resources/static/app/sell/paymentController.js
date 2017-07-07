@@ -177,7 +177,8 @@
                 "balance":$scope.balanceAmount,
 				"receiptNote":GlobalVariable.receiptNotes,
 				"transactionNote":GlobalVariable.transNotes,
-				"customerName":GlobalVariable.customerNameOnSearch
+				"customerName":GlobalVariable.customerNameOnSearch,
+				"notes":$rootScope.customerNotes
 
 			};
 			request = JSON.stringify(request);

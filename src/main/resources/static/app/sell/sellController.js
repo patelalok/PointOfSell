@@ -1052,13 +1052,15 @@
 		function onBalanceSuccess(response) {
 			if (response !== null && response !== ''
 				&& parseFloat(response) !== 0) {
-				GlobalVariable.balanceRemaining= parseFloat(response);
+				GlobalVariable.balanceRemaining= parseFloat(response.balance);
 				// GlobalVariable.remainingBalanceAmount =
 				// GlobalVariable.balanceRemaining;
 				$rootScope.productTotal = GlobalVariable.balanceRemaining;
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
 				$rootScope.totalPayment = GlobalVariable.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
+				$rootScope.customerNotes=response.notes;
+				GlobalVariable.customerNotes = $rootScope.customerNotes;
 			} else {
 				GlobalVariable.balanceRemaining = parseFloat(response);
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;

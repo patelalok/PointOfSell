@@ -130,6 +130,9 @@
 							<span>Discount</span>
 						</th>
 						<th style="font-weight:bold;" class="wrapword">
+							<span>Sub Total</span>
+						</th>
+						<th style="font-weight:bold;" class="wrapword">
 							<span>Total Amount</span>
 						</th>
 						<th style="font-weight:bold;" class="wrapword">
@@ -155,13 +158,14 @@
 					<tbody >
 					<!-- data-ng-class="{'expiredRow' : row.expiryStatus != undefined}" -->
 					<tr data-ng-repeat="row in salesHistory | filter:filterHistory| limitTo:barLimit" >
-						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionDate}}</span></td>
-						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionTime}}</span></td>
-						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.customerPhoneNo}}</span></td>
+						<td class="wrapword" style="width:8%;" ng-click="showTransNotes(row)"><span>{{row.transactionDate}}</span></td>
+						<td class="wrapword" style="width:8%;" ng-click="showTransNotes(row)"><span>{{row.transactionTime}}</span></td>
+						<td class="wrapword" style="width:9%;" ng-click="showTransNotes(row)"><span>{{row.customerPhoneNo}}</span></td>
 						<td class="wrapword" style="width:15%;" ng-click="showTransNotes(row)"><span>{{row.customerName}}</span></td>
 						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.username}}</span></td>
 						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.tax}}</span></td>
 						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.discount}}</span></td>
+						<td class="wrapword" style="width:5%;" ng-click="showTransNotes(row)"><span>{{row.subTotal}}</span></td>
 						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.totalAmount}}</span></td>
 						<td class="wrapword" style="width:10%;" ng-click="showTransNotes(row)"><span>{{row.transactionCompId}}</span></td>
 						<td class="wrapword" style="width:5%;"><span ng-if="row.status == 'r'">return</span>
