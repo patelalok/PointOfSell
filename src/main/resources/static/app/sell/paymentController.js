@@ -178,7 +178,7 @@
 				"receiptNote":GlobalVariable.receiptNotes,
 				"transactionNote":GlobalVariable.transNotes,
 				"customerName":GlobalVariable.customerNameOnSearch,
-				"notes":$rootScope.customerNotes
+				"notes":GlobalVariable.customerNotes
 
 			};
 			request = JSON.stringify(request);

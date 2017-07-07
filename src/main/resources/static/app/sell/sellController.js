@@ -1059,8 +1059,8 @@
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
 				$rootScope.totalPayment = GlobalVariable.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
-				$rootScope.customerNotes=response.notes;
-				GlobalVariable.customerNotes = $rootScope.customerNotes;
+				$scope.custNotes=response.notes;
+				GlobalVariable.customerNotes = $scope.custNotes;
 			} else {
 				GlobalVariable.balanceRemaining = parseFloat(response);
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
@@ -1070,6 +1070,11 @@
 		}
 		function onBalanceError(response) {
 
+		}
+
+		$scope.changeNotes = function()
+		{
+            GlobalVariable.customerNotes = $scope.custNotes;
 		}
 
 		$scope.searchCustomerByFirst = function() {
