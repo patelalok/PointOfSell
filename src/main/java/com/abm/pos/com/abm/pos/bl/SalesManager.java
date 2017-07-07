@@ -669,6 +669,7 @@ public class SalesManager {
             transaction.setTotalAmount(rs.getDouble("TOTAL_AMOUNT"));
             transaction.setTax(rs.getDouble("TAX_AMOUNT"));
             transaction.setDiscount(rs.getDouble("DISCOUNT_AMOUNT"));
+            transaction.setSubTotal(rs.getDouble("SUBTOTAL"));
             transaction.setCustomerPhoneNo(rs.getString("CUSTOMER_PHONENO"));
             transaction.setCustomerName(rs.getString("FIRST_NAME_LAST_NAME"));
             transaction.setUsername(rs.getString("USERNAME"));

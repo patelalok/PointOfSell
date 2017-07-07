@@ -455,7 +455,7 @@ public class SQLQueries {
             "TRANSACTION_COMP_ID," +
             "TRANSACTION_DATE, \n" +
             "TOTAL_AMOUNT,\n" +
-            "TAX_AMOUNT, \n" +
+            "TAX_AMOUNT, SUBTOTAL,\n" +
             "DISCOUNT_AMOUNT, \n" +
             "CUSTOMER_PHONENO,\n" +
             "STATUS,\n" +
