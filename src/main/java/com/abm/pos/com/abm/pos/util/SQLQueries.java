@@ -836,9 +836,9 @@ public class SQLQueries {
     public String getInventoryByBrand = "SELECT b.BRAND_NAME as COMMON_NAME, count(p.PRODUCT_NO) NOOFPRODUCTS, sum((p.COST_PRICE)* p.QUANTITY) COST, sum((p.RETAIL_PRICE)* p.QUANTITY) RETAIL, avg(p.MARKUP) MARGIN FROM product p, brand b WHERE p.BRAND_ID = b.BRAND_ID GROUP BY b.BRAND_NAME";
 
 
-    public String getCustomerBalance = "SELECT BALANCE FROM customer WHERE PHONE_NO = ?";
+    public String getCustomerBalanceAndNotes = "SELECT BALANCE,CUSTOMER_NOTE FROM customer WHERE PHONE_NO = ?";
 
-    public String updateBalanceToCustomerProfile = "UPDATE customer SET BALANCE = ?, BALANCE_LAST_UPDATE_DATE = ? WHERE PHONE_NO = ? ";
+    public String updateBalanceToCustomerProfile = "UPDATE customer SET BALANCE = ?, BALANCE_LAST_UPDATE_DATE = ?, CUSTOMER_NOTE = ? WHERE PHONE_NO = ? ";
 
     public String getTransactionDetailsForReceiptWithoutCustomer = "SELECT * FROM transaction WHERE TRANSACTION_COMP_ID = ?";
 

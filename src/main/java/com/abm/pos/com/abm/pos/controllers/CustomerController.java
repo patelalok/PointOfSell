@@ -2,6 +2,7 @@ package com.abm.pos.com.abm.pos.controllers;
 
 import com.abm.pos.com.abm.pos.bl.CustomerManager;
 import com.abm.pos.com.abm.pos.dto.CustomerDto;
+import com.abm.pos.com.abm.pos.dto.CustomerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/getCustomerBalance", method = RequestMethod.GET, produces = "application/json")
-    public String getCustomerBalance(@RequestParam String phoneNo)
+    public CustomerResponse getCustomerBalance(@RequestParam String phoneNo)
     {
         return customerManager.getCustomerBalance(phoneNo);
     }

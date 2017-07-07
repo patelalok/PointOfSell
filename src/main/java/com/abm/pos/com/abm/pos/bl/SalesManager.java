@@ -141,6 +141,7 @@ public class SalesManager {
                 jdbcTemplate.update(sqlQuery.updateBalanceToCustomerProfile,
                         transactionDto.getBalance(),
                         transactionDto.getTransactionDate(),
+                        transactionDto.getNotes(),
                         transactionDto.getCustomerPhoneNo());
                 System.out.println("Customer Balance Added Successfully");
             }

@@ -35,6 +35,7 @@ public class TransactionDto {
 
     private String receiptNote;
     private String transactionNote;
+    private String notes;
 
     public int getTransactionCompId() {
         return transactionCompId;
@@ -242,5 +243,13 @@ public class TransactionDto {
 
     public void setTransactionNote(String transactionNote) {
         this.transactionNote = transactionNote;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

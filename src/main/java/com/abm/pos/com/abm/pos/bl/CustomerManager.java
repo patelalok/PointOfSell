@@ -1,6 +1,7 @@
 package com.abm.pos.com.abm.pos.bl;
 
 import com.abm.pos.com.abm.pos.dto.CustomerDto;
+import com.abm.pos.com.abm.pos.dto.CustomerResponse;
 import com.abm.pos.com.abm.pos.dto.MultyAddProductDto;
 import com.abm.pos.com.abm.pos.util.SQLQueries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -182,18 +183,36 @@ public class CustomerManager {
 
 
 
-    public String getCustomerBalance(String phoneNo) {
-        String balance = null;
+    public CustomerResponse getCustomerBalance(String phoneNo) {
+
+
+        CustomerResponse customerResponses = new CustomerResponse();
         try
         {
-            balance  = (jdbcTemplate.queryForObject(sqlQuery.getCustomerBalance,new Object[] {phoneNo}, String.class));
+            customerResponses  = (jdbcTemplate.queryForObject(sqlQuery.getCustomerBalanceAndNotes, new CustomerResponseMapper(), phoneNo));
         }
         catch (Exception e)
         {
-
+            System.out.println(e);
         }
-        return balance;
+        return customerResponses;
     }
+
+    private final class CustomerResponseMapper implements RowMapper<CustomerResponse>
+    {
+
+        @Override
+        public CustomerResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            CustomerResponse customerResponse = new CustomerResponse();
+
+            customerResponse.setBalance(rs.getString("BALANCE"));
+            customerResponse.setNotes(rs.getString("CUSTOMER_NOTE"));
+
+            return customerResponse;
+        }
+    }
+
 
     public int deleteCustomerToDB(int custId) {
 
