@@ -274,6 +274,7 @@
 			$rootScope.subTotal = 0;
 			$rootScope.productTotal = 0;
 			$rootScope.customerPhone = '';
+            GlobalVariable.customerNotes = '';
 			GlobalVariable.addProductClicked = false;
 			GlobalVariable.userPhone ='';
 			GlobalVariable.userFName = '';

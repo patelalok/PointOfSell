@@ -21,6 +21,7 @@
 		GlobalVariable.customerFound = false;
 		$scope.showEditableFields = false;
 		$scope.IMEIProdctFound = false;
+		$rootScope.custNotes = '';
 		//GlobalVariable.addProductClicked= false;
 
 		var i = 0;
@@ -1059,8 +1060,8 @@
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
 				$rootScope.totalPayment = GlobalVariable.balanceRemaining;
 				GlobalVariable.checkOuttotal = $rootScope.totalPayment;
-				$scope.custNotes=response.notes;
-				GlobalVariable.customerNotes = $scope.custNotes;
+
+				GlobalVariable.customerNotes = response.notes;
 			} else {
 				GlobalVariable.balanceRemaining = parseFloat(response);
 				GlobalVariable.custBalance = GlobalVariable.balanceRemaining;
@@ -1072,9 +1073,9 @@
 
 		}
 
-		$scope.changeNotes = function()
+		$scope.changeNotes = function(notes)
 		{
-            GlobalVariable.customerNotes = $scope.custNotes;
+            GlobalVariable.customerNotes =GlobalVariable.customerNotes;
 		}
 
 		$scope.searchCustomerByFirst = function() {
