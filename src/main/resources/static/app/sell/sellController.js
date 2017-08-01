@@ -941,6 +941,7 @@
 			$rootScope.printTranszipCode='';
 			$rootScope.printTransPhone='';
 			$rootScope.printTransCompany = '';
+			$rootScope.invoiceData = [];
 			if(response.length !==0)
 			{
 				if(GlobalVariable.receiptData[0].customerDtosList .length !== 0)
@@ -956,6 +957,36 @@
 					$scope.printTransCompany =GlobalVariable.receiptData[0].customerDtosList[0].companyName;
 
 				}
+
+				for(var i = 0 ; i < GlobalVariable.receiptData[0].transactionLineItemDtoList.length ; i++)
+				{
+						$rootScope.invoiceData.push({
+
+							"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].productNumber,
+							"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].productDescription,
+							"imeiNo":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].imeiNo,
+							"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].retail,
+							"discount":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].discount,
+							"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].totalProductPrice,
+							"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].quantity,
+							"totalProductPriceWithTax":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].totalProductPriceWithTax
+						});
+				}
+                $scope.subTotalInvoice = '';
+                $scope.subTotalInvoice = '';
+                $scope.totalDiscInvoice = '';
+                $scope.salesTaxInvoice= '';
+                $scope.totalQuantityInvoice='';
+                $scope.prevBalanceInvoice='';
+                $scope.productTotalInvoice='';
+
+				$scope.subTotalInvoice = GlobalVariable.receiptData[0].transactionDtoList[0].subTotal;
+				$scope.totalDiscInvoice=GlobalVariable.receiptData[0].transactionDtoList[0].discount;
+				$scope.salesTaxInvoice=GlobalVariable.receiptData[0].transactionDtoList[0].tax;
+				$scope.totalQuantityInvoice=GlobalVariable.receiptData[0].transactionDtoList[0].totalQuantity;
+				$scope.prevBalanceInvoice=GlobalVariable.receiptData[0].transactionDtoList[0].prevBalance;
+				$scope.productTotalInvoice=GlobalVariable.receiptData[0].transactionDtoList[0].totalAmount;
+
 			}
 
 			GlobalVariable.printInvoice = true;
@@ -1119,6 +1150,33 @@
 		}
 		function render() {
 
+            $scope.currentPageIndexArr = 0;
+            GlobalVariable.customerNameOnSearch= '';
+            if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '' && GlobalVariable.userPhone != undefined &&
+                GlobalVariable.userFName != undefined)
+            {
+                if (GlobalVariable.custTypeCd == 'Business') {
+                    GlobalVariable.selectTax = 'noTax';
+                    GlobalVariable.selectedTaxDrp = 'noTax';
+                }
+                else if (GlobalVariable.custTypeCd == 'Retail') {
+                    GlobalVariable.selectTax = 'default';
+                    GlobalVariable.selectedTaxDrp = 'default';
+                }
+                GlobalVariable.customerFound = true;
+                GlobalVariable.customerNameOnSearch = GlobalVariable.userFName;
+                GlobalVariable.regPhone1 = GlobalVariable.userPhone;
+                var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
+                    + GlobalVariable.regPhone1;
+                dataService.Get(url, onBalanceSuccess, onBalanceError,
+                    'application/json', 'application/json');
+                //$scope.prevBalance = GlobalVariable.balanceRemaining;
+            }
+            else
+            {
+                GlobalVariable.customerFound = false;
+            }
+
 			if (GlobalVariable.onlineSellProduct == true) {
 				for (var i = 0; i < GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList.length; i++) {
 					$rootScope.testData
@@ -1146,38 +1204,20 @@
 						});
 
 				}
+				if(GlobalVariable.getReturnSellDetails[0].customerDtosList.length > 0)
+				{
+                    GlobalVariable.customerNameOnSearch = GlobalVariable.getReturnSellDetails[0].customerDtosList[0].firstName + '' + GlobalVariable.getReturnSellDetails[0].customerDtosList[0].lastName;
+                    GlobalVariable.regPhone1 = GlobalVariable.getReturnSellDetails[0].customerDtosList[0].phoneNo;
+                    var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
+                        + GlobalVariable.regPhone1;
+                    dataService.Get(url, onBalanceSuccess, onBalanceError,
+                        'application/json', 'application/json');
+				}
 
 				$scope.loadCheckOutData();
 			}
 
 
-			$scope.currentPageIndexArr = 0;
-			GlobalVariable.customerNameOnSearch= '';
-
-			if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '' && GlobalVariable.userPhone != undefined &&
-				GlobalVariable.userFName != undefined)
-			{
-				if (GlobalVariable.custTypeCd == 'Business') {
-					GlobalVariable.selectTax = 'noTax';
-					GlobalVariable.selectedTaxDrp = 'noTax';
-				}
-				else if (GlobalVariable.custTypeCd == 'Retail') {
-					GlobalVariable.selectTax = 'default';
-					GlobalVariable.selectedTaxDrp = 'default';
-				}
-				GlobalVariable.customerFound = true;
-				GlobalVariable.customerNameOnSearch = GlobalVariable.userFName;
-				GlobalVariable.regPhone1 = GlobalVariable.userPhone;
-				var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
-					+ GlobalVariable.regPhone1;
-				dataService.Get(url, onBalanceSuccess, onBalanceError,
-					'application/json', 'application/json');
-				//$scope.prevBalance = GlobalVariable.balanceRemaining;
-			}
-			else
-			{
-				GlobalVariable.customerFound = false;
-			}
 			if(GlobalVariable.addProductClicked)
 			{
 				$rootScope.testData = GlobalVariable.onAddProduct;

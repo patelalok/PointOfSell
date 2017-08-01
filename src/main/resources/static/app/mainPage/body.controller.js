@@ -118,6 +118,30 @@
 		};
 		function onClockSuccess(response)
 		{
+            $rootScope.testData = [];
+            GlobalVariable.onlineSellProduct = false;
+
+
+            GlobalVariable.custTypeCd = '';
+            $rootScope.totalPayment = '0.00';
+            $rootScope.customerName = '';
+            $rootScope.regPhone = '';
+            $rootScope.customerNameOnSearch = '';
+            GlobalVariable.customerFound = false;
+            $rootScope.totalQuantity = 0;
+            $rootScope.subTotal = 0;
+            $rootScope.productTotal = 0;
+            $rootScope.customerPhone = '';
+            GlobalVariable.addProductClicked = false;
+            GlobalVariable.userPhone ='';
+            GlobalVariable.userFName = '';
+            GlobalVariable.customerNameOnSearch = '';
+            GlobalVariable.regPhone1 ='';
+            GlobalVariable.balanceRemaining = 0;
+            GlobalVariable.transId = '';
+            GlobalVariable.last4='';
+            GlobalVariable.sellIMEINumber = '';
+            GlobalVariable.selectTax = 'default';
 			$state.go('login');
 		}
 		function OnClockError(error)
