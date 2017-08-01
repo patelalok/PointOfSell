@@ -768,23 +768,24 @@ public class SQLQueries {
             "            group by p.DESCRIPTION";
 
     //Need to fix THIS QUERY
-    public String getSalesbyCustomer = "            SELECT  c.FIRST_NAME as COMMON_NAME , \n" +
-            "\t\t\t\t\t\tsum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,  \n" +
-            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY,  \n" +
-            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX,  \n" +
-            "                        sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,  \n" +
-            "                        avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE,  \n" +
-            "            sum(\n" +
-            "            CASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
-            "            WHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
-            "            WHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
-            "            ELSE 0.0\n" +
-            "            END )PROFIT   \n" +
-            "                        FROM transaction_line_item t, customer c,  \n" +
-            "                        transaction l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID  \n" +
-            "                        AND c.PHONE_NO = l.CUSTOMER_PHONENO  \n" +
-            "                        AND t.DATE BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w' " +
-            "                        group by c.FIRST_NAME";
+    public String getSalesbyCustomer = "" +
+            "SELECT  CONCAT(c.FIRST_NAME, ' ', c.LAST_NAME) as COMMON_NAME, \n" +
+            "sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.TOTAL_PRODUCT_PRICE_WITH_TAX END) SALESTOTAL,\n" +
+            "sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.QUANTITY END) QUANTITY, \n" +
+            "sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE  TOTAL_PRODUCT_PRICE_WITH_TAX - TOTALPRODUCTPRICE END) TAX,\n" +
+            "sum(CASE WHEN t.TRANSACTION_STATUS= 'o' THEN 0.0 ELSE t.DISCOUNT END) DISCOUNT,\n" +
+            "avg(t.TOTALPRODUCTPRICE) AVGTOTALPRODUCTPRICE,\n" +
+            "sum(\n" +
+            "\tCASE WHEN t.TRANSACTION_STATUS= 'c' THEN (t.RETAIL-t.COST-t.DISCOUNT/t.QUANTITY) * t.QUANTITY\n" +
+            "\tWHEN t.TRANSACTION_STATUS= 'r' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "\tWHEN t.TRANSACTION_STATUS= 'p' THEN (t.RETAIL-t.COST-t.DISCOUNT/-t.QUANTITY) * -t.QUANTITY\n" +
+            "\tELSE 0.0\n" +
+            "\tEND )PROFIT\n" +
+            "\t\t\tFROM transaction_line_item t, customer c,\n" +
+            "\t\t\ttransaction l WHERE t.TRANSACTION_COMP_ID = l.TRANSACTION_COMP_ID\n" +
+            "\t\t\tAND c.PHONE_NO = l.CUSTOMER_PHONENO\n" +
+            "\t\t\tAND t.DATE BETWEEN ? AND ? AND t.TRANSACTION_STATUS <> 'w'\n" +
+            "\t\t\tgroup by c.FIRST_NAME, c.LAST_NAME";
 
     //NEED TI FIX THIS QUERY TOO..
     public String getSalesByUser = "      SELECT  u.USERNAME as COMMON_NAME, \n" +
