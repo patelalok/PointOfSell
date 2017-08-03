@@ -1151,6 +1151,7 @@
 		function render() {
 
             $scope.currentPageIndexArr = 0;
+            GlobalVariable.selectTax = "default";
             GlobalVariable.customerNameOnSearch= '';
             if(GlobalVariable.userPhone !== '' && GlobalVariable.userFName !== '' && GlobalVariable.userPhone != undefined &&
                 GlobalVariable.userFName != undefined)
@@ -1176,6 +1177,12 @@
             {
                 GlobalVariable.customerFound = false;
             }
+
+            if(GlobalVariable.addProductClicked)
+            {
+                $rootScope.testData = GlobalVariable.onAddProduct;
+            }
+            getTaxDetails();
 
 			if (GlobalVariable.onlineSellProduct == true) {
 				for (var i = 0; i < GlobalVariable.getReturnSellDetails[0].transactionLineItemDtoList.length; i++) {
@@ -1206,6 +1213,19 @@
 				}
 				if(GlobalVariable.getReturnSellDetails[0].customerDtosList.length > 0)
 				{
+					if(GlobalVariable.getReturnSellDetails[0].customerDtosList[0].customerType == "Business")
+					{
+                        GlobalVariable.selectTax = 'noTax';
+                        GlobalVariable.selectedTaxDrp = 'noTax';
+
+					}
+                    else if(GlobalVariable.getReturnSellDetails[0].customerDtosList[0].customerType == "Retail")
+                    {
+                        GlobalVariable.selectTax = 'default';
+                        GlobalVariable.selectedTaxDrp = 'default';
+                    }
+                    $rootScope.customerPhone = GlobalVariable.getReturnSellDetails[0].customerDtosList[0].phoneNo;
+                    GlobalVariable.customerFound = true;
                     GlobalVariable.customerNameOnSearch = GlobalVariable.getReturnSellDetails[0].customerDtosList[0].firstName + '' + GlobalVariable.getReturnSellDetails[0].customerDtosList[0].lastName;
                     GlobalVariable.regPhone1 = GlobalVariable.getReturnSellDetails[0].customerDtosList[0].phoneNo;
                     var url = GlobalConstants.URLCONSTANTS+'getCustomerBalance?phoneNo='
@@ -1214,15 +1234,12 @@
                         'application/json', 'application/json');
 				}
 
+
 				$scope.loadCheckOutData();
 			}
 
 
-			if(GlobalVariable.addProductClicked)
-			{
-				$rootScope.testData = GlobalVariable.onAddProduct;
-			}
-			getTaxDetails();
+
 
 			if(GlobalVariable.getProducts ==  undefined || GlobalVariable.getProducts == null)
 			{
@@ -1276,7 +1293,7 @@
 		function onGetTaxSuccess(response) {
 			$scope.totalDefaultTax = response[0].tax;
 
-			GlobalVariable.selectTax = "default";
+
 			$scope.loadCheckOutData();
 		}
 		$scope.clearValue = function(value)
