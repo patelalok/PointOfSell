@@ -268,7 +268,7 @@ public class SalesManager {
 
             if(result !=0)
             {
-                insertTransactionLineItem(transactionLineItemDto,phoneNo);
+               // insertTransactionLineItem(transactionLineItemDto,phoneNo);
                 //Adding customer's product price to give customer same price from last transaction.
                 addProductPriceByCustomer(transactionLineItemDto, phoneNo);
             }
