@@ -962,14 +962,14 @@
 				{
 						$rootScope.invoiceData.push({
 
-							"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].productNumber,
-							"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].productDescription,
-							"imeiNo":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].imeiNo,
-							"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].retail,
-							"discount":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].discount,
-							"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].totalProductPrice,
-							"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].quantity,
-							"totalProductPriceWithTax":GlobalVariable.receiptData[0].transactionLineItemDtoList[0].totalProductPriceWithTax
+							"productNumber":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productNumber,
+							"productDescription":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].productDescription,
+							"imeiNo":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].imeiNo,
+							"retail":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].retail,
+							"discount":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].discount,
+							"totalProductPrice":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPrice,
+							"quantity":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].quantity,
+							"totalProductPriceWithTax":GlobalVariable.receiptData[0].transactionLineItemDtoList[i].totalProductPriceWithTax
 						});
 				}
                 $scope.subTotalInvoice = '';

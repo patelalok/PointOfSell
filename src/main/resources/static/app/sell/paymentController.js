@@ -13,6 +13,10 @@
 		$scope.paidAmountDebit =0;
 		$scope.paidAmountCheck =0;
 		$scope.restrictCharacter=restrictCharacter;
+		var debitValue =0;
+        var creditValue =0;
+        var cashValue =0;
+        var checkValue =0 ;
 
 		$scope.GlobalVariable = GlobalVariable;
 		$rootScope.modifiedTransData = [];
@@ -513,23 +517,45 @@
 		};
 		$scope.calculateAmount = function(value,means)
 		{
-			if(value == "" || value == undefined) {
+			if((value == "" || value == undefined) &&
+				($scope.creditCardPayout == '' || $scope.creditCardPayout == undefined) &&
+                ($scope.cashPayout == '' || $scope.cashPayout == undefined) &&
+                ($scope.debitCardPayout == '' || $scope.debitCardPayout == undefined) &&
+                ($scope.checkPayout == '' || $scope.checkPayout == undefined)) {
 				value = 0;
 				$scope.balanceAmount = GlobalVariable.checkOuttotal;
 			}
 
 			if(means == 'debit')
 			{
-				$scope.debitId = 3;
-				if(parseFloat($scope.balanceAmount) > parseFloat(value) )
+
+				if($scope.debitCardPayout == '' || $scope.debitCardPayout == undefined)
 				{
-					$scope.paidAmountDebit = parseFloat($scope.paidAmountDebit) + parseFloat(value);
+                    $scope.debitCardPayout = 0;
+				}
+                if($scope.checkPayout == '' || $scope.checkPayout == undefined)
+                {
+                    $scope.checkPayout = 0;
+                }
+                if($scope.cashPayout == '' || $scope.cashPayout == undefined)
+                {
+                    $scope.cashPayout = 0;
+                }
+                if($scope.creditCardPayout == '' || $scope.creditCardPayout == undefined)
+                {
+                    $scope.creditCardPayout = 0;
+                }
+
+				$scope.debitId = 3;
+				if(parseFloat($scope.balanceAmount) > parseFloat($scope.debitCardPayout) )
+				{
+					$scope.paidAmountDebit = parseFloat($scope.paidAmountDebit) + parseFloat($scope.debitCardPayout);
 				}
 				else
 				{
 					$scope.paidAmountDebit =  parseFloat($scope.paidAmountDebit) +  $scope.balanceAmount  ;
 				}
-				$scope.balanceAmount =parseFloat(parseFloat(parseFloat($scope.balanceAmount)-parseFloat(value)).toFixed(2));
+				$scope.balanceAmount =parseFloat(parseFloat(parseFloat(GlobalVariable.checkOuttotal)-parseFloat($scope.debitCardPayout)-parseFloat($scope.creditCardPayout)-parseFloat($scope.cashPayout)-parseFloat($scope.checkPayout)).toFixed(2));
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCash == 0) {
 
 					$scope.paidAmountDebit = GlobalVariable.checkOuttotal;
@@ -537,16 +563,32 @@
 			}
 			else if(means == 'check')
 			{
+                if($scope.debitCardPayout == '' || $scope.debitCardPayout == undefined)
+                {
+                    $scope.debitCardPayout = 0;
+                }
+                if($scope.checkPayout == '' || $scope.checkPayout == undefined)
+                {
+                    $scope.checkPayout = 0;
+                }
+                if($scope.cashPayout == '' || $scope.cashPayout == undefined)
+                {
+                    $scope.cashPayout = 0;
+                }
+                if($scope.creditCardPayout == '' || $scope.creditCardPayout == undefined)
+                {
+                    $scope.creditCardPayout = 0;
+                }
 				$scope.checkId = 4;
-				if(parseFloat($scope.balanceAmount) > parseFloat(value) )
+				if(parseFloat($scope.balanceAmount) > parseFloat($scope.checkPayout) )
 				{
-					$scope.paidAmountCheck = parseFloat($scope.paidAmountCheck) + parseFloat(value);
+					$scope.paidAmountCheck = parseFloat($scope.paidAmountCheck) + parseFloat($scope.checkPayout);
 				}
 				else
 				{
 					$scope.paidAmountCheck=  parseFloat($scope.paidAmountCheck) +  $scope.balanceAmount  ;
 				}
-				$scope.balanceAmount =parseFloat(parseFloat(parseFloat($scope.balanceAmount)-parseFloat(value)).toFixed(2));
+                $scope.balanceAmount =parseFloat(parseFloat(parseFloat(GlobalVariable.checkOuttotal)-parseFloat($scope.debitCardPayout)-parseFloat($scope.creditCardPayout)-parseFloat($scope.cashPayout)-parseFloat($scope.checkPayout)).toFixed(2));
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCheck == 0) {
 
 					$scope.paidAmountCheck = GlobalVariable.checkOuttotal;
@@ -554,16 +596,32 @@
 			}
 			else if(means == 'cash')
 			{
+                if($scope.debitCardPayout == '' || $scope.debitCardPayout == undefined)
+                {
+                    $scope.debitCardPayout = 0;
+                }
+                if($scope.checkPayout == '' || $scope.checkPayout == undefined)
+                {
+                    $scope.checkPayout = 0;
+                }
+                if($scope.cashPayout == '' || $scope.cashPayout == undefined)
+                {
+                    $scope.cashPayout = 0;
+                }
+                if($scope.creditCardPayout == '' || $scope.creditCardPayout == undefined)
+                {
+                    $scope.creditCardPayout = 0;
+                }
 				$scope.cashId =1;
-				if(parseFloat($scope.balanceAmount) > parseFloat(value))
+				if(parseFloat($scope.balanceAmount) > parseFloat($scope.cashPayout))
 				{
-					$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
+					$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat($scope.cashPayout);
 				}
 				else
 				{
 					$scope.paidAmountCash =  parseFloat($scope.paidAmountCash) +  $scope.balanceAmount  ;
 				}
-				$scope.balanceAmount =parseFloat(parseFloat(parseFloat($scope.balanceAmount)-parseFloat(value)).toFixed(2));
+                $scope.balanceAmount =parseFloat(parseFloat(parseFloat(GlobalVariable.checkOuttotal)-parseFloat($scope.debitCardPayout)-parseFloat($scope.creditCardPayout)-parseFloat($scope.cashPayout)-parseFloat($scope.checkPayout)).toFixed(2));
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCredit == 0) {
 
 					$scope.paidAmountCash = GlobalVariable.checkOuttotal;
@@ -572,16 +630,32 @@
 			}
 			else
 			{
+                if($scope.debitCardPayout == '' || $scope.debitCardPayout == undefined)
+                {
+                    $scope.debitCardPayout = 0;
+                }
+                if($scope.checkPayout == '' || $scope.checkPayout == undefined)
+                {
+                    $scope.checkPayout = 0;
+                }
+                if($scope.cashPayout == '' || $scope.cashPayout == undefined)
+                {
+                    $scope.cashPayout = 0;
+                }
+                if($scope.creditCardPayout == '' || $scope.creditCardPayout == undefined)
+                {
+                    $scope.creditCardPayout = 0;
+                }
 				$scope.creditIdMulty = 2;
-				if(parseFloat($scope.balanceAmount) > parseFloat(value) )
+				if(parseFloat($scope.balanceAmount) > parseFloat($scope.creditCardPayout) )
 				{
-					$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat(value);
+					$scope.paidAmountCredit = parseFloat($scope.paidAmountCredit) + parseFloat($scope.creditCardPayout);
 				}
 				else
 				{
 					$scope.paidAmountCredit =  parseFloat($scope.paidAmountCredit) +  $scope.balanceAmount  ;
 				}
-				$scope.balanceAmount =parseFloat(parseFloat(parseFloat($scope.balanceAmount)-parseFloat(value)).toFixed(2));
+                $scope.balanceAmount =parseFloat(parseFloat(parseFloat(GlobalVariable.checkOuttotal)-parseFloat($scope.debitCardPayout)-parseFloat($scope.creditCardPayout)-parseFloat($scope.cashPayout)-parseFloat($scope.checkPayout)).toFixed(2));
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCash == 0) {
 
 					$scope.paidAmountCredit = GlobalVariable.checkOuttotal;
