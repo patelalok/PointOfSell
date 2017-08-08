@@ -443,6 +443,7 @@ public class SalesManager {
 
 
 
+            //By this logic if email is failing i will get an email
             if( null != receiptDtoList.get(0).getCustomerDtosList().get(0).getEmail())
             {
                 email = receiptDtoList.get(0).getCustomerDtosList().get(0).getEmail();
@@ -452,7 +453,7 @@ public class SalesManager {
 
         EmailStatus emailStatus = emailHtmlSender.send(email, "ExcelWireless Order Details", "template-1", context);
 
-        return false;
+        return  emailStatus.isSuccess();
     }
 
 
