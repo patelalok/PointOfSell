@@ -287,7 +287,7 @@
 			"addTax":row.addTax,
 			"stock":row.stock,
 			"modelId":row.modelId,
-			"isEccomerce":row.isEccomerce
+			"isEcommerce":row.isEcommerce
 		};
 			var url =GlobalConstants.URLCONSTANTS+"editProduct";
 			request= JSON.stringify(request);
