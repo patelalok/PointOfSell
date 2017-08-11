@@ -285,7 +285,9 @@
 			"image": "image",
 			"createdDate": "1000-01-01 00:00:00",
 			"addTax":row.addTax,
-			"stock":row.stock
+			"stock":row.stock,
+			"modelId":row.modelId,
+			"isEccomerce":row.isEccomerce
 		};
 			var url =GlobalConstants.URLCONSTANTS+"editProduct";
 			request= JSON.stringify(request);

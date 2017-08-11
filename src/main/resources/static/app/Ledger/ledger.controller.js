@@ -140,8 +140,16 @@
 		{
 			if(data == true)
 			{
-
+                modalService.showModal('', '', "Main sent successfully", $scope.callBackEmail1);
 			}
+			else
+			{
+                modalService.showModal('', '', "Error in sending mail", $scope.callBackEmail1);
+			}
+		}
+        $scope.callBackEmail1 = function(ok)
+		{
+
 		}
 		function getEmailError(data)
 		{

@@ -276,8 +276,10 @@
 			util.customError.hide(['vendName','categoryName','brandName','productId','altNo']);
 			if(addValidated())
 			{
+
 				if(GlobalVariable.editProduct == true)
 				{
+                    var ecommerceFlag = 0;
 					if($scope.selectedReturnType == 'Custom')
 						$scope.retType = $scope.customReturn;
 					else
@@ -289,9 +291,9 @@
 						$scope.phoneIMEI = '';
 
 					if($scope.ecommerce == true)
-						$scope.ecommerce = 1;
+                        ecommerceFlag = 1;
 					else
-						$scope.ecommerce =0;
+                        ecommerceFlag =0;
 					var request={
 						"productId": GlobalVariable.editProductDetails.productId,
 						"productNo":$scope.productId,
@@ -312,12 +314,13 @@
 						"createdDate": "1000-01-01 00:00:00",
 						"addTax":$scope.productYesyNO,
 						"modelId":$scope.modelId,
-						"isEcommerce":$scope.ecommerce
+						"isEcommerce":ecommerceFlag
 					};
 					var url =GlobalConstants.URLCONSTANTS+"editProduct";
 				}
 				else
 				{
+					var ecommerceFlag = 0;
 
 					if($scope.selectedReturnType == 'Custom')
 						$scope.retType = $scope.customReturn;
@@ -331,9 +334,9 @@
 						$scope.phoneIMEI = '';
 
 					if($scope.ecommerce == true)
-						$scope.ecommerce = 1;
+                        ecommerceFlag = 1;
 					else
-						$scope.ecommerce =0;
+                        ecommerceFlag =0;
 
 					var request = {
 
@@ -354,7 +357,7 @@
 						"createdDate": "1000-01-01 00:00:00",
 						"addTax":$scope.productYesyNO,
 						"modelId":$scope.modelId,
-						"isEcommerce":$scope.ecommerce
+						"isEcommerce":ecommerceFlag
 					};
 					var url =GlobalConstants.URLCONSTANTS+"addProduct";
 				}
