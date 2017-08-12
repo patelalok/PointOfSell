@@ -92,7 +92,7 @@ public class UserManager {
         {
             user = jdbcTemplate.query(sqlQuery.getUserDetails, new UserManager.AddUserMapper());
 
-            for(int i = 0; i<= user.size(); i++)
+            for(int i = 0; i< user.size(); i++)
             {
                 UserDto u = user.get(i);
 
