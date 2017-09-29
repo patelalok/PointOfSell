@@ -455,7 +455,7 @@
 					$rootScope.testData[$rootScope.testData.length - 1].discount = $scope.discount;
 					$rootScope.testData[$rootScope.testData.length - 1].total = parseFloat($scope.total);
 					$rootScope.testData[$rootScope.testData.length - 1].totalWithTax = parseFloat($scope.tWTax);
-					$rootScope.testData[$rootScope.testData.length - 1].totalTax = parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax);
+					$rootScope.testData[$rootScope.testData.length - 1].totalTax = Math.abs(parseFloat($rootScope.testData[$rootScope.testData.length - 1].total)-parseFloat($rootScope.testData[$rootScope.testData.length - 1].totalWithTax));
 					/*$rootScope.testData
 					 .push({
 					 "itemId":$rootScope.testData[$rootScope.testData.length - 1].productId,
