@@ -615,12 +615,18 @@
 				$scope.cashId =1;
 				if(parseFloat($scope.balanceAmount) > parseFloat($scope.cashPayout))
 				{
+					if($scope.checkPayout == 0)
+                        $scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat(value);
+						else
 					$scope.paidAmountCash = parseFloat($scope.paidAmountCash) + parseFloat($scope.cashPayout);
 				}
 				else
 				{
 					$scope.paidAmountCash =  parseFloat($scope.paidAmountCash) +  $scope.balanceAmount  ;
 				}
+                if($scope.checkPayout == 0)
+                    $scope.balanceAmount =parseFloat(parseFloat(parseFloat(GlobalVariable.checkOuttotal)-parseFloat($scope.debitCardPayout)-parseFloat($scope.creditCardPayout)-parseFloat($scope.cashPayout)-parseFloat($scope.checkPayout)-parseFloat(value)).toFixed(2));
+                else
                 $scope.balanceAmount =parseFloat(parseFloat(parseFloat(GlobalVariable.checkOuttotal)-parseFloat($scope.debitCardPayout)-parseFloat($scope.creditCardPayout)-parseFloat($scope.cashPayout)-parseFloat($scope.checkPayout)).toFixed(2));
 				if($scope.balanceAmount <= 0 && $scope.paidAmountCredit == 0) {
 
